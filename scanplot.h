@@ -9,6 +9,7 @@
 #include <qwt_slider.h>
 #include <qlayout.h>
 #include <qwt_plot_marker.h>
+#include <qwt_plot_curve.h>
 
 class ScanPlot : public QWidget
 {
@@ -19,6 +20,7 @@ public:
 private:
     QwtPlotMarker mX;
     QwtPlotCanvas canvas;
+    QwtPlotCurve *d_curve1;
 
 signals:
 

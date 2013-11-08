@@ -32,6 +32,14 @@ ScanPlot::ScanPlot(QWidget *parent) :
         mX.setXValue( 0.0);
         mX.attach( q_plot );
 
+    d_curve1 = new QwtPlotCurve( "Amplitude" );
+    d_curve1->setRenderHint( QwtPlotItem::RenderAntialiased );
+    d_curve1->setPen( Qt::yellow );
+    d_curve1->setLegendAttribute( QwtPlotCurve::LegendShowLine );
+    d_curve1->setYAxis( QwtPlot::yLeft );
+    d_curve1->attach( q_plot );
+
+
         QwtSlider *slider = new QwtSlider();
         slider->setOrientation( Qt::Horizontal );
         slider->setScale( 0.0, 1000.0 );
