@@ -21,22 +21,21 @@ ScanPlot::ScanPlot(QWidget *parent) :
 
         q_plot->enableAxis( QwtPlot::yRight );
         q_plot->setAxisTitle( QwtPlot::xBottom, "Text1" );
-        q_plot->setAxisTitle( QwtPlot::yLeft, "lens anterior maximum" );
-        q_plot->setAxisTitle( QwtPlot::yRight, "lens posterior maximum" );
+        q_plot->setAxisTitle( QwtPlot::yLeft, "Text2" );
+        q_plot->setAxisTitle( QwtPlot::yRight, "Text3" );
 
-        mX.setLabel( QString::fromLatin1( "x = 2 pi" ) );
+        mX.setLabel( QString::fromLatin1( "axis" ) );
         mX.setLabelAlignment( Qt::AlignLeft | Qt::AlignBottom );
         mX.setLabelOrientation( Qt::Vertical );
         mX.setLineStyle( QwtPlotMarker::VLine );
         mX.setLinePen( Qt::red, 0, Qt::DashDotLine );
-        mX.setXValue( 222.0);
+        mX.setXValue( 0.0);
         mX.attach( q_plot );
-        mX.setXValue( 333.0);
 
         QwtSlider *slider = new QwtSlider();
         slider->setOrientation( Qt::Horizontal );
-        slider->setScale( 0.0, 500.0 );
-        slider->setTotalSteps( 500 );
+        slider->setScale( 0.0, 1000.0 );
+        slider->setTotalSteps( 1000 );
         slider->setSingleSteps( 1 );
 
         q_plot->setSizePolicy(QSizePolicy::Ignored,QSizePolicy::Ignored);
