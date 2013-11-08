@@ -33,14 +33,12 @@ SOURCES += main.cpp\
         plot.cpp\
 	panel.cpp\
 	knob.cpp \
-    graf.cpp \
     scanplot.cpp
 
 HEADERS  += mainwindow.h\
         plot.h\
 	panel.h\
 	knob.h \
-    graf.h \
     scanplot.h
 
 #FORMS    += mainwindow.ui

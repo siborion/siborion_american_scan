@@ -34,15 +34,7 @@ MainWindow::MainWindow( QWidget *parent ):
     QMainWindow( parent )
 {
     d_panel = new Panel( this );
-//    d_plot = new Plot( this );
-//    const int margin = 5;
-//    d_plot->setContentsMargins( margin, margin, margin, 0 );
-
     setCentralWidget( d_panel );
-
-
-//    setCentralWidget( d_plot );
-
 }
 
 

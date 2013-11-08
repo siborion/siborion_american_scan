@@ -2,7 +2,6 @@
 #define _PANEL_H_ 1
 
 #include <qtabwidget.h>
-#include "graf.h"
 #include "scanplot.h"
 
 
@@ -21,14 +20,10 @@ public:
 Q_SIGNALS:
 
 private Q_SLOTS:
-    void changeVal(double);
 
 private:
     QWidget *createOnlineTab( QWidget * );
     QWidget *createBaseTab( QWidget * );
-    graf *p_graf;
-    void changeVal1(double);
-//    Knob *d_amplitudeKnob;
 };
 
 #endif
