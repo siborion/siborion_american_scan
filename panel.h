@@ -2,6 +2,9 @@
 #define _PANEL_H_ 1
 
 #include <qtabwidget.h>
+#include "graf.h"
+#include "scanplot.h"
+
 
 class QComboBox;
 class SpinBox;
@@ -14,12 +17,18 @@ class Panel: public QTabWidget
 
 public:
     Panel( QWidget * = NULL );
+
 Q_SIGNALS:
+
 private Q_SLOTS:
+    void changeVal(double);
+
 private:
     QWidget *createOnlineTab( QWidget * );
     QWidget *createBaseTab( QWidget * );
-    Knob *d_amplitudeKnob;
+    graf *p_graf;
+    void changeVal1(double);
+//    Knob *d_amplitudeKnob;
 };
 
 #endif

@@ -5,6 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui
+QT	 += serialport
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -31,11 +32,15 @@ SOURCES += main.cpp\
         mainwindow.cpp\
         plot.cpp\
 	panel.cpp\
-	knob.cpp
+	knob.cpp \
+    graf.cpp \
+    scanplot.cpp
 
 HEADERS  += mainwindow.h\
         plot.h\
 	panel.h\
-	knob.h
+	knob.h \
+    graf.h \
+    scanplot.h
 
 #FORMS    += mainwindow.ui

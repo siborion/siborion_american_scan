@@ -40,6 +40,7 @@ MainWindow::MainWindow( QWidget *parent ):
 
     setCentralWidget( d_panel );
 
+
 //    setCentralWidget( d_plot );
 
 }
