@@ -1,6 +1,4 @@
 #include "panel.h"
-#include "plot.h"
-#include "knob.h"
 #include "scanplot.h"
 #include <qlabel.h>
 #include <qcombobox.h>

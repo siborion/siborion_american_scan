@@ -13,7 +13,6 @@
 #include <qwt_plot_renderer.h>
 #include <qwt_text.h>
 #include <qwt_math.h>
-#include "plot.h"
 #include "panel.h"
 #include "mainwindow.h"
 

@@ -30,15 +30,11 @@ CONFIG(release, debug|release) {
 
 SOURCES += main.cpp\
         mainwindow.cpp\
-        plot.cpp\
 	panel.cpp\
-	knob.cpp \
-    scanplot.cpp
+        scanplot.cpp
 
 HEADERS  += mainwindow.h\
-        plot.h\
 	panel.h\
-	knob.h \
-    scanplot.h
+        scanplot.h
 
 #FORMS    += mainwindow.ui
