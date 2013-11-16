@@ -31,10 +31,13 @@ CONFIG(release, debug|release) {
 SOURCES += main.cpp\
         mainwindow.cpp\
 	panel.cpp\
-        scanplot.cpp
+        scanplot.cpp\
+        mesurement.cpp\
+
 
 HEADERS  += mainwindow.h\
 	panel.h\
-        scanplot.h
+        scanplot.h\
+	mesurement.h
 
 #FORMS    += mainwindow.ui

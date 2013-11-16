@@ -3,7 +3,7 @@
 
 #include <qtabwidget.h>
 #include "scanplot.h"
-
+#include <mesurement.h>
 
 class QComboBox;
 class SpinBox;
@@ -24,6 +24,7 @@ private Q_SLOTS:
 private:
     QWidget *createOnlineTab( QWidget * );
     QWidget *createBaseTab( QWidget * );
+    mesurement *createMesTab( QWidget * );
 };
 
 #endif

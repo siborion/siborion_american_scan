@@ -44,17 +44,17 @@ ScanPlot::ScanPlot(QWidget *parent) :
 
 
 
-        QwtSlider *slider = new QwtSlider();
-        slider->setOrientation( Qt::Horizontal );
-        slider->setScale( 0.0, 1000.0 );
-        slider->setTotalSteps( 1000 );
-        slider->setSingleSteps( 1 );
+//        QwtSlider *slider = new QwtSlider();
+//        slider->setOrientation( Qt::Horizontal );
+//        slider->setScale( 0.0, 1000.0 );
+//        slider->setTotalSteps( 1000 );
+//        slider->setSingleSteps( 1 );
 
         q_plot->setSizePolicy(QSizePolicy::Ignored,QSizePolicy::Ignored);
         layout->addWidget( q_plot, 0, 0 );
-        layout->addWidget( slider );
+//        layout->addWidget( slider );
 
-        connect( slider, SIGNAL( valueChanged( double ) ), SLOT( changeVal( double ) ) );
+//        connect( slider, SIGNAL( valueChanged( double ) ), SLOT( changeVal( double ) ) );
 }
 
 void ScanPlot::changeVal(double Val)
