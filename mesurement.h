@@ -3,8 +3,11 @@
 
 #include <QWidget>
 #include <qlayout.h>
+#include <QTableWidget>
+#include <QHeaderView>
 #include <QPushButton>
 #include "scanplot.h"
+
 
 class mesurement : public QWidget
 {
