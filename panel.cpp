@@ -1,5 +1,6 @@
 #include "panel.h"
 #include "scanplot.h"
+#include "bases.h"
 #include <qlabel.h>
 #include <qcombobox.h>
 #include <qspinbox.h>
@@ -15,9 +16,10 @@ Panel::Panel( QWidget *parent ):
 {
     setStyleSheet("QTabBar::tab { min-width: 100px; }");
     setTabPosition( QTabWidget::North );
-    addTab( createMesTab( this ), "MEASUREMENT" );
-    addTab( createOnlineTab( this ), "IOL CALCULATOR" );
-    addTab( createBaseTab( this ), "BASE" );
+    addTab( createBaseTab( this ), "Data Base" );
+    addTab( createMesTab( this ), "Measurement" );
+    addTab( createOnlineTab( this ), "Calculator" );
+    addTab( createOnlineTab( this ), "Print" );
 }
 
 QWidget *Panel::createOnlineTab( QWidget *parent )
@@ -31,7 +33,7 @@ QWidget *Panel::createOnlineTab( QWidget *parent )
 
 QWidget *Panel::createBaseTab( QWidget *parent )
 {
-    QWidget *page = new QWidget( parent );
+    bases *page = new bases( parent );
     return page;
 }
 

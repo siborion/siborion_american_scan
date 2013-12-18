@@ -7,6 +7,8 @@
 #include <qwt_plot_grid.h>
 #include <qwt_plot_canvas.h>
 #include <qwt_slider.h>
+#include <qwt_symbol.h>
+#include <qwt_scale_widget.h>
 #include <qlayout.h>
 #include <qwt_plot_marker.h>
 #include <qwt_plot_curve.h>

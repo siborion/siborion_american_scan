@@ -8,6 +8,8 @@ ScanPlot::ScanPlot(QWidget *parent) :
         QGridLayout *layout = new QGridLayout( this );
 
         QwtPlot *q_plot = new QwtPlot(this);
+        QwtPlotCurve *curve = new QwtPlotCurve();
+
         canvas.setBorderRadius( 10 );
         q_plot->setCanvas(&canvas);
         q_plot->setCanvasBackground( QColor( "MidnightBlue" ) );
@@ -43,6 +45,19 @@ ScanPlot::ScanPlot(QWidget *parent) :
     d_curve1->setSamples(x,y,1000);
 
 
+    QwtSymbol *pSym = new QwtSymbol;
+    pSym->setStyle(QwtSymbol::Ellipse);
+    curve->setSymbol(pSym);
+    double tx[1];
+    double ty[1];
+
+    tx[0]=ty[0]=10;
+
+    curve->setSamples(tx, ty, 1);
+    curve->attach( q_plot );
+
+//    curve->setSymbol(new QwtSymbol (QwtSymbol::Ellipse, Qt::gray, Qt::gray, QSize( 20, 20 ) ) );
+//    curve->setSymbol(new QwtSymbol( QwtSymbol::Ellipse, Qt::gray, Qt::gray, QSize( 20, 20 ) ) );
 
         QwtSlider *slider = new QwtSlider();
         slider->setOrientation( Qt::Horizontal );
