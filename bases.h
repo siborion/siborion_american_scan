@@ -7,6 +7,9 @@
 #include <QGridLayout>
 #include <QPushButton>
 #include <QTableWidget>
+#include <QLabel>
+#include <QLineEdit>
+
 
 class bases : public QWidget
 {
@@ -21,6 +24,9 @@ public slots:
 private:
     void adjTable();
     QTableWidget *twTable;
+    QPushButton *pbAdd;
+    QPushButton *pbDel;
+    QPushButton *pbEdit;
 
 };
 
