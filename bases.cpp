@@ -3,6 +3,7 @@
 bases::bases(QWidget *parent) :
     QWidget(parent)
 {
+
     QHBoxLayout *Layout = new QHBoxLayout(this);
 
     QVBoxLayout *leftLayout  = new QVBoxLayout();
@@ -20,12 +21,15 @@ bases::bases(QWidget *parent) :
 
     QLabel    *lSearch  = new QLabel(tr("Search"));
     QLineEdit *leSearch = new QLineEdit();
-    twTable = new QTableWidget(0, 6);
+    twTable = new QTableView();
+
+    model = new QStandardItemModel();
     pbAdd = new QPushButton();
     pbEdit = new QPushButton();
     pbDel = new QPushButton();
-    QPushButton *pbPatientHistory = new QPushButton(tr("Patient History"));
+    pbPatientHistory = new QPushButton();
 
+    twTable->setModel(model);
 
     topRightLayout->addWidget(lSearch);
     topRightLayout->addWidget(leSearch);
@@ -39,23 +43,78 @@ bases::bases(QWidget *parent) :
     rightLayout->addWidget(twTable,          1, 0, 1, 1);
     rightLayout->addLayout(botRightLayout, 2, 0);
 
-    adjTable();
-
     Layout->addLayout(leftLayout);
     Layout->addLayout(rightLayout);
+
+    adjTable(enPatient);
+
+    connect(pbPatient, SIGNAL(pressed()), SLOT(changeBasePatient()));
+    connect(pbDoctor, SIGNAL(pressed()), SLOT(changeBaseDoctor()));
+    connect(pbLens, SIGNAL(pressed()), SLOT(changeBaseLens()));
 }
 
-
-void bases::adjTable()
+void bases::adjTable(quint8 Val)
 {
     QStringList lst;
-    lst<<tr("Ref.№")<<tr("Patient ID")<<tr("First Name")<<tr("Last Name")<<tr("Doctor Name")<<tr("Notes");
-    twTable->setHorizontalHeaderLabels(lst);
-    twTable->setColumnWidth(0,50);
-    twTable->setColumnWidth(1,50);
-    twTable->setColumnWidth(2,50);
-    pbAdd->setText(tr("Add Patient"));
-    pbEdit->setText(tr("Edit Patient"));
-    pbDel->setText(tr("Delete Patient"));
+    QStringList lstButton;
+    TypeBase = Val;
+    switch (TypeBase)
+    {
+    case enPatient:
+        lst<<tr("Ref.№")<<tr("Patient ID")<<tr("First Name")<<tr("Last Name")<<tr("Doctor Name")<<tr("Notes");
+        lstButton<<tr("Add Patient")<<tr("Edit Patient")<<tr("Delete Patient")<<tr("Patient History");
+        break;
+    case enDoctor:
+        lst<<tr("Doctor Id")<<tr("First Name")<<tr("Last Name")<<tr("Notes");
+        lstButton<<tr("Add Doctor")<<tr("Edit Doctor")<<tr("Delete Doctor");
+        break;
+    case enLens:
+        lst<<tr("Lens Name")<<tr("Mfg Name")<<tr("Mfg A_Const")<<tr("Mfg ACD")<<tr("Mfg SF")<<tr("Hoffer ACD");
+        lstButton<<tr("Add Lens")<<tr("Edit Lens")<<tr("Delete Lens");
+        break;
+    }
+    model->setColumnCount(lst.count());
+    model->setHorizontalHeaderLabels(lst);
+    pbAdd->setText (lstButton.at(0));
+    pbEdit->setText(lstButton.at(1));
+    pbDel->setText (lstButton.at(2));
+    if(lstButton.count()>3)
+    {
+        pbPatientHistory->setVisible(true);
+        pbPatientHistory->setText(lstButton.at(3));
+    }
+    else
+        pbPatientHistory->setVisible(false);
 
+    adjCol();
+}
+
+void bases::resizeEvent( QResizeEvent *__e )
+{
+    adjCol();
+}
+
+void bases::adjCol()
+{
+    quint16 uiWidth;
+    quint8 ColCount;
+    ColCount = model->columnCount();
+    uiWidth = (twTable->width()-3)/ColCount;
+    for(quint8 i=0; i<ColCount; i++)
+    {
+        twTable->setColumnWidth(i, uiWidth);
+    }
+}
+
+void bases::changeBasePatient()
+{
+    adjTable(enPatient);
+}
+void bases::changeBaseDoctor()
+{
+    adjTable(enDoctor);
+}
+void bases::changeBaseLens()
+{
+    adjTable(enLens);
 }

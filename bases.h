@@ -6,10 +6,13 @@
 #include <QVBoxLayout>
 #include <QGridLayout>
 #include <QPushButton>
-#include <QTableWidget>
+#include <QTableView>
 #include <QLabel>
 #include <QLineEdit>
+#include <QStandardItemModel>
+#include <QResizeEvent>
 
+enum {enPatient, enDoctor, enLens};
 
 class bases : public QWidget
 {
@@ -22,11 +25,24 @@ signals:
 public slots:
 
 private:
-    void adjTable();
-    QTableWidget *twTable;
+    void adjCol();
+
+    QTableView *twTable;
     QPushButton *pbAdd;
     QPushButton *pbDel;
     QPushButton *pbEdit;
+    QPushButton *pbPatientHistory;
+    QStandardItemModel *model;
+    quint8 TypeBase;
+
+protected:
+void resizeEvent( QResizeEvent *__e );
+
+private slots:
+    void adjTable(quint8);
+    void changeBasePatient();
+    void changeBaseDoctor();
+    void changeBaseLens();
 
 };
 
