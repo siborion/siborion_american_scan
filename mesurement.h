@@ -8,6 +8,7 @@
 #include <QPushButton>
 #include <QStandardItemModel>
 #include "scanplot.h"
+#include <adjview.h>
 
 
 class mesurement : public QWidget
@@ -17,9 +18,9 @@ public:
     explicit mesurement(QWidget *parent = 0);
 
 private:
-    QTableView *twPatient;
-    QTableView *twLens;
-    QTableView *twVelocity;
+    adjview *twPatient;
+    adjview *twLens;
+    adjview *twVelocity;
     QStandardItemModel *modelPatient;
     QStandardItemModel *modelLens;
     QStandardItemModel *modelVelocity;

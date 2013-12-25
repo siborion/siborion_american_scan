@@ -11,7 +11,7 @@ void adjview::setColumnPercent(QList<int> percentList)
     quint8 colCount;
     columnPercent = percentList;
     colCount  = columnPercent.count();
-    viewWidht = width()-colCount;
+    viewWidht = width();
     for(quint8 i=0; i<colCount; i++)
     {
         this->setColumnWidth(i, (viewWidht*columnPercent.at(i))/100);

@@ -3,105 +3,114 @@
 mesurement::mesurement(QWidget *parent) :
     QWidget(parent)
 {
+    QList<int> columnPercent;
+
     QVBoxLayout *layout = new QVBoxLayout(this);
     QHBoxLayout *layoutTop = new QHBoxLayout();
     QHBoxLayout *layoutBot = new QHBoxLayout();
     QVBoxLayout *layoutBotLeft = new QVBoxLayout();
 
-    twPatient  = new QTableView();
+
+//------------------------------------ TableView
+    twPatient  = new adjview();
     QSpacerItem *vs0 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
-    twLens     = new QTableView();
-    twVelocity = new QTableView();
+    twLens     = new adjview();
+    QSpacerItem *vs1 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+    twVelocity = new adjview();
+
+    columnPercent.clear();
+    columnPercent<<50<<50;
+    twPatient->setColumnPercent(columnPercent);
+
+    columnPercent.clear();
+    columnPercent<<33<<33<<34;
+    twLens->setColumnPercent(columnPercent);
+
+    columnPercent.clear();
+    columnPercent<<50<<50;
+    twVelocity->setColumnPercent(columnPercent);
 
     twPatient->verticalHeader()->hide();
     twPatient->horizontalHeader()->hide();
+    twPatient->setMaximumHeight(120);
+    twPatient->setFrameShape(QFrame::NoFrame);
+    twPatient->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    twPatient->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+    twLens->verticalHeader()->hide();
+    twLens->horizontalHeader()->hide();
+    twLens->setMaximumHeight(120);
+    twLens->setFrameShape(QFrame::NoFrame);
+    twLens->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    twLens->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+    twVelocity->verticalHeader()->hide();
+    twVelocity->horizontalHeader()->hide();
+    twVelocity->setMaximumHeight(120);
+    twVelocity->setFrameShape(QFrame::NoFrame);
+    twVelocity->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    twVelocity->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
 
     modelPatient  = new QStandardItemModel();
     modelLens     = new QStandardItemModel();
     modelVelocity = new QStandardItemModel();
 
     modelPatient->setColumnCount(2);
-    modelLens->setColumnCount(2);
+    modelLens->setColumnCount(3);
     modelVelocity->setColumnCount(2);
 
-    modelPatient->setRowCount(2);
+    modelPatient->setRowCount(4);
+    modelLens->setRowCount(4);
+    modelVelocity->setRowCount(4);
 
     twPatient->setModel(modelPatient);
-
-//    twVelocity->setSpan(0, 0, 1, 2);
-//    twVelocity->setSpan(1, 0, 1, 2);
+    twLens->setModel(modelLens);
+    twVelocity->setModel(modelVelocity);
 
     layoutTop->addWidget(twPatient);
     layoutTop->addItem(vs0);
     layoutTop->addWidget(twLens);
+    layoutTop->addItem(vs1);
     layoutTop->addWidget(twVelocity);
 
+//----------------------------------------- Button
+    QPushButton *pbOd = new QPushButton(tr("OD"));
+    QSpacerItem *hs0 = new QSpacerItem(50, 5, QSizePolicy::Expanding, QSizePolicy::Expanding);
+    QPushButton *pbMeasure = new QPushButton(tr("Measure"));
+    QSpacerItem *hs1 = new QSpacerItem(50, 5, QSizePolicy::Expanding, QSizePolicy::Expanding);
+    QPushButton *pbAutoFreeze = new QPushButton(tr("Auto Freeze"));
+    QPushButton *pbAuto = new QPushButton(tr("Auto"));
+    QPushButton *pbManual = new QPushButton(tr("Manual"));
+    QSpacerItem *hs2 = new QSpacerItem(50, 5, QSizePolicy::Expanding, QSizePolicy::Expanding);
+    QPushButton *pbContact = new QPushButton(tr("Contact"));
+    QPushButton *pbImmersion = new QPushButton(tr("Immersion"));
+    QSpacerItem *hs3 = new QSpacerItem(50, 5, QSizePolicy::Expanding, QSizePolicy::Expanding);
+    QPushButton *pbCataract = new QPushButton(tr("Cataract"));
+    QPushButton *pbAphakic = new QPushButton(tr("Aphakic"));
+    layoutBotLeft->setSpacing(0);
+    layoutBotLeft->addWidget(pbOd);
+    layoutBotLeft->addItem(hs0);
+    layoutBotLeft->addWidget(pbMeasure);
+    layoutBotLeft->addItem(hs1);
+    layoutBotLeft->addWidget(pbAutoFreeze);
+    layoutBotLeft->addWidget(pbAuto);
+    layoutBotLeft->addWidget(pbManual);
+    layoutBotLeft->addItem(hs2);
+    layoutBotLeft->addWidget(pbContact);
+    layoutBotLeft->addWidget(pbImmersion);
+    layoutBotLeft->addItem(hs3);
+    layoutBotLeft->addWidget(pbCataract);
+    layoutBotLeft->addWidget(pbAphakic);
+
+
+
+    ScanPlot *pPlot = new ScanPlot();
+
+
+
+    layoutBot->addLayout(layoutBotLeft);
+    layoutBot->addWidget(pPlot);
     layout->addLayout(layoutTop);
     layout->addLayout(layoutBot);
-
-
-
-
-//    QGridLayout *layoutDown = new QGridLayout();
-//    QGridLayout *layoutDown1= new QGridLayout();
-//    QGridLayout *layoutDown2= new QGridLayout();
-//    QGridLayout *layoutDown3= new QGridLayout();
-//    QPushButton *btStart    = new QPushButton();
-//    QPushButton *btFreez    = new QPushButton();
-//    QPushButton *btImersion = new QPushButton();
-//    QPushButton *btArhakic  = new QPushButton();
-//    QPushButton *btContact  = new QPushButton();
-//    QPushButton *btCataract = new QPushButton();
-//    QPushButton *btLeft     = new QPushButton();
-//    QPushButton *btRight    = new QPushButton();
-//    QSpacerItem *vs0 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
-//    QSpacerItem *vs1 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
-//    QSpacerItem *vs2 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
-//    QSpacerItem *vs3 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
-
-//    QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
-//    sizePolicy.setHorizontalStretch(0);
-//    sizePolicy.setVerticalStretch(0);
-
-//    QTableWidget *tbLastMeas = new QTableWidget(10, 3);
-//    QStringList lst;
-//    lst << "d" << "f" << "h";
-//    tbLastMeas->setHorizontalHeaderLabels(lst);
-//    tbLastMeas->setColumnWidth(0,50);
-//    tbLastMeas->setColumnWidth(1,50);
-//    tbLastMeas->setColumnWidth(2,50);
-
-//    tbLastMeas->setMaximumWidth(200);
-
-//    layout->addLayout    (layoutDown,  0, 0, 1, 1);
-//    layoutDown->addLayout(layoutDown1, 0, 0, 1, 1);
-//    layoutDown->addLayout(layoutDown2, 0, 2, 1, 1);
-//    layoutDown->addLayout(layoutDown3, 0, 3, 1, 1);
-
-//    btStart->setText("Start");
-//    btFreez->setText("Freez");
-//    btImersion->setText("Imersion");
-//    btArhakic->setText("Arhakic");
-//    btContact->setText("Contact");
-//    btCataract->setText("Catatract");
-//    btLeft->setText("Left");
-//    btRight->setText("Right");
-
-//    ScanPlot *p_scan = new ScanPlot();
-
-//    layoutDown1->addItem(vs0,          0, 0, 1, 1);
-//    layoutDown1->addWidget(btStart,    1, 0, 1, 1);
-//    layoutDown1->addWidget(btFreez,    2, 0, 1, 1);
-//    layoutDown1->addItem(vs1,          3, 0, 1, 1);
-//    layoutDown1->addWidget(btImersion, 4, 0, 1, 1);
-//    layoutDown1->addWidget(btArhakic,  5, 0, 1, 1);
-//    layoutDown1->addWidget(btContact,  6, 0, 1, 1);
-//    layoutDown1->addWidget(btCataract, 7, 0, 1, 1);
-//    layoutDown1->addItem(vs2,          8, 0, 1, 1);
-//    layoutDown1->addWidget(btLeft,     9, 0, 1, 1);
-//    layoutDown1->addWidget(btRight,    10,0, 1, 1);
-//    layoutDown1->addItem(vs3,          11,0, 1, 1);
-//    layoutDown2->addWidget( p_scan, 0, 0, 1, 1 );
-//    layoutDown3->addWidget( tbLastMeas, 0, 0, 1, 1 );
-
 }

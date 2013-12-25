@@ -94,7 +94,6 @@ void bases::adjTable(quint8 Val)
     }
     else
         pbPatientHistory->setVisible(false);
-
     twTable->setColumnPercent(columnPercent);
 }
 
