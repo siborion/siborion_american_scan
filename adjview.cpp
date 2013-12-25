@@ -20,5 +20,8 @@ void adjview::setColumnPercent(QList<int> percentList)
 
 void adjview::resizeEvent( QResizeEvent *__e )
 {
+    QResizeEvent *tmp; //заглушка
+    tmp = __e;
+    tmp->size();
     setColumnPercent(columnPercent);
 }
