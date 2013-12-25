@@ -11,12 +11,17 @@ bases::bases(QWidget *parent) :
     QHBoxLayout *topRightLayout  = new QHBoxLayout();
     QHBoxLayout *botRightLayout  = new QHBoxLayout();
 
+    QSpacerItem *buttonSpacerTop = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
     QPushButton *pbPatient = new QPushButton(tr("Patient"));
     QPushButton *pbDoctor = new QPushButton(tr("Doctor"));
     QPushButton *pbLens = new QPushButton(tr("Lens Styles"));
+    QSpacerItem *buttonSpacerBot = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+    leftLayout->addItem(buttonSpacerTop);
     leftLayout->addWidget(pbPatient);
     leftLayout->addWidget(pbDoctor);
     leftLayout->addWidget(pbLens);
+    leftLayout->addItem(buttonSpacerBot);
 
 
     QLabel    *lSearch  = new QLabel(tr("Search"));
@@ -99,7 +104,7 @@ void bases::adjCol()
     quint16 uiWidth;
     quint8 ColCount;
     ColCount = model->columnCount();
-    uiWidth = (twTable->width()-3)/ColCount;
+    uiWidth = (twTable->width()-ColCount)/ColCount;
     for(quint8 i=0; i<ColCount; i++)
     {
         twTable->setColumnWidth(i, uiWidth);
