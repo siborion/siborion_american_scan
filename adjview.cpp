@@ -3,6 +3,7 @@
 adjview::adjview(QTableView *parent) :
     QTableView(parent)
 {
+
 }
 
 void adjview::setColumnPercent(QList<int> percentList)

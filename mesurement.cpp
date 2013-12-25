@@ -33,6 +33,7 @@ mesurement::mesurement(QWidget *parent) :
     twPatient->verticalHeader()->hide();
     twPatient->horizontalHeader()->hide();
     twPatient->setMaximumHeight(120);
+    twPatient->setMinimumHeight(120);
     twPatient->setFrameShape(QFrame::NoFrame);
     twPatient->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     twPatient->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -40,6 +41,7 @@ mesurement::mesurement(QWidget *parent) :
     twLens->verticalHeader()->hide();
     twLens->horizontalHeader()->hide();
     twLens->setMaximumHeight(120);
+    twLens->setMinimumHeight(120);
     twLens->setFrameShape(QFrame::NoFrame);
     twLens->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     twLens->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -47,6 +49,7 @@ mesurement::mesurement(QWidget *parent) :
     twVelocity->verticalHeader()->hide();
     twVelocity->horizontalHeader()->hide();
     twVelocity->setMaximumHeight(120);
+    twVelocity->setMinimumHeight(120);
     twVelocity->setFrameShape(QFrame::NoFrame);
     twVelocity->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     twVelocity->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -106,11 +109,21 @@ mesurement::mesurement(QWidget *parent) :
 
 
     ScanPlot *pPlot = new ScanPlot();
+    twLens  = new adjview();
+    twLens->verticalHeader()->hide();
+    modelLens  = new QStandardItemModel();
+    modelLens->setRowCount(10);
+    modelLens->setColumnCount(5);
+    twLens->setModel(modelLens);
+    columnPercent.clear();
+    columnPercent<<20<<20<<20<<20<<20;
+    twLens->setColumnPercent(columnPercent);
 
 
 
     layoutBot->addLayout(layoutBotLeft);
     layoutBot->addWidget(pPlot);
+    layoutBot->addWidget(twLens);
     layout->addLayout(layoutTop);
     layout->addLayout(layoutBot);
 }
