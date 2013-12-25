@@ -3,7 +3,6 @@
 bases::bases(QWidget *parent) :
     QWidget(parent)
 {
-
     QHBoxLayout *Layout = new QHBoxLayout(this);
 
     QVBoxLayout *leftLayout  = new QVBoxLayout();
@@ -23,10 +22,8 @@ bases::bases(QWidget *parent) :
     leftLayout->addWidget(pbLens);
     leftLayout->addItem(buttonSpacerBot);
 
-
     QLabel    *lSearch  = new QLabel(tr("Search"));
     QLineEdit *leSearch = new QLineEdit();
-    twTable = new QTableView();
 
     model = new QStandardItemModel();
     pbAdd = new QPushButton();
@@ -34,6 +31,7 @@ bases::bases(QWidget *parent) :
     pbDel = new QPushButton();
     pbPatientHistory = new QPushButton();
 
+    twTable = new QTableView();
     twTable->setModel(model);
 
     topRightLayout->addWidget(lSearch);
@@ -45,7 +43,7 @@ bases::bases(QWidget *parent) :
     botRightLayout->addWidget(pbPatientHistory);
 
     rightLayout->addLayout(topRightLayout, 0, 0);
-    rightLayout->addWidget(twTable,          1, 0, 1, 1);
+    rightLayout->addWidget(twTable,        1, 0, 1, 1);
     rightLayout->addLayout(botRightLayout, 2, 0);
 
     Layout->addLayout(leftLayout);
@@ -96,6 +94,9 @@ void bases::adjTable(quint8 Val)
 
 void bases::resizeEvent( QResizeEvent *__e )
 {
+    QResizeEvent *tmp;  //заглушка
+    tmp = __e;          //
+    tmp->oldSize();     //
     adjCol();
 }
 
