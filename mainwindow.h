@@ -1,4 +1,5 @@
 #include <qmainwindow.h>
+#include <QTableView>
 
 class QwtPlotZoomer;
 class QwtPlotPicker;

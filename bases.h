@@ -11,6 +11,7 @@
 #include <QLineEdit>
 #include <QStandardItemModel>
 #include <QResizeEvent>
+#include <adjview.h>
 
 enum {enPatient, enDoctor, enLens};
 
@@ -27,16 +28,13 @@ public slots:
 private:
     void adjCol();
 
-    QTableView *twTable;
+    adjview *twTable;
     QPushButton *pbAdd;
     QPushButton *pbDel;
     QPushButton *pbEdit;
     QPushButton *pbPatientHistory;
     QStandardItemModel *model;
     quint8 TypeBase;
-
-protected:
-void resizeEvent( QResizeEvent *__e );
 
 private slots:
     void adjTable(quint8);

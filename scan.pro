@@ -33,13 +33,15 @@ SOURCES += main.cpp\
 	panel.cpp\
         scanplot.cpp\
         mesurement.cpp\
-    bases.cpp
+    bases.cpp \
+    adjview.cpp
 
 
 HEADERS  += mainwindow.h\
 	panel.h\
         scanplot.h\
 	mesurement.h \
-    bases.h
+    bases.h \
+    adjview.h
 
 #FORMS    += mainwindow.ui

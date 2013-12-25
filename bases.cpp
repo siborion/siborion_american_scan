@@ -31,7 +31,7 @@ bases::bases(QWidget *parent) :
     pbDel = new QPushButton();
     pbPatientHistory = new QPushButton();
 
-    twTable = new QTableView();
+    twTable = new adjview();
     twTable->setModel(model);
 
     topRightLayout->addWidget(lSearch);
@@ -60,19 +60,25 @@ void bases::adjTable(quint8 Val)
 {
     QStringList lst;
     QStringList lstButton;
+    QList<int>  columnPercent;
+
+    columnPercent.clear();
     TypeBase = Val;
     switch (TypeBase)
     {
     case enPatient:
+        columnPercent   <<       5        <<      20        <<      20       <<       20        <<     35;
         lst<<tr("Ref.№")<<tr("Patient ID")<<tr("First Name")<<tr("Last Name")<<tr("Doctor Name")<<tr("Notes");
         lstButton<<tr("Add Patient")<<tr("Edit Patient")<<tr("Delete Patient")<<tr("Patient History");
         break;
     case enDoctor:
-        lst<<tr("Doctor Id")<<tr("First Name")<<tr("Last Name")<<tr("Notes");
+        columnPercent   <<       5        <<      30        <<      30       <<     35;
+        lst             <<tr("Doctor Id") <<tr("First Name")<<tr("Last Name")<<tr("Notes");
         lstButton<<tr("Add Doctor")<<tr("Edit Doctor")<<tr("Delete Doctor");
         break;
     case enLens:
-        lst<<tr("Lens Name")<<tr("Mfg Name")<<tr("Mfg A_Const")<<tr("Mfg ACD")<<tr("Mfg SF")<<tr("Hoffer ACD");
+        columnPercent   <<       5       <<      20      <<      20         <<     20    <<      20    <<      15;
+        lst             <<tr("Lens Name")<<tr("Mfg Name")<<tr("Mfg A_Const")<<tr("Mfg ACD")<<tr("Mfg SF")<<tr("Hoffer ACD");
         lstButton<<tr("Add Lens")<<tr("Edit Lens")<<tr("Delete Lens");
         break;
     }
@@ -89,27 +95,7 @@ void bases::adjTable(quint8 Val)
     else
         pbPatientHistory->setVisible(false);
 
-    adjCol();
-}
-
-void bases::resizeEvent( QResizeEvent *__e )
-{
-    QResizeEvent *tmp;  //заглушка
-    tmp = __e;          //
-    tmp->oldSize();     //
-    adjCol();
-}
-
-void bases::adjCol()
-{
-    quint16 uiWidth;
-    quint8 ColCount;
-    ColCount = model->columnCount();
-    uiWidth = (twTable->width()-ColCount)/ColCount;
-    for(quint8 i=0; i<ColCount; i++)
-    {
-        twTable->setColumnWidth(i, uiWidth);
-    }
+    twTable->setColumnPercent(columnPercent);
 }
 
 void bases::changeBasePatient()
