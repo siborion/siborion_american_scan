@@ -4,12 +4,12 @@ mesurement::mesurement(QWidget *parent) :
     QWidget(parent)
 {
     QList<int> columnPercent;
+    QStringList lst;
 
     QVBoxLayout *layout = new QVBoxLayout(this);
     QHBoxLayout *layoutTop = new QHBoxLayout();
     QHBoxLayout *layoutBot = new QHBoxLayout();
     QVBoxLayout *layoutBotLeft = new QVBoxLayout();
-
 
 //------------------------------------ TableView
     twPatient  = new adjview();
@@ -109,21 +109,28 @@ mesurement::mesurement(QWidget *parent) :
 
 
     ScanPlot *pPlot = new ScanPlot();
-    twLens  = new adjview();
-    twLens->verticalHeader()->hide();
-    modelLens  = new QStandardItemModel();
-    modelLens->setRowCount(10);
-    modelLens->setColumnCount(5);
-    twLens->setModel(modelLens);
+
+    twMeas  = new adjview();
+    twMeas->verticalHeader()->hide();
+    modelMeas  = new QStandardItemModel();
+    modelMeas->setRowCount(10);
+    modelMeas->setColumnCount(6);
+    twMeas->setModel(modelMeas);
+    lst.clear();
     columnPercent.clear();
-    columnPercent<<20<<20<<20<<20<<20;
-    twLens->setColumnPercent(columnPercent);
+    columnPercent<<10      <<30            <<15      <<15       <<15      <<15;
+    lst          <<tr("No")<<tr("AveVelAl")<<tr("AL")<<tr("ACD")<<tr("LT")<<tr("VIT");
+    modelMeas->setHorizontalHeaderLabels(lst);
+    twMeas->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    twMeas->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    twMeas->setMaximumHeight(325);
+    twMeas->setMinimumHeight(325);
+    twMeas->setColumnPercent(columnPercent);
 
 
-
-    layoutBot->addLayout(layoutBotLeft);
-    layoutBot->addWidget(pPlot);
-    layoutBot->addWidget(twLens);
+    layoutBot->addLayout(layoutBotLeft,0);
+    layoutBot->addWidget(pPlot,1);
+    layoutBot->addWidget(twMeas,0);
     layout->addLayout(layoutTop);
     layout->addLayout(layoutBot);
 }

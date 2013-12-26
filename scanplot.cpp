@@ -10,6 +10,11 @@ ScanPlot::ScanPlot(QWidget *parent) :
         QwtPlot *q_plot = new QwtPlot(this);
         QwtPlotCurve *curve = new QwtPlotCurve();
 
+        q_plot->setAxisScale(QwtPlot::xBottom, 0, 32);
+        q_plot->setAxisScale(QwtPlot::yLeft,   0, 0);
+        q_plot->setAxisScale(QwtPlot::yRight,  0, 0);
+//        q_plot->setAxisTitle(QwtPlot::xBottom, "1111");
+
         canvas.setBorderRadius( 10 );
         q_plot->setCanvas(&canvas);
         q_plot->setCanvasBackground( QColor( "MidnightBlue" ) );
@@ -35,15 +40,15 @@ ScanPlot::ScanPlot(QWidget *parent) :
         mX.setLinePen( Qt::red, 0, Qt::DashDotLine );
         mX.setXValue( 0.0);
         mX.attach( q_plot );
-
-    d_curve1 = new QwtPlotCurve( "Amplitude" );
-    d_curve1->setRenderHint( QwtPlotItem::RenderAntialiased );
-    d_curve1->setPen( Qt::yellow );
-    d_curve1->setLegendAttribute( QwtPlotCurve::LegendShowLine );
-    d_curve1->setYAxis( QwtPlot::yLeft );
-    d_curve1->attach( q_plot );
-    d_curve1->setSamples(x,y,1000);
-
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//    d_curve1 = new QwtPlotCurve();
+//    d_curve1->setRenderHint( QwtPlotItem::RenderAntialiased );
+//    d_curve1->setPen( Qt::yellow );
+//    d_curve1->setLegendAttribute( QwtPlotCurve::LegendShowLine );
+//    d_curve1->setYAxis( QwtPlot::yLeft );
+//    d_curve1->attach( q_plot );
+//    d_curve1->setSamples(x,y,1000);
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     QwtSymbol *pSym = new QwtSymbol;
     pSym->setStyle(QwtSymbol::Ellipse);

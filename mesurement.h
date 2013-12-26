@@ -21,9 +21,11 @@ private:
     adjview *twPatient;
     adjview *twLens;
     adjview *twVelocity;
+    adjview *twMeas;
     QStandardItemModel *modelPatient;
     QStandardItemModel *modelLens;
     QStandardItemModel *modelVelocity;
+    QStandardItemModel *modelMeas;
 
 signals:
 
