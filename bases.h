@@ -2,8 +2,7 @@
 #define BASES_H
 
 #include <QWidget>
-#include <QVBoxLayout>
-#include <QVBoxLayout>
+//#include <QVBoxLayout>
 #include <QGridLayout>
 #include <QPushButton>
 #include <QTableView>
@@ -12,6 +11,7 @@
 #include <QStandardItemModel>
 #include <QResizeEvent>
 #include <adjview.h>
+#include <patient.h>
 
 enum {enPatient, enDoctor, enLens};
 
@@ -41,6 +41,9 @@ private slots:
     void changeBasePatient();
     void changeBaseDoctor();
     void changeBaseLens();
+    void Add();
+    void Edit();
+    void Del();
 
 };
 

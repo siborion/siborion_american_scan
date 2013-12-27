@@ -34,7 +34,8 @@ SOURCES += main.cpp\
         scanplot.cpp\
         mesurement.cpp\
     bases.cpp \
-    adjview.cpp
+    adjview.cpp \
+    patient.cpp
 
 
 HEADERS  += mainwindow.h\
@@ -42,6 +43,7 @@ HEADERS  += mainwindow.h\
         scanplot.h\
 	mesurement.h \
     bases.h \
-    adjview.h
+    adjview.h \
+    patient.h
 
 #FORMS    += mainwindow.ui
