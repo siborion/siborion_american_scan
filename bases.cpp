@@ -55,7 +55,8 @@ bases::bases(QWidget *parent) :
     connect(pbDoctor, SIGNAL(pressed()), SLOT(changeBaseDoctor()));
     connect(pbLens, SIGNAL(pressed()), SLOT(changeBaseLens()));
 
-    connect(pbAdd, SIGNAL(pressed()), SLOT(Add()));
+    connect(pbAdd,  SIGNAL(pressed()), SLOT(Add()));
+    connect(pbEdit, SIGNAL(pressed()), SLOT(Add()));
 }
 
 void bases::adjTable(quint8 Val)
@@ -126,7 +127,12 @@ void bases::Add()
     }
     if(TypeBase==enDoctor)
     {
-        patient *pPatient1 = new patient();
+        doctor *pDoctor = new doctor();
+        if(pDoctor->exec() == QDialog::Accepted)
+        {
+
+        }
+        delete pDoctor;
     }
 
 //    switch (TypeBase)

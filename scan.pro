@@ -35,7 +35,8 @@ SOURCES += main.cpp\
         mesurement.cpp\
     bases.cpp \
     adjview.cpp \
-    patient.cpp
+    patient.cpp \
+    doctor.cpp
 
 
 HEADERS  += mainwindow.h\
@@ -44,6 +45,7 @@ HEADERS  += mainwindow.h\
 	mesurement.h \
     bases.h \
     adjview.h \
-    patient.h
+    patient.h \
+    doctor.h
 
 #FORMS    += mainwindow.ui

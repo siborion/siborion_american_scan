@@ -10,6 +10,7 @@
 #include <QTextEdit>
 #include <QComboBox>
 #include <QFrame>
+#include <QSpacerItem>
 
 class patient : public QDialog
 {

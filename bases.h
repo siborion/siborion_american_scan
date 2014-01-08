@@ -12,6 +12,7 @@
 #include <QResizeEvent>
 #include <adjview.h>
 #include <patient.h>
+#include <doctor.h>
 
 enum {enPatient, enDoctor, enLens};
 
