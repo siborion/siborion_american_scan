@@ -134,6 +134,15 @@ void bases::Add()
         }
         delete pDoctor;
     }
+    if(TypeBase==enLens)
+    {
+        lens *pLens = new lens();
+        if(pLens->exec() == QDialog::Accepted)
+        {
+
+        }
+        delete pLens;
+    }
 
 //    switch (TypeBase)
 //    {

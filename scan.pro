@@ -36,7 +36,8 @@ SOURCES += main.cpp\
     bases.cpp \
     adjview.cpp \
     patient.cpp \
-    doctor.cpp
+    doctor.cpp \
+    lens.cpp
 
 
 HEADERS  += mainwindow.h\
@@ -46,6 +47,7 @@ HEADERS  += mainwindow.h\
     bases.h \
     adjview.h \
     patient.h \
-    doctor.h
+    doctor.h \
+    lens.h
 
 #FORMS    += mainwindow.ui
