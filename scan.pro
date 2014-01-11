@@ -4,6 +4,9 @@
 #
 #-------------------------------------------------
 
+QMAKE_CXXFLAGS += -std=gnu++11
+
+
 QT       += core gui
 QT	 += serialport
 
@@ -37,7 +40,8 @@ SOURCES += main.cpp\
     adjview.cpp \
     patient.cpp \
     doctor.cpp \
-    lens.cpp
+    lens.cpp \
+    calculator.cpp
 
 
 HEADERS  += mainwindow.h\
@@ -48,6 +52,7 @@ HEADERS  += mainwindow.h\
     adjview.h \
     patient.h \
     doctor.h \
-    lens.h
+    lens.h \
+    calculator.h
 
 #FORMS    += mainwindow.ui

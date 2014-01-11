@@ -3,6 +3,8 @@
 doctor::doctor(QWidget *parent) :
     QDialog(parent)
 {
+    setMinimumWidth(350);
+
     QList<int> columnPercent;
     QStringList lst;
 
@@ -21,10 +23,18 @@ doctor::doctor(QWidget *parent) :
     twDoctor->setFrameShape(QFrame::NoFrame);
     twDoctor->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     twDoctor->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
     columnPercent.clear();
     columnPercent<<50<<50;
     twDoctor->setColumnPercent(columnPercent);
-//----------------------------------------------------------------
+
+    for(quint8 i=0; i<4; i++)
+    {
+        modelDoctor->setItem(i, 0, new QStandardItem(baseMap[i][0]));
+        modelDoctor->item   (i, 0)->setBackground(Qt::lightGray);
+        modelDoctor->item   (i, 0)->setEditable(false);
+    }
+    //----------------------------------------------------------------
     QGroupBox   *gbFormula     = new QGroupBox("Primary Formula");
     QGridLayout *formulaLayout = new QGridLayout(gbFormula);
     QCheckBox   *cbSrk2          = new QCheckBox(tr("SRK II"));

@@ -16,17 +16,24 @@ class doctor : public QDialog
     Q_OBJECT
 public:
     explicit doctor(QWidget *parent = 0);
+    QStandardItemModel *modelDoctor;
+    QStandardItemModel *modelLens;
+    QString baseMap[4][2] = {
+        {"Doctor ID",  "doctorId"},
+        {"First Name", "firstName"},
+        {"Last Name",  "lastName"},
+        {"Note_", "Note"}
+        };
 
 signals:
 
 private:
     adjview *twDoctor;
-    QStandardItemModel *modelDoctor;
     adjview *twLens;
-    QStandardItemModel *modelLens;
 
 public slots:
 
 };
+
 
 #endif // DOCTOR_H

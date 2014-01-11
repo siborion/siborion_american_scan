@@ -27,6 +27,26 @@ private:
     QStandardItemModel *modelVelocity;
     QStandardItemModel *modelMeas;
 
+    QString baseMapPatient[4] = {
+        "Patient ID",
+        "Patient Name",
+        "Date", 
+        "Doctor Name"
+        };
+
+    QString baseMapLens[4] = {
+        "Axial Length As: ACD+LT+VIT",
+        "ACD @ 1532 m/sec",
+        "LT @ 1641 m/sec",
+        "VIT @ 1532 m/sec"
+        };
+
+    QString baseMapVelocity[3] = {
+        "AL @ Ave. Velocity 1550 m/sec",
+        "Average",
+        "SD"
+        };
+
 signals:
 
 public slots:

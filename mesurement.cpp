@@ -23,11 +23,11 @@ mesurement::mesurement(QWidget *parent) :
     twPatient->setColumnPercent(columnPercent);
 
     columnPercent.clear();
-    columnPercent<<33<<33<<34;
+    columnPercent<<60<<20<<20;
     twLens->setColumnPercent(columnPercent);
 
     columnPercent.clear();
-    columnPercent<<50<<50;
+    columnPercent<<80<<20;
     twVelocity->setColumnPercent(columnPercent);
 
     twPatient->verticalHeader()->hide();
@@ -65,7 +65,7 @@ mesurement::mesurement(QWidget *parent) :
 
     modelPatient->setRowCount(4);
     modelLens->setRowCount(4);
-    modelVelocity->setRowCount(4);
+    modelVelocity->setRowCount(3);
 
     twPatient->setModel(modelPatient);
     twLens->setModel(modelLens);
@@ -77,7 +77,32 @@ mesurement::mesurement(QWidget *parent) :
     layoutTop->addItem(vs1);
     layoutTop->addWidget(twVelocity);
 
+    for(quint8 i=0; i<4; i++)
+    {
+        modelPatient->setItem(i, 0, new QStandardItem(baseMapPatient[i]));
+        modelPatient->item   (i, 0)->setBackground(Qt::lightGray);
+        modelPatient->item   (i, 0)->setEditable(false);
+    }
+
+    for(quint8 i=0; i<4; i++)
+    {
+        modelLens->setItem(i, 0, new QStandardItem(baseMapLens[i]));
+        modelLens->item   (i, 0)->setBackground(Qt::lightGray);
+        modelLens->item   (i, 0)->setEditable(false);
+        modelLens->setItem(i, 2, new QStandardItem("mm"));
+        modelLens->item   (i, 2)->setBackground(Qt::lightGray);
+        modelLens->item   (i, 2)->setEditable(false);
+    }
+
+    for(quint8 i=0; i<3; i++)
+    {
+        modelVelocity->setItem(i, 0, new QStandardItem(baseMapVelocity[i]));
+        modelVelocity->item   (i, 0)->setBackground(Qt::lightGray);
+        modelVelocity->item   (i, 0)->setEditable(false);
+    }
+
 //----------------------------------------- Button
+    QSpacerItem *hs = new QSpacerItem(50, 5, QSizePolicy::Expanding, QSizePolicy::Expanding);
     QPushButton *pbOd = new QPushButton(tr("OD"));
     QSpacerItem *hs0 = new QSpacerItem(50, 5, QSizePolicy::Expanding, QSizePolicy::Expanding);
     QPushButton *pbMeasure = new QPushButton(tr("Measure"));
@@ -91,7 +116,10 @@ mesurement::mesurement(QWidget *parent) :
     QSpacerItem *hs3 = new QSpacerItem(50, 5, QSizePolicy::Expanding, QSizePolicy::Expanding);
     QPushButton *pbCataract = new QPushButton(tr("Cataract"));
     QPushButton *pbAphakic = new QPushButton(tr("Aphakic"));
+    QSpacerItem *hs4 = new QSpacerItem(50, 5, QSizePolicy::Expanding, QSizePolicy::Expanding);
+
     layoutBotLeft->setSpacing(0);
+    layoutBotLeft->addItem(hs);
     layoutBotLeft->addWidget(pbOd);
     layoutBotLeft->addItem(hs0);
     layoutBotLeft->addWidget(pbMeasure);
@@ -105,7 +133,7 @@ mesurement::mesurement(QWidget *parent) :
     layoutBotLeft->addItem(hs3);
     layoutBotLeft->addWidget(pbCataract);
     layoutBotLeft->addWidget(pbAphakic);
-
+    layoutBotLeft->addItem(hs4);
 
 
     ScanPlot *pPlot = new ScanPlot();

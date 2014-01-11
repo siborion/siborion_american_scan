@@ -130,7 +130,7 @@ void bases::Add()
         doctor *pDoctor = new doctor();
         if(pDoctor->exec() == QDialog::Accepted)
         {
-
+            qDebug() << pDoctor->modelDoctor->item(0,1)->text();
         }
         delete pDoctor;
     }

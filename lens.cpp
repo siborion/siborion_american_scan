@@ -25,11 +25,18 @@ lens::lens(QWidget *parent) :
     twLens->setColumnPercent(columnPercent);
 
 //    modelLens->item(1,1)->setText("asdfasdf");
-    modelLens->setItem(1, 1, new QStandardItem("khbkh"));
+//    modelLens->setItem(1, 1, new QStandardItem("khbkh"));
+//    twLens->setStyleSheet("QTableView { border: none;"
+//                                         "background-color: #FFDE21;"
+//                                         "selection-background-color: #109}");
+//    modelLens->item(1,1)->setBackground(Qt::green);
 
-    twLens->setStyleSheet("QTableView { border: none;"
-                                         "background-color: #FFDE21;"
-                                         "selection-background-color: #109}");
+    for(quint8 i=0; i<17; i++)
+    {
+        modelLens->setItem(i, 0, new QStandardItem(baseMap[i][0]));
+        modelLens->item   (i, 0)->setBackground(Qt::lightGray);
+        modelLens->item   (i, 0)->setEditable(false);
+    }
 
     QPushButton *pbCancel = new QPushButton(tr("Cancel"));
     QPushButton *pbOk = new QPushButton(tr("Ok"));

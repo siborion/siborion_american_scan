@@ -4,6 +4,8 @@
 #include <qtabwidget.h>
 #include "scanplot.h"
 #include <mesurement.h>
+#include <calculator.h>
+
 
 class QComboBox;
 class SpinBox;
@@ -25,6 +27,7 @@ private:
     QWidget *createOnlineTab( QWidget * );
     QWidget *createBaseTab( QWidget * );
     mesurement *createMesTab( QWidget * );
+    calculator *createCalculatorTab( QWidget * );
 };
 
 #endif

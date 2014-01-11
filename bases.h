@@ -2,7 +2,7 @@
 #define BASES_H
 
 #include <QWidget>
-//#include <QVBoxLayout>
+#include <QDebug>
 #include <QGridLayout>
 #include <QPushButton>
 #include <QTableView>
