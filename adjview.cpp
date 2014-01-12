@@ -6,6 +6,21 @@ adjview::adjview(QTableView *parent) :
 
 }
 
+adjview::adjview(int row, int col, QList<int> columnPercent, QTableView *parent) :
+    QTableView(parent)
+{
+    QStandardItemModel *model = new QStandardItemModel();
+    model->setRowCount(row);
+    model->setColumnCount(col);
+    setModel(model);
+    verticalHeader()->hide();
+    horizontalHeader()->hide();
+    setFrameShape(QFrame::NoFrame);
+    setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    setColumnPercent(columnPercent);
+}
+
 void adjview::setColumnPercent(QList<int> percentList)
 {
     quint16 viewWidht;

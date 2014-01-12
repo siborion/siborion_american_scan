@@ -101,6 +101,24 @@ calculator::calculator(QWidget *parent) :
     layoutGroupBox->addWidget(rbHofferQ);
     layoutGroupBox->addWidget(rbHolladay);
 
-
     layout->addWidget(groupBox);
+
+
+//    modelCalculator = new QStandardItemModel();
+//    modelCalculator->setRowCount(4);
+//    modelCalculator->setColumnCount(2);
+    columnPercent.clear();
+    columnPercent<<20<<80;
+    twCalculator = new adjview(4, 2, columnPercent);
+//    twCalculator->setModel(modelCalculator);
+//    twCalculator->verticalHeader()->hide();
+//    twCalculator->horizontalHeader()->hide();
+//    twCalculator->setFrameShape(QFrame::NoFrame);
+//    twCalculator->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+//    twCalculator->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+//    twCalculator->setColumnPercent(columnPercent);
+//    twCalculator->setMaximumHeight(120);
+
+    layout->addWidget(twCalculator);
+
 }

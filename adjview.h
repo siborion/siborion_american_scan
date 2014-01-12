@@ -3,6 +3,8 @@
 
 #include <QTableView>
 #include <QResizeEvent>
+#include <QStandardItemModel>
+#include <QHeaderView>
 
 class adjview : public QTableView
 {
@@ -11,6 +13,7 @@ private:
     QList<int> columnPercent;
 public:
     explicit adjview(QTableView *parent = 0);
+    explicit adjview(int row, int col, QList<int> columnPercent, QTableView *parent = 0);
     void setColumnPercent(QList<int>);
 
 signals:

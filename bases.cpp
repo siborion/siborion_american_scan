@@ -14,6 +14,9 @@ bases::bases(QWidget *parent) :
     QPushButton *pbPatient = new QPushButton(tr("Patient"));
     QPushButton *pbDoctor = new QPushButton(tr("Doctor"));
     QPushButton *pbLens = new QPushButton(tr("Lens Styles"));
+    pbPatient->setMinimumHeight(50);
+    pbDoctor->setMinimumHeight(50);
+    pbLens->setMinimumHeight(50);
     QSpacerItem *buttonSpacerBot = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
     leftLayout->addItem(buttonSpacerTop);

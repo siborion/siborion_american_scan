@@ -27,7 +27,8 @@ private:
     QStandardItemModel *modelK;
     adjview *twA;
     QStandardItemModel *modelA;
-
+    adjview *twCalculator;
+    QStandardItemModel *modelCalculator;
     
 public slots:
     
