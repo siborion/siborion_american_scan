@@ -6,7 +6,7 @@ adjview::adjview(QTableView *parent) :
 
 }
 
-adjview::adjview(int row, int col, QList<int> columnPercent, QTableView *parent) :
+adjview::adjview(int row, int col, QList<int> columnPercent, QTableView *parent):
     QTableView(parent)
 {
     QStandardItemModel *model = new QStandardItemModel();
@@ -19,6 +19,23 @@ adjview::adjview(int row, int col, QList<int> columnPercent, QTableView *parent)
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setColumnPercent(columnPercent);
+}
+
+adjview::adjview(int row, QStringList col, QList<int> columnPercent, QTableView *parent):
+    QTableView(parent)
+{
+    QStandardItemModel *model = new QStandardItemModel();
+//    model  = new QStandardItemModel();
+    model->setRowCount(row);
+    model->setColumnCount(col.count());
+    setModel(model);
+    verticalHeader()->hide();
+    setFrameShape(QFrame::NoFrame);
+    setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    setColumnPercent(columnPercent);
+    model->setHorizontalHeaderLabels(col);
+//    adjview(row, 4, columnPercent);
 }
 
 void adjview::setColumnPercent(QList<int> percentList)
