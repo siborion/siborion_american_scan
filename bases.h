@@ -40,9 +40,9 @@ private:
 
 private slots:
     void adjTable(quint8);
-    void changeBasePatient();
-    void changeBaseDoctor();
-    void changeBaseLens();
+    void changeBasePatient(bool Val);
+    void changeBaseDoctor(bool Val);
+    void changeBaseLens(bool Val);
     void Add();
     void Edit();
     void Del();

@@ -15,22 +15,30 @@ calculator::calculator(QWidget *parent) :
     columnPercent.clear();
     columnPercent<<50<<50;
     twName = new adjview(3, 2, columnPercent);
-    twName->setMaximumHeight(90);
+    twName->verticalHeader()->setDefaultSectionSize(20);
+    twName->setMinimumHeight(60);
+    twName->setMaximumHeight(60);
 //-------------------------------
     columnPercent.clear();
     columnPercent<<15<<15<<15<<15<<15<<25;
     twLens = new adjview(8, 6, columnPercent);
-    twLens->setMaximumHeight(240);
+    twLens->verticalHeader()->setDefaultSectionSize(20);
+    twLens->setMinimumHeight(160);
+    twLens->setMaximumHeight(160);
 //-------------------------------
     columnPercent.clear();
     columnPercent<<50<<50;
     twK = new adjview(4, 2, columnPercent);
-    twK->setMaximumHeight(120);
+    twK->verticalHeader()->setDefaultSectionSize(20);
+    twK->setMinimumHeight(80);
+    twK->setMaximumHeight(80);
 //-------------------------------
     columnPercent.clear();
     columnPercent<<50<<50;
     twA = new adjview(4, 2, columnPercent);
-    twA->setMaximumHeight(120);
+    twA->verticalHeader()->setDefaultSectionSize(20);
+    twA->setMinimumHeight(80);
+    twA->setMaximumHeight(80);
 
     layoutTopLeftDown->addWidget(twK, 0, Qt::AlignTop);
     layoutTopLeftDown->addWidget(twA, 0, Qt::AlignTop);
@@ -55,9 +63,22 @@ calculator::calculator(QWidget *parent) :
     layout->addWidget(groupBox);
 //--------------------------------
     columnPercent.clear();
-    columnPercent<<20<<80;
-    twCalculator = new adjview(4, 2, columnPercent);
-  
+    columnPercent<<10<<10<<10<<10<<10<<10<<10<<10<<10<<10;
+    twCalculator = new adjview(10, 10, columnPercent);
+    twCalculator->verticalHeader()->setDefaultSectionSize(20);
+    twCalculator->setMinimumHeight(200);
+    twCalculator->setMaximumHeight(200);
     layout->addWidget(twCalculator);
+
+//--------------------------------
+    columnPercent.clear();
+    columnPercent<<20<<20<<20<<20<<20;
+    twCalculator1 = new adjview(4, 5, columnPercent);
+    twCalculator1->verticalHeader()->setDefaultSectionSize(20);
+    twCalculator1->setMinimumHeight(80);
+    twCalculator1->setMaximumHeight(80);
+
+
+    layout->addWidget(twCalculator1);
 
 }

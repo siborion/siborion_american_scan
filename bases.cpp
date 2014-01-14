@@ -10,20 +10,42 @@ bases::bases(QWidget *parent) :
     QHBoxLayout *topRightLayout  = new QHBoxLayout();
     QHBoxLayout *botRightLayout  = new QHBoxLayout();
 
-    QSpacerItem *buttonSpacerTop = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
-    QPushButton *pbPatient = new QPushButton(tr("Patient"));
-    QPushButton *pbDoctor = new QPushButton(tr("Doctor"));
-    QPushButton *pbLens = new QPushButton(tr("Lens Styles"));
-    pbPatient->setMinimumHeight(50);
-    pbDoctor->setMinimumHeight(50);
-    pbLens->setMinimumHeight(50);
-    QSpacerItem *buttonSpacerBot = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+//    QSpacerItem *buttonSpacerTop = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+//    QPushButton *pbPatient = new QPushButton(tr("Patient"));
+//    QPushButton *pbDoctor = new QPushButton(tr("Doctor"));
+//    QPushButton *pbLens = new QPushButton(tr("Lens Styles"));
+//    pbPatient->setMinimumHeight(50);
+//    pbDoctor->setMinimumHeight(50);
+//    pbLens->setMinimumHeight(50);
+//    QSpacerItem *buttonSpacerBot = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
-    leftLayout->addItem(buttonSpacerTop);
-    leftLayout->addWidget(pbPatient);
-    leftLayout->addWidget(pbDoctor);
-    leftLayout->addWidget(pbLens);
-    leftLayout->addItem(buttonSpacerBot);
+//    leftLayout->addItem(buttonSpacerTop);
+//    leftLayout->addWidget(pbPatient);
+//    leftLayout->addWidget(pbDoctor);
+//    leftLayout->addWidget(pbLens);
+
+//    QGroupBox *gbSelect = new QGroupBox();
+//    QVBoxLayout *groupBoxLayout  = new QVBoxLayout(gbSelect);
+//    QRadioButton *rbPatient = new QRadioButton(tr("Patient"), gbSelect);
+//    QRadioButton *rbDoctor  = new QRadioButton(tr("Doctor"), gbSelect);
+//    QRadioButton *rbLens    = new QRadioButton(tr("Lens Styles"), gbSelect);
+//    groupBoxLayout->addWidget(rbPatient);
+//    groupBoxLayout->addWidget(rbDoctor);
+//    groupBoxLayout->addWidget(rbLens);
+//    leftLayout->addWidget(gbSelect);
+
+//    leftLayout->addItem(buttonSpacerBot);
+
+
+    QGroupBox *gbSelect = new QGroupBox();
+    QHBoxLayout *groupBoxLayout  = new QHBoxLayout(gbSelect);
+    QRadioButton *rbPatient = new QRadioButton(tr("Patient"), gbSelect);
+    rbPatient->setChecked(true);
+    QRadioButton *rbDoctor  = new QRadioButton(tr("Doctor"), gbSelect);
+    QRadioButton *rbLens    = new QRadioButton(tr("Lens Styles"), gbSelect);
+    groupBoxLayout->addWidget(rbPatient);
+    groupBoxLayout->addWidget(rbDoctor);
+    groupBoxLayout->addWidget(rbLens);
 
     QLabel    *lSearch  = new QLabel(tr("Search"));
     QLineEdit *leSearch = new QLineEdit();
@@ -37,6 +59,7 @@ bases::bases(QWidget *parent) :
     twTable = new adjview();
     twTable->setModel(model);
 
+    topRightLayout->addWidget(gbSelect);
     topRightLayout->addWidget(lSearch);
     topRightLayout->addWidget(leSearch);
 
@@ -54,9 +77,12 @@ bases::bases(QWidget *parent) :
 
     adjTable(enPatient);
 
-    connect(pbPatient, SIGNAL(pressed()), SLOT(changeBasePatient()));
-    connect(pbDoctor, SIGNAL(pressed()), SLOT(changeBaseDoctor()));
-    connect(pbLens, SIGNAL(pressed()), SLOT(changeBaseLens()));
+//    connect(pbPatient, SIGNAL(pressed()), SLOT(changeBasePatient()));
+//    connect(pbDoctor, SIGNAL(pressed()), SLOT(changeBaseDoctor()));
+//    connect(pbLens, SIGNAL(pressed()), SLOT(changeBaseLens()));
+    connect(rbPatient, SIGNAL(clicked(bool)), SLOT(changeBasePatient(bool)));
+    connect(rbDoctor, SIGNAL(clicked(bool)), SLOT(changeBaseDoctor(bool)));
+    connect(rbLens, SIGNAL(clicked(bool)), SLOT(changeBaseLens(bool)));
 
     connect(pbAdd,  SIGNAL(pressed()), SLOT(Add()));
     connect(pbEdit, SIGNAL(pressed()), SLOT(Add()));
@@ -73,17 +99,17 @@ void bases::adjTable(quint8 Val)
     switch (TypeBase)
     {
     case enPatient:
-        columnPercent   <<       5        <<      20        <<      20       <<       20        <<     35;
+        columnPercent<<10   <<   10        <<      20        <<      20       <<       20        <<     20;
         lst<<tr("Ref.№")<<tr("Patient ID")<<tr("First Name")<<tr("Last Name")<<tr("Doctor Name")<<tr("Notes");
         lstButton<<tr("Add Patient")<<tr("Edit Patient")<<tr("Delete Patient")<<tr("Patient History");
         break;
     case enDoctor:
-        columnPercent   <<       5        <<      30        <<      30       <<     35;
+        columnPercent   <<       10        <<      30        <<      30       <<     30;
         lst             <<tr("Doctor Id") <<tr("First Name")<<tr("Last Name")<<tr("Notes");
         lstButton<<tr("Add Doctor")<<tr("Edit Doctor")<<tr("Delete Doctor");
         break;
     case enLens:
-        columnPercent   <<       5       <<      20      <<      20         <<     20    <<      20    <<      15;
+        columnPercent   <<       10       <<      20      <<      20         <<     20    <<      20    <<      10;
         lst             <<tr("Lens Name")<<tr("Mfg Name")<<tr("Mfg A_Const")<<tr("Mfg ACD")<<tr("Mfg SF")<<tr("Hoffer ACD");
         lstButton<<tr("Add Lens")<<tr("Edit Lens")<<tr("Delete Lens");
         break;
@@ -103,17 +129,20 @@ void bases::adjTable(quint8 Val)
     twTable->setColumnPercent(columnPercent);
 }
 
-void bases::changeBasePatient()
+void bases::changeBasePatient(bool Val)
 {
-    adjTable(enPatient);
+    if(Val)
+        adjTable(enPatient);
 }
-void bases::changeBaseDoctor()
+void bases::changeBaseDoctor(bool Val)
 {
-    adjTable(enDoctor);
+    if(Val)
+        adjTable(enDoctor);
 }
-void bases::changeBaseLens()
+void bases::changeBaseLens(bool Val)
 {
-    adjTable(enLens);
+    if(Val)
+        adjTable(enLens);
 }
 
 

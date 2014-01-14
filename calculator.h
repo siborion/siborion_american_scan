@@ -29,7 +29,9 @@ private:
     QStandardItemModel *modelA;
     adjview *twCalculator;
     QStandardItemModel *modelCalculator;
-    
+    adjview *twCalculator1;
+    QStandardItemModel *modelCalculator1;
+
 public slots:
     
 };
