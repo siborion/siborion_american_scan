@@ -32,6 +32,25 @@ private:
     adjview *twCalculator1;
     QStandardItemModel *modelCalculator1;
 
+    QString baseMapName[3] = {
+        "Patient ID",
+        "Patient Name",
+        "Doctor Name"
+        };
+    QString baseMapK[4] = {
+        "AL",
+        "K1-Value",
+        "K2-Value",
+        "K-Value"
+        };
+    QString baseMapA[4] = {
+        "A Const",
+        "ACD",
+        "SF",
+        "Rx"
+        };
+
+
 public slots:
     
 };
