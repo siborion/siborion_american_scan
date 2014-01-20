@@ -19,6 +19,7 @@ adjview::adjview(int row, int col, QList<int> columnPercent, QTableView *parent)
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setColumnPercent(columnPercent);
+    setAlternatingRowColors(true);
 }
 
 adjview::adjview(int row, QStringList col, QList<int> columnPercent, QTableView *parent):
@@ -35,6 +36,7 @@ adjview::adjview(int row, QStringList col, QList<int> columnPercent, QTableView 
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setColumnPercent(columnPercent);
     model->setHorizontalHeaderLabels(col);
+    setAlternatingRowColors(true);
 //    adjview(row, 4, columnPercent);
 }
 

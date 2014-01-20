@@ -13,6 +13,9 @@ calculator::calculator(QWidget *parent) :
     QHBoxLayout *layoutTopLeftDown   = new QHBoxLayout();
     QHBoxLayout *layoutGroupBox      = new QHBoxLayout();
 
+//    QSpacerItem *vs0 = new QSpacerItem(20, 40, QSizePolicy::Expanding, QSizePolicy::Expanding);
+    QSpacerItem *vs1 = new QSpacerItem(20, 40, QSizePolicy::Expanding, QSizePolicy::Expanding);
+
     columnPercent.clear();
     columnPercent<<50<<50;
     twName = new adjview(3, 2, columnPercent);
@@ -73,6 +76,7 @@ calculator::calculator(QWidget *parent) :
     layoutTop->addLayout(layoutTopLeft);
     layoutTop->addWidget(twLens);
     layout->addLayout(layoutTop);
+//    layout->addItem(vs0);
     //--------------------------------
     QGroupBox *groupBox = new QGroupBox("Primary Formula");
     groupBox->setLayout(layoutGroupBox);
@@ -87,6 +91,7 @@ calculator::calculator(QWidget *parent) :
     layoutGroupBox->addWidget(rbHolladay);
 
     layout->addWidget(groupBox);
+//    layout->addItem(vs1);
     //--------------------------------
     columnPercent.clear();
     columnPercent<<10<<10<<10<<10<<10<<10<<10<<10<<10<<10;
@@ -94,6 +99,46 @@ calculator::calculator(QWidget *parent) :
     twCalculator->verticalHeader()->setDefaultSectionSize(20);
     twCalculator->setMinimumHeight(200);
     twCalculator->setMaximumHeight(200);
+    twCalculator->setSpan(0, 0, 1, 2);
+    twCalculator->setSpan(0, 2, 1, 2);
+    twCalculator->setSpan(0, 4, 1, 2);
+    twCalculator->setSpan(0, 6, 1, 2);
+    twCalculator->setSpan(0, 8, 1, 2);
+    twCalculator->setSpan(1, 0, 1, 2);
+    twCalculator->setSpan(1, 2, 1, 2);
+    twCalculator->setSpan(1, 4, 1, 2);
+    twCalculator->setSpan(1, 6, 1, 2);
+    twCalculator->setSpan(1, 8, 1, 2);
+    model = (QStandardItemModel*)twCalculator->model();
+
+    QStandardItem *ac1 = new QStandardItem("A-Const= ,00");
+    ac1->setTextAlignment(Qt::AlignRight);
+    QStandardItem *ac2 = new QStandardItem("A-Const= ,00");
+    ac2->setTextAlignment(Qt::AlignRight);
+    QStandardItem *ac3 = new QStandardItem("A-Const= ,00");
+    ac3->setTextAlignment(Qt::AlignRight);
+    QStandardItem *ac4 = new QStandardItem("A-Const= ,00");
+    ac4->setTextAlignment(Qt::AlignRight);
+    QStandardItem *ac5 = new QStandardItem("A-Const= ,00");
+    ac5->setTextAlignment(Qt::AlignRight);
+
+    model->setItem(1, 0, ac1);
+    model->setItem(1, 2, ac2);
+    model->setItem(1, 4, ac3);
+    model->setItem(1, 6, ac4);
+    model->setItem(1, 8, ac5);
+    model->setItem(2, 0, new QStandardItem("IOL"));
+    model->setItem(2, 1, new QStandardItem("REF"));
+    model->setItem(2, 2, new QStandardItem("IOL"));
+    model->setItem(2, 3, new QStandardItem("REF"));
+    model->setItem(2, 4, new QStandardItem("IOL"));
+    model->setItem(2, 5, new QStandardItem("REF"));
+    model->setItem(2, 6, new QStandardItem("IOL"));
+    model->setItem(2, 7, new QStandardItem("REF"));
+    model->setItem(2, 8, new QStandardItem("IOL"));
+    model->setItem(2, 9, new QStandardItem("REF"));
+//    model->setData()
+
     layout->addWidget(twCalculator);
 
     //--------------------------------
@@ -104,7 +149,10 @@ calculator::calculator(QWidget *parent) :
     twCalculator1->setMinimumHeight(80);
     twCalculator1->setMaximumHeight(80);
 
-
     layout->addWidget(twCalculator1);
+    layout->addItem(vs1);
+
+    mydelegate *ded = new mydelegate(true, this);
+    twCalculator->setItemDelegate(ded);
 
 }

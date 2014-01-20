@@ -9,6 +9,7 @@
 #include <QSpacerItem>
 #include <QRadioButton>
 #include <adjview.h>
+#include <mydelegate.h>
 
 class calculator : public QWidget
 {
