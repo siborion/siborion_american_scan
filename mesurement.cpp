@@ -3,6 +3,11 @@
 mesurement::mesurement(QWidget *parent) :
     QWidget(parent)
 {
+    QPalette Pal(palette());
+    Pal.setColor(QPalette::Background, Qt::gray);
+    setAutoFillBackground(true);
+    setPalette(Pal);
+
     QList<int> columnPercent;
     QStringList lst;
     QStandardItemModel *model = new QStandardItemModel();

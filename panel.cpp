@@ -14,6 +14,11 @@
 Panel::Panel( QWidget *parent ):
     QTabWidget( parent )
 {
+    QPalette Pal(palette());
+    Pal.setColor(QPalette::Background, Qt::gray);
+    setAutoFillBackground(true);
+    setPalette(Pal);
+
     setStyleSheet("QTabBar::tab { min-width: 100px; }");
     setTabPosition( QTabWidget::North );
     addTab( createBaseTab( this ), "Data Base" );

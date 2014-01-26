@@ -9,6 +9,7 @@ QMAKE_CXXFLAGS += -std=gnu++11
 
 QT       += core gui
 QT	 += serialport
+#QT       += svg
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -58,3 +59,6 @@ HEADERS  += mainwindow.h\
     mydelegate.h
 
 #FORMS    += mainwindow.ui
+
+RESOURCES += \
+    scan.qrc

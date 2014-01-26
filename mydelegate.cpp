@@ -53,7 +53,9 @@ void mydelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
                        const QModelIndex &index) const
 {
     QStyleOptionViewItem o = option;
-//    o.font.setBold(true);
+
+    if(index.row()==1)
+        o.font.setPixelSize(10);
 
     if((index.row()==0)||(index.row()==2))
         painter->fillRect(o.rect, QColor(255, 170, 255));

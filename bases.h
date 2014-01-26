@@ -14,6 +14,9 @@
 #include <patient.h>
 #include <doctor.h>
 #include <lens.h>
+//#include <QSvgRenderer>
+#include <QPainter>
+//#include "q.h"
 
 enum {enPatient, enDoctor, enLens};
 
@@ -31,12 +34,15 @@ private:
     void adjCol();
 
     adjview *twTable;
+    QPushButton *pTest;
     QPushButton *pbAdd;
     QPushButton *pbDel;
     QPushButton *pbEdit;
     QPushButton *pbPatientHistory;
     QStandardItemModel *model;
     quint8 TypeBase;
+//    QSvgWidget *tmp;
+    QString *svg;
 
 private slots:
     void adjTable(quint8);

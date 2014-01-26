@@ -31,7 +31,10 @@ private:
     adjview *twCalculator;
     QStandardItemModel *modelCalculator;
     adjview *twCalculator1;
+    adjview *twCalculator2;
+    adjview *twCalculator3;
     QStandardItemModel *modelCalculator1;
+    QFrame *frCalculator;
 
     QString baseMapName[3] = {
         "Patient ID",

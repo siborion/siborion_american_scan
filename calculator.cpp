@@ -3,6 +3,11 @@
 calculator::calculator(QWidget *parent) :
     QWidget(parent)
 {
+    QPalette Pal(palette());
+    Pal.setColor(QPalette::Background, Qt::gray);
+    setAutoFillBackground(true);
+    setPalette(Pal);
+
     QList<int> columnPercent;
     QStringList lst;
     QStandardItemModel *model;
@@ -13,8 +18,9 @@ calculator::calculator(QWidget *parent) :
     QHBoxLayout *layoutTopLeftDown   = new QHBoxLayout();
     QHBoxLayout *layoutGroupBox      = new QHBoxLayout();
 
-//    QSpacerItem *vs0 = new QSpacerItem(20, 40, QSizePolicy::Expanding, QSizePolicy::Expanding);
+    QSpacerItem *vs0 = new QSpacerItem(20, 40, QSizePolicy::Expanding, QSizePolicy::Expanding);
     QSpacerItem *vs1 = new QSpacerItem(20, 40, QSizePolicy::Expanding, QSizePolicy::Expanding);
+    QSpacerItem *vs2 = new QSpacerItem(20, 40, QSizePolicy::Expanding, QSizePolicy::Expanding);
 
     columnPercent.clear();
     columnPercent<<50<<50;
@@ -90,69 +96,98 @@ calculator::calculator(QWidget *parent) :
     layoutGroupBox->addWidget(rbHofferQ);
     layoutGroupBox->addWidget(rbHolladay);
 
+    layout->addItem(vs0);
     layout->addWidget(groupBox);
-//    layout->addItem(vs1);
+    layout->addItem(vs1);
     //--------------------------------
-    columnPercent.clear();
-    columnPercent<<10<<10<<10<<10<<10<<10<<10<<10<<10<<10;
-    twCalculator = new adjview(10, 10, columnPercent);
-    twCalculator->verticalHeader()->setDefaultSectionSize(20);
-    twCalculator->setMinimumHeight(200);
-    twCalculator->setMaximumHeight(200);
-    twCalculator->setSpan(0, 0, 1, 2);
-    twCalculator->setSpan(0, 2, 1, 2);
-    twCalculator->setSpan(0, 4, 1, 2);
-    twCalculator->setSpan(0, 6, 1, 2);
-    twCalculator->setSpan(0, 8, 1, 2);
-    twCalculator->setSpan(1, 0, 1, 2);
-    twCalculator->setSpan(1, 2, 1, 2);
-    twCalculator->setSpan(1, 4, 1, 2);
-    twCalculator->setSpan(1, 6, 1, 2);
-    twCalculator->setSpan(1, 8, 1, 2);
-    model = (QStandardItemModel*)twCalculator->model();
+//    columnPercent.clear();
+//    columnPercent<<10<<10<<10<<10<<10<<10<<10<<10<<10<<10;
+//    twCalculator = new adjview(10, 10, columnPercent);
+//    twCalculator->verticalHeader()->setDefaultSectionSize(20);
+//    twCalculator->setMinimumHeight(200);
+//    twCalculator->setMaximumHeight(200);
+//    twCalculator->setSpan(0, 0, 1, 2);
+//    twCalculator->setSpan(0, 2, 1, 2);
+//    twCalculator->setSpan(0, 4, 1, 2);
+//    twCalculator->setSpan(0, 6, 1, 2);
+//    twCalculator->setSpan(0, 8, 1, 2);
+//    twCalculator->setSpan(1, 0, 1, 2);
+//    twCalculator->setSpan(1, 2, 1, 2);
+//    twCalculator->setSpan(1, 4, 1, 2);
+//    twCalculator->setSpan(1, 6, 1, 2);
+//    twCalculator->setSpan(1, 8, 1, 2);
+//    model = (QStandardItemModel*)twCalculator->model();
 
-    QStandardItem *ac1 = new QStandardItem("A-Const= ,00");
-    ac1->setTextAlignment(Qt::AlignRight);
-    QStandardItem *ac2 = new QStandardItem("A-Const= ,00");
-    ac2->setTextAlignment(Qt::AlignRight);
-    QStandardItem *ac3 = new QStandardItem("A-Const= ,00");
-    ac3->setTextAlignment(Qt::AlignRight);
-    QStandardItem *ac4 = new QStandardItem("A-Const= ,00");
-    ac4->setTextAlignment(Qt::AlignRight);
-    QStandardItem *ac5 = new QStandardItem("A-Const= ,00");
-    ac5->setTextAlignment(Qt::AlignRight);
+//    QStandardItem *ac1 = new QStandardItem("A-Const= ,00");
+//    ac1->setTextAlignment(Qt::AlignRight);
+//    QStandardItem *ac2 = new QStandardItem("A-Const= ,00");
+//    ac2->setTextAlignment(Qt::AlignRight);
+//    QStandardItem *ac3 = new QStandardItem("A-Const= ,00");
+//    ac3->setTextAlignment(Qt::AlignRight);
+//    QStandardItem *ac4 = new QStandardItem("A-Const= ,00");
+//    ac4->setTextAlignment(Qt::AlignRight);
+//    QStandardItem *ac5 = new QStandardItem("A-Const= ,00");
+//    ac5->setTextAlignment(Qt::AlignRight);
 
-    model->setItem(1, 0, ac1);
-    model->setItem(1, 2, ac2);
-    model->setItem(1, 4, ac3);
-    model->setItem(1, 6, ac4);
-    model->setItem(1, 8, ac5);
-    model->setItem(2, 0, new QStandardItem("IOL"));
-    model->setItem(2, 1, new QStandardItem("REF"));
-    model->setItem(2, 2, new QStandardItem("IOL"));
-    model->setItem(2, 3, new QStandardItem("REF"));
-    model->setItem(2, 4, new QStandardItem("IOL"));
-    model->setItem(2, 5, new QStandardItem("REF"));
-    model->setItem(2, 6, new QStandardItem("IOL"));
-    model->setItem(2, 7, new QStandardItem("REF"));
-    model->setItem(2, 8, new QStandardItem("IOL"));
-    model->setItem(2, 9, new QStandardItem("REF"));
+//    model->setItem(1, 0, ac1);
+//    model->setItem(1, 2, ac2);
+//    model->setItem(1, 4, ac3);
+//    model->setItem(1, 6, ac4);
+//    model->setItem(1, 8, ac5);
+//    model->setItem(2, 0, new QStandardItem("IOL"));
+//    model->setItem(2, 1, new QStandardItem("REF"));
+//    model->setItem(2, 2, new QStandardItem("IOL"));
+//    model->setItem(2, 3, new QStandardItem("REF"));
+//    model->setItem(2, 4, new QStandardItem("IOL"));
+//    model->setItem(2, 5, new QStandardItem("REF"));
+//    model->setItem(2, 6, new QStandardItem("IOL"));
+//    model->setItem(2, 7, new QStandardItem("REF"));
+//    model->setItem(2, 8, new QStandardItem("IOL"));
+//    model->setItem(2, 9, new QStandardItem("REF"));
 //    model->setData()
 
-    layout->addWidget(twCalculator);
-
+//    layout->addWidget(twCalculator);
     //--------------------------------
-    columnPercent.clear();
-    columnPercent<<20<<20<<20<<20<<20;
-    twCalculator1 = new adjview(4, 5, columnPercent);
-    twCalculator1->verticalHeader()->setDefaultSectionSize(20);
-    twCalculator1->setMinimumHeight(80);
-    twCalculator1->setMaximumHeight(80);
+//    columnPercent.clear();
+//    columnPercent<<20<<20<<20<<20<<20;
+//    twCalculator1 = new adjview(4, 5, columnPercent);
+//    twCalculator1->verticalHeader()->setDefaultSectionSize(20);
+//    twCalculator1->setMinimumHeight(80);
+//    twCalculator1->setMaximumHeight(80);
+//    layout->addWidget(twCalculator1);
+//    layout->addItem(vs1);
+//    mydelegate *ded = new mydelegate(true, this);
+//    twCalculator->setItemDelegate(ded);
 
-    layout->addWidget(twCalculator1);
-    layout->addItem(vs1);
+     frCalculator = new QFrame();
+     frCalculator->setFrameShape(QFrame::WinPanel);
+     frCalculator->setFrameShadow(QFrame::Raised);
+     QGridLayout *frLayout = new QGridLayout(frCalculator);
 
-    mydelegate *ded = new mydelegate(true, this);
-    twCalculator->setItemDelegate(ded);
+     columnPercent.clear();
+     columnPercent<<50<<50;
+     lst.clear();
+     lst<<"IOL"<<"REF";
+     twCalculator1 = new adjview(10, lst, columnPercent);
+     twCalculator1->verticalHeader()->setDefaultSectionSize(20);
+     twCalculator1->setMinimumHeight(200);
+     twCalculator1->setMaximumHeight(200);
 
+     twCalculator2 = new adjview(10, lst, columnPercent);
+     twCalculator2->verticalHeader()->setDefaultSectionSize(20);
+     twCalculator2->setMinimumHeight(200);
+     twCalculator2->setMaximumHeight(200);
+
+     twCalculator3 = new adjview(10, lst, columnPercent);
+     twCalculator3->verticalHeader()->setDefaultSectionSize(20);
+     twCalculator3->setMinimumHeight(200);
+     twCalculator3->setMaximumHeight(200);
+
+     frLayout->addWidget(twCalculator1, 0, 0);
+     frLayout->addWidget(twCalculator2, 0, 1);
+     frLayout->addWidget(twCalculator3, 0, 2);
+
+     layout->addWidget(frCalculator);
+     layout->addItem(vs2);
 }
+

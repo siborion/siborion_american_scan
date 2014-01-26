@@ -3,41 +3,66 @@
 adjview::adjview(QTableView *parent) :
     QTableView(parent)
 {
-
+    QPalette palette;
+    QBrush brush(QColor(    Qt::gray));
+    brush.setStyle(Qt::SolidPattern);
+    palette.setBrush(QPalette::Active, QPalette::Base, brush);
+    palette.setBrush(QPalette::Inactive, QPalette::Base, brush);
+    QBrush brush1(QColor(    Qt::gray));
+    brush1.setStyle(Qt::SolidPattern);
+    palette.setBrush(QPalette::Disabled, QPalette::Base, brush1);
+    setPalette(palette);
+    horizontalHeader()->setStyleSheet("QHeaderView::section{background-color:gray}");
 }
 
 adjview::adjview(int row, int col, QList<int> columnPercent, QTableView *parent):
     QTableView(parent)
 {
+    QPalette palette;
+    QBrush brush(QColor(    Qt::gray));
+    brush.setStyle(Qt::SolidPattern);
+    palette.setBrush(QPalette::Active, QPalette::Base, brush);
+    palette.setBrush(QPalette::Inactive, QPalette::Base, brush);
+    QBrush brush1(QColor(    Qt::gray));
+    brush1.setStyle(Qt::SolidPattern);
+    palette.setBrush(QPalette::Disabled, QPalette::Base, brush1);
+    setPalette(palette);
+
     QStandardItemModel *model = new QStandardItemModel();
     model->setRowCount(row);
     model->setColumnCount(col);
     setModel(model);
     verticalHeader()->hide();
     horizontalHeader()->hide();
-    setFrameShape(QFrame::NoFrame);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setColumnPercent(columnPercent);
-    setAlternatingRowColors(true);
+    horizontalHeader()->setStyleSheet("QHeaderView::section{background-color:gray}");
 }
 
 adjview::adjview(int row, QStringList col, QList<int> columnPercent, QTableView *parent):
     QTableView(parent)
 {
+    QPalette palette;
+    QBrush brush(QColor(    Qt::gray));
+    brush.setStyle(Qt::SolidPattern);
+    palette.setBrush(QPalette::Active, QPalette::Base, brush);
+    palette.setBrush(QPalette::Inactive, QPalette::Base, brush);
+    QBrush brush1(QColor(    Qt::gray));
+    brush1.setStyle(Qt::SolidPattern);
+    palette.setBrush(QPalette::Disabled, QPalette::Base, brush1);
+    setPalette(palette);
+
     QStandardItemModel *model = new QStandardItemModel();
-//    model  = new QStandardItemModel();
     model->setRowCount(row);
     model->setColumnCount(col.count());
     setModel(model);
     verticalHeader()->hide();
-    setFrameShape(QFrame::NoFrame);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setColumnPercent(columnPercent);
     model->setHorizontalHeaderLabels(col);
-    setAlternatingRowColors(true);
-//    adjview(row, 4, columnPercent);
+    horizontalHeader()->setStyleSheet("QHeaderView::section{background-color:gray}");
 }
 
 void adjview::setColumnPercent(QList<int> percentList)

@@ -3,6 +3,20 @@
 bases::bases(QWidget *parent) :
     QWidget(parent)
 {
+    QPalette Pal(palette());
+    Pal.setColor(QPalette::Background, Qt::gray);
+    setAutoFillBackground(true);
+    setPalette(Pal);
+
+//    QByteArray line;
+//    QFile file("in.svg");
+//       if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+//           return;
+//
+//       while (!file.atEnd()) {
+//           line.append(file.readLine());
+//       }
+
     QHBoxLayout *Layout = new QHBoxLayout(this);
 
     QVBoxLayout *leftLayout  = new QVBoxLayout();
@@ -51,6 +65,7 @@ bases::bases(QWidget *parent) :
     QLineEdit *leSearch = new QLineEdit();
 
     model = new QStandardItemModel();
+    pTest = new QPushButton();
     pbAdd = new QPushButton();
     pbEdit = new QPushButton();
     pbDel = new QPushButton();
@@ -62,6 +77,28 @@ bases::bases(QWidget *parent) :
     topRightLayout->addWidget(gbSelect);
     topRightLayout->addWidget(lSearch);
     topRightLayout->addWidget(leSearch);
+
+//    QString t = "in.txt";
+//    svg = new QString();
+//    tmp = new QSvgWidget();
+//    tmp->load(QString( "in.svg" ));
+//    tmp->setMinimumSize(50,50);
+//    tmp->setMaximumSize(50,50);
+//    QSvgRenderer qSvg;
+//    qSvg.load(line);
+//    QPixmap pix(90, 90);
+//    QPainter painter;
+//    painter.begin(&pix);
+//    painter.fillRect(QRect(0,0,90,90), QColor(0,255,0,100));
+//    qSvg.render(&painter);
+//    painter.end();
+//    QIcon icon;
+//    icon.addPixmap(pix);
+//    pTest->setMinimumHeight(100);
+//    pTest->setIcon(icon);
+//    pTest->setIconSize(QSize(100,100));
+//    botRightLayout->addWidget(tmp);
+//    botRightLayout->addWidget(pTest);
 
     botRightLayout->addWidget(pbAdd);
     botRightLayout->addWidget(pbEdit);
@@ -144,7 +181,6 @@ void bases::changeBaseLens(bool Val)
     if(Val)
         adjTable(enLens);
 }
-
 
 void bases::Add()
 {
