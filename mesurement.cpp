@@ -33,12 +33,12 @@ mesurement::mesurement(QWidget *parent) :
     columnPercent<<80<<20;
     twVelocity = new adjview(3, 2, columnPercent);
 
-    twPatient->setMaximumHeight(120);
-    twPatient->setMinimumHeight(120);
-    twLens->setMaximumHeight(120);
-    twLens->setMinimumHeight(120);
-    twVelocity->setMaximumHeight(120);
-    twVelocity->setMinimumHeight(120);
+//    twPatient->setMaximumHeight(120);
+//    twPatient->setMinimumHeight(120);
+//    twLens->setMaximumHeight(120);
+//    twLens->setMinimumHeight(120);
+//    twVelocity->setMaximumHeight(120);
+//    twVelocity->setMinimumHeight(120);
 
     layoutTop->addWidget(twPatient);
     layoutTop->addItem(vs0);
@@ -114,8 +114,8 @@ mesurement::mesurement(QWidget *parent) :
     columnPercent<<10      <<30            <<15      <<15       <<15      <<15;
     lst          <<tr("No")<<tr("AveVelAl")<<tr("AL")<<tr("ACD")<<tr("LT")<<tr("VIT");
     twMeas  = new adjview(10, lst, columnPercent);
-    twMeas->setMaximumHeight(350);
-    twMeas->setMinimumHeight(350);
+//    twMeas->setMaximumHeight(350);
+//    twMeas->setMinimumHeight(350);
 
     layoutBot->addLayout(layoutBotLeft,0);
     layoutBot->addWidget(pPlot,1);

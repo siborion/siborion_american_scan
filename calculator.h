@@ -10,6 +10,8 @@
 #include <QRadioButton>
 #include <adjview.h>
 #include <mydelegate.h>
+#include <QComboBox>
+#include <QPushButton>
 
 class calculator : public QWidget
 {
@@ -35,6 +37,14 @@ private:
     adjview *twCalculator3;
     QStandardItemModel *modelCalculator1;
     QFrame *frCalculator;
+    QComboBox *cbFormula1;
+    QComboBox *cbFormula2;
+    QComboBox *cbFormula3;
+    adjview *twVs1;
+    adjview *twVs2;
+    adjview *twVs3;
+    QPushButton *pbOD;
+    QPushButton *pbPersCalc;
 
     QString baseMapName[3] = {
         "Patient ID",

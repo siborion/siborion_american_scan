@@ -38,6 +38,9 @@ adjview::adjview(int row, int col, QList<int> columnPercent, QTableView *parent)
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setColumnPercent(columnPercent);
     horizontalHeader()->setStyleSheet("QHeaderView::section{background-color:gray}");
+    verticalHeader()->setDefaultSectionSize(20);
+    setMinimumHeight(rowHeight(0)*row + 2);
+    setMaximumHeight(rowHeight(0)*row + 2);
 }
 
 adjview::adjview(int row, QStringList col, QList<int> columnPercent, QTableView *parent):
@@ -63,7 +66,39 @@ adjview::adjview(int row, QStringList col, QList<int> columnPercent, QTableView 
     setColumnPercent(columnPercent);
     model->setHorizontalHeaderLabels(col);
     horizontalHeader()->setStyleSheet("QHeaderView::section{background-color:gray}");
+    verticalHeader()->setDefaultSectionSize(20);
+    setMinimumHeight(rowHeight(0)*row + horizontalHeader()->height() + 2);
+    setMaximumHeight(rowHeight(0)*row + horizontalHeader()->height() + 2);
 }
+
+adjview::adjview(QStringList row, int col, QList<int> columnPercent, QTableView *parent):
+    QTableView(parent)
+{
+    QPalette palette;
+    QBrush brush(QColor(    Qt::gray));
+    brush.setStyle(Qt::SolidPattern);
+    palette.setBrush(QPalette::Active, QPalette::Base, brush);
+    palette.setBrush(QPalette::Inactive, QPalette::Base, brush);
+    QBrush brush1(QColor(    Qt::gray));
+    brush1.setStyle(Qt::SolidPattern);
+    palette.setBrush(QPalette::Disabled, QPalette::Base, brush1);
+    setPalette(palette);
+
+    QStandardItemModel *model = new QStandardItemModel();
+    model->setRowCount(row.count());
+    model->setColumnCount(col);
+    setModel(model);
+    horizontalHeader()->hide();
+    setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    setColumnPercent(columnPercent);
+    model->setVerticalHeaderLabels(row);
+    verticalHeader()->setStyleSheet("QHeaderView::section{background-color:gray}");
+    verticalHeader()->setDefaultSectionSize(20);
+    setMinimumHeight(rowHeight(0)*row.count() + horizontalHeader()->height() + 2);
+    setMaximumHeight(rowHeight(0)*row.count() + horizontalHeader()->height() + 2);
+}
+
 
 void adjview::setColumnPercent(QList<int> percentList)
 {
