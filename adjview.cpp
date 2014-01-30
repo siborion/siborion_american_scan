@@ -38,9 +38,10 @@ adjview::adjview(int row, int col, QList<int> columnPercent, QTableView *parent)
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setColumnPercent(columnPercent);
     horizontalHeader()->setStyleSheet("QHeaderView::section{background-color:gray}");
-    verticalHeader()->setDefaultSectionSize(20);
+    verticalHeader()->setDefaultSectionSize(15);
     setMinimumHeight(rowHeight(0)*row + 2);
     setMaximumHeight(rowHeight(0)*row + 2);
+    horizontalHeader()->setSectionsClickable(false);
 }
 
 adjview::adjview(int row, QStringList col, QList<int> columnPercent, QTableView *parent):
@@ -66,9 +67,10 @@ adjview::adjview(int row, QStringList col, QList<int> columnPercent, QTableView 
     setColumnPercent(columnPercent);
     model->setHorizontalHeaderLabels(col);
     horizontalHeader()->setStyleSheet("QHeaderView::section{background-color:gray}");
-    verticalHeader()->setDefaultSectionSize(20);
+    verticalHeader()->setDefaultSectionSize(15);
     setMinimumHeight(rowHeight(0)*row + horizontalHeader()->height() + 2);
     setMaximumHeight(rowHeight(0)*row + horizontalHeader()->height() + 2);
+    horizontalHeader()->setSectionsClickable(false);
 }
 
 adjview::adjview(QStringList row, int col, QList<int> columnPercent, QTableView *parent):
@@ -97,6 +99,7 @@ adjview::adjview(QStringList row, int col, QList<int> columnPercent, QTableView 
     verticalHeader()->setDefaultSectionSize(20);
     setMinimumHeight(rowHeight(0)*row.count() + horizontalHeader()->height() + 2);
     setMaximumHeight(rowHeight(0)*row.count() + horizontalHeader()->height() + 2);
+    verticalHeader()->setSectionsClickable(false);
 }
 
 

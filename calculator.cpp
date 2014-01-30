@@ -83,6 +83,14 @@ calculator::calculator(QWidget *parent) :
      QGridLayout *frLayout = new QGridLayout(frCalculator);
 
      columnPercent.clear();
+     columnPercent<<100;
+     lst.clear();
+     lst<<"U.D.";
+     twHead1 = new adjview(1, lst, columnPercent);
+     twHead2 = new adjview(1, lst, columnPercent);
+     twHead3 = new adjview(1, lst, columnPercent);
+
+     columnPercent.clear();
      columnPercent<<50<<50;
      lst.clear();
      lst<<"IOL"<<"REF";
@@ -105,15 +113,19 @@ calculator::calculator(QWidget *parent) :
      twVs2 = new adjview(lst, 1, columnPercent);
      twVs3 = new adjview(lst, 1, columnPercent);
 
+     frLayout->setVerticalSpacing(0);
      frLayout->addWidget(cbFormula1, 0, 0);
      frLayout->addWidget(cbFormula2, 0, 1);
      frLayout->addWidget(cbFormula3, 0, 2);
-     frLayout->addWidget(twCalculator1, 1, 0);
-     frLayout->addWidget(twCalculator2, 1, 1);
-     frLayout->addWidget(twCalculator3, 1, 2);
-     frLayout->addWidget(twVs1, 2, 0);
-     frLayout->addWidget(twVs2, 2, 1);
-     frLayout->addWidget(twVs3, 2, 2);
+     frLayout->addWidget(twHead1, 1, 0);
+     frLayout->addWidget(twHead2, 1, 1);
+     frLayout->addWidget(twHead3, 1, 2);
+     frLayout->addWidget(twCalculator1, 2, 0);
+     frLayout->addWidget(twCalculator2, 2, 1);
+     frLayout->addWidget(twCalculator3, 2, 2);
+     frLayout->addWidget(twVs1, 3, 0);
+     frLayout->addWidget(twVs2, 3, 1);
+     frLayout->addWidget(twVs3, 3, 2);
 
      layout->addWidget(frCalculator);
      layout->addItem(vs2);
