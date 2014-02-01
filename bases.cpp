@@ -3,10 +3,10 @@
 bases::bases(QWidget *parent) :
     QWidget(parent)
 {
-    QPalette Pal(palette());
-    Pal.setColor(QPalette::Background, Qt::gray);
-    setAutoFillBackground(true);
-    setPalette(Pal);
+//    QPalette Pal(palette());
+//    Pal.setColor(QPalette::Background, Qt::gray);
+//    setAutoFillBackground(true);
+//    setPalette(Pal);
 
 //    QByteArray line;
 //    QFile file("in.svg");

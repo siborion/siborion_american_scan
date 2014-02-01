@@ -3,10 +3,10 @@
 calculator::calculator(QWidget *parent) :
     QWidget(parent)
 {
-    QPalette Pal(palette());
-    Pal.setColor(QPalette::Background, Qt::gray);
-    setAutoFillBackground(true);
-    setPalette(Pal);
+//    QPalette Pal(palette());
+//    Pal.setColor(QPalette::Background, Qt::gray);
+//    setAutoFillBackground(true);
+//    setPalette(Pal);
 
     QList<int> columnPercent;
     QStringList lst;
@@ -80,52 +80,60 @@ calculator::calculator(QWidget *parent) :
      frCalculator = new QFrame();
      frCalculator->setFrameShape(QFrame::WinPanel);
      frCalculator->setFrameShadow(QFrame::Raised);
-     QGridLayout *frLayout = new QGridLayout(frCalculator);
+     QHBoxLayout *frLayout = new QHBoxLayout(frCalculator);
 
-     columnPercent.clear();
-     columnPercent<<100;
-     lst.clear();
-     lst<<"U.D.";
-     twHead1 = new adjview(1, lst, columnPercent);
-     twHead2 = new adjview(1, lst, columnPercent);
-     twHead3 = new adjview(1, lst, columnPercent);
+     Formula1 = new formula();
+     Formula2 = new formula();
+     Formula3 = new formula();
 
-     columnPercent.clear();
-     columnPercent<<50<<50;
-     lst.clear();
-     lst<<"IOL"<<"REF";
-     twCalculator1 = new adjview(10, lst, columnPercent);
-     twCalculator2 = new adjview(10, lst, columnPercent);
-     twCalculator3 = new adjview(10, lst, columnPercent);
+     frLayout->addWidget(Formula1);
+     frLayout->addWidget(Formula2);
+     frLayout->addWidget(Formula3);
 
-     lst.clear();
-     lst<<"SRKII"<<"SRK/T"<<"Hoffer Q"<<"Holladay";
-     cbFormula1 = new QComboBox();
-     cbFormula1->addItems(lst);
-     cbFormula2 = new QComboBox();
-     cbFormula2->addItems(lst);
-     cbFormula3 = new QComboBox();
-     cbFormula3->addItems(lst);
+//     columnPercent.clear();
+//     columnPercent<<100;
+//     lst.clear();
+//     lst<<"U.D.";
+//     twHead1 = new adjview(1, lst, columnPercent);
+//     twHead2 = new adjview(1, lst, columnPercent);
+//     twHead3 = new adjview(1, lst, columnPercent);
 
-     columnPercent.clear();
-     columnPercent<<100;
-     twVs1 = new adjview(lst, 1, columnPercent);
-     twVs2 = new adjview(lst, 1, columnPercent);
-     twVs3 = new adjview(lst, 1, columnPercent);
+//     columnPercent.clear();
+//     columnPercent<<50<<50;
+//     lst.clear();
+//     lst<<"IOL"<<"REF";
+//     twCalculator1 = new adjview(10, lst, columnPercent);
+//     twCalculator2 = new adjview(10, lst, columnPercent);
+//     twCalculator3 = new adjview(10, lst, columnPercent);
 
-     frLayout->setVerticalSpacing(0);
-     frLayout->addWidget(cbFormula1, 0, 0);
-     frLayout->addWidget(cbFormula2, 0, 1);
-     frLayout->addWidget(cbFormula3, 0, 2);
-     frLayout->addWidget(twHead1, 1, 0);
-     frLayout->addWidget(twHead2, 1, 1);
-     frLayout->addWidget(twHead3, 1, 2);
-     frLayout->addWidget(twCalculator1, 2, 0);
-     frLayout->addWidget(twCalculator2, 2, 1);
-     frLayout->addWidget(twCalculator3, 2, 2);
-     frLayout->addWidget(twVs1, 3, 0);
-     frLayout->addWidget(twVs2, 3, 1);
-     frLayout->addWidget(twVs3, 3, 2);
+//     lst.clear();
+//     lst<<"SRKII"<<"SRK/T"<<"Hoffer Q"<<"Holladay";
+//     cbFormula1 = new QComboBox();
+//     cbFormula1->addItems(lst);
+//     cbFormula2 = new QComboBox();
+//     cbFormula2->addItems(lst);
+//     cbFormula3 = new QComboBox();
+//     cbFormula3->addItems(lst);
+
+//     columnPercent.clear();
+//     columnPercent<<100;
+//     twVs1 = new adjview(lst, 1, columnPercent);
+//     twVs2 = new adjview(lst, 1, columnPercent);
+//     twVs3 = new adjview(lst, 1, columnPercent);
+
+//     frLayout->setVerticalSpacing(0);
+//     frLayout->addWidget(cbFormula1, 0, 0);
+//     frLayout->addWidget(cbFormula2, 0, 1);
+//     frLayout->addWidget(cbFormula3, 0, 2);
+//     frLayout->addWidget(twHead1, 1, 0);
+//     frLayout->addWidget(twHead2, 1, 1);
+//     frLayout->addWidget(twHead3, 1, 2);
+//     frLayout->addWidget(twCalculator1, 2, 0);
+//     frLayout->addWidget(twCalculator2, 2, 1);
+//     frLayout->addWidget(twCalculator3, 2, 2);
+//     frLayout->addWidget(twVs1, 3, 0);
+//     frLayout->addWidget(twVs2, 3, 1);
+//     frLayout->addWidget(twVs3, 3, 2);
 
      layout->addWidget(frCalculator);
      layout->addItem(vs2);

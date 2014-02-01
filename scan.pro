@@ -43,7 +43,8 @@ SOURCES += main.cpp\
     doctor.cpp \
     lens.cpp \
     calculator.cpp \
-    mydelegate.cpp
+    mydelegate.cpp \
+    formula.cpp
 
 
 HEADERS  += mainwindow.h\
@@ -56,7 +57,8 @@ HEADERS  += mainwindow.h\
     doctor.h \
     lens.h \
     calculator.h \
-    mydelegate.h
+    mydelegate.h \
+    formula.h
 
 #FORMS    += mainwindow.ui
 
