@@ -14,18 +14,19 @@ class formula : public QWidget
 private:
     adjview *twHead;
     adjview *twCalculator;
-//    QStandardItemModel *modelCalculator1;
-//    QFrame *frCalculator;
+    adjview *twFormula;
+    adjview *twEmm;
     QComboBox *cbFormula;
-//    adjview *twVs;
+    QStringList getListFormula();
+    QStandardItem *getItem(QString);
 
 public:
     explicit formula(QWidget *parent = 0);
     
 signals:
     
-public slots:
-    
+private slots:
+    void refreshFormula(void);
 };
 
 #endif // FORMULA_H

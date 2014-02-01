@@ -31,7 +31,7 @@ calculator::calculator(QWidget *parent) :
     }
     //-------------------------------
     columnPercent.clear();
-    columnPercent<<16<<16<<16<<16<<16<<20;
+    columnPercent<<20<<16<<22<<16<<15<<11;
     lst<<"Lens Name"<<"Lens Mfg"<<"Mfg A-Const"<<"pAConst"<<"MfgACD"<<"pACD";
     twLens = new adjview(8, lst, columnPercent);
     //-------------------------------
