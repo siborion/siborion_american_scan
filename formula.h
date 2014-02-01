@@ -18,7 +18,7 @@ private:
     adjview *twEmm;
     QComboBox *cbFormula;
     QStringList getListFormula();
-    QStandardItem *getItem(QString);
+    QStandardItem *getItem(QString, Qt::AlignmentFlag);
 
 public:
     explicit formula(QWidget *parent = 0);

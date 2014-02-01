@@ -16,8 +16,11 @@ formula::formula(QWidget *parent) :
     columnPercent.clear();
     columnPercent<<100;
     lst.clear();
-    lst<<"CN50SM / Alcon / A-Const = 116.5";
+    lst<<"CN50SM / Alcon";
     twHead = new adjview(1, lst, columnPercent);
+    QStandardItemModel *model = new QStandardItemModel();
+    model = (QStandardItemModel*)twHead->model();
+    model->setItem(0, 0, getItem(QString("A-Const = 116.5"), Qt::AlignRight));
 
     columnPercent.clear();
     columnPercent<<100;
@@ -75,13 +78,13 @@ void formula::refreshFormula(void)
     QStandardItemModel *model = new QStandardItemModel();
     model = (QStandardItemModel*)twFormula->model();
     curIndex = cbFormula->currentIndex();
-    model->setItem(0, 0, getItem(slTmp.at(curIndex)));
+    model->setItem(0, 0, getItem(slTmp.at(curIndex), Qt::AlignCenter));
     for(quint8 i=0; i<4; i++)
     {
         if(curIndex != i)
         {
             j++;
-            model->setItem(10+j, 0, getItem(slTmp.at(i)));
+            model->setItem(10+j, 0, getItem(slTmp.at(i), Qt::AlignCenter));
         }
     }
 }
@@ -93,9 +96,11 @@ QStringList formula::getListFormula()
     return slTmp;
 }
 
-QStandardItem* formula::getItem(QString val)
+QStandardItem* formula::getItem(QString val, Qt::AlignmentFlag align)
 {
     QStandardItem *siTmp = new QStandardItem(val);
-    siTmp->setTextAlignment(Qt::AlignCenter);
+    siTmp->setTextAlignment(align);
     return siTmp;
 }
+
+
