@@ -1,4 +1,5 @@
 #include <qmainwindow.h>
+
 #include <QTableView>
 
 class QwtPlotZoomer;
@@ -20,4 +21,5 @@ private Q_SLOTS:
 private:
     Plot *d_plot;
     Panel *d_panel;
+//    dbacces db;
 };

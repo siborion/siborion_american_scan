@@ -32,6 +32,7 @@ public:
 MainWindow::MainWindow( QWidget *parent ):
     QMainWindow( parent )
 {
+//    db = dbacces.getInstance();
     d_panel = new Panel( this );
     setCentralWidget( d_panel );
 }

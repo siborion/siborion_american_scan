@@ -51,9 +51,9 @@ calculator::calculator(QWidget *parent) :
     //--------------------------------
     columnPercent.clear();
     columnPercent<<50<<50;
-    twA = new adjview(4, 2, columnPercent);
+    twA = new adjview(3, 2, columnPercent);
     model = (QStandardItemModel*)twA->model();
-    for(quint8 i=0; i<4; i++)
+    for(quint8 i=0; i<3; i++)
     {
         model->setItem(i, 0, new QStandardItem(baseMapA[i]));
         model->item   (i, 0)->setBackground(Qt::lightGray);
@@ -61,20 +61,26 @@ calculator::calculator(QWidget *parent) :
     }
     //--------------------------------
 
+    twRx = new adjview(1, 2, columnPercent);
+    model = (QStandardItemModel*)twRx->model();
+    model->setItem(0, 0, new QStandardItem(baseMapA[3]));
+    model->item   (0, 0)->setBackground(Qt::lightGray);
+    model->item   (0, 0)->setEditable(false);
+
     pbOD = new QPushButton("OD");
+//    pbOD->setMinimumHeight(40);
     pbPersCalc = new QPushButton("Personalized Calculation");
 
-
-
-    layoutTopLeftDown->addWidget(twK, 0, 0);
-    layoutTopLeftDown->addWidget(twA, 0, 1);
-    layoutTopLeftDown->addWidget(pbOD, 1, 0);
-    layoutTopLeftDown->addWidget(pbPersCalc, 1, 1);
+    layoutTopLeftDown->addWidget(twK,  0, 0, 2, 1, Qt::AlignTop);
+    layoutTopLeftDown->addWidget(twA,  0, 1, 1, 1, Qt::AlignTop);
+    layoutTopLeftDown->addWidget(twRx, 1, 1);
+    layoutTopLeftDown->addWidget(pbOD,       2, 0, 2, 1, Qt::AlignTop);
+    layoutTopLeftDown->addWidget(pbPersCalc, 2, 1, 1, 1, Qt::AlignTop);
 
     layoutTopLeft->addWidget(twName);
     layoutTopLeft->addLayout(layoutTopLeftDown);
     layoutTop->addLayout(layoutTopLeft);
-    layoutTop->addWidget(twLens);
+    layoutTop->addWidget(twLens, 0, Qt::AlignTop);
     layout->addLayout(layoutTop);
 
      frCalculator = new QFrame();

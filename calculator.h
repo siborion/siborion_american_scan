@@ -31,6 +31,8 @@ private:
     QStandardItemModel *modelK;
     adjview *twA;
     QStandardItemModel *modelA;
+    adjview *twRx;
+    QStandardItemModel *modelRx;
     adjview *twCalculator;
     QStandardItemModel *modelCalculator;
 //    adjview *twHead1;

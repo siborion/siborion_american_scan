@@ -9,7 +9,7 @@ QMAKE_CXXFLAGS += -std=gnu++11
 
 QT       += core gui
 QT	 += serialport
-#QT       += svg
+QT       += sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -44,7 +44,8 @@ SOURCES += main.cpp\
     lens.cpp \
     calculator.cpp \
     mydelegate.cpp \
-    formula.cpp
+    formula.cpp \
+    dbacces.cpp
 
 
 HEADERS  += mainwindow.h\
@@ -58,7 +59,8 @@ HEADERS  += mainwindow.h\
     lens.h \
     calculator.h \
     mydelegate.h \
-    formula.h
+    formula.h \
+    dbacces.h
 
 #FORMS    += mainwindow.ui
 
