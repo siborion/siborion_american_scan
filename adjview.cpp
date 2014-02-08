@@ -42,6 +42,7 @@ adjview::adjview(int row, int col, QList<int> columnPercent, QTableView *parent)
     setMinimumHeight(rowHeight(0)*row + 2);
     setMaximumHeight(rowHeight(0)*row + 2);
     horizontalHeader()->setSectionsClickable(false);
+    setFrameShape(QFrame::NoFrame);
 }
 
 adjview::adjview(int row, QStringList col, QList<int> columnPercent, QTableView *parent):
@@ -71,6 +72,7 @@ adjview::adjview(int row, QStringList col, QList<int> columnPercent, QTableView 
     setMinimumHeight(rowHeight(0)*row + horizontalHeader()->height() + 2);
     setMaximumHeight(rowHeight(0)*row + horizontalHeader()->height() + 2);
     horizontalHeader()->setSectionsClickable(false);
+    setFrameShape(QFrame::NoFrame);
 }
 
 adjview::adjview(QStringList row, int col, QList<int> columnPercent, QTableView *parent):
@@ -100,6 +102,7 @@ adjview::adjview(QStringList row, int col, QList<int> columnPercent, QTableView 
     setMinimumHeight(rowHeight(0)*row.count() + horizontalHeader()->height() + 2);
     setMaximumHeight(rowHeight(0)*row.count() + horizontalHeader()->height() + 2);
     verticalHeader()->setSectionsClickable(false);
+    setFrameShape(QFrame::NoFrame);
 }
 
 
