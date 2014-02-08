@@ -23,23 +23,20 @@ public:
 
 private:
     QGridLayout *layout;
-    QwtPlot *q_plot;
+    QwtPlot *ttt;
     QwtPlotMarker mX;
 //    QwtPlotCanvas *canvas;
 //    QwtPlotCurve *d_curve1;
     QFileDialog *fileName;
     QPushButton *pbTmp;
     void getPlot(QwtPlot*);
-    double x[10];
-    double y[10];
-
 
 signals:
 
 public slots:
 
 private slots:
-    void changeVal(double);
+    void getTest();
 
 };
 
