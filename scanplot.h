@@ -22,14 +22,14 @@ public:
     explicit ScanPlot(QWidget *parent = 0);
 
 private:
-    QGridLayout *layout;
+//    QGridLayout *layout;
     QwtPlot *ttt;
-    QwtPlotMarker mX;
+//    QwtPlotMarker mX;
 //    QwtPlotCanvas *canvas;
 //    QwtPlotCurve *d_curve1;
-    QFileDialog *fileName;
-    QPushButton *pbTmp;
-    void getPlot(QwtPlot*);
+//    QFileDialog *fileName;
+//    QPushButton *pbTmp;
+//    void getPlot(QwtPlot*);
 
 signals:
 
