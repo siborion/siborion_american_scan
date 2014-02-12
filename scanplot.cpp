@@ -29,37 +29,38 @@ void ScanPlot::getTest()
 {
     double x[4096];
     double y[4096];
-
+    QList <QByteArray> baSample;
     double Tmp;
     quint16 kolVo=0;
-    QString fileName = QFileDialog::getOpenFileName();
-
-    ttt->detachItems(QwtPlotItem::Rtti_PlotCurve);
-
-    QFile file(fileName);
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
-        return;
-
-    file.read(144);
-
-    while (!file.atEnd())
+    QStringList fileNames = QFileDialog::getOpenFileNames();
+    QFile file;
+    foreach(QString fileName, fileNames)
     {
-        x[kolVo] = kolVo;
-        bool bOk;
-        Tmp = file.read(1).toHex().toUInt(&bOk, 16);
-        file.read(1);
-        y[kolVo] = Tmp;
+        ttt->detachItems(QwtPlotItem::Rtti_PlotCurve);
+        kolVo = 0;
+        file.setFileName(fileName);
+        if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+            return;
 
-        kolVo++;
+        file.read(144);
+
+        while (!file.atEnd())
+        {
+            x[kolVo] = kolVo;
+            bool bOk;
+            Tmp = file.read(1).toHex().toUInt(&bOk, 16);
+            file.read(1);
+            y[kolVo] = Tmp;
+            kolVo++;
+        }
+
+        QwtPlotCurve *d_curve2 = new QwtPlotCurve();
+        d_curve2->setRenderHint( QwtPlotItem::RenderAntialiased );
+        d_curve2->setPen( Qt::yellow );
+        d_curve2->setYAxis( QwtPlot::yLeft );
+        d_curve2->setSamples((const double*)x, (const double*)y, 1024);
+        d_curve2->attach( ttt );
+        ttt->replot();
+        file.close();
     }
-
-    QwtPlotCurve *d_curve2 = new QwtPlotCurve();
-    d_curve2->setRenderHint( QwtPlotItem::RenderAntialiased );
-    d_curve2->setPen( Qt::yellow );
-    //        d_curve2->setLegendAttribute( QwtPlotCurve::LegendShowLine );
-    d_curve2->setYAxis( QwtPlot::yLeft );
-    d_curve2->setSamples((const double*)x, (const double*)y, 1024);
-    d_curve2->attach( ttt );
-    ttt->replot();
-    file.close();
 }

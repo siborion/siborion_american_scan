@@ -26,6 +26,7 @@ private:
     QStandardItemModel *modelLens;
     QStandardItemModel *modelVelocity;
     QStandardItemModel *modelMeas;
+    QPushButton *pbTest;
 
     QString baseMapPatient[4] = {
         "Patient ID",
@@ -50,6 +51,9 @@ private:
 signals:
 
 public slots:
+
+private slots:
+    void getFileSample();
 
 };
 

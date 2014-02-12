@@ -117,9 +117,48 @@ mesurement::mesurement(QWidget *parent) :
 //    twMeas->setMaximumHeight(350);
 //    twMeas->setMinimumHeight(350);
 
+    QPushButton *pbTest = new QPushButton("test");
+
     layoutBot->addLayout(layoutBotLeft,0);
     layoutBot->addWidget(pPlot,1);
     layoutBot->addWidget(twMeas,0);
+    layoutBot->addWidget(pbTest);
     layout->addLayout(layoutTop);
     layout->addLayout(layoutBot);
+
+    connect(pbTest, SIGNAL(clicked()), SLOT(getFileSample()));
+}
+
+void mesurement::getFileSample()
+{
+    QList <QByteArray> baListSample;
+    QByteArray Sample;
+    QStandardItemModel *model;
+
+    QStringList fileNames = QFileDialog::getOpenFileNames();
+    QFile file;
+    bool bOk;
+    foreach(QString fileName, fileNames)
+    {
+        Sample.clear();
+        file.setFileName(fileName);
+        if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+            return;
+
+        file.read(144);
+
+        while (!file.atEnd())
+        {
+            Sample.append(file.read(1).toHex().toUInt(&bOk, 16));
+            file.read(1);
+        }
+        file.close();
+        baListSample << Sample;
+        QStandardItem *item2 = new QStandardItem();
+        item2->setData("222", Qt::UserRole);
+        model = (QStandardItemModel*)twMeas->model();
+        model->setItem(0, 0, new QStandardItem("111"));
+        model->setItem(1, 1, item2);
+    }
+
 }
