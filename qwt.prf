@@ -17,6 +17,12 @@ unix {
 win32 {
     QwtBase    = C:/Qt/qwt-$${QwtVersion}
 
+    QT += printsupport
+    QT += concurrent
+    DEFINES += QWT_NO_OPENGL
+    DEFINES += QWT_NO_SVG
+
+
     contains(QwtBuild, dll) {
         DEFINES    += QWT_DLL
 

@@ -45,7 +45,8 @@ SOURCES += main.cpp\
     calculator.cpp \
     mydelegate.cpp \
     formula.cpp \
-    dbacces.cpp
+    dbacces.cpp \
+    plot.cpp
 
 
 HEADERS  += mainwindow.h\
@@ -60,7 +61,8 @@ HEADERS  += mainwindow.h\
     calculator.h \
     mydelegate.h \
     formula.h \
-    dbacces.h
+    dbacces.h \
+    plot.h
 
 #FORMS    += mainwindow.ui
 

@@ -9,6 +9,10 @@
 #include <QStandardItemModel>
 #include "scanplot.h"
 #include <adjview.h>
+#include "mydelegate.h"
+#include "plot.h"
+
+#include <qwt_plot.h>
 
 
 class mesurement : public QWidget
@@ -18,15 +22,18 @@ public:
     explicit mesurement(QWidget *parent = 0);
 
 private:
+    QwtPlot *pQwt;
     adjview *twPatient;
     adjview *twLens;
     adjview *twVelocity;
     adjview *twMeas;
+    Plot *pPlot;
     QStandardItemModel *modelPatient;
     QStandardItemModel *modelLens;
     QStandardItemModel *modelVelocity;
     QStandardItemModel *modelMeas;
     QPushButton *pbTest;
+    void drawSample(double* x, double* y);
 
     QString baseMapPatient[4] = {
         "Patient ID",
@@ -54,6 +61,7 @@ public slots:
 
 private slots:
     void getFileSample();
+    void changeRow(QModelIndex curIndex);
 
 };
 

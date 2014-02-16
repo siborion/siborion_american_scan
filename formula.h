@@ -4,7 +4,6 @@
 #include <QWidget>
 #include <QFormLayout>
 #include <adjview.h>
-#include <mydelegate.h>
 #include <QComboBox>
 
 

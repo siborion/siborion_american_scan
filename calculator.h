@@ -10,7 +10,6 @@
 #include <QRadioButton>
 #include <adjview.h>
 #include <formula.h>
-#include <mydelegate.h>
 #include <QComboBox>
 #include <QPushButton>
 

@@ -20,9 +20,12 @@ class ScanPlot : public QWidget
     Q_OBJECT
 public:
     explicit ScanPlot(QWidget *parent = 0);
+    void drawSample(double *x, double *y);
+    QwtPlot *q_plot;
 
 private:
 //    QGridLayout *layout;
+//    QwtPlot *q_plot;
     QwtPlot *ttt;
 //    QwtPlotMarker mX;
 //    QwtPlotCanvas *canvas;

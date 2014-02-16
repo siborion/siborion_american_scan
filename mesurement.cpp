@@ -8,6 +8,8 @@ mesurement::mesurement(QWidget *parent) :
 //    setAutoFillBackground(true);
 //    setPalette(Pal);
 
+
+
     QList<int> columnPercent;
     QStringList lst;
     QStandardItemModel *model = new QStandardItemModel();
@@ -107,13 +109,23 @@ mesurement::mesurement(QWidget *parent) :
     layoutBotLeft->addWidget(pbAphakic);
     layoutBotLeft->addItem(hs4);
 
-    ScanPlot *pPlot = new ScanPlot();
+    pPlot = new Plot(this);
+
+//    pQwt = pPlot->q_plot;
 
     lst.clear();
     columnPercent.clear();
     columnPercent<<10      <<30            <<15      <<15       <<15      <<15;
     lst          <<tr("No")<<tr("AveVelAl")<<tr("AL")<<tr("ACD")<<tr("LT")<<tr("VIT");
     twMeas  = new adjview(10, lst, columnPercent);
+
+    QFont font;
+    font.setBold(true);
+    twMeas->model()->setData(twMeas->model()->index(1, 1), font, Qt::FontRole);
+
+//    mydelegate *myDelegate = new mydelegate();
+//    twMeas->setItemDelegate(myDelegate);
+    //twMeas->setSelectionMode(QAbstractItemView::SelectRows);
 //    twMeas->setMaximumHeight(350);
 //    twMeas->setMinimumHeight(350);
 
@@ -127,10 +139,12 @@ mesurement::mesurement(QWidget *parent) :
     layout->addLayout(layoutBot);
 
     connect(pbTest, SIGNAL(clicked()), SLOT(getFileSample()));
+    connect(twMeas, SIGNAL(clicked(QModelIndex)), SLOT(changeRow(QModelIndex)));
 }
 
 void mesurement::getFileSample()
 {
+    quint8 kolVo=0;
     QList <QByteArray> baListSample;
     QByteArray Sample;
     QStandardItemModel *model;
@@ -138,15 +152,14 @@ void mesurement::getFileSample()
     QStringList fileNames = QFileDialog::getOpenFileNames();
     QFile file;
     bool bOk;
+    model = (QStandardItemModel*)twMeas->model();
     foreach(QString fileName, fileNames)
     {
         Sample.clear();
         file.setFileName(fileName);
         if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
             return;
-
         file.read(144);
-
         while (!file.atEnd())
         {
             Sample.append(file.read(1).toHex().toUInt(&bOk, 16));
@@ -154,11 +167,47 @@ void mesurement::getFileSample()
         }
         file.close();
         baListSample << Sample;
-        QStandardItem *item2 = new QStandardItem();
-        item2->setData("222", Qt::UserRole);
-        model = (QStandardItemModel*)twMeas->model();
-        model->setItem(0, 0, new QStandardItem("111"));
-        model->setItem(1, 1, item2);
+        QStandardItem *item0 = new QStandardItem();
+        QStandardItem *item1 = new QStandardItem();
+        item0->setData(kolVo,  Qt::DisplayRole);
+        item1->setData(Sample, Qt::UserRole);
+//        model->setItem(kolVo, 0, item0);
+//        model->setItem(kolVo, 0, item1);
+        twMeas->model()->setData(twMeas->model()->index(kolVo, 0), kolVo, Qt::DisplayRole);
+        twMeas->model()->setData(twMeas->model()->index(kolVo, 0), Sample, Qt::UserRole);
+        kolVo++;
     }
 
 }
+
+void mesurement::changeRow(QModelIndex curIndex)
+{
+    double x[2048];
+    double y[2048];
+    quint16 kolvo=0;
+    QByteArray baTmp;
+    baTmp.append(twMeas->model()->data(curIndex, Qt::UserRole).toByteArray());
+    foreach (quint8 val, baTmp)
+    {
+        x[kolvo] = kolvo;
+        y[kolvo] = double(val);
+//        qDebug() << y[kolvo];
+        kolvo++;
+    }
+
+    pPlot->drawSample(x, y, 1000);
+//    drawSample(x, y);
+}
+
+
+void mesurement::drawSample(double* x, double* y)
+{
+//    QwtPlotCurve *d_curve2 = new QwtPlotCurve();
+//    d_curve2->setRenderHint( QwtPlotItem::RenderAntialiased );
+//    d_curve2->setPen( Qt::yellow );
+//    d_curve2->setYAxis( QwtPlot::yLeft );
+//    d_curve2->setSamples((const double*)x, (const double*)y, 1024);
+//    d_curve2->attach(pQwt);
+//    pQwt->replot();
+}
+

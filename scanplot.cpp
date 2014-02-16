@@ -54,13 +54,26 @@ void ScanPlot::getTest()
             kolVo++;
         }
 
-        QwtPlotCurve *d_curve2 = new QwtPlotCurve();
-        d_curve2->setRenderHint( QwtPlotItem::RenderAntialiased );
-        d_curve2->setPen( Qt::yellow );
-        d_curve2->setYAxis( QwtPlot::yLeft );
-        d_curve2->setSamples((const double*)x, (const double*)y, 1024);
-        d_curve2->attach( ttt );
-        ttt->replot();
+//        QwtPlotCurve *d_curve2 = new QwtPlotCurve();
+//        d_curve2->setRenderHint( QwtPlotItem::RenderAntialiased );
+//        d_curve2->setPen( Qt::yellow );
+//        d_curve2->setYAxis( QwtPlot::yLeft );
+//        d_curve2->setSamples((const double*)x, (const double*)y, 1024);
+//        d_curve2->attach( ttt );
+//        ttt->replot();
+        drawSample(x ,y);
         file.close();
     }
 }
+
+void ScanPlot::drawSample(double* x, double* y)
+{
+    QwtPlotCurve *d_curve2 = new QwtPlotCurve();
+    d_curve2->setRenderHint( QwtPlotItem::RenderAntialiased );
+    d_curve2->setPen( Qt::yellow );
+    d_curve2->setYAxis( QwtPlot::yLeft );
+    d_curve2->setSamples((const double*)x, (const double*)y, 1024);
+    d_curve2->attach(ttt);
+    ttt->replot();
+}
+
