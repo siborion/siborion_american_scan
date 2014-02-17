@@ -67,7 +67,7 @@ Plot::Plot( QWidget *parent ):
     setAxisMaxMajor( QwtPlot::xBottom, 6 );
     setAxisMaxMinor( QwtPlot::xBottom, 9 );
 //    setAxisScaleEngine( QwtPlot::xBottom, new QwtLogScaleEngine );
-    setAxisScale(QwtPlot::xBottom, -50.0, 1024.0);
+    setAxisScale(QwtPlot::xBottom, -20.0, 1024.0);
     setAxisScale(QwtPlot::yLeft, 0.0, 255.0);
 
 

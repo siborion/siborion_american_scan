@@ -3,19 +3,13 @@
 mesurement::mesurement(QWidget *parent) :
     QWidget(parent)
 {
-//    QPalette Pal(palette());
-//    Pal.setColor(QPalette::Background, Qt::gray);
-//    setAutoFillBackground(true);
-//    setPalette(Pal);
-
-
-
     QList<int> columnPercent;
     QStringList lst;
     QStandardItemModel *model = new QStandardItemModel();
 
     QVBoxLayout *layout = new QVBoxLayout(this);
     QHBoxLayout *layoutTop = new QHBoxLayout();
+    QVBoxLayout *layoutTopLeft = new QVBoxLayout();
     QHBoxLayout *layoutBot = new QHBoxLayout();
     QVBoxLayout *layoutBotLeft = new QVBoxLayout();
 
@@ -42,11 +36,11 @@ mesurement::mesurement(QWidget *parent) :
 //    twVelocity->setMaximumHeight(120);
 //    twVelocity->setMinimumHeight(120);
 
-    layoutTop->addWidget(twPatient);
-    layoutTop->addItem(vs0);
-    layoutTop->addWidget(twLens);
-    layoutTop->addItem(vs1);
-    layoutTop->addWidget(twVelocity);
+    layoutTopLeft->addWidget(twPatient);
+//    layoutTop->addItem(vs0);
+    layoutTopLeft->addWidget(twLens);
+//    layoutTop->addItem(vs1);
+    layoutTopLeft->addWidget(twVelocity);
 
     model = (QStandardItemModel*)twPatient->model();
     for(quint8 i=0; i<4; i++)
@@ -129,16 +123,22 @@ mesurement::mesurement(QWidget *parent) :
 //    twMeas->setMaximumHeight(350);
 //    twMeas->setMinimumHeight(350);
 
-    QPushButton *pbTest = new QPushButton("test");
+    QPushButton *pbTest = new QPushButton("Add samples");
+
+    layoutTop->addItem(layoutTopLeft);
+    layoutTop->addWidget(twMeas);
+    layoutTop->setStretch(0, 1);
+    layoutTop->setStretch(1, 2);
+
 
     layoutBot->addLayout(layoutBotLeft,0);
     layoutBot->addWidget(pPlot,1);
-    layoutBot->addWidget(twMeas,0);
-    layoutBot->addWidget(pbTest);
+//    layoutTopLeft->addWidget(pbTest);
     layout->addLayout(layoutTop);
+
     layout->addLayout(layoutBot);
 
-    connect(pbTest, SIGNAL(clicked()), SLOT(getFileSample()));
+    connect(pbAuto, SIGNAL(clicked()), SLOT(getFileSample()));
     connect(twMeas, SIGNAL(clicked(QModelIndex)), SLOT(changeRow(QModelIndex)));
 }
 
@@ -169,15 +169,17 @@ void mesurement::getFileSample()
         baListSample << Sample;
         QStandardItem *item0 = new QStandardItem();
         QStandardItem *item1 = new QStandardItem();
+        QStandardItem *item2 = new QStandardItem();
         item0->setData(kolVo,  Qt::DisplayRole);
         item1->setData(Sample, Qt::UserRole);
+        item2->setData(fileName,  Qt::DisplayRole);
 //        model->setItem(kolVo, 0, item0);
 //        model->setItem(kolVo, 0, item1);
         twMeas->model()->setData(twMeas->model()->index(kolVo, 0), kolVo, Qt::DisplayRole);
         twMeas->model()->setData(twMeas->model()->index(kolVo, 0), Sample, Qt::UserRole);
+        twMeas->model()->setData(twMeas->model()->index(kolVo, 1), fileName, Qt::DisplayRole);
         kolVo++;
     }
-
 }
 
 void mesurement::changeRow(QModelIndex curIndex)
@@ -191,23 +193,8 @@ void mesurement::changeRow(QModelIndex curIndex)
     {
         x[kolvo] = kolvo;
         y[kolvo] = double(val);
-//        qDebug() << y[kolvo];
         kolvo++;
     }
-
     pPlot->drawSample(x, y, 1000);
-//    drawSample(x, y);
-}
-
-
-void mesurement::drawSample(double* x, double* y)
-{
-//    QwtPlotCurve *d_curve2 = new QwtPlotCurve();
-//    d_curve2->setRenderHint( QwtPlotItem::RenderAntialiased );
-//    d_curve2->setPen( Qt::yellow );
-//    d_curve2->setYAxis( QwtPlot::yLeft );
-//    d_curve2->setSamples((const double*)x, (const double*)y, 1024);
-//    d_curve2->attach(pQwt);
-//    pQwt->replot();
 }
 

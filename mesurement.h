@@ -33,7 +33,6 @@ private:
     QStandardItemModel *modelVelocity;
     QStandardItemModel *modelMeas;
     QPushButton *pbTest;
-    void drawSample(double* x, double* y);
 
     QString baseMapPatient[4] = {
         "Patient ID",
