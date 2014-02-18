@@ -95,21 +95,27 @@ Plot::Plot( QWidget *parent ):
     d_marker1->attach( this );
 
     d_marker2 = new QwtPlotMarker();
-    d_marker2->setLineStyle( QwtPlotMarker::HLine );
+    d_marker2->setValue( 0.0, 0.0 );
+    d_marker2->setLineStyle( QwtPlotMarker::VLine );
     d_marker2->setLabelAlignment( Qt::AlignRight | Qt::AlignBottom );
-    d_marker2->setLinePen( QColor( 200, 150, 0 ), 0, Qt::DashDotLine );
-    d_marker2->setSymbol( new QwtSymbol( QwtSymbol::Diamond,
-        QColor( Qt::yellow ), QColor( Qt::green ), QSize( 8, 8 ) ) );
+    d_marker2->setLinePen( Qt::green, 0, Qt::DashDotLine );
     d_marker2->attach( this );
 
-    setDamp( 0.0 );
+    d_marker3 = new QwtPlotMarker();
+    d_marker3->setValue( 0.0, 0.0 );
+    d_marker3->setLineStyle( QwtPlotMarker::VLine );
+    d_marker3->setLabelAlignment( Qt::AlignRight | Qt::AlignBottom );
+    d_marker3->setLinePen( Qt::green, 0, Qt::DashDotLine );
+    d_marker3->attach( this );
 
+    setDamp( 0.0 );
     setAutoReplot( true );
 }
 
 void Plot::drawSample(const double *x, const double *y, int count)
 {
     d_curve1->setSamples(x, y, count );
+    d_marker1->setValue( 100.0, 0.0 );
 }
 
 void Plot::showData( const double *frequency, const double *amplitude,

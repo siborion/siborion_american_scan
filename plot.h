@@ -27,6 +27,7 @@ private:
     QwtPlotCurve *d_curve2;
     QwtPlotMarker *d_marker1;
     QwtPlotMarker *d_marker2;
+    QwtPlotMarker *d_marker3;
 };
 
 #endif

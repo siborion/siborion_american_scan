@@ -157,7 +157,7 @@ void mesurement::getFileSample()
     {
         Sample.clear();
         file.setFileName(fileName);
-        if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+        if (!file.open(QIODevice::ReadOnly))
             return;
         file.read(144);
         while (!file.atEnd())
