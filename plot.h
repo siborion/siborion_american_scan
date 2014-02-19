@@ -13,6 +13,7 @@ class Plot: public QwtPlot
 public:
     Plot( QWidget *parent );
     void drawSample(const double *frequency, const double *amplitude, int count);
+    void drawMarker(quint8 nomMarker, quint16 pos);
 
 public Q_SLOTS:
     void setDamp( double damping );

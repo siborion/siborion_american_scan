@@ -113,9 +113,9 @@ mesurement::mesurement(QWidget *parent) :
     lst          <<tr("No")<<tr("AveVelAl")<<tr("AL")<<tr("ACD")<<tr("LT")<<tr("VIT");
     twMeas  = new adjview(10, lst, columnPercent);
 
-    QFont font;
-    font.setBold(true);
-    twMeas->model()->setData(twMeas->model()->index(1, 1), font, Qt::FontRole);
+//    QFont font;
+//    font.setBold(true);
+//    twMeas->model()->setData(twMeas->model()->index(1, 1), font, Qt::FontRole);
 
 //    mydelegate *myDelegate = new mydelegate();
 //    twMeas->setItemDelegate(myDelegate);
@@ -123,7 +123,7 @@ mesurement::mesurement(QWidget *parent) :
 //    twMeas->setMaximumHeight(350);
 //    twMeas->setMinimumHeight(350);
 
-    QPushButton *pbTest = new QPushButton("Add samples");
+//    QPushButton *pbTest = new QPushButton("Add samples");
 
     layoutTop->addItem(layoutTopLeft);
     layoutTop->addWidget(twMeas);
@@ -144,7 +144,10 @@ mesurement::mesurement(QWidget *parent) :
 
 void mesurement::getFileSample()
 {
-    quint8 kolVo=0;
+    quint16 L1, L2, Retina;
+    quint8  kolVo=0;
+    quint16 numByte;
+    quint8 Val;
     QList <QByteArray> baListSample;
     QByteArray Sample;
     QStandardItemModel *model;
@@ -160,10 +163,22 @@ void mesurement::getFileSample()
         if (!file.open(QIODevice::ReadOnly))
             return;
         file.read(144);
+        numByte = 0;
+        L1=L2=Retina=0;
         while (!file.atEnd())
         {
-            Sample.append(file.read(1).toHex().toUInt(&bOk, 16));
+            Val = (file.read(1).toHex().toUInt(&bOk, 16));
             file.read(1);
+            Sample.append(Val);
+
+            if((Val>=230)&&(L1==0)&&(numByte>=54)&&(numByte<162))
+                L1 = numByte;
+            if((Val>=230)&&(L2==0)&&(numByte>=(L1+54))&&(numByte<(L1+162)))
+                L2 = numByte;
+            if((Val>=230)&&(Retina==0)&&(numByte>=(459)))
+                Retina = numByte;
+
+            numByte++;
         }
         file.close();
         baListSample << Sample;
@@ -173,28 +188,43 @@ void mesurement::getFileSample()
         item0->setData(kolVo,  Qt::DisplayRole);
         item1->setData(Sample, Qt::UserRole);
         item2->setData(fileName,  Qt::DisplayRole);
-//        model->setItem(kolVo, 0, item0);
-//        model->setItem(kolVo, 0, item1);
         twMeas->model()->setData(twMeas->model()->index(kolVo, 0), kolVo, Qt::DisplayRole);
         twMeas->model()->setData(twMeas->model()->index(kolVo, 0), Sample, Qt::UserRole);
         twMeas->model()->setData(twMeas->model()->index(kolVo, 1), fileName, Qt::DisplayRole);
+        twMeas->model()->setData(twMeas->model()->index(kolVo, 3), (round(((double)L1/27)*100))/100, Qt::DisplayRole);
+        twMeas->model()->setData(twMeas->model()->index(kolVo, 4), (round(((double)(L2-L1)/27)*100))/100, Qt::DisplayRole);
+        twMeas->model()->setData(twMeas->model()->index(kolVo, 2), (round(((double)Retina/27)*100))/100, Qt::DisplayRole);
         kolVo++;
     }
 }
 
 void mesurement::changeRow(QModelIndex curIndex)
 {
+    quint16 L1, L2, Retina, kolvo;
     double x[2048];
     double y[2048];
-    quint16 kolvo=0;
+    L1=L2=Retina=kolvo=0;
     QByteArray baTmp;
     baTmp.append(twMeas->model()->data(curIndex, Qt::UserRole).toByteArray());
     foreach (quint8 val, baTmp)
     {
         x[kolvo] = kolvo;
         y[kolvo] = double(val);
+
+        if((y[kolvo]>230)&&(L1==0)&&(kolvo>54)&&(kolvo<162))
+            L1 = kolvo;
+
+        if((y[kolvo]>230)&&(L2==0)&&(kolvo>(L1+54))&&(kolvo<(L1+162)))
+            L2 = kolvo;
+
+        if((y[kolvo]>230)&&(Retina==0)&&(kolvo>(459)))
+            Retina = kolvo;
+
         kolvo++;
     }
     pPlot->drawSample(x, y, 1000);
+    pPlot->drawMarker(0, L1);
+    pPlot->drawMarker(1, L2);
+    pPlot->drawMarker(2, Retina);
 }
 

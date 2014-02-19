@@ -59,7 +59,7 @@ Plot::Plot( QWidget *parent ):
     grid->attach( this );
 
     // axes
-//    enableAxis( QwtPlot::yRight );
+    enableAxis( QwtPlot::xTop );
 //    setAxisTitle( QwtPlot::xBottom, "Normalized Frequency" );
 //    setAxisTitle( QwtPlot::yLeft, "Amplitude [dB]" );
 //    setAxisTitle( QwtPlot::yRight, "Phase [deg]" );
@@ -67,7 +67,10 @@ Plot::Plot( QWidget *parent ):
     setAxisMaxMajor( QwtPlot::xBottom, 6 );
     setAxisMaxMinor( QwtPlot::xBottom, 9 );
 //    setAxisScaleEngine( QwtPlot::xBottom, new QwtLogScaleEngine );
-    setAxisScale(QwtPlot::xBottom, -20.0, 1024.0);
+    double dMin, dMax;
+    dMin=(-20.0); dMax=(1024.0);
+    setAxisScale(QwtPlot::xBottom, dMin, dMax);
+    setAxisScale(QwtPlot::xTop, (dMin/27), (dMax/27));
     setAxisScale(QwtPlot::yLeft, 0.0, 255.0);
 
 
@@ -87,25 +90,31 @@ Plot::Plot( QWidget *parent ):
     d_curve2->attach( this );
 
     // marker
+    QwtText *L1 = new QwtText("L1");
     d_marker1 = new QwtPlotMarker();
-    d_marker1->setValue( 0.0, 0.0 );
+    d_marker1->setXValue( 0.0 );
+    d_marker1->setLabel(*L1);
     d_marker1->setLineStyle( QwtPlotMarker::VLine );
-    d_marker1->setLabelAlignment( Qt::AlignRight | Qt::AlignBottom );
-    d_marker1->setLinePen( Qt::green, 0, Qt::DashDotLine );
+    d_marker1->setLabelAlignment( Qt::AlignLeft | Qt::AlignTop );
+    d_marker1->setLinePen( Qt::red, 0, Qt::SolidLine );
     d_marker1->attach( this );
 
+    QwtText *L2 = new QwtText("\r\nL2");
     d_marker2 = new QwtPlotMarker();
-    d_marker2->setValue( 0.0, 0.0 );
+    d_marker2->setXValue( 0.0 );
+    d_marker2->setLabel(*L2);
     d_marker2->setLineStyle( QwtPlotMarker::VLine );
-    d_marker2->setLabelAlignment( Qt::AlignRight | Qt::AlignBottom );
-    d_marker2->setLinePen( Qt::green, 0, Qt::DashDotLine );
+    d_marker2->setLabelAlignment( Qt::AlignLeft | Qt::AlignTop );
+    d_marker2->setLinePen( Qt::red, 0, Qt::SolidLine );
     d_marker2->attach( this );
 
+    QwtText *Retina = new QwtText("\r\n\r\nRetina");
     d_marker3 = new QwtPlotMarker();
-    d_marker3->setValue( 0.0, 0.0 );
+    d_marker3->setXValue( 0.0 );
+    d_marker3->setLabel(*Retina);
     d_marker3->setLineStyle( QwtPlotMarker::VLine );
-    d_marker3->setLabelAlignment( Qt::AlignRight | Qt::AlignBottom );
-    d_marker3->setLinePen( Qt::green, 0, Qt::DashDotLine );
+    d_marker3->setLabelAlignment( Qt::AlignLeft | Qt::AlignTop );
+    d_marker3->setLinePen( Qt::red, 0, Qt::SolidLine );
     d_marker3->attach( this );
 
     setDamp( 0.0 );
@@ -117,6 +126,24 @@ void Plot::drawSample(const double *x, const double *y, int count)
     d_curve1->setSamples(x, y, count );
     d_marker1->setValue( 100.0, 0.0 );
 }
+
+void Plot::drawMarker(quint8 nomMarker, quint16 pos)
+{
+    switch(nomMarker)
+    {
+    case 0:
+        d_marker1->setXValue((double)pos);
+    break;
+    case 1:
+        d_marker2->setXValue((double)pos);
+    break;
+    case 2:
+        d_marker3->setXValue((double)pos);
+    break;
+    }
+}
+
+
 
 void Plot::showData( const double *frequency, const double *amplitude,
     const double *phase, int count )
