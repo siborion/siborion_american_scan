@@ -228,3 +228,22 @@ void mesurement::changeRow(QModelIndex curIndex)
     pPlot->drawMarker(2, Retina);
 }
 
+bool mesurement::checkSample(QByteArray *Sample, QList<quint16> &extremum)
+{
+#define Start 5
+    quint16 kolvo = 0;
+    foreach (quint8 val, *Sample)
+    {
+        if(kolvo>Start)
+        {
+
+        }
+        kolvo++;
+    }
+    return true;
+}
+
+
+
+
+

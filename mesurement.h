@@ -33,6 +33,7 @@ private:
     QStandardItemModel *modelVelocity;
     QStandardItemModel *modelMeas;
     QPushButton *pbTest;
+    bool checkSample(QByteArray *Sample, QList<quint16> &extremum);
 
     QString baseMapPatient[4] = {
         "Patient ID",
