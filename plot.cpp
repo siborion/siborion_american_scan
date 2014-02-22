@@ -92,6 +92,7 @@ Plot::Plot( QWidget *parent ):
     // marker
     QwtText *L1 = new QwtText("L1");
     d_marker1 = new QwtPlotMarker();
+    d_marker1->setVisible(false);
     d_marker1->setXValue( 0.0 );
     d_marker1->setLabel(*L1);
     d_marker1->setLineStyle( QwtPlotMarker::VLine );
@@ -99,8 +100,10 @@ Plot::Plot( QWidget *parent ):
     d_marker1->setLinePen( Qt::red, 0, Qt::SolidLine );
     d_marker1->attach( this );
 
+
     QwtText *L2 = new QwtText("\r\nL2");
     d_marker2 = new QwtPlotMarker();
+    d_marker2->setVisible(false);
     d_marker2->setXValue( 0.0 );
     d_marker2->setLabel(*L2);
     d_marker2->setLineStyle( QwtPlotMarker::VLine );
@@ -108,8 +111,10 @@ Plot::Plot( QWidget *parent ):
     d_marker2->setLinePen( Qt::red, 0, Qt::SolidLine );
     d_marker2->attach( this );
 
+
     QwtText *Retina = new QwtText("\r\n\r\nRetina");
     d_marker3 = new QwtPlotMarker();
+    d_marker3->setVisible(false);
     d_marker3->setXValue( 0.0 );
     d_marker3->setLabel(*Retina);
     d_marker3->setLineStyle( QwtPlotMarker::VLine );
