@@ -253,7 +253,8 @@ void Plot::drawMarker(quint8 nomMarker, quint16 pos)
 void Plot::drawMarker(double x, double y)
 {
     QwtPlotMarker *d_marker4 = new QwtPlotMarker();
-    d_marker4->setLineStyle( QwtPlotMarker::NoLine );
+    d_marker4->setLineStyle( QwtPlotMarker::VLine );
+    d_marker4->setLinePen( Qt::red, 0, Qt::SolidLine );
     d_marker4->setSymbol( new QwtSymbol( QwtSymbol::Diamond,QColor( Qt::yellow ), QColor( Qt::green ), QSize( 8, 8 ) ) );
     d_marker4->setValue(x, y);
     d_marker4->attach( this );

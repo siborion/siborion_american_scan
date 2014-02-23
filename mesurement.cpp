@@ -207,7 +207,7 @@ void mesurement::changeRow(QModelIndex curIndex)
     L1=L2=Retina=kolvo=0;
     QByteArray baTmp;
     baTmp.append(twMeas->model()->data(curIndex, Qt::UserRole).toByteArray());
-    qDebug() << pPlot->itemList();
+//    qDebug() << pPlot->itemList();
     foreach (quint8 val, baTmp)
     {
         x[kolvo] = kolvo;
@@ -236,7 +236,7 @@ bool mesurement::checkSample(QByteArray *Sample, QList<quint16> &extremum)
 #define sampleStart 5
 #define sampleEnd   1024
 #define pik         (255*0.9)
-#define spad        (255*0.6)
+#define spad        (60)
     quint16 kolvo = 0;
     bool front = true;
     foreach (quint8 val, *Sample)
@@ -249,10 +249,11 @@ bool mesurement::checkSample(QByteArray *Sample, QList<quint16> &extremum)
                 {
                     for(int i=1; i<=5; i++)
                     {
-                        if((Sample->at(kolvo-i))<spad)
+                        if(((quint8)(Sample->at(kolvo-i)))<spad)
                         {
-                            pPlot->drawMarker(double(kolvo-i), double(quint8(Sample->at(kolvo-i))));
-                            extremum.append(kolvo-i+1);
+                            pPlot->drawMarker(double((kolvo-i)+1), double(quint8(Sample->at((kolvo-i)+1))));
+                            extremum.append((kolvo-i)+1);
+                            qDebug()<<(quint8)(Sample->at((kolvo-i)+1));
                             break;
                         }
                     }
