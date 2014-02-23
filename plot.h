@@ -14,6 +14,7 @@ public:
     Plot( QWidget *parent );
     void drawSample(const double *frequency, const double *amplitude, int count);
     void drawMarker(quint8 nomMarker, quint16 pos);
+    void drawMarker(double x, double y);
 
 public Q_SLOTS:
     void setDamp( double damping );
@@ -29,6 +30,7 @@ private:
     QwtPlotMarker *d_marker1;
     QwtPlotMarker *d_marker2;
     QwtPlotMarker *d_marker3;
+//    QwtPlotMarker *d_marker4;
 };
 
 #endif

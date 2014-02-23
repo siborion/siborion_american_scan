@@ -38,6 +38,7 @@ Plot::Plot( QWidget *parent ):
     QwtPlot( parent )
 {
     setAutoReplot( false );
+    setAutoDelete(true);
 
 //    setTitle( "Frequency Response of a Second-Order System" );
 
@@ -126,30 +127,6 @@ Plot::Plot( QWidget *parent ):
     setAutoReplot( true );
 }
 
-void Plot::drawSample(const double *x, const double *y, int count)
-{
-    d_curve1->setSamples(x, y, count );
-    d_marker1->setValue( 100.0, 0.0 );
-}
-
-void Plot::drawMarker(quint8 nomMarker, quint16 pos)
-{
-    switch(nomMarker)
-    {
-    case 0:
-        d_marker1->setXValue((double)pos);
-    break;
-    case 1:
-        d_marker2->setXValue((double)pos);
-    break;
-    case 2:
-        d_marker3->setXValue((double)pos);
-    break;
-    }
-}
-
-
-
 void Plot::showData( const double *frequency, const double *amplitude,
     const double *phase, int count )
 {
@@ -233,4 +210,59 @@ void Plot::setDamp( double damping )
     setAutoReplot( doReplot );
 
     replot();
+}
+
+void Plot::drawSample(const double *x, const double *y, int count)
+{
+    foreach (QwtPlotItem *p, itemList())
+    {
+//        qDebug()  << qobject_cast<QwtPlotItem>(p);
+//        removeItem(p);
+
+        if(p->rtti() == QwtPlotItem::Rtti_PlotMarker)
+            removeItem(p);
+//        qDebug() << p->plot();
+
+//        QwtPlotMarker* starEditor = static_cast<QwtPlotMarker*>(*p);
+//            if (starEditor != 0)
+//            {
+//            }
+
+
+    }
+
+    d_curve1->setSamples(x, y, count );
+}
+
+void Plot::drawMarker(quint8 nomMarker, quint16 pos)
+{
+    switch(nomMarker)
+    {
+    case 0:
+        d_marker1->setXValue((double)pos);
+    break;
+    case 1:
+        d_marker2->setXValue((double)pos);
+    break;
+    case 2:
+        d_marker3->setXValue((double)pos);
+    break;
+    }
+}
+
+void Plot::drawMarker(double x, double y)
+{
+    QwtPlotMarker *d_marker4 = new QwtPlotMarker();
+    d_marker4->setLineStyle( QwtPlotMarker::NoLine );
+    d_marker4->setSymbol( new QwtSymbol( QwtSymbol::Diamond,QColor( Qt::yellow ), QColor( Qt::green ), QSize( 8, 8 ) ) );
+    d_marker4->setValue(x, y);
+    d_marker4->attach( this );
+
+
+//    if(itemList().count()>2)
+//    {
+//        removeItem(itemList().at(0));
+//        removeItem(itemList().at(1));
+//    }
+
 }

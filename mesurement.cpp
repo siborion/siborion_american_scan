@@ -18,13 +18,13 @@ mesurement::mesurement(QWidget *parent) :
     columnPercent<<50<<50;
     twPatient  = new adjview(4, 2, columnPercent);
 
-    QSpacerItem *vs0 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+//    QSpacerItem *vs0 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
     columnPercent.clear();
     columnPercent<<60<<20<<20;
     twLens     = new adjview(4, 3, columnPercent);
 
-    QSpacerItem *vs1 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+//    QSpacerItem *vs1 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
     columnPercent.clear();
     columnPercent<<80<<20;
     twVelocity = new adjview(3, 2, columnPercent);
@@ -200,12 +200,14 @@ void mesurement::getFileSample()
 
 void mesurement::changeRow(QModelIndex curIndex)
 {
+    QList<quint16> extremum;
     quint16 L1, L2, Retina, kolvo;
     double x[2048];
     double y[2048];
     L1=L2=Retina=kolvo=0;
     QByteArray baTmp;
     baTmp.append(twMeas->model()->data(curIndex, Qt::UserRole).toByteArray());
+    qDebug() << pPlot->itemList();
     foreach (quint8 val, baTmp)
     {
         x[kolvo] = kolvo;
@@ -226,19 +228,46 @@ void mesurement::changeRow(QModelIndex curIndex)
     pPlot->drawMarker(0, L1);
     pPlot->drawMarker(1, L2);
     pPlot->drawMarker(2, Retina);
+    checkSample(&baTmp, extremum);
 }
 
 bool mesurement::checkSample(QByteArray *Sample, QList<quint16> &extremum)
 {
-#define Start 5
+#define sampleStart 5
+#define sampleEnd   1024
+#define pik         (255*0.9)
+#define spad        (255*0.6)
     quint16 kolvo = 0;
+    bool front = true;
     foreach (quint8 val, *Sample)
     {
-        if(kolvo>Start)
+        if(kolvo>sampleStart)
         {
-
+            if(val>pik)
+            {
+                if (front)
+                {
+                    for(int i=1; i<=5; i++)
+                    {
+                        if((Sample->at(kolvo-i))<spad)
+                        {
+                            pPlot->drawMarker(double(kolvo-i), double(quint8(Sample->at(kolvo-i))));
+                            extremum.append(kolvo-i+1);
+                            break;
+                        }
+                    }
+                }
+                front = false;
+            }
+            else
+            {
+                if(val<spad)
+                    front = true;
+            }
         }
         kolvo++;
+        if(kolvo>sampleEnd)
+            break;
     }
     return true;
 }
