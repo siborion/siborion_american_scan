@@ -200,7 +200,7 @@ void mesurement::getFileSample()
 
 void mesurement::changeRow(QModelIndex curIndex)
 {
-    QList<quint16> extremum;
+    QList<quint16> extremum, mainParam;
     quint16 L1, L2, Retina, kolvo;
     double x[2048];
     double y[2048];
@@ -213,22 +213,36 @@ void mesurement::changeRow(QModelIndex curIndex)
         x[kolvo] = kolvo;
         y[kolvo] = double(val);
 
-        if((y[kolvo]>230)&&(L1==0)&&(kolvo>54)&&(kolvo<162))
-            L1 = kolvo;
+//        if((y[kolvo]>230)&&(L1==0)&&(kolvo>54)&&(kolvo<162))
+//            L1 = kolvo;
 
-        if((y[kolvo]>230)&&(L2==0)&&(kolvo>(L1+54))&&(kolvo<(L1+162)))
-            L2 = kolvo;
+//        if((y[kolvo]>230)&&(L2==0)&&(kolvo>(L1+54))&&(kolvo<(L1+162)))
+//            L2 = kolvo;
 
-        if((y[kolvo]>230)&&(Retina==0)&&(kolvo>(459)))
-            Retina = kolvo;
+//        if((y[kolvo]>230)&&(Retina==0)&&(kolvo>(459)))
+//            Retina = kolvo;
 
         kolvo++;
     }
     pPlot->drawSample(x, y, 1000);
-    pPlot->drawMarker(0, L1);
-    pPlot->drawMarker(1, L2);
-    pPlot->drawMarker(2, Retina);
-    checkSample(&baTmp, extremum);
+//    pPlot->drawMarker(0, L1);
+//    pPlot->drawMarker(1, L2);
+//    pPlot->drawMarker(2, Retina);
+    if(checkSample(&baTmp, extremum))
+    {
+        foreach(int val, extremum)
+        {
+            pPlot->drawMarker((double)val,(double)(quint8)baTmp.at(val), Qt::yellow);
+        }
+        if(findMainParam(&extremum, mainParam))
+        {
+            foreach(int val, mainParam)
+            {
+//                qDebug() << val;
+                pPlot->drawMarker((double)val,(double)(quint8)baTmp.at(val), Qt::green);
+            }
+        }
+    }
 }
 
 bool mesurement::checkSample(QByteArray *Sample, QList<quint16> &extremum)
@@ -251,9 +265,9 @@ bool mesurement::checkSample(QByteArray *Sample, QList<quint16> &extremum)
                     {
                         if(((quint8)(Sample->at(kolvo-i)))<spad)
                         {
-                            pPlot->drawMarker(double((kolvo-i)+1), double(quint8(Sample->at((kolvo-i)+1))));
+//                            pPlot->drawMarker(double((kolvo-i)+1), double(quint8(Sample->at((kolvo-i)+1))));
                             extremum.append((kolvo-i)+1);
-                            qDebug()<<(quint8)(Sample->at((kolvo-i)+1));
+//                            qDebug()<<(quint8)(Sample->at((kolvo-i)+1));
                             break;
                         }
                     }
@@ -270,10 +284,34 @@ bool mesurement::checkSample(QByteArray *Sample, QList<quint16> &extremum)
         if(kolvo>sampleEnd)
             break;
     }
-    return true;
+    return (extremum.count()>=3?true:false) ;
 }
 
+bool mesurement::findMainParam(QList<quint16> *extremum, QList<quint16> &mainParam)
+{
+    quint16 L1, L2, Retina, val;
+    L1=L2=Retina=0;
 
+    for(int i=0; i<extremum->count();i++)
+    {
+        val = extremum->at(i);
+        if((L1==0)&&(val>54)&&(val<162))
+            L1 = val;
+        if((L2==0)&&(val>(L1+54))&&(val<(L1+162)))
+            L2 = val;
+        if((Retina==0)&&(val>(459)))
+            Retina = val;
 
+    }
+    if((L1>0)&&(L2>0)&&(Retina>0))
+    {
+        mainParam.append(L1);
+        mainParam.append(L2);
+        mainParam.append(Retina);
+        return true;
+    }
+    else
+        return false;
+}
 
 

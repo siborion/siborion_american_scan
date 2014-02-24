@@ -34,6 +34,7 @@ private:
     QStandardItemModel *modelMeas;
     QPushButton *pbTest;
     bool checkSample(QByteArray *Sample, QList<quint16> &extremum);
+    bool findMainParam(QList<quint16> *extremum, QList<quint16> &mainParam);
 
     QString baseMapPatient[4] = {
         "Patient ID",

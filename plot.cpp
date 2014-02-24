@@ -220,7 +220,11 @@ void Plot::drawSample(const double *x, const double *y, int count)
 //        removeItem(p);
 
         if(p->rtti() == QwtPlotItem::Rtti_PlotMarker)
+        {
             removeItem(p);
+        }
+
+
 //        qDebug() << p->plot();
 
 //        QwtPlotMarker* starEditor = static_cast<QwtPlotMarker*>(*p);
@@ -250,12 +254,12 @@ void Plot::drawMarker(quint8 nomMarker, quint16 pos)
     }
 }
 
-void Plot::drawMarker(double x, double y)
+void Plot::drawMarker(double x, double y, const QColor &color)
 {
     QwtPlotMarker *d_marker4 = new QwtPlotMarker();
     d_marker4->setLineStyle( QwtPlotMarker::VLine );
     d_marker4->setLinePen( Qt::red, 0, Qt::SolidLine );
-    d_marker4->setSymbol( new QwtSymbol( QwtSymbol::Diamond,QColor( Qt::yellow ), QColor( Qt::green ), QSize( 8, 8 ) ) );
+    d_marker4->setSymbol( new QwtSymbol( QwtSymbol::Diamond,QColor( color ), QColor( color ), QSize( 8, 8 ) ) );
     d_marker4->setValue(x, y);
     d_marker4->attach( this );
 
