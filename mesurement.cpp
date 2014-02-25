@@ -207,27 +207,13 @@ void mesurement::changeRow(QModelIndex curIndex)
     L1=L2=Retina=kolvo=0;
     QByteArray baTmp;
     baTmp.append(twMeas->model()->data(curIndex, Qt::UserRole).toByteArray());
-//    qDebug() << pPlot->itemList();
     foreach (quint8 val, baTmp)
     {
         x[kolvo] = kolvo;
         y[kolvo] = double(val);
-
-//        if((y[kolvo]>230)&&(L1==0)&&(kolvo>54)&&(kolvo<162))
-//            L1 = kolvo;
-
-//        if((y[kolvo]>230)&&(L2==0)&&(kolvo>(L1+54))&&(kolvo<(L1+162)))
-//            L2 = kolvo;
-
-//        if((y[kolvo]>230)&&(Retina==0)&&(kolvo>(459)))
-//            Retina = kolvo;
-
         kolvo++;
     }
     pPlot->drawSample(x, y, 1000);
-//    pPlot->drawMarker(0, L1);
-//    pPlot->drawMarker(1, L2);
-//    pPlot->drawMarker(2, Retina);
     if(checkSample(&baTmp, extremum))
     {
         foreach(int val, extremum)
@@ -236,11 +222,14 @@ void mesurement::changeRow(QModelIndex curIndex)
         }
         if(findMainParam(&extremum, mainParam))
         {
-            foreach(int val, mainParam)
-            {
-//                qDebug() << val;
-                pPlot->drawMarker((double)val,(double)(quint8)baTmp.at(val), Qt::green);
-            }
+//            foreach(int val, mainParam)
+//            {
+            pPlot->drawMarker(mainParam.at(0), "Start");
+            pPlot->drawMarker(mainParam.at(1), "L1");
+            pPlot->drawMarker(mainParam.at(2), "L2");
+            pPlot->drawMarker(mainParam.at(3), "Retina");
+//                pPlot->drawMarker(val);
+//            }
         }
     }
 }
@@ -289,22 +278,25 @@ bool mesurement::checkSample(QByteArray *Sample, QList<quint16> &extremum)
 
 bool mesurement::findMainParam(QList<quint16> *extremum, QList<quint16> &mainParam)
 {
-    quint16 L1, L2, Retina, val;
-    L1=L2=Retina=0;
+    quint16 Start, L1, L2, Retina, val;
+    Start=L1=L2=Retina=0;
 
     for(int i=0; i<extremum->count();i++)
     {
         val = extremum->at(i);
-        if((L1==0)&&(val>54)&&(val<162))
+        if(Start==0)
+            Start = val;
+        if((L1==0)&&(val>(Start+54))&&(val<(Start+162)))
             L1 = val;
         if((L2==0)&&(val>(L1+54))&&(val<(L1+162)))
             L2 = val;
-        if((Retina==0)&&(val>(459)))
+        if((Retina==0)&&(val>(Start+459)))
             Retina = val;
 
     }
-    if((L1>0)&&(L2>0)&&(Retina>0))
+    if((Start>0)&&(L1>0)&&(L2>0)&&(Retina>0))
     {
+        mainParam.append(Start);
         mainParam.append(L1);
         mainParam.append(L2);
         mainParam.append(Retina);

@@ -10,6 +10,8 @@
 #include <qmath.h>
 #include "complexnumber.h"
 #include "plot.h"
+#include <qevent.h>
+
 
 #if QT_VERSION < 0x040601
 #define qExp(x) ::exp(x)
@@ -125,6 +127,7 @@ Plot::Plot( QWidget *parent ):
 
     setDamp( 0.0 );
     setAutoReplot( true );
+
 }
 
 void Plot::showData( const double *frequency, const double *amplitude,
@@ -199,75 +202,252 @@ void Plot::setDamp( double damping )
         }
 
     }
-
     double f3 = frequency[i3] - ( frequency[i3] - frequency[i3 - 1] )
         / ( amplitude[i3] - amplitude[i3 -1] ) * ( amplitude[i3] + 3 );
-
-//    showPeak( fmax, amax );
-//    show3dB( f3 );
-//    showData( frequency, amplitude, phase, ArraySize );
-
     setAutoReplot( doReplot );
-
     replot();
 }
 
 void Plot::drawSample(const double *x, const double *y, int count)
 {
+    QwtPlotMarker *d;
     foreach (QwtPlotItem *p, itemList())
     {
-//        qDebug()  << qobject_cast<QwtPlotItem>(p);
-//        removeItem(p);
-
+        d = (QwtPlotMarker*)p;
+//        p->setXAxis();
         if(p->rtti() == QwtPlotItem::Rtti_PlotMarker)
         {
+//                    d = (QwtPlotMarker*)p;
+//                    d->setXValue(d->xValue()+10);
             removeItem(p);
         }
-
-
-//        qDebug() << p->plot();
-
-//        QwtPlotMarker* starEditor = static_cast<QwtPlotMarker*>(*p);
-//            if (starEditor != 0)
-//            {
-//            }
-
-
     }
-
     d_curve1->setSamples(x, y, count );
 }
 
-void Plot::drawMarker(quint8 nomMarker, quint16 pos)
+void Plot::drawMarker(quint16 pos, QString title)
 {
-    switch(nomMarker)
-    {
-    case 0:
-        d_marker1->setXValue((double)pos);
-    break;
-    case 1:
-        d_marker2->setXValue((double)pos);
-    break;
-    case 2:
-        d_marker3->setXValue((double)pos);
-    break;
-    }
+    QwtPlotMarker *d_marker = new QwtPlotMarker();
+    d_marker->setLineStyle( QwtPlotMarker::VLine );
+    d_marker->setLinePen( Qt::red, 0, Qt::SolidLine );
+    d_marker->setXValue((double)pos);
+    d_marker->setTitle(title);
+    d_marker->attach( this );
 }
 
 void Plot::drawMarker(double x, double y, const QColor &color)
 {
-    QwtPlotMarker *d_marker4 = new QwtPlotMarker();
-    d_marker4->setLineStyle( QwtPlotMarker::VLine );
-    d_marker4->setLinePen( Qt::red, 0, Qt::SolidLine );
-    d_marker4->setSymbol( new QwtSymbol( QwtSymbol::Diamond,QColor( color ), QColor( color ), QSize( 8, 8 ) ) );
-    d_marker4->setValue(x, y);
-    d_marker4->attach( this );
-
-
-//    if(itemList().count()>2)
-//    {
-//        removeItem(itemList().at(0));
-//        removeItem(itemList().at(1));
-//    }
-
+    QwtPlotMarker *d_marker = new QwtPlotMarker();
+    d_marker->setLineStyle( QwtPlotMarker::NoLine );
+    d_marker->setLinePen( color, 0, Qt::SolidLine );
+    d_marker->setSymbol( new QwtSymbol( QwtSymbol::Diamond,QColor( color ), QColor( color ), QSize( 8, 8 ) ) );
+    d_marker->setValue(x, y);
+    d_marker->attach( this );
 }
+
+
+bool Plot::eventFilter( QObject *object, QEvent *event )
+{
+
+    switch( event->type() )
+    {
+        case QEvent::FocusIn:
+        {
+//            showCursor( true );
+            break;
+        }
+        case QEvent::FocusOut:
+        {
+//            showCursor( false );
+            break;
+        }
+        case QEvent::Paint:
+        {
+//            QApplication::postEvent( this, new QEvent( QEvent::User ) );
+            break;
+        }
+        case QEvent::MouseButtonPress:
+        {
+            const QMouseEvent *mouseEvent = static_cast<QMouseEvent *>( event );
+            select( mouseEvent->pos() );
+            return true;
+        }
+        case QEvent::MouseMove:
+        {
+            const QMouseEvent *mouseEvent = static_cast<QMouseEvent *>( event );
+            move( mouseEvent->pos() );
+            return true;
+        }
+        case QEvent::KeyPress:
+        {
+            const QKeyEvent *keyEvent = static_cast<QKeyEvent *>( event );
+
+            const int delta = 5;
+            switch( keyEvent->key() )
+            {
+                case Qt::Key_Up:
+                {
+//                    shiftCurveCursor( true );
+                    return true;
+                }
+                case Qt::Key_Down:
+                {
+//                    shiftCurveCursor( false );
+                    return true;
+                }
+                case Qt::Key_Right:
+                case Qt::Key_Plus:
+                {
+//                    if ( d_selectedCurve )
+//                        shiftPointCursor( true );
+//                    else
+//                        shiftCurveCursor( true );
+                    return true;
+                }
+                case Qt::Key_Left:
+                case Qt::Key_Minus:
+                {
+//                    if ( d_selectedCurve )
+//                        shiftPointCursor( false );
+//                    else
+//                        shiftCurveCursor( true );
+                    return true;
+                }
+
+
+                case Qt::Key_1:
+                {
+//                    moveBy( -delta, delta );
+                    break;
+                }
+                case Qt::Key_2:
+                {
+//                    moveBy( 0, delta );
+                    break;
+                }
+                case Qt::Key_3:
+                {
+//                    moveBy( delta, delta );
+                    break;
+                }
+                case Qt::Key_4:
+                {
+//                    moveBy( -delta, 0 );
+                    break;
+                }
+                case Qt::Key_6:
+                {
+//                    moveBy( delta, 0 );
+                    break;
+                }
+                case Qt::Key_7:
+                {
+//                    moveBy( -delta, -delta );
+                    break;
+                }
+                case Qt::Key_8:
+                {
+//                    moveBy( 0, -delta );
+                    break;
+                }
+                case Qt::Key_9:
+                {
+//                    moveBy( delta, -delta );
+                    break;
+                }
+                default:
+                    break;
+            }
+        }
+        default:
+            break;
+    }
+
+    return QObject::eventFilter( object, event );
+}
+
+
+
+
+void Plot::select( const QPoint &pos )
+{
+    QwtPlotMarker *curve = NULL;
+    double dist = 10e10;
+    int index = -1;
+
+    const QwtPlotItemList& itmList = itemList();
+    for ( QwtPlotItemIterator it = itmList.begin();
+        it != itmList.end(); ++it )
+    {
+        if ( ( *it )->rtti() == QwtPlotItem::Rtti_PlotMarker)
+        {
+            QwtPlotMarker *c = static_cast<QwtPlotMarker *>( *it );
+
+            double d;
+            d = abs(c->xValue() - pos.x());
+            int idx = c->xValue();
+            if ( d < dist )
+            {
+                curve = c;
+                index = idx;
+                dist = d;
+            }
+        }
+    }
+
+    if ( curve && dist < 10 ) // 10 pixels tolerance
+    {
+        d_selectedCurve = curve;
+        d_selectedPoint = index;
+//        showCursor( true );
+    }
+}
+
+
+
+
+// Move the selected point
+void Plot::move( const QPoint &pos )
+{
+    if ( !d_selectedCurve )
+        return;
+
+ //   QVector<double> xData( d_selectedCurve->xValue());
+ //   QVector<double> yData( d_selectedCurve->yValue());
+
+//    for ( int i = 0;
+//        i < static_cast<int>( d_selectedCurve->xValue()); i++ )
+//    {
+//        if ( i == d_selectedPoint )
+//        {
+//            xData[i] = invTransform(
+//                d_selectedCurve->xAxis(), pos.x() );
+//            yData[i] = invTransform(
+//                d_selectedCurve->yAxis(), pos.y() );
+            d_selectedCurve->setXValue(pos.x());
+//        }
+//        else
+//        {
+//            const QPointF sample = d_selectedCurve->sample( i );
+//            xData[i] = sample.x();
+//            yData[i] = sample.y();
+//        }
+ //   }
+//    d_selectedCurve->setSamples( xData, yData );
+
+    /*
+       Enable QwtPlotCanvas::ImmediatePaint, so that the canvas has been
+       updated before we paint the cursor on it.
+     */
+    QwtPlotCanvas *plotCanvas =
+        qobject_cast<QwtPlotCanvas *>( canvas() );
+
+    plotCanvas->setPaintAttribute( QwtPlotCanvas::ImmediatePaint, true );
+    replot();
+    plotCanvas->setPaintAttribute( QwtPlotCanvas::ImmediatePaint, false );
+
+//    showCursor( true );
+}
+
+
+
