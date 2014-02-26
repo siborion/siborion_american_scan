@@ -232,6 +232,8 @@ void Plot::drawMarker(quint16 pos, QString title)
     d_marker->setLinePen( Qt::red, 0, Qt::SolidLine );
     d_marker->setXValue((double)pos);
     d_marker->setTitle(title);
+    d_marker->setLabel(title);
+    d_marker->setLabelAlignment( Qt::AlignLeft | Qt::AlignTop );
     d_marker->attach( this );
 }
 
@@ -366,15 +368,11 @@ bool Plot::eventFilter( QObject *object, QEvent *event )
     return QObject::eventFilter( object, event );
 }
 
-
-
-
 void Plot::select( const QPoint &pos )
 {
     QwtPlotMarker *curve = NULL;
     double dist = 10e10;
     int index = -1;
-
     const QwtPlotItemList& itmList = itemList();
     for ( QwtPlotItemIterator it = itmList.begin();
         it != itmList.end(); ++it )
@@ -382,72 +380,125 @@ void Plot::select( const QPoint &pos )
         if ( ( *it )->rtti() == QwtPlotItem::Rtti_PlotMarker)
         {
             QwtPlotMarker *c = static_cast<QwtPlotMarker *>( *it );
-
-            double d;
-            d = abs(c->xValue() - pos.x());
-            int idx = c->xValue();
-            if ( d < dist )
+            if((c->title().text()=="Start")||(c->title().text()=="L1")||(c->title().text()=="L2")||(c->title().text()=="Retina"))
             {
-                curve = c;
-                index = idx;
-                dist = d;
+                double d;
+                d = abs(c->xValue() - (invTransform(c->xAxis(), pos.x())));
+                int idx = c->xValue();
+                if ( d < dist )
+                {
+                    curve = c;
+                    index = idx;
+                    dist = d;
+                }
             }
         }
     }
-
     if ( curve && dist < 10 ) // 10 pixels tolerance
     {
         d_selectedCurve = curve;
         d_selectedPoint = index;
-//        showCursor( true );
     }
 }
 
-
-
-
-// Move the selected point
 void Plot::move( const QPoint &pos )
 {
     if ( !d_selectedCurve )
         return;
-
- //   QVector<double> xData( d_selectedCurve->xValue());
- //   QVector<double> yData( d_selectedCurve->yValue());
-
-//    for ( int i = 0;
-//        i < static_cast<int>( d_selectedCurve->xValue()); i++ )
-//    {
-//        if ( i == d_selectedPoint )
-//        {
-//            xData[i] = invTransform(
-//                d_selectedCurve->xAxis(), pos.x() );
-//            yData[i] = invTransform(
-//                d_selectedCurve->yAxis(), pos.y() );
-            d_selectedCurve->setXValue(pos.x());
-//        }
-//        else
-//        {
-//            const QPointF sample = d_selectedCurve->sample( i );
-//            xData[i] = sample.x();
-//            yData[i] = sample.y();
-//        }
- //   }
-//    d_selectedCurve->setSamples( xData, yData );
-
-    /*
-       Enable QwtPlotCanvas::ImmediatePaint, so that the canvas has been
-       updated before we paint the cursor on it.
-     */
-    QwtPlotCanvas *plotCanvas =
-        qobject_cast<QwtPlotCanvas *>( canvas() );
-
-    plotCanvas->setPaintAttribute( QwtPlotCanvas::ImmediatePaint, true );
-    replot();
-    plotCanvas->setPaintAttribute( QwtPlotCanvas::ImmediatePaint, false );
-
-//    showCursor( true );
+    d_selectedCurve->setXValue(invTransform(d_selectedCurve->xAxis(), pos.x()));
 }
+
+
+
+bool Plot::findExtremum(QByteArray *Sample, QList<quint16> &extremum)
+{
+#define sampleStart 5
+#define sampleEnd   1024
+#define pik         (255*0.9)
+#define spad        (60)
+    quint16 kolvo = 0;
+    bool front = true;
+    foreach (quint8 val, *Sample)
+    {
+        if(kolvo>sampleStart)
+        {
+            if(val>pik)
+            {
+                if (front)
+                {
+                    for(int i=1; i<=5; i++)
+                    {
+                        if(((quint8)(Sample->at(kolvo-i)))<spad)
+                        {
+//                            pPlot->drawMarker(double((kolvo-i)+1), double(quint8(Sample->at((kolvo-i)+1))));
+                            extremum.append((kolvo-i)+1);
+//                            qDebug()<<(quint8)(Sample->at((kolvo-i)+1));
+                            break;
+                        }
+                    }
+                }
+                front = false;
+            }
+            else
+            {
+                if(val<spad)
+                    front = true;
+            }
+        }
+        kolvo++;
+        if(kolvo>sampleEnd)
+            break;
+    }
+    return (extremum.count()>=3?true:false) ;
+}
+
+bool Plot::findMainParam(QList<quint16> *extremum, QList<quint16> &mainParam)
+{
+    quint16 Start, L1, L2, Retina, val;
+    Start=L1=L2=Retina=0;
+
+    for(int i=0; i<extremum->count();i++)
+    {
+        val = extremum->at(i);
+        if(Start==0)
+            Start = val;
+        if((L1==0)&&(val>(Start+54))&&(val<(Start+162)))
+            L1 = val;
+        if((L2==0)&&(val>(L1+54))&&(val<(L1+162)))
+            L2 = val;
+        if((Retina==0)&&(val>(Start+459)))
+            Retina = val;
+
+    }
+    if((Start>0)&&(L1>0)&&(L2>0)&&(Retina>0))
+    {
+        mainParam.append(Start);
+        mainParam.append(L1);
+        mainParam.append(L2);
+        mainParam.append(Retina);
+        return true;
+    }
+    else
+        return false;
+}
+
+
+QList <double> Plot::intToMM(QList<quint16> *mainParam)
+{
+    QList <double> ret;
+    ret.clear();
+    ret.append((double)(round(mainParam->at(0)*100/27)/100));
+    ret.append((double)(round(mainParam->at(1)*100/27)/100));
+    ret.append((double)(round(mainParam->at(2)*100/27)/100));
+    ret.append((double)(round(mainParam->at(3)*100/27)/100));
+    return ret;
+}
+
+
+
+
+
+
 
 
 

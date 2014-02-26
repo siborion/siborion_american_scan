@@ -17,6 +17,9 @@ public:
     void drawMarker(double x, double y, const QColor &);
     virtual bool eventFilter( QObject *, QEvent * );
 //    virtual bool event( QEvent * );
+    bool findMainParam(QList<quint16> *extremum, QList<quint16> &mainParam);
+    bool findExtremum(QByteArray *Sample, QList<quint16> &extremum);
+    QList <double> intToMM(QList<quint16> *mainParam);
 
 public Q_SLOTS:
     void setDamp( double damping );
