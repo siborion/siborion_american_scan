@@ -6,6 +6,23 @@
 class QwtPlotCurve;
 class QwtPlotMarker;
 
+struct stMainParam
+{
+    quint16 Start;
+    quint16 L1;
+    quint16 L2;
+    quint16 Retina;
+};
+
+struct stResultParam
+{
+    double ACD;
+    double LT;
+    double Vit;
+    double AL;
+};
+
+
 class Plot: public QwtPlot
 {
     Q_OBJECT
@@ -17,7 +34,7 @@ public:
     void drawMarker(double x, double y, const QColor &);
     virtual bool eventFilter( QObject *, QEvent * );
 //    virtual bool event( QEvent * );
-    bool findMainParam(QList<quint16> *extremum, QList<quint16> &mainParam);
+    bool findMainParam(QList<quint16> *extremum, stMainParam &mainParam);
     bool findExtremum(QByteArray *Sample, QList<quint16> &extremum);
     QList <double> intToMM(QList<quint16> *mainParam);
 
@@ -40,6 +57,9 @@ private:
 //    QwtPlotMarker *d_marker4;
     QwtPlotMarker *d_selectedCurve;
     int d_selectedPoint;
+
+Q_SIGNALS:
+    void refreshTable(stMainParam mainParam);
 
 };
 

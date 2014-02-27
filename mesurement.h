@@ -20,6 +20,8 @@ class mesurement : public QWidget
     Q_OBJECT
 public:
     explicit mesurement(QWidget *parent = 0);
+    enum ItemDataRole{TypeRole = Qt::UserRole + 1000,
+                        SignalValueRole = Qt::UserRole + 1001};
 
 private:
     QwtPlot *pQwt;
@@ -33,9 +35,11 @@ private:
     QStandardItemModel *modelVelocity;
     QStandardItemModel *modelMeas;
     QPushButton *pbTest;
-    bool checkSample(QByteArray *Sample, QList<quint16> &extremum);
-    bool findMainParam(QList<quint16> *extremum, QList<quint16> &mainParam);
-
+    double decRound(double Val, quint8 dec);
+    QModelIndex tableIndex;
+//    bool checkSample(QByteArray *Sample, QList<quint16> &extremum);
+//    bool findMainParam(QList<quint16> *extremum, QList<quint16> &mainParam);
+    void refreshTable(quint8 rowNom, stMainParam mainParam);
     QString baseMapPatient[4] = {
         "Patient ID",
         "Patient Name",
@@ -63,7 +67,7 @@ public slots:
 private slots:
     void getFileSample();
     void changeRow(QModelIndex curIndex);
-
+    void refreshTable(stMainParam);
 };
 
 #endif // MESUREMENT_H

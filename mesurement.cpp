@@ -140,20 +140,25 @@ mesurement::mesurement(QWidget *parent) :
 
     connect(pbAuto, SIGNAL(clicked()), SLOT(getFileSample()));
     connect(twMeas, SIGNAL(clicked(QModelIndex)), SLOT(changeRow(QModelIndex)));
+    connect(pPlot, SIGNAL(refreshTable(stMainParam)), SLOT(refreshTable(stMainParam)));
 }
 
 void mesurement::getFileSample()
 {
-    double Start, L1, L2, Retina;
-    QList <double> listParamMM;
+    stMainParam curMainParam;
+//    double Start, L1, L2, Retina;
+//    QList <double> listParamMM;
+    const int IdRole = Qt::UserRole+1;
     quint8  kolVo=0;
-    quint16 numByte;
+//    quint16 numByte;
     quint8 Val;
     QList <QByteArray> baListSample;
     QByteArray Sample;
     QStandardItemModel *model;
     QList <quint16> extremum;
     QList <quint16> mainParam;
+    QList <quint16> TTT;
+
 
     QStringList fileNames = QFileDialog::getOpenFileNames();
     QFile file;
@@ -166,22 +171,20 @@ void mesurement::getFileSample()
         if (!file.open(QIODevice::ReadOnly))
             return;
         file.read(144);
-        numByte = 0;
-        L1=L2=Retina=0;
+//        numByte = 0;
+//        L1=L2=Retina=0;
         while (!file.atEnd())
         {
             Val = (file.read(1).toHex().toUInt(&bOk, 16));
             file.read(1);
             Sample.append(Val);
-
-            if((Val>=230)&&(L1==0)&&(numByte>=54)&&(numByte<162))
-                L1 = numByte;
-            if((Val>=230)&&(L2==0)&&(numByte>=(L1+54))&&(numByte<(L1+162)))
-                L2 = numByte;
-            if((Val>=230)&&(Retina==0)&&(numByte>=(459)))
-                Retina = numByte;
-
-            numByte++;
+            //            if((Val>=230)&&(L1==0)&&(numByte>=54)&&(numByte<162))
+            //                L1 = numByte;
+            //            if((Val>=230)&&(L2==0)&&(numByte>=(L1+54))&&(numByte<(L1+162)))
+            //                L2 = numByte;
+            //            if((Val>=230)&&(Retina==0)&&(numByte>=(459)))
+            //                Retina = numByte;
+//            numByte++;
         }
         file.close();
 
@@ -189,46 +192,46 @@ void mesurement::getFileSample()
         mainParam.clear();
         if (pPlot->findExtremum(&Sample, extremum))
         {
-            if(pPlot->findMainParam(&extremum, mainParam))
+            if(pPlot->findMainParam(&extremum, curMainParam))
             {
-                listParamMM = pPlot->intToMM(&mainParam);
-                Start = listParamMM.at(0);
-                L1 = listParamMM.at(1);
-                L2 = listParamMM.at(2);
-                Retina = listParamMM.at(3);
+                twMeas->model()->setData(twMeas->model()->index(kolVo, 0), kolVo, Qt::DisplayRole);
+                twMeas->model()->setData(twMeas->model()->index(kolVo, 0), Sample, Qt::UserRole);
+                twMeas->model()->setData(twMeas->model()->index(kolVo, 1), fileName, Qt::DisplayRole);
+
+                refreshTable(kolVo, curMainParam);
+
             }
         }
-
-
-//        baListSample << Sample;
-        QStandardItem *item0 = new QStandardItem();
-        QStandardItem *item1 = new QStandardItem();
-        QStandardItem *item2 = new QStandardItem();
-        item0->setData(kolVo,  Qt::DisplayRole);
-        item1->setData(Sample, Qt::UserRole);
-        item2->setData(fileName,  Qt::DisplayRole);
-        twMeas->model()->setData(twMeas->model()->index(kolVo, 0), kolVo, Qt::DisplayRole);
-        twMeas->model()->setData(twMeas->model()->index(kolVo, 0), Sample, Qt::UserRole);
-        twMeas->model()->setData(twMeas->model()->index(kolVo, 1), fileName, Qt::DisplayRole);
-//        twMeas->model()->setData(twMeas->model()->index(kolVo, 3), (round(((double)L1/27)*100))/100, Qt::DisplayRole);
-//        twMeas->model()->setData(twMeas->model()->index(kolVo, 4), (round(((double)(L2-L1)/27)*100))/100, Qt::DisplayRole);
-//        twMeas->model()->setData(twMeas->model()->index(kolVo, 2), (round(((double)Retina/27)*100))/100, Qt::DisplayRole);
-        twMeas->model()->setData(twMeas->model()->index(kolVo, 3), L1, Qt::DisplayRole);
-        twMeas->model()->setData(twMeas->model()->index(kolVo, 4), L2, Qt::DisplayRole);
-        twMeas->model()->setData(twMeas->model()->index(kolVo, 2), Retina, Qt::DisplayRole);
         kolVo++;
     }
 }
 
 void mesurement::changeRow(QModelIndex curIndex)
 {
-    QList<quint16> extremum, mainParam;
-    quint16 L1, L2, Retina, kolvo;
+    stMainParam mainParam;
+    QList<quint16> extremum;
+    quint16 kolvo;
     double x[2048];
     double y[2048];
-    L1=L2=Retina=kolvo=0;
+    kolvo=0;
+
+    tableIndex = curIndex;
+
     QByteArray baTmp;
     baTmp.append(twMeas->model()->data(curIndex, Qt::UserRole).toByteArray());
+
+    curIndex = twMeas->model()->index(curIndex.row(), curIndex.column()+2);
+    mainParam.Start = (twMeas->model()->data(curIndex, Qt::UserRole).toInt());
+
+    curIndex = twMeas->model()->index(curIndex.row(), curIndex.column()+1);
+    mainParam.L1 = (twMeas->model()->data(curIndex, Qt::UserRole).toInt());
+
+    curIndex = twMeas->model()->index(curIndex.row(), curIndex.column()+1);
+    mainParam.L2 = (twMeas->model()->data(curIndex, Qt::UserRole).toInt());
+
+    curIndex = twMeas->model()->index(curIndex.row(), curIndex.column()+1);
+    mainParam.Retina = (twMeas->model()->data(curIndex, Qt::UserRole).toInt());
+
     foreach (quint8 val, baTmp)
     {
         x[kolvo] = kolvo;
@@ -236,95 +239,52 @@ void mesurement::changeRow(QModelIndex curIndex)
         kolvo++;
     }
     pPlot->drawSample(x, y, 1000);
-    if(checkSample(&baTmp, extremum))
+
+    if(pPlot->findExtremum(&baTmp, extremum))
     {
         foreach(int val, extremum)
         {
             pPlot->drawMarker((double)val,(double)(quint8)baTmp.at(val), Qt::yellow);
         }
-        if(findMainParam(&extremum, mainParam))
-        {
-            pPlot->drawMarker(mainParam.at(0), "Start");
-            pPlot->drawMarker(mainParam.at(1), "L1");
-            pPlot->drawMarker(mainParam.at(2), "L2");
-            pPlot->drawMarker(mainParam.at(3), "Retina");
-        }
+        pPlot->drawMarker(mainParam.Start, "Start");
+        pPlot->drawMarker(mainParam.L1, "L1");
+        pPlot->drawMarker(mainParam.L2, "L2");
+        pPlot->drawMarker(mainParam.Retina, "Retina");
     }
 }
 
-bool mesurement::checkSample(QByteArray *Sample, QList<quint16> &extremum)
+
+void mesurement::refreshTable(stMainParam mainParam)
 {
-#define sampleStart 5
-#define sampleEnd   1024
-#define pik         (255*0.9)
-#define spad        (60)
-    quint16 kolvo = 0;
-    bool front = true;
-    foreach (quint8 val, *Sample)
-    {
-        if(kolvo>sampleStart)
-        {
-            if(val>pik)
-            {
-                if (front)
-                {
-                    for(int i=1; i<=5; i++)
-                    {
-                        if(((quint8)(Sample->at(kolvo-i)))<spad)
-                        {
-//                            pPlot->drawMarker(double((kolvo-i)+1), double(quint8(Sample->at((kolvo-i)+1))));
-                            extremum.append((kolvo-i)+1);
-//                            qDebug()<<(quint8)(Sample->at((kolvo-i)+1));
-                            break;
-                        }
-                    }
-                }
-                front = false;
-            }
-            else
-            {
-                if(val<spad)
-                    front = true;
-            }
-        }
-        kolvo++;
-        if(kolvo>sampleEnd)
-            break;
-    }
-    return (extremum.count()>=3?true:false) ;
+    refreshTable((quint8)tableIndex.row(), mainParam);
 }
 
-bool mesurement::findMainParam(QList<quint16> *extremum, QList<quint16> &mainParam)
+
+void mesurement::refreshTable(quint8 rowNom, stMainParam mainParam)
 {
-    quint16 Start, L1, L2, Retina, val;
-    Start=L1=L2=Retina=0;
+    stResultParam resultParam;
+    resultParam.ACD = decRound(mainParam.L1 - mainParam.Start, 2);
+    resultParam.LT = decRound(mainParam.L2 - mainParam.L1, 2);
+    resultParam.AL = decRound(mainParam.Retina - mainParam.Start, 2);
+    resultParam.Vit = decRound(mainParam.Retina - mainParam.L2, 2);
 
-    for(int i=0; i<extremum->count();i++)
-    {
-        val = extremum->at(i);
-        if(Start==0)
-            Start = val;
-        if((L1==0)&&(val>(Start+54))&&(val<(Start+162)))
-            L1 = val;
-        if((L2==0)&&(val>(L1+54))&&(val<(L1+162)))
-            L2 = val;
-        if((Retina==0)&&(val>(Start+459)))
-            Retina = val;
-
-    }
-    if((Start>0)&&(L1>0)&&(L2>0)&&(Retina>0))
-    {
-        mainParam.append(Start);
-        mainParam.append(L1);
-        mainParam.append(L2);
-        mainParam.append(Retina);
-        return true;
-    }
-    else
-        return false;
+    twMeas->model()->setData(twMeas->model()->index(rowNom, 2), resultParam.AL,  Qt::DisplayRole);
+    twMeas->model()->setData(twMeas->model()->index(rowNom, 2), mainParam.Start, Qt::UserRole);
+    twMeas->model()->setData(twMeas->model()->index(rowNom, 3), resultParam.ACD, Qt::DisplayRole);
+    twMeas->model()->setData(twMeas->model()->index(rowNom, 3), mainParam.L1,    Qt::UserRole);
+    twMeas->model()->setData(twMeas->model()->index(rowNom, 4), resultParam.LT,  Qt::DisplayRole);
+    twMeas->model()->setData(twMeas->model()->index(rowNom, 4), mainParam.L2,    Qt::UserRole);
+    twMeas->model()->setData(twMeas->model()->index(rowNom, 5), resultParam.Vit, Qt::DisplayRole);
+    twMeas->model()->setData(twMeas->model()->index(rowNom, 5), mainParam.Retina,    Qt::UserRole);
 }
 
-
-
+double mesurement::decRound(double Val, quint8 dec)
+{
+    Val *= pow(10, dec);
+    Val /=27;
+    Val = round(Val);
+    Val /= pow(10, dec);
+    return Val;
+}
 
 

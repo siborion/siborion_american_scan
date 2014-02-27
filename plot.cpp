@@ -403,9 +403,35 @@ void Plot::select( const QPoint &pos )
 
 void Plot::move( const QPoint &pos )
 {
+    stMainParam mainParam;
+
     if ( !d_selectedCurve )
         return;
     d_selectedCurve->setXValue(invTransform(d_selectedCurve->xAxis(), pos.x()));
+
+    const QwtPlotItemList& itmList = itemList();
+    for ( QwtPlotItemIterator it = itmList.begin();
+        it != itmList.end(); ++it )
+    {
+        if ( ( *it )->rtti() == QwtPlotItem::Rtti_PlotMarker)
+        {
+            QwtPlotMarker *c = static_cast<QwtPlotMarker *>( *it );
+
+    if(c->title().text()=="Start")
+        mainParam.Start = c->xValue();
+
+    if(c->title().text()=="L1")
+        mainParam.L1 = c->xValue();
+
+    if(c->title().text()=="L2")
+        mainParam.L2 = c->xValue();
+
+    if(c->title().text()=="Retina")
+        mainParam.Retina = c->xValue();
+        }
+    }
+
+    emit(refreshTable(mainParam));
 }
 
 
@@ -452,7 +478,7 @@ bool Plot::findExtremum(QByteArray *Sample, QList<quint16> &extremum)
     return (extremum.count()>=3?true:false) ;
 }
 
-bool Plot::findMainParam(QList<quint16> *extremum, QList<quint16> &mainParam)
+bool Plot::findMainParam(QList<quint16> *extremum, stMainParam &mainParam)
 {
     quint16 Start, L1, L2, Retina, val;
     Start=L1=L2=Retina=0;
@@ -472,16 +498,15 @@ bool Plot::findMainParam(QList<quint16> *extremum, QList<quint16> &mainParam)
     }
     if((Start>0)&&(L1>0)&&(L2>0)&&(Retina>0))
     {
-        mainParam.append(Start);
-        mainParam.append(L1);
-        mainParam.append(L2);
-        mainParam.append(Retina);
+        mainParam.Start = Start;
+        mainParam.L1 = L1;
+        mainParam.L2 = L2;
+        mainParam.Retina = Retina;
         return true;
     }
     else
         return false;
 }
-
 
 QList <double> Plot::intToMM(QList<quint16> *mainParam)
 {
