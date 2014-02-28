@@ -134,24 +134,15 @@ mesurement::mesurement(QWidget *parent) :
 void mesurement::getFileSample()
 {
     stMainParam curMainParam;
-//    double Start, L1, L2, Retina;
-//    QList <double> listParamMM;
-    const int IdRole = Qt::UserRole+1;
     quint8  kolVo=0;
-//    quint16 numByte;
     quint8 Val;
-    QList <QByteArray> baListSample;
     QByteArray Sample;
-    QStandardItemModel *model;
     QList <quint16> extremum;
     QList <quint16> mainParam;
-    QList <quint16> TTT;
 
-
-    QStringList fileNames = QFileDialog::getOpenFileNames();
+    QStringList fileNames = QFileDialog::getOpenFileNames(this, "select files");
     QFile file;
     bool bOk;
-    model = (QStandardItemModel*)twMeas->model();
     foreach(QString fileName, fileNames)
     {
         Sample.clear();
@@ -159,23 +150,13 @@ void mesurement::getFileSample()
         if (!file.open(QIODevice::ReadOnly))
             return;
         file.read(144);
-//        numByte = 0;
-//        L1=L2=Retina=0;
         while (!file.atEnd())
         {
             Val = (file.read(1).toHex().toUInt(&bOk, 16));
             file.read(1);
             Sample.append(Val);
-            //            if((Val>=230)&&(L1==0)&&(numByte>=54)&&(numByte<162))
-            //                L1 = numByte;
-            //            if((Val>=230)&&(L2==0)&&(numByte>=(L1+54))&&(numByte<(L1+162)))
-            //                L2 = numByte;
-            //            if((Val>=230)&&(Retina==0)&&(numByte>=(459)))
-            //                Retina = numByte;
-//            numByte++;
         }
         file.close();
-
         extremum.clear();
         mainParam.clear();
         if (pPlot->findExtremum(&Sample, extremum))
@@ -185,9 +166,7 @@ void mesurement::getFileSample()
                 twMeas->model()->setData(twMeas->model()->index(kolVo, 0), kolVo, Qt::DisplayRole);
                 twMeas->model()->setData(twMeas->model()->index(kolVo, 0), Sample, Qt::UserRole);
                 twMeas->model()->setData(twMeas->model()->index(kolVo, 1), fileName, Qt::DisplayRole);
-
                 refreshTable(kolVo, curMainParam);
-
             }
         }
         kolVo++;
