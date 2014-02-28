@@ -112,24 +112,12 @@ mesurement::mesurement(QWidget *parent) :
     columnPercent<<10      <<30            <<15      <<15       <<15      <<15;
     lst          <<tr("No")<<tr("AveVelAl")<<tr("AL")<<tr("ACD")<<tr("LT")<<tr("VIT");
     twMeas  = new adjview(10, lst, columnPercent);
-
-//    QFont font;
-//    font.setBold(true);
-//    twMeas->model()->setData(twMeas->model()->index(1, 1), font, Qt::FontRole);
-
-//    mydelegate *myDelegate = new mydelegate();
-//    twMeas->setItemDelegate(myDelegate);
-    //twMeas->setSelectionMode(QAbstractItemView::SelectRows);
-//    twMeas->setMaximumHeight(350);
-//    twMeas->setMinimumHeight(350);
-
-//    QPushButton *pbTest = new QPushButton("Add samples");
+    twMeas->setSelectionBehavior(QAbstractItemView::SelectRows);
 
     layoutTop->addItem(layoutTopLeft);
     layoutTop->addWidget(twMeas);
     layoutTop->setStretch(0, 1);
     layoutTop->setStretch(1, 2);
-
 
     layoutBot->addLayout(layoutBotLeft,0);
     layoutBot->addWidget(pPlot,1);
@@ -218,6 +206,8 @@ void mesurement::changeRow(QModelIndex curIndex)
     tableIndex = curIndex;
 
     QByteArray baTmp;
+
+    curIndex = twMeas->model()->index(curIndex.row(), 0);
     baTmp.append(twMeas->model()->data(curIndex, Qt::UserRole).toByteArray());
 
     curIndex = twMeas->model()->index(curIndex.row(), curIndex.column()+2);
