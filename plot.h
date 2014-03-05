@@ -2,6 +2,7 @@
 #define _PLOT_H_
 
 #include <qwt_plot.h>
+#include <QApplication>
 
 class QwtPlotCurve;
 class QwtPlotMarker;
@@ -37,6 +38,7 @@ public:
     bool findMainParam(QList<quint16> *extremum, stMainParam &mainParam);
     bool findExtremum(QByteArray *Sample, QList<quint16> &extremum);
     QList <double> intToMM(QList<quint16> *mainParam);
+    QList<quint16> allExtremum;
 
 public Q_SLOTS:
     void setDamp( double damping );
@@ -56,6 +58,7 @@ private:
     QwtPlotMarker *d_marker3;
 //    QwtPlotMarker *d_marker4;
     QwtPlotMarker *d_selectedCurve;
+    QwtPlotMarker *romb_selectedCurve;
     int d_selectedPoint;
 
 Q_SIGNALS:

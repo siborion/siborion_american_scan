@@ -188,16 +188,12 @@ void mesurement::changeRow(QModelIndex curIndex)
 
     curIndex = twMeas->model()->index(curIndex.row(), 0);
     baTmp.append(twMeas->model()->data(curIndex, Qt::UserRole).toByteArray());
-
     curIndex = twMeas->model()->index(curIndex.row(), curIndex.column()+2);
     mainParam.Start = (twMeas->model()->data(curIndex, Qt::UserRole).toInt());
-
     curIndex = twMeas->model()->index(curIndex.row(), curIndex.column()+1);
     mainParam.L1 = (twMeas->model()->data(curIndex, Qt::UserRole).toInt());
-
     curIndex = twMeas->model()->index(curIndex.row(), curIndex.column()+1);
     mainParam.L2 = (twMeas->model()->data(curIndex, Qt::UserRole).toInt());
-
     curIndex = twMeas->model()->index(curIndex.row(), curIndex.column()+1);
     mainParam.Retina = (twMeas->model()->data(curIndex, Qt::UserRole).toInt());
 
@@ -211,14 +207,18 @@ void mesurement::changeRow(QModelIndex curIndex)
 
     if(pPlot->findExtremum(&baTmp, extremum))
     {
-        foreach(int val, extremum)
-        {
-            pPlot->drawMarker((double)val,(double)(quint8)baTmp.at(val), Qt::yellow);
-        }
+//        foreach(int val, extremum)
+//        {
+//            pPlot->drawMarker((double)val,(double)(quint8)baTmp.at(val), Qt::yellow);
+//        }
         pPlot->drawMarker(mainParam.Start, "Start");
+        pPlot->drawMarker((double)mainParam.Start,(double)60, Qt::yellow);
         pPlot->drawMarker(mainParam.L1, "L1");
+        pPlot->drawMarker((double)mainParam.L1,(double)60, Qt::yellow);
         pPlot->drawMarker(mainParam.L2, "L2");
+        pPlot->drawMarker((double)mainParam.L2,(double)60, Qt::yellow);
         pPlot->drawMarker(mainParam.Retina, "Retina");
+        pPlot->drawMarker((double)mainParam.Retina,(double)60, Qt::yellow);
     }
 }
 

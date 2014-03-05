@@ -374,8 +374,7 @@ void Plot::select( const QPoint &pos )
     double dist = 10e10;
     int index = -1;
     const QwtPlotItemList& itmList = itemList();
-    for ( QwtPlotItemIterator it = itmList.begin();
-        it != itmList.end(); ++it )
+    for ( QwtPlotItemIterator it = itmList.begin();it != itmList.end(); ++it )
     {
         if ( ( *it )->rtti() == QwtPlotItem::Rtti_PlotMarker)
         {
@@ -398,39 +397,66 @@ void Plot::select( const QPoint &pos )
     {
         d_selectedCurve = curve;
         d_selectedPoint = index;
+        for ( QwtPlotItemIterator it = itmList.begin();it != itmList.end(); ++it )
+        {
+            if ( ( *it )->rtti() == QwtPlotItem::Rtti_PlotMarker)
+            {
+                QwtPlotMarker *c = static_cast<QwtPlotMarker *>( *it );
+                if((c->title().text()!="Start")&&(c->title().text()!="L1")&&(c->title().text()!="L2")&&(c->title().text()!="Retina"))
+                {
+                    if (d_selectedPoint == c->xValue())
+                    {
+//                        curve = c;
+                        romb_selectedCurve = c;
+                        break;
+                    }
+                }
+            }
+        }
     }
 }
 
 void Plot::move( const QPoint &pos )
 {
     stMainParam mainParam;
-
+    quint16 val, in, curDist, dist=0xffff;
     if ( !d_selectedCurve )
         return;
-    d_selectedCurve->setXValue(invTransform(d_selectedCurve->xAxis(), pos.x()));
+
+    if (QApplication::keyboardModifiers().testFlag(Qt::ControlModifier) == false)
+    {
+        foreach(val, allExtremum)
+        {
+            curDist = abs(val-(invTransform(d_selectedCurve->xAxis(), pos.x())));
+            if(dist>curDist)
+            {
+                in = val;
+                dist = curDist;
+            }
+        }
+        d_selectedCurve->setXValue(in);
+        romb_selectedCurve->setXValue(in);
+    }
+    else
+        d_selectedCurve->setXValue(invTransform(d_selectedCurve->xAxis(), pos.x()));
 
     const QwtPlotItemList& itmList = itemList();
-    for ( QwtPlotItemIterator it = itmList.begin();
-        it != itmList.end(); ++it )
+    for ( QwtPlotItemIterator it = itmList.begin(); it != itmList.end(); ++it )
     {
         if ( ( *it )->rtti() == QwtPlotItem::Rtti_PlotMarker)
         {
             QwtPlotMarker *c = static_cast<QwtPlotMarker *>( *it );
 
-    if(c->title().text()=="Start")
-        mainParam.Start = c->xValue();
-
-    if(c->title().text()=="L1")
-        mainParam.L1 = c->xValue();
-
-    if(c->title().text()=="L2")
-        mainParam.L2 = c->xValue();
-
-    if(c->title().text()=="Retina")
-        mainParam.Retina = c->xValue();
+            if(c->title().text()=="Start")
+                mainParam.Start = c->xValue();
+            if(c->title().text()=="L1")
+                mainParam.L1 = c->xValue();
+            if(c->title().text()=="L2")
+                mainParam.L2 = c->xValue();
+            if(c->title().text()=="Retina")
+                mainParam.Retina = c->xValue();
         }
     }
-
     emit(refreshTable(mainParam));
 }
 
@@ -475,6 +501,9 @@ bool Plot::findExtremum(QByteArray *Sample, QList<quint16> &extremum)
         if(kolvo>sampleEnd)
             break;
     }
+
+    allExtremum = extremum;
+
     return (extremum.count()>=3?true:false) ;
 }
 
