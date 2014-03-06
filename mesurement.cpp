@@ -13,6 +13,8 @@ mesurement::mesurement(QWidget *parent) :
     QHBoxLayout *layoutBot = new QHBoxLayout();
     QVBoxLayout *layoutBotLeft = new QVBoxLayout();
 
+    lcdView = new bigview();
+
 //------------------------------------ TableView
     columnPercent.clear();
     columnPercent<<50<<50;
@@ -105,6 +107,7 @@ mesurement::mesurement(QWidget *parent) :
 
     pPlot = new Plot(this);
 
+
 //    pQwt = pPlot->q_plot;
 
     lst.clear();
@@ -115,9 +118,13 @@ mesurement::mesurement(QWidget *parent) :
     twMeas->setSelectionBehavior(QAbstractItemView::SelectRows);
 
     layoutTop->addItem(layoutTopLeft);
+    layoutTop->addWidget(lcdView);
     layoutTop->addWidget(twMeas);
     layoutTop->setStretch(0, 1);
-    layoutTop->setStretch(1, 2);
+    layoutTop->setStretch(1, 1);
+    layoutTop->setStretch(2, 2);
+//    layoutTop->setStretch(1, 2, 2, 2);
+
 
     layoutBot->addLayout(layoutBotLeft,0);
     layoutBot->addWidget(pPlot,1);
@@ -189,6 +196,7 @@ void mesurement::changeRow(QModelIndex curIndex)
     curIndex = twMeas->model()->index(curIndex.row(), 0);
     baTmp.append(twMeas->model()->data(curIndex, Qt::UserRole).toByteArray());
     curIndex = twMeas->model()->index(curIndex.row(), curIndex.column()+2);
+    lcdView->setDisplay(twMeas->model()->data(curIndex, Qt::DisplayRole).toDouble());
     mainParam.Start = (twMeas->model()->data(curIndex, Qt::UserRole).toInt());
     curIndex = twMeas->model()->index(curIndex.row(), curIndex.column()+1);
     mainParam.L1 = (twMeas->model()->data(curIndex, Qt::UserRole).toInt());
@@ -236,6 +244,8 @@ void mesurement::refreshTable(quint8 rowNom, stMainParam mainParam)
     resultParam.LT = decRound(mainParam.L2 - mainParam.L1, 2);
     resultParam.AL = decRound(mainParam.Retina - mainParam.Start, 2);
     resultParam.Vit = decRound(mainParam.Retina - mainParam.L2, 2);
+
+    lcdView->setDisplay(resultParam.AL);
 
     twMeas->model()->setData(twMeas->model()->index(rowNom, 2), resultParam.AL,  Qt::DisplayRole);
     twMeas->model()->setData(twMeas->model()->index(rowNom, 2), mainParam.Start, Qt::UserRole);

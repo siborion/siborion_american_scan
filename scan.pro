@@ -46,7 +46,8 @@ SOURCES += main.cpp\
     mydelegate.cpp \
     formula.cpp \
     dbacces.cpp \
-    plot.cpp
+    plot.cpp \
+    bigview.cpp
 
 
 HEADERS  += mainwindow.h\
@@ -62,7 +63,8 @@ HEADERS  += mainwindow.h\
     mydelegate.h \
     formula.h \
     dbacces.h \
-    plot.h
+    plot.h \
+    bigview.h
 
 #FORMS    += mainwindow.ui
 
