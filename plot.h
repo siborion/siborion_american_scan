@@ -44,10 +44,10 @@ public Q_SLOTS:
 //    void setDamp( double damping );
 
 private:
-    void showData( const double *frequency, const double *amplitude,
-        const double *phase, int count );
-    void showPeak( double freq, double amplitude );
-    void show3dB( double freq );
+//    void showData( const double *frequency, const double *amplitude,
+//        const double *phase, int count );
+//    void showPeak( double freq, double amplitude );
+//    void show3dB( double freq );
     void select( const QPoint &pos );
     void move( const QPoint &pos );
 
