@@ -41,7 +41,7 @@ public:
     QList<quint16> allExtremum;
 
 public Q_SLOTS:
-    void setDamp( double damping );
+//    void setDamp( double damping );
 
 private:
     void showData( const double *frequency, const double *amplitude,

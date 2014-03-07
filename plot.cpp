@@ -18,23 +18,23 @@
 #define qAtan2(y, x) ::atan2(y, x)
 #endif
 
-static void logSpace( double *array, int size, double xmin, double xmax )
-{
-    if ( ( xmin <= 0.0 ) || ( xmax <= 0.0 ) || ( size <= 0 ) )
-        return;
+//static void logSpace( double *array, int size, double xmin, double xmax )
+//{
+//    if ( ( xmin <= 0.0 ) || ( xmax <= 0.0 ) || ( size <= 0 ) )
+//        return;
 
-    const int imax = size - 1;
+//    const int imax = size - 1;
 
-    array[0] = xmin;
-    array[imax] = xmax;
+//    array[0] = xmin;
+//    array[imax] = xmax;
 
-    const double lxmin = log( xmin );
-    const double lxmax = log( xmax );
-    const double lstep = ( lxmax - lxmin ) / double( imax );
+//    const double lxmin = log( xmin );
+//    const double lxmax = log( xmax );
+//    const double lstep = ( lxmax - lxmin ) / double( imax );
 
-    for ( int i = 1; i < imax; i++ )
-        array[i] = qExp( lxmin + double( i ) * lstep );
-}
+//    for ( int i = 1; i < imax; i++ )
+//        array[i] = qExp( lxmin + double( i ) * lstep );
+//}
 
 Plot::Plot( QWidget *parent ):
     QwtPlot( parent )
@@ -125,7 +125,7 @@ Plot::Plot( QWidget *parent ):
     d_marker3->setLinePen( Qt::red, 0, Qt::SolidLine );
     d_marker3->attach( this );
 
-    setDamp( 0.0 );
+//    setDamp( 0.0 );
     setAutoReplot( true );
 
 }
@@ -166,47 +166,47 @@ void Plot::show3dB( double freq )
 //
 // re-calculate frequency response
 //
-void Plot::setDamp( double damping )
-{
-    const bool doReplot = autoReplot();
-    setAutoReplot( false );
+//void Plot::setDamp( double damping )
+//{
+//    const bool doReplot = autoReplot();
+//    setAutoReplot( false );
 
-    const int ArraySize = 200;
+//    const int ArraySize = 200;
 
-    double frequency[ArraySize];
-    double amplitude[ArraySize];
-    double phase[ArraySize];
+//    double frequency[ArraySize];
+//    double amplitude[ArraySize];
+//    double phase[ArraySize];
 
-    // build frequency vector with logarithmic division
-    logSpace( frequency, ArraySize, 0.01, 100 );
+//    // build frequency vector with logarithmic division
+//    logSpace( frequency, ArraySize, 0.01, 100 );
 
-    int i3 = 1;
-    double fmax = 1;
-    double amax = -1000.0;
+//    int i3 = 1;
+//    double fmax = 1;
+//    double amax = -1000.0;
 
-    for ( int i = 0; i < ArraySize; i++ )
-    {
-        double f = frequency[i];
-        const ComplexNumber g =
-            ComplexNumber( 1.0 ) / ComplexNumber( 1.0 - f * f, 2.0 * damping * f );
+//    for ( int i = 0; i < ArraySize; i++ )
+//    {
+//        double f = frequency[i];
+//        const ComplexNumber g =
+//            ComplexNumber( 1.0 ) / ComplexNumber( 1.0 - f * f, 2.0 * damping * f );
 
-        amplitude[i] = 20.0 * log10( qSqrt( g.real() * g.real() + g.imag() * g.imag() ) );
-        phase[i] = qAtan2( g.imag(), g.real() ) * ( 180.0 / M_PI );
+//        amplitude[i] = 20.0 * log10( qSqrt( g.real() * g.real() + g.imag() * g.imag() ) );
+//        phase[i] = qAtan2( g.imag(), g.real() ) * ( 180.0 / M_PI );
 
-        if ( ( i3 <= 1 ) && ( amplitude[i] < -3.0 ) )
-            i3 = i;
-        if ( amplitude[i] > amax )
-        {
-            amax = amplitude[i];
-            fmax = frequency[i];
-        }
+//        if ( ( i3 <= 1 ) && ( amplitude[i] < -3.0 ) )
+//            i3 = i;
+//        if ( amplitude[i] > amax )
+//        {
+//            amax = amplitude[i];
+//            fmax = frequency[i];
+//        }
 
-    }
-    double f3 = frequency[i3] - ( frequency[i3] - frequency[i3 - 1] )
-        / ( amplitude[i3] - amplitude[i3 -1] ) * ( amplitude[i3] + 3 );
-    setAutoReplot( doReplot );
-    replot();
-}
+//    }
+//    double f3 = frequency[i3] - ( frequency[i3] - frequency[i3 - 1] )
+//        / ( amplitude[i3] - amplitude[i3 -1] ) * ( amplitude[i3] + 3 );
+//    setAutoReplot( doReplot );
+//    replot();
+//}
 
 void Plot::drawSample(const double *x, const double *y, int count)
 {
