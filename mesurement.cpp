@@ -20,28 +20,16 @@ mesurement::mesurement(QWidget *parent) :
     columnPercent<<50<<50;
     twPatient  = new adjview(4, 2, columnPercent);
 
-//    QSpacerItem *vs0 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
-
     columnPercent.clear();
     columnPercent<<60<<20<<20;
     twLens     = new adjview(4, 3, columnPercent);
 
-//    QSpacerItem *vs1 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
     columnPercent.clear();
     columnPercent<<80<<20;
     twVelocity = new adjview(3, 2, columnPercent);
 
-//    twPatient->setMaximumHeight(120);
-//    twPatient->setMinimumHeight(120);
-//    twLens->setMaximumHeight(120);
-//    twLens->setMinimumHeight(120);
-//    twVelocity->setMaximumHeight(120);
-//    twVelocity->setMinimumHeight(120);
-
     layoutTopLeft->addWidget(twPatient);
-//    layoutTop->addItem(vs0);
     layoutTopLeft->addWidget(twLens);
-//    layoutTop->addItem(vs1);
     layoutTopLeft->addWidget(twVelocity);
 
     model = (QStandardItemModel*)twPatient->model();
@@ -107,9 +95,6 @@ mesurement::mesurement(QWidget *parent) :
 
     pPlot = new Plot(this);
 
-
-//    pQwt = pPlot->q_plot;
-
     lst.clear();
     columnPercent.clear();
     columnPercent<<10      <<30            <<15      <<15       <<15      <<15;
@@ -123,12 +108,9 @@ mesurement::mesurement(QWidget *parent) :
     layoutTop->setStretch(0, 1);
     layoutTop->setStretch(1, 1);
     layoutTop->setStretch(2, 2);
-//    layoutTop->setStretch(1, 2, 2, 2);
-
 
     layoutBot->addLayout(layoutBotLeft,0);
     layoutBot->addWidget(pPlot,1);
-//    layoutTopLeft->addWidget(pbTest);
     layout->addLayout(layoutTop);
 
     layout->addLayout(layoutBot);
@@ -215,10 +197,6 @@ void mesurement::changeRow(QModelIndex curIndex)
 
     if(pPlot->findExtremum(&baTmp, extremum))
     {
-//        foreach(int val, extremum)
-//        {
-//            pPlot->drawMarker((double)val,(double)(quint8)baTmp.at(val), Qt::yellow);
-//        }
         pPlot->drawMarker(mainParam.Start, "Start");
         pPlot->drawMarker((double)mainParam.Start,(double)60, Qt::yellow);
         pPlot->drawMarker(mainParam.L1, "L1");
@@ -230,12 +208,10 @@ void mesurement::changeRow(QModelIndex curIndex)
     }
 }
 
-
 void mesurement::refreshTable(stMainParam mainParam)
 {
     refreshTable((quint8)tableIndex.row(), mainParam);
 }
-
 
 void mesurement::refreshTable(quint8 rowNom, stMainParam mainParam)
 {
@@ -265,5 +241,3 @@ double mesurement::decRound(double Val, quint8 dec)
     Val /= pow(10, dec);
     return Val;
 }
-
-

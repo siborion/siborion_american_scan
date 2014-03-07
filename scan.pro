@@ -35,7 +35,6 @@ CONFIG(release, debug|release) {
 SOURCES += main.cpp\
         mainwindow.cpp\
 	panel.cpp\
-        scanplot.cpp\
         mesurement.cpp\
     bases.cpp \
     adjview.cpp \
@@ -52,7 +51,6 @@ SOURCES += main.cpp\
 
 HEADERS  += mainwindow.h\
 	panel.h\
-        scanplot.h\
 	mesurement.h \
     bases.h \
     adjview.h \

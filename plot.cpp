@@ -12,6 +12,8 @@
 #include "plot.h"
 #include <qevent.h>
 
+
+
 Plot::Plot( QWidget *parent ):
     QwtPlot( parent )
 {
@@ -19,9 +21,9 @@ Plot::Plot( QWidget *parent ):
     setAutoDelete(true);
 
     QwtPlotCanvas *canvas = new QwtPlotCanvas();
-    canvas->setBorderRadius( 10 );
     setCanvas( canvas );
-    setCanvasBackground( QColor( "MidnightBlue" ) );
+//    setCanvasBackground( QColor( "MidnightBlue" ) );
+    setCanvasBackground(QColor("DarkSlateGray"));
 
     // grid
     QwtPlotGrid *grid = new QwtPlotGrid;
@@ -64,13 +66,20 @@ void Plot::drawSample(const double *x, const double *y, int count)
 
 void Plot::drawMarker(quint16 pos, QString title)
 {
+    QFont qF;
+    qF.setPixelSize(20);
+    QwtText qT;
+    qT.setFont(qF);
+    qT.setText(title);
+    qT.setBackgroundBrush(QBrush("DarkSlateGray"));
     QwtPlotMarker *d_marker = new QwtPlotMarker();
     d_marker->setLineStyle( QwtPlotMarker::VLine );
     d_marker->setLinePen( Qt::red, 0, Qt::SolidLine );
     d_marker->setXValue((double)pos);
     d_marker->setTitle(title);
-    d_marker->setLabel(title);
-    d_marker->setLabelAlignment( Qt::AlignLeft | Qt::AlignTop );
+//    d_marker->set
+    d_marker->setLabel(qT);
+    d_marker->setLabelAlignment(Qt::AlignRight | Qt::AlignTop);
     d_marker->attach( this );
 }
 
