@@ -12,11 +12,10 @@
 #include "plot.h"
 #include <qevent.h>
 
-
-#if QT_VERSION < 0x040601
-#define qExp(x) ::exp(x)
-#define qAtan2(y, x) ::atan2(y, x)
-#endif
+//#if QT_VERSION < 0x040601
+//#define qExp(x) ::exp(x)
+//#define qAtan2(y, x) ::atan2(y, x)
+//#endif
 
 //static void logSpace( double *array, int size, double xmin, double xmax )
 //{
@@ -85,45 +84,45 @@ Plot::Plot( QWidget *parent ):
     d_curve1->setYAxis( QwtPlot::yLeft );
     d_curve1->attach( this );
 
-    d_curve2 = new QwtPlotCurve();
-    d_curve2->setRenderHint( QwtPlotItem::RenderAntialiased );
-    d_curve2->setPen( Qt::cyan );
-    d_curve2->setLegendAttribute( QwtPlotCurve::LegendShowLine );
-    d_curve2->setYAxis( QwtPlot::yRight );
-    d_curve2->attach( this );
+//    d_curve2 = new QwtPlotCurve();
+//    d_curve2->setRenderHint( QwtPlotItem::RenderAntialiased );
+//    d_curve2->setPen( Qt::cyan );
+//    d_curve2->setLegendAttribute( QwtPlotCurve::LegendShowLine );
+//    d_curve2->setYAxis( QwtPlot::yRight );
+//    d_curve2->attach( this );
 
     // marker
-    QwtText *L1 = new QwtText("L1");
-    d_marker1 = new QwtPlotMarker();
-    d_marker1->setVisible(false);
-    d_marker1->setXValue( 0.0 );
-    d_marker1->setLabel(*L1);
-    d_marker1->setLineStyle( QwtPlotMarker::VLine );
-    d_marker1->setLabelAlignment( Qt::AlignLeft | Qt::AlignTop );
-    d_marker1->setLinePen( Qt::red, 0, Qt::SolidLine );
-    d_marker1->attach( this );
+//    QwtText *L1 = new QwtText("L1");
+//    d_marker1 = new QwtPlotMarker();
+//    d_marker1->setVisible(false);
+//    d_marker1->setXValue( 0.0 );
+//    d_marker1->setLabel(*L1);
+//    d_marker1->setLineStyle( QwtPlotMarker::VLine );
+//    d_marker1->setLabelAlignment( Qt::AlignLeft | Qt::AlignTop );
+//    d_marker1->setLinePen( Qt::red, 0, Qt::SolidLine );
+//    d_marker1->attach( this );
 
 
-    QwtText *L2 = new QwtText("\r\nL2");
-    d_marker2 = new QwtPlotMarker();
-    d_marker2->setVisible(false);
-    d_marker2->setXValue( 0.0 );
-    d_marker2->setLabel(*L2);
-    d_marker2->setLineStyle( QwtPlotMarker::VLine );
-    d_marker2->setLabelAlignment( Qt::AlignLeft | Qt::AlignTop );
-    d_marker2->setLinePen( Qt::red, 0, Qt::SolidLine );
-    d_marker2->attach( this );
+//    QwtText *L2 = new QwtText("\r\nL2");
+//    d_marker2 = new QwtPlotMarker();
+//    d_marker2->setVisible(false);
+//    d_marker2->setXValue( 0.0 );
+//    d_marker2->setLabel(*L2);
+//    d_marker2->setLineStyle( QwtPlotMarker::VLine );
+//    d_marker2->setLabelAlignment( Qt::AlignLeft | Qt::AlignTop );
+//    d_marker2->setLinePen( Qt::red, 0, Qt::SolidLine );
+//    d_marker2->attach( this );
 
 
-    QwtText *Retina = new QwtText("\r\n\r\nRetina");
-    d_marker3 = new QwtPlotMarker();
-    d_marker3->setVisible(false);
-    d_marker3->setXValue( 0.0 );
-    d_marker3->setLabel(*Retina);
-    d_marker3->setLineStyle( QwtPlotMarker::VLine );
-    d_marker3->setLabelAlignment( Qt::AlignLeft | Qt::AlignTop );
-    d_marker3->setLinePen( Qt::red, 0, Qt::SolidLine );
-    d_marker3->attach( this );
+//    QwtText *Retina = new QwtText("\r\n\r\nRetina");
+//    d_marker3 = new QwtPlotMarker();
+//    d_marker3->setVisible(false);
+//    d_marker3->setXValue( 0.0 );
+//    d_marker3->setLabel(*Retina);
+//    d_marker3->setLineStyle( QwtPlotMarker::VLine );
+//    d_marker3->setLabelAlignment( Qt::AlignLeft | Qt::AlignTop );
+//    d_marker3->setLinePen( Qt::red, 0, Qt::SolidLine );
+//    d_marker3->attach( this );
 
 //    setDamp( 0.0 );
     setAutoReplot( true );
