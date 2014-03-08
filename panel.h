@@ -2,7 +2,7 @@
 #define _PANEL_H_ 1
 
 #include <qtabwidget.h>
-#include "scanplot.h"
+//#include "scanplot.h"
 #include <mesurement.h>
 #include <calculator.h>
 

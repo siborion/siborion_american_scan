@@ -7,7 +7,8 @@
 #include <QHeaderView>
 #include <QPushButton>
 #include <QStandardItemModel>
-#include "scanplot.h"
+#include <QFileDialog>
+//#include "scanplot.h"
 #include <adjview.h>
 #include "mydelegate.h"
 #include "plot.h"

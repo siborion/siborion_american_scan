@@ -1,5 +1,5 @@
 #include "panel.h"
-#include "scanplot.h"
+//#include "scanplot.h"
 #include "bases.h"
 #include <qlabel.h>
 #include <qcombobox.h>
