@@ -46,7 +46,8 @@ SOURCES += main.cpp\
     formula.cpp \
     dbacces.cpp \
     plot.cpp \
-    bigview.cpp
+    bigview.cpp \
+    bigviewnum.cpp
 
 
 HEADERS  += mainwindow.h\
@@ -62,9 +63,13 @@ HEADERS  += mainwindow.h\
     formula.h \
     dbacces.h \
     plot.h \
-    bigview.h
+    bigview.h \
+    bigviewnum.h
 
 #FORMS    += mainwindow.ui
 
 RESOURCES += \
     scan.qrc
+
+FORMS += \
+    bigviewnum.ui

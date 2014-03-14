@@ -50,6 +50,7 @@ Plot::Plot( QWidget *parent ):
     d_curve1->setYAxis( QwtPlot::yLeft );
     d_curve1->attach( this );
     setAutoReplot( true );
+//    this->setMaximumSize(200,200);
 }
 
 void Plot::drawSample(const double *x, const double *y, int count)

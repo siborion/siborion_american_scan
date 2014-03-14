@@ -9,9 +9,9 @@ mesurement::mesurement(QWidget *parent) :
 
     QVBoxLayout *layout = new QVBoxLayout(this);
     QHBoxLayout *layoutTop = new QHBoxLayout();
-    QVBoxLayout *layoutTopLeft = new QVBoxLayout();
+    QVBoxLayout *layoutRight = new QVBoxLayout();
     QHBoxLayout *layoutBot = new QHBoxLayout();
-    QVBoxLayout *layoutBotLeft = new QVBoxLayout();
+    QHBoxLayout *layoutKey = new QHBoxLayout();
 
     lcdView = new bigview();
 
@@ -28,9 +28,10 @@ mesurement::mesurement(QWidget *parent) :
     columnPercent<<80<<20;
     twVelocity = new adjview(3, 2, columnPercent);
 
-    layoutTopLeft->addWidget(twPatient);
-    layoutTopLeft->addWidget(twLens);
-    layoutTopLeft->addWidget(twVelocity);
+    layoutTop->addWidget(twPatient);
+    layoutTop->addWidget(twLens);
+    layoutTop->addWidget(twVelocity);
+//    layoutTop->addWidget(lcdView);
 
     model = (QStandardItemModel*)twPatient->model();
     for(quint8 i=0; i<4; i++)
@@ -60,38 +61,38 @@ mesurement::mesurement(QWidget *parent) :
     }
 
 //----------------------------------------- Button
-    QSpacerItem *hs = new QSpacerItem(50, 5, QSizePolicy::Expanding, QSizePolicy::Expanding);
+    QSpacerItem *hs = new QSpacerItem(50, 5, QSizePolicy::Expanding, QSizePolicy::Minimum);
     QPushButton *pbOd = new QPushButton(tr("OD"));
-    QSpacerItem *hs0 = new QSpacerItem(50, 5, QSizePolicy::Expanding, QSizePolicy::Expanding);
+    QSpacerItem *hs0 = new QSpacerItem(50, 5, QSizePolicy::Expanding, QSizePolicy::Minimum);
     QPushButton *pbMeasure = new QPushButton(tr("Measure"));
-    QSpacerItem *hs1 = new QSpacerItem(50, 5, QSizePolicy::Expanding, QSizePolicy::Expanding);
+    QSpacerItem *hs1 = new QSpacerItem(50, 5, QSizePolicy::Expanding, QSizePolicy::Minimum);
     QPushButton *pbAutoFreeze = new QPushButton(tr("Auto Freeze"));
     QPushButton *pbAuto = new QPushButton(tr("Auto"));
     QPushButton *pbManual = new QPushButton(tr("Manual"));
-    QSpacerItem *hs2 = new QSpacerItem(50, 5, QSizePolicy::Expanding, QSizePolicy::Expanding);
+    QSpacerItem *hs2 = new QSpacerItem(50, 5, QSizePolicy::Expanding, QSizePolicy::Minimum);
     QPushButton *pbContact = new QPushButton(tr("Contact"));
     QPushButton *pbImmersion = new QPushButton(tr("Immersion"));
-    QSpacerItem *hs3 = new QSpacerItem(50, 5, QSizePolicy::Expanding, QSizePolicy::Expanding);
+    QSpacerItem *hs3 = new QSpacerItem(50, 5, QSizePolicy::Expanding, QSizePolicy::Minimum);
     QPushButton *pbCataract = new QPushButton(tr("Cataract"));
     QPushButton *pbAphakic = new QPushButton(tr("Aphakic"));
-    QSpacerItem *hs4 = new QSpacerItem(50, 5, QSizePolicy::Expanding, QSizePolicy::Expanding);
+    QSpacerItem *hs4 = new QSpacerItem(50, 5, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-    layoutBotLeft->setSpacing(0);
-    layoutBotLeft->addItem(hs);
-    layoutBotLeft->addWidget(pbOd);
-    layoutBotLeft->addItem(hs0);
-    layoutBotLeft->addWidget(pbMeasure);
-    layoutBotLeft->addItem(hs1);
-    layoutBotLeft->addWidget(pbAutoFreeze);
-    layoutBotLeft->addWidget(pbAuto);
-    layoutBotLeft->addWidget(pbManual);
-    layoutBotLeft->addItem(hs2);
-    layoutBotLeft->addWidget(pbContact);
-    layoutBotLeft->addWidget(pbImmersion);
-    layoutBotLeft->addItem(hs3);
-    layoutBotLeft->addWidget(pbCataract);
-    layoutBotLeft->addWidget(pbAphakic);
-    layoutBotLeft->addItem(hs4);
+    layoutKey->setSpacing(0);
+    layoutKey->addItem(hs);
+    layoutKey->addWidget(pbOd);
+    layoutKey->addItem(hs0);
+    layoutKey->addWidget(pbMeasure);
+    layoutKey->addItem(hs1);
+    layoutKey->addWidget(pbAutoFreeze);
+    layoutKey->addWidget(pbAuto);
+    layoutKey->addWidget(pbManual);
+    layoutKey->addItem(hs2);
+    layoutKey->addWidget(pbContact);
+    layoutKey->addWidget(pbImmersion);
+    layoutKey->addItem(hs3);
+    layoutKey->addWidget(pbCataract);
+    layoutKey->addWidget(pbAphakic);
+    layoutKey->addItem(hs4);
 
     pPlot = new Plot(this);
 
@@ -101,19 +102,26 @@ mesurement::mesurement(QWidget *parent) :
     lst          <<tr("No")<<tr("AveVelAl")<<tr("AL")<<tr("ACD")<<tr("LT")<<tr("VIT");
     twMeas  = new adjview(10, lst, columnPercent);
     twMeas->setSelectionBehavior(QAbstractItemView::SelectRows);
+    twMeas->setMinimumWidth(200);
 
-    layoutTop->addItem(layoutTopLeft);
-    layoutTop->addWidget(lcdView);
-    layoutTop->addWidget(twMeas);
-    layoutTop->setStretch(0, 1);
-    layoutTop->setStretch(1, 1);
-    layoutTop->setStretch(2, 2);
+//    layoutTop->addItem(layoutTopLeft);
+//    layoutTop->addWidget(twMeas);
+//    layoutTop->setStretch(0, 1);
+//    layoutTop->setStretch(1, 1);
+//    layoutTop->setStretch(2, 2);
 
-    layoutBot->addLayout(layoutBotLeft,0);
-    layoutBot->addWidget(pPlot,1);
-    layout->addLayout(layoutTop);
+//    layoutBot->addLayout(layoutKey, 1);
+    layoutBot->addWidget(pPlot, 5);
+    layoutBot->addLayout(layoutRight, 1);
 
-    layout->addLayout(layoutBot);
+    layoutRight->addWidget(lcdView);
+    layoutRight->addWidget(twMeas);
+
+
+    layout->addLayout(layoutTop, 1);
+    layout->addLayout(layoutBot, 2);
+    layout->addLayout(layoutKey, 1);
+
 
     connect(pbAuto, SIGNAL(clicked()), SLOT(getFileSample()));
     connect(twMeas, SIGNAL(clicked(QModelIndex)), SLOT(changeRow(QModelIndex)));
