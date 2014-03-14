@@ -12,7 +12,7 @@
 #include <adjview.h>
 #include "mydelegate.h"
 #include "plot.h"
-#include "bigview.h"
+#include "bigviewnum.h"
 
 #include <qwt_plot.h>
 
@@ -32,7 +32,7 @@ private:
     adjview *twVelocity;
     adjview *twMeas;
     Plot *pPlot;
-    bigview *lcdView;
+    bigviewnum *pBigView;
     QStandardItemModel *modelPatient;
     QStandardItemModel *modelLens;
     QStandardItemModel *modelVelocity;

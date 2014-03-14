@@ -6,6 +6,8 @@ bigviewnum::bigviewnum(QWidget *parent) :
     ui(new Ui::bigviewnum)
 {
     ui->setupUi(this);
+    setMinimumSize(200,200);
+
 }
 
 bigviewnum::~bigviewnum()

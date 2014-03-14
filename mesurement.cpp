@@ -13,7 +13,7 @@ mesurement::mesurement(QWidget *parent) :
     QHBoxLayout *layoutBot = new QHBoxLayout();
     QHBoxLayout *layoutKey = new QHBoxLayout();
 
-    lcdView = new bigview();
+    pBigView = new bigviewnum();
 
 //------------------------------------ TableView
     columnPercent.clear();
@@ -30,8 +30,8 @@ mesurement::mesurement(QWidget *parent) :
 
     layoutTop->addWidget(twPatient);
     layoutTop->addWidget(twLens);
-    layoutTop->addWidget(twVelocity);
-//    layoutTop->addWidget(lcdView);
+    layoutTop->addWidget(twVelocity,0,Qt::AlignTop);
+//    layoutTop->addWidget(pBigView);
 
     model = (QStandardItemModel*)twPatient->model();
     for(quint8 i=0; i<4; i++)
@@ -114,7 +114,7 @@ mesurement::mesurement(QWidget *parent) :
     layoutBot->addWidget(pPlot, 5);
     layoutBot->addLayout(layoutRight, 1);
 
-    layoutRight->addWidget(lcdView);
+    layoutRight->addWidget(pBigView);
     layoutRight->addWidget(twMeas);
 
 
@@ -186,7 +186,7 @@ void mesurement::changeRow(QModelIndex curIndex)
     curIndex = twMeas->model()->index(curIndex.row(), 0);
     baTmp.append(twMeas->model()->data(curIndex, Qt::UserRole).toByteArray());
     curIndex = twMeas->model()->index(curIndex.row(), curIndex.column()+2);
-    lcdView->setDisplay(twMeas->model()->data(curIndex, Qt::DisplayRole).toDouble());
+//    lcdView->setDisplay(twMeas->model()->data(curIndex, Qt::DisplayRole).toDouble());
     mainParam.Start = (twMeas->model()->data(curIndex, Qt::UserRole).toInt());
     curIndex = twMeas->model()->index(curIndex.row(), curIndex.column()+1);
     mainParam.L1 = (twMeas->model()->data(curIndex, Qt::UserRole).toInt());
@@ -229,7 +229,7 @@ void mesurement::refreshTable(quint8 rowNom, stMainParam mainParam)
     resultParam.AL = decRound(mainParam.Retina - mainParam.Start, 2);
     resultParam.Vit = decRound(mainParam.Retina - mainParam.L2, 2);
 
-    lcdView->setDisplay(resultParam.AL);
+//    lcdView->setDisplay(resultParam.AL);
 
     twMeas->model()->setData(twMeas->model()->index(rowNom, 2), resultParam.AL,  Qt::DisplayRole);
     twMeas->model()->setData(twMeas->model()->index(rowNom, 2), mainParam.Start, Qt::UserRole);
