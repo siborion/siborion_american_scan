@@ -11,7 +11,7 @@ mesurement::mesurement(QWidget *parent) :
     QHBoxLayout *layoutTop = new QHBoxLayout();
     QVBoxLayout *layoutRight = new QVBoxLayout();
     QHBoxLayout *layoutBot = new QHBoxLayout();
-    QHBoxLayout *layoutKey = new QHBoxLayout();
+//    QHBoxLayout *layoutKey = new QHBoxLayout();
 
     pBigView = new bigviewnum();
 
@@ -61,38 +61,38 @@ mesurement::mesurement(QWidget *parent) :
     }
 
 //----------------------------------------- Button
-    QSpacerItem *hs = new QSpacerItem(50, 5, QSizePolicy::Expanding, QSizePolicy::Minimum);
-    QPushButton *pbOd = new QPushButton(tr("OD"));
-    QSpacerItem *hs0 = new QSpacerItem(50, 5, QSizePolicy::Expanding, QSizePolicy::Minimum);
-    QPushButton *pbMeasure = new QPushButton(tr("Measure"));
-    QSpacerItem *hs1 = new QSpacerItem(50, 5, QSizePolicy::Expanding, QSizePolicy::Minimum);
-    QPushButton *pbAutoFreeze = new QPushButton(tr("Auto Freeze"));
-    QPushButton *pbAuto = new QPushButton(tr("Auto"));
-    QPushButton *pbManual = new QPushButton(tr("Manual"));
-    QSpacerItem *hs2 = new QSpacerItem(50, 5, QSizePolicy::Expanding, QSizePolicy::Minimum);
-    QPushButton *pbContact = new QPushButton(tr("Contact"));
-    QPushButton *pbImmersion = new QPushButton(tr("Immersion"));
-    QSpacerItem *hs3 = new QSpacerItem(50, 5, QSizePolicy::Expanding, QSizePolicy::Minimum);
-    QPushButton *pbCataract = new QPushButton(tr("Cataract"));
-    QPushButton *pbAphakic = new QPushButton(tr("Aphakic"));
-    QSpacerItem *hs4 = new QSpacerItem(50, 5, QSizePolicy::Expanding, QSizePolicy::Minimum);
+//    QSpacerItem *hs = new QSpacerItem(50, 5, QSizePolicy::Expanding, QSizePolicy::Minimum);
+//    QPushButton *pbOd = new QPushButton(tr("OD"));
+//    QSpacerItem *hs0 = new QSpacerItem(50, 5, QSizePolicy::Expanding, QSizePolicy::Minimum);
+//    QPushButton *pbMeasure = new QPushButton(tr("Measure"));
+//    QSpacerItem *hs1 = new QSpacerItem(50, 5, QSizePolicy::Expanding, QSizePolicy::Minimum);
+//    QPushButton *pbAutoFreeze = new QPushButton(tr("Auto Freeze"));
+//    QPushButton *pbAuto = new QPushButton(tr("Auto"));
+//    QPushButton *pbManual = new QPushButton(tr("Manual"));
+//    QSpacerItem *hs2 = new QSpacerItem(50, 5, QSizePolicy::Expanding, QSizePolicy::Minimum);
+//    QPushButton *pbContact = new QPushButton(tr("Contact"));
+//    QPushButton *pbImmersion = new QPushButton(tr("Immersion"));
+//    QSpacerItem *hs3 = new QSpacerItem(50, 5, QSizePolicy::Expanding, QSizePolicy::Minimum);
+//    QPushButton *pbCataract = new QPushButton(tr("Cataract"));
+//    QPushButton *pbAphakic = new QPushButton(tr("Aphakic"));
+//    QSpacerItem *hs4 = new QSpacerItem(50, 5, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-    layoutKey->setSpacing(0);
-    layoutKey->addItem(hs);
-    layoutKey->addWidget(pbOd);
-    layoutKey->addItem(hs0);
-    layoutKey->addWidget(pbMeasure);
-    layoutKey->addItem(hs1);
-    layoutKey->addWidget(pbAutoFreeze);
-    layoutKey->addWidget(pbAuto);
-    layoutKey->addWidget(pbManual);
-    layoutKey->addItem(hs2);
-    layoutKey->addWidget(pbContact);
-    layoutKey->addWidget(pbImmersion);
-    layoutKey->addItem(hs3);
-    layoutKey->addWidget(pbCataract);
-    layoutKey->addWidget(pbAphakic);
-    layoutKey->addItem(hs4);
+//    layoutKey->setSpacing(0);
+//    layoutKey->addItem(hs);
+//    layoutKey->addWidget(pbOd);
+//    layoutKey->addItem(hs0);
+//    layoutKey->addWidget(pbMeasure);
+//    layoutKey->addItem(hs1);
+//    layoutKey->addWidget(pbAutoFreeze);
+//    layoutKey->addWidget(pbAuto);
+//    layoutKey->addWidget(pbManual);
+//    layoutKey->addItem(hs2);
+//    layoutKey->addWidget(pbContact);
+//    layoutKey->addWidget(pbImmersion);
+//    layoutKey->addItem(hs3);
+//    layoutKey->addWidget(pbCataract);
+//    layoutKey->addWidget(pbAphakic);
+//    layoutKey->addItem(hs4);
 
     pPlot = new Plot(this);
 
@@ -102,7 +102,7 @@ mesurement::mesurement(QWidget *parent) :
     lst          <<tr("No")<<tr("AveVelAl")<<tr("AL")<<tr("ACD")<<tr("LT")<<tr("VIT");
     twMeas  = new adjview(10, lst, columnPercent);
     twMeas->setSelectionBehavior(QAbstractItemView::SelectRows);
-    twMeas->setMinimumWidth(200);
+    twMeas->setMinimumWidth(250);
 
 //    layoutTop->addItem(layoutTopLeft);
 //    layoutTop->addWidget(twMeas);
@@ -118,12 +118,15 @@ mesurement::mesurement(QWidget *parent) :
     layoutRight->addWidget(twMeas);
 
 
+    pKey = new key();
+
     layout->addLayout(layoutTop, 1);
     layout->addLayout(layoutBot, 2);
-    layout->addLayout(layoutKey, 1);
+//    layout->addLayout(layoutKey, 1);
+    layout->addWidget(pKey,0);
 
-
-    connect(pbAuto, SIGNAL(clicked()), SLOT(getFileSample()));
+    connect(pKey, SIGNAL(keyAuto()), SLOT(getFileSample()));
+//    connect(pbAuto, SIGNAL(clicked()), SLOT(getFileSample()));
     connect(twMeas, SIGNAL(clicked(QModelIndex)), SLOT(changeRow(QModelIndex)));
     connect(pPlot, SIGNAL(refreshTable(stMainParam)), SLOT(refreshTable(stMainParam)));
 }

@@ -47,7 +47,8 @@ SOURCES += main.cpp\
     dbacces.cpp \
     plot.cpp \
     bigview.cpp \
-    bigviewnum.cpp
+    bigviewnum.cpp \
+    key.cpp
 
 
 HEADERS  += mainwindow.h\
@@ -64,7 +65,8 @@ HEADERS  += mainwindow.h\
     dbacces.h \
     plot.h \
     bigview.h \
-    bigviewnum.h
+    bigviewnum.h \
+    key.h
 
 #FORMS    += mainwindow.ui
 
