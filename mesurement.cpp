@@ -111,9 +111,19 @@ mesurement::mesurement(QWidget *parent) :
 //    layoutTop->setStretch(2, 2);
 
 //    layoutBot->addLayout(layoutKey, 1);
+
+    QPushButton *pbOd = new QPushButton(tr("OD"));
+    QFont font;
+    font.setPointSize(24);
+    font.setBold(true);
+    font.setWeight(75);
+    pbOd->setFont(font);
+    pbOd->setFont(font);
+
     layoutBot->addWidget(pPlot, 5);
     layoutBot->addLayout(layoutRight, 1);
 
+    layoutRight->addWidget(pbOd);
     layoutRight->addWidget(pBigView);
     layoutRight->addWidget(twMeas);
 
@@ -241,7 +251,7 @@ void mesurement::refreshTable(quint8 rowNom, stMainParam mainParam)
     twMeas->model()->setData(twMeas->model()->index(rowNom, 4), resultParam.LT,  Qt::DisplayRole);
     twMeas->model()->setData(twMeas->model()->index(rowNom, 4), mainParam.L2,    Qt::UserRole);
     twMeas->model()->setData(twMeas->model()->index(rowNom, 5), resultParam.Vit, Qt::DisplayRole);
-    twMeas->model()->setData(twMeas->model()->index(rowNom, 5), mainParam.Retina,    Qt::UserRole);
+    twMeas->model()->setData(twMeas->model()->index(rowNom, 5), mainParam.Retina,Qt::UserRole);
 }
 
 double mesurement::decRound(double Val, quint8 dec)

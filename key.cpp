@@ -6,8 +6,8 @@ key::key(QWidget *parent) :
     //----------------------------------------- Button
     QHBoxLayout *layoutKey = new QHBoxLayout(this);
 
-    QSpacerItem *hs = new QSpacerItem(50, 5, QSizePolicy::Expanding, QSizePolicy::Minimum);
-    QPushButton *pbOd = new QPushButton(tr("OD"));
+//    QSpacerItem *hs = new QSpacerItem(50, 5, QSizePolicy::Expanding, QSizePolicy::Minimum);
+//    QPushButton *pbOd = new QPushButton(tr("OD"));
     QSpacerItem *hs0 = new QSpacerItem(50, 5, QSizePolicy::Expanding, QSizePolicy::Minimum);
     QPushButton *pbMeasure = new QPushButton(tr("Measure"));
     QSpacerItem *hs1 = new QSpacerItem(50, 5, QSizePolicy::Expanding, QSizePolicy::Minimum);
@@ -23,8 +23,8 @@ key::key(QWidget *parent) :
     QSpacerItem *hs4 = new QSpacerItem(50, 5, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
     layoutKey->setSpacing(0);
-    layoutKey->addItem(hs);
-    layoutKey->addWidget(pbOd);
+//    layoutKey->addItem(hs);
+//    layoutKey->addWidget(pbOd);
     layoutKey->addItem(hs0);
     layoutKey->addWidget(pbMeasure);
     layoutKey->addItem(hs1);
