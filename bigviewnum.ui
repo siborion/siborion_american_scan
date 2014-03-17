@@ -47,7 +47,7 @@
       <number>2</number>
      </property>
      <item row="4" column="1" rowspan="2">
-      <widget class="QLabel" name="label_6">
+      <widget class="QLabel" name="lAlDev">
        <property name="font">
         <font>
          <pointsize>36</pointsize>
@@ -64,7 +64,7 @@
       </widget>
      </item>
      <item row="1" column="1" rowspan="2">
-      <widget class="QLabel" name="label_2">
+      <widget class="QLabel" name="lAlAvg">
        <property name="font">
         <font>
          <pointsize>36</pointsize>
@@ -73,7 +73,7 @@
         </font>
        </property>
        <property name="text">
-        <string>22.22</string>
+        <string>00.00</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -107,7 +107,7 @@
         </font>
        </property>
        <property name="text">
-        <string>LT</string>
+        <string>AL</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -144,7 +144,7 @@
         </font>
        </property>
        <property name="text">
-        <string>LT</string>
+        <string>AL</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>

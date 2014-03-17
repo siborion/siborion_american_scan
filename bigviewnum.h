@@ -14,6 +14,7 @@ class bigviewnum : public QWidget
 public:
     explicit bigviewnum(QWidget *parent = 0);
     ~bigviewnum();
+    void setDisplay(double Avg, double Div);
     
 private:
     Ui::bigviewnum *ui;

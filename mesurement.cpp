@@ -236,6 +236,9 @@ void mesurement::refreshTable(stMainParam mainParam)
 
 void mesurement::refreshTable(quint8 rowNom, stMainParam mainParam)
 {
+    double sumAl, curAl, devAl;
+    quint8 modelCount;
+
     stResultParam resultParam;
     resultParam.ACD = decRound(mainParam.L1 - mainParam.Start, 2);
     resultParam.LT = decRound(mainParam.L2 - mainParam.L1, 2);
@@ -252,6 +255,46 @@ void mesurement::refreshTable(quint8 rowNom, stMainParam mainParam)
     twMeas->model()->setData(twMeas->model()->index(rowNom, 4), mainParam.L2,    Qt::UserRole);
     twMeas->model()->setData(twMeas->model()->index(rowNom, 5), resultParam.Vit, Qt::DisplayRole);
     twMeas->model()->setData(twMeas->model()->index(rowNom, 5), mainParam.Retina,Qt::UserRole);
+
+    modelCount = sumAl = devAl = 0;
+    for (int i=0; i<10; i++)
+    {
+        curAl = 0;
+        curAl = twMeas->model()->data(twMeas->model()->index(i, 2), Qt::DisplayRole).toDouble();
+        if(curAl>0)
+        {
+            sumAl += curAl;
+            modelCount++;
+        }
+    }
+
+    if(modelCount>0)
+    {
+        sumAl = (sumAl/modelCount);
+        sumAl *= 100;
+        sumAl =  round(sumAl);
+        sumAl /= 100;
+    }
+
+    for (int i=0; i<10; i++)
+    {
+        curAl = 0;
+        curAl = twMeas->model()->data(twMeas->model()->index(i, 2), Qt::DisplayRole).toDouble();
+        if(curAl>0)
+        {
+            if(sumAl>curAl)
+            {
+                if(devAl < (sumAl-curAl))
+                    devAl = sumAl-curAl;
+            }
+            else
+            {
+                if(devAl < (curAl-sumAl))
+                    devAl = curAl-sumAl;
+            }
+        }
+    }
+    pBigView->setDisplay(sumAl , devAl);
 }
 
 double mesurement::decRound(double Val, quint8 dec)

@@ -48,7 +48,8 @@ SOURCES += main.cpp\
     plot.cpp \
     bigview.cpp \
     bigviewnum.cpp \
-    key.cpp
+    key.cpp \
+    key_radio.cpp
 
 
 HEADERS  += mainwindow.h\
@@ -66,7 +67,8 @@ HEADERS  += mainwindow.h\
     plot.h \
     bigview.h \
     bigviewnum.h \
-    key.h
+    key.h \
+    key_radio.h
 
 #FORMS    += mainwindow.ui
 
