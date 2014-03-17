@@ -128,7 +128,7 @@ mesurement::mesurement(QWidget *parent) :
     layoutRight->addWidget(twMeas);
 
 
-    pKey = new key();
+    pKey = new key_radio();
 
     layout->addLayout(layoutTop, 1);
     layout->addLayout(layoutBot, 2);

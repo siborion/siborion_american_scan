@@ -4,6 +4,8 @@
 #include <QWidget>
 #include <QPushButton>
 #include <QHBoxLayout>
+#include <QGroupBox>
+#include <QRadioButton>
 
 class key_radio : public QWidget
 {
@@ -12,7 +14,7 @@ public:
     explicit key_radio(QWidget *parent = 0);
     
 signals:
-    void key_radioAuto();
+    void keyAuto();
     
 private slots:
     void key_radioAutoClicked();

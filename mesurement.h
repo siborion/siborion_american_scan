@@ -13,7 +13,7 @@
 #include "mydelegate.h"
 #include "plot.h"
 #include "bigviewnum.h"
-#include "key.h"
+#include "key_radio.h"
 
 #include <qwt_plot.h>
 
@@ -32,7 +32,7 @@ private:
     adjview *twLens;
     adjview *twVelocity;
     adjview *twMeas;
-    key *pKey;
+    key_radio *pKey;
     Plot *pPlot;
     bigviewnum *pBigView;
     QStandardItemModel *modelPatient;
