@@ -208,6 +208,10 @@ void mesurement::changeRow(QModelIndex curIndex)
     curIndex = twMeas->model()->index(curIndex.row(), curIndex.column()+1);
     mainParam.Retina = (twMeas->model()->data(curIndex, Qt::UserRole).toInt());
 
+
+
+//    AL = decRound(mainParam.Retina - mainParam.Start, 2);
+
     foreach (quint8 val, baTmp)
     {
         x[kolvo] = kolvo;
@@ -227,6 +231,12 @@ void mesurement::changeRow(QModelIndex curIndex)
         pPlot->drawMarker(mainParam.Retina, "Retina");
         pPlot->drawMarker((double)mainParam.Retina,(double)60, Qt::yellow);
     }
+
+    AL =  (twMeas->model()->data(twMeas->model()->index(twMeas->currentIndex().row(), 5), Qt::UserRole).toDouble());
+    AL -= (twMeas->model()->data(twMeas->model()->index(twMeas->currentIndex().row(), 2), Qt::UserRole).toDouble());
+    AL = decRound(AL, 2);
+    pBigView->setDisplay(AL);
+
 }
 
 void mesurement::refreshTable(stMainParam mainParam)
@@ -294,7 +304,13 @@ void mesurement::refreshTable(quint8 rowNom, stMainParam mainParam)
             }
         }
     }
-    pBigView->setDisplay(sumAl , devAl);
+
+
+//    AL = decRound((twMeas->model()->data(twMeas->model()->index(twMeas->currentIndex().row()), 5)), 2);
+
+    AL =  decRound(twMeas->model()->data(twMeas->model()->index(twMeas->currentIndex().row(), 5), Qt::UserRole).toDouble(), 2);
+    AL -= decRound(twMeas->model()->data(twMeas->model()->index(twMeas->currentIndex().row(), 2), Qt::UserRole).toDouble(), 2);
+    pBigView->setDisplay(AL, sumAl , devAl);
 }
 
 double mesurement::decRound(double Val, quint8 dec)

@@ -35,6 +35,12 @@ MainWindow::MainWindow( QWidget *parent ):
 //    db = dbacces.getInstance();
     d_panel = new Panel( this );
     setCentralWidget( d_panel );
+
+//    scanbase *sdb = new scanbase();
+    pBase = scanbase::instanse();
+
+
+
 }
 
 

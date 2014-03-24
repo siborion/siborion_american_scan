@@ -14,11 +14,20 @@
 #include <patient.h>
 #include <doctor.h>
 #include <lens.h>
-//#include <QSvgRenderer>
 #include <QPainter>
-//#include "q.h"
+#include <QSql>
+#include <QSqlQueryModel>
+#include "scanbase.h"
 
-enum {enPatient, enDoctor, enLens};
+namespace BaseType
+{
+    enum Status
+    {
+        enPatient = 0,
+        enDoctor = 1,
+        enLens = 2
+    };
+}
 
 class bases : public QWidget
 {
@@ -31,28 +40,27 @@ signals:
 public slots:
 
 private:
+    scanbase *pBase;
     void adjCol();
-
+    void fillModel(BaseType::Status);
     adjview *twTable;
     QPushButton *pTest;
     QPushButton *pbAdd;
     QPushButton *pbDel;
     QPushButton *pbEdit;
     QPushButton *pbPatientHistory;
-    QStandardItemModel *model;
-    quint8 TypeBase;
-//    QSvgWidget *tmp;
+    QSqlQueryModel  *model;
+    BaseType::Status TypeBase;
     QString *svg;
 
 private slots:
-    void adjTable(quint8);
+    void adjTable(BaseType::Status);
     void changeBasePatient(bool Val);
     void changeBaseDoctor(bool Val);
     void changeBaseLens(bool Val);
     void Add();
     void Edit();
     void Del();
-
 };
 
 #endif // BASES_H

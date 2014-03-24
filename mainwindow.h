@@ -1,4 +1,5 @@
 #include <qmainwindow.h>
+#include "scanbase.h"
 
 #include <QTableView>
 
@@ -21,5 +22,6 @@ private Q_SLOTS:
 private:
     Plot *d_plot;
     Panel *d_panel;
+    scanbase *pBase;
 //    dbacces db;
 };

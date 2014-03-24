@@ -27,6 +27,7 @@ public:
                         SignalValueRole = Qt::UserRole + 1001};
 
 private:
+    double AL;
     QwtPlot *pQwt;
     adjview *twPatient;
     adjview *twLens;
