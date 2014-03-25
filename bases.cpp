@@ -154,9 +154,12 @@ void bases::Add()
 
 void bases::Edit()
 {
+    quint32 curRow;
+    curRow = twTable->currentIndex().row();
+
     if(TypeBase==BaseType::enPatient)
     {
-        patient *pPatient = new patient(45);
+        patient *pPatient = new patient(model->data(model->index(curRow, 1)).toUInt());
         if(pPatient->exec() == QDialog::Accepted)
         {
         }

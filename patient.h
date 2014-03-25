@@ -12,16 +12,17 @@
 #include <QFrame>
 #include <QSpacerItem>
 #include <QDebug>
+#include "scanbase.h"
+
 
 class patient : public QDialog
 {
     Q_OBJECT
 public:
-
     explicit patient(quint32 id, QWidget *parent = 0);
 
 private:
-    void createInterface();
+    scanbase *pBase;
 
 signals:
 

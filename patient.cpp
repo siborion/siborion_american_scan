@@ -1,15 +1,14 @@
 #include "patient.h"
 
-
 patient::patient(quint32 id, QWidget *parent) :
     QDialog(parent)
 {
-    qDebug()<<id;
-    createInterface();
-}
+    QSqlQuery  query;
+    QSqlRecord rec;
+    QObjectList objectList;
 
-void patient::createInterface()
-{
+    pBase = scanbase::instanse();
+
     QGridLayout *layout = new QGridLayout(this);
     QHBoxLayout *buttonLayout  = new QHBoxLayout();
 
@@ -38,27 +37,27 @@ void patient::createInterface()
     QLabel  *lK2         = new QLabel(tr("K2 - Value"));
     QLabel  *lK          = new QLabel(tr("K  - Value"));
 
-    QLineEdit  *leRef        = new QLineEdit();
-    QLineEdit  *leId         = new QLineEdit();
-    QLineEdit  *leFirstName  = new QLineEdit();
-    QLineEdit  *leLastName   = new QLineEdit();
-    QLineEdit  *leBirth      = new QLineEdit();
-    QLineEdit  *leAge        = new QLineEdit();
-    QRadioButton *rbMale     = new QRadioButton(tr("Male"));
-    QRadioButton *rbFemale   = new QRadioButton(tr("Female"));
-    QLineEdit  *leAddress    = new QLineEdit();
-    QLineEdit  *leCity       = new QLineEdit();
-    QLineEdit  *leState      = new QLineEdit();
-    QLineEdit  *leZip        = new QLineEdit();
-    QLineEdit  *lePhone      = new QLineEdit();
+    QLineEdit  *leRef        = new QLineEdit(); leRef->setObjectName("ref");
+    QLineEdit  *leId         = new QLineEdit(); leId->setObjectName("id");
+    QLineEdit  *leFirstName  = new QLineEdit(); leFirstName->setObjectName("first");
+    QLineEdit  *leLastName   = new QLineEdit(); leLastName->setObjectName("last");
+    QLineEdit  *leBirth      = new QLineEdit(); leBirth->setObjectName("birth");
+    QLineEdit  *leAge        = new QLineEdit(); leAge->setObjectName("age");
+    QRadioButton *rbMale     = new QRadioButton(tr("Male"));   rbMale->setObjectName("sex");
+    QRadioButton *rbFemale   = new QRadioButton(tr("Female")); rbFemale->setObjectName("female");
+    QLineEdit  *leAddress    = new QLineEdit(); leAddress->setObjectName("adress");
+    QLineEdit  *leCity       = new QLineEdit(); leCity->setObjectName("city");
+    QLineEdit  *leState      = new QLineEdit(); leState->setObjectName("state");
+    QLineEdit  *leZip        = new QLineEdit(); leZip->setObjectName("zip");
+    QLineEdit  *lePhone      = new QLineEdit(); lePhone->setObjectName("phone");
     QTextEdit  *teNotes      = new QTextEdit();
     QComboBox  *cbDoctor     = new QComboBox();
-    QLineEdit  *leK1Left     = new QLineEdit();
-    QLineEdit  *leK1Right    = new QLineEdit();
-    QLineEdit  *leK2Left     = new QLineEdit();
-    QLineEdit  *leK2Right    = new QLineEdit();
-    QLineEdit  *leKLeft     = new QLineEdit();
-    QLineEdit  *leKRight    = new QLineEdit();
+    QLineEdit  *leK1Left     = new QLineEdit(); leK1Left-> setObjectName("k1left");
+    QLineEdit  *leK1Right    = new QLineEdit(); leK1Right->setObjectName("k1right");
+    QLineEdit  *leK2Left     = new QLineEdit(); leK2Left-> setObjectName("k2left");
+    QLineEdit  *leK2Right    = new QLineEdit(); leK2Right->setObjectName("k2right");
+    QLineEdit  *leKLeft     = new QLineEdit();  leKLeft->setObjectName("kleft");
+    QLineEdit  *leKRight    = new QLineEdit();  leKRight->setObjectName("kright");
     QSpacerItem *buttonSpacerBot = new QSpacerItem(20, 40, QSizePolicy::Expanding, QSizePolicy::Expanding);
 
     layout->addWidget(lRef,      0, 0);
@@ -109,5 +108,28 @@ void patient::createInterface()
     layout->addLayout(buttonLayout, 18, 0, 1, 5);
     connect(pbOk, SIGNAL(clicked()), SLOT(accept()));
     connect(pbCancel, SIGNAL(clicked()), SLOT(reject()));
+
+    query = pBase->getData("select * from patient;");
+    if(query.first())
+    {
+        rec = query.record();
+        objectList << this->children();
+
+        for(int i=0; i<objectList.count();i++)
+        {
+            qint8 recNum = rec.indexOf(objectList.at(i)->objectName());
+
+            if(recNum>=0)
+            {
+                QLineEdit *c = dynamic_cast<QLineEdit *>(objectList.at(i));
+                if(c)
+                    c->setText(query.value(recNum).toString());
+
+                QRadioButton *r = dynamic_cast<QRadioButton *>(objectList.at(i));
+                if(r)
+                    r->setChecked(query.value(recNum).toBool());
+            }
+        }
+    }
 }
 
