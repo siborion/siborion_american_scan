@@ -33,6 +33,7 @@ bases::bases(QWidget *parent) :
 
     twTable = new adjview();
     twTable->setModel(model);
+    twTable->setSelectionBehavior(QAbstractItemView::SelectRows);
 
     topRightLayout->addWidget(gbSelect);
     topRightLayout->addWidget(lSearch);
@@ -56,11 +57,12 @@ bases::bases(QWidget *parent) :
     connect(rbDoctor, SIGNAL(clicked(bool)), SLOT(changeBaseDoctor(bool)));
     connect(rbLens, SIGNAL(clicked(bool)), SLOT(changeBaseLens(bool)));
     connect(pbAdd,  SIGNAL(pressed()), SLOT(Add()));
-    connect(pbEdit, SIGNAL(pressed()), SLOT(Add()));
+    connect(pbEdit, SIGNAL(pressed()), SLOT(Edit()));
 }
 
 void bases::adjTable(BaseType::Status Val)
 {
+    QString str;
     QStringList lst;
     QStringList lstButton;
     QList<int>  columnPercent;
@@ -73,20 +75,22 @@ void bases::adjTable(BaseType::Status Val)
         columnPercent<<10   <<   10        <<      20        <<      20       <<       20        <<     20;
         lst<<tr("Ref.№")<<tr("Patient ID")<<tr("First Name")<<tr("Last Name")<<tr("Doctor Name")<<tr("Notes");
         lstButton<<tr("Add Patient")<<tr("Edit Patient")<<tr("Delete Patient")<<tr("Patient History");
+        str = "SELECT  ref, id, first, last, doctor, notes from patient;";
         break;
     case BaseType::enDoctor:
         columnPercent   <<       10        <<      30        <<      30       <<     30;
         lst             <<tr("Doctor Id") <<tr("First Name")<<tr("Last Name")<<tr("Notes");
         lstButton<<tr("Add Doctor")<<tr("Edit Doctor")<<tr("Delete Doctor");
+        str = "SELECT id from doctor;";
         break;
     case BaseType::enLens:
         columnPercent   <<       10       <<      20      <<      20         <<     20    <<      20    <<      10;
         lst             <<tr("Lens Name")<<tr("Mfg Name")<<tr("Mfg A_Const")<<tr("Mfg ACD")<<tr("Mfg SF")<<tr("Hoffer ACD");
         lstButton<<tr("Add Lens")<<tr("Edit Lens")<<tr("Delete Lens");
+        str = "SELECT id from lens;";
         break;
     }
-//    model->setColumnCount(lst.count());
-//    model->setHorizontalHeaderLabels(lst);
+    model->setQuery(str);
     pbAdd->setText (lstButton.at(0));
     pbEdit->setText(lstButton.at(1));
     pbDel->setText (lstButton.at(2));
@@ -98,8 +102,7 @@ void bases::adjTable(BaseType::Status Val)
     else
         pbPatientHistory->setVisible(false);
     twTable->setColumnPercent(columnPercent);
-
-    fillModel(BaseType::enDoctor);
+    fillModelHead(lst);
 }
 
 void bases::changeBasePatient(bool Val)
@@ -122,7 +125,7 @@ void bases::Add()
 {
     if(TypeBase==BaseType::enPatient)
     {
-        patient *pPatient = new patient();
+        patient *pPatient = new patient(0);
         if(pPatient->exec() == QDialog::Accepted)
         {
 
@@ -151,15 +154,14 @@ void bases::Add()
 
 void bases::Edit()
 {
-    switch (TypeBase)
+    if(TypeBase==BaseType::enPatient)
     {
-    case BaseType::enPatient:
-        break;
-    case BaseType::enDoctor:
-        break;
-    case BaseType::enLens:
-        break;
+        patient *pPatient = new patient(45);
+        if(pPatient->exec() == QDialog::Accepted)
+        {
+        }
     }
+
 }
 
 void bases::Del()
@@ -175,23 +177,29 @@ void bases::Del()
     }
 }
 
-void bases::fillModel(BaseType::Status)
+void bases::fillModelHead(QStringList sl)
 {
-    QSqlQuery sqData;
-    switch (TypeBase)
+    for(int i=0; i<sl.count(); i++)
     {
-    case BaseType::enPatient:
-        sqData = pBase->getData("select * from patient;");
-        break;
-    case BaseType::enDoctor:
-        sqData = pBase->getData("select * from patient;");
-        break;
-    case BaseType::enLens:
-        sqData = pBase->getData("select * from patient;");
-        break;
+        model->setHeaderData(i, Qt::Horizontal, sl.at(i), Qt::DisplayRole);
     }
-    model->setQuery("select * from patient;");
-    qDebug() << model->lastError();
+
+//    QSqlQuery sqData;
+//    switch (TypeBase)
+//    {
+//    case BaseType::enPatient:
+//        sqData = pBase->getData("select * from patient;");
+//      break;
+//    case BaseType::enDoctor:
+//        sqData = pBase->getData("select * from patient;");
+//        break;
+//    case BaseType::enLens:
+//        sqData = pBase->getData("select * from patient;");
+//        break;
+//    }
+//    model->setHeaderData(0, Qt::Horizontal, "454545", Qt::DisplayRole);
+//    model->setQuery("select id from patient;");
+//    qDebug() << model->lastError();
 }
 
 

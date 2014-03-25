@@ -11,12 +11,17 @@
 #include <QComboBox>
 #include <QFrame>
 #include <QSpacerItem>
+#include <QDebug>
 
 class patient : public QDialog
 {
     Q_OBJECT
 public:
-    explicit patient(QWidget *parent = 0);
+
+    explicit patient(quint32 id, QWidget *parent = 0);
+
+private:
+    void createInterface();
 
 signals:
 

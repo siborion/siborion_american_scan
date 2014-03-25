@@ -1,7 +1,14 @@
 #include "patient.h"
 
-patient::patient(QWidget *parent) :
+
+patient::patient(quint32 id, QWidget *parent) :
     QDialog(parent)
+{
+    qDebug()<<id;
+    createInterface();
+}
+
+void patient::createInterface()
 {
     QGridLayout *layout = new QGridLayout(this);
     QHBoxLayout *buttonLayout  = new QHBoxLayout();
@@ -103,3 +110,4 @@ patient::patient(QWidget *parent) :
     connect(pbOk, SIGNAL(clicked()), SLOT(accept()));
     connect(pbCancel, SIGNAL(clicked()), SLOT(reject()));
 }
+

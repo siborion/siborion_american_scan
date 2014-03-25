@@ -42,7 +42,7 @@ public slots:
 private:
     scanbase *pBase;
     void adjCol();
-    void fillModel(BaseType::Status);
+    void fillModelHead(QStringList sl);
     adjview *twTable;
     QPushButton *pTest;
     QPushButton *pbAdd;
