@@ -13,7 +13,8 @@
 #include <QSpacerItem>
 #include <QDebug>
 #include "scanbase.h"
-
+#include <QSqlTableModel>
+#include <QStandardItem>
 
 class patient : public QDialog
 {
@@ -23,6 +24,8 @@ public:
 
 private:
     scanbase *pBase;
+    QSqlTableModel *model;
+    int findRecord(QSqlTableModel *tableModel, quint32 guid);
 
 signals:
 
