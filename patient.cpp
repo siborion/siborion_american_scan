@@ -3,10 +3,7 @@
 patient::patient(quint32 id, QWidget *parent) :
     QDialog(parent)
 {
-    QSqlQuery  query;
-    QSqlRecord rec;
-    QObjectList objectList;
-    QString str;
+    patientId = id;
 
     pBase = scanbase::instanse();
 
@@ -45,27 +42,27 @@ patient::patient(quint32 id, QWidget *parent) :
     QLabel  *lK2         = new QLabel(tr("K2 - Value"));
     QLabel  *lK          = new QLabel(tr("K  - Value"));
 
-    QLineEdit  *leRef        = new QLineEdit(); leRef->setObjectName("ref");
+    QLineEdit  *leRef        = new QLineEdit(); leRef->setObjectName("VALref");
     QLineEdit  *leId         = new QLineEdit(); leId->setObjectName("id");
-    QLineEdit  *leFirstName  = new QLineEdit(); leFirstName->setObjectName("first");
-    QLineEdit  *leLastName   = new QLineEdit(); leLastName->setObjectName("last");
-    QLineEdit  *leBirth      = new QLineEdit(); leBirth->setObjectName("birth");
-    QLineEdit  *leAge        = new QLineEdit(); leAge->setObjectName("age");
-    QRadioButton *rbMale     = new QRadioButton(tr("Male"));   rbMale->setObjectName("sex0");
-    QRadioButton *rbFemale   = new QRadioButton(tr("Female")); rbFemale->setObjectName("sex1");
-    QLineEdit  *leAddress    = new QLineEdit(); leAddress->setObjectName("adress");
-    QLineEdit  *leCity       = new QLineEdit(); leCity->setObjectName("city");
-    QLineEdit  *leState      = new QLineEdit(); leState->setObjectName("state");
-    QLineEdit  *leZip        = new QLineEdit(); leZip->setObjectName("zip");
-    QLineEdit  *lePhone      = new QLineEdit(); lePhone->setObjectName("phone");
-    QTextEdit  *teNotes      = new QTextEdit(); teNotes->setObjectName("notes");
-    QComboBox  *cbDoctor     = new QComboBox(); cbDoctor->setObjectName("doctor");
-    QLineEdit  *leK1Left     = new QLineEdit(); leK1Left-> setObjectName("k1left");
-    QLineEdit  *leK1Right    = new QLineEdit(); leK1Right->setObjectName("k1right");
-    QLineEdit  *leK2Left     = new QLineEdit(); leK2Left-> setObjectName("k2left");
-    QLineEdit  *leK2Right    = new QLineEdit(); leK2Right->setObjectName("k2right");
-    QLineEdit  *leKLeft     = new QLineEdit();  leKLeft->setObjectName("kleft");
-    QLineEdit  *leKRight    = new QLineEdit();  leKRight->setObjectName("kright");
+    QLineEdit  *leFirstName  = new QLineEdit(); leFirstName->setObjectName("VALfirst");
+    QLineEdit  *leLastName   = new QLineEdit(); leLastName->setObjectName("VALlast");
+    QLineEdit  *leBirth      = new QLineEdit(); leBirth->setObjectName("VALbirth");
+    QLineEdit  *leAge        = new QLineEdit(); leAge->setObjectName("VALage");
+    QRadioButton *rbMale     = new QRadioButton(tr("Male"));   rbMale->setObjectName("VALsex0");
+    QRadioButton *rbFemale   = new QRadioButton(tr("Female")); rbFemale->setObjectName("VALsex1");
+    QLineEdit  *leAddress    = new QLineEdit(); leAddress->setObjectName(" VALadress");
+    QLineEdit  *leCity       = new QLineEdit(); leCity->setObjectName("VALcity");
+    QLineEdit  *leState      = new QLineEdit(); leState->setObjectName("VALstate");
+    QLineEdit  *leZip        = new QLineEdit(); leZip->setObjectName("VALzip");
+    QLineEdit  *lePhone      = new QLineEdit(); lePhone->setObjectName("VALphone");
+    QTextEdit  *teNotes      = new QTextEdit(); teNotes->setObjectName("VALnotes");
+    QComboBox  *cbDoctor     = new QComboBox(); cbDoctor->setObjectName("VALdoctor");
+    QLineEdit  *leK1Left     = new QLineEdit(); leK1Left-> setObjectName("VALk1left");
+    QLineEdit  *leK1Right    = new QLineEdit(); leK1Right->setObjectName("VALk1right");
+    QLineEdit  *leK2Left     = new QLineEdit(); leK2Left-> setObjectName("VALk2left");
+    QLineEdit  *leK2Right    = new QLineEdit(); leK2Right->setObjectName("VALk2right");
+    QLineEdit  *leKLeft     = new QLineEdit();  leKLeft->setObjectName("VALkleft");
+    QLineEdit  *leKRight    = new QLineEdit();  leKRight->setObjectName("VALkright");
     QSpacerItem *buttonSpacerBot = new QSpacerItem(20, 40, QSizePolicy::Expanding, QSizePolicy::Expanding);
 
     layout->addWidget(lRef,      0, 0);
@@ -114,16 +111,25 @@ patient::patient(quint32 id, QWidget *parent) :
     buttonLayout->addWidget(pbCancel);
     buttonLayout->addWidget(pbOk);
     layout->addLayout(buttonLayout, 18, 0, 1, 5);
-    connect(pbOk, SIGNAL(clicked()), SLOT(accept()));
+    connect(pbOk, SIGNAL(clicked()), SLOT(save()));
     connect(pbCancel, SIGNAL(clicked()), SLOT(reject()));
 
     cbDoctor->setModel(model);
     cbDoctor->setModelColumn(model->fieldIndex("name"));
     findRecord(model, 0);
 
+    fillData();
+}
+
+void patient::fillData()
+{
+    QString str;
+    QSqlQuery  query;
+    QSqlRecord rec;
+    QObjectList objectList;
+
     str = "select * from patient where id = %1 ;";
-    str = str.arg(id);
-    qDebug() << str;
+    str = str.arg(patientId);
     query = pBase->getData(str);
     if(query.first())
     {
@@ -135,46 +141,49 @@ patient::patient(quint32 id, QWidget *parent) :
         for(int i=0; i<objectList.count();i++)
         {
             sObName = objectList.at(i)->objectName();
-
-            QLineEdit *c = dynamic_cast<QLineEdit *>(objectList.at(i));
-            if(c)
+            if(sObName.left(3) == "VAL")
             {
-                qint8 recNum = rec.indexOf(sObName);
-                if(recNum>=0)
-                    c->setText(query.value(recNum).toString());
-            }
-
-            QRadioButton *r = dynamic_cast<QRadioButton *>(objectList.at(i));
-            if(r)
-            {
-                str = sObName.left(sObName.count()-1);
-                qint8 recNum = rec.indexOf(str);
-                if(recNum>=0)
+                sObName = sObName.right(sObName.count()-3);
+                QLineEdit *c = dynamic_cast<QLineEdit *>(objectList.at(i));
+                if(c)
                 {
-                    val = query.value(recNum).toUInt();
-                    str.append(QString("%1").arg(val));
-                    if(sObName == str)
-                        r->setChecked(true);
+                    qint8 recNum = rec.indexOf(sObName);
+                    if(recNum>=0)
+                        c->setText(query.value(recNum).toString());
                 }
-            }
 
-            QTextEdit *t = dynamic_cast<QTextEdit *>(objectList.at(i));
-            if(t)
-            {
-                qint8 recNum = rec.indexOf(sObName);
-                if(recNum>=0)
-                    t->setText(query.value(recNum).toString());
-            }
-
-            QComboBox *b = dynamic_cast<QComboBox *>(objectList.at(i));
-            if(b)
-            {
-                qint8 recNum = rec.indexOf(sObName);
-                if(recNum>=0)
+                QRadioButton *r = dynamic_cast<QRadioButton *>(objectList.at(i));
+                if(r)
                 {
-                    val = query.value(recNum).toUInt();
-                    if(sObName == "doctor")
-                        b->setCurrentIndex(findRecord(model, val));
+                    str = sObName.left(sObName.count()-1);
+                    qint8 recNum = rec.indexOf(str);
+                    if(recNum>=0)
+                    {
+                        val = query.value(recNum).toUInt();
+                        str.append(QString("%1").arg(val));
+                        if(sObName == str)
+                            r->setChecked(true);
+                    }
+                }
+
+                QTextEdit *t = dynamic_cast<QTextEdit *>(objectList.at(i));
+                if(t)
+                {
+                    qint8 recNum = rec.indexOf(sObName);
+                    if(recNum>=0)
+                        t->setText(query.value(recNum).toString());
+                }
+
+                QComboBox *b = dynamic_cast<QComboBox *>(objectList.at(i));
+                if(b)
+                {
+                    qint8 recNum = rec.indexOf(sObName);
+                    if(recNum>=0)
+                    {
+                        val = query.value(recNum).toUInt();
+                        if(sObName == "doctor")
+                            b->setCurrentIndex(findRecord(model, val));
+                    }
                 }
             }
         }
@@ -191,4 +200,65 @@ int patient::findRecord(QSqlTableModel *tableModel, quint32 id)
     return (-1);
 }
 
+void patient::save()
+{
+    QString strUpdate;
+    QSqlQuery  query;
+    QSqlRecord rec;
+    QObjectList objectList;
+    QString sObName;
+    QString strInsertColumn;
+    QString strInsertValue;
 
+    strUpdate = "update patient set id=id";
+    strInsertColumn = "insert into patient (";
+    strInsertValue = " values (";
+
+    objectList << this->children();
+
+    for(int i=0; i<objectList.count();i++)
+    {
+        sObName = objectList.at(i)->objectName();
+
+        if(sObName.left(3) == "VAL")
+        {
+            sObName = sObName.right(sObName.count()-3);
+
+
+            QLineEdit *c = dynamic_cast<QLineEdit *>(objectList.at(i));
+            if(c)
+            {
+                strUpdate.append(QString(",\"%1\"='%2'").arg(sObName).arg(c->text()));
+                strInsertColumn.append(sObName);
+                strInsertValue.append(c->text());
+            }
+
+            QTextEdit *t = dynamic_cast<QTextEdit *>(objectList.at(i));
+            if(t)
+                strUpdate.append(QString(",\"%1\"='%2'").arg(sObName).arg(t->toPlainText()));
+
+            QComboBox *b = dynamic_cast<QComboBox *>(objectList.at(i));
+            if(b)
+            {
+                quint32 cbTmp;
+                cbTmp = b->model()->data(b->model()->index(b->currentIndex(), 0)).toUInt();
+                strUpdate.append(QString(",\"%1\"='%2'").arg(sObName).arg(cbTmp));
+            }
+
+            QRadioButton *r = dynamic_cast<QRadioButton *>(objectList.at(i));
+            if(r)
+            {
+                QString rbStr;
+                rbStr = sObName.right(1);
+                sObName = sObName.left(sObName.count()-1);
+                if(r->isChecked())
+                    strUpdate.append(QString(",\"%1\"='%2'").arg(sObName).arg(rbStr));
+            }
+        }
+    }
+    strUpdate.append(QString(" where id=%1;").arg(patientId));
+    query.prepare(strUpdate);
+    qDebug() << query.exec();
+    qDebug() << strUpdate;
+    accept();
+}

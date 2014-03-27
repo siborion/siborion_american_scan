@@ -26,11 +26,12 @@ private:
     scanbase *pBase;
     QSqlTableModel *model;
     int findRecord(QSqlTableModel *tableModel, quint32 guid);
-
+    void fillData();
+    quint32 patientId;
 signals:
-
 public slots:
-
+private slots:
+    void save();
 };
 
 #endif // PATIENT_H
