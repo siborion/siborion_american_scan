@@ -30,10 +30,13 @@ private:
     int findRecord(QSqlTableModel *tableModel, quint32 guid);
     void fillData();
     quint32 patientId;
+    void test (const QObjectList &t);
+
 signals:
 public slots:
+
 private slots:
-    void save();
+    void saveData();
 };
 
 #endif // PATIENT_H

@@ -13,19 +13,21 @@ class basefill : public QObject
 {
     Q_OBJECT
 public:
-    explicit basefill(QObject *parent = 0);
+//    explicit basefill(quint32 id, const QObjectList &list, QString tableName, QObject *parent);
+    explicit basefill(quint32 id, const QObjectList &list, QString tableName);
+    void saveData(void);
+    void fillData(void);
 
 private:
     scanbase *pBase;
-    void fillData();
     int findRecord(QSqlTableModel *tableModel, quint32 id);
-    void save();
-    quint32 Id;
+    const QObjectList *olParent;
+    quint32 uiId;
+    QString qsTableName;
     
 signals:
     
 public slots:
-    
 };
 
 #endif // BASEFILL_H

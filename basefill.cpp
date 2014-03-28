@@ -1,9 +1,14 @@
 #include "basefill.h"
 
-basefill::basefill(QObject *parent) :
-    QObject(parent)
+//basefill::basefill(quint32 id, const QObjectList &list, QString tableName, QObject *parent) :
+basefill::basefill(quint32 id, const QObjectList &list, QString tableName) //:
+//    QObject(parent)
 {
     pBase = scanbase::instanse();
+    olParent = &list;
+    uiId = id;
+    qsTableName = tableName;
+    qDebug() << qsTableName;
 
 }
 
@@ -12,25 +17,23 @@ void basefill::fillData()
     QString str;
     QSqlQuery  query;
     QSqlRecord rec;
-    QObjectList objectList;
 
-    str = "select * from patient where id = %1 ;";
-    str = str.arg(Id);
+    str = "select * from %1 where id = %2 ;";
+    str = str.arg(qsTableName).arg(uiId);
     query = pBase->getData(str);
     if(query.first())
     {
         QString sObName;
         quint8 val;
         rec = query.record();
-        objectList << this->children();
 
-        for(int i=0; i<objectList.count();i++)
+        for(int i=0; i<olParent->count();i++)
         {
-            sObName = objectList.at(i)->objectName();
+            sObName = olParent->at(i)->objectName();
             if(sObName.left(3) == "VAL")
             {
                 sObName = sObName.right(sObName.count()-3);
-                QLineEdit *c = dynamic_cast<QLineEdit *>(objectList.at(i));
+                QLineEdit *c = dynamic_cast<QLineEdit *>(olParent->at(i));
                 if(c)
                 {
                     qint8 recNum = rec.indexOf(sObName);
@@ -38,7 +41,7 @@ void basefill::fillData()
                         c->setText(query.value(recNum).toString());
                 }
 
-                QRadioButton *r = dynamic_cast<QRadioButton *>(objectList.at(i));
+                QRadioButton *r = dynamic_cast<QRadioButton *>(olParent->at(i));
                 if(r)
                 {
                     str = sObName.left(sObName.count()-1);
@@ -52,7 +55,7 @@ void basefill::fillData()
                     }
                 }
 
-                QTextEdit *t = dynamic_cast<QTextEdit *>(objectList.at(i));
+                QTextEdit *t = dynamic_cast<QTextEdit *>(olParent->at(i));
                 if(t)
                 {
                     qint8 recNum = rec.indexOf(sObName);
@@ -60,7 +63,7 @@ void basefill::fillData()
                         t->setText(query.value(recNum).toString());
                 }
 
-                QComboBox *b = dynamic_cast<QComboBox *>(objectList.at(i));
+                QComboBox *b = dynamic_cast<QComboBox *>(olParent->at(i));
                 if(b)
                 {
                     qint8 recNum = rec.indexOf(sObName);
@@ -74,57 +77,48 @@ void basefill::fillData()
             }
         }
     }
+//    saveData();
 }
 
-int basefill::findRecord(QSqlTableModel *tableModel, quint32 id)
-{
-    for(int i=0; i<tableModel->rowCount(); i++)
-    {
-        if(id == tableModel->index(i, 0).data(Qt::DisplayRole).toUInt())
-            return i;
-    }
-    return (-1);
-}
-
-void basefill::save()
+void basefill::saveData()
 {
     QString strUpdate;
     QString strUpdateValue;
     QSqlQuery  query;
-    QSqlRecord rec;
-    QObjectList objectList;
+//    QSqlRecord rec;
     QString sObName;
     QString strInsertColumn;
     QString strInsertValue;
 
-    strUpdate = "update patient set id=id";
-    strInsertColumn = "insert into patient (";
+//    qDebug() << "ttttttttttttttt";
+//    qDebug() << qsTableName;
+
+    strUpdate = QString("update %1 set id=id").arg(qsTableName);
+    strInsertColumn = QString("insert into %1 (").arg(qsTableName);
     strInsertValue = " values (";
 
-    objectList << this->children();
-
-    for(int i=0; i<objectList.count();i++)
+    for(int i=0; i<olParent->count();i++)
     {
-        sObName = objectList.at(i)->objectName();
+        sObName = olParent->at(i)->objectName();
 
         if(sObName.left(3) == "VAL")
         {
             sObName = sObName.right(sObName.count()-3);
             strUpdateValue = "";
 
-            QLineEdit *c = dynamic_cast<QLineEdit *>(objectList.at(i));
+            QLineEdit *c = dynamic_cast<QLineEdit *>(olParent->at(i));
             if(c)
                 strUpdateValue = c->text();
 
-            QTextEdit *t = dynamic_cast<QTextEdit *>(objectList.at(i));
+            QTextEdit *t = dynamic_cast<QTextEdit *>(olParent->at(i));
             if(t)
                 strUpdateValue = t->toPlainText();
 
-            QComboBox *b = dynamic_cast<QComboBox *>(objectList.at(i));
+            QComboBox *b = dynamic_cast<QComboBox *>(olParent->at(i));
             if(b)
                 strUpdateValue = QString("%1").arg(b->model()->data(b->model()->index(b->currentIndex(), 0)).toUInt());
 
-            QRadioButton *r = dynamic_cast<QRadioButton *>(objectList.at(i));
+            QRadioButton *r = dynamic_cast<QRadioButton *>(olParent->at(i));
             if(r)
             {
                 QString rbStr="";
@@ -147,11 +141,22 @@ void basefill::save()
     strInsertValue =strInsertValue.mid (0,strInsertValue.count()-1);
     strInsertValue.append(") ");
     strInsertColumn.append(strInsertValue);
-    strUpdate.append(QString(" where id=%1;").arg(Id));
+    strUpdate.append(QString(" where id=%1;").arg(uiId));
 
-    if(Id>0)
+    if(uiId>0)
         query.prepare(strUpdate);
     else
         query.prepare(strInsertColumn);
     query.exec();
 }
+
+int basefill::findRecord(QSqlTableModel *tableModel, quint32 id)
+{
+    for(int i=0; i<tableModel->rowCount(); i++)
+    {
+        if(id == tableModel->index(i, 0).data(Qt::DisplayRole).toUInt())
+            return i;
+    }
+    return (-1);
+}
+

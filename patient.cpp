@@ -6,7 +6,6 @@ patient::patient(quint32 id, QWidget *parent) :
     patientId = id;
 
     pBase = scanbase::instanse();
-    basefill *pBaseFill = new basefill();
 
     model = new QSqlTableModel ();
     model->setTable("doctor");
@@ -109,14 +108,23 @@ patient::patient(quint32 id, QWidget *parent) :
     buttonLayout->addWidget(pbCancel);
     buttonLayout->addWidget(pbOk);
     layout->addLayout(buttonLayout, 18, 0, 1, 5);
-    connect(pbOk, SIGNAL(clicked()), SLOT(save()));
+//    basefill pBaseFill = new basefill(id, children(), (QString)"patient");
+    pBaseFill = new basefill(id, children(), (QString)"patient");
+    connect(pbOk, SIGNAL(clicked()), SLOT(saveData()));
     connect(pbCancel, SIGNAL(clicked()), SLOT(reject()));
 
     cbDoctor->setModel(model);
     cbDoctor->setModelColumn(model->fieldIndex("name"));
     findRecord(model, 0);
 
-    fillData();
+    pBaseFill->fillData();
+}
+
+void patient::test(const QObjectList &t)
+{
+        QLabel *c = dynamic_cast<QLabel *>(t.at(5));
+        if(c)
+            c->setText("5555");
 }
 
 void patient::fillData()
@@ -198,73 +206,8 @@ int patient::findRecord(QSqlTableModel *tableModel, quint32 id)
     return (-1);
 }
 
-void patient::save()
+void patient::saveData()
 {
-    QString strUpdate;
-    QString strUpdateValue;
-    QSqlQuery  query;
-    QSqlRecord rec;
-    QObjectList objectList;
-    QString sObName;
-    QString strInsertColumn;
-    QString strInsertValue;
-
-    strUpdate = "update patient set id=id";
-    strInsertColumn = "insert into patient (";
-    strInsertValue = " values (";
-
-    objectList << this->children();
-
-    for(int i=0; i<objectList.count();i++)
-    {
-        sObName = objectList.at(i)->objectName();
-
-        if(sObName.left(3) == "VAL")
-        {
-            sObName = sObName.right(sObName.count()-3);
-            strUpdateValue = "";
-
-            QLineEdit *c = dynamic_cast<QLineEdit *>(objectList.at(i));
-            if(c)
-                strUpdateValue = c->text();
-
-            QTextEdit *t = dynamic_cast<QTextEdit *>(objectList.at(i));
-            if(t)
-                strUpdateValue = t->toPlainText();
-
-            QComboBox *b = dynamic_cast<QComboBox *>(objectList.at(i));
-            if(b)
-                strUpdateValue = QString("%1").arg(b->model()->data(b->model()->index(b->currentIndex(), 0)).toUInt());
-
-            QRadioButton *r = dynamic_cast<QRadioButton *>(objectList.at(i));
-            if(r)
-            {
-                QString rbStr="";
-                rbStr = sObName.right(1);
-                sObName = sObName.left(sObName.count()-1);
-                if(r->isChecked())
-                    strUpdateValue = rbStr;
-            }
-
-            if(!strUpdateValue.isEmpty())
-            {
-                strUpdate.append(QString(",\"%1\"='%2'").arg(sObName).arg(strUpdateValue));
-                strInsertColumn.append(QString("\"%1\",").arg(sObName));
-                strInsertValue.append(QString("'%1',").arg(strUpdateValue));
-            }
-        }
-    }
-    strInsertColumn=strInsertColumn.mid(0,strInsertColumn.count()-1);
-    strInsertColumn.append(") ");
-    strInsertValue =strInsertValue.mid (0,strInsertValue.count()-1);
-    strInsertValue.append(") ");
-    strInsertColumn.append(strInsertValue);
-    strUpdate.append(QString(" where id=%1;").arg(patientId));
-
-    if(patientId>0)
-        query.prepare(strUpdate);
-    else
-        query.prepare(strInsertColumn);
-    query.exec();
+    pBaseFill->saveData();
     accept();
 }
