@@ -50,7 +50,8 @@ SOURCES += main.cpp\
     bigviewnum.cpp \
     key.cpp \
     key_radio.cpp \
-    scanbase.cpp
+    scanbase.cpp \
+    basefill.cpp
 
 
 HEADERS  += mainwindow.h\
@@ -70,7 +71,8 @@ HEADERS  += mainwindow.h\
     bigviewnum.h \
     key.h \
     key_radio.h \
-    scanbase.h
+    scanbase.h \
+    basefill.h
 
 #FORMS    += mainwindow.ui
 

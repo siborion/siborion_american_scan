@@ -13,6 +13,7 @@
 #include <QSpacerItem>
 #include <QDebug>
 #include "scanbase.h"
+#include "basefill.h"
 #include <QSqlTableModel>
 #include <QStandardItem>
 
@@ -24,6 +25,7 @@ public:
 
 private:
     scanbase *pBase;
+    basefill *pBaseFill;
     QSqlTableModel *model;
     int findRecord(QSqlTableModel *tableModel, quint32 guid);
     void fillData();

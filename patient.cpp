@@ -6,13 +6,11 @@ patient::patient(quint32 id, QWidget *parent) :
     patientId = id;
 
     pBase = scanbase::instanse();
+    basefill *pBaseFill = new basefill();
 
     model = new QSqlTableModel ();
     model->setTable("doctor");
-    if(model->select())
-    {
-        qDebug()<<"555555";
-    }
+    model->select();
 
     QGridLayout *layout = new QGridLayout(this);
     QHBoxLayout *buttonLayout  = new QHBoxLayout();
@@ -267,8 +265,6 @@ void patient::save()
         query.prepare(strUpdate);
     else
         query.prepare(strInsertColumn);
-    qDebug() << query.exec();
-    qDebug() << strUpdate;
-    qDebug() << strInsertColumn;
+    query.exec();
     accept();
 }
