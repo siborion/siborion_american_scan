@@ -27,8 +27,8 @@ private:
     scanbase *pBase;
     basefill *pBaseFill;
     QSqlTableModel *model;
-    int findRecord(QSqlTableModel *tableModel, quint32 guid);
-    void fillData();
+//    int findRecord(QSqlTableModel *tableModel, quint32 guid);
+//    void fillData();
     quint32 patientId;
     void test (const QObjectList &t);
 
