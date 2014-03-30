@@ -58,6 +58,9 @@ bases::bases(QWidget *parent) :
     connect(rbLens, SIGNAL(clicked(bool)), SLOT(changeBaseLens(bool)));
     connect(pbAdd,  SIGNAL(pressed()), SLOT(Add()));
     connect(pbEdit, SIGNAL(pressed()), SLOT(Edit()));
+    connect(pbDel, SIGNAL(pressed()), SLOT(Del()));
+//    connect(twTable, SIGNAL(clicked(QModelIndex)), SLOT(DelIndex(QModelIndex)));
+    connect(twTable, SIGNAL(doubleClicked(QModelIndex)), SLOT(EditIndex(QModelIndex)));
 }
 
 void bases::adjTable(BaseType::Status Val)
@@ -128,7 +131,7 @@ void bases::Add()
         patient *pPatient = new patient(0);
         if(pPatient->exec() == QDialog::Accepted)
         {
-
+            adjTable(BaseType::enPatient);
         }
         delete pPatient;
     }
@@ -162,16 +165,32 @@ void bases::Edit()
         patient *pPatient = new patient(model->data(model->index(curRow, 1)).toUInt());
         if(pPatient->exec() == QDialog::Accepted)
         {
+            adjTable(BaseType::enPatient);
         }
     }
 
 }
 
+void bases::EditIndex(QModelIndex index)
+{
+    Edit();
+}
+
+
 void bases::Del()
 {
+    QString str;
+    quint32 curId;
+    QSqlQuery query;
     switch (TypeBase)
     {
     case BaseType::enPatient:
+        curId = model->data(twTable->model()->index(twTable->currentIndex().row(), 1), Qt::DisplayRole).toUInt();
+        str = QString(" DELETE FROM \"patient\" WHERE \"id\"=%1; ")
+                .arg(curId);
+        query.prepare(str);
+        query.exec();
+        adjTable(BaseType::enPatient);
         break;
     case BaseType::enDoctor:
         break;

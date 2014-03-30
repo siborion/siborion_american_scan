@@ -61,6 +61,7 @@ private slots:
     void Add();
     void Edit();
     void Del();
+    void EditIndex(QModelIndex);
 };
 
 #endif // BASES_H
