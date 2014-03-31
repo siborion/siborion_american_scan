@@ -52,7 +52,8 @@ SOURCES += main.cpp\
     key_radio.cpp \
     scanbase.cpp \
     basefill.cpp \
-    dialog_lens.cpp
+    dialog_lens.cpp \
+    dialog_doctor.cpp
 
 
 HEADERS  += mainwindow.h\
@@ -74,7 +75,8 @@ HEADERS  += mainwindow.h\
     key_radio.h \
     scanbase.h \
     basefill.h \
-    dialog_lens.h
+    dialog_lens.h \
+    dialog_doctor.h
 
 #FORMS    += mainwindow.ui
 
@@ -83,4 +85,5 @@ RESOURCES += \
 
 FORMS += \
     bigviewnum.ui \
-    dialog_lens.ui
+    dialog_lens.ui \
+    dialog_doctor.ui

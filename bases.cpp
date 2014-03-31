@@ -84,7 +84,7 @@ void bases::adjTable(BaseType::Status Val)
         columnPercent   <<       10        <<      30        <<      30       <<     30;
         lst             <<tr("Doctor Id") <<tr("First Name")<<tr("Last Name")<<tr("Notes");
         lstButton<<tr("Add Doctor")<<tr("Edit Doctor")<<tr("Delete Doctor");
-        str = "SELECT id from doctor;";
+        str = "SELECT id, name, last, note from doctor;";
         break;
     case BaseType::enLens:
         columnPercent   << 0 <<            10       <<      20      <<      20         <<     20    <<      20    <<      10;
@@ -137,10 +137,10 @@ void bases::Add()
     }
     if(TypeBase==BaseType::enDoctor)
     {
-        doctor *pDoctor = new doctor();
+        dialog_doctor *pDoctor = new dialog_doctor(0);
         if(pDoctor->exec() == QDialog::Accepted)
         {
-//            qDebug() << pDoctor->modelDoctor->item(0,1)->text();
+            adjTable(BaseType::enDoctor);
         }
         delete pDoctor;
     }
@@ -170,6 +170,16 @@ void bases::Edit()
             adjTable(BaseType::enPatient);
         }
     }
+
+    if(TypeBase==BaseType::enDoctor)
+    {
+        dialog_doctor *pDoctor = new dialog_doctor(model->data(model->index(curRow, 0)).toUInt());
+        if(pDoctor->exec() == QDialog::Accepted)
+        {
+            adjTable(BaseType::enDoctor);
+        }
+    }
+
 
     if(TypeBase==BaseType::enLens)
     {
@@ -203,6 +213,12 @@ void bases::Del()
         adjTable(BaseType::enPatient);
         break;
     case BaseType::enDoctor:
+        curId = model->data(twTable->model()->index(twTable->currentIndex().row(), 0), Qt::DisplayRole).toUInt();
+        str = QString(" DELETE FROM \"doctor\" WHERE \"id\"=%1; ")
+                .arg(curId);
+        query.prepare(str);
+        query.exec();
+        adjTable(BaseType::enDoctor);
         break;
     case BaseType::enLens:
         curId = model->data(twTable->model()->index(twTable->currentIndex().row(), 0), Qt::DisplayRole).toUInt();

@@ -19,6 +19,7 @@
 #include <QSqlQueryModel>
 #include "scanbase.h"
 #include "dialog_lens.h"
+#include "dialog_doctor.h"
 
 namespace BaseType
 {

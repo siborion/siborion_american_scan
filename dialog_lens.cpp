@@ -19,8 +19,6 @@ dialog_lens::~dialog_lens()
 
 void dialog_lens::saveData()
 {
-    qDebug()<<1;
     pBaseFill->saveData();
-    qDebug()<<2;
     accept();
 }
