@@ -51,7 +51,8 @@ SOURCES += main.cpp\
     key.cpp \
     key_radio.cpp \
     scanbase.cpp \
-    basefill.cpp
+    basefill.cpp \
+    dialog_lens.cpp
 
 
 HEADERS  += mainwindow.h\
@@ -72,7 +73,8 @@ HEADERS  += mainwindow.h\
     key.h \
     key_radio.h \
     scanbase.h \
-    basefill.h
+    basefill.h \
+    dialog_lens.h
 
 #FORMS    += mainwindow.ui
 
@@ -80,4 +82,5 @@ RESOURCES += \
     scan.qrc
 
 FORMS += \
-    bigviewnum.ui
+    bigviewnum.ui \
+    dialog_lens.ui

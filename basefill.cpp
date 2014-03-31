@@ -20,6 +20,7 @@ void basefill::fillData()
 
     str = "select * from %1 where id = %2 ;";
     str = str.arg(qsTableName).arg(uiId);
+    qDebug() << str;
     query = pBase->getData(str);
     if(query.first())
     {

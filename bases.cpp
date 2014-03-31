@@ -87,10 +87,10 @@ void bases::adjTable(BaseType::Status Val)
         str = "SELECT id from doctor;";
         break;
     case BaseType::enLens:
-        columnPercent   <<       10       <<      20      <<      20         <<     20    <<      20    <<      10;
-        lst             <<tr("Lens Name")<<tr("Mfg Name")<<tr("Mfg A_Const")<<tr("Mfg ACD")<<tr("Mfg SF")<<tr("Hoffer ACD");
+        columnPercent   << 0 <<            10       <<      20      <<      20         <<     20    <<      20    <<      10;
+        lst             <<tr("id") <<tr("Lens Name")<<tr("Mfg Name")<<tr("Mfg A_Const")<<tr("Mfg ACD")<<tr("Mfg SF")<<tr("Hoffer ACD");
         lstButton<<tr("Add Lens")<<tr("Edit Lens")<<tr("Delete Lens");
-        str = "SELECT id from lens;";
+        str = "SELECT id, name, mfg, aconst, acd, sf, hacd from lens;";
         break;
     }
     model->setQuery(str);
@@ -146,10 +146,10 @@ void bases::Add()
     }
     if(TypeBase==BaseType::enLens)
     {
-        lens *pLens = new lens();
+        dialog_lens *pLens = new dialog_lens(0);
         if(pLens->exec() == QDialog::Accepted)
         {
-
+            adjTable(BaseType::enLens);
         }
         delete pLens;
     }
@@ -157,8 +157,10 @@ void bases::Add()
 
 void bases::Edit()
 {
-    quint32 curRow;
+    qint32 curRow;
     curRow = twTable->currentIndex().row();
+    if(curRow<0)
+        return;
 
     if(TypeBase==BaseType::enPatient)
     {
@@ -169,6 +171,14 @@ void bases::Edit()
         }
     }
 
+    if(TypeBase==BaseType::enLens)
+    {
+        dialog_lens *pLens = new dialog_lens(model->data(model->index(curRow, 0)).toUInt());
+        if(pLens->exec() == QDialog::Accepted)
+        {
+            adjTable(BaseType::enLens);
+        }
+    }
 }
 
 void bases::EditIndex(QModelIndex index)
@@ -195,6 +205,12 @@ void bases::Del()
     case BaseType::enDoctor:
         break;
     case BaseType::enLens:
+        curId = model->data(twTable->model()->index(twTable->currentIndex().row(), 0), Qt::DisplayRole).toUInt();
+        str = QString(" DELETE FROM \"lens\" WHERE \"id\"=%1; ")
+                .arg(curId);
+        query.prepare(str);
+        query.exec();
+        adjTable(BaseType::enLens);
         break;
     }
 }
