@@ -5,94 +5,97 @@ mesurement::mesurement(QWidget *parent) :
 {
     QList<int> columnPercent;
     QStringList lst;
-    QStandardItemModel *model = new QStandardItemModel();
 
     QVBoxLayout *layout = new QVBoxLayout(this);
     QHBoxLayout *layoutTop = new QHBoxLayout();
     QVBoxLayout *layoutRight = new QVBoxLayout();
     QHBoxLayout *layoutBot = new QHBoxLayout();
-//    QHBoxLayout *layoutKey = new QHBoxLayout();
 
     pBigView = new bigviewnum();
 
 //------------------------------------ TableView
-    columnPercent.clear();
-    columnPercent<<50<<50;
-    twPatient  = new adjview(4, 2, columnPercent);
+    QSpacerItem *vs1 = new QSpacerItem(20, 40, QSizePolicy::Expanding, QSizePolicy::Expanding);
+    QSpacerItem *vs2 = new QSpacerItem(20, 40, QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-    columnPercent.clear();
-    columnPercent<<60<<20<<20;
-    twLens     = new adjview(4, 3, columnPercent);
+    QGridLayout *twPatient  = new QGridLayout();
+    QGridLayout *twLens     = new QGridLayout();
+    QGridLayout *twVelocity = new QGridLayout();
+    twPatient->setSpacing(2); twLens->setSpacing(2); twVelocity->setSpacing(2);
 
-    columnPercent.clear();
-    columnPercent<<80<<20;
-    twVelocity = new adjview(3, 2, columnPercent);
+    layoutTop->addLayout(twPatient);
+    layoutTop->addItem(vs1);
+    layoutTop->addLayout(twLens);
+    layoutTop->addItem(vs2);
+    layoutTop->addLayout(twVelocity);
 
-    layoutTop->addWidget(twPatient);
-    layoutTop->addWidget(twLens);
-    layoutTop->addWidget(twVelocity,0,Qt::AlignTop);
-//    layoutTop->addWidget(pBigView);
+//--------------------*twPatient---------------------------------------
+    QLabel *patientName = new QLabel("Patient Name:");
+    QLabel *measureData = new QLabel("Data:");
+    QLabel *doctorName  = new QLabel("Doctor Name:");
+    QComboBox *VALname = new QComboBox();
+    QLineEdit *VALdata = new QLineEdit();
+    QComboBox *VALdoctor = new QComboBox();
 
-    model = (QStandardItemModel*)twPatient->model();
-    for(quint8 i=0; i<4; i++)
-    {
-        model->setItem(i, 0, new QStandardItem(baseMapPatient[i]));
-        model->item   (i, 0)->setBackground(Qt::lightGray);
-        model->item   (i, 0)->setEditable(false);
-    }
+    modelName = new QSqlTableModel ();
+    modelName->setTable("v_cbpatient");
+    modelName->select();
+    VALname->setModel(modelName);
+    VALname->setModelColumn(modelName->fieldIndex("name"));
 
-    model = (QStandardItemModel*)twLens->model();
-    for(quint8 i=0; i<4; i++)
-    {
-        model->setItem(i, 0, new QStandardItem(baseMapLens[i]));
-        model->item   (i, 0)->setBackground(Qt::lightGray);
-        model->item   (i, 0)->setEditable(false);
-        model->setItem(i, 2, new QStandardItem("mm"));
-        model->item   (i, 2)->setBackground(Qt::lightGray);
-        model->item   (i, 2)->setEditable(false);
-    }
+    modelDoctor = new QSqlTableModel ();
+    modelDoctor->setTable("v_cbdoctor");
+    modelDoctor->select();
+    VALdoctor->setModel(modelDoctor);
+    VALdoctor->setModelColumn(modelDoctor->fieldIndex("name"));
 
-    model = (QStandardItemModel*)twVelocity->model();
-    for(quint8 i=0; i<3; i++)
-    {
-        model->setItem(i, 0, new QStandardItem(baseMapVelocity[i]));
-        model->item   (i, 0)->setBackground(Qt::lightGray);
-        model->item   (i, 0)->setEditable(false);
-    }
+    twPatient->addWidget(patientName);
+    twPatient->addWidget(measureData);
+    twPatient->addWidget(doctorName);
+    twPatient->addWidget(VALname,0,1);
+    twPatient->addWidget(VALdata,1,1);
+    twPatient->addWidget(VALdoctor,2,1);
+//--------------------*twLens--------------------------------------------
+    QLabel *axialLenght = new QLabel("Axial Lenght As: ACD+LT+VIT");
+    QLabel *acd  = new QLabel("ACD @ 1532 m/sec:");
+    QLabel *lt   = new QLabel("LT @ 1641 m/sec:");
+    QLabel *vit  = new QLabel("VIT @ 1641 m/sec:");
+    QLabel *mm0  = new QLabel("mm");
+    QLabel *mm1  = new QLabel("mm");
+    QLabel *mm2  = new QLabel("mm");
+    QLabel *mm3  = new QLabel("mm");
+    QLineEdit *VALaxial = new QLineEdit();
+    QLineEdit *VALacd = new QLineEdit();
+    QLineEdit *VALlt = new QLineEdit();
+    QLineEdit *VALvit = new QLineEdit();
 
-//----------------------------------------- Button
-//    QSpacerItem *hs = new QSpacerItem(50, 5, QSizePolicy::Expanding, QSizePolicy::Minimum);
-//    QPushButton *pbOd = new QPushButton(tr("OD"));
-//    QSpacerItem *hs0 = new QSpacerItem(50, 5, QSizePolicy::Expanding, QSizePolicy::Minimum);
-//    QPushButton *pbMeasure = new QPushButton(tr("Measure"));
-//    QSpacerItem *hs1 = new QSpacerItem(50, 5, QSizePolicy::Expanding, QSizePolicy::Minimum);
-//    QPushButton *pbAutoFreeze = new QPushButton(tr("Auto Freeze"));
-//    QPushButton *pbAuto = new QPushButton(tr("Auto"));
-//    QPushButton *pbManual = new QPushButton(tr("Manual"));
-//    QSpacerItem *hs2 = new QSpacerItem(50, 5, QSizePolicy::Expanding, QSizePolicy::Minimum);
-//    QPushButton *pbContact = new QPushButton(tr("Contact"));
-//    QPushButton *pbImmersion = new QPushButton(tr("Immersion"));
-//    QSpacerItem *hs3 = new QSpacerItem(50, 5, QSizePolicy::Expanding, QSizePolicy::Minimum);
-//    QPushButton *pbCataract = new QPushButton(tr("Cataract"));
-//    QPushButton *pbAphakic = new QPushButton(tr("Aphakic"));
-//    QSpacerItem *hs4 = new QSpacerItem(50, 5, QSizePolicy::Expanding, QSizePolicy::Minimum);
+    twLens->addWidget(axialLenght);
+    twLens->addWidget(acd);
+    twLens->addWidget(lt);
+    twLens->addWidget(vit);
+    twLens->addWidget(VALaxial, 0, 1);
+    twLens->addWidget(VALacd, 1, 1);
+    twLens->addWidget(VALlt, 2, 1);
+    twLens->addWidget(VALvit, 3, 1);
+    twLens->addWidget(mm0, 0, 2);
+    twLens->addWidget(mm1, 1, 2);
+    twLens->addWidget(mm2, 2, 2);
+    twLens->addWidget(mm3, 3, 2);
+//--------------------*twVelocity--------------------------------------------
+    QLabel *al = new QLabel("AL @ Ave.Velocity 1550 m/sec");
+    QLabel *average  = new QLabel("Average");
+    QLabel *sd   = new QLabel("SD");
+    QLineEdit *VALal = new QLineEdit();
+    QLineEdit *VALaverage = new QLineEdit();
+    QLineEdit *VALsd = new QLineEdit();
 
-//    layoutKey->setSpacing(0);
-//    layoutKey->addItem(hs);
-//    layoutKey->addWidget(pbOd);
-//    layoutKey->addItem(hs0);
-//    layoutKey->addWidget(pbMeasure);
-//    layoutKey->addItem(hs1);
-//    layoutKey->addWidget(pbAutoFreeze);
-//    layoutKey->addWidget(pbAuto);
-//    layoutKey->addWidget(pbManual);
-//    layoutKey->addItem(hs2);
-//    layoutKey->addWidget(pbContact);
-//    layoutKey->addWidget(pbImmersion);
-//    layoutKey->addItem(hs3);
-//    layoutKey->addWidget(pbCataract);
-//    layoutKey->addWidget(pbAphakic);
-//    layoutKey->addItem(hs4);
+    twVelocity->addWidget(al);
+    twVelocity->addWidget(average);
+    twVelocity->addWidget(sd);
+    twVelocity->addWidget(VALal, 0, 1);
+    twVelocity->addWidget(VALaverage, 1, 1);
+    twVelocity->addWidget(VALsd, 2, 1);
+
+
 
     pPlot = new Plot(this);
 
@@ -103,14 +106,6 @@ mesurement::mesurement(QWidget *parent) :
     twMeas  = new adjview(10, lst, columnPercent);
     twMeas->setSelectionBehavior(QAbstractItemView::SelectRows);
     twMeas->setMinimumWidth(250);
-
-//    layoutTop->addItem(layoutTopLeft);
-//    layoutTop->addWidget(twMeas);
-//    layoutTop->setStretch(0, 1);
-//    layoutTop->setStretch(1, 1);
-//    layoutTop->setStretch(2, 2);
-
-//    layoutBot->addLayout(layoutKey, 1);
 
     QPushButton *pbOd = new QPushButton(tr("OD"));
     QFont font;
@@ -132,11 +127,9 @@ mesurement::mesurement(QWidget *parent) :
 
     layout->addLayout(layoutTop, 1);
     layout->addLayout(layoutBot, 2);
-//    layout->addLayout(layoutKey, 1);
     layout->addWidget(pKey,0);
 
     connect(pKey, SIGNAL(keyAuto()), SLOT(getFileSample()));
-//    connect(pbAuto, SIGNAL(clicked()), SLOT(getFileSample()));
     connect(twMeas, SIGNAL(clicked(QModelIndex)), SLOT(changeRow(QModelIndex)));
     connect(pPlot, SIGNAL(refreshTable(stMainParam)), SLOT(refreshTable(stMainParam)));
 }
@@ -199,7 +192,6 @@ void mesurement::changeRow(QModelIndex curIndex)
     curIndex = twMeas->model()->index(curIndex.row(), 0);
     baTmp.append(twMeas->model()->data(curIndex, Qt::UserRole).toByteArray());
     curIndex = twMeas->model()->index(curIndex.row(), curIndex.column()+2);
-//    lcdView->setDisplay(twMeas->model()->data(curIndex, Qt::DisplayRole).toDouble());
     mainParam.Start = (twMeas->model()->data(curIndex, Qt::UserRole).toInt());
     curIndex = twMeas->model()->index(curIndex.row(), curIndex.column()+1);
     mainParam.L1 = (twMeas->model()->data(curIndex, Qt::UserRole).toInt());
@@ -207,10 +199,6 @@ void mesurement::changeRow(QModelIndex curIndex)
     mainParam.L2 = (twMeas->model()->data(curIndex, Qt::UserRole).toInt());
     curIndex = twMeas->model()->index(curIndex.row(), curIndex.column()+1);
     mainParam.Retina = (twMeas->model()->data(curIndex, Qt::UserRole).toInt());
-
-
-
-//    AL = decRound(mainParam.Retina - mainParam.Start, 2);
 
     foreach (quint8 val, baTmp)
     {
@@ -254,8 +242,6 @@ void mesurement::refreshTable(quint8 rowNom, stMainParam mainParam)
     resultParam.LT = decRound(mainParam.L2 - mainParam.L1, 2);
     resultParam.AL = decRound(mainParam.Retina - mainParam.Start, 2);
     resultParam.Vit = decRound(mainParam.Retina - mainParam.L2, 2);
-
-//    lcdView->setDisplay(resultParam.AL);
 
     twMeas->model()->setData(twMeas->model()->index(rowNom, 2), resultParam.AL,  Qt::DisplayRole);
     twMeas->model()->setData(twMeas->model()->index(rowNom, 2), mainParam.Start, Qt::UserRole);
@@ -304,9 +290,6 @@ void mesurement::refreshTable(quint8 rowNom, stMainParam mainParam)
             }
         }
     }
-
-
-//    AL = decRound((twMeas->model()->data(twMeas->model()->index(twMeas->currentIndex().row()), 5)), 2);
 
     AL =  decRound(twMeas->model()->data(twMeas->model()->index(twMeas->currentIndex().row(), 5), Qt::UserRole).toDouble(), 2);
     AL -= decRound(twMeas->model()->data(twMeas->model()->index(twMeas->currentIndex().row(), 2), Qt::UserRole).toDouble(), 2);

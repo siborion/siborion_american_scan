@@ -8,7 +8,7 @@ patient::patient(quint32 id, QWidget *parent) :
     pBase = scanbase::instanse();
 
     model = new QSqlTableModel ();
-    model->setTable("doctor");
+    model->setTable("v_cbdoctor");
     model->select();
 
     QGridLayout *layout = new QGridLayout(this);
@@ -41,7 +41,7 @@ patient::patient(quint32 id, QWidget *parent) :
 
     QLineEdit  *leRef        = new QLineEdit(); leRef->setObjectName("VALref");
     QLineEdit  *leId         = new QLineEdit(); leId->setObjectName("id");
-    QLineEdit  *leFirstName  = new QLineEdit(); leFirstName->setObjectName("VALfirst");
+    QLineEdit  *leFirstName  = new QLineEdit(); leFirstName->setObjectName("VALname");
     QLineEdit  *leLastName   = new QLineEdit(); leLastName->setObjectName("VALlast");
     QLineEdit  *leBirth      = new QLineEdit(); leBirth->setObjectName("VALbirth");
     QLineEdit  *leAge        = new QLineEdit(); leAge->setObjectName("VALage");

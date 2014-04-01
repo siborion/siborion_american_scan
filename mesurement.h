@@ -7,9 +7,12 @@
 #include <QHeaderView>
 #include <QPushButton>
 #include <QStandardItemModel>
+#include <QSqlTableModel>
 #include <QFileDialog>
-//#include "scanplot.h"
+#include <QLabel>
 #include <adjview.h>
+#include <QLineEdit>
+#include <QComboBox>
 #include "mydelegate.h"
 #include "plot.h"
 #include "bigviewnum.h"
@@ -43,9 +46,21 @@ private:
     QPushButton *pbTest;
     double decRound(double Val, quint8 dec);
     QModelIndex tableIndex;
-//    bool checkSample(QByteArray *Sample, QList<quint16> &extremum);
-//    bool findMainParam(QList<quint16> *extremum, QList<quint16> &mainParam);
     void refreshTable(quint8 rowNom, stMainParam mainParam);
+
+    QComboBox *VALname;
+    QLineEdit *VALdata;
+    QComboBox *VALdoctor;
+    QSqlTableModel *modelName;
+    QSqlTableModel *modelDoctor;
+
+    QLineEdit *VALaxial;
+    QLineEdit *VALacd;
+    QLineEdit *VALlt;
+    QLineEdit *VALvit;
+
+
+
     QString baseMapPatient[4] = {
         "Patient ID",
         "Patient Name",
