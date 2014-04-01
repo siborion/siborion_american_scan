@@ -17,16 +17,30 @@ mesurement::mesurement(QWidget *parent) :
     QSpacerItem *vs1 = new QSpacerItem(20, 40, QSizePolicy::Expanding, QSizePolicy::Expanding);
     QSpacerItem *vs2 = new QSpacerItem(20, 40, QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-    QGridLayout *twPatient  = new QGridLayout();
-    QGridLayout *twLens     = new QGridLayout();
-    QGridLayout *twVelocity = new QGridLayout();
+    QFrame *fmPatient = new QFrame();
+    QFrame *fmLens = new QFrame();
+    QFrame *fmVelocity = new QFrame();
+    fmPatient->setFrameShape(QFrame::WinPanel);
+    fmPatient->setFrameShadow(QFrame::Raised);
+    fmLens->setFrameShape(QFrame::WinPanel);
+    fmLens->setFrameShadow(QFrame::Raised);
+    fmVelocity->setFrameShape(QFrame::WinPanel);
+    fmVelocity->setFrameShadow(QFrame::Raised);
+
+//    fmPatient->setStyleSheet(QStringLiteral("background-color: rgb(234, 234, 234);"));
+//    fmLens->setStyleSheet(QStringLiteral("background-color: rgb(234, 234, 234);"));
+//    fmVelocity->setStyleSheet(QStringLiteral("background-color: rgb(234, 234, 234);"));
+
+    QGridLayout *twPatient  = new QGridLayout(fmPatient);
+    QGridLayout *twLens     = new QGridLayout(fmLens);
+    QGridLayout *twVelocity = new QGridLayout(fmVelocity);
     twPatient->setSpacing(2); twLens->setSpacing(2); twVelocity->setSpacing(2);
 
-    layoutTop->addLayout(twPatient);
-    layoutTop->addItem(vs1);
-    layoutTop->addLayout(twLens);
-    layoutTop->addItem(vs2);
-    layoutTop->addLayout(twVelocity);
+    layoutTop->addWidget(fmPatient);
+//    layoutTop->addItem(vs1);
+    layoutTop->addWidget(fmLens);
+//    layoutTop->addItem(vs2);
+    layoutTop->addWidget(fmVelocity);
 
 //--------------------*twPatient---------------------------------------
     QLabel *patientName = new QLabel("Patient Name:");
@@ -96,8 +110,13 @@ mesurement::mesurement(QWidget *parent) :
     twVelocity->addWidget(VALsd, 2, 1);
 
 
-
+    QFrame *fmPlot = new QFrame();
+    fmPlot->setFrameShape(QFrame::WinPanel);
+    fmPlot->setFrameShadow(QFrame::Raised);
+//    fmPlot->setStyleSheet(QStringLiteral("background-color: rgb(234, 234, 234);"));
+    QGridLayout *glPlot  = new QGridLayout(fmPlot);
     pPlot = new Plot(this);
+    glPlot->addWidget(pPlot);
 
     lst.clear();
     columnPercent.clear();
@@ -115,7 +134,7 @@ mesurement::mesurement(QWidget *parent) :
     pbOd->setFont(font);
     pbOd->setFont(font);
 
-    layoutBot->addWidget(pPlot, 5);
+    layoutBot->addWidget(fmPlot, 5);
     layoutBot->addLayout(layoutRight, 1);
 
     layoutRight->addWidget(pbOd);

@@ -9,6 +9,7 @@ key_radio::key_radio(QWidget *parent) :
 //    QSpacerItem *hs = new QSpacerItem(50, 5, QSizePolicy::Expanding, QSizePolicy::Minimum);
 //    QPushButton *pbOd = new QPushButton(tr("OD"));
     QSpacerItem *hs0 = new QSpacerItem(50, 5, QSizePolicy::Expanding, QSizePolicy::Minimum);
+    QPushButton *pbSave = new QPushButton(tr("Save"));
     QPushButton *pbMeasure = new QPushButton(tr("Measure"));
     QSpacerItem *hs1 = new QSpacerItem(50, 5, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
@@ -61,6 +62,7 @@ key_radio::key_radio(QWidget *parent) :
 //    layoutkey_radio->addWidget(pbCataract);
 //    layoutkey_radio->addWidget(pbAphakic);
     layoutkey_radio->addItem(hs4);
+    layoutkey_radio->addWidget(pbSave);
 
     connect(pbMeasure, SIGNAL(clicked()), SLOT(key_radioAutoClicked()));
 }

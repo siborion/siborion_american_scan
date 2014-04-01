@@ -12,8 +12,6 @@
 #include "plot.h"
 #include <qevent.h>
 
-
-
 Plot::Plot( QWidget *parent ):
     QwtPlot( parent )
 {
@@ -23,6 +21,9 @@ Plot::Plot( QWidget *parent ):
     QwtPlotCanvas *canvas = new QwtPlotCanvas();
     setCanvas( canvas );
 //    setCanvasBackground( QColor( "MidnightBlue" ) );
+//    setStyleSheet(QStringLiteral("background-color: rgb(234, 234, 234);"));
+
+
     setCanvasBackground(QColor("DarkSlateGray"));
 
     // grid
@@ -52,6 +53,7 @@ Plot::Plot( QWidget *parent ):
     setAutoReplot( true );
 //    this->setMaximumSize(200,200);
 }
+
 
 void Plot::drawSample(const double *x, const double *y, int count)
 {
