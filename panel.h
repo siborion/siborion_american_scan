@@ -4,6 +4,7 @@
 #include <qtabwidget.h>
 //#include "scanplot.h"
 #include <mesurement.h>
+#include <history.h>
 #include <calculator.h>
 
 
@@ -27,6 +28,7 @@ private:
     QWidget *createOnlineTab( QWidget * );
     QWidget *createBaseTab( QWidget * );
     mesurement *createMesTab( QWidget * );
+    history *createHisTab( QWidget * );
     calculator *createCalculatorTab( QWidget * );
 };
 

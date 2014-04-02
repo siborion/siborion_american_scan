@@ -1,5 +1,5 @@
-#ifndef MESUREMENT_H
-#define MESUREMENT_H
+#ifndef history_H
+#define history_H
 
 #include "scanbase.h"
 #include "basefill.h"
@@ -23,43 +23,42 @@
 #include <qwt_plot.h>
 
 
-class mesurement : public QWidget
+class history : public QWidget
 {
     Q_OBJECT
 public:
-    explicit mesurement(QWidget *parent = 0);
+    explicit history(QWidget *parent = 0);
     enum ItemDataRole{TypeRole = Qt::UserRole + 1000,
                         SignalValueRole = Qt::UserRole + 1001};
 
 private:
     double AL;
     QwtPlot *pQwt;
-    adjview *twPatient;
-    adjview *twLens;
-    adjview *twVelocity;
+//    adjview *twPatient;
+//    adjview *twLens;
+//    adjview *twVelocity;
     adjview *twMeas;
-    key_radio *pKey;
     Plot *pPlot;
     bigviewnum *pBigView;
-    QStandardItemModel *modelPatient;
-    QStandardItemModel *modelLens;
-    QStandardItemModel *modelVelocity;
-    QStandardItemModel *modelMeas;
-    QPushButton *pbTest;
+//    QStandardItemModel *modelPatient;
+//    QStandardItemModel *modelLens;
+//    QStandardItemModel *modelVelocity;
+//    QStandardItemModel *modelMeas;
+//    QPushButton *pbTest;
     double decRound(double Val, quint8 dec);
     QModelIndex tableIndex;
     void refreshTable(quint8 rowNom, stMainParam mainParam);
 
-    QComboBox *VALname;
-    QLineEdit *VALdata;
-    QComboBox *VALdoctor;
-    QSqlTableModel *modelName;
-    QSqlTableModel *modelDoctor;
+//    QComboBox *VALname;
+//    QLineEdit *VALdata;
+//    QComboBox *VALdoctor;
+//    QSqlTableModel *modelName;
+//    QSqlTableModel *modelDoctor;
 
-    QLineEdit *VALaxial;
-    QLineEdit *VALacd;
-    QLineEdit *VALlt;
-    QLineEdit *VALvit;
+//    QLineEdit *VALaxial;
+//    QLineEdit *VALacd;
+//    QLineEdit *VALlt;
+//    QLineEdit *VALvit;
 
     scanbase *pBase;
     basefill *pBaseFill;
@@ -98,4 +97,4 @@ private slots:
     void save();
 };
 
-#endif // MESUREMENT_H
+#endif // history_H

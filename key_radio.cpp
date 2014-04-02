@@ -65,11 +65,19 @@ key_radio::key_radio(QWidget *parent) :
     layoutkey_radio->addWidget(pbSave);
 
     connect(pbMeasure, SIGNAL(clicked()), SLOT(key_radioAutoClicked()));
+    connect(pbSave, SIGNAL(clicked()), SLOT(key_radioSaveClicked()));
 }
 
 void key_radio::key_radioAutoClicked()
 {
     emit keyAuto();
 }
+
+
+void key_radio::key_radioSaveClicked()
+{
+    emit keySave();
+}
+
 
 

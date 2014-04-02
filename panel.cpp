@@ -23,6 +23,7 @@ Panel::Panel( QWidget *parent ):
     setTabPosition( QTabWidget::North );
     addTab( createBaseTab( this ), "Data Base" );
     addTab( createMesTab( this ), "Measurement" );
+    addTab( createHisTab( this ), "History" );
     addTab( createCalculatorTab( this ), "Calculator" );
     addTab( createOnlineTab( this ), "Print" );
 }
@@ -46,6 +47,12 @@ mesurement *Panel::createMesTab( QWidget *parent )
 {
     mesurement *Mesur = new mesurement(parent);
     return Mesur;
+}
+
+history *Panel::createHisTab( QWidget *parent )
+{
+    history *History = new history(parent);
+    return History;
 }
 
 calculator *Panel::createCalculatorTab( QWidget *parent )

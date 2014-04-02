@@ -15,9 +15,11 @@ public:
     
 signals:
     void keyAuto();
+    void keySave();
     
 private slots:
     void key_radioAutoClicked();
+    void key_radioSaveClicked();
     
 };
 

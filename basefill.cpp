@@ -145,9 +145,15 @@ void basefill::saveData()
     strUpdate.append(QString(" where id=%1;").arg(uiId));
 
     if(uiId>0)
+    {
         query.prepare(strUpdate);
+        qDebug() << strUpdate;
+    }
     else
+    {
         query.prepare(strInsertColumn);
+        qDebug() << strInsertColumn;
+    }
     query.exec();
 }
 

@@ -53,7 +53,8 @@ SOURCES += main.cpp\
     scanbase.cpp \
     basefill.cpp \
     dialog_lens.cpp \
-    dialog_doctor.cpp
+    dialog_doctor.cpp \
+    history.cpp
 
 
 HEADERS  += mainwindow.h\
@@ -76,7 +77,8 @@ HEADERS  += mainwindow.h\
     scanbase.h \
     basefill.h \
     dialog_lens.h \
-    dialog_doctor.h
+    dialog_doctor.h \
+    history.h
 
 #FORMS    += mainwindow.ui
 
