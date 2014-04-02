@@ -13,17 +13,17 @@ history::history(QWidget *parent) :
     QVBoxLayout *layoutRight = new QVBoxLayout();
     QHBoxLayout *layoutBot = new QHBoxLayout();
 
-    pBigView = new bigviewnum();
+    pBigView = new bigviewnumhor();
 
 //------------------------------------ TableView
 //    QSpacerItem *vs1 = new QSpacerItem(20, 40, QSizePolicy::Expanding, QSizePolicy::Expanding);
 //    QSpacerItem *vs2 = new QSpacerItem(20, 40, QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-//    QFrame *fmPatient = new QFrame();
+      QFrame *fmTop = new QFrame();
 //    QFrame *fmLens = new QFrame();
 //    QFrame *fmVelocity = new QFrame();
-//    fmPatient->setFrameShape(QFrame::WinPanel);
-//    fmPatient->setFrameShadow(QFrame::Raised);
+      fmTop->setFrameShape(QFrame::WinPanel);
+      fmTop->setFrameShadow(QFrame::Raised);
 //    fmLens->setFrameShape(QFrame::WinPanel);
 //    fmLens->setFrameShadow(QFrame::Raised);
 //    fmVelocity->setFrameShape(QFrame::WinPanel);
@@ -134,17 +134,20 @@ history::history(QWidget *parent) :
     font.setBold(true);
     font.setWeight(75);
     pbOd->setFont(font);
-    pbOd->setFont(font);
+
 
     layoutBot->addWidget(fmPlot, 5);
     layoutBot->addLayout(layoutRight, 1);
 
-    layoutRight->addWidget(pbOd);
-    layoutRight->addWidget(pBigView);
+    layoutTop->addWidget(pbOd);
+    layoutTop->addWidget(pBigView);
+
     layoutRight->addWidget(twMeas);
 
-//    layout->addLayout(layoutTop, 1);
+    layout->addLayout(layoutTop, 1);
     layout->addLayout(layoutBot, 2);
+    layout->setStretch(0, 0);
+    layout->setStretch(1, 1);
 
     connect(twMeas, SIGNAL(clicked(QModelIndex)), SLOT(changeRow(QModelIndex)));
     connect(pPlot, SIGNAL(refreshTable(stMainParam)), SLOT(refreshTable(stMainParam)));

@@ -54,7 +54,8 @@ SOURCES += main.cpp\
     basefill.cpp \
     dialog_lens.cpp \
     dialog_doctor.cpp \
-    history.cpp
+    history.cpp \
+    bigviewnumhor.cpp
 
 
 HEADERS  += mainwindow.h\
@@ -78,7 +79,8 @@ HEADERS  += mainwindow.h\
     basefill.h \
     dialog_lens.h \
     dialog_doctor.h \
-    history.h
+    history.h \
+    bigviewnumhor.h
 
 #FORMS    += mainwindow.ui
 
@@ -88,4 +90,5 @@ RESOURCES += \
 FORMS += \
     bigviewnum.ui \
     dialog_lens.ui \
-    dialog_doctor.ui
+    dialog_doctor.ui \
+    bigviewnumhor.ui

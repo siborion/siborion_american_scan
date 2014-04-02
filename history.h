@@ -17,7 +17,7 @@
 #include <QComboBox>
 #include "mydelegate.h"
 #include "plot.h"
-#include "bigviewnum.h"
+#include "bigviewnumhor.h"
 #include "key_radio.h"
 
 #include <qwt_plot.h>
@@ -39,7 +39,7 @@ private:
 //    adjview *twVelocity;
     adjview *twMeas;
     Plot *pPlot;
-    bigviewnum *pBigView;
+    bigviewnumhor *pBigView;
 //    QStandardItemModel *modelPatient;
 //    QStandardItemModel *modelLens;
 //    QStandardItemModel *modelVelocity;
