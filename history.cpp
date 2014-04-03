@@ -14,108 +14,17 @@ history::history(QWidget *parent) :
     QHBoxLayout *layoutBot = new QHBoxLayout();
 
     pBigView = new bigviewnumhor();
-
-//------------------------------------ TableView
-//    QSpacerItem *vs1 = new QSpacerItem(20, 40, QSizePolicy::Expanding, QSizePolicy::Expanding);
-//    QSpacerItem *vs2 = new QSpacerItem(20, 40, QSizePolicy::Expanding, QSizePolicy::Expanding);
-
-      QFrame *fmTop = new QFrame();
-//    QFrame *fmLens = new QFrame();
-//    QFrame *fmVelocity = new QFrame();
-      fmTop->setFrameShape(QFrame::WinPanel);
-      fmTop->setFrameShadow(QFrame::Raised);
-//    fmLens->setFrameShape(QFrame::WinPanel);
-//    fmLens->setFrameShadow(QFrame::Raised);
-//    fmVelocity->setFrameShape(QFrame::WinPanel);
-//    fmVelocity->setFrameShadow(QFrame::Raised);
-
-//    fmPatient->setStyleSheet(QStringLiteral("background-color: rgb(234, 234, 234);"));
-//    fmLens->setStyleSheet(QStringLiteral("background-color: rgb(234, 234, 234);"));
-//    fmVelocity->setStyleSheet(QStringLiteral("background-color: rgb(234, 234, 234);"));
-
-//    QGridLayout *twPatient  = new QGridLayout(fmPatient);
-//    QGridLayout *twLens     = new QGridLayout(fmLens);
-//    QGridLayout *twVelocity = new QGridLayout(fmVelocity);
-//    twPatient->setSpacing(2); twLens->setSpacing(2); twVelocity->setSpacing(2);
-
-//    layoutTop->addWidget(fmPatient);
-//    layoutTop->addItem(vs1);
-//    layoutTop->addWidget(fmLens);
-//    layoutTop->addItem(vs2);
-//    layoutTop->addWidget(fmVelocity);
-
-//--------------------*twPatient---------------------------------------
-//    QLabel *patientName = new QLabel("Patient Name:");
-//    QLabel *measureData = new QLabel("Data:");
-//    QLabel *doctorName  = new QLabel("Doctor Name:");
-//    QComboBox *VALname = new QComboBox();
-//    QLineEdit *VALdata = new QLineEdit();
-//    QComboBox *VALdoctor = new QComboBox();
-
-//    modelName = new QSqlTableModel ();
-//    modelName->setTable("v_cbpatient");
-//    modelName->select();
-//    VALname->setModel(modelName);
-//    VALname->setModelColumn(modelName->fieldIndex("name"));
-
-//    modelDoctor = new QSqlTableModel ();
-//    modelDoctor->setTable("v_cbdoctor");
-//    modelDoctor->select();
-//    VALdoctor->setModel(modelDoctor);
-//    VALdoctor->setModelColumn(modelDoctor->fieldIndex("name"));
-
-//    twPatient->addWidget(patientName);
-//    twPatient->addWidget(measureData);
-//    twPatient->addWidget(doctorName);
-//    twPatient->addWidget(VALname,0,1);
-//    twPatient->addWidget(VALdata,1,1);
-//    twPatient->addWidget(VALdoctor,2,1);
-//--------------------*twLens--------------------------------------------
-//    QLabel *axialLenght = new QLabel("Axial Lenght As: ACD+LT+VIT");
-//    QLabel *acd  = new QLabel("ACD @ 1532 m/sec:");
-//    QLabel *lt   = new QLabel("LT @ 1641 m/sec:");
-//    QLabel *vit  = new QLabel("VIT @ 1641 m/sec:");
-//    QLabel *mm0  = new QLabel("mm");
-//    QLabel *mm1  = new QLabel("mm");
-//    QLabel *mm2  = new QLabel("mm");
-//    QLabel *mm3  = new QLabel("mm");
-//    QLineEdit *VALaxial = new QLineEdit();
-//    QLineEdit *VALacd = new QLineEdit();
-//    QLineEdit *VALlt = new QLineEdit();
-//    QLineEdit *VALvit = new QLineEdit();
-
-//    twLens->addWidget(axialLenght);
-//    twLens->addWidget(acd);
-//    twLens->addWidget(lt);
-//    twLens->addWidget(vit);
-//    twLens->addWidget(VALaxial, 0, 1);
-//    twLens->addWidget(VALacd, 1, 1);
-//    twLens->addWidget(VALlt, 2, 1);
-//    twLens->addWidget(VALvit, 3, 1);
-//    twLens->addWidget(mm0, 0, 2);
-//    twLens->addWidget(mm1, 1, 2);
-//    twLens->addWidget(mm2, 2, 2);
-//    twLens->addWidget(mm3, 3, 2);
-//--------------------*twVelocity--------------------------------------------
-//    QLabel *al = new QLabel("AL @ Ave.Velocity 1550 m/sec");
-//    QLabel *average  = new QLabel("Average");
-//    QLabel *sd   = new QLabel("SD");
-//    QLineEdit *VALal = new QLineEdit();
-//    QLineEdit *VALaverage = new QLineEdit();
-//    QLineEdit *VALsd = new QLineEdit();
-
-//    twVelocity->addWidget(al);
-//    twVelocity->addWidget(average);
-//    twVelocity->addWidget(sd);
-//    twVelocity->addWidget(VALal, 0, 1);
-//    twVelocity->addWidget(VALaverage, 1, 1);
-//    twVelocity->addWidget(VALsd, 2, 1);
+    pBigView->setMinimumHeight(20);
 
 
-      QFrame *fmPlot = new QFrame();
+    QFrame *fmTop = new QFrame();
+    fmTop->setFrameShape(QFrame::WinPanel);
+    fmTop->setFrameShadow(QFrame::Raised);
+
+
+    QFrame *fmPlot = new QFrame();
     fmPlot->setFrameShape(QFrame::WinPanel);
     fmPlot->setFrameShadow(QFrame::Raised);
-//    fmPlot->setStyleSheet(QStringLiteral("background-color: rgb(234, 234, 234);"));
     QGridLayout *glPlot  = new QGridLayout(fmPlot);
     pPlot = new Plot(this);
     glPlot->addWidget(pPlot);
@@ -144,7 +53,7 @@ history::history(QWidget *parent) :
 
     layoutRight->addWidget(twMeas);
 
-//    layout->addLayout(layoutTop, 1);
+    layout->addLayout(layoutTop, 1);
     layout->addLayout(layoutBot, 2);
     layout->setStretch(0, 0);
     layout->setStretch(1, 1);
