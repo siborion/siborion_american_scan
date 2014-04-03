@@ -14,6 +14,8 @@ mesurement::mesurement(QWidget *parent) :
     QGridLayout *layoutBot = new QGridLayout();
 
     pBigView = new bigviewnum();
+    pBigView->setMaximumHeight(100);
+//    pBigView->setMinimumHeight(150);
 
 //------------------------------------ TableView
     QSpacerItem *vs1 = new QSpacerItem(20, 40, QSizePolicy::Expanding, QSizePolicy::Expanding);

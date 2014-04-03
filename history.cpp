@@ -14,8 +14,8 @@ history::history(QWidget *parent) :
     QHBoxLayout *layoutBot = new QHBoxLayout();
 
     pBigView = new bigviewnumhor();
-    pBigView->setMinimumHeight(20);
-
+    pBigView->setMaximumHeight(70);
+    pBigView->setMinimumHeight(70);
 
     QFrame *fmTop = new QFrame();
     fmTop->setFrameShape(QFrame::WinPanel);
