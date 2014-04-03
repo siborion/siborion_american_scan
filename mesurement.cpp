@@ -11,7 +11,7 @@ mesurement::mesurement(QWidget *parent) :
     QVBoxLayout *layout = new QVBoxLayout(this);
     QHBoxLayout *layoutTop = new QHBoxLayout();
     QVBoxLayout *layoutRight = new QVBoxLayout();
-    QHBoxLayout *layoutBot = new QHBoxLayout();
+    QGridLayout *layoutBot = new QGridLayout();
 
     pBigView = new bigviewnum();
 
@@ -136,19 +136,20 @@ mesurement::mesurement(QWidget *parent) :
     pbOd->setFont(font);
     pbOd->setFont(font);
 
-    layoutBot->addWidget(fmPlot, 5);
-    layoutBot->addLayout(layoutRight, 1);
+    pKey = new key_radio();
+
+    layoutBot->addWidget(fmPlot, 0, 0);
+    layoutBot->addWidget(pKey,1,0);
+    layoutBot->addLayout(layoutRight, 0, 1);
 
     layoutRight->addWidget(pbOd);
     layoutRight->addWidget(pBigView);
     layoutRight->addWidget(twMeas);
 
 
-    pKey = new key_radio();
 
     layout->addLayout(layoutTop, 1);
     layout->addLayout(layoutBot, 2);
-    layout->addWidget(pKey,0);
 
     pBaseFill = new basefill(0, children(), (QString)"history");
 
