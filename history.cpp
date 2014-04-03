@@ -14,8 +14,11 @@ history::history(QWidget *parent) :
     QHBoxLayout *layoutBot = new QHBoxLayout();
 
     pBigView = new bigviewnumhor();
-    pBigView->setMaximumHeight(70);
     pBigView->setMinimumHeight(70);
+    pBigView->setMaximumHeight(100);
+    qDebug() << pBigView->minimumHeight();
+    qDebug() << pBigView->maximumHeight();
+
 
     QFrame *fmTop = new QFrame();
     fmTop->setFrameShape(QFrame::WinPanel);
@@ -28,6 +31,39 @@ history::history(QWidget *parent) :
     QGridLayout *glPlot  = new QGridLayout(fmPlot);
     pPlot = new Plot(this);
     glPlot->addWidget(pPlot);
+
+
+    QTreeWidget *treeWidget = new QTreeWidget();
+    QList <QTreeWidgetItem*> pItem;
+    QTreeWidgetItem *pItemTmp;
+
+    pItem.append(addItem("Dr.Ivanov"));
+    pItem.append(addItem(pItem.last(), "Patient 1"));
+    pItem.append(addItem(pItem.last(), "01.01.2014"));
+    pItemTmp = pItem.last();
+    pItem.append(addItem(pItemTmp, "Session 1"));
+    pItem.append(addItem(pItemTmp, "Session 2"));
+    pItem.append(addItem(pItemTmp, "Session 3"));
+    pItem.append(addItem(pItemTmp, "Session 4"));
+
+    pItem.append(addItem("Dr.Petrov"));
+    pItem.append(addItem(pItem.last(), "Patient 2"));
+    pItem.append(addItem(pItem.last(), "01.01.2014"));
+    pItemTmp = pItem.last();
+    pItem.append(addItem(pItemTmp, "Session 1"));
+    pItem.append(addItem(pItemTmp, "Session 2"));
+    pItem.append(addItem(pItemTmp, "Session 3"));
+    pItem.append(addItem(pItemTmp, "Session 4"));
+
+    treeWidget->addTopLevelItems(pItem);
+
+//    pItemChild.append(addItem(pItem.last(), ""));
+//    pItemChild.last()->setData(0, Qt::DisplayRole, tr("Вх.1,2"));
+//    pItemChild.last()->setData(0, Qt::UserRole, ob_info::input);
+//    treeWidget->setItemWidget(pItemChild.last(), 1, new ob_info_interval());
+
+
+
 
     lst.clear();
     columnPercent.clear();
@@ -51,6 +87,7 @@ history::history(QWidget *parent) :
     layoutTop->addWidget(pbOd);
     layoutTop->addWidget(pBigView);
 
+    layoutRight->addWidget(treeWidget);
     layoutRight->addWidget(twMeas);
 
     layout->addLayout(layoutTop, 1);
@@ -237,4 +274,19 @@ void history::save()
 {
     qDebug() << "Save";
     pBaseFill->saveData();
+}
+
+QTreeWidgetItem* history::addItem(QString name)
+{
+  QStringList lst;
+  lst << name;
+  QTreeWidgetItem* pItem = new QTreeWidgetItem(treeWidget, lst, 0);
+  return pItem;
+}
+QTreeWidgetItem* history::addItem(QTreeWidgetItem* item, QString name)
+{
+  QStringList lst;
+  lst << name;
+  QTreeWidgetItem* pItem = new QTreeWidgetItem(item, lst, 0);
+  return pItem;
 }

@@ -6,6 +6,8 @@
 #include <QWidget>
 #include <qlayout.h>
 #include <QTableWidget>
+#include <QTreeWidget>
+#include <QTreeWidgetItem>
 #include <QHeaderView>
 #include <QPushButton>
 #include <QStandardItemModel>
@@ -32,6 +34,9 @@ public:
                         SignalValueRole = Qt::UserRole + 1001};
 
 private:
+    QTreeWidgetItem* addItem(QString name);
+    QTreeWidgetItem* addItem(QTreeWidgetItem* item, QString name);
+    QTreeWidget *treeWidget;
     double AL;
     QwtPlot *pQwt;
 //    adjview *twPatient;

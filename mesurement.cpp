@@ -14,13 +14,10 @@ mesurement::mesurement(QWidget *parent) :
     QGridLayout *layoutBot = new QGridLayout();
 
     pBigView = new bigviewnum();
-    pBigView->setMaximumHeight(100);
-//    pBigView->setMinimumHeight(150);
+    pBigView->setMinimumHeight(100);
+    pBigView->setMaximumHeight(150);
 
 //------------------------------------ TableView
-    QSpacerItem *vs1 = new QSpacerItem(20, 40, QSizePolicy::Expanding, QSizePolicy::Expanding);
-    QSpacerItem *vs2 = new QSpacerItem(20, 40, QSizePolicy::Expanding, QSizePolicy::Expanding);
-
     QFrame *fmPatient = new QFrame();
     QFrame *fmLens = new QFrame();
     QFrame *fmVelocity = new QFrame();
@@ -34,19 +31,13 @@ mesurement::mesurement(QWidget *parent) :
     fmLens->setMaximumHeight(100);
     fmVelocity->setMaximumHeight(100);
 
-//    fmPatient->setStyleSheet(QStringLiteral("background-color: rgb(234, 234, 234);"));
-//    fmLens->setStyleSheet(QStringLiteral("background-color: rgb(234, 234, 234);"));
-//    fmVelocity->setStyleSheet(QStringLiteral("background-color: rgb(234, 234, 234);"));
-
     QGridLayout *twPatient  = new QGridLayout(fmPatient);
     QGridLayout *twLens     = new QGridLayout(fmLens);
     QGridLayout *twVelocity = new QGridLayout(fmVelocity);
     twPatient->setSpacing(2); twLens->setSpacing(2); twVelocity->setSpacing(2);
 
     layoutTop->addWidget(fmPatient);
-//    layoutTop->addItem(vs1);
     layoutTop->addWidget(fmLens);
-//    layoutTop->addItem(vs2);
     layoutTop->addWidget(fmVelocity);
 
 //--------------------*twPatient---------------------------------------
@@ -120,7 +111,6 @@ mesurement::mesurement(QWidget *parent) :
     QFrame *fmPlot = new QFrame();
     fmPlot->setFrameShape(QFrame::WinPanel);
     fmPlot->setFrameShadow(QFrame::Raised);
-//    fmPlot->setStyleSheet(QStringLiteral("background-color: rgb(234, 234, 234);"));
     QGridLayout *glPlot  = new QGridLayout(fmPlot);
     pPlot = new Plot(this);
     glPlot->addWidget(pPlot);
@@ -150,8 +140,6 @@ mesurement::mesurement(QWidget *parent) :
     layoutRight->addWidget(pbOd);
     layoutRight->addWidget(pBigView);
     layoutRight->addWidget(twMeas);
-
-
 
     layout->addLayout(layoutTop, 0);
     layout->addLayout(layoutBot, 5);
