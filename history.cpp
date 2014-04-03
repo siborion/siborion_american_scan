@@ -144,7 +144,7 @@ history::history(QWidget *parent) :
 
     layoutRight->addWidget(twMeas);
 
-    layout->addLayout(layoutTop, 1);
+//    layout->addLayout(layoutTop, 1);
     layout->addLayout(layoutBot, 2);
     layout->setStretch(0, 0);
     layout->setStretch(1, 1);

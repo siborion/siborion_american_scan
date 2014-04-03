@@ -28,6 +28,9 @@ mesurement::mesurement(QWidget *parent) :
     fmLens->setFrameShadow(QFrame::Raised);
     fmVelocity->setFrameShape(QFrame::WinPanel);
     fmVelocity->setFrameShadow(QFrame::Raised);
+    fmPatient->setMaximumHeight(100);
+    fmLens->setMaximumHeight(100);
+    fmVelocity->setMaximumHeight(100);
 
 //    fmPatient->setStyleSheet(QStringLiteral("background-color: rgb(234, 234, 234);"));
 //    fmLens->setStyleSheet(QStringLiteral("background-color: rgb(234, 234, 234);"));
@@ -148,8 +151,8 @@ mesurement::mesurement(QWidget *parent) :
 
 
 
-    layout->addLayout(layoutTop, 1);
-    layout->addLayout(layoutBot, 2);
+    layout->addLayout(layoutTop, 0);
+    layout->addLayout(layoutBot, 5);
 
     pBaseFill = new basefill(0, children(), (QString)"history");
 
