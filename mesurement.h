@@ -19,6 +19,7 @@
 #include "plot.h"
 #include "bigviewnum.h"
 #include "key_radio.h"
+#include "sampletable.h"
 
 #include <qwt_plot.h>
 
@@ -38,6 +39,7 @@ private:
     adjview *twLens;
     adjview *twVelocity;
     adjview *twMeas;
+    sampletable *pSampleTable;
     key_radio *pKey;
     Plot *pPlot;
     bigviewnum *pBigView;
@@ -92,10 +94,11 @@ signals:
 public slots:
 
 private slots:
-    void getFileSample();
-    void changeRow(QModelIndex curIndex);
-    void refreshTable(stMainParam);
-    void save();
+    void changeRow();
+//    void getFileSample();
+//    void changeRow(QModelIndex curIndex);
+//    void refreshTable(stMainParam);
+//    void save();
 };
 
 #endif // MESUREMENT_H

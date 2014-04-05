@@ -36,7 +36,7 @@ history::history(QWidget *parent) :
     QTreeWidget *treeWidget = new QTreeWidget();
     QList <QTreeWidgetItem*> pItem;
     QTreeWidgetItem *pItemTmp;
-
+/*
     pItem.append(addItem("Dr.Ivanov"));
     pItem.append(addItem(pItem.last(), "Patient 1"));
     pItem.append(addItem(pItem.last(), "01.01.2014"));
@@ -56,7 +56,7 @@ history::history(QWidget *parent) :
     pItem.append(addItem(pItemTmp, "Session 4"));
 
     treeWidget->addTopLevelItems(pItem);
-
+*/
 //    pItemChild.append(addItem(pItem.last(), ""));
 //    pItemChild.last()->setData(0, Qt::DisplayRole, tr("Вх.1,2"));
 //    pItemChild.last()->setData(0, Qt::UserRole, ob_info::input);

@@ -2,11 +2,25 @@
 scanbase *scanbase::_instanse = NULL;
 scanbase::scanbase()
 {
+    QString sCurPath;
+    sCurPath = QDir::currentPath();
+    sCurPath.append("/base.db");
     pDB = QSqlDatabase::addDatabase("QSQLITE");
-    pDB.setDatabaseName("base.db");
+    pDB.setDatabaseName(sCurPath);
+
+    QMessageBox msgBox;
+    msgBox.setText(sCurPath);
+    msgBox.exec();
+
     if(pDB.open())
     {
-        qDebug() << "Open";
+        qDebug() <<QDir::currentPath();
+        qDebug() << sCurPath;
+    }
+    else
+    {
+        msgBox.setText("File not found");
+        msgBox.exec();
     }
 }
 

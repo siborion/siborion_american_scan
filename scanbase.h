@@ -8,6 +8,8 @@
 #include <QDebug>
 #include <QSqlQuery>
 #include <QSqlRecord>
+#include <QDir>
+#include <QMessageBox>
 
 class scanbase : public QObject //QSqlDataguardbase
 {
