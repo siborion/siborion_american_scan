@@ -9,8 +9,8 @@ scanbase::scanbase()
     pDB.setDatabaseName(sCurPath);
 
     QMessageBox msgBox;
-    msgBox.setText(sCurPath);
-    msgBox.exec();
+//    msgBox.setText(sCurPath);
+//    msgBox.exec();
 
     if(pDB.open())
     {

@@ -94,3 +94,5 @@ FORMS += \
     dialog_lens.ui \
     dialog_doctor.ui \
     bigviewnumhor.ui
+
+OTHER_FILES += plugins/sqldrivers/qsqlite.dll

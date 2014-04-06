@@ -94,7 +94,7 @@ signals:
 public slots:
 
 private slots:
-    void changeRow();
+    void changeRow(QList<quint16> extremum);
 //    void getFileSample();
 //    void changeRow(QModelIndex curIndex);
 //    void refreshTable(stMainParam);

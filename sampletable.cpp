@@ -147,6 +147,7 @@ QList <double> Plot::intToMM(QList<quint16> *mainParam)
 
 void sampletable::refreshTable(stMainParam mainParam)
 {
+    qDebug()<<"refreshTable1";
     refreshTable((quint8)tableIndex.row(), mainParam);
 }
 
@@ -155,6 +156,8 @@ void sampletable::refreshTable(quint8 rowNom, stMainParam mainParam)
 {
     double sumAl, curAl, devAl;
     quint8 modelCount;
+
+    qDebug()<<"refreshTable2";
 
     stResultParam resultParam;
     resultParam.ACD = decRound(mainParam.L1 - mainParam.Start, 2);
@@ -227,7 +230,7 @@ double sampletable::decRound(double Val, quint8 dec)
 void sampletable::changeRow(QModelIndex curIndex)
 {
 //    stMainParam mainParam;
-//    QList<quint16> extremum;
+    QList<quint16> extremum;
 //    quint16 kolvo;
 //    double x[2048];
 //    double y[2048];
@@ -279,7 +282,10 @@ void sampletable::changeRow(QModelIndex curIndex)
 //    AL = decRound(AL, 2);
 //    pBigView->setDisplay(AL);
 
+    extremum.clear();
+    findExtremum(&baSample, extremum);
+
     qDebug()<<"changeRow";
 
-    emit(changeRow());
+    emit(changeRow(extremum));
 }

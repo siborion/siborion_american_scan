@@ -15,10 +15,10 @@ public:
 //    QHash<quint16, quint8> hSample;
     stMainParam mainParam;
     QByteArray baSample;
+    QList<quint16> allExtremum;
 
 private:
     double AL;
-    QList<quint16> allExtremum;
     adjview *twMeas;
     bool findExtremum(QByteArray *Sample, QList<quint16> &extremum);
     bool findMainParam(QList<quint16> *extremum, stMainParam &mainParam);
@@ -27,12 +27,13 @@ private:
     QModelIndex tableIndex;
 
 signals:
-    void changeRow();
+    void changeRow(QList<quint16> extremum);
 
 public slots:
     void getFileSample();
     void refreshTable(stMainParam mainParam);
     void changeRow(QModelIndex curIndex);
+
 
 };
 

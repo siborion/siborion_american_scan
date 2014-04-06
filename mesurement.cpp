@@ -153,38 +153,23 @@ mesurement::mesurement(QWidget *parent) :
 //    connect(twMeas, SIGNAL(clicked(QModelIndex)), SLOT(changeRow(QModelIndex)));
     connect(pPlot, SIGNAL(refreshTable(stMainParam)), pSampleTable, SLOT(refreshTable(stMainParam)));
 //    connect(pKey, SIGNAL(keySave()), SLOT(save()));
-    connect(pSampleTable, SIGNAL(changeRow()), SLOT(changeRow()));
+    connect(pSampleTable, SIGNAL(changeRow(QList<quint16>)), SLOT(changeRow(QList<quint16> )));
 }
 
-void mesurement::changeRow()
+void mesurement::changeRow(QList<quint16> extremum)
 {
     double x[1024], y[1024];
     quint16 kolvo = 0;
-//    QHash<quint16, quint8>::const_iterator i = pSampleTable->hSample.constBegin();
-//    while (i != pSampleTable->hSample.constEnd())
-//    {
-//        qDebug() << i.key() << ": " << i.value();
-//        x[i.key()] = (double)i.key();
-//        y[i.key()] = (double)i.value();
-//        ++i;
-//    }
+
     foreach (quint8 val, pSampleTable->baSample)
     {
-//        hSample.insert(kolvo, val);
         x[kolvo] = kolvo;
         y[kolvo] = double(val);
         kolvo++;
     }
 
     pPlot->drawSample(x, y, 1000);
-
-    qDebug()<<"5555";
-    qDebug()<<pSampleTable->mainParam.Start;
-    qDebug()<<pSampleTable->mainParam.L1;
-    qDebug()<<pSampleTable->mainParam.L2;
-    pPlot->drawMarker(100, "Start");
-    pPlot->drawMarker(pSampleTable->mainParam.Start, "Start");
-
+    pPlot->allExtremum = extremum;
     pPlot->drawMarker((double)pSampleTable->mainParam.Start,(double)60, Qt::yellow);
     pPlot->drawMarker(pSampleTable->mainParam.L1, "L1");
     pPlot->drawMarker((double)pSampleTable->mainParam.L1,(double)60, Qt::yellow);
