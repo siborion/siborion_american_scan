@@ -1,4 +1,5 @@
 #include "sampletable.h"
+#include <QtCore/qmath.h>
 
 sampletable::sampletable(QWidget *parent) :
     QWidget(parent)
@@ -14,8 +15,10 @@ sampletable::sampletable(QWidget *parent) :
     lst          <<tr("No")<<tr("AveVelAl")<<tr("AL")<<tr("ACD")<<tr("LT")<<tr("VIT");
     twMeas  = new adjview(10, lst, columnPercent);
     twMeas->setSelectionBehavior(QAbstractItemView::SelectRows);
-    twMeas->setMinimumWidth(250);
+    twMeas->setMaximumWidth(350);
+    twMeas->setMinimumWidth(280);
     layout->addWidget(twMeas);
+    twMeas->model()->removeRows(0,10);
 
     connect(twMeas, SIGNAL(clicked(QModelIndex)), SLOT(changeRow(QModelIndex)));
     connect(twMeas, SIGNAL(activated(QModelIndex)), SLOT(changeRow(QModelIndex)));
@@ -29,6 +32,9 @@ void sampletable::getFileSample()
     QByteArray Sample;
     QList <quint16> extremum;
     QList <quint16> mainParam;
+    QStandardItemModel *model;
+    model = (QStandardItemModel*)twMeas->model();
+    model->setRowCount(0);
 
     QStringList fileNames = QFileDialog::getOpenFileNames(this, "select files");
     QFile file;
@@ -53,6 +59,8 @@ void sampletable::getFileSample()
         {
             if(findMainParam(&extremum, curMainParam))
             {
+                QStandardItem *ttt = new QStandardItem();
+                model->appendRow(ttt);
                 twMeas->model()->setData(twMeas->model()->index(kolVo, 0), kolVo, Qt::DisplayRole);
                 twMeas->model()->setData(twMeas->model()->index(kolVo, 0), Sample, Qt::UserRole);
                 twMeas->model()->setData(twMeas->model()->index(kolVo, 1), fileName, Qt::DisplayRole);
@@ -159,7 +167,6 @@ void sampletable::refreshTable(quint8 rowNom, stMainParam mainParam)
 
     qDebug()<<"refreshTable2";
 
-    stResultParam resultParam;
     resultParam.ACD = decRound(mainParam.L1 - mainParam.Start, 2);
     resultParam.LT = decRound(mainParam.L2 - mainParam.L1, 2);
     resultParam.AL = decRound(mainParam.Retina - mainParam.Start, 2);
@@ -216,6 +223,11 @@ void sampletable::refreshTable(quint8 rowNom, stMainParam mainParam)
     AL =  decRound(twMeas->model()->data(twMeas->model()->index(twMeas->currentIndex().row(), 5), Qt::UserRole).toDouble(), 2);
     AL -= decRound(twMeas->model()->data(twMeas->model()->index(twMeas->currentIndex().row(), 2), Qt::UserRole).toDouble(), 2);
 //    pBigView->setDisplay(AL, sumAl , devAl);
+    resultParam.AL = AL;
+    resultParam.sumAl = sumAl;
+    resultParam.devAl = devAl;
+//    emit (refreshMainParam());
+    refreshResult(rowNom);
 }
 
 double sampletable::decRound(double Val, quint8 dec)
@@ -229,16 +241,9 @@ double sampletable::decRound(double Val, quint8 dec)
 
 void sampletable::changeRow(QModelIndex curIndex)
 {
-//    stMainParam mainParam;
     QList<quint16> extremum;
-//    quint16 kolvo;
-//    double x[2048];
-//    double y[2048];
-//    kolvo=0;
 
     tableIndex = curIndex;
-
-//    QByteArray baTmp;
 
     curIndex = twMeas->model()->index(curIndex.row(), 0);
     baSample=(twMeas->model()->data(curIndex, Qt::UserRole).toByteArray());
@@ -279,7 +284,7 @@ void sampletable::changeRow(QModelIndex curIndex)
 
 //    AL =  (twMeas->model()->data(twMeas->model()->index(twMeas->currentIndex().row(), 5), Qt::UserRole).toDouble());
 //    AL -= (twMeas->model()->data(twMeas->model()->index(twMeas->currentIndex().row(), 2), Qt::UserRole).toDouble());
-//    AL = decRound(AL, 2);
+ //   AL = decRound(AL, 2);
 //    pBigView->setDisplay(AL);
 
     extremum.clear();
@@ -288,4 +293,76 @@ void sampletable::changeRow(QModelIndex curIndex)
     qDebug()<<"changeRow";
 
     emit(changeRow(extremum));
+
+    refreshResult(twMeas->currentIndex().row());
+}
+
+
+void sampletable::refreshResult(quint8 rowNom)
+{
+    double sumAl, curAl, devAl, sd;
+    quint8 modelCount;
+
+    resultParam.ACD = twMeas->model()->data(twMeas->model()->index(rowNom, 3), Qt::DisplayRole).toDouble();
+    resultParam.LT =  twMeas->model()->data(twMeas->model()->index(rowNom, 4), Qt::DisplayRole).toDouble();
+    resultParam.AL =  twMeas->model()->data(twMeas->model()->index(rowNom, 2), Qt::DisplayRole).toDouble();
+    resultParam.Vit = twMeas->model()->data(twMeas->model()->index(rowNom, 5), Qt::DisplayRole).toDouble();
+
+    modelCount = sumAl = devAl = 0;
+    for (int i=0; i<10; i++)
+    {
+        curAl = 0;
+        curAl = twMeas->model()->data(twMeas->model()->index(i, 2), Qt::DisplayRole).toDouble();
+        if(curAl>0)
+        {
+            sumAl += curAl;
+            modelCount++;
+        }
+    }
+
+    if(modelCount>0)
+    {
+        sumAl = (sumAl/modelCount);
+        sumAl *= 100;
+        sumAl =  round(sumAl);
+        sumAl /= 100;
+    }
+
+    sd = 0;
+    for (int i=0; i<10; i++)
+    {
+        curAl = 0;
+        curAl = twMeas->model()->data(twMeas->model()->index(i, 2), Qt::DisplayRole).toDouble();
+        if(curAl>0)
+        {
+            if(sumAl>curAl)
+            {
+                if(devAl < (sumAl-curAl))
+                    devAl = sumAl-curAl;
+            }
+            else
+            {
+                if(devAl < (curAl-sumAl))
+                    devAl = curAl-sumAl;
+            }
+            sd += qPow(devAl, 2);
+        }
+    }
+
+    sd /= modelCount;
+    sd = qPow(sd, 0.5);
+    sd = decRound(sd, 4);
+
+    resultParam.sumAl = sumAl;
+    resultParam.devAl = devAl;
+    resultParam.countSample = modelCount;
+    resultParam.SD = sd;
+
+    emit (refreshMainParam());
+}
+
+void sampletable::delSample()
+{
+    twMeas->model()->removeRow(twMeas->currentIndex().row());
+    refreshResult(twMeas->currentIndex().row());
 }

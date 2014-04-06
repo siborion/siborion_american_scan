@@ -5,6 +5,7 @@
 #include <QVBoxLayout>
 #include <adjview.h>
 #include <QFileDialog>
+#include <QStandardItem>
 #include "plot.h"
 
 class sampletable : public QWidget
@@ -16,6 +17,7 @@ public:
     stMainParam mainParam;
     QByteArray baSample;
     QList<quint16> allExtremum;
+    stResultParam resultParam;
 
 private:
     double AL;
@@ -25,14 +27,17 @@ private:
     void refreshTable(quint8 rowNom, stMainParam mainParam);
     double decRound(double Val, quint8 dec);
     QModelIndex tableIndex;
+    void refreshResult(quint8 rowNom);
 
 signals:
     void changeRow(QList<quint16> extremum);
+    void refreshMainParam();
 
 public slots:
     void getFileSample();
     void refreshTable(stMainParam mainParam);
     void changeRow(QModelIndex curIndex);
+    void delSample();
 
 
 };

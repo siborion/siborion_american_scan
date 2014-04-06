@@ -63,11 +63,16 @@ private:
     QLineEdit *VALlt;
     QLineEdit *VALvit;
 
+    QLineEdit *VALal;
+    QLineEdit *VALaverage;
+    QLineEdit *VALsd;
+
     scanbase *pBase;
     basefill *pBaseFill;
 
+    QPushButton *pbDel;
 
-
+    QLabel *average;
 
     QString baseMapPatient[4] = {
         "Patient ID",
@@ -95,6 +100,7 @@ public slots:
 
 private slots:
     void changeRow(QList<quint16> extremum);
+    void refreshMainParam();
 //    void getFileSample();
 //    void changeRow(QModelIndex curIndex);
 //    void refreshTable(stMainParam);
