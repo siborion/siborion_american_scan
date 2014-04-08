@@ -44,12 +44,12 @@
 #include <QStyledItemDelegate>
 
 //! [0]
-class SpinBoxDelegate : public QStyledItemDelegate
+class CheckBoxDelegate : public QStyledItemDelegate
 {
     Q_OBJECT
 
 public:
-    SpinBoxDelegate(QObject *parent = 0);
+    CheckBoxDelegate(QObject *parent = 0);
 
     QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option,
                           const QModelIndex &index) const;

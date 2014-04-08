@@ -56,7 +56,9 @@ SOURCES += main.cpp\
     dialog_doctor.cpp \
     history.cpp \
     bigviewnumhor.cpp \
-    sampletable.cpp
+    sampletable.cpp \
+    delegate_check.cpp \
+    delegate.cpp
 
 
 HEADERS  += mainwindow.h\
@@ -82,7 +84,9 @@ HEADERS  += mainwindow.h\
     dialog_doctor.h \
     history.h \
     bigviewnumhor.h \
-    sampletable.h
+    sampletable.h \
+    delegate_check.h \
+    delegate.h
 
 #FORMS    += mainwindow.ui
 

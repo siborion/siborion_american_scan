@@ -1,4 +1,4 @@
-/****************************************************************************
+/******D:\_SVN\SibOrion\siborion_american_scan\delegate_check.cpp**********************************************************************
 **
 ** Copyright (C) 2013 Digia Plc and/or its subsidiary(-ies).
 ** Contact: http://www.qt-project.org/legal
@@ -45,56 +45,63 @@
     using a spin box widget.
 */
 
-#include "delegate.h"
+#include "delegate_check.h"
 
-#include <QSpinBox>
+#include <QCheckBox>
+#include <QDebug>
 
 //! [0]
-SpinBoxDelegate::SpinBoxDelegate(QObject *parent)
+CheckBoxDelegate::CheckBoxDelegate(QObject *parent)
     : QStyledItemDelegate(parent)
 {
 }
 //! [0]
 
 //! [1]
-QWidget *SpinBoxDelegate::createEditor(QWidget *parent,
+QWidget *CheckBoxDelegate::createEditor(QWidget *parent,
     const QStyleOptionViewItem &/* option */,
     const QModelIndex &/* index */) const
 {
-    QSpinBox *editor = new QSpinBox(parent);
-    editor->setFrame(false);
-    editor->setMinimum(0);
-    editor->setMaximum(100);
+    QCheckBox *editor = new QCheckBox(parent);
+//    editor->setFrame(false);
+//    editor->setMinimum(0);
+//    editor->setMaximum(100);
 
     return editor;
 }
 //! [1]
 
 //! [2]
-void SpinBoxDelegate::setEditorData(QWidget *editor,
-                                    const QModelIndex &index) const
+void CheckBoxDelegate::setEditorData(QWidget *editor,
+                                     const QModelIndex &index) const
 {
-    int value = index.model()->data(index, Qt::EditRole).toInt();
-
-    QSpinBox *spinBox = static_cast<QSpinBox*>(editor);
-    spinBox->setValue(value);
+    qDebug()<<index.column();
+    if(index.column()==0)
+    {
+        int value = index.model()->data(index, Qt::EditRole).toInt();
+        QCheckBox *CheckBox = static_cast<QCheckBox*>(editor);
+        CheckBox->setChecked(value);
+    }
 }
 //! [2]
 
 //! [3]
-void SpinBoxDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
+void CheckBoxDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
                                    const QModelIndex &index) const
 {
-    QSpinBox *spinBox = static_cast<QSpinBox*>(editor);
-    spinBox->interpretText();
-    int value = spinBox->value();
-
-    model->setData(index, value, Qt::EditRole);
+    qDebug()<<index.column();
+    if(index.column()==0)
+    {
+        QCheckBox *CheckBox = static_cast<QCheckBox*>(editor);
+        //    CheckBox->interpretText();
+        int value = CheckBox->isChecked();
+        model->setData(index, value, Qt::EditRole);
+    }
 }
 //! [3]
 
 //! [4]
-void SpinBoxDelegate::updateEditorGeometry(QWidget *editor,
+void CheckBoxDelegate::updateEditorGeometry(QWidget *editor,
     const QStyleOptionViewItem &option, const QModelIndex &/* index */) const
 {
     editor->setGeometry(option.rect);

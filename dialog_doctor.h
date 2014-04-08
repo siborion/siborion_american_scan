@@ -4,6 +4,9 @@
 #include <QDialog>
 #include "scanbase.h"
 #include "basefill.h"
+#include "delegate.h"
+#include <QStandardItemModel>
+#include <QSqlRelationalTableModel>
 
 namespace Ui {
 class dialog_doctor;
