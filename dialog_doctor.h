@@ -21,6 +21,7 @@ private:
     Ui::dialog_doctor *ui;
     scanbase *pBase;
     basefill *pBaseFill;
+    QSqlQueryModel  *model;
 
 private slots:
     void saveData();

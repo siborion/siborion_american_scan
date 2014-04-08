@@ -1,12 +1,13 @@
 #include "doctor.h"
+#include <QDebug>
 
 doctor::doctor(QWidget *parent) :
     QDialog(parent)
 {
-    setMinimumWidth(350);
-
+    QString str;
     QList<int> columnPercent;
     QStringList lst;
+    setMinimumWidth(350);
 
     QVBoxLayout *layout        = new QVBoxLayout(this);
     QHBoxLayout *buttonLayout  = new QHBoxLayout();
@@ -46,23 +47,32 @@ doctor::doctor(QWidget *parent) :
     formulaLayout->addWidget(cbSrkT,    1, 0);
     formulaLayout->addWidget(cbHolladay,1, 1);
 //----------------------------------------------------------------
+    model = new QSqlQueryModel();
     twLens = new adjview();
-    modelLens = new QStandardItemModel();
-    modelLens->setColumnCount(4);
-    modelLens->setRowCount(1);
+    twLens->setModel(model);
+    twLens->setSelectionBehavior(QAbstractItemView::SelectRows);
+
     lst.clear();
     lst<<tr("Lens Name")<<tr("Lens Mfg")<<tr("Mfg A-Const")<<tr("Mfr ACD");
-    modelLens->setHorizontalHeaderLabels(lst);
-    twLens->setModel(modelLens);
-    twLens->verticalHeader()->hide();
-    twLens->setMaximumHeight(120);
-    twLens->setMinimumHeight(120);
-    twLens->setFrameShape(QFrame::NoFrame);
-    twLens->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    twLens->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    columnPercent.clear();
-    columnPercent<<25<<25<<25<<25;
-    twLens->setColumnPercent(columnPercent);
+    str = "SELECT  * from lens;";
+
+    model->setQuery(str);
+
+//    model->lastError();
+
+//    modelLens->setHorizontalHeaderLabels(lst);
+
+
+//    twLens->setModel(modelLens);
+//    twLens->verticalHeader()->hide();
+//    twLens->setMaximumHeight(120);
+//    twLens->setMinimumHeight(120);
+//    twLens->setFrameShape(QFrame::NoFrame);
+//    twLens->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+//    twLens->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+//    columnPercent.clear();
+//    columnPercent<<25<<25<<25<<25;
+//    twLens->setColumnPercent(columnPercent);
 //-----------------------------------------------------------------
 
     layout->addWidget(twDoctor);

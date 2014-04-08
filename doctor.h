@@ -9,6 +9,7 @@
 #include <QCheckBox>
 #include <QHeaderView>
 #include <QStandardItemModel>
+#include <QSqlQueryModel>
 #include <adjview.h>
 
 class doctor : public QDialog
@@ -30,6 +31,7 @@ signals:
 private:
     adjview *twDoctor;
     adjview *twLens;
+    QSqlQueryModel  *model;
 
 public slots:
 
