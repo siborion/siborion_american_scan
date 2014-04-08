@@ -129,12 +129,12 @@ void basefill::saveData()
                     strUpdateValue = rbStr;
             }
 
-            if(!strUpdateValue.isEmpty())
-            {
+//            if(!strUpdateValue.isEmpty())
+//            {
                 strUpdate.append(QString(",\"%1\"='%2'").arg(sObName).arg(strUpdateValue));
                 strInsertColumn.append(QString("\"%1\",").arg(sObName));
                 strInsertValue.append(QString("'%1',").arg(strUpdateValue));
-            }
+//            }
         }
     }
     strInsertColumn=strInsertColumn.mid(0,strInsertColumn.count()-1);

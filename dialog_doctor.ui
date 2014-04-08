@@ -43,29 +43,29 @@
      <layout class="QGridLayout" name="gridLayout_3">
       <item row="0" column="0">
        <layout class="QGridLayout" name="gridLayout_2">
-        <item row="1" column="0">
-         <widget class="QCheckBox" name="checkBox_2">
-          <property name="text">
-           <string>SRK T</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="0">
-         <widget class="QCheckBox" name="checkBox">
-          <property name="text">
-           <string>SRK II</string>
-          </property>
-         </widget>
-        </item>
         <item row="0" column="1">
-         <widget class="QCheckBox" name="checkBox_3">
+         <widget class="QRadioButton" name="radioButton_2">
           <property name="text">
            <string>HOFFER Q</string>
           </property>
          </widget>
         </item>
+        <item row="0" column="0">
+         <widget class="QRadioButton" name="radioButton">
+          <property name="text">
+           <string>SRK II</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QRadioButton" name="radioButton_3">
+          <property name="text">
+           <string>SRK T</string>
+          </property>
+         </widget>
+        </item>
         <item row="1" column="1">
-         <widget class="QCheckBox" name="checkBox_4">
+         <widget class="QRadioButton" name="radioButton_4">
           <property name="text">
            <string>HOLLADAY</string>
           </property>

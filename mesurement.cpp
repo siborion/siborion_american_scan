@@ -137,7 +137,7 @@ mesurement::mesurement(QWidget *parent) :
 
     layoutBot->addWidget(fmPlot, 0, 0);
     layoutBot->addWidget(pKey,1,0);
-    layoutBot->addLayout(layoutRight, 0, 1);
+    layoutBot->addLayout(layoutRight, 0, 1, 2, 1);
 
     QPushButton *pbDel = new QPushButton(tr("Delete"));
 
