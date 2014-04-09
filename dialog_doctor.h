@@ -4,7 +4,7 @@
 #include <QDialog>
 #include "scanbase.h"
 #include "basefill.h"
-#include "delegate.h"
+#include "delegate_check.h"
 #include <QStandardItemModel>
 #include <QSqlRelationalTableModel>
 
@@ -24,11 +24,12 @@ private:
     Ui::dialog_doctor *ui;
     scanbase *pBase;
     basefill *pBaseFill;
-    QSqlQueryModel  *model;
+    QStandardItemModel  *model;
+    CheckBoxDelegate *delegate;
 
 private slots:
     void saveData();
-
+    void include(bool);
 };
 
 #endif // DIALOG_DOCTOR_H
