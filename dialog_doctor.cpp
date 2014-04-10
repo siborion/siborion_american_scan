@@ -9,6 +9,8 @@ dialog_doctor::dialog_doctor(quint32 id, QWidget *parent) :
     QStringList lst;
     quint16 tableWidth;
 
+    curId = id;
+
     pBase = scanbase::instanse();
 
     ui->setupUi(this);
@@ -17,7 +19,7 @@ dialog_doctor::dialog_doctor(quint32 id, QWidget *parent) :
     pBaseFill->fillData();
 
     model = new QStandardItemModel();
-    QSqlQuery sql(QString("SELECT name, mfg, aconst, acd, doc.id_doctor, doc.nom_formula "
+    QSqlQuery sql(QString("SELECT name, mfg, aconst, acd, doc.id_doctor, doc.nom_formula, lens.id "
     "from lens "
     "LEFT JOIN doctor_lens doc "
     "ON (lens.id = doc.id_lens) AND doc.id_doctor=%1;")
@@ -27,6 +29,7 @@ dialog_doctor::dialog_doctor(quint32 id, QWidget *parent) :
     quint16 numRow=0;
     qint8 formula;
     quint8 include;
+    quint16 id_lens;
     while(sql.next())
     {
         for(int i=0; i<=3; i++)
@@ -36,9 +39,10 @@ dialog_doctor::dialog_doctor(quint32 id, QWidget *parent) :
         }
         include = sql.value(4).toUInt();
         formula = sql.value(5).isNull()?(-1):sql.value(5).toUInt();
-        qDebug()<<formula;
+        id_lens = sql.value(6).toUInt();
         model->item(numRow,0)->setData(include, Qt::UserRole);
         model->item(numRow,0)->setData(formula, Qt::UserRole+1);
+        model->item(numRow,0)->setData(id_lens, Qt::UserRole+2);
         numRow++;
     }
 
@@ -59,6 +63,10 @@ dialog_doctor::dialog_doctor(quint32 id, QWidget *parent) :
     connect(ui->buttonBox, SIGNAL(accepted()), SLOT(saveData()));
     connect(ui->tableView, SIGNAL(clicked(QModelIndex)),SLOT(changeModel(QModelIndex)));
     connect(ui->cbInclude, SIGNAL(clicked(bool)), SLOT(include(bool)));
+    connect(ui->radioButton,  SIGNAL(clicked()) , SLOT(selectFormula()));
+    connect(ui->radioButton_2,  SIGNAL(clicked()) , SLOT(selectFormula()));
+    connect(ui->radioButton_3,  SIGNAL(clicked()) , SLOT(selectFormula()));
+    connect(ui->radioButton_4,  SIGNAL(clicked()) , SLOT(selectFormula()));
 }
 
 dialog_doctor::~dialog_doctor()
@@ -68,7 +76,29 @@ dialog_doctor::~dialog_doctor()
 
 void dialog_doctor::saveData()
 {
+    quint8 formula;
+    quint16 id_lens;
+    QString str;
+
     pBaseFill->saveData();
+
+    QSqlQuery sql(QString("DELETE FROM doctor_lens WHERE id_doctor=%1;")
+                  .arg(curId));
+    sql.exec();
+
+    for(quint16 i=0; i<model->rowCount(); i++)
+    {
+        if(model->data(model->index(i,0),Qt::UserRole).toInt())
+        {
+            formula = model->data(model->index(i,0),Qt::UserRole+1).toInt();
+            id_lens = model->data(model->index(i,0),Qt::UserRole+2).toInt();
+            str = QString("INSERT INTO doctor_lens (id_lens, id_doctor, nom_formula) "
+                          "VALUES (%1, %2, %3) ;")
+                  .arg(id_lens).arg(curId).arg(formula);
+            QSqlQuery sql;
+            sql.exec(str);
+        }
+    }
     accept();
 }
 
@@ -85,6 +115,10 @@ void dialog_doctor::changeModel(QModelIndex index)
     ui->cbInclude->setChecked(model->data(model->index(index.row(),0),Qt::UserRole).toBool());
     if(ui->cbInclude->isChecked())
     {
+        ui->radioButton->setDown(false);
+        ui->radioButton_2->setDown(false);
+        ui->radioButton_3->setDown(false);
+        ui->radioButton_4->setDown(false);
         ui->groupBox->setEnabled(true);
         switch(model->data(model->index(index.row(),0),Qt::UserRole+1).toInt())
         {
@@ -101,11 +135,10 @@ void dialog_doctor::changeModel(QModelIndex index)
             ui->radioButton_4->setChecked(true);
             break;
         default:
-            qDebug()<<"555555555555";
-            ui->radioButton->setChecked(false);
-            ui->radioButton_2->setChecked(false);
-            ui->radioButton_3->setChecked(false);
-            ui->radioButton_4->setChecked(false);
+            ui->radioButton->setDown(true);
+            ui->radioButton_2->setDown(true);
+            ui->radioButton_3->setDown(true);
+            ui->radioButton_4->setDown(true);
             break;
         }
     }
@@ -113,3 +146,21 @@ void dialog_doctor::changeModel(QModelIndex index)
         ui->groupBox->setEnabled(false);
 }
 
+void dialog_doctor::selectFormula()
+{
+    quint16  curRow;
+    qint8 formula=-1;
+    curRow = ui->tableView->currentIndex().row();
+
+    QRadioButton *editor = qobject_cast<QRadioButton *>(sender());
+    if(editor == ui->radioButton)
+        formula = 0;
+    else if(editor == ui->radioButton_2)
+        formula = 1;
+    else if(editor == ui->radioButton_3)
+        formula = 2;
+    else if(editor == ui->radioButton_4)
+        formula = 3;
+
+    model->setData(model->index(curRow,0), formula, Qt::UserRole+1);
+}
