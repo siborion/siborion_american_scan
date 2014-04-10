@@ -17,20 +17,38 @@ dialog_doctor::dialog_doctor(quint32 id, QWidget *parent) :
     pBaseFill->fillData();
 
     model = new QStandardItemModel();
-    model->setRowCount(4);
-    model->setColumnCount(4);
-//    model->setTable("lens");
-//    model->setEditStrategy(QSqlTableModel::OnManualSubmit);
-//    model->select();
-//    qDebug()<<"0000000000";
-//    qDebug()<<model->lastError().text();
+    QSqlQuery sql(QString("SELECT name, mfg, aconst, acd, doc.id_doctor, doc.nom_formula "
+    "from lens "
+    "LEFT JOIN doctor_lens doc "
+    "ON (lens.id = doc.id_lens) AND doc.id_doctor=%1;")
+    .arg(id));
+    sql.exec();
+
+    quint16 numRow=0;
+    qint8 formula;
+    quint8 include;
+    while(sql.next())
+    {
+        for(int i=0; i<=3; i++)
+        {
+            model->setItem(numRow,i,new QStandardItem());
+            model->item(numRow,i)->setData(sql.value(i).toString(),Qt::DisplayRole);
+        }
+        include = sql.value(4).toUInt();
+        formula = sql.value(5).isNull()?(-1):sql.value(5).toUInt();
+        qDebug()<<formula;
+        model->item(numRow,0)->setData(include, Qt::UserRole);
+        model->item(numRow,0)->setData(formula, Qt::UserRole+1);
+        numRow++;
+    }
+
     ui->tableView->setModel(model);
-    ui->tableView->setSelectionBehavior(QAbstractItemView::SelectItems);
+    ui->tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
     delegate = new CheckBoxDelegate();
     ui->tableView->setItemDelegate(delegate);
     lst.clear();
-    columnPercent<< 0 << 25  <<           25 <<              25 <<          25 << 0;
-    lst<<tr("V")<<tr("Lens Name")<<tr("Lens Mfg")<<tr("Mfg A-Const")<<tr("Mfr ACD")<<" ";
+    columnPercent << 25  <<           25 <<              25 <<       25;
+    lst<<tr("Lens Name")<<tr("Lens Mfg")<<tr("Mfg A-Const")<<tr("Mfr ACD");
     tableWidth = 300;
     for(int i=0; i<lst.count(); i++)
     {
@@ -38,9 +56,8 @@ dialog_doctor::dialog_doctor(quint32 id, QWidget *parent) :
         ui->tableView->setColumnWidth(i, (tableWidth*columnPercent.at(i))/100);
     }
 
-    model->setData(model->index(1,1), 8, Qt::DisplayRole);
-
     connect(ui->buttonBox, SIGNAL(accepted()), SLOT(saveData()));
+    connect(ui->tableView, SIGNAL(clicked(QModelIndex)),SLOT(changeModel(QModelIndex)));
     connect(ui->cbInclude, SIGNAL(clicked(bool)), SLOT(include(bool)));
 }
 
@@ -57,7 +74,42 @@ void dialog_doctor::saveData()
 
 void dialog_doctor::include(bool val)
 {
-//    qDebug()<<model->data(model->index(ui->tableView->currentIndex().row(), 0), Qt::DisplayRole).toInt();
-//    model->setData(model->index(ui->tableView->currentIndex().row(),0), val?1:0, Qt::DisplayRole);
-    model->setData(model->index(0,0), 8, Qt::DisplayRole);
+    quint16  curRow;
+    curRow = ui->tableView->currentIndex().row();
+    model->setData(model->index(curRow,0), val?1:0, Qt::UserRole);
+    changeModel(model->index(curRow,0));
 }
+
+void dialog_doctor::changeModel(QModelIndex index)
+{
+    ui->cbInclude->setChecked(model->data(model->index(index.row(),0),Qt::UserRole).toBool());
+    if(ui->cbInclude->isChecked())
+    {
+        ui->groupBox->setEnabled(true);
+        switch(model->data(model->index(index.row(),0),Qt::UserRole+1).toInt())
+        {
+        case 0:
+            ui->radioButton->setChecked(true);
+            break;
+        case 1:
+            ui->radioButton_2->setChecked(true);
+            break;
+        case 2:
+            ui->radioButton_3->setChecked(true);
+            break;
+        case 3:
+            ui->radioButton_4->setChecked(true);
+            break;
+        default:
+            qDebug()<<"555555555555";
+            ui->radioButton->setChecked(false);
+            ui->radioButton_2->setChecked(false);
+            ui->radioButton_3->setChecked(false);
+            ui->radioButton_4->setChecked(false);
+            break;
+        }
+    }
+    else
+        ui->groupBox->setEnabled(false);
+}
+

@@ -11,7 +11,7 @@ CheckBoxDelegate::CheckBoxDelegate(QObject *parent)
 void CheckBoxDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
                              const QModelIndex &index) const
 {
-    if(index.model()->index(index.row(), 0).data(Qt::DisplayRole) == 1)
+    if(index.model()->index(index.row(), 0).data(Qt::UserRole).toUInt() > 0)
         painter->fillRect(option.rect, QColor(Qt::green));
     QStyledItemDelegate::paint(painter, option, index);
 }
