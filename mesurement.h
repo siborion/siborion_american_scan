@@ -20,6 +20,7 @@
 #include "bigviewnum.h"
 #include "key_radio.h"
 #include "sampletable.h"
+#include "QDate"
 
 #include <qwt_plot.h>
 

@@ -47,6 +47,8 @@ mesurement::mesurement(QWidget *parent) :
     QComboBox *VALname = new QComboBox();
     QLineEdit *VALdata = new QLineEdit();
     QComboBox *VALdoctor = new QComboBox();
+    VALdata->setText(QString("%1").arg(QDate::currentDate().toString("yyyy.MM.dd")));
+
 
     modelName = new QSqlTableModel ();
     modelName->setTable("v_cbpatient");

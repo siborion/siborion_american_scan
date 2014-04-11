@@ -18,6 +18,7 @@ key_radio::key_radio(QWidget *parent) :
     QRadioButton *rbAutoFreeze = new QRadioButton(tr("Auto Freeze"));
     QRadioButton *rbAuto = new QRadioButton(tr("Auto"));
     QRadioButton *rbManual = new QRadioButton(tr("Manual"));
+    rbManual->setChecked(true);
     ltAuto->addWidget(rbAutoFreeze);
     ltAuto->addWidget(rbAuto);
     ltAuto->addWidget(rbManual);
@@ -27,6 +28,7 @@ key_radio::key_radio(QWidget *parent) :
     QHBoxLayout  *ltContact = new QHBoxLayout(gbContact);
     QRadioButton *rbContact = new QRadioButton(tr("Contact"));
     QRadioButton *rbImmersion = new QRadioButton(tr("Immersion"));
+    rbContact->setChecked(true);
     ltContact->addWidget(rbContact);
     ltContact->addWidget(rbImmersion);
 
@@ -36,6 +38,7 @@ key_radio::key_radio(QWidget *parent) :
     QHBoxLayout  *ltCataract = new QHBoxLayout(gbCataract);
     QRadioButton *rbCataract = new QRadioButton(tr("Cataract"));
     QRadioButton *rbAphakic = new QRadioButton(tr("Aphakic"));
+    rbAphakic->setChecked(true);
     ltCataract->addWidget(rbCataract);
     ltCataract->addWidget(rbAphakic);
 
