@@ -20,6 +20,9 @@ sampletable::sampletable(QWidget *parent) :
     layout->addWidget(twMeas);
     twMeas->model()->removeRows(0,10);
 
+    delegate = new delegate_sample();
+    twMeas->setItemDelegate(delegate);
+
     connect(twMeas, SIGNAL(clicked(QModelIndex)), SLOT(changeRow(QModelIndex)));
     connect(twMeas, SIGNAL(activated(QModelIndex)), SLOT(changeRow(QModelIndex)));
 }
@@ -352,6 +355,21 @@ void sampletable::refreshResult(quint8 rowNom)
     sd /= modelCount;
     sd = qPow(sd, 0.5);
     sd = decRound(sd, 4);
+
+    for (int i=0; i<10; i++)
+    {
+                double curDev;
+        curAl = twMeas->model()->data(twMeas->model()->index(i, 2), Qt::DisplayRole).toDouble();
+        if(curAl>0)
+        {
+            curDev = round(abs(curAl*100 - sumAl*100));
+            curDev /= 100;
+
+            qDebug()<<curAl;
+            qDebug()<<sd;
+        }
+                twMeas->model()->setData(twMeas->model()->index(i, 1), curDev, Qt::DisplayRole);
+    }
 
     resultParam.sumAl = sumAl;
     resultParam.devAl = devAl;

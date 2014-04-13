@@ -152,6 +152,8 @@ mesurement::mesurement(QWidget *parent) :
     layout->addLayout(layoutTop, 0);
     layout->addLayout(layoutBot, 5);
 
+
+
     pBaseFill = new basefill(0, children(), (QString)"history");
 
     connect(pKey, SIGNAL(keyAuto()), pSampleTable, SLOT(getFileSample()));

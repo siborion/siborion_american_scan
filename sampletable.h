@@ -7,6 +7,7 @@
 #include <QFileDialog>
 #include <QStandardItem>
 #include "plot.h"
+#include "delegate_sample.h"
 
 class sampletable : public QWidget
 {
@@ -28,6 +29,7 @@ private:
     double decRound(double Val, quint8 dec);
     QModelIndex tableIndex;
     void refreshResult(quint8 rowNom);
+    delegate_sample *delegate;
 
 signals:
     void changeRow(QList<quint16> extremum);
