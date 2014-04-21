@@ -24,7 +24,8 @@ Plot::Plot( QWidget *parent ):
 //    setStyleSheet(QStringLiteral("background-color: rgb(234, 234, 234);"));
 
 
-    setCanvasBackground(QColor("DarkSlateGray"));
+//    setCanvasBackground(QColor("DarkSlateGray"));
+    setCanvasBackground(QColor("Black"));
 
     // grid
     QwtPlotGrid *grid = new QwtPlotGrid;
@@ -42,6 +43,7 @@ Plot::Plot( QWidget *parent ):
     setAxisScale(QwtPlot::xBottom, dMin, dMax);
     setAxisScale(QwtPlot::xTop, (dMin/27), (dMax/27));
     setAxisScale(QwtPlot::yLeft, 0.0, 255.0);
+
 
     // curves
     d_curve1 = new QwtPlotCurve();

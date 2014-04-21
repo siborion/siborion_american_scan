@@ -111,10 +111,13 @@ mesurement::mesurement(QWidget *parent) :
 
 
     QFrame *fmPlot = new QFrame();
-    fmPlot->setFrameShape(QFrame::WinPanel);
-    fmPlot->setFrameShadow(QFrame::Raised);
+    fmPlot->setStyleSheet(QStringLiteral("background-color: rgb(0, 0, 100);"));
+    fmPlot->setFrameShape(QFrame::NoFrame);
+    fmPlot->setFrameShadow(QFrame::Plain);
     QGridLayout *glPlot  = new QGridLayout(fmPlot);
     pPlot = new Plot(this);
+    QPushButton *TTT = new QPushButton(tr("OD"));
+    glPlot->addWidget(TTT);
     glPlot->addWidget(pPlot);
 
     lst.clear();
