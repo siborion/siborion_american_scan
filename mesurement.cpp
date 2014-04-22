@@ -17,6 +17,13 @@ mesurement::mesurement(QWidget *parent) :
     pBigView->setMinimumHeight(100);
     pBigView->setMaximumHeight(150);
 
+    pBigViewCur = new bigviewnumcur();
+    pBigViewCur->setMinimumHeight(50);
+    pBigViewCur->setMaximumHeight(50);
+    pBigViewCur->setMinimumWidth(250);
+    pBigViewCur->setMaximumWidth(250);
+
+
 //------------------------------------ TableView
     QFrame *fmPatient = new QFrame();
     QFrame *fmLens = new QFrame();
@@ -109,16 +116,20 @@ mesurement::mesurement(QWidget *parent) :
     twVelocity->addWidget(VALaverage, 1, 1);
     twVelocity->addWidget(VALsd, 2, 1);
 
-
     QFrame *fmPlot = new QFrame();
     fmPlot->setStyleSheet(QStringLiteral("background-color: rgb(0, 0, 100);"));
     fmPlot->setFrameShape(QFrame::NoFrame);
     fmPlot->setFrameShadow(QFrame::Plain);
+//    QSpacerItem *vs = new QSpacerItem(20, 40, QSizePolicy::Expanding, QSizePolicy::Expanding);
     QGridLayout *glPlot  = new QGridLayout(fmPlot);
     pPlot = new Plot(this);
-    QPushButton *TTT = new QPushButton(tr("OD"));
-    glPlot->addWidget(TTT);
-    glPlot->addWidget(pPlot);
+
+//    QVBoxLayout *layoutBigView = new QVBoxLayout(this);
+//    layoutBigView->addItem(vs);
+//    layoutBigView->addWidget(pBigViewCur);
+    glPlot->addWidget(pBigViewCur);
+//    glPlot->addLayout(layoutBigView,0,0);
+    glPlot->addWidget(pPlot,1,0);
 
     lst.clear();
     columnPercent.clear();
@@ -130,13 +141,13 @@ mesurement::mesurement(QWidget *parent) :
 
     pSampleTable = new sampletable();
 
-    QPushButton *pbOd = new QPushButton(tr("OD"));
-    QFont font;
-    font.setPointSize(24);
-    font.setBold(true);
-    font.setWeight(75);
-    pbOd->setFont(font);
-    pbOd->setFont(font);
+//    QPushButton *pbOd = new QPushButton(tr("OD"));
+//    QFont font;
+//    font.setPointSize(24);
+//    font.setBold(true);
+//    font.setWeight(75);
+//    pbOd->setFont(font);
+//    pbOd->setFont(font);
 
     pKey = new key_radio();
 
@@ -146,7 +157,7 @@ mesurement::mesurement(QWidget *parent) :
 
     QPushButton *pbDel = new QPushButton(tr("Delete"));
 
-    layoutRight->addWidget(pbOd);
+//    layoutRight->addWidget(pbOd);
     layoutRight->addWidget(pBigView);
 //    layoutRight->addWidget(twMeas);
     layoutRight->addWidget(pSampleTable);
@@ -199,6 +210,8 @@ void mesurement::refreshMainParam()
     VALlt->setText(QString("%1").arg(pSampleTable->resultParam.LT));
     VALvit->setText(QString("%1").arg(pSampleTable->resultParam.Vit));
     pBigView->setDisplay(pSampleTable->resultParam.AL, pSampleTable->resultParam.sumAl, pSampleTable->resultParam.devAl);
+    pBigViewCur->setDisplay(pSampleTable->resultParam.AL, pSampleTable->resultParam.ACD, pSampleTable->resultParam.LT, pSampleTable->resultParam.Vit);
+
 
 //`    VALal->setText(QString("%1").arg(pSampleTable->resultParam.AL));
     average->setText(QString("Average (count %1)").arg(pSampleTable->resultParam.countSample));

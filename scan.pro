@@ -59,7 +59,8 @@ SOURCES += main.cpp\
     sampletable.cpp \
     delegate_check.cpp \
     delegate.cpp \
-    delegate_sample.cpp
+    delegate_sample.cpp \
+    bigviewnumcur.cpp
 
 
 HEADERS  += mainwindow.h\
@@ -88,7 +89,8 @@ HEADERS  += mainwindow.h\
     sampletable.h \
     delegate_check.h \
     delegate.h \
-    delegate_sample.h
+    delegate_sample.h \
+    bigviewnumcur.h
 
 #FORMS    += mainwindow.ui
 
@@ -99,6 +101,7 @@ FORMS += \
     bigviewnum.ui \
     dialog_lens.ui \
     dialog_doctor.ui \
-    bigviewnumhor.ui
+    bigviewnumhor.ui \
+    bigviewnumcur.ui
 
 OTHER_FILES += plugins/sqldrivers/qsqlite.dll

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>209</width>
-    <height>118</height>
+    <width>233</width>
+    <height>167</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -30,7 +30,7 @@
     <number>0</number>
    </property>
    <item row="0" column="0">
-    <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,0,0,0,0,0" columnstretch="0,1,0,0">
+    <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,0,0,0,0,0,0,0,0,0" columnstretch="0,0,0,0">
      <property name="leftMargin">
       <number>2</number>
      </property>
@@ -43,41 +43,84 @@
      <property name="bottomMargin">
       <number>2</number>
      </property>
-     <property name="spacing">
+     <property name="horizontalSpacing">
+      <number>5</number>
+     </property>
+     <property name="verticalSpacing">
       <number>2</number>
      </property>
-     <item row="4" column="2">
-      <widget class="QLabel" name="label_2">
+     <item row="1" column="0" colspan="4">
+      <widget class="QLabel" name="label_4">
        <property name="font">
         <font>
-         <pointsize>10</pointsize>
          <weight>75</weight>
          <bold>true</bold>
         </font>
        </property>
        <property name="text">
-        <string>Dev.</string>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="0">
-      <widget class="QLabel" name="label_7">
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string/>
+        <string>Average</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
        </property>
       </widget>
      </item>
-     <item row="1" column="0">
+     <item row="4" column="2">
+      <widget class="QLabel" name="label_9">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>VIT</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="10" column="0" colspan="4">
+      <widget class="Line" name="line_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="0" colspan="4">
+      <widget class="QLabel" name="label_3">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Deviation</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="2">
+      <widget class="QLabel" name="label_8">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>LT</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0">
       <widget class="QLabel" name="label">
        <property name="font">
         <font>
@@ -93,76 +136,11 @@
         <string>AL</string>
        </property>
        <property name="alignment">
-        <set>Qt::AlignCenter</set>
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
        </property>
       </widget>
      </item>
-     <item row="2" column="0">
-      <widget class="QLabel" name="label_3">
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="0">
-      <widget class="QLabel" name="label_5">
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string>Avg.</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="1" rowspan="2">
-      <widget class="QLabel" name="lAlAvg">
-       <property name="font">
-        <font>
-         <pointsize>24</pointsize>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string>00.00</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="3" rowspan="2">
-      <widget class="QLabel" name="lAlDev">
-       <property name="font">
-        <font>
-         <pointsize>24</pointsize>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string>0.0</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1" rowspan="2" colspan="3">
+     <item row="2" column="1" rowspan="3">
       <widget class="QLabel" name="lAlCur">
        <property name="font">
         <font>
@@ -179,10 +157,43 @@
        </property>
       </widget>
      </item>
-     <item row="6" column="0" colspan="4">
-      <widget class="Line" name="line_2">
+     <item row="7" column="2">
+      <widget class="QLabel" name="label_2">
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>ACD</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="0" colspan="4">
+      <widget class="Line" name="line">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="2">
+      <widget class="QLabel" name="label_6">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>ACD</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
        </property>
       </widget>
      </item>
@@ -193,10 +204,146 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="0" colspan="4">
-      <widget class="Line" name="line">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
+     <item row="9" column="0">
+      <widget class="QLabel" name="label_7">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>AL</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="7" column="1" rowspan="3">
+      <widget class="QLabel" name="lAlAvg">
+       <property name="font">
+        <font>
+         <pointsize>36</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>00.00</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="8" column="2">
+      <widget class="QLabel" name="label_10">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>LT</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="9" column="2">
+      <widget class="QLabel" name="label_11">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>VIT</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="3">
+      <widget class="QLabel" name="label_5">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>00.00</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="3">
+      <widget class="QLabel" name="label_12">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>00.00</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="3">
+      <widget class="QLabel" name="label_13">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>00.00</string>
+       </property>
+      </widget>
+     </item>
+     <item row="7" column="3">
+      <widget class="QLabel" name="label_14">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>00.00</string>
+       </property>
+      </widget>
+     </item>
+     <item row="8" column="3">
+      <widget class="QLabel" name="label_15">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>00.00</string>
+       </property>
+      </widget>
+     </item>
+     <item row="9" column="3">
+      <widget class="QLabel" name="label_16">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>00.00</string>
        </property>
       </widget>
      </item>

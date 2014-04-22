@@ -18,6 +18,7 @@
 #include "mydelegate.h"
 #include "plot.h"
 #include "bigviewnum.h"
+#include "bigviewnumcur.h"
 #include "key_radio.h"
 #include "sampletable.h"
 #include "QDate"
@@ -44,6 +45,7 @@ private:
     key_radio *pKey;
     Plot *pPlot;
     bigviewnum *pBigView;
+    bigviewnumcur *pBigViewCur;
     QStandardItemModel *modelPatient;
     QStandardItemModel *modelLens;
     QStandardItemModel *modelVelocity;

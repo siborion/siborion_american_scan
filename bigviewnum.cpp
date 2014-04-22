@@ -17,9 +17,9 @@ bigviewnum::~bigviewnum()
 
 void bigviewnum::setDisplay(double Al, double Avg, double Dev)
 {
-    ui->lAlCur->setText(QString("%1").arg(Al));
-    ui->lAlAvg->setText(QString("%1").arg(Avg));
-    ui->lAlDev->setText(QString("%1").arg(Dev));
+//    ui->lAlCur->setText(QString("%1").arg(Al));
+//    ui->lAlAvg->setText(QString("%1").arg(Avg));
+//    ui->lAlDev->setText(QString("%1").arg(Dev));
 }
 
 void bigviewnum::setDisplay(double Al)
