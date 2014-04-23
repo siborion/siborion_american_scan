@@ -167,7 +167,14 @@ void sampletable::refreshTable(stMainParam mainParam)
 void sampletable::refreshTable(quint8 rowNom, stMainParam mainParam)
 {
     double sumAl, curAl, devAl;
+    double sumAcd, curAcd;
+    double sumLt, curLt;
+    double sumVit, curVit;
     quint8 modelCount;
+    curAl = curAcd = curAcd = curLt = curVit = 0;
+    sumAl = sumAcd = sumAcd = sumLt = sumVit = 0;
+
+    qDebug()<<"refreshTable";
 
     resultParam.ACD = decRound(mainParam.L1 - mainParam.Start, 2);
     resultParam.LT = decRound(mainParam.L2 - mainParam.L1, 2);
@@ -186,21 +193,26 @@ void sampletable::refreshTable(quint8 rowNom, stMainParam mainParam)
     modelCount = sumAl = devAl = 0;
     for (int i=0; i<10; i++)
     {
-        curAl = 0;
         curAl = twMeas->model()->data(twMeas->model()->index(i, 2), Qt::DisplayRole).toDouble();
+        curAcd = twMeas->model()->data(twMeas->model()->index(i, 3), Qt::DisplayRole).toDouble();
+        curLt = twMeas->model()->data(twMeas->model()->index(i, 4), Qt::DisplayRole).toDouble();
+        curVit = twMeas->model()->data(twMeas->model()->index(i, 5), Qt::DisplayRole).toDouble();
         if(curAl>0)
-        {
-            sumAl += curAl;
-            modelCount++;
-        }
+            {sumAl += curAl; modelCount++;}
+        if(curAcd>0)
+            sumAcd += curAcd;
+        if(curLt>0)
+            sumLt += curLt;
+        if(curAcd>0)
+            sumVit += curVit;
     }
 
     if(modelCount>0)
     {
-        sumAl = (sumAl/modelCount);
-        sumAl *= 100;
-        sumAl =  round(sumAl);
-        sumAl /= 100;
+        sumAl = (sumAl/modelCount); sumAl *= 100; sumAl =  round(sumAl); sumAl /= 100;
+        sumAcd = (sumAcd/modelCount); sumAcd *= 100; sumAcd =  round(sumAcd); sumAcd /= 100;
+        sumLt = (sumLt/modelCount); sumLt *= 100; sumLt =  round(sumLt); sumLt /= 100;
+        sumVit = (sumVit/modelCount); sumVit *= 100; sumVit =  round(sumVit); sumVit /= 100;
     }
 
     for (int i=0; i<10; i++)
@@ -227,6 +239,12 @@ void sampletable::refreshTable(quint8 rowNom, stMainParam mainParam)
     resultParam.AL = AL;
     resultParam.sumAl = sumAl;
     resultParam.devAl = devAl;
+
+    resultParam.AvgAcd = sumAcd;
+    qDebug()<<sumAcd;
+    resultParam.AvgLt = sumLt;
+    resultParam.AvgVit = sumVit;
+
     refreshResult(rowNom);
 }
 
@@ -303,6 +321,8 @@ void sampletable::refreshResult(quint8 rowNom)
     double sumAl, curAl, devAl, sd;
     quint8 modelCount;
     QColor color;
+
+    qDebug()<<"refreshResult";
 
     resultParam.ACD = twMeas->model()->data(twMeas->model()->index(rowNom, 3), Qt::DisplayRole).toDouble();
     resultParam.LT =  twMeas->model()->data(twMeas->model()->index(rowNom, 4), Qt::DisplayRole).toDouble();

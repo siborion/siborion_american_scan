@@ -16,6 +16,7 @@ public:
     ~bigviewnum();
     void setDisplay(double Al);
     void setDisplay(double Al, double Avg, double Div);
+    void setDisplay(double Avg, double AvgAcd, double AvgLt, double AvgVit, double Dev);
     
 private:
     Ui::bigviewnum *ui;

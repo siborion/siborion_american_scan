@@ -210,7 +210,7 @@ void mesurement::refreshMainParam()
     VALacd->setText(QString("%1").arg(pSampleTable->resultParam.ACD));
     VALlt->setText(QString("%1").arg(pSampleTable->resultParam.LT));
     VALvit->setText(QString("%1").arg(pSampleTable->resultParam.Vit));
-    pBigView->setDisplay(pSampleTable->resultParam.AL, pSampleTable->resultParam.sumAl, pSampleTable->resultParam.devAl);
+    pBigView->setDisplay(pSampleTable->resultParam.sumAl, pSampleTable->resultParam.AvgAcd, pSampleTable->resultParam.AvgLt, pSampleTable->resultParam.AvgVit, pSampleTable->resultParam.devAl);
     pBigViewCur->setDisplay(pSampleTable->resultParam.AL, pSampleTable->resultParam.ACD, pSampleTable->resultParam.LT, pSampleTable->resultParam.Vit);
 
     average->setText(QString("Average (count %1)").arg(pSampleTable->resultParam.countSample));

@@ -258,7 +258,7 @@
         <string notr="true">color: rgb(255, 255, 0);</string>
        </property>
        <property name="text">
-        <string>FIO</string>
+        <string>Select patient</string>
        </property>
       </widget>
      </item>
