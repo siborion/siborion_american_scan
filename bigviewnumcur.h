@@ -2,6 +2,7 @@
 #define BIGVIEWNUMCUR_H
 
 #include <QWidget>
+#include <QDate>
 
 namespace Ui {
 class bigviewnumcur;
@@ -15,6 +16,8 @@ public:
     explicit bigviewnumcur(QWidget *parent = 0);
     ~bigviewnumcur();
     void setDisplay(double AL, double ACD, double LT, double VIT);
+    void setDisplay(QString FIO);
+    void changeEye();
 private:
     Ui::bigviewnumcur *ui;
 };

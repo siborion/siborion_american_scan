@@ -20,8 +20,8 @@ mesurement::mesurement(QWidget *parent) :
     pBigViewCur = new bigviewnumcur();
     pBigViewCur->setMinimumHeight(50);
     pBigViewCur->setMaximumHeight(50);
-    pBigViewCur->setMinimumWidth(250);
-    pBigViewCur->setMaximumWidth(250);
+//    pBigViewCur->setMinimumWidth(250);
+//    pBigViewCur->setMaximumWidth(250);
 
 
 //------------------------------------ TableView
@@ -43,9 +43,9 @@ mesurement::mesurement(QWidget *parent) :
     QGridLayout *twVelocity = new QGridLayout(fmVelocity);
     twPatient->setSpacing(2); twLens->setSpacing(2); twVelocity->setSpacing(2);
 
-    layoutTop->addWidget(fmPatient);
-    layoutTop->addWidget(fmLens);
-    layoutTop->addWidget(fmVelocity);
+//    layoutTop->addWidget(fmPatient);
+//    layoutTop->addWidget(fmLens);
+//    layoutTop->addWidget(fmVelocity);
 
 //--------------------*twPatient---------------------------------------
     QLabel *patientName = new QLabel("Patient Name:");
@@ -141,7 +141,7 @@ mesurement::mesurement(QWidget *parent) :
 
     pSampleTable = new sampletable();
 
-//    QPushButton *pbOd = new QPushButton(tr("OD"));
+    QPushButton *pbOd = new QPushButton(tr("Change Eye"));
 //    QFont font;
 //    font.setPointSize(24);
 //    font.setBold(true);
@@ -157,8 +157,8 @@ mesurement::mesurement(QWidget *parent) :
 
     QPushButton *pbDel = new QPushButton(tr("Delete"));
 
-//    layoutRight->addWidget(pbOd);
     layoutRight->addWidget(pBigView);
+    layoutRight->addWidget(pbOd);
 //    layoutRight->addWidget(twMeas);
     layoutRight->addWidget(pSampleTable);
     layoutRight->addWidget(pbDel);
@@ -177,6 +177,7 @@ mesurement::mesurement(QWidget *parent) :
     connect(pSampleTable, SIGNAL(changeRow(QList<quint16>)), SLOT(changeRow(QList<quint16> )));
     connect(pSampleTable, SIGNAL(refreshMainParam()), SLOT(refreshMainParam()));
     connect(pbDel, SIGNAL(clicked()), pSampleTable, SLOT(delSample()));
+    connect(pbOd, SIGNAL(pressed()), SLOT(changeEye()));
 }
 
 void mesurement::changeRow(QList<quint16> extremum)
@@ -212,9 +213,17 @@ void mesurement::refreshMainParam()
     pBigView->setDisplay(pSampleTable->resultParam.AL, pSampleTable->resultParam.sumAl, pSampleTable->resultParam.devAl);
     pBigViewCur->setDisplay(pSampleTable->resultParam.AL, pSampleTable->resultParam.ACD, pSampleTable->resultParam.LT, pSampleTable->resultParam.Vit);
 
-
-//`    VALal->setText(QString("%1").arg(pSampleTable->resultParam.AL));
     average->setText(QString("Average (count %1)").arg(pSampleTable->resultParam.countSample));
     VALaverage->setText(QString("%1").arg(pSampleTable->resultParam.sumAl));
     VALsd->setText(QString("%1").arg(pSampleTable->resultParam.SD));
+}
+
+void mesurement::changeRow(quint8 idType, quint16 idRow, QString Text)
+{
+    pBigViewCur->setDisplay(Text);
+}
+
+void mesurement::changeEye()
+{
+    pBigViewCur->changeEye();
 }

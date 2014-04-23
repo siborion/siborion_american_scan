@@ -169,8 +169,6 @@ void sampletable::refreshTable(quint8 rowNom, stMainParam mainParam)
     double sumAl, curAl, devAl;
     quint8 modelCount;
 
-//    qDebug()<<"refreshTable2";
-
     resultParam.ACD = decRound(mainParam.L1 - mainParam.Start, 2);
     resultParam.LT = decRound(mainParam.L2 - mainParam.L1, 2);
     resultParam.AL = decRound(mainParam.Retina - mainParam.Start, 2);
@@ -226,11 +224,9 @@ void sampletable::refreshTable(quint8 rowNom, stMainParam mainParam)
 
     AL =  decRound(twMeas->model()->data(twMeas->model()->index(twMeas->currentIndex().row(), 5), Qt::UserRole).toDouble(), 2);
     AL -= decRound(twMeas->model()->data(twMeas->model()->index(twMeas->currentIndex().row(), 2), Qt::UserRole).toDouble(), 2);
-//    pBigView->setDisplay(AL, sumAl , devAl);
     resultParam.AL = AL;
     resultParam.sumAl = sumAl;
     resultParam.devAl = devAl;
-//    emit (refreshMainParam());
     refreshResult(rowNom);
 }
 

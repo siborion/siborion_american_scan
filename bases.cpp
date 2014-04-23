@@ -53,6 +53,14 @@ bases::bases(QWidget *parent) :
 
     adjTable(BaseType::enPatient);
 
+    if(model->rowCount()>0)
+    {
+        twTable->setCurrentIndex(model->index(0,0));
+        qDebug()<<model->index(0,0);
+    }
+    qDebug()<<model->rowCount();
+
+
     connect(rbPatient, SIGNAL(clicked(bool)), SLOT(changeBasePatient(bool)));
     connect(rbDoctor, SIGNAL(clicked(bool)), SLOT(changeBaseDoctor(bool)));
     connect(rbLens, SIGNAL(clicked(bool)), SLOT(changeBaseLens(bool)));
@@ -61,6 +69,9 @@ bases::bases(QWidget *parent) :
     connect(pbDel, SIGNAL(pressed()), SLOT(Del()));
 //    connect(twTable, SIGNAL(clicked(QModelIndex)), SLOT(DelIndex(QModelIndex)));
     connect(twTable, SIGNAL(doubleClicked(QModelIndex)), SLOT(EditIndex(QModelIndex)));
+    connect(twTable->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), SLOT(changeRow(QModelIndex,QModelIndex)));
+    qDebug()<<twTable->selectionModel();
+
 }
 
 void bases::adjTable(BaseType::Status Val)
@@ -256,6 +267,12 @@ void bases::fillModelHead(QStringList sl)
 //    qDebug() << model->lastError();
 }
 
-
-
-
+void bases::changeRow(QModelIndex cur, QModelIndex prev)
+{
+    QString sFio;
+    qDebug()<<"99999999999";
+//    model->itemData(model->index(cur.row(),3))
+    sFio = model->data(model->index(cur.row(),2)).toString();
+    qDebug()<<sFio;
+    emit changeRow(1,1,sFio);
+}

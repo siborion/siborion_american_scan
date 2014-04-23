@@ -55,6 +55,7 @@ private:
     BaseType::Status TypeBase;
     QString *svg;
 
+
 private slots:
     void adjTable(BaseType::Status);
     void changeBasePatient(bool Val);
@@ -64,6 +65,11 @@ private slots:
     void Edit();
     void Del();
     void EditIndex(QModelIndex);
+    void changeRow(QModelIndex cur, QModelIndex prev);
+
+Q_SIGNALS:
+//signals:
+    void changeRow(quint8 idType, quint16 idRow, QString Text);
 };
 
 #endif // BASES_H

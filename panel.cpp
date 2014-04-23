@@ -1,6 +1,5 @@
 #include "panel.h"
 //#include "scanplot.h"
-#include "bases.h"
 #include <qlabel.h>
 #include <qcombobox.h>
 #include <qspinbox.h>
@@ -19,13 +18,20 @@ Panel::Panel( QWidget *parent ):
 //    setAutoFillBackground(true);
 //    setPalette(Pal);
 
+    page = new bases( parent );
+    Mesur = new mesurement(parent);
+
     setStyleSheet("QTabBar::tab { min-width: 100px; }");
     setTabPosition( QTabWidget::North );
-    addTab( createBaseTab( this ), "Data Base" );
-    addTab( createMesTab( this ), "Measurement" );
+//    addTab( createBaseTab( this ), "Data Base" );
+    addTab( page, "Data Base" );
+//    addTab( createMesTab( this ), "Measurement" );
+    addTab( Mesur, "Measurement" );
     addTab( createHisTab( this ), "History" );
     addTab( createCalculatorTab( this ), "Calculator" );
     addTab( createOnlineTab( this ), "Print" );
+    connect(page,SIGNAL(changeRow(quint8,quint16,QString)),Mesur,SLOT(changeRow(quint8,quint16,QString)));
+
 }
 
 QWidget *Panel::createOnlineTab( QWidget *parent )

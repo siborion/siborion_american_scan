@@ -2,7 +2,7 @@
 #define _PANEL_H_ 1
 
 #include <qtabwidget.h>
-//#include "scanplot.h"
+#include "bases.h"
 #include <mesurement.h>
 #include <history.h>
 #include <calculator.h>
@@ -30,6 +30,8 @@ private:
     mesurement *createMesTab( QWidget * );
     history *createHisTab( QWidget * );
     calculator *createCalculatorTab( QWidget * );
+    bases *page;
+    mesurement *Mesur;
 };
 
 #endif

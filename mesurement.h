@@ -1,6 +1,7 @@
 #ifndef MESUREMENT_H
 #define MESUREMENT_H
 
+#include "bases.h"
 #include "scanbase.h"
 #include "basefill.h"
 #include <QWidget>
@@ -100,10 +101,12 @@ private:
 signals:
 
 public slots:
+    void changeRow(quint8 idType, quint16 idRow, QString Text);
 
 private slots:
     void changeRow(QList<quint16> extremum);
     void refreshMainParam();
+    void changeEye();
 //    void getFileSample();
 //    void changeRow(QModelIndex curIndex);
 //    void refreshTable(stMainParam);
