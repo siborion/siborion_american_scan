@@ -21,12 +21,16 @@ struct stResultParam
     double LT;
     double Vit;
     double AL;
-    double sumAl;
-    double devAl;
 
+    double AvgAl;
     double AvgAcd;
     double AvgLt;
     double AvgVit;
+
+    double devAl;
+    double devAcd;
+    double devLt;
+    double devVit;
 
     quint8 countSample;
     double SD;

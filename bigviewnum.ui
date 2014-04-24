@@ -309,7 +309,7 @@
       </widget>
      </item>
      <item row="7" column="3">
-      <widget class="QLabel" name="label_14">
+      <widget class="QLabel" name="lDevAcd">
        <property name="font">
         <font>
          <weight>75</weight>
@@ -322,7 +322,7 @@
       </widget>
      </item>
      <item row="8" column="3">
-      <widget class="QLabel" name="label_15">
+      <widget class="QLabel" name="lDevLt">
        <property name="font">
         <font>
          <weight>75</weight>
@@ -335,7 +335,7 @@
       </widget>
      </item>
      <item row="9" column="3">
-      <widget class="QLabel" name="label_16">
+      <widget class="QLabel" name="lDevVit">
        <property name="font">
         <font>
          <weight>75</weight>
