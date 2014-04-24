@@ -282,6 +282,9 @@ void bases::changeRow(QModelIndex cur, QModelIndex prev)
         sFio += " ";
         sFio += model->data(model->index(cur.row(),2)).toString();
         break;
+    default:
+        return;
+        break;
     }
-    emit changeRow(TypeBase, 1, sFio);
+        emit changeRow(TypeBase, cur.row(), sFio);
 }
