@@ -14,7 +14,7 @@ mesurement::mesurement(QWidget *parent) :
     QGridLayout *layoutBot = new QGridLayout();
 
     pBigView = new bigviewnum();
-    pBigView->setMinimumHeight(100);
+    pBigView->setMinimumHeight(120);
     pBigView->setMaximumHeight(150);
 
     pBigViewCur = new bigviewnumcur();
