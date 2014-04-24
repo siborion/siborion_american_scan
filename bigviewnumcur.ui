@@ -61,7 +61,7 @@
         </font>
        </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(255, 255, 0);</string>
+        <string notr="true">color: rgb(255, 255, 255);</string>
        </property>
        <property name="text">
         <string>00.00</string>
@@ -81,7 +81,7 @@
         <enum>Qt::LeftToRight</enum>
        </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(255, 255, 0);</string>
+        <string notr="true">color: rgb(255, 255, 255);</string>
        </property>
        <property name="text">
         <string>AL</string>
@@ -117,7 +117,7 @@
         </font>
        </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(255, 255, 0);</string>
+        <string notr="true">color: rgb(255, 255, 255);</string>
        </property>
        <property name="text">
         <string>00.00</string>
@@ -133,7 +133,7 @@
         </font>
        </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(255, 255, 0);</string>
+        <string notr="true">color: rgb(255, 255, 255);</string>
        </property>
        <property name="text">
         <string>00.00</string>
@@ -149,7 +149,7 @@
         </font>
        </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(255, 255, 0);</string>
+        <string notr="true">color: rgb(255, 255, 255);</string>
        </property>
        <property name="text">
         <string>VIT</string>
@@ -169,7 +169,7 @@
         </font>
        </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(255, 255, 0);</string>
+        <string notr="true">color: rgb(255, 255, 255);</string>
        </property>
        <property name="text">
         <string>00.00</string>
@@ -188,6 +188,9 @@
          <bold>true</bold>
         </font>
        </property>
+       <property name="styleSheet">
+        <string>color: rgb(255, 255, 255);</string>
+       </property>
        <property name="text">
         <string>OD</string>
        </property>
@@ -200,6 +203,9 @@
          <weight>75</weight>
          <bold>true</bold>
         </font>
+       </property>
+       <property name="styleSheet">
+        <string>color: rgb(255, 255, 255);</string>
        </property>
        <property name="text">
         <string>Data</string>
@@ -215,7 +221,7 @@
         </font>
        </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(255, 255, 0);</string>
+        <string notr="true">color: rgb(255, 255, 255);</string>
        </property>
        <property name="text">
         <string>Select patient</string>
@@ -245,7 +251,7 @@
         </font>
        </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(255, 255, 0);</string>
+        <string notr="true">color: rgb(255, 255, 255);</string>
        </property>
        <property name="text">
         <string>LT</string>
@@ -265,7 +271,7 @@
         </font>
        </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(255, 255, 0);</string>
+        <string notr="true">color: rgb(255, 255, 255);</string>
        </property>
        <property name="text">
         <string>ACD</string>
@@ -282,6 +288,9 @@
          <weight>75</weight>
          <bold>true</bold>
         </font>
+       </property>
+       <property name="styleSheet">
+        <string>color: rgb(255, 255, 255);</string>
        </property>
        <property name="text">
         <string>Select doctor</string>

@@ -19,7 +19,7 @@ mesurement::mesurement(QWidget *parent) :
     pBigViewCur->setMaximumHeight(50);
 
     QFrame *fmPlot = new QFrame();
-    fmPlot->setStyleSheet(QStringLiteral("background-color: rgb(0, 0, 100);"));
+    fmPlot->setStyleSheet(QStringLiteral("background-color: rgb(0, 0, 0);"));
     fmPlot->setFrameShape(QFrame::NoFrame);
     fmPlot->setFrameShadow(QFrame::Plain);
     QGridLayout *glPlot  = new QGridLayout(fmPlot);

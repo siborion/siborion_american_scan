@@ -77,7 +77,7 @@ void Plot::drawMarker(quint16 pos, QString title)
     qT.setFont(qF);
     qT.setText(title);
     QColor color;
-    color.setRgb(0,0,100,255);
+    color.setRgb(0,0,0,255);
     qT.setBackgroundBrush(color);
     QwtPlotMarker *d_marker = new QwtPlotMarker();
     d_marker->setLineStyle( QwtPlotMarker::VLine );
