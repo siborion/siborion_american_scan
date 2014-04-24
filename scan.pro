@@ -58,7 +58,6 @@ SOURCES += main.cpp\
     bigviewnumhor.cpp \
     sampletable.cpp \
     delegate_check.cpp \
-    delegate.cpp \
     delegate_sample.cpp \
     bigviewnumcur.cpp
 
@@ -88,7 +87,6 @@ HEADERS  += mainwindow.h\
     bigviewnumhor.h \
     sampletable.h \
     delegate_check.h \
-    delegate.h \
     delegate_sample.h \
     bigviewnumcur.h
 
