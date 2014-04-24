@@ -8,7 +8,6 @@ mesurement::mesurement(QWidget *parent) :
     QList<int> columnPercent;
     QStringList lst;
 
-//    QVBoxLayout *layoutRight = new QVBoxLayout();
     QGridLayout *layoutBot = new QGridLayout(this);
 
     pBigView = new bigviewnum();
@@ -44,21 +43,42 @@ mesurement::mesurement(QWidget *parent) :
     pKey = new key_radio();
     QPushButton *pbDel = new QPushButton(tr("Delete"));
 
+    QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
+    QPushButton *pbMeasure = new QPushButton();
+    pbMeasure->setSizePolicy(sizePolicy);
+    QIcon icon;
+    icon.addFile(QStringLiteral(":/test/scan"), QSize(), QIcon::Normal, QIcon::Off);
+    pbMeasure->setIcon(icon);
+    pbMeasure->setIconSize(QSize(50, 50));
+
 
     layoutBot->addWidget(fmPlot, 0, 0, 4, 1);
     layoutBot->addWidget(pKey,5,0,1,1);
 
-    layoutBot->addWidget(pSampleTable,0,1);
-    layoutBot->addWidget(pbDel,1,1);
-    layoutBot->addItem(vs,2,1);
+
+    QFrame *fmSample = new QFrame();
+//    fmSample->setStyleSheet(QStringLiteral("background-color: rgb(0, 0, 100);"));
+    fmSample->setFrameShape(QFrame::WinPanel);
+    fmSample->setFrameShadow(QFrame::Raised);
+    QVBoxLayout *glSample  = new QVBoxLayout(fmSample);
+    glSample->addWidget(pSampleTable);
+    glSample->addWidget(pbDel);
+    fmSample->setFixedHeight(230);
+//    fmSample->setMinimumHeight(240);
+//    fmSample->setMaximumHeight(250);
+
+    layoutBot->addWidget(fmSample,0,1);
+    layoutBot->addItem(vs,1,1);
+    layoutBot->addWidget(pbMeasure,2,1);
     layoutBot->addWidget(pBigView,3,1);
+
 
 
 //    layoutRight->addWidget(pbOd);
 
 //    pBaseFill = new basefill(0, children(), (QString)"history");
 
-    connect(pKey, SIGNAL(keyAuto()), pSampleTable, SLOT(getFileSample()));
+    connect(pbMeasure, SIGNAL(pressed()), pSampleTable, SLOT(getFileSample()));
     connect(pPlot, SIGNAL(refreshTable(stMainParam)), pSampleTable, SLOT(refreshTable(stMainParam)));
     connect(pSampleTable, SIGNAL(changeRow(QList<quint16>)), SLOT(changeRow(QList<quint16> )));
     connect(pSampleTable, SIGNAL(refreshMainParam()), SLOT(refreshMainParam()));

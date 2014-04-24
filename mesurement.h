@@ -75,6 +75,7 @@ private:
 //    basefill *pBaseFill;
 
     QPushButton *pbDel;
+    QPushButton *pbMeasure;
 
 //    QLabel *average;
 

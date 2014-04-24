@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>243</width>
-    <height>167</height>
+    <width>225</width>
+    <height>155</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -79,7 +79,7 @@
            <widget class="QLabel" name="lDevAL_2">
             <property name="font">
              <font>
-              <pointsize>36</pointsize>
+              <pointsize>32</pointsize>
               <weight>75</weight>
               <bold>true</bold>
              </font>
@@ -303,7 +303,7 @@
            <widget class="QLabel" name="lAveAL_2">
             <property name="font">
              <font>
-              <pointsize>36</pointsize>
+              <pointsize>32</pointsize>
               <weight>75</weight>
               <bold>true</bold>
              </font>

@@ -14,12 +14,12 @@ public:
     explicit key_radio(QWidget *parent = 0);
     
 signals:
-    void keyAuto();
-    void keySave();
+//    void keyAuto();
+//    void keySave();
     
 private slots:
-    void key_radioAutoClicked();
-    void key_radioSaveClicked();
+//    void key_radioAutoClicked();
+//    void key_radioSaveClicked();
     
 };
 

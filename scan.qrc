@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/test">
         <file>qmlvideo.svg</file>
+        <file alias="scan">scan.png</file>
     </qresource>
 </RCC>
