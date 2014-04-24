@@ -16,7 +16,8 @@ public:
     explicit bigviewnumcur(QWidget *parent = 0);
     ~bigviewnumcur();
     void setDisplay(double AL, double ACD, double LT, double VIT);
-    void setDisplay(QString FIO);
+    void setPatient(QString FIO);
+    void setDoctor(QString FIO);
     void changeEye();
 private:
     Ui::bigviewnumcur *ui;

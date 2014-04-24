@@ -26,10 +26,16 @@ void bigviewnumcur::setDisplay(double AL, double ACD, double LT, double VIT)
     ui->lCurVIT->setText(QString("%1").arg(VIT,4,'f',2));
 }
 
-void bigviewnumcur::setDisplay(QString FIO)
+void bigviewnumcur::setPatient(QString FIO)
 {
     ui->lFioPatient->setText(FIO);
 }
+
+void bigviewnumcur::setDoctor(QString FIO)
+{
+    ui->lFioDoctor->setText(FIO);
+}
+
 
 void bigviewnumcur::changeEye()
 {

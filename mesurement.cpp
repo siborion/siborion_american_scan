@@ -157,11 +157,11 @@ mesurement::mesurement(QWidget *parent) :
 
     QPushButton *pbDel = new QPushButton(tr("Delete"));
 
-    layoutRight->addWidget(pBigView);
-    layoutRight->addWidget(pbOd);
-//    layoutRight->addWidget(twMeas);
     layoutRight->addWidget(pSampleTable);
     layoutRight->addWidget(pbDel);
+
+    layoutRight->addWidget(pBigView);
+    layoutRight->addWidget(pbOd);
 
     layout->addLayout(layoutTop, 0);
     layout->addLayout(layoutBot, 5);
@@ -220,7 +220,15 @@ void mesurement::refreshMainParam()
 
 void mesurement::changeRow(quint8 idType, quint16 idRow, QString Text)
 {
-    pBigViewCur->setDisplay(Text);
+    switch(idType)
+    {
+    case BaseType::enPatient:
+            pBigViewCur->setPatient(Text);
+        break;
+    case BaseType::enDoctor:
+            pBigViewCur->setDoctor(Text);
+        break;
+    }
 }
 
 void mesurement::changeEye()
