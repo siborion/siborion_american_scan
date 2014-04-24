@@ -56,27 +56,27 @@ private:
     QModelIndex tableIndex;
     void refreshTable(quint8 rowNom, stMainParam mainParam);
 
-    QComboBox *VALname;
-    QLineEdit *VALdata;
-    QComboBox *VALdoctor;
-    QSqlTableModel *modelName;
-    QSqlTableModel *modelDoctor;
+//    QComboBox *VALname;
+//    QLineEdit *VALdata;
+//    QComboBox *VALdoctor;
+//    QSqlTableModel *modelName;
+//    QSqlTableModel *modelDoctor;
 
-    QLineEdit *VALaxial;
-    QLineEdit *VALacd;
-    QLineEdit *VALlt;
-    QLineEdit *VALvit;
+//    QLineEdit *VALaxial;
+//    QLineEdit *VALacd;
+//    QLineEdit *VALlt;
+//    QLineEdit *VALvit;
 
-    QLineEdit *VALal;
-    QLineEdit *VALaverage;
-    QLineEdit *VALsd;
+//    QLineEdit *VALal;
+//    QLineEdit *VALaverage;
+//    QLineEdit *VALsd;
 
     scanbase *pBase;
-    basefill *pBaseFill;
+//    basefill *pBaseFill;
 
     QPushButton *pbDel;
 
-    QLabel *average;
+//    QLabel *average;
 
     QString baseMapPatient[4] = {
         "Patient ID",

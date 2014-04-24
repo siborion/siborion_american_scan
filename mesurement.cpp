@@ -8,7 +8,7 @@ mesurement::mesurement(QWidget *parent) :
     QList<int> columnPercent;
     QStringList lst;
 
-    QVBoxLayout *layoutRight = new QVBoxLayout();
+//    QVBoxLayout *layoutRight = new QVBoxLayout();
     QGridLayout *layoutBot = new QGridLayout(this);
 
     pBigView = new bigviewnum();
@@ -18,7 +18,6 @@ mesurement::mesurement(QWidget *parent) :
     pBigViewCur = new bigviewnumcur();
     pBigViewCur->setMinimumHeight(50);
     pBigViewCur->setMaximumHeight(50);
-
 
     QFrame *fmPlot = new QFrame();
     fmPlot->setStyleSheet(QStringLiteral("background-color: rgb(0, 0, 100);"));
@@ -40,33 +39,36 @@ mesurement::mesurement(QWidget *parent) :
 
     pSampleTable = new sampletable();
 
-    QPushButton *pbOd = new QPushButton(tr("Change Eye"));
+    QSpacerItem *vs = new QSpacerItem(20, 40, QSizePolicy::Expanding, QSizePolicy::Expanding);
+
     pKey = new key_radio();
-
-    layoutBot->addWidget(fmPlot, 0, 0);
-    layoutBot->addWidget(pKey,1,0);
-    layoutBot->addLayout(layoutRight, 0, 1, 2, 1);
-
     QPushButton *pbDel = new QPushButton(tr("Delete"));
 
-    layoutRight->addWidget(pSampleTable);
-    layoutRight->addWidget(pbDel);
-    layoutRight->addWidget(pBigView);
-    layoutRight->addWidget(pbOd);
 
-    pBaseFill = new basefill(0, children(), (QString)"history");
+    layoutBot->addWidget(fmPlot, 0, 0, 4, 1);
+    layoutBot->addWidget(pKey,5,0,1,1);
+
+    layoutBot->addWidget(pSampleTable,0,1);
+    layoutBot->addWidget(pbDel,1,1);
+    layoutBot->addItem(vs,2,1);
+    layoutBot->addWidget(pBigView,3,1);
+
+
+//    layoutRight->addWidget(pbOd);
+
+//    pBaseFill = new basefill(0, children(), (QString)"history");
 
     connect(pKey, SIGNAL(keyAuto()), pSampleTable, SLOT(getFileSample()));
     connect(pPlot, SIGNAL(refreshTable(stMainParam)), pSampleTable, SLOT(refreshTable(stMainParam)));
     connect(pSampleTable, SIGNAL(changeRow(QList<quint16>)), SLOT(changeRow(QList<quint16> )));
     connect(pSampleTable, SIGNAL(refreshMainParam()), SLOT(refreshMainParam()));
     connect(pbDel, SIGNAL(clicked()), pSampleTable, SLOT(delSample()));
-    connect(pbOd, SIGNAL(pressed()), SLOT(changeEye()));
+//    connect(pbOd, SIGNAL(pressed()), SLOT(changeEye()));
 }
 
 void mesurement::changeRow(QList<quint16> extremum)
 {
-    double x[1024], y[1024];
+    double x[2024], y[2024];
     quint16 kolvo = 0;
 
     foreach (quint8 val, pSampleTable->baSample)
@@ -90,16 +92,16 @@ void mesurement::changeRow(QList<quint16> extremum)
 
 void mesurement::refreshMainParam()
 {
-    VALaxial->setText(QString("%1").arg(pSampleTable->resultParam.AL));
-    VALacd->setText(QString("%1").arg(pSampleTable->resultParam.ACD));
-    VALlt->setText(QString("%1").arg(pSampleTable->resultParam.LT));
-    VALvit->setText(QString("%1").arg(pSampleTable->resultParam.Vit));
+//    VALaxial->setText(QString("%1").arg(pSampleTable->resultParam.AL));
+//    VALacd->setText(QString("%1").arg(pSampleTable->resultParam.ACD));
+//    VALlt->setText(QString("%1").arg(pSampleTable->resultParam.LT));
+//    VALvit->setText(QString("%1").arg(pSampleTable->resultParam.Vit));
     pBigView->setDisplay(pSampleTable->resultParam.AvgAl, pSampleTable->resultParam.AvgAcd, pSampleTable->resultParam.AvgLt, pSampleTable->resultParam.AvgVit, pSampleTable->resultParam.devAl, pSampleTable->resultParam.devAcd, pSampleTable->resultParam.devLt, pSampleTable->resultParam.devVit);
     pBigViewCur->setDisplay(pSampleTable->resultParam.AL, pSampleTable->resultParam.ACD, pSampleTable->resultParam.LT, pSampleTable->resultParam.Vit);
 
-    average->setText(QString("Average (count %1)").arg(pSampleTable->resultParam.countSample));
-    VALaverage->setText(QString("%1").arg(pSampleTable->resultParam.AvgAl));
-    VALsd->setText(QString("%1").arg(pSampleTable->resultParam.SD));
+//    average->setText(QString("Average (count %1)").arg(pSampleTable->resultParam.countSample));
+//    VALaverage->setText(QString("%1").arg(pSampleTable->resultParam.AvgAl));
+//    VALsd->setText(QString("%1").arg(pSampleTable->resultParam.SD));
 }
 
 void mesurement::changeRow(quint8 idType, quint16 idRow, QString Text)
