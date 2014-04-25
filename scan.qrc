@@ -2,5 +2,8 @@
     <qresource prefix="/test">
         <file>qmlvideo.svg</file>
         <file alias="scan">scan.png</file>
+        <file alias="doctor">pic/doctor.png</file>
+        <file alias="patient">pic/pacient.png</file>
+        <file alias="Del">pic/bin_empty.png</file>
     </qresource>
 </RCC>

@@ -41,7 +41,13 @@ mesurement::mesurement(QWidget *parent) :
     QSpacerItem *vs = new QSpacerItem(20, 40, QSizePolicy::Expanding, QSizePolicy::Expanding);
 
     pKey = new key_radio();
-    QPushButton *pbDel = new QPushButton(tr("Delete"));
+    QPushButton *pbDel = new QPushButton(tr(""));
+    QIcon iconDel;
+    iconDel.addFile(QStringLiteral(":/test/Del"), QSize(), QIcon::Normal, QIcon::Off);
+    pbDel->setIcon(iconDel);
+    pbDel->setIconSize(QSize(30, 30));
+
+
 
     QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
     QPushButton *pbMeasure = new QPushButton();
@@ -60,9 +66,9 @@ mesurement::mesurement(QWidget *parent) :
 //    fmSample->setStyleSheet(QStringLiteral("background-color: rgb(0, 0, 100);"));
     fmSample->setFrameShape(QFrame::WinPanel);
     fmSample->setFrameShadow(QFrame::Raised);
-    QVBoxLayout *glSample  = new QVBoxLayout(fmSample);
-    glSample->addWidget(pSampleTable);
-    glSample->addWidget(pbDel);
+    QGridLayout *glSample  = new QGridLayout(fmSample);
+    glSample->addWidget(pSampleTable,0,0,1,3);
+    glSample->addWidget(pbDel,1,2,1,1);
     fmSample->setFixedHeight(230);
 //    fmSample->setMinimumHeight(240);
 //    fmSample->setMaximumHeight(250);

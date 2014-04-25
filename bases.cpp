@@ -13,13 +13,23 @@ bases::bases(QWidget *parent) :
 
     QGroupBox *gbSelect = new QGroupBox();
     QHBoxLayout *groupBoxLayout  = new QHBoxLayout(gbSelect);
-    QRadioButton *rbPatient = new QRadioButton(tr("Patient"), gbSelect);
+    QRadioButton *rbPatient = new QRadioButton(tr(""), gbSelect);
     rbPatient->setChecked(true);
-    QRadioButton *rbDoctor  = new QRadioButton(tr("Doctor"), gbSelect);
+    QRadioButton *rbDoctor  = new QRadioButton(tr(""), gbSelect);
     QRadioButton *rbLens    = new QRadioButton(tr("Lens Styles"), gbSelect);
     groupBoxLayout->addWidget(rbPatient);
     groupBoxLayout->addWidget(rbDoctor);
     groupBoxLayout->addWidget(rbLens);
+
+    QIcon iconPatient;
+    iconPatient.addFile(QStringLiteral(":/test/patient"), QSize(), QIcon::Normal, QIcon::Off);
+    rbPatient->setIcon(iconPatient);
+    rbPatient->setIconSize(QSize(80, 80));
+
+    QIcon iconDoctor;
+    iconDoctor.addFile(QStringLiteral(":/test/doctor"), QSize(), QIcon::Normal, QIcon::Off);
+    rbDoctor->setIcon(iconDoctor);
+    rbDoctor->setIconSize(QSize(80, 80));
 
     QLabel    *lSearch  = new QLabel(tr("Search"));
     QLineEdit *leSearch = new QLineEdit();
