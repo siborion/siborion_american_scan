@@ -90,6 +90,7 @@ mesurement::mesurement(QWidget *parent) :
     connect(pSampleTable, SIGNAL(refreshMainParam()), SLOT(refreshMainParam()));
     connect(pbDel, SIGNAL(clicked()), pSampleTable, SLOT(delSample()));
 //    connect(pbOd, SIGNAL(pressed()), SLOT(changeEye()));
+    connect(pKey,SIGNAL(changeEye(quint8)),SLOT(changeEye(quint8)));
 }
 
 void mesurement::changeRow(QList<quint16> extremum)
@@ -143,7 +144,7 @@ void mesurement::changeRow(quint8 idType, quint16 idRow, QString Text)
     }
 }
 
-void mesurement::changeEye()
+void mesurement::changeEye(quint8 val)
 {
-    pBigViewCur->changeEye();
+        pBigViewCur->changeEye(val);
 }

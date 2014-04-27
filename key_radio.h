@@ -10,17 +10,23 @@
 class key_radio : public QWidget
 {
     Q_OBJECT
+
+Q_SIGNALS:
+//signals:
+    void changeEye(quint8);
+//    void keyAuto();
+//    void keySave();
+
+
 public:
     explicit key_radio(QWidget *parent = 0);
     
-signals:
-//    void keyAuto();
-//    void keySave();
     
 private slots:
+    void key_radioOd(bool );
+    void key_radioOs(bool );
 //    void key_radioAutoClicked();
-//    void key_radioSaveClicked();
-    
+
 };
 
 #endif // key_radio_H

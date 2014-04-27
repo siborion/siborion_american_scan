@@ -162,7 +162,7 @@
              </font>
             </property>
             <property name="text">
-             <string>Deviation</string>
+             <string>Std. deviation</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>

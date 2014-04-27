@@ -18,7 +18,7 @@ public:
     void setDisplay(double AL, double ACD, double LT, double VIT);
     void setPatient(QString FIO);
     void setDoctor(QString FIO);
-    void changeEye();
+    void changeEye(quint8);
 private:
     Ui::bigviewnumcur *ui;
 };

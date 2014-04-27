@@ -27,7 +27,7 @@ Panel::Panel( QWidget *parent ):
     addTab( page, "Data Base" );
 //    addTab( createMesTab( this ), "Measurement" );
     addTab( Mesur, "Measurement" );
-    addTab( createHisTab( this ), "History" );
+//    addTab( createHisTab( this ), "History" );
     addTab( createCalculatorTab( this ), "Calculator" );
     addTab( createOnlineTab( this ), "Print" );
     connect(page,SIGNAL(changeRow(quint8,quint16,QString)),Mesur,SLOT(changeRow(quint8,quint16,QString)));
@@ -58,6 +58,7 @@ mesurement *Panel::createMesTab( QWidget *parent )
 history *Panel::createHisTab( QWidget *parent )
 {
     history *History = new history(parent);
+//    History->setVisible(false);
     return History;
 }
 

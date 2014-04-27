@@ -37,8 +37,11 @@ void bigviewnumcur::setDoctor(QString FIO)
 }
 
 
-void bigviewnumcur::changeEye()
+void bigviewnumcur::changeEye(quint8 val)
 {
-    ui->lYeas->setText(ui->lYeas->text()=="OD"?"OS":"OD");
+    if(val==0)
+        ui->lYeas->setText("OD");
+    else
+        ui->lYeas->setText("OS");
 }
 

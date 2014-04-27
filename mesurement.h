@@ -107,7 +107,7 @@ public slots:
 private slots:
     void changeRow(QList<quint16> extremum);
     void refreshMainParam();
-    void changeEye();
+    void changeEye(quint8);
 //    void getFileSample();
 //    void changeRow(QModelIndex curIndex);
 //    void refreshTable(stMainParam);
