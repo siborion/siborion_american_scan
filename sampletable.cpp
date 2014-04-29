@@ -18,7 +18,7 @@ sampletable::sampletable(QWidget *parent) :
     twMeas->setMaximumWidth(350);
     twMeas->setMinimumWidth(280);
     layout->addWidget(twMeas);
-    twMeas->model()->removeRows(0,10);
+//    twMeas->model()->removeRows(0,10);
 
     delegate = new delegate_sample();
 //    twMeas->setItemDelegate(delegate);

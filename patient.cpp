@@ -54,12 +54,12 @@ patient::patient(quint32 id, QWidget *parent) :
     QLineEdit  *lePhone      = new QLineEdit(); lePhone->setObjectName("VALphone");
     QTextEdit  *teNotes      = new QTextEdit(); teNotes->setObjectName("VALnotes");
     QComboBox  *cbDoctor     = new QComboBox(); cbDoctor->setObjectName("VALdoctor");
-    QLineEdit  *leK1Left     = new QLineEdit(); leK1Left-> setObjectName("VALk1left");
-    QLineEdit  *leK1Right    = new QLineEdit(); leK1Right->setObjectName("VALk1right");
-    QLineEdit  *leK2Left     = new QLineEdit(); leK2Left-> setObjectName("VALk2left");
-    QLineEdit  *leK2Right    = new QLineEdit(); leK2Right->setObjectName("VALk2right");
-    QLineEdit  *leKLeft     = new QLineEdit();  leKLeft->setObjectName("VALkleft");
-    QLineEdit  *leKRight    = new QLineEdit();  leKRight->setObjectName("VALkright");
+    leK1Left     = new QLineEdit(); leK1Left-> setObjectName("VALk1left");
+    leK1Right    = new QLineEdit(); leK1Right->setObjectName("VALk1right");
+    leK2Left     = new QLineEdit(); leK2Left-> setObjectName("VALk2left");
+    leK2Right    = new QLineEdit(); leK2Right->setObjectName("VALk2right");
+    leKLeft     = new QLineEdit();  leKLeft->setObjectName("VALkleft");
+    leKRight    = new QLineEdit();  leKRight->setObjectName("VALkright");
     QSpacerItem *buttonSpacerBot = new QSpacerItem(20, 40, QSizePolicy::Expanding, QSizePolicy::Expanding);
 
     layout->addWidget(lRef,      0, 0);
@@ -94,28 +94,40 @@ patient::patient(quint32 id, QWidget *parent) :
 
     layout->addWidget(lLeft,    14, 1, 1, 1);
     layout->addWidget(lRight,   14, 2, 1, 1);
+
     layout->addWidget(lK1,      15, 0, 1, 1);
     layout->addWidget(leK1Left, 15, 1, 1, 1);
-    layout->addWidget(leK1Right,15, 2, 1, 1);
+
     layout->addWidget(lK2,      16, 0, 1, 1);
     layout->addWidget(leK2Left, 16, 1, 1, 1);
-    layout->addWidget(leK2Right,16, 2, 1, 1);
-    layout->addWidget(lK,       17, 0, 1, 1);
+
     layout->addWidget(leKLeft,  17, 1, 1, 1);
+    layout->addWidget(lK,       17, 0, 1, 1);
+
+    layout->addWidget(leK1Right,15, 2, 1, 1);
+    layout->addWidget(leK2Right,16, 2, 1, 1);
     layout->addWidget(leKRight, 17, 2, 1, 1);
+
     layout->addItem(buttonSpacerBot, 18, 0, 20, 20);
+
+    leKLeft->setEnabled(false);
+    leKRight->setEnabled(false);
+
 
     buttonLayout->addWidget(pbCancel);
     buttonLayout->addWidget(pbOk);
     layout->addLayout(buttonLayout, 18, 0, 1, 5);
-//    basefill pBaseFill = new basefill(id, children(), (QString)"patient");
     pBaseFill = new basefill(id, children(), (QString)"patient");
+
     connect(pbOk, SIGNAL(clicked()), SLOT(saveData()));
     connect(pbCancel, SIGNAL(clicked()), SLOT(reject()));
+    connect(leK1Left, SIGNAL(textChanged(QString)), SLOT(kLeftAverage()));
+    connect(leK2Left, SIGNAL(textChanged(QString)), SLOT(kLeftAverage()));
+    connect(leK1Right, SIGNAL(textChanged(QString)), SLOT(kRightAverage()));
+    connect(leK2Right, SIGNAL(textChanged(QString)), SLOT(kRightAverage()));
 
     cbDoctor->setModel(model);
     cbDoctor->setModelColumn(model->fieldIndex("name"));
-//    findRecord(model, 0);
 
     pBaseFill->fillData();
 }
@@ -125,3 +137,20 @@ void patient::saveData()
     pBaseFill->saveData();
     accept();
 }
+
+void patient::kLeftAverage()
+{
+    double dTmp;
+    dTmp  = leK1Left->text().toDouble()+leK2Left->text().toDouble();
+    dTmp /= 2;
+    leKLeft->setText(QString("%1").arg(dTmp));
+}
+
+void patient::kRightAverage()
+{
+    double dTmp;
+    dTmp  = leK1Right->text().toDouble()+leK2Right->text().toDouble();
+    dTmp /= 2;
+    leKRight->setText(QString("%1").arg(dTmp));
+}
+

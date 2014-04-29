@@ -27,16 +27,23 @@ private:
     scanbase *pBase;
     basefill *pBaseFill;
     QSqlTableModel *model;
-//    int findRecord(QSqlTableModel *tableModel, quint32 guid);
-//    void fillData();
     quint32 patientId;
     void test (const QObjectList &t);
+
+    QLineEdit  *leK1Left;
+    QLineEdit  *leK1Right;
+    QLineEdit  *leK2Left;
+    QLineEdit  *leK2Right;
+    QLineEdit  *leKLeft;
+    QLineEdit  *leKRight;
 
 signals:
 public slots:
 
 private slots:
     void saveData();
+    void kLeftAverage();
+    void kRightAverage();
 };
 
 #endif // PATIENT_H
