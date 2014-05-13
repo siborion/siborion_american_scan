@@ -19,7 +19,7 @@ dialog_doctor::dialog_doctor(quint32 id, QWidget *parent) :
     pBaseFill->fillData();
 
     model = new QStandardItemModel();
-    QSqlQuery sql(QString("SELECT name, mfg, aconst, acd, doc.id_doctor, doc.nom_formula, lens.id "
+    QSqlQuery sql(QString("SELECT name, mfg, aconst, acd, doc.nom_formula, doc.id_doctor,  lens.id "
     "from lens "
     "LEFT JOIN doctor_lens doc "
     "ON (lens.id = doc.id_lens) AND doc.id_doctor=%1;")
@@ -32,7 +32,7 @@ dialog_doctor::dialog_doctor(quint32 id, QWidget *parent) :
     quint16 id_lens;
     while(sql.next())
     {
-        for(int i=0; i<=3; i++)
+        for(int i=0; i<=4; i++)
         {
             model->setItem(numRow,i,new QStandardItem());
             model->item(numRow,i)->setData(sql.value(i).toString(),Qt::DisplayRole);
@@ -46,14 +46,21 @@ dialog_doctor::dialog_doctor(quint32 id, QWidget *parent) :
         numRow++;
     }
 
+    CCombo_Delegate * pCombo_Delegate = new CCombo_Delegate( ui->tableView );
+    pCombo_Delegate->values().insert( 0, "SRK II" );
+    pCombo_Delegate->values().insert( 1, "HOFFER Q" );
+    pCombo_Delegate->values().insert( 2, "SRK T" );
+    pCombo_Delegate->values().insert( 3, "HOLLADAY" );
+    ui->tableView->setItemDelegateForColumn(4, pCombo_Delegate);
+
     ui->tableView->setModel(model);
     ui->tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
-    delegate = new CheckBoxDelegate();
-    ui->tableView->setItemDelegate(delegate);
+//    delegate = new CheckBoxDelegate();
+//    ui->tableView->setItemDelegate(delegate);
     lst.clear();
-    columnPercent << 25  <<           25 <<              25 <<       25;
-    lst<<tr("Lens Name")<<tr("Lens Mfg")<<tr("Mfg A-Const")<<tr("Mfr ACD");
-    tableWidth = 300;
+    columnPercent << 25  <<     15 <<            15 <<           15       <<     30;
+    lst<<tr("Lens Name")<<tr("Lens Mfg")<<tr("Mfg A-Const")<<tr("Mfr ACD")<<tr("Primary formula");
+    tableWidth = 390;
     for(int i=0; i<lst.count(); i++)
     {
         model->setHeaderData(i, Qt::Horizontal, lst.at(i), Qt::DisplayRole);
@@ -88,15 +95,18 @@ void dialog_doctor::saveData()
 
     for(quint16 i=0; i<model->rowCount(); i++)
     {
+        qDebug()<<"88888888888888888888";
         if(model->data(model->index(i,0),Qt::UserRole).toInt())
         {
-            formula = model->data(model->index(i,0),Qt::UserRole+1).toInt();
+            formula = model->data(model->index(i,4)).toInt();
+            qDebug()<<model->data(model->index(i,4));
             id_lens = model->data(model->index(i,0),Qt::UserRole+2).toInt();
             str = QString("INSERT INTO doctor_lens (id_lens, id_doctor, nom_formula) "
                           "VALUES (%1, %2, %3) ;")
                   .arg(id_lens).arg(curId).arg(formula);
             QSqlQuery sql;
             sql.exec(str);
+            qDebug()<<str;
         }
     }
     accept();

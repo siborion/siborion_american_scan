@@ -7,6 +7,7 @@
 #include "delegate_check.h"
 #include <QStandardItemModel>
 #include <QSqlRelationalTableModel>
+#include "combo_delegate.h"
 
 namespace Ui {
 class dialog_doctor;

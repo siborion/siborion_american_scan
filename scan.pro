@@ -59,7 +59,8 @@ SOURCES += main.cpp\
     sampletable.cpp \
     delegate_check.cpp \
     delegate_sample.cpp \
-    bigviewnumcur.cpp
+    bigviewnumcur.cpp \
+    combo_delegate.cpp
 
 
 HEADERS  += mainwindow.h\
@@ -88,7 +89,8 @@ HEADERS  += mainwindow.h\
     sampletable.h \
     delegate_check.h \
     delegate_sample.h \
-    bigviewnumcur.h
+    bigviewnumcur.h \
+    combo_delegate.h
 
 #FORMS    += mainwindow.ui
 
