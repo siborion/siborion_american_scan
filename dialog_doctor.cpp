@@ -53,7 +53,7 @@ dialog_doctor::dialog_doctor(quint32 id, QWidget *parent) :
     pCombo_Delegate->values().insert( 3, "HOLLADAY" );
     ui->tableView->setItemDelegateForColumn(5, pCombo_Delegate);
 
-    SpinBoxDelegate * pCheck_Delegate = new SpinBoxDelegate( ui->tableView );
+    CheckBoxDelegate * pCheck_Delegate = new CheckBoxDelegate( ui->tableView );
     ui->tableView->setItemDelegateForColumn(0, pCheck_Delegate);
 
     ui->tableView->setModel(model);
