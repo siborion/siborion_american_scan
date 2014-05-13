@@ -131,17 +131,10 @@ void mesurement::refreshMainParam()
 //    VALsd->setText(QString("%1").arg(pSampleTable->resultParam.SD));
 }
 
-void mesurement::changeRow(quint8 idType, quint16 idRow, QString Text)
+void mesurement::changeRow(quint8 idType, quint16 idRow, QString Patient, QString Doctor)
 {
-    switch(idType)
-    {
-    case BaseType::enPatient:
-            pBigViewCur->setPatient(Text);
-        break;
-    case BaseType::enDoctor:
-            pBigViewCur->setDoctor(Text);
-        break;
-    }
+            pBigViewCur->setPatient(Patient);
+            pBigViewCur->setDoctor(Doctor);
 }
 
 void mesurement::changeEye(quint8 val)

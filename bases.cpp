@@ -280,21 +280,18 @@ void bases::fillModelHead(QStringList sl)
 void bases::changeRow(QModelIndex cur, QModelIndex prev)
 {
     QString sFio;
+    QString sDoc;
     switch(TypeBase)
     {
     case BaseType::enPatient:
         sFio = "Patient: "+model->data(model->index(cur.row(),2)).toString();
         sFio += " ";
         sFio += model->data(model->index(cur.row(),3)).toString();
-        break;
-    case BaseType::enDoctor:
-        sFio = "Doctor: "+model->data(model->index(cur.row(),1)).toString();
-        sFio += " ";
-        sFio += model->data(model->index(cur.row(),2)).toString();
+        sDoc = "Doctor: "+model->data(model->index(cur.row(),4)).toString();
         break;
     default:
         return;
         break;
     }
-        emit changeRow(TypeBase, cur.row(), sFio);
+    emit changeRow(TypeBase, cur.row(), sFio, sDoc);
 }

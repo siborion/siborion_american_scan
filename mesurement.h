@@ -102,7 +102,7 @@ private:
 signals:
 
 public slots:
-    void changeRow(quint8 idType, quint16 idRow, QString Text);
+    void changeRow(quint8 idType, quint16 idRow, QString Patient, QString Doctor);
 
 private slots:
     void changeRow(QList<quint16> extremum);

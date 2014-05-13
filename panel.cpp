@@ -30,7 +30,7 @@ Panel::Panel( QWidget *parent ):
 //    addTab( createHisTab( this ), "History" );
     addTab( createCalculatorTab( this ), "Calculator" );
     addTab( createOnlineTab( this ), "Print" );
-    connect(page,SIGNAL(changeRow(quint8,quint16,QString)),Mesur,SLOT(changeRow(quint8,quint16,QString)));
+    connect(page,SIGNAL(changeRow(quint8,quint16,QString,QString)),Mesur,SLOT(changeRow(quint8,quint16,QString,QString)));
 
 }
 
