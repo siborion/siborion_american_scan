@@ -4,10 +4,10 @@
 #include <QDialog>
 #include "scanbase.h"
 #include "basefill.h"
-#include "delegate_check.h"
 #include <QStandardItemModel>
 #include <QSqlRelationalTableModel>
 #include "combo_delegate.h"
+#include "delegate.h"
 
 namespace Ui {
 class dialog_doctor;
@@ -26,7 +26,7 @@ private:
     scanbase *pBase;
     basefill *pBaseFill;
     QStandardItemModel  *model;
-    CheckBoxDelegate *delegate;
+//    CheckBoxDelegate *delegate;
     quint32 curId;
 
 private slots:

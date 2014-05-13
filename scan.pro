@@ -57,10 +57,10 @@ SOURCES += main.cpp\
     history.cpp \
     bigviewnumhor.cpp \
     sampletable.cpp \
-    delegate_check.cpp \
     delegate_sample.cpp \
     bigviewnumcur.cpp \
-    combo_delegate.cpp
+    combo_delegate.cpp \
+    delegate.cpp
 
 
 HEADERS  += mainwindow.h\
@@ -87,10 +87,10 @@ HEADERS  += mainwindow.h\
     history.h \
     bigviewnumhor.h \
     sampletable.h \
-    delegate_check.h \
     delegate_sample.h \
     bigviewnumcur.h \
-    combo_delegate.h
+    combo_delegate.h \
+    delegate.h
 
 #FORMS    += mainwindow.ui
 
