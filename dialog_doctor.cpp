@@ -19,17 +19,22 @@ dialog_doctor::dialog_doctor(quint32 id, QWidget *parent) :
     pBaseFill->fillData();
 
     model = new QStandardItemModel();
-    QSqlQuery sql(QString("SELECT doc.id_doctor, name, mfg, aconst, acd, doc.nom_formula, lens.id "
-    "from lens "
-    "LEFT JOIN doctor_lens doc "
-    "ON (lens.id = doc.id_lens) AND doc.id_doctor=%1;")
-    .arg(id));
+
+    QString str = QString("SELECT doc.id_doctor, name, mfg, aconst, acd, doc.nom_formula, lens.id "
+                          "from lens "
+                          "LEFT JOIN doctor_lens doc "
+                          "ON (lens.id = doc.id_lens) AND doc.id_doctor=%1;")
+                          .arg(id);
+
+    QSqlQuery sql(str);
     sql.exec();
+
+    qDebug()<<str;
 
     quint16 numRow=0;
 //    qint8 formula;
 //    quint8 include;
-//    quint16 id_lens;
+    quint16 id_lens;
     while(sql.next())
     {
         for(int i=0; i<=5; i++)
@@ -39,18 +44,19 @@ dialog_doctor::dialog_doctor(quint32 id, QWidget *parent) :
         }
 //        include = sql.value(5).toUInt();
 //        formula = sql.value(5).isNull()?(-1):sql.value(5).toUInt();
-//        id_lens = sql.value(6).toUInt();
+        id_lens = sql.value(6).toUInt();
 //        model->item(numRow,0)->setData(include, Qt::UserRole);
 //        model->item(numRow,0)->setData(formula, Qt::UserRole+1);
-//        model->item(numRow,0)->setData(id_lens, Qt::UserRole+2);
+        model->item(numRow,0)->setData(id_lens, Qt::UserRole+2);
         numRow++;
     }
 
     CCombo_Delegate * pCombo_Delegate = new CCombo_Delegate( ui->tableView );
-    pCombo_Delegate->values().insert( 0, "SRK II" );
-    pCombo_Delegate->values().insert( 1, "HOFFER Q" );
-    pCombo_Delegate->values().insert( 2, "SRK T" );
-    pCombo_Delegate->values().insert( 3, "HOLLADAY" );
+    pCombo_Delegate->values().insert( 0, "" );
+    pCombo_Delegate->values().insert( 1, "SRK II" );
+    pCombo_Delegate->values().insert( 2, "HOFFER Q" );
+    pCombo_Delegate->values().insert( 3, "SRK T" );
+    pCombo_Delegate->values().insert( 4, "HOLLADAY" );
     ui->tableView->setItemDelegateForColumn(5, pCombo_Delegate);
 
     CheckBoxDelegate * pCheck_Delegate = new CheckBoxDelegate( ui->tableView );

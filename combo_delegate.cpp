@@ -2,6 +2,7 @@
 
 #include <QPainter>
 #include <QComboBox>
+#include <QDebug>
 
 CCombo_Delegate::CCombo_Delegate( QObject *parent ) : QItemDelegate(parent)
 {
@@ -55,11 +56,18 @@ void CCombo_Delegate::updateEditorGeometry( QWidget *editor,
 void CCombo_Delegate::paint( QPainter * painter, const QStyleOptionViewItem &option,
                           const QModelIndex &index ) const
 {
+    QString s;
+
     QStyleOptionViewItem opt = option;
-    int value = index.data().toInt();
 
 
-    QString s = m_values[ value ];
+        int value = index.data().toInt();
+        s = m_values[ value ];
+
+//    qDebug()<<index.data();
+//    qDebug()<<value;
+//    qDebug()<<s;
+
     QVariant color = index.data( Qt::TextColorRole );
 
     if ( color.isValid() && qvariant_cast<QColor>(color).isValid() )
