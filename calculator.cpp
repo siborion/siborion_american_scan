@@ -1,12 +1,10 @@
 #include "calculator.h"
+#include <QDebug>
 
 calculator::calculator(QWidget *parent) :
     QWidget(parent)
 {
-//    QPalette Pal(palette());
-//    Pal.setColor(QPalette::Background, Qt::gray);
-//    setAutoFillBackground(true);
-//    setPalette(Pal);
+    pBase = scanbase::instanse();
 
     QList<int> columnPercent;
     QStringList lst;
@@ -26,6 +24,7 @@ calculator::calculator(QWidget *parent) :
     for(quint8 i=0; i<3; i++)
     {
         model->setItem(i, 0, new QStandardItem(baseMapName[i]));
+        model->setItem(i, 1, new QStandardItem());
         model->item   (i, 0)->setBackground(Qt::lightGray);
         model->item   (i, 0)->setEditable(false);
     }
@@ -34,6 +33,16 @@ calculator::calculator(QWidget *parent) :
     columnPercent<<20<<16<<22<<16<<15<<11;
     lst<<"Lens Name"<<"Lens Mfg"<<"Mfg A-Const"<<"pAConst"<<"MfgACD"<<"pACD";
     twLens = new adjview(8, lst, columnPercent);
+    modelMainLens = new QSqlQueryModel ();
+    twLens->setModel(modelMainLens);
+    QString str = "SELECT  name, mfg, aconst, acd from lens;";
+    modelMainLens->setQuery(str);
+    modelMainLens->setHeaderData(0, Qt::Horizontal, "Lens Name", Qt::DisplayRole);
+    modelMainLens->setHeaderData(1, Qt::Horizontal, "Mfg", Qt::DisplayRole);
+    modelMainLens->setHeaderData(2, Qt::Horizontal, "A-Const", Qt::DisplayRole);
+    modelMainLens->setHeaderData(3, Qt::Horizontal, "ACD", Qt::DisplayRole);
+
+
     //-------------------------------
     columnPercent.clear();
     columnPercent<<40<<40<<20;
@@ -68,7 +77,6 @@ calculator::calculator(QWidget *parent) :
     model->item   (0, 0)->setEditable(false);
 
     pbOD = new QPushButton("OD");
-//    pbOD->setMinimumHeight(40);
     pbPersCalc = new QPushButton("Personalized Calculation");
 
     layoutTopLeftDown->addWidget(twK,  0, 0, 2, 1, Qt::AlignTop);
@@ -96,52 +104,50 @@ calculator::calculator(QWidget *parent) :
      frLayout->addWidget(Formula2);
      frLayout->addWidget(Formula3);
 
-//     columnPercent.clear();
-//     columnPercent<<100;
-//     lst.clear();
-//     lst<<"U.D.";
-//     twHead1 = new adjview(1, lst, columnPercent);
-//     twHead2 = new adjview(1, lst, columnPercent);
-//     twHead3 = new adjview(1, lst, columnPercent);
-
-//     columnPercent.clear();
-//     columnPercent<<50<<50;
-//     lst.clear();
-//     lst<<"IOL"<<"REF";
-//     twCalculator1 = new adjview(10, lst, columnPercent);
-//     twCalculator2 = new adjview(10, lst, columnPercent);
-//     twCalculator3 = new adjview(10, lst, columnPercent);
-
-//     lst.clear();
-//     lst<<"SRKII"<<"SRK/T"<<"Hoffer Q"<<"Holladay";
-//     cbFormula1 = new QComboBox();
-//     cbFormula1->addItems(lst);
-//     cbFormula2 = new QComboBox();
-//     cbFormula2->addItems(lst);
-//     cbFormula3 = new QComboBox();
-//     cbFormula3->addItems(lst);
-
-//     columnPercent.clear();
-//     columnPercent<<100;
-//     twVs1 = new adjview(lst, 1, columnPercent);
-//     twVs2 = new adjview(lst, 1, columnPercent);
-//     twVs3 = new adjview(lst, 1, columnPercent);
-
-//     frLayout->setVerticalSpacing(0);
-//     frLayout->addWidget(cbFormula1, 0, 0);
-//     frLayout->addWidget(cbFormula2, 0, 1);
-//     frLayout->addWidget(cbFormula3, 0, 2);
-//     frLayout->addWidget(twHead1, 1, 0);
-//     frLayout->addWidget(twHead2, 1, 1);
-//     frLayout->addWidget(twHead3, 1, 2);
-//     frLayout->addWidget(twCalculator1, 2, 0);
-//     frLayout->addWidget(twCalculator2, 2, 1);
-//     frLayout->addWidget(twCalculator3, 2, 2);
-//     frLayout->addWidget(twVs1, 3, 0);
-//     frLayout->addWidget(twVs2, 3, 1);
-//     frLayout->addWidget(twVs3, 3, 2);
 
      layout->addWidget(frCalculator);
      layout->addItem(vs2);
+
+     connect(pbOD, SIGNAL(clicked()), SLOT(changeEye()));
 }
 
+void calculator::refreshPatientParam(quint16 id)
+{
+    QStandardItemModel *model;
+    model = (QStandardItemModel*)twK->model();
+
+    QString str = QString("SELECT k1left, k2left, kleft, k1right, k2right, kright FROM patient WHERE id=%1;")
+            .arg(id);
+    QSqlQuery sql(str);
+    if(sql.exec())
+    {
+        sql.next();
+        if(pbOD->text()=="OD")
+        {
+            model->setData(model->index(1,1), sql.value(0).toString(), Qt::DisplayRole);
+            model->setData(model->index(2,1), sql.value(1).toString(), Qt::DisplayRole);
+            model->setData(model->index(3,1), sql.value(2).toString(), Qt::DisplayRole);
+        }
+        else
+        {
+            model->setData(model->index(1,1), sql.value(3).toString(), Qt::DisplayRole);
+            model->setData(model->index(2,1), sql.value(4).toString(), Qt::DisplayRole);
+            model->setData(model->index(3,1), sql.value(5).toString(), Qt::DisplayRole);
+        }
+    }
+}
+
+void calculator::changeRow(quint8 numBase, quint16 id, QString Patient, QString Doctor)
+{
+    QStandardItemModel *model;
+    model = (QStandardItemModel*)twName->model();
+    model->setData(model->index(0,1), QString("%1").arg(id), Qt::DisplayRole);
+    model->setData(model->index(1,1), Patient, Qt::DisplayRole);
+    model->setData(model->index(2,1), Doctor, Qt::DisplayRole);
+    refreshPatientParam(id);
+}
+
+void calculator::changeEye()
+{
+    pbOD->setText(pbOD->text()=="OD"?"OS":"OD");
+}

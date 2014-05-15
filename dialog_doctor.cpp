@@ -52,7 +52,7 @@ dialog_doctor::dialog_doctor(quint32 id, QWidget *parent) :
     }
 
     CCombo_Delegate * pCombo_Delegate = new CCombo_Delegate( ui->tableView );
-    pCombo_Delegate->values().insert( 0, "" );
+    pCombo_Delegate->values().insert( 0, " " );
     pCombo_Delegate->values().insert( 1, "SRK II" );
     pCombo_Delegate->values().insert( 2, "HOFFER Q" );
     pCombo_Delegate->values().insert( 3, "SRK T" );

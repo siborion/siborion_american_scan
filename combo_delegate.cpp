@@ -21,6 +21,8 @@ QWidget * CCombo_Delegate::createEditor( QWidget * parent,
         ++i;
      }
 
+    pEditor->model()->sort(0);
+
     pEditor -> installEventFilter( const_cast<CCombo_Delegate*>( this ) );
     return pEditor;
 }

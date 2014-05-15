@@ -12,6 +12,8 @@
 #include <formula.h>
 #include <QComboBox>
 #include <QPushButton>
+#include <QSqlQueryModel>
+#include "scanbase.h"
 
 class calculator : public QWidget
 {
@@ -22,6 +24,9 @@ public:
 signals:
 
 private:
+    QSqlQueryModel  *modelMainLens;
+    void refreshPatientParam(quint16 id);
+    scanbase *pBase;
     adjview *twName;
     QStandardItemModel *modelName;
     adjview *twLens;
@@ -74,7 +79,9 @@ private:
 
 
 public slots:
-    
+    void changeRow(quint8 id ,quint16 id1 ,QString sTmp1, QString sTmp2);
+    void changeEye();
+
 };
 
 #endif // CALCULATOR_H

@@ -32,6 +32,7 @@ private:
     calculator *createCalculatorTab( QWidget * );
     bases *page;
     mesurement *Mesur;
+    calculator *Calculator;
 };
 
 #endif
