@@ -78,11 +78,11 @@ dialog_doctor::dialog_doctor(quint32 id, QWidget *parent) :
 
     connect(ui->buttonBox, SIGNAL(accepted()), SLOT(saveData()));
     connect(ui->tableView, SIGNAL(clicked(QModelIndex)),SLOT(changeModel(QModelIndex)));
-    connect(ui->cbInclude, SIGNAL(clicked(bool)), SLOT(include(bool)));
-    connect(ui->radioButton,  SIGNAL(clicked()) , SLOT(selectFormula()));
-    connect(ui->radioButton_2,  SIGNAL(clicked()) , SLOT(selectFormula()));
-    connect(ui->radioButton_3,  SIGNAL(clicked()) , SLOT(selectFormula()));
-    connect(ui->radioButton_4,  SIGNAL(clicked()) , SLOT(selectFormula()));
+//    connect(ui->cbInclude, SIGNAL(clicked(bool)), SLOT(include(bool)));
+//    connect(ui->radioButton,  SIGNAL(clicked()) , SLOT(selectFormula()));
+//    connect(ui->radioButton_2,  SIGNAL(clicked()) , SLOT(selectFormula()));
+//    connect(ui->radioButton_3,  SIGNAL(clicked()) , SLOT(selectFormula()));
+//    connect(ui->radioButton_4,  SIGNAL(clicked()) , SLOT(selectFormula()));
 }
 
 dialog_doctor::~dialog_doctor()
@@ -119,7 +119,7 @@ void dialog_doctor::saveData()
     }
     accept();
 }
-
+/*
 void dialog_doctor::include(bool val)
 {
     quint16  curRow;
@@ -127,7 +127,8 @@ void dialog_doctor::include(bool val)
     model->setData(model->index(curRow,0), val?1:0, Qt::UserRole);
     changeModel(model->index(curRow,0));
 }
-
+*/
+/*
 void dialog_doctor::changeModel(QModelIndex index)
 {
     ui->cbInclude->setChecked(model->data(model->index(index.row(),0),Qt::UserRole).toBool());
@@ -163,13 +164,13 @@ void dialog_doctor::changeModel(QModelIndex index)
     else
         ui->groupBox->setEnabled(false);
 }
-
+*/
+/*
 void dialog_doctor::selectFormula()
 {
     quint16  curRow;
     qint8 formula=-1;
     curRow = ui->tableView->currentIndex().row();
-
     QRadioButton *editor = qobject_cast<QRadioButton *>(sender());
     if(editor == ui->radioButton)
         formula = 0;
@@ -179,6 +180,6 @@ void dialog_doctor::selectFormula()
         formula = 2;
     else if(editor == ui->radioButton_4)
         formula = 3;
-
     model->setData(model->index(curRow,0), formula, Qt::UserRole+1);
 }
+*/

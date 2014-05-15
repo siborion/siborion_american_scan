@@ -17,7 +17,7 @@ patient::patient(quint32 id, QWidget *parent) :
     layout->setSpacing(0);
 
     QPushButton *pbCancel = new QPushButton(tr("Cancel"));
-    QPushButton *pbOk = new QPushButton(tr("Ok"));
+    QPushButton *pbOk = new QPushButton(tr("Save"));
 
     QLabel  *lRef        = new QLabel(tr("Ref. No"));
     QLabel  *lId         = new QLabel(tr("Patient ID"));
@@ -43,8 +43,9 @@ patient::patient(quint32 id, QWidget *parent) :
     QLineEdit  *leId         = new QLineEdit(); leId->setObjectName("id");
     QLineEdit  *leFirstName  = new QLineEdit(); leFirstName->setObjectName("VALname");
     QLineEdit  *leLastName   = new QLineEdit(); leLastName->setObjectName("VALlast");
-    QLineEdit  *leBirth      = new QLineEdit(); leBirth->setObjectName("VALbirth");
-    QLineEdit  *leAge        = new QLineEdit(); leAge->setObjectName("VALage");
+    QDateEdit  *leBirth      = new QDateEdit(); leBirth->setObjectName("VALbirth");
+    leBirth->setDisplayFormat("MM.dd.yyyy");
+    leAge        = new QLineEdit(); leAge->setObjectName("VALage");
     QRadioButton *rbMale     = new QRadioButton(tr("Male"));   rbMale->setObjectName("VALsex0");
     QRadioButton *rbFemale   = new QRadioButton(tr("Female")); rbFemale->setObjectName("VALsex1");
     QLineEdit  *leAddress    = new QLineEdit(); leAddress->setObjectName(" VALadress");
@@ -112,6 +113,7 @@ patient::patient(quint32 id, QWidget *parent) :
 
     leKLeft->setEnabled(false);
     leKRight->setEnabled(false);
+    leAge->setEnabled(false);
 
 
     buttonLayout->addWidget(pbCancel);
@@ -121,10 +123,12 @@ patient::patient(quint32 id, QWidget *parent) :
 
     connect(pbOk, SIGNAL(clicked()), SLOT(saveData()));
     connect(pbCancel, SIGNAL(clicked()), SLOT(reject()));
-    connect(leK1Left, SIGNAL(textChanged(QString)), SLOT(kLeftAverage()));
-    connect(leK2Left, SIGNAL(textChanged(QString)), SLOT(kLeftAverage()));
+    connect(leK1Left, SIGNAL(textChanged(QString)),  SLOT(kLeftAverage()));
+    connect(leK2Left, SIGNAL(textChanged(QString)),  SLOT(kLeftAverage()));
     connect(leK1Right, SIGNAL(textChanged(QString)), SLOT(kRightAverage()));
     connect(leK2Right, SIGNAL(textChanged(QString)), SLOT(kRightAverage()));
+    connect(leK2Right, SIGNAL(textChanged(QString)), SLOT(kRightAverage()));
+    connect(leBirth, SIGNAL(dateChanged(QDate)),   SLOT(calculateAge(QDate)));
 
     cbDoctor->setModel(model);
     cbDoctor->setModelColumn(model->fieldIndex("name"));
@@ -154,3 +158,10 @@ void patient::kRightAverage()
     leKRight->setText(QString("%1").arg(dTmp));
 }
 
+void patient::calculateAge(QDate val)
+{
+    quint8 age;
+    age = (QDate::currentDate().year() - val.year());
+    leAge->setText(QString("%1").arg(age));
+//    qDebug()<<age;
+}

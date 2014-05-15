@@ -6,6 +6,7 @@
 #include <QRadioButton>
 #include <QTextEdit>
 #include <QComboBox>
+#include <QDateEdit>
 #include <QSqlTableModel>
 #include "scanbase.h"
 

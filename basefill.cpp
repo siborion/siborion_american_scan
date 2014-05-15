@@ -34,6 +34,22 @@ void basefill::fillData()
             if(sObName.left(3) == "VAL")
             {
                 sObName = sObName.right(sObName.count()-3);
+
+                QDateEdit *d = dynamic_cast<QDateEdit *>(olParent->at(i));
+                if(d)
+                {
+                    QString sTmp;
+                    qint8 recNum = rec.indexOf(sObName);
+                    if(recNum>=0)
+                    {
+                        sTmp = (query.value(recNum).toString());
+                        qDebug()<<"**********************"<<sTmp;
+//                        sTmp = "11.11.2011";
+                        QDate dTmp = QDate::fromString(sTmp, "MM.dd.yyyy");
+                        d->setDate(dTmp);
+                    }
+                }
+
                 QLineEdit *c = dynamic_cast<QLineEdit *>(olParent->at(i));
                 if(c)
                 {
@@ -107,6 +123,10 @@ void basefill::saveData()
             sObName = sObName.right(sObName.count()-3);
             strUpdateValue = "";
 
+            QDateEdit *d = dynamic_cast<QDateEdit *>(olParent->at(i));
+            if(d)
+                strUpdateValue = d->text();
+
             QLineEdit *c = dynamic_cast<QLineEdit *>(olParent->at(i));
             if(c)
                 strUpdateValue = c->text();
@@ -143,6 +163,8 @@ void basefill::saveData()
     strInsertValue.append(") ");
     strInsertColumn.append(strInsertValue);
     strUpdate.append(QString(" where id=%1;").arg(uiId));
+
+    qDebug()<<"==========="<<strUpdate;
 
     if(uiId>0)
     {

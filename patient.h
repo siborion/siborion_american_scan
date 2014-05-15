@@ -36,6 +36,7 @@ private:
     QLineEdit  *leK2Right;
     QLineEdit  *leKLeft;
     QLineEdit  *leKRight;
+    QLineEdit  *leAge;
 
 signals:
 public slots:
@@ -44,6 +45,7 @@ private slots:
     void saveData();
     void kLeftAverage();
     void kRightAverage();
+    void calculateAge(QDate date);
 };
 
 #endif // PATIENT_H

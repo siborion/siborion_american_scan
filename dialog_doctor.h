@@ -31,9 +31,9 @@ private:
 
 private slots:
     void saveData();
-    void include(bool);
-    void changeModel(QModelIndex);
-    void selectFormula();
+//    void include(bool);
+//    void changeModel(QModelIndex);
+//    void selectFormula();
 };
 
 #endif // DIALOG_DOCTOR_H
