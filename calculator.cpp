@@ -4,10 +4,12 @@
 calculator::calculator(QWidget *parent) :
     QWidget(parent)
 {
-    pBase = scanbase::instanse();
-
     QList<int> columnPercent;
     QStringList lst;
+
+
+    pBase = scanbase::instanse();
+
     QStandardItemModel *model;
 
     QVBoxLayout *layout              = new QVBoxLayout(this);
@@ -145,9 +147,30 @@ void calculator::changeRow(quint8 numBase, quint16 id, QString Patient, QString 
     model->setData(model->index(1,1), Patient, Qt::DisplayRole);
     model->setData(model->index(2,1), Doctor, Qt::DisplayRole);
     refreshPatientParam(id);
+    refreshTable(id);
 }
 
 void calculator::changeEye()
 {
     pbOD->setText(pbOD->text()=="OD"?"OS":"OD");
+}
+
+void calculator::refreshTable(quint16 id)
+{
+    QList<int> columnPercent;
+    QStringList lst;
+
+    columnPercent.clear();
+    columnPercent<<20<<16<<22<<16<<15<<11;
+    lst<<"Lens Name"<<"Lens Mfg"<<"Mfg A-Const"<<"pAConst"<<"MfgACD"<<"pACD";
+//    twLens = new adjview(8, lst, columnPercent);
+    modelMainLens = new QSqlQueryModel ();
+    twLens->setModel(modelMainLens);
+    QString str = QString("SELECT lens.* FROM patient, doctor_lens, lens ON patient.doctor=doctor_lens.id_doctor AND lens.id=doctor_lens.id_lens WHERE patient.id=%1;").arg(id);
+    modelMainLens->setQuery(str);
+    modelMainLens->setHeaderData(0, Qt::Horizontal, "Lens Name", Qt::DisplayRole);
+    modelMainLens->setHeaderData(1, Qt::Horizontal, "Mfg", Qt::DisplayRole);
+    modelMainLens->setHeaderData(2, Qt::Horizontal, "A-Const", Qt::DisplayRole);
+    modelMainLens->setHeaderData(3, Qt::Horizontal, "ACD", Qt::DisplayRole);
+    qDebug()<<"0000000000000";
 }

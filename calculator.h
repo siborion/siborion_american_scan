@@ -24,6 +24,7 @@ public:
 signals:
 
 private:
+    void refreshTable(quint16 id);
     QSqlQueryModel  *modelMainLens;
     void refreshPatientParam(quint16 id);
     scanbase *pBase;
