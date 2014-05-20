@@ -289,7 +289,7 @@ void bases::changeRow(QModelIndex cur, QModelIndex prev)
         sFio = model->data(model->index(cur.row(),2)).toString();
         sFio += " ";
         sFio += model->data(model->index(cur.row(),3)).toString();
-        sDoc = model->data(model->index(cur.row(),4)).toString();
+//        sDoc = model->data(model->index(cur.row(),4)).toString();
         break;
     default:
         return;

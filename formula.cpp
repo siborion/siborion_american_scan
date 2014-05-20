@@ -58,11 +58,11 @@ formula::formula(QWidget *parent) :
     cbFormula = new QComboBox();
     cbFormula->setStyleSheet(QLatin1String("text-align: right;"));
     cbFormula->addItems(lst);
-    cbFormula->setItemData(-1, Qt::AlignCenter, Qt::TextAlignmentRole);
     cbFormula->setItemData(0, Qt::AlignCenter, Qt::TextAlignmentRole);
     cbFormula->setItemData(1, Qt::AlignCenter, Qt::TextAlignmentRole);
     cbFormula->setItemData(2, Qt::AlignCenter, Qt::TextAlignmentRole);
     cbFormula->setItemData(3, Qt::AlignCenter, Qt::TextAlignmentRole);
+    cbFormula->setItemData(4, Qt::AlignCenter, Qt::TextAlignmentRole);
 
     layout->addWidget(cbFormula, 0, 0, 1, 2);
     layout->addWidget(twHead,    1, 0, 1, 2);
@@ -98,7 +98,7 @@ void formula::refreshFormula(void)
 QStringList formula::getListFormula()
 {
     QStringList slTmp;
-    slTmp<<"SRKII"<<"SRK/T"<<"Hoffer Q"<<"Holladay";
+    slTmp<<""<<"SRKII"<<"SRK/T"<<"Hoffer Q"<<"Holladay";
     return slTmp;
 }
 
