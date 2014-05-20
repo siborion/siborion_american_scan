@@ -109,4 +109,30 @@ QStandardItem* formula::getItem(QString val, Qt::AlignmentFlag align)
     return siTmp;
 }
 
+void formula::setValue(quint8 formula, QString name, QString aconst, QString acd, QString fs)
+{
+    QStringList lensName;
+    lensName<<name;
 
+    cbFormula->setCurrentIndex(formula);
+    QStandardItemModel *model = (QStandardItemModel*)twHead->model();
+    model->setHorizontalHeaderLabels(lensName);
+
+    switch (formula)
+    {
+    case 0:
+    case 1:
+            model->setData(twHead->model()->index(0,0),aconst,Qt::DisplayRole);
+        break;
+    case 2:
+        model->setData(twHead->model()->index(0,0),acd,Qt::DisplayRole);
+        break;
+    case 3:
+        model->setData(twHead->model()->index(0,0),fs,Qt::DisplayRole);
+        break;
+    }
+
+//    model->setData(twHead->model()->index(0,0),"999",Qt::DisplayRole);
+
+//    model->setData(model->index(0,0,"uuu"));
+}

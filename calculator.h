@@ -82,6 +82,7 @@ private:
 public slots:
     void changeRow(quint8 id ,quint16 id1 ,QString sTmp1, QString sTmp2);
     void changeEye();
+    void refreshAl(double);
 
 };
 

@@ -20,6 +20,9 @@ private:
     QStandardItem *getItem(QString, Qt::AlignmentFlag);
 
 public:
+    void setValue(quint8 formula, QString name, QString aconst, QString acd, QString fs);
+
+public:
     explicit formula(QWidget *parent = 0);
     
 signals:

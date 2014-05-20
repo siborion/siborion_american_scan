@@ -14,7 +14,7 @@ sampletable::sampletable(QWidget *parent) :
     columnPercent<<10      <<30            <<15      <<15       <<15      <<15;
     lst          <<tr("No")<<tr("AveVelAl")<<tr("AL")<<tr("ACD")<<tr("LT")<<tr("VIT");
     twMeas  = new adjview(10, lst, columnPercent);
-//    twMeas->setSelectionBehavior(QAbstractItemView::SelectRows);
+    twMeas->setSelectionBehavior(QAbstractItemView::SelectRows);
     twMeas->setMaximumWidth(350);
     twMeas->setMinimumWidth(280);
     layout->addWidget(twMeas);
@@ -414,6 +414,12 @@ void sampletable::refreshResult(quint8 rowNom)
 
 void sampletable::delSample()
 {
-    twMeas->model()->removeRow(twMeas->currentIndex().row());
-    refreshResult(twMeas->currentIndex().row());
+    quint8 curRow;
+    curRow = twMeas->currentIndex().row();
+
+    twMeas->model()->removeRow(curRow);
+    twMeas->selectRow(curRow);
+
+    changeRow(twMeas->currentIndex());
+
 }

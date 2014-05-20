@@ -162,15 +162,63 @@ void calculator::refreshTable(quint16 id)
 
     columnPercent.clear();
     columnPercent<<20<<16<<22<<16<<15<<11;
-    lst<<"Lens Name"<<"Lens Mfg"<<"Mfg A-Const"<<"pAConst"<<"MfgACD"<<"pACD";
+//    lst<<"Lens Name"<<"Lens Mfg"<<"Mfg A-Const"<<"pAConst"<<"MfgACD"<<"pACD";
 //    twLens = new adjview(8, lst, columnPercent);
     modelMainLens = new QSqlQueryModel ();
     twLens->setModel(modelMainLens);
-    QString str = QString("SELECT lens.* FROM patient, doctor_lens, lens ON patient.doctor=doctor_lens.id_doctor AND lens.id=doctor_lens.id_lens WHERE patient.id=%1;").arg(id);
+    QString str = QString("SELECT lens.name,lens.aconst,lens.acd,lens.sf,doctor_lens.nom_formula FROM patient, doctor_lens, lens ON patient.doctor=doctor_lens.id_doctor AND lens.id=doctor_lens.id_lens WHERE patient.id=%1;").arg(id);
     modelMainLens->setQuery(str);
-    modelMainLens->setHeaderData(0, Qt::Horizontal, "Lens Name", Qt::DisplayRole);
-    modelMainLens->setHeaderData(1, Qt::Horizontal, "Mfg", Qt::DisplayRole);
-    modelMainLens->setHeaderData(2, Qt::Horizontal, "A-Const", Qt::DisplayRole);
-    modelMainLens->setHeaderData(3, Qt::Horizontal, "ACD", Qt::DisplayRole);
+//    modelMainLens->setHeaderData(0, Qt::Horizontal, "Lens Name", Qt::DisplayRole);
+//    modelMainLens->setHeaderData(1, Qt::Horizontal, "Mfg", Qt::DisplayRole);
+//    modelMainLens->setHeaderData(2, Qt::Horizontal, "A-Const", Qt::DisplayRole);
+//    modelMainLens->setHeaderData(3, Qt::Horizontal, "ACD", Qt::DisplayRole);
     qDebug()<<"0000000000000";
+
+    Formula1->setEnabled(false);
+    Formula2->setEnabled(false);
+    Formula3->setEnabled(false);
+
+    for(quint8 i=0; i<modelMainLens->rowCount() && i<3; i++)
+    {
+        quint8 nFormula;
+        QString lensName, lensAconst, lensAcd, lensFs;
+        nFormula   = twLens->model()->itemData(twLens->model()->index(i,4)).value(0).toInt();
+        lensName   = twLens->model()->itemData(twLens->model()->index(i,0)).value(0).toString();
+        lensAconst = twLens->model()->itemData(twLens->model()->index(i,1)).value(0).toString();
+        lensAcd = twLens->model()->itemData(twLens->model()->index(i,2)).value(0).toString();
+        lensFs = twLens->model()->itemData(twLens->model()->index(i,3)).value(0).toString();
+
+        qDebug()<<lensName;
+
+        switch (i)
+        {
+        case 0:
+            Formula1->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs);
+            Formula1->setEnabled(true);
+            break;
+        case 1:
+            Formula2->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs);
+            Formula2->setEnabled(true);
+            break;
+        case 2:
+            Formula3->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs);
+            Formula3->setEnabled(true);
+        default:
+            break;
+        }
+//        nFormula = modelMainLens->itemData(modelMainLens->index(i,6))
+//        modelMainLens->itemData()
+//        Formula1->setValue(
+    }
+//    modelMainLens->itemData()
 }
+
+void calculator::refreshAl(double AL)
+{
+    QStandardItemModel *model;
+    model = (QStandardItemModel*)twK->model();
+    model->setData(model->index(0,1), AL, Qt::DisplayRole);
+
+    qDebug()<<AL;
+}
+
