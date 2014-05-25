@@ -14,6 +14,7 @@
 #include <QPushButton>
 #include <QSqlQueryModel>
 #include "scanbase.h"
+#include "calc.h"
 
 class calculator : public QWidget
 {
@@ -24,6 +25,7 @@ public:
 signals:
 
 private:
+    _formulae stFormula;
     void refreshTable(quint16 id);
     QSqlQueryModel  *modelMainLens;
     void refreshPatientParam(quint16 id);

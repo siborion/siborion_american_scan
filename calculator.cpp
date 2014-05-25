@@ -1,4 +1,5 @@
 #include "calculator.h"
+#include "calc.h"
 #include <QDebug>
 
 calculator::calculator(QWidget *parent) :
@@ -152,7 +153,17 @@ void calculator::changeRow(quint8 numBase, quint16 id, QString Patient, QString 
 
 void calculator::changeEye()
 {
+//    double K;
     pbOD->setText(pbOD->text()=="OD"?"OS":"OD");
+
+//    QStandardItemModel *model;
+//    model = (QStandardItemModel*)twK->model();
+//    model->setData(model->index(3,1), sql.value(2).toString(), Qt::DisplayRole);
+
+
+    Calculator(0, 12, 1, 2, 0, &stFormula);
+//    Calculator(0, 12, 1, 2, 0, &stFormula);
+    Formula1->saveParam(&stFormula);
 }
 
 void calculator::refreshTable(quint16 id)
@@ -180,6 +191,7 @@ void calculator::refreshTable(quint16 id)
 
     for(quint8 i=0; i<modelMainLens->rowCount() && i<3; i++)
     {
+        double K, AL;
         quint8 nFormula;
         QString lensName, lensAconst, lensAcd, lensFs;
         nFormula   = twLens->model()->itemData(twLens->model()->index(i,4)).value(0).toInt();
@@ -187,22 +199,29 @@ void calculator::refreshTable(quint16 id)
         lensAconst = twLens->model()->itemData(twLens->model()->index(i,1)).value(0).toString();
         lensAcd = twLens->model()->itemData(twLens->model()->index(i,2)).value(0).toString();
         lensFs = twLens->model()->itemData(twLens->model()->index(i,3)).value(0).toString();
+        K  = twK->model()->itemData(twK->model()->index(3,1)).value(0).toDouble();
+        AL = twK->model()->itemData(twK->model()->index(0,1)).value(0).toDouble();
+
+
+
+//        K=1;
+//        AL = 20;
 
         qDebug()<<lensName;
 
         switch (i)
         {
         case 0:
-            Formula1->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs);
+            Formula1->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, K, AL);
             Formula1->setEnabled(true);
             break;
         case 1:
-            Formula2->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs);
+            Formula2->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, K, AL);
             Formula2->setEnabled(true);
             break;
         case 2:
-            Formula3->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs);
-            Formula3->setEnabled(true);
+           Formula3->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, K, AL);
+           Formula3->setEnabled(true);
         default:
             break;
         }

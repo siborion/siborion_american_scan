@@ -60,7 +60,8 @@ SOURCES += main.cpp\
     delegate_sample.cpp \
     bigviewnumcur.cpp \
     combo_delegate.cpp \
-    delegate.cpp
+    delegate.cpp \
+    calc.cpp
 
 
 HEADERS  += mainwindow.h\
@@ -90,7 +91,8 @@ HEADERS  += mainwindow.h\
     delegate_sample.h \
     bigviewnumcur.h \
     combo_delegate.h \
-    delegate.h
+    delegate.h \
+    calc.h
 
 #FORMS    += mainwindow.ui
 

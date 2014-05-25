@@ -1,4 +1,5 @@
 #include "formula.h"
+#include <QDebug>
 
 formula::formula(QWidget *parent) :
     QWidget(parent)
@@ -69,7 +70,6 @@ formula::formula(QWidget *parent) :
 
     layout->addWidget(twFormula,    2, 0, 2, 1);
     layout->addWidget(twCalculator, 2, 1, 1, 1, Qt::AlignTop);
-
     layout->addWidget(twEmm, 3, 1, 1, 1, Qt::AlignTop);
 
     connect(cbFormula, SIGNAL(currentIndexChanged(int)), this, SLOT(refreshFormula()));
@@ -109,30 +109,70 @@ QStandardItem* formula::getItem(QString val, Qt::AlignmentFlag align)
     return siTmp;
 }
 
-void formula::setValue(quint8 formula, QString name, QString aconst, QString acd, QString fs)
+void formula::setValue(quint8 formula, QString name, QString aconst, QString acd, QString fs, double dK, double dAL)
 {
     QStringList lensName;
+    _formulae stFormula;
     lensName<<name;
 
     cbFormula->setCurrentIndex(formula);
     QStandardItemModel *model = (QStandardItemModel*)twHead->model();
     model->setHorizontalHeaderLabels(lensName);
 
+    qDebug() << "000000000000000000000";
+    AConst = aconst.toDouble();
+    qDebug() << "AConst" << AConst ;
+    ACD = acd.toDouble();
+    qDebug() << "ACD" << ACD ;
+    SF = fs.toDouble();
+    qDebug() << "SF" << SF ;
+    K = dK;
+    qDebug() << "K" << K ;
+    AL = dAL;
+    qDebug() << "AL" << AL ;
+    qDebug() << "111111111111111111111";
+
     switch (formula)
     {
     case 0:
     case 1:
-            model->setData(twHead->model()->index(0,0),aconst,Qt::DisplayRole);
+        model->setData(twHead->model()->index(0,0),aconst,Qt::DisplayRole);
+        Calculator(formula, AL, AConst, K, 0, &stFormula);
         break;
     case 2:
         model->setData(twHead->model()->index(0,0),acd,Qt::DisplayRole);
+        Calculator(formula, AL, ACD, K, 0, &stFormula);
         break;
     case 3:
         model->setData(twHead->model()->index(0,0),fs,Qt::DisplayRole);
+        Calculator(formula, AL, SF, K, 0, &stFormula);
         break;
     }
 
-//    model->setData(twHead->model()->index(0,0),"999",Qt::DisplayRole);
+    model = (QStandardItemModel*)twCalculator->model();
+    qDebug()<<"888";
+    for(quint8 i=0; i<5; i++)
+    {
+        QStandardItem *sTmp1 = new QStandardItem(QString("%1").arg(stFormula.IOLPower[i]));
+        model->setItem(i, 0, sTmp1);
+        QStandardItem *sTmp2 = new QStandardItem(QString("%1").arg(stFormula.PORx[i]));
+        model->setItem(i, 1, sTmp2);
+    }
 
-//    model->setData(model->index(0,0,"uuu"));
+
+}
+
+
+void formula::saveParam(_formulae *val)
+{
+    QStandardItemModel *model = new QStandardItemModel();
+    model = (QStandardItemModel*)twCalculator->model();
+    qDebug()<<"888";
+    for(quint8 i=0; i<5; i++)
+    {
+        QStandardItem *sTmp1 = new QStandardItem(QString("%1").arg(val->IOLPower[i]));
+        model->setItem(i, 0, sTmp1);
+        QStandardItem *sTmp2 = new QStandardItem(QString("%1").arg(val->PORx[i]));
+        model->setItem(i, 1, sTmp2);
+    }
 }
