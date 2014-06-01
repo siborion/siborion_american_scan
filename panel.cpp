@@ -70,5 +70,3 @@ calculator *Panel::createCalculatorTab( QWidget *parent )
     calculator *Calculator = new calculator(parent);
     return Calculator;
 }
-
-

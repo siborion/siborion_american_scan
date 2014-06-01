@@ -85,7 +85,7 @@ void formula::refreshFormula(void)
     model = (QStandardItemModel*)twFormula->model();
     curIndex = cbFormula->currentIndex();
     model->setItem(0, 0, getItem(slTmp.at(curIndex), Qt::AlignCenter));
-    for(quint8 i=0; i<4; i++)
+    for(quint8 i=1; i<5; i++)
     {
         if(curIndex != i)
         {
@@ -158,8 +158,9 @@ void formula::setValue(quint8 formula, QString name, QString aconst, QString acd
         QStandardItem *sTmp2 = new QStandardItem(QString("%1").arg(stFormula.PORx[i]));
         model->setItem(i, 1, sTmp2);
     }
-
-
+    model = (QStandardItemModel*)twEmm->model();
+    QStandardItem *sTmp3 = new QStandardItem(QString("%1").arg(stFormula.PEMM));
+    model->setItem(0, 0, sTmp3);
 }
 
 

@@ -9,11 +9,8 @@ int main ( int argc, char **argv )
     paths.append("platforms");
 //    paths.append("sqldrivers");
     QCoreApplication::setLibraryPaths(paths);
-
     QApplication a( argc, argv );
-
     a.addLibraryPath(a.applicationDirPath()+"/plugins");
-
     MainWindow w;
     w.resize( 900, 400 );
     w.show();

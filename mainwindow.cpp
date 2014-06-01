@@ -38,9 +38,4 @@ MainWindow::MainWindow( QWidget *parent ):
 
 //    scanbase *sdb = new scanbase();
     pBase = scanbase::instanse();
-
-
-
 }
-
-
