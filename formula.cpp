@@ -135,15 +135,20 @@ void formula::setValue(quint8 formula, QString name, QString aconst, QString acd
     switch (formula)
     {
     case 0:
-    case 1:
+        break;
+    case SRKII:
         model->setData(twHead->model()->index(0,0),aconst,Qt::DisplayRole);
         Calculator(formula, AL, AConst, K, 0, &stFormula);
         break;
-    case 2:
-        model->setData(twHead->model()->index(0,0),acd,Qt::DisplayRole);
+    case SRKT:
+        model->setData(twHead->model()->index(0,0),aconst,Qt::DisplayRole);
         Calculator(formula, AL, ACD, K, 0, &stFormula);
         break;
-    case 3:
+    case HOFFERQ:
+        model->setData(twHead->model()->index(0,0),acd,Qt::DisplayRole);
+        Calculator(formula, AL, SF, K, 0, &stFormula);
+        break;
+    case HOLLADAY:
         model->setData(twHead->model()->index(0,0),fs,Qt::DisplayRole);
         Calculator(formula, AL, SF, K, 0, &stFormula);
         break;
