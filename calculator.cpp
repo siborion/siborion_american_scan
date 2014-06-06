@@ -112,6 +112,7 @@ calculator::calculator(QWidget *parent) :
      layout->addItem(vs2);
 
      connect(pbOD, SIGNAL(clicked()), SLOT(changeEye()));
+     connect(twK->model(), SIGNAL(dataChanged(QModelIndex,QModelIndex)),  SLOT(setAL(QModelIndex,QModelIndex)));
 }
 
 void calculator::refreshPatientParam(quint16 id)
@@ -147,8 +148,9 @@ void calculator::changeRow(quint8 numBase, quint16 id, QString Patient, QString 
     model->setData(model->index(0,1), QString("%1").arg(id), Qt::DisplayRole);
     model->setData(model->index(1,1), Patient, Qt::DisplayRole);
     model->setData(model->index(2,1), Doctor, Qt::DisplayRole);
-    refreshPatientParam(id);
-    refreshTable(id);
+    patientCurId = id;
+    refreshPatientParam(patientCurId);
+    refreshTable(patientCurId);
 }
 
 void calculator::changeEye()
@@ -239,5 +241,15 @@ void calculator::refreshAl(double AL)
     model->setData(model->index(0,1), AL, Qt::DisplayRole);
 
     qDebug()<<AL;
+}
+
+void calculator::setAL(QModelIndex val1, QModelIndex val2)
+{
+    if((val1.column()==1)&&(val1.row()==0))
+    {
+//        AL = val1.data().toDouble();
+        refreshTable(patientCurId);
+    }
+
 }
 

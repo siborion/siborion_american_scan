@@ -25,6 +25,7 @@ private:
     QComboBox *cbFormula;
     QStringList getListFormula();
     QStandardItem *getItem(QString, Qt::AlignmentFlag);
+    QStandardItem *getItem(double, Qt::AlignmentFlag);
 
 public:
     void setValue(quint8 formula, QString name, QString aconst, QString acd, QString fs, double K, double AL);
@@ -33,10 +34,12 @@ public:
     explicit formula(QWidget *parent = 0);
     void saveParam(_formulae *val);
     
-signals:
+public slots:
+    void setAL(QModelIndex,QModelIndex);
     
 private slots:
     void refreshFormula(void);
+    void changeFotmula();
 };
 
 #endif // FORMULA_H

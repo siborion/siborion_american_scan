@@ -25,6 +25,7 @@ public:
 signals:
 
 private:
+    quint16 patientCurId;
     _formulae stFormula;
     void refreshTable(quint16 id);
     QSqlQueryModel  *modelMainLens;
@@ -80,6 +81,8 @@ private:
         "Rx"
         };
 
+private slots:
+    void setAL(QModelIndex,QModelIndex);
 
 public slots:
     void changeRow(quint8 id ,quint16 id1 ,QString sTmp1, QString sTmp2);

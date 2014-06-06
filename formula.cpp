@@ -78,11 +78,16 @@ formula::formula(QWidget *parent) :
 
 void formula::refreshFormula(void)
 {
+    _formulae stFormula;
     quint8 curIndex, j=0;
     QStringList slTmp;
     slTmp = getListFormula();
     QStandardItemModel *model = new QStandardItemModel();
     model = (QStandardItemModel*)twFormula->model();
+
+    QStandardItemModel *model1 = new QStandardItemModel();
+    model1 = (QStandardItemModel*)twEmm->model();
+
     curIndex = cbFormula->currentIndex();
     model->setItem(0, 0, getItem(slTmp.at(curIndex), Qt::AlignCenter));
     for(quint8 i=1; i<5; i++)
@@ -90,6 +95,12 @@ void formula::refreshFormula(void)
         if(curIndex != i)
         {
             j++;
+
+            Calculator(i, AL, SF, K, 0, &stFormula);
+//            qDebug() << "stFormula.PEMM" << stFormula.PEMM;
+//            QStandardItem siTmp = new QStandardItem(stFormula.PEMM);
+//            ttt = new QStandardItem(stFormula.PEMM);
+            model1->setItem(j, 0, getItem(stFormula.PEMM, Qt::AlignCenter));
             model->setItem(10+j, 0, getItem(slTmp.at(i), Qt::AlignCenter));
         }
     }
@@ -107,6 +118,20 @@ QStandardItem* formula::getItem(QString val, Qt::AlignmentFlag align)
     QStandardItem *siTmp = new QStandardItem(val);
     siTmp->setTextAlignment(align);
     return siTmp;
+}
+
+QStandardItem* formula::getItem(double val, Qt::AlignmentFlag align)
+{
+    qDebug() << val;
+    QStandardItem *siTmp = new QStandardItem(QString("%1").arg(val));
+    siTmp->setTextAlignment(align);
+    return siTmp;
+}
+
+
+void formula::setAL(QModelIndex prev, QModelIndex post)
+{
+    //AL = dAL;
 }
 
 void formula::setValue(quint8 formula, QString name, QString aconst, QString acd, QString fs, double dK, double dAL)
@@ -166,6 +191,7 @@ void formula::setValue(quint8 formula, QString name, QString aconst, QString acd
     model = (QStandardItemModel*)twEmm->model();
     QStandardItem *sTmp3 = new QStandardItem(QString("%1").arg(stFormula.PEMM));
     model->setItem(0, 0, sTmp3);
+    refreshFormula();
 }
 
 
@@ -181,4 +207,9 @@ void formula::saveParam(_formulae *val)
         QStandardItem *sTmp2 = new QStandardItem(QString("%1").arg(val->PORx[i]));
         model->setItem(i, 1, sTmp2);
     }
+}
+
+void formula::changeFotmula()
+{
+
 }
