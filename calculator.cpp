@@ -185,7 +185,6 @@ void calculator::refreshTable(quint16 id)
 //    modelMainLens->setHeaderData(1, Qt::Horizontal, "Mfg", Qt::DisplayRole);
 //    modelMainLens->setHeaderData(2, Qt::Horizontal, "A-Const", Qt::DisplayRole);
 //    modelMainLens->setHeaderData(3, Qt::Horizontal, "ACD", Qt::DisplayRole);
-    qDebug()<<"0000000000000";
 
     Formula1->setEnabled(false);
     Formula2->setEnabled(false);
@@ -209,7 +208,6 @@ void calculator::refreshTable(quint16 id)
 //        K=1;
 //        AL = 20;
 
-        qDebug()<<lensName;
 
         switch (i)
         {
@@ -240,7 +238,6 @@ void calculator::refreshAl(double AL)
     model = (QStandardItemModel*)twK->model();
     model->setData(model->index(0,1), AL, Qt::DisplayRole);
 
-    qDebug()<<AL;
 }
 
 void calculator::setAL(QModelIndex val1, QModelIndex val2)

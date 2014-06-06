@@ -72,14 +72,14 @@ formula::formula(QWidget *parent) :
     layout->addWidget(twCalculator, 2, 1, 1, 1, Qt::AlignTop);
     layout->addWidget(twEmm, 3, 1, 1, 1, Qt::AlignTop);
 
-    connect(cbFormula, SIGNAL(currentIndexChanged(int)), this, SLOT(refreshFormula()));
-    refreshFormula();
+    connect(cbFormula, SIGNAL(currentIndexChanged(int)), this, SLOT(changeFotmula(int)));
+//    refreshFormula();
 }
 
-void formula::refreshFormula(void)
+void formula::refreshFormula(int curIndex)
 {
     _formulae stFormula;
-    quint8 curIndex, j=0;
+    quint8 j=0;
     QStringList slTmp;
     slTmp = getListFormula();
     QStandardItemModel *model = new QStandardItemModel();
@@ -88,7 +88,6 @@ void formula::refreshFormula(void)
     QStandardItemModel *model1 = new QStandardItemModel();
     model1 = (QStandardItemModel*)twEmm->model();
 
-    curIndex = cbFormula->currentIndex();
     model->setItem(0, 0, getItem(slTmp.at(curIndex), Qt::AlignCenter));
     for(quint8 i=1; i<5; i++)
     {
@@ -96,14 +95,19 @@ void formula::refreshFormula(void)
         {
             j++;
 
-            Calculator(i, AL, SF, K, 0, &stFormula);
-//            qDebug() << "stFormula.PEMM" << stFormula.PEMM;
-//            QStandardItem siTmp = new QStandardItem(stFormula.PEMM);
-//            ttt = new QStandardItem(stFormula.PEMM);
+            switch (i)
+            {
+            case SRKII:   Calculator(i, AL, AConst, K, 0, &stFormula); break;
+            case SRKT:    Calculator(i, AL, ACD, K, 0, &stFormula);    break;
+            case HOFFERQ: Calculator(i, AL, SF, K, 0, &stFormula);     break;
+            case HOLLADAY:Calculator(i, AL, SF, K, 0, &stFormula);     break;
+            }
+
             model1->setItem(j, 0, getItem(stFormula.PEMM, Qt::AlignCenter));
             model->setItem(10+j, 0, getItem(slTmp.at(i), Qt::AlignCenter));
         }
     }
+//    calculateIOL(curIndex);
 }
 
 QStringList formula::getListFormula()
@@ -122,7 +126,6 @@ QStandardItem* formula::getItem(QString val, Qt::AlignmentFlag align)
 
 QStandardItem* formula::getItem(double val, Qt::AlignmentFlag align)
 {
-    qDebug() << val;
     QStandardItem *siTmp = new QStandardItem(QString("%1").arg(val));
     siTmp->setTextAlignment(align);
     return siTmp;
@@ -137,14 +140,12 @@ void formula::setAL(QModelIndex prev, QModelIndex post)
 void formula::setValue(quint8 formula, QString name, QString aconst, QString acd, QString fs, double dK, double dAL)
 {
     QStringList lensName;
-    _formulae stFormula;
     lensName<<name;
 
     cbFormula->setCurrentIndex(formula);
     QStandardItemModel *model = (QStandardItemModel*)twHead->model();
     model->setHorizontalHeaderLabels(lensName);
 
-    qDebug() << "000000000000000000000";
     AConst = aconst.toDouble();
     qDebug() << "AConst" << AConst ;
     ACD = acd.toDouble();
@@ -155,32 +156,38 @@ void formula::setValue(quint8 formula, QString name, QString aconst, QString acd
     qDebug() << "K" << K ;
     AL = dAL;
     qDebug() << "AL" << AL ;
-    qDebug() << "111111111111111111111";
+    calculateIOL(formula);
+    refreshFormula(formula);
 
+
+}
+
+void formula::calculateIOL(quint8 formula)
+{
+    _formulae stFormula;
+    QStandardItemModel *model = (QStandardItemModel*)twHead->model();
+    qDebug()<<formula;
     switch (formula)
     {
     case 0:
         break;
     case SRKII:
-        model->setData(twHead->model()->index(0,0),aconst,Qt::DisplayRole);
         Calculator(formula, AL, AConst, K, 0, &stFormula);
         break;
     case SRKT:
-        model->setData(twHead->model()->index(0,0),aconst,Qt::DisplayRole);
         Calculator(formula, AL, ACD, K, 0, &stFormula);
         break;
     case HOFFERQ:
-        model->setData(twHead->model()->index(0,0),acd,Qt::DisplayRole);
         Calculator(formula, AL, SF, K, 0, &stFormula);
         break;
     case HOLLADAY:
-        model->setData(twHead->model()->index(0,0),fs,Qt::DisplayRole);
         Calculator(formula, AL, SF, K, 0, &stFormula);
         break;
     }
 
     model = (QStandardItemModel*)twCalculator->model();
-    qDebug()<<"888";
+    model->clear();
+ //   qDebug()<<"888";
     for(quint8 i=0; i<5; i++)
     {
         QStandardItem *sTmp1 = new QStandardItem(QString("%1").arg(stFormula.IOLPower[i]));
@@ -191,7 +198,7 @@ void formula::setValue(quint8 formula, QString name, QString aconst, QString acd
     model = (QStandardItemModel*)twEmm->model();
     QStandardItem *sTmp3 = new QStandardItem(QString("%1").arg(stFormula.PEMM));
     model->setItem(0, 0, sTmp3);
-    refreshFormula();
+
 }
 
 
@@ -199,7 +206,7 @@ void formula::saveParam(_formulae *val)
 {
     QStandardItemModel *model = new QStandardItemModel();
     model = (QStandardItemModel*)twCalculator->model();
-    qDebug()<<"888";
+//    qDebug()<<"888";
     for(quint8 i=0; i<5; i++)
     {
         QStandardItem *sTmp1 = new QStandardItem(QString("%1").arg(val->IOLPower[i]));
@@ -209,7 +216,9 @@ void formula::saveParam(_formulae *val)
     }
 }
 
-void formula::changeFotmula()
+void formula::changeFotmula(int formula)
 {
+    calculateIOL(formula);
+    refreshFormula(formula);
 
 }

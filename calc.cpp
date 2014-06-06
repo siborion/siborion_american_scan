@@ -1,5 +1,6 @@
 #include "calc.h"
 #include <math.h>
+#include <QDebug>
 
 calc::calc()
 {
@@ -213,7 +214,6 @@ void SRKIICalc(double AL, double AConst, double K,double Rx,iol_formula* SRKIIVa
   double Diff_In_Emmetropia, Diff_Add;
   double REFR;
   int Loop;
-  //print("\r\nSRK II");
   if (AL < 20.0)
    AConst = AConst + 3;
   else if ((AL >= 20.0) & (AL < 21.0))
@@ -227,6 +227,11 @@ void SRKIICalc(double AL, double AConst, double K,double Rx,iol_formula* SRKIIVa
 
   Emmetropia = AConst - (0.9 * K) - (2.5 * AL);
   SRKIIValues->PEMM = Emmetropia;
+
+  qDebug() << "AConst" << AConst;
+  qDebug() << "K" << K;
+  qDebug() << "AL" << AL;
+  qDebug() << "SRKIIValues->PEMM" << SRKIIValues->PEMM;
 
   Emmetropia_Rounded = floor(Emmetropia);
 
@@ -370,35 +375,25 @@ int Calculator(int FormulaType, double AL, double AConst, double K,double Rx,iol
 //   printf("\r\nSRKII");
 //   SRKIICalc(AL,AConst,K);
 
-   if (FormulaType == SRKII){
-     SRKIICalc(AL,AConst,K, Rx,formula_values);
-   }
-   else if (FormulaType == SRKT){
-     SRKTCalc(AL,AConst,K, Rx,formula_values);
-   }
-   else if (FormulaType == HOFFERQ){
-     HofferCalc(AL,AConst,K, Rx,formula_values);
-   }
-   else if (FormulaType == HOLLADAY){
-     HolladayCalc(AL,AConst,K, Rx,formula_values);
-   }
-   else if (FormulaType == BINHORST){
-     BinkhorstCalc(AL,AConst,K, Rx,formula_values);
-   }
-   else{
+   qDebug()<<"FormulaType"<<FormulaType;
+   qDebug()<<"double AConst"<<AConst;
 
-    return -1;
+   switch (FormulaType)
+   {
+   case SRKII:
+            SRKIICalc(AL,AConst,K, Rx,formula_values);
+       break;
+   case SRKT:
+            SRKTCalc(AL,AConst,K, Rx,formula_values);
+       break;
+   case HOFFERQ:
+            HofferCalc(AL,AConst,K, Rx,formula_values);
+       break;
+   case HOLLADAY:
+            HolladayCalc(AL,AConst,K, Rx,formula_values);
+       break;
    }
 
-
-
-
-//   printf("\r\nSRK T");
-//   SRKTCalc(AL,AConst,K);
-//   printf("\r\nHolladay");
-//     for(i=0;i<2;i=i+0.25){
-//   HolladayCalc(AL+i,AConst,K);
-//     }
   return 0;
 }
 

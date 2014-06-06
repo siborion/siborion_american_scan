@@ -26,6 +26,7 @@ private:
     QStringList getListFormula();
     QStandardItem *getItem(QString, Qt::AlignmentFlag);
     QStandardItem *getItem(double, Qt::AlignmentFlag);
+    void calculateIOL(quint8 formula);
 
 public:
     void setValue(quint8 formula, QString name, QString aconst, QString acd, QString fs, double K, double AL);
@@ -38,8 +39,8 @@ public slots:
     void setAL(QModelIndex,QModelIndex);
     
 private slots:
-    void refreshFormula(void);
-    void changeFotmula();
+    void refreshFormula(int);
+    void changeFotmula(int);
 };
 
 #endif // FORMULA_H
