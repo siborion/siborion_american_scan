@@ -98,9 +98,9 @@ void formula::refreshFormula(int curIndex)
             switch (i)
             {
             case SRKII:   Calculator(i, AL, AConst, K, 0, &stFormula); break;
-            case SRKT:    Calculator(i, AL, ACD, K, 0, &stFormula);    break;
+            case SRKT:    Calculator(i, AL, AConst, K, 0, &stFormula);    break;
             case HOFFERQ: Calculator(i, AL, SF, K, 0, &stFormula);     break;
-            case HOLLADAY:Calculator(i, AL, SF, K, 0, &stFormula);     break;
+            case HOLLADAY:Calculator(i, AL, AConst, K, 0, &stFormula);     break;
             }
 
             model1->setItem(j, 0, getItem(stFormula.PEMM, Qt::AlignCenter));
@@ -175,13 +175,13 @@ void formula::calculateIOL(quint8 formula)
         Calculator(formula, AL, AConst, K, 0, &stFormula);
         break;
     case SRKT:
-        Calculator(formula, AL, ACD, K, 0, &stFormula);
+        Calculator(formula, AL, AConst, K, 0, &stFormula);
         break;
     case HOFFERQ:
         Calculator(formula, AL, SF, K, 0, &stFormula);
         break;
     case HOLLADAY:
-        Calculator(formula, AL, SF, K, 0, &stFormula);
+        Calculator(formula, AL, AConst, K, 0, &stFormula);
         break;
     }
 

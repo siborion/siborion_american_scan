@@ -228,11 +228,6 @@ void SRKIICalc(double AL, double AConst, double K,double Rx,iol_formula* SRKIIVa
   Emmetropia = AConst - (0.9 * K) - (2.5 * AL);
   SRKIIValues->PEMM = Emmetropia;
 
-  qDebug() << "AConst" << AConst;
-  qDebug() << "K" << K;
-  qDebug() << "AL" << AL;
-  qDebug() << "SRKIIValues->PEMM" << SRKIIValues->PEMM;
-
   Emmetropia_Rounded = floor(Emmetropia);
 
   Diff_In_Emmetropia = Emmetropia - Emmetropia_Rounded;
@@ -271,14 +266,20 @@ void SRKTCalc(double AL, double AConst,double K,double Rx,iol_formula* SRKTValue
 
  int Loop=0;
 
+ qDebug()<<"AL"<<AL;
+ qDebug()<<"AConst"<<AConst;
+ qDebug()<<"K"<<K;
+
  //print("\r\nSRKT");
  ACD = 0.62467 * AConst - 68.747;
  //ACD = 0.58352 * AConst - 63.896;
+ qDebug()<<"ACD"<<ACD;
 
  if (AL > 24.2)
    ALCORR = (1.716 - 0.0237 * AL) * AL - 3.446;
  else
    ALCORR = AL;
+ qDebug()<<"ALCORR"<<ALCORR;
 
  C0 = K;
  C1 = 337.5 / C0;
@@ -288,14 +289,21 @@ void SRKTCalc(double AL, double AConst,double K,double Rx,iol_formula* SRKTValue
    SQRTR1 = 0.0;
 
  ACCORR = C1 - sqrt(SQRTR1) + ACD - 3.3357;
+ qDebug()<<"ACCORR"<<ACCORR;
 
 
  C3 = AL * 0.97971 + 0.65696;
+ qDebug()<<"C3"<<C3;
  C4 = C3 - ACCORR;
+ qDebug()<<"C4"<<C4;
  C5 = 1.336 * C1 - 0.333 * ACCORR;
+ qDebug()<<"C5"<<C5;
  C6 = 1.336 * C1 - 0.333 * C3;
+ qDebug()<<"C6"<<C6;
  C8 = 12.0 * C6 + C3 * C1;
+ qDebug()<<"C8"<<C8;
  C9 = 12.0 * C5 + ACCORR * C1;
+ qDebug()<<"C9"<<C9;
 
  REFR1 = Rx;
 
