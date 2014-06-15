@@ -146,7 +146,8 @@ RT = 0.200;
 R = 337.5/K;
 VD = 12.0;
 ER = 0.0;
-SF = AConst * 0.5663 - 65.60;
+//SF = AConst * 0.5663 - 65.60;
+SF = AConst;
 
 //printf("\r\nSF = %5.2f",SF);
 LP=0.0;
@@ -343,7 +344,8 @@ int HofferCalc(double A, double AConst, double K,double Rx,iol_formula* HofferVa
   if (A <= 0)
      return -1;
 
-  C = CalculatedACD(A,AConst, K);
+//  C = CalculatedACD(A,AConst, K);
+  C = AConst;
 
 //  printf("\r\nACD=%7.4f",C);
   P_Emmetropia = (1336.0 / (A          - C- 0.05))-(1.336/ ((1.336 / (K + Rx)) - ((C  + 0.05) / 1000.0)));

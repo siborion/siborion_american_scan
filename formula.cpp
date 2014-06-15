@@ -99,8 +99,8 @@ void formula::refreshFormula(int curIndex)
             {
             case SRKII:   Calculator(i, AL, AConst, K, 0, &stFormula); break;
             case SRKT:    Calculator(i, AL, AConst, K, 0, &stFormula);    break;
-            case HOFFERQ: Calculator(i, AL, SF, K, 0, &stFormula);     break;
-            case HOLLADAY:Calculator(i, AL, AConst, K, 0, &stFormula);     break;
+            case HOFFERQ: Calculator(i, AL, ACD, K, 0, &stFormula);     break;
+            case HOLLADAY:Calculator(i, AL, SF, K, 0, &stFormula);     break;
             }
 
             model1->setItem(j, 0, getItem(stFormula.PEMM, Qt::AlignCenter));
@@ -156,10 +156,9 @@ void formula::setValue(quint8 formula, QString name, QString aconst, QString acd
     qDebug() << "K" << K ;
     AL = dAL;
     qDebug() << "AL" << AL ;
-    calculateIOL(formula);
-    refreshFormula(formula);
-
-
+//    calculateIOL(formula);
+//    refreshFormula(formula);
+    changeFotmula(formula);
 }
 
 void formula::calculateIOL(quint8 formula)
@@ -178,10 +177,10 @@ void formula::calculateIOL(quint8 formula)
         Calculator(formula, AL, AConst, K, 0, &stFormula);
         break;
     case HOFFERQ:
-        Calculator(formula, AL, SF, K, 0, &stFormula);
+        Calculator(formula, AL, ACD, K, 0, &stFormula);
         break;
     case HOLLADAY:
-        Calculator(formula, AL, AConst, K, 0, &stFormula);
+        Calculator(formula, AL, SF, K, 0, &stFormula);
         break;
     }
 
@@ -221,4 +220,21 @@ void formula::changeFotmula(int formula)
     calculateIOL(formula);
     refreshFormula(formula);
 
+    QStandardItemModel *model = new QStandardItemModel();
+    model = (QStandardItemModel*)twHead->model();
+    switch (formula)
+    {
+    case SRKII:
+        model->setItem(0, 0, getItem(QString("A-Const = %1").arg(AConst), Qt::AlignRight));
+        break;
+    case SRKT:
+        model->setItem(0, 0, getItem(QString("A-Const = %1").arg(AConst), Qt::AlignRight));
+        break;
+    case HOFFERQ:
+        model->setItem(0, 0, getItem(QString("ACD = %1").arg(ACD), Qt::AlignRight));
+        break;
+    case HOLLADAY:
+        model->setItem(0, 0, getItem(QString("SF = %1").arg(SF), Qt::AlignRight));
+        break;
+    }
 }
