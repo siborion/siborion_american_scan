@@ -185,9 +185,9 @@ void formula::calculateIOL(quint8 formula)
     }
 
     model = (QStandardItemModel*)twCalculator->model();
-    model->clear();
+//    model->clear();
  //   qDebug()<<"888";
-    for(quint8 i=0; i<5; i++)
+    for(quint8 i=0; i<7; i++)
     {
         QStandardItem *sTmp1 = new QStandardItem(QString("%1").arg(stFormula.IOLPower[i]));
         model->setItem(i, 0, sTmp1);
@@ -205,12 +205,11 @@ void formula::saveParam(_formulae *val)
 {
     QStandardItemModel *model = new QStandardItemModel();
     model = (QStandardItemModel*)twCalculator->model();
-//    qDebug()<<"888";
-    for(quint8 i=0; i<5; i++)
+    for(quint8 i=0; i<7; i++)
     {
-        QStandardItem *sTmp1 = new QStandardItem(QString("%1").arg(val->IOLPower[i]));
+        QStandardItem *sTmp1 = new QStandardItem(QString("%1").arg((val->IOLPower[i])));
         model->setItem(i, 0, sTmp1);
-        QStandardItem *sTmp2 = new QStandardItem(QString("%1").arg(val->PORx[i]));
+        QStandardItem *sTmp2 = new QStandardItem(QString("%1").arg((val->PORx[i])));
         model->setItem(i, 1, sTmp2);
     }
 }

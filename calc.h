@@ -13,8 +13,8 @@
 
 typedef struct _formulae{
     double PEMM;
-    double IOLPower[5];
-    double PORx[5];
+    double IOLPower[7];
+    double PORx[7];
 }iol_formula;
 
 

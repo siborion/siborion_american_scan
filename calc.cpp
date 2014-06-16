@@ -182,7 +182,7 @@ LP = P_Emmetropia;
   Diff_Add = Diff(Diff_In_Emmetropia);
   Emmetropia_New = Emmetropia_Rounded + Diff_Add;
   Loop=0;
-  for (LP = Emmetropia_New - 1.0; LP <= Emmetropia_New + 1.0; LP = LP + 0.5)
+  for (LP = Emmetropia_New - 1.5; LP <= Emmetropia_New + 1.5; LP = LP + 0.5)
    {
     HolladayValues->IOLPower[Loop] = LP;
     ERROR_1 = 1000*N2*(N2*R-(N1-1)*Alm)-LP*(Alm-AD-SF)*(N2*R-(N1-1)*(AD+SF));
@@ -245,7 +245,7 @@ void SRKIICalc(double AL, double AConst, double K,double Rx,iol_formula* SRKIIVa
   Diff_In_Emmetropia = Emmetropia - Emmetropia_New;
   REFR1 = Diff_In_Emmetropia / CR;
   Loop=0;
-  for (i = Emmetropia_New - 1.0; i <= Emmetropia_New + 1.0; i = i + 0.5)
+  for (i = Emmetropia_New - 1.5; i <= Emmetropia_New + 1.5; i = i + 0.5)
    {
     REFR = (REFR1 + (Emmetropia_New - i) / CR);
     SRKIIValues->PORx[Loop] = REFR;
@@ -317,7 +317,7 @@ void SRKTCalc(double AL, double AConst,double K,double Rx,iol_formula* SRKTValue
  Diff_Add = Diff(Diff_In_Emmetropia);
 
   Emmetropia_New = Emmetropia_Rounded + Diff_Add;
-  for (i = Emmetropia_New - 1.0; i <= Emmetropia_New + 1.0; i = i + 0.5)
+  for (i = Emmetropia_New - 1.5; i <= Emmetropia_New + 1.5; i = i + 0.5)
    {
     SRKTValues->IOLPower[Loop] = i;
     REFR = (1336.0 * C6 - i * C4 * C5) / (1.336 * C8 - 0.001 * i * C4 * C9);
@@ -332,20 +332,44 @@ void SRKTCalc(double AL, double AConst,double K,double Rx,iol_formula* SRKTValue
 }
 
 
-int HofferCalc(double A, double AConst, double K,double Rx,iol_formula* HofferValues)
+int HofferCalc(double A, double ACD, double K,double Rx,iol_formula* HofferValues)
 {
   double C,R1,P;
   double P_Emmetropia,P_Emmetropia_New,DIE,REFR;
   int Loop;
+ double m, g, kk;
+ double ACD1,ACD2,ACD3;
 
-  //printf("\r\nHoffer-Q");
-  if (K <= 0)
-     return -1;
-  if (A <= 0)
-     return -1;
+ if (K <= 0)
+    return -1;
+ if (A <= 0)
+    return -1;
+
+  if (A <= 23.0){
+     m = 1.0;
+     g = 28.0;
+  }
+  else{
+     m = -1.0;
+     g = 23.5;
+  }
+
+
+  if (ACD > 6.5)
+      ACD = 6.5;
+  else if (ACD < 3.0)
+     ACD = 3.0;
+
+  kk = K / 57.2957;
+  ACD1 =     0.3 * (A - 23.5);
+  ACD2 = tan(kk) * tan(kk);
+  ACD3 = 0.1 * m * (23.5- A) * (23.5 - A) * tan((0.1 * (g - A) * (g - A)) / 57.2957);
+
+
+  C = (ACD + ACD1 + ACD2 + ACD3 - 0.9917);
 
 //  C = CalculatedACD(A,AConst, K);
-  C = AConst;
+//  C = AConst;
 
 //  printf("\r\nACD=%7.4f",C);
   P_Emmetropia = (1336.0 / (A          - C- 0.05))-(1.336/ ((1.336 / (K + Rx)) - ((C  + 0.05) / 1000.0)));
@@ -358,7 +382,7 @@ int HofferCalc(double A, double AConst, double K,double Rx,iol_formula* HofferVa
   P_Emmetropia_New = P_Emmetropia_New + Diff(DIE);
 
   Loop = 0;
-  for (P = P_Emmetropia_New - 1.0; P<=P_Emmetropia_New + 1.0; P= P + 0.5){
+  for (P = P_Emmetropia_New - 1.5; P<=P_Emmetropia_New + 1.5; P= P + 0.5){
     R1 = (1.336 / (1.336 / (1336 / (A - C - 0.05) - P) + (C + 0.05) / 1000.0)) - K;
     REFR = R1 / (1 + (0.012 * R1));
     HofferValues->PORx[Loop] = REFR;
