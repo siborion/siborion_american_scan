@@ -125,7 +125,7 @@ QStandardItem* formula::getItem(QString val, Qt::AlignmentFlag align)
 
 QStandardItem* formula::getItem(double val, Qt::AlignmentFlag align)
 {
-    QString str = QString("%1").arg(val, 0, 'f', 2);
+    QString str = QString("(EMM) %1").arg(val, 0, 'f', 2);
     QStandardItem *siTmp = new QStandardItem(str);
     siTmp->setTextAlignment(align);
     return siTmp;
