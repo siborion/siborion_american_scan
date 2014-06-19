@@ -102,7 +102,6 @@ void formula::refreshFormula(int curIndex)
             case HOFFERQ: Calculator(i, AL, ACD, K, 0, &stFormula);     break;
             case HOLLADAY:Calculator(i, AL, SF, K, 0, &stFormula);     break;
             }
-
             model1->setItem(j, 0, getItem(stFormula.PEMM, Qt::AlignCenter));
             model->setItem(10+j, 0, getItem(slTmp.at(i), Qt::AlignCenter));
         }
@@ -126,7 +125,8 @@ QStandardItem* formula::getItem(QString val, Qt::AlignmentFlag align)
 
 QStandardItem* formula::getItem(double val, Qt::AlignmentFlag align)
 {
-    QStandardItem *siTmp = new QStandardItem(QString("%1").arg(val));
+    QString str = QString("%1").arg(val, 0, 'f', 2);
+    QStandardItem *siTmp = new QStandardItem(str);
     siTmp->setTextAlignment(align);
     return siTmp;
 }
@@ -163,6 +163,7 @@ void formula::setValue(quint8 formula, QString name, QString aconst, QString acd
 
 void formula::calculateIOL(quint8 formula)
 {
+    double dTmp;
     _formulae stFormula;
     QStandardItemModel *model = (QStandardItemModel*)twHead->model();
     qDebug()<<formula;
@@ -184,18 +185,13 @@ void formula::calculateIOL(quint8 formula)
         break;
     }
 
+    saveParam(&stFormula);
+
     model = (QStandardItemModel*)twCalculator->model();
-//    model->clear();
- //   qDebug()<<"888";
-    for(quint8 i=0; i<7; i++)
-    {
-        QStandardItem *sTmp1 = new QStandardItem(QString("%1").arg(stFormula.IOLPower[i]));
-        model->setItem(i, 0, sTmp1);
-        QStandardItem *sTmp2 = new QStandardItem(QString("%1").arg(stFormula.PORx[i]));
-        model->setItem(i, 1, sTmp2);
-    }
     model = (QStandardItemModel*)twEmm->model();
-    QStandardItem *sTmp3 = new QStandardItem(QString("%1").arg(stFormula.PEMM));
+    QString str = QString("%1").arg(round(stFormula.PEMM*100)/100, 0, 'f', 2);
+    QStandardItem *sTmp3 = new QStandardItem(str);
+    sTmp3->setTextAlignment(Qt::AlignCenter);
     model->setItem(0, 0, sTmp3);
 
 }
@@ -203,13 +199,21 @@ void formula::calculateIOL(quint8 formula)
 
 void formula::saveParam(_formulae *val)
 {
+    double dTmp;
     QStandardItemModel *model = new QStandardItemModel();
     model = (QStandardItemModel*)twCalculator->model();
     for(quint8 i=0; i<7; i++)
     {
-        QStandardItem *sTmp1 = new QStandardItem(QString("%1").arg((val->IOLPower[i])));
+
+        dTmp = val->IOLPower[i];
+        QString str = QString("%1").arg(dTmp, 0, 'f', 1);
+        QStandardItem *sTmp1 = new QStandardItem(str);
+        sTmp1->setTextAlignment(Qt::AlignCenter);
         model->setItem(i, 0, sTmp1);
-        QStandardItem *sTmp2 = new QStandardItem(QString("%1").arg((val->PORx[i])));
+        dTmp = round(val->PORx[i]*100)/100;
+        str = QString("%1").arg(dTmp, 0, 'f', 2);
+        QStandardItem *sTmp2 = new QStandardItem(str);
+        sTmp2->setTextAlignment(Qt::AlignCenter);
         model->setItem(i, 1, sTmp2);
     }
 }
