@@ -6,6 +6,8 @@
 #include <adjview.h>
 #include "calc.h"
 #include <QComboBox>
+#include <QLabel>
+#include <QLineEdit>
 
 
 class formula : public QWidget
@@ -18,7 +20,9 @@ private:
     double ACD;
     double SF;
 
-    adjview *twHead;
+//    adjview *twHead;
+    QLabel *lLens;
+    QLineEdit *leLens;
     adjview *twCalculator;
     adjview *twFormula;
     adjview *twEmm;

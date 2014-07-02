@@ -1,5 +1,6 @@
 #include "formula.h"
 #include <QDebug>
+#include <QLabel>
 
 formula::formula(QWidget *parent) :
     QWidget(parent)
@@ -11,17 +12,21 @@ formula::formula(QWidget *parent) :
     layout->setColumnStretch(0,1);
     layout->setColumnStretch(1,2);
 
+    lLens = new QLabel("lens");
+    leLens = new QLineEdit();
+//    lFormula->setText("formula");
+
     QList<int> columnPercent;
     QStringList lst;
 
-    columnPercent.clear();
-    columnPercent<<100;
-    lst.clear();
-    lst<<"CN50SM / Alcon";
-    twHead = new adjview(1, lst, columnPercent);
-    QStandardItemModel *model = new QStandardItemModel();
-    model = (QStandardItemModel*)twHead->model();
-    model->setItem(0, 0, getItem(QString("A-Const = 116.5"), Qt::AlignRight));
+//    columnPercent.clear();
+//    columnPercent<<100;
+//    lst.clear();
+//    lst<<"CN50SM / Alcon";
+//   twHead = new adjview(1, lst, columnPercent);
+//    QStandardItemModel *model = new QStandardItemModel();
+//    model = (QStandardItemModel*)twHead->model();
+//    model->setItem(0, 0, getItem(QString("A-Const = 116.5"), Qt::AlignRight));
 
     columnPercent.clear();
     columnPercent<<100;
@@ -66,11 +71,13 @@ formula::formula(QWidget *parent) :
     cbFormula->setItemData(4, Qt::AlignCenter, Qt::TextAlignmentRole);
 
     layout->addWidget(cbFormula, 0, 0, 1, 2);
-    layout->addWidget(twHead,    1, 0, 1, 2);
+//    layout->addWidget(twHead,    1, 0, 1, 2);
+    layout->addWidget(lLens,    1, 0, 1, 2);
+    layout->addWidget(leLens,   2, 0, 1, 2);
 
-    layout->addWidget(twFormula,    2, 0, 2, 1);
-    layout->addWidget(twCalculator, 2, 1, 1, 1, Qt::AlignTop);
-    layout->addWidget(twEmm, 3, 1, 1, 1, Qt::AlignTop);
+    layout->addWidget(twFormula,    3, 0, 2, 1);
+    layout->addWidget(twCalculator, 3, 1, 1, 1, Qt::AlignTop);
+    layout->addWidget(twEmm, 4, 1, 1, 1, Qt::AlignTop);
 
     connect(cbFormula, SIGNAL(currentIndexChanged(int)), this, SLOT(changeFotmula(int)));
 //    refreshFormula();
@@ -139,12 +146,14 @@ void formula::setAL(QModelIndex prev, QModelIndex post)
 
 void formula::setValue(quint8 formula, QString name, QString aconst, QString acd, QString fs, double dK, double dAL)
 {
-    QStringList lensName;
-    lensName<<name;
+//    QStringList lensName;
+//    lensName<<name;
 
     cbFormula->setCurrentIndex(formula);
-    QStandardItemModel *model = (QStandardItemModel*)twHead->model();
-    model->setHorizontalHeaderLabels(lensName);
+//    QStandardItemModel *model = (QStandardItemModel*)twHead->model();
+//    model->setHorizontalHeaderLabels(lensName);
+
+    lLens->setText(name);
 
     AConst = aconst.toDouble();
     qDebug() << "AConst" << AConst ;
@@ -163,9 +172,9 @@ void formula::setValue(quint8 formula, QString name, QString aconst, QString acd
 
 void formula::calculateIOL(quint8 formula)
 {
-    double dTmp;
+
     _formulae stFormula;
-    QStandardItemModel *model = (QStandardItemModel*)twHead->model();
+    QStandardItemModel *model;// = (QStandardItemModel*)twHead->model();
     qDebug()<<formula;
     switch (formula)
     {
@@ -223,21 +232,26 @@ void formula::changeFotmula(int formula)
     calculateIOL(formula);
     refreshFormula(formula);
 
-    QStandardItemModel *model = new QStandardItemModel();
-    model = (QStandardItemModel*)twHead->model();
+//    QStandardItemModel *model = new QStandardItemModel();
+//    model = (QStandardItemModel*)twHead->model();
     switch (formula)
     {
     case SRKII:
-        model->setItem(0, 0, getItem(QString("A-Const = %1").arg(AConst), Qt::AlignRight));
+//        model->setItem(0, 0, getItem(QString("A-Const = %1").arg(AConst), Qt::AlignRight));
+        leLens->setText(QString("A-Const = %1").arg(AConst));
+//        leLens->setText("test");
         break;
     case SRKT:
-        model->setItem(0, 0, getItem(QString("A-Const = %1").arg(AConst), Qt::AlignRight));
+//        model->setItem(0, 0, getItem(QString("A-Const = %1").arg(AConst), Qt::AlignRight));
+        leLens->setText(QString("A-Const = %1").arg(AConst));
         break;
     case HOFFERQ:
-        model->setItem(0, 0, getItem(QString("ACD = %1").arg(ACD), Qt::AlignRight));
+//        model->setItem(0, 0, getItem(QString("ACD = %1").arg(ACD), Qt::AlignRight));
+        leLens->setText(QString("ACD = %1").arg(ACD));
         break;
     case HOLLADAY:
-        model->setItem(0, 0, getItem(QString("SF = %1").arg(SF), Qt::AlignRight));
+//        model->setItem(0, 0, getItem(QString("SF = %1").arg(SF), Qt::AlignRight));
+        leLens->setText(QString("SF = %1").arg(SF));
         break;
     }
 }
