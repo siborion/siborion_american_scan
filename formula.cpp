@@ -72,8 +72,8 @@ formula::formula(QWidget *parent) :
 
     layout->addWidget(cbFormula, 0, 0, 1, 2);
 //    layout->addWidget(twHead,    1, 0, 1, 2);
-    layout->addWidget(lLens,    1, 0, 1, 2);
-    layout->addWidget(leLens,   2, 0, 1, 2);
+    layout->addWidget(lLens,    1, 0, 1, 1);
+    layout->addWidget(leLens,   1, 1, 1, 1);
 
     layout->addWidget(twFormula,    3, 0, 2, 1);
     layout->addWidget(twCalculator, 3, 1, 1, 1, Qt::AlignTop);
@@ -198,7 +198,7 @@ void formula::calculateIOL(quint8 formula)
 
     model = (QStandardItemModel*)twCalculator->model();
     model = (QStandardItemModel*)twEmm->model();
-    QString str = QString("%1").arg(round(stFormula.PEMM*100)/100, 0, 'f', 2);
+    QString str = QString("(EMM) %1").arg(round(stFormula.PEMM*100)/100, 0, 'f', 2);
     QStandardItem *sTmp3 = new QStandardItem(str);
     sTmp3->setTextAlignment(Qt::AlignCenter);
     model->setItem(0, 0, sTmp3);

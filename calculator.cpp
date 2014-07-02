@@ -33,17 +33,19 @@ calculator::calculator(QWidget *parent) :
     }
     //-------------------------------
     columnPercent.clear();
-    columnPercent<<20<<16<<22<<16<<15<<11;
-    lst<<"Lens Name"<<"Lens Mfg"<<"Mfg A-Const"<<"pAConst"<<"MfgACD"<<"pACD";
+    columnPercent<<20<<20<<20<<20<<20;
+    lst<<"Lens Name"<<"AConst"<<"ACD"<<"SF"<<"FORMULA";
     twLens = new adjview(8, lst, columnPercent);
     modelMainLens = new QSqlQueryModel ();
     twLens->setModel(modelMainLens);
-    QString str = "SELECT  name, mfg, aconst, acd from lens;";
+//    QString str = "SELECT  name, mfg, aconst, acd from lens;";
+    QString str = QString("SELECT lens.name as 'Lens Name',lens.aconst,lens.acd,lens.sf,doctor_lens.nom_formula FROM patient, doctor_lens, lens ON patient.doctor=doctor_lens.id_doctor AND lens.id=doctor_lens.id_lens WHERE 0=1;");
     modelMainLens->setQuery(str);
     modelMainLens->setHeaderData(0, Qt::Horizontal, "Lens Name", Qt::DisplayRole);
-    modelMainLens->setHeaderData(1, Qt::Horizontal, "Mfg", Qt::DisplayRole);
-    modelMainLens->setHeaderData(2, Qt::Horizontal, "A-Const", Qt::DisplayRole);
-    modelMainLens->setHeaderData(3, Qt::Horizontal, "ACD", Qt::DisplayRole);
+    modelMainLens->setHeaderData(1, Qt::Horizontal, "AConst", Qt::DisplayRole);
+    modelMainLens->setHeaderData(2, Qt::Horizontal, "ACD", Qt::DisplayRole);
+    modelMainLens->setHeaderData(3, Qt::Horizontal, "SF", Qt::DisplayRole);
+    modelMainLens->setHeaderData(4, Qt::Horizontal, "FORMULA", Qt::DisplayRole);
 
 
     //-------------------------------
@@ -177,14 +179,17 @@ void calculator::refreshTable(quint16 id)
     columnPercent<<20<<16<<22<<16<<15<<11;
 //    lst<<"Lens Name"<<"Lens Mfg"<<"Mfg A-Const"<<"pAConst"<<"MfgACD"<<"pACD";
 //    twLens = new adjview(8, lst, columnPercent);
+//  <<"AConst"<<"ACD"<<"SF"<<"FORMULA";
     modelMainLens = new QSqlQueryModel ();
     twLens->setModel(modelMainLens);
-    QString str = QString("SELECT lens.name,lens.aconst,lens.acd,lens.sf,doctor_lens.nom_formula FROM patient, doctor_lens, lens ON patient.doctor=doctor_lens.id_doctor AND lens.id=doctor_lens.id_lens WHERE patient.id=%1;").arg(id);
+    QString str = QString("SELECT lens.name as 'Lens Name',lens.aconst,lens.acd,lens.sf,doctor_lens.nom_formula FROM patient, doctor_lens, lens ON patient.doctor=doctor_lens.id_doctor AND lens.id=doctor_lens.id_lens WHERE patient.id=%1;").arg(id);
     modelMainLens->setQuery(str);
-//    modelMainLens->setHeaderData(0, Qt::Horizontal, "Lens Name", Qt::DisplayRole);
-//    modelMainLens->setHeaderData(1, Qt::Horizontal, "Mfg", Qt::DisplayRole);
-//    modelMainLens->setHeaderData(2, Qt::Horizontal, "A-Const", Qt::DisplayRole);
-//    modelMainLens->setHeaderData(3, Qt::Horizontal, "ACD", Qt::DisplayRole);
+
+    modelMainLens->setHeaderData(0, Qt::Horizontal, "Lens Name", Qt::DisplayRole);
+    modelMainLens->setHeaderData(1, Qt::Horizontal, "AConst", Qt::DisplayRole);
+    modelMainLens->setHeaderData(2, Qt::Horizontal, "ACD", Qt::DisplayRole);
+    modelMainLens->setHeaderData(3, Qt::Horizontal, "SF", Qt::DisplayRole);
+    modelMainLens->setHeaderData(4, Qt::Horizontal, "FORMULA", Qt::DisplayRole);
 
     Formula1->setEnabled(false);
     Formula2->setEnabled(false);
