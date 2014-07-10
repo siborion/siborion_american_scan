@@ -23,6 +23,10 @@
 #include "key_radio.h"
 #include "sampletable.h"
 #include "QDate"
+#include <QSerialPort>
+#include <QSerialPortInfo>
+#include <QTimer>
+
 
 #include <qwt_plot.h>
 
@@ -36,6 +40,10 @@ public:
                         SignalValueRole = Qt::UserRole + 1001};
 
 private:
+    quint8 offset;
+    QComboBox *cbPort;
+    QSerialPort *port;
+    QTimer *timer;
     double AL;
     QwtPlot *pQwt;
     adjview *twPatient;
@@ -109,6 +117,8 @@ private slots:
     void changeRow(QList<quint16> extremum);
     void refreshMainParam();
     void changeEye(quint8);
+    void openPort();
+    void doTimer();
 //    void getFileSample();
 //    void changeRow(QModelIndex curIndex);
 //    void refreshTable(stMainParam);

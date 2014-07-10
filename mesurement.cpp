@@ -57,9 +57,19 @@ mesurement::mesurement(QWidget *parent) :
     pbMeasure->setIcon(icon);
     pbMeasure->setIconSize(QSize(50, 50));
 
-
     layoutBot->addWidget(fmPlot, 0, 0, 4, 1);
     layoutBot->addWidget(pKey,5,0,1,1);
+
+    port = new QSerialPort(this);
+    timer = new QTimer();
+    timer->start(100);
+
+    cbPort  = new QComboBox();
+    foreach(const QSerialPortInfo &info, QSerialPortInfo::availablePorts())
+    {
+        cbPort->addItem(info.portName());
+//        cbPort->addItem(info.description());
+    }
 
 
     QFrame *fmSample = new QFrame();
@@ -68,6 +78,7 @@ mesurement::mesurement(QWidget *parent) :
     fmSample->setFrameShadow(QFrame::Raised);
     QGridLayout *glSample  = new QGridLayout(fmSample);
     glSample->addWidget(pSampleTable,0,0,1,3);
+    glSample->addWidget(cbPort,1,0,1,1);
     glSample->addWidget(pbDel,1,2,1,1);
     fmSample->setFixedHeight(230);
 //    fmSample->setMinimumHeight(240);
@@ -79,18 +90,14 @@ mesurement::mesurement(QWidget *parent) :
     layoutBot->addWidget(pBigView,3,1);
 
 
-
-//    layoutRight->addWidget(pbOd);
-
-//    pBaseFill = new basefill(0, children(), (QString)"history");
-
-    connect(pbMeasure, SIGNAL(pressed()), pSampleTable, SLOT(getFileSample()));
+//    connect(pbMeasure, SIGNAL(pressed()), pSampleTable, SLOT(getFileSample()));
+    connect(pbMeasure, SIGNAL(pressed()), SLOT(openPort()));
     connect(pPlot, SIGNAL(refreshTable(stMainParam)), pSampleTable, SLOT(refreshTable(stMainParam)));
     connect(pSampleTable, SIGNAL(changeRow(QList<quint16>)), SLOT(changeRow(QList<quint16> )));
     connect(pSampleTable, SIGNAL(refreshMainParam()), SLOT(refreshMainParam()));
     connect(pbDel, SIGNAL(clicked()), pSampleTable, SLOT(delSample()));
-//    connect(pbOd, SIGNAL(pressed()), SLOT(changeEye()));
     connect(pKey,SIGNAL(changeEye(quint8)),SLOT(changeEye(quint8)));
+    connect(timer, SIGNAL(timeout()), SLOT(doTimer()));
 }
 
 void mesurement::changeRow(QList<quint16> extremum)
@@ -140,4 +147,53 @@ void mesurement::changeRow(quint8 idType, quint16 idRow, QString Patient, QStrin
 void mesurement::changeEye(quint8 val)
 {
         pBigViewCur->changeEye(val);
+}
+
+void mesurement::openPort()
+{
+    QString str;
+    str = "\\\\.\\" + cbPort->currentText();
+    port->setPortName(str);
+    port->setBaudRate(QSerialPort::Baud19200);
+    port->setDataBits(QSerialPort::Data8);
+    port->setParity(QSerialPort::NoParity);
+    port->setStopBits(QSerialPort::OneStop);
+    port->setFlowControl(QSerialPort::NoFlowControl);
+    if(port->isOpen())
+    {
+        port->close();
+//        pbPort->setText("Подключить");
+    }
+    else
+    {
+        if(port->open(QIODevice::ReadWrite))
+        {
+//            pbPort->setText("Отключить");
+//            numAction = ActionType::readVersion;
+//            Read_Write = true;
+        }
+    }
+}
+
+void mesurement::doTimer()
+{
+    double x[2024], y[2024];
+    quint16 kolvo = 0;
+//    quint8 val;
+//    offset++;
+
+    if(port->isOpen())
+    {
+        foreach (quint8 val, port->readAll())
+//        for(int i=0; i<1024; i++)
+        {
+            x[kolvo] = kolvo;
+            y[kolvo] = double(val);
+            kolvo++;
+            if(kolvo>=1024)
+                break;
+        }
+        pPlot->drawSample(x, y, kolvo);
+        port->write("A");
+    }
 }
