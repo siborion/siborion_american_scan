@@ -177,15 +177,13 @@ void mesurement::openPort()
 
 void mesurement::doTimer()
 {
+    QByteArray baTmp;
     double x[2024], y[2024];
     quint16 kolvo = 0;
-//    quint8 val;
-//    offset++;
-
     if(port->isOpen())
     {
-        foreach (quint8 val, port->readAll())
-//        for(int i=0; i<1024; i++)
+        baTmp = port->readAll();
+        foreach(quint8 val, baTmp)
         {
             x[kolvo] = kolvo;
             y[kolvo] = double(val);
