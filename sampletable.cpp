@@ -63,12 +63,13 @@ void sampletable::getFileSample()
         {
             if(findMainParam(&extremum, curMainParam))
             {
-                QStandardItem *ttt = new QStandardItem();
-                model->appendRow(ttt);
-                twMeas->model()->setData(twMeas->model()->index(kolVo, 0), kolVo, Qt::DisplayRole);
-                twMeas->model()->setData(twMeas->model()->index(kolVo, 0), Sample, Qt::UserRole);
-                twMeas->model()->setData(twMeas->model()->index(kolVo, 1), fileName, Qt::DisplayRole);
-                refreshTable(kolVo, curMainParam);
+                addSampleToTable(Sample, curMainParam);
+//                QStandardItem *ttt = new QStandardItem();
+//                model->appendRow(ttt);
+//                twMeas->model()->setData(twMeas->model()->index(kolVo, 0), kolVo, Qt::DisplayRole);
+//                twMeas->model()->setData(twMeas->model()->index(kolVo, 0), Sample, Qt::UserRole);
+//                twMeas->model()->setData(twMeas->model()->index(kolVo, 1), fileName, Qt::DisplayRole);
+//                refreshTable(kolVo, curMainParam);
             }
         }
         kolVo++;
@@ -423,3 +424,20 @@ void sampletable::delSample()
     changeRow(twMeas->currentIndex());
 
 }
+
+void sampletable::addSampleToTable(QByteArray Sample, stMainParam curMainParam)
+{
+    quint8 kolVo;
+    QString fileName = "";
+    QStandardItemModel *model;
+    model = (QStandardItemModel*)twMeas->model();
+    kolVo = twMeas->model()->rowCount();
+    QStandardItem *ttt = new QStandardItem();
+    model->appendRow(ttt);
+    twMeas->model()->setData(twMeas->model()->index(kolVo, 0), kolVo, Qt::DisplayRole);
+    twMeas->model()->setData(twMeas->model()->index(kolVo, 0), Sample, Qt::UserRole);
+    twMeas->model()->setData(twMeas->model()->index(kolVo, 1), fileName, Qt::DisplayRole);
+    refreshTable(kolVo, curMainParam);
+}
+
+

@@ -14,17 +14,20 @@ class sampletable : public QWidget
     Q_OBJECT
 public:
     explicit sampletable(QWidget *parent = 0);
+    bool findExtremum(QByteArray *Sample, QList<quint16> &extremum);
+    bool findMainParam(QList<quint16> *extremum, stMainParam &mainParam);
+    void addSampleToTable();
+    void addSampleToTable(QByteArray Sample, stMainParam curMainParam);
 //    QHash<quint16, quint8> hSample;
     stMainParam mainParam;
     QByteArray baSample;
     QList<quint16> allExtremum;
     stResultParam resultParam;
+    adjview *twMeas;
 
 private:
     double AL;
-    adjview *twMeas;
-    bool findExtremum(QByteArray *Sample, QList<quint16> &extremum);
-    bool findMainParam(QList<quint16> *extremum, stMainParam &mainParam);
+//    bool findMainParam(QList<quint16> *extremum, stMainParam &mainParam);
     void refreshTable(quint8 rowNom, stMainParam mainParam);
     double decRound(double Val, quint8 dec);
     QModelIndex tableIndex;

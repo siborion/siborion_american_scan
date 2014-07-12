@@ -168,6 +168,10 @@ void mesurement::openPort()
     {
         if(port->open(QIODevice::ReadWrite))
         {
+            QStandardItemModel *model;
+            model = (QStandardItemModel*)pSampleTable->twMeas->model();
+            model->setRowCount(0);
+
 //            pbPort->setText("Отключить");
 //            numAction = ActionType::readVersion;
 //            Read_Write = true;
@@ -177,6 +181,8 @@ void mesurement::openPort()
 
 void mesurement::doTimer()
 {
+    QList <quint16> extremum;
+    stMainParam mainParam;
     QByteArray baTmp;
     double x[2024], y[2024];
     quint16 kolvo = 0;
@@ -192,6 +198,11 @@ void mesurement::doTimer()
                 break;
         }
         pPlot->drawSample(x, y, kolvo);
+        if(pSampleTable->findExtremum(&baTmp, extremum))
+        {
+            if (pSampleTable->findMainParam(&extremum, mainParam))
+                pSampleTable->addSampleToTable(baTmp, mainParam);
+        }
         port->write("A");
     }
 }
