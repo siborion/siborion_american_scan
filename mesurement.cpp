@@ -189,6 +189,27 @@ void mesurement::doTimer()
     if(port->isOpen())
     {
         baTmp = port->readAll();
+
+
+        quint8 Val;
+        QFile file;
+        bool bOk;
+            baTmp.clear();
+            file.setFileName("2.txt");
+            if (!file.open(QIODevice::ReadOnly))
+                return;
+            file.read(144);
+            while (!file.atEnd())
+            {
+                Val = (file.read(1).toHex().toUInt(&bOk, 16));
+                file.read(1);
+                baTmp.append(Val);
+            }
+            file.close();
+
+
+
+
         foreach(quint8 val, baTmp)
         {
             x[kolvo] = kolvo;
@@ -197,6 +218,8 @@ void mesurement::doTimer()
             if(kolvo>=1024)
                 break;
         }
+        qDebug()<<"baTmp"<<baTmp.count();
+        qDebug()<<"Kolvo"<<kolvo;
         pPlot->drawSample(x, y, kolvo);
         if(pSampleTable->findExtremum(&baTmp, extremum))
         {
