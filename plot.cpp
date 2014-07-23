@@ -20,12 +20,14 @@ Plot::Plot( QWidget *parent ):
 
     QwtPlotCanvas *canvas = new QwtPlotCanvas();
     setCanvas( canvas );
+
+
 //    setCanvasBackground( QColor( "MidnightBlue" ) );
-//    setStyleSheet(QStringLiteral("background-color: rgb(234, 234, 234);"));
+    setStyleSheet(QStringLiteral("background-color: rgb(234, 234, 234);"));
 
 
 //    setCanvasBackground(QColor("DarkSlateGray"));
-    setCanvasBackground(QColor("Black"));
+//    setCanvasBackground(QColor("Black"));
 
     // grid
     QwtPlotGrid *grid = new QwtPlotGrid;
@@ -54,6 +56,7 @@ Plot::Plot( QWidget *parent ):
     d_curve1->attach( this );
     setAutoReplot( true );
 //    this->setMaximumSize(200,200);
+
 }
 
 

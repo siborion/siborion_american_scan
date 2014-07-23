@@ -119,6 +119,7 @@ private slots:
     void changeEye(quint8);
     void openPort();
     void doTimer();
+    void delSample();
 //    void getFileSample();
 //    void changeRow(QModelIndex curIndex);
 //    void refreshTable(stMainParam);

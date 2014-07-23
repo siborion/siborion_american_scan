@@ -177,7 +177,7 @@ void sampletable::refreshTable(quint8 rowNom, stMainParam mainParam)
     sumAl = sumAcd = sumLt = sumVit = 0;
     devAl = devAcd = devLt = devVit = 0;
 
-    qDebug()<<"refreshTable";
+//    qDebug()<<"refreshTable";
 
     resultParam.ACD = decRound(mainParam.L1 - mainParam.Start, 2);
     resultParam.LT = decRound(mainParam.L2 - mainParam.L1, 2);
@@ -333,7 +333,7 @@ void sampletable::refreshResult(quint8 rowNom)
     quint8 modelCount;
     QColor color;
 
-    qDebug()<<"refreshResult";
+//    qDebug()<<"refreshResult";
 
     resultParam.ACD = twMeas->model()->data(twMeas->model()->index(rowNom, 3), Qt::DisplayRole).toDouble();
     resultParam.LT =  twMeas->model()->data(twMeas->model()->index(rowNom, 4), Qt::DisplayRole).toDouble();
@@ -417,12 +417,9 @@ void sampletable::delSample()
 {
     quint8 curRow;
     curRow = twMeas->currentIndex().row();
-
     twMeas->model()->removeRow(curRow);
     twMeas->selectRow(curRow);
-
     changeRow(twMeas->currentIndex());
-
 }
 
 void sampletable::addSampleToTable(QByteArray Sample, stMainParam curMainParam)

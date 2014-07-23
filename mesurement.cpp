@@ -25,6 +25,16 @@ mesurement::mesurement(QWidget *parent) :
     QGridLayout *glPlot  = new QGridLayout(fmPlot);
     pPlot = new Plot(this);
 
+
+    double x[2024], y[2024];
+    for(int i=0; i<=1024; i++)
+    {
+        x[i] = i;
+        y[i] = 255;
+    }
+    pPlot->drawSample(x, y, 1024);
+
+
     glPlot->addWidget(pBigViewCur);
     glPlot->addWidget(pPlot,1,0);
 
@@ -62,7 +72,7 @@ mesurement::mesurement(QWidget *parent) :
 
     port = new QSerialPort(this);
     timer = new QTimer();
-    timer->start(100);
+    timer->start(62);
 
     cbPort  = new QComboBox();
     foreach(const QSerialPortInfo &info, QSerialPortInfo::availablePorts())
@@ -94,10 +104,23 @@ mesurement::mesurement(QWidget *parent) :
     connect(pbMeasure, SIGNAL(pressed()), SLOT(openPort()));
     connect(pPlot, SIGNAL(refreshTable(stMainParam)), pSampleTable, SLOT(refreshTable(stMainParam)));
     connect(pSampleTable, SIGNAL(changeRow(QList<quint16>)), SLOT(changeRow(QList<quint16> )));
-    connect(pSampleTable, SIGNAL(refreshMainParam()), SLOT(refreshMainParam()));
+//    connect(pSampleTable, SIGNAL(refreshMainParam()), SLOT(refreshMainParam()));
     connect(pbDel, SIGNAL(clicked()), pSampleTable, SLOT(delSample()));
+//    connect(pbDel, SIGNAL(clicked()), SLOT(delSample()));
     connect(pKey,SIGNAL(changeEye(quint8)),SLOT(changeEye(quint8)));
     connect(timer, SIGNAL(timeout()), SLOT(doTimer()));
+}
+
+void mesurement::delSample()
+{
+    double x[2024], y[2024];
+    quint16 kolvo = 0;
+    for(kolvo=0; kolvo<=1024; kolvo++)
+    {
+        x[kolvo] = kolvo;
+        y[kolvo] = double(255);
+    }
+    pPlot->drawSample(x, y, 1024);
 }
 
 void mesurement::changeRow(QList<quint16> extremum)
@@ -112,7 +135,7 @@ void mesurement::changeRow(QList<quint16> extremum)
         kolvo++;
     }
 
-    pPlot->drawSample(x, y, 1000);
+    pPlot->drawSample(x, y, 1024);
     pPlot->allExtremum = extremum;
     pPlot->drawMarker(pSampleTable->mainParam.Start, "Start");
     pPlot->drawMarker((double)pSampleTable->mainParam.Start,(double)60, Qt::yellow);
@@ -172,9 +195,14 @@ void mesurement::openPort()
             model = (QStandardItemModel*)pSampleTable->twMeas->model();
             model->setRowCount(0);
 
-//            pbPort->setText("Отключить");
-//            numAction = ActionType::readVersion;
-//            Read_Write = true;
+            double x[2024], y[2024];
+            quint16 kolvo = 0;
+            for(kolvo=0; kolvo<=1024; kolvo++)
+            {
+                x[kolvo] = kolvo;
+                y[kolvo] = double(255);
+            }
+            pPlot->drawSample(x, y, 1024);
         }
     }
 }
@@ -190,25 +218,21 @@ void mesurement::doTimer()
     {
         baTmp = port->readAll();
 
-
-        quint8 Val;
-        QFile file;
-        bool bOk;
-            baTmp.clear();
-            file.setFileName("2.txt");
-            if (!file.open(QIODevice::ReadOnly))
-                return;
-            file.read(144);
-            while (!file.atEnd())
-            {
-                Val = (file.read(1).toHex().toUInt(&bOk, 16));
-                file.read(1);
-                baTmp.append(Val);
-            }
-            file.close();
-
-
-
+//        quint8 Val;
+//        QFile file;
+//        bool bOk;
+//            baTmp.clear();
+//            file.setFileName("2.txt");
+//            if (!file.open(QIODevice::ReadOnly))
+//                return;
+//            file.read(144);
+//            while (!file.atEnd())
+//            {
+//                Val = (file.read(1).toHex().toUInt(&bOk, 16));
+//                file.read(1);
+//                baTmp.append(Val);
+//            }
+//            file.close();
 
         foreach(quint8 val, baTmp)
         {
@@ -218,8 +242,10 @@ void mesurement::doTimer()
             if(kolvo>=1024)
                 break;
         }
-        qDebug()<<"baTmp"<<baTmp.count();
-        qDebug()<<"Kolvo"<<kolvo;
+//        qDebug()<<"baTmp"<<baTmp.count();
+//        qDebug()<<"Kolvo"<<kolvo;
+//        QDateTime dt;
+//        qDebug()<<dt.currentDateTimeUtc();
         pPlot->drawSample(x, y, kolvo);
         if(pSampleTable->findExtremum(&baTmp, extremum))
         {
