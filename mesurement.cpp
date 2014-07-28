@@ -66,7 +66,7 @@ mesurement::mesurement(QWidget *parent) :
     icon.addFile(QStringLiteral(":/test/scan"), QSize(), QIcon::Normal, QIcon::Off);
     pbMeasure->setIcon(icon);
     pbMeasure->setIconSize(QSize(50, 50));
-    pbMeasure->setCheckable(true);
+//    pbMeasure->setCheckable(true);
 
     layoutBot->addWidget(fmPlot, 0, 0, 4, 1);
     layoutBot->addWidget(pKey,5,0,1,1);
@@ -221,10 +221,9 @@ void mesurement::doTimer()
     double x[2024], y[2024];
     quint16 kolvo = 0;
 
-    timer->start(62);
-
     if(port->isOpen())
     {
+        timer->start(62);
         baTmp = port->readAll();
 
 //        QMessageBox msgBox;
@@ -257,7 +256,7 @@ void mesurement::doTimer()
                 break;
         }
 
-//        if(kolvo>=1000)
+        if(kolvo>=1000)
         {
 
             pPlot->drawSample(x, y, kolvo);
