@@ -66,13 +66,15 @@ mesurement::mesurement(QWidget *parent) :
     icon.addFile(QStringLiteral(":/test/scan"), QSize(), QIcon::Normal, QIcon::Off);
     pbMeasure->setIcon(icon);
     pbMeasure->setIconSize(QSize(50, 50));
+    pbMeasure->setCheckable(true);
 
     layoutBot->addWidget(fmPlot, 0, 0, 4, 1);
     layoutBot->addWidget(pKey,5,0,1,1);
 
     port = new QSerialPort(this);
     timer = new QTimer();
-    timer->start(62);
+//    timer->start(62);
+    timer->start(2000);
 
     cbPort  = new QComboBox();
     foreach(const QSerialPortInfo &info, QSerialPortInfo::availablePorts())
@@ -186,6 +188,8 @@ void mesurement::openPort()
     {
         port->close();
 //        pbPort->setText("Подключить");
+        timer->start(2000);
+
     }
     else
     {
@@ -204,6 +208,7 @@ void mesurement::openPort()
 //                y[kolvo] = double(255);
             }
             pPlot->drawSample(x, y, 1024);
+            timer->start(2000);
         }
     }
 }
@@ -216,7 +221,8 @@ void mesurement::doTimer()
     double x[2024], y[2024];
     quint16 kolvo = 0;
 
-    x[0]=1.1;
+    timer->start(62);
+
     if(port->isOpen())
     {
         baTmp = port->readAll();
@@ -251,13 +257,7 @@ void mesurement::doTimer()
                 break;
         }
 
-
-//        qDebug()<<"baTmp"<<baTmp.count();
-//        qDebug()<<"Kolvo"<<kolvo;
-//        QDateTime dt;
-//        qDebug()<<dt.currentDateTimeUtc();
-
-        if(kolvo>=1000)
+//        if(kolvo>=1000)
         {
 
             pPlot->drawSample(x, y, kolvo);
