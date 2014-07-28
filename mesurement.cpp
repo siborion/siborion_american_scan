@@ -30,7 +30,7 @@ mesurement::mesurement(QWidget *parent) :
     for(int i=0; i<=1024; i++)
     {
         x[i] = i;
-        y[i] = 255;
+        y[i] = 128;
     }
     pPlot->drawSample(x, y, 1024);
 
@@ -200,7 +200,8 @@ void mesurement::openPort()
             for(kolvo=0; kolvo<=1024; kolvo++)
             {
                 x[kolvo] = kolvo;
-                y[kolvo] = double(255);
+                y[kolvo] = double((unsigned char)kolvo);
+//                y[kolvo] = double(255);
             }
             pPlot->drawSample(x, y, 1024);
         }
@@ -214,9 +215,16 @@ void mesurement::doTimer()
     QByteArray baTmp;
     double x[2024], y[2024];
     quint16 kolvo = 0;
+
+    x[0]=1.1;
     if(port->isOpen())
     {
         baTmp = port->readAll();
+
+//        QMessageBox msgBox;
+//        msgBox.setText(QString("%1").arg(x[0]));
+//        msgBox.exec();
+
 
 //        quint8 Val;
 //        QFile file;
@@ -237,20 +245,27 @@ void mesurement::doTimer()
         foreach(quint8 val, baTmp)
         {
             x[kolvo] = kolvo;
-            y[kolvo] = double(val);
+            y[kolvo] = double((unsigned char)val);
             kolvo++;
             if(kolvo>=1024)
                 break;
         }
+
+
 //        qDebug()<<"baTmp"<<baTmp.count();
 //        qDebug()<<"Kolvo"<<kolvo;
 //        QDateTime dt;
 //        qDebug()<<dt.currentDateTimeUtc();
-        pPlot->drawSample(x, y, kolvo);
-        if(pSampleTable->findExtremum(&baTmp, extremum))
+
+        if(kolvo>=1000)
         {
-            if (pSampleTable->findMainParam(&extremum, mainParam))
-                pSampleTable->addSampleToTable(baTmp, mainParam);
+
+            pPlot->drawSample(x, y, kolvo);
+            if(pSampleTable->findExtremum(&baTmp, extremum))
+            {
+                if (pSampleTable->findMainParam(&extremum, mainParam))
+                    pSampleTable->addSampleToTable(baTmp, mainParam);
+            }
         }
         port->write("A");
     }
