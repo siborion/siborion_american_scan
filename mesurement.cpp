@@ -97,11 +97,11 @@ mesurement::mesurement(QWidget *parent) :
 //    fmSample->setMaximumHeight(250);
 
 
-    teTmp = new QTextEdit();
+//    teTmp = new QTextEdit();
 
     layoutBot->addWidget(fmSample,0,1);
-//    layoutBot->addItem(vs,1,1);
-    layoutBot->addWidget(teTmp);
+    layoutBot->addItem(vs,1,1);
+//    layoutBot->addWidget(teTmp);
     layoutBot->addWidget(pbMeasure,2,1);
     layoutBot->addWidget(pBigView,3,1);
 
@@ -221,7 +221,7 @@ void mesurement::doTimer()
 {
     QList <quint16> extremum;
     stMainParam mainParam;
-    QByteArray baTmp;
+    QByteArray baTmp, baTmp2;
     double x[2024], y[2024];
     quint16 kolvo = 0;
 
@@ -260,9 +260,12 @@ void mesurement::doTimer()
 //            }
 //            file.close();
 
+        baTmp2.clear();
+
         foreach(quint8 val, baTmp)
         {
             val = (val*2);
+            baTmp2.append(val);
             x[kolvo] = kolvo;
             y[kolvo] = double((unsigned char)val);
 //            ttt.append(QString::number(val,16));
@@ -276,10 +279,10 @@ void mesurement::doTimer()
         {
 //            teTmp->setText(ttt);
             pPlot->drawSample(x, y, kolvo);
-            if(pSampleTable->findExtremum(&baTmp, extremum))
+            if(pSampleTable->findExtremum(&baTmp2, extremum))
             {
                 if (pSampleTable->findMainParam(&extremum, mainParam))
-                    pSampleTable->addSampleToTable(baTmp, mainParam);
+                    pSampleTable->addSampleToTable(baTmp2, mainParam);
             }
         }
         port->write("A");

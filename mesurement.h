@@ -41,7 +41,7 @@ public:
                         SignalValueRole = Qt::UserRole + 1001};
 
 private:
-    QTextEdit *teTmp;
+//    QTextEdit *teTmp;
     quint8 offset;
     QComboBox *cbPort;
     QSerialPort *port;
