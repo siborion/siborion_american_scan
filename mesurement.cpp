@@ -225,9 +225,9 @@ void mesurement::doTimer()
     double x[2024], y[2024];
     quint16 kolvo = 0;
 
-    QString ttt;
-    ttt.clear();
-    baTmp.clear();
+//    QString ttt;
+//    ttt.clear();
+//    baTmp.clear();
 
 //    for(int i=0; i<=1024;i++)
 //    {baTmp.append(254);}
@@ -265,8 +265,8 @@ void mesurement::doTimer()
             val = (val*2);
             x[kolvo] = kolvo;
             y[kolvo] = double((unsigned char)val);
-            ttt.append(QString::number(val,16));
-            ttt.append(',');
+//            ttt.append(QString::number(val,16));
+//            ttt.append(',');
             kolvo++;
             if(kolvo>=1024)
                 break;
@@ -274,7 +274,7 @@ void mesurement::doTimer()
 
         if(kolvo>=1000)
         {
-            teTmp->setText(ttt);
+//            teTmp->setText(ttt);
             pPlot->drawSample(x, y, kolvo);
             if(pSampleTable->findExtremum(&baTmp, extremum))
             {
