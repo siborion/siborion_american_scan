@@ -74,7 +74,7 @@ mesurement::mesurement(QWidget *parent) :
     port = new QSerialPort(this);
     timer = new QTimer();
 //    timer->start(62);
-    timer->start(2000);
+    timer->start(1000);
 
     cbPort  = new QComboBox();
     foreach(const QSerialPortInfo &info, QSerialPortInfo::availablePorts())
@@ -192,7 +192,7 @@ void mesurement::openPort()
     {
         port->close();
 //        pbPort->setText("Подключить");
-        timer->start(2000);
+        timer->start(1000);
 
     }
     else
@@ -212,7 +212,7 @@ void mesurement::openPort()
 //                y[kolvo] = double(255);
             }
             pPlot->drawSample(x, y, 1024);
-            timer->start(2000);
+            timer->start(1000);
         }
     }
 }
@@ -234,7 +234,7 @@ void mesurement::doTimer()
 
     if(port->isOpen())
     {
-//        timer->start(62);
+        timer->start(62);
         baTmp = port->readAll();
 
 
@@ -262,6 +262,7 @@ void mesurement::doTimer()
 
         foreach(quint8 val, baTmp)
         {
+            val = (val*2);
             x[kolvo] = kolvo;
             y[kolvo] = double((unsigned char)val);
             ttt.append(QString::number(val,16));
