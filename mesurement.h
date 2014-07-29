@@ -26,6 +26,7 @@
 #include <QSerialPort>
 #include <QSerialPortInfo>
 #include <QTimer>
+#include <QTextEdit>
 
 
 #include <qwt_plot.h>
@@ -40,6 +41,7 @@ public:
                         SignalValueRole = Qt::UserRole + 1001};
 
 private:
+    QTextEdit *teTmp;
     quint8 offset;
     QComboBox *cbPort;
     QSerialPort *port;
