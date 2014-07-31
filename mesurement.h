@@ -111,6 +111,7 @@ private:
 
 signals:
     void refreshAl(double);
+    void refreshAcd(double);
 
 public slots:
     void changeRow(quint8 idType, quint16 idRow, QString Patient, QString Doctor);

@@ -23,11 +23,11 @@ Plot::Plot( QWidget *parent ):
 
 
 //    setCanvasBackground( QColor( "MidnightBlue" ) );
-    setStyleSheet(QStringLiteral("background-color: rgb(234, 234, 234);"));
+//    setStyleSheet(QStringLiteral("background-color: rgb(234, 234, 234);"));
 
 
 //    setCanvasBackground(QColor("DarkSlateGray"));
-//    setCanvasBackground(QColor("Black"));
+    setCanvasBackground(QColor("Black"));
 
     // grid
     QwtPlotGrid *grid = new QwtPlotGrid;

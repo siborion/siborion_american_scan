@@ -96,18 +96,19 @@ void formula::refreshFormula(int curIndex)
     model1 = (QStandardItemModel*)twEmm->model();
 
     model->setItem(0, 0, getItem(slTmp.at(curIndex), Qt::AlignCenter));
-    for(quint8 i=1; i<5; i++)
+    for(quint8 i=1; i<=5; i++)
     {
         if(curIndex != i)
         {
             j++;
-
             switch (i)
             {
             case SRKII:   Calculator(i, AL, AConst, K, 0, &stFormula); break;
             case SRKT:    Calculator(i, AL, AConst, K, 0, &stFormula);    break;
             case HOFFERQ: Calculator(i, AL, ACD, K, 0, &stFormula);     break;
             case HOLLADAY:Calculator(i, AL, SF, K, 0, &stFormula);     break;
+            case HAIGIS:  Calculator(i, AL, AConst, K, ACD_measure, &stFormula);  break;
+
             }
             model1->setItem(j, 0, getItem(stFormula.PEMM, Qt::AlignCenter));
             model->setItem(10+j, 0, getItem(slTmp.at(i), Qt::AlignCenter));
@@ -119,7 +120,7 @@ void formula::refreshFormula(int curIndex)
 QStringList formula::getListFormula()
 {
     QStringList slTmp;
-    slTmp<<""<<"SRKII"<<"SRK/T"<<"Hoffer Q"<<"Holladay";
+    slTmp<<""<<"SRKII"<<"SRK/T"<<"Hoffer Q"<<"Holladay"<<"Haigis";
     return slTmp;
 }
 
@@ -144,7 +145,7 @@ void formula::setAL(QModelIndex prev, QModelIndex post)
     //AL = dAL;
 }
 
-void formula::setValue(quint8 formula, QString name, QString aconst, QString acd, QString fs, double dK, double dAL)
+void formula::setValue(quint8 formula, QString name, QString aconst, QString acd, QString fs, double dK, double dAL, double dACD)
 {
 //    QStringList lensName;
 //    lensName<<name;
@@ -164,7 +165,9 @@ void formula::setValue(quint8 formula, QString name, QString aconst, QString acd
     K = dK;
     qDebug() << "K" << K ;
     AL = dAL;
-    qDebug() << "AL" << AL ;
+    ACD_measure = dACD;
+    qDebug() << "AL_measure" << AL ;
+    qDebug() << "ACD_measure" << ACD_measure ;
 //    calculateIOL(formula);
 //    refreshFormula(formula);
     changeFotmula(formula);
@@ -192,6 +195,10 @@ void formula::calculateIOL(quint8 formula)
     case HOLLADAY:
         Calculator(formula, AL, SF, K, 0, &stFormula);
         break;
+    case HAIGIS:
+        Calculator(formula, AL, AConst, K, ACD_measure, &stFormula);
+        break;
+
     }
 
     saveParam(&stFormula);
@@ -252,6 +259,10 @@ void formula::changeFotmula(int formula)
     case HOLLADAY:
 //        model->setItem(0, 0, getItem(QString("SF = %1").arg(SF), Qt::AlignRight));
         leLens->setText(QString("SF = %1").arg(SF));
+        break;
+    case HAIGIS:
+//        model->setItem(0, 0, getItem(QString("SF = %1").arg(SF), Qt::AlignRight));
+        leLens->setText(QString("A-Const = %1").arg(AConst));
         break;
     }
 }

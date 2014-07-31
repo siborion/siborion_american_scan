@@ -197,7 +197,7 @@ void calculator::refreshTable(quint16 id)
 
     for(quint8 i=0; i<modelMainLens->rowCount() && i<3; i++)
     {
-        double K, AL;
+        double K, AL_meausre;
         quint8 nFormula;
         QString lensName, lensAconst, lensAcd, lensFs;
         nFormula   = twLens->model()->itemData(twLens->model()->index(i,4)).value(0).toInt();
@@ -206,8 +206,7 @@ void calculator::refreshTable(quint16 id)
         lensAcd = twLens->model()->itemData(twLens->model()->index(i,2)).value(0).toString();
         lensFs = twLens->model()->itemData(twLens->model()->index(i,3)).value(0).toString();
         K  = twK->model()->itemData(twK->model()->index(3,1)).value(0).toDouble();
-        AL = twK->model()->itemData(twK->model()->index(0,1)).value(0).toDouble();
-
+        AL_meausre = twK->model()->itemData(twK->model()->index(0,1)).value(0).toDouble();
 
 
 //        K=1;
@@ -217,15 +216,15 @@ void calculator::refreshTable(quint16 id)
         switch (i)
         {
         case 0:
-            Formula1->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, K, AL);
+            Formula1->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, K, AL_meausre,ACD_measure);
             Formula1->setEnabled(true);
             break;
         case 1:
-            Formula2->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, K, AL);
+            Formula2->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, K, AL_meausre,ACD_measure);
             Formula2->setEnabled(true);
             break;
         case 2:
-           Formula3->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, K, AL);
+           Formula3->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, K, AL_meausre,ACD_measure);
            Formula3->setEnabled(true);
         default:
             break;
@@ -242,7 +241,11 @@ void calculator::refreshAl(double AL)
     QStandardItemModel *model;
     model = (QStandardItemModel*)twK->model();
     model->setData(model->index(0,1), AL, Qt::DisplayRole);
+}
 
+void calculator::refreshAcd(double Acd)
+{
+ACD_measure = Acd;
 }
 
 void calculator::setAL(QModelIndex val1, QModelIndex val2)

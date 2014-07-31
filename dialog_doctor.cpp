@@ -57,6 +57,7 @@ dialog_doctor::dialog_doctor(quint32 id, QWidget *parent) :
     pCombo_Delegate->values().insert( 2, "SRK T" );
     pCombo_Delegate->values().insert( 3, "HOFFER Q" );
     pCombo_Delegate->values().insert( 4, "HOLLADAY" );
+    pCombo_Delegate->values().insert( 5, "HAIGIS" );
     ui->tableView->setItemDelegateForColumn(5, pCombo_Delegate);
 
     CheckBoxDelegate * pCheck_Delegate = new CheckBoxDelegate( ui->tableView );

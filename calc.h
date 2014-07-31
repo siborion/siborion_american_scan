@@ -5,7 +5,7 @@
 #define SRKT       2
 #define HOFFERQ    3
 #define HOLLADAY   4
-#define BINHORST   5
+#define HAIGIS     5
 
 
 
@@ -24,6 +24,7 @@ void SRKIICalc(double AL, double AConst, double K,double Rx,iol_formula* SRKIIVa
 void SRKTCalc(double AL, double AConst,double K,double Rx,iol_formula* SRKTValues);
 int HofferCalc(double A, double AConst, double K,double Rx,iol_formula* HofferValues);
 void HolladayCalc(double AL, double AConst, double K,double Rx, iol_formula* HolladayValues);
+void BinkhorstCalc(double AL,double AConst, double K,double Rx,iol_formula* BinhorstValues );
 
 
 class calc

@@ -19,6 +19,7 @@ private:
     double AConst;
     double ACD;
     double SF;
+    double ACD_measure;
 
 //    adjview *twHead;
     QLabel *lLens;
@@ -33,7 +34,7 @@ private:
     void calculateIOL(quint8 formula);
 
 public:
-    void setValue(quint8 formula, QString name, QString aconst, QString acd, QString fs, double K, double AL);
+    void setValue(quint8 formula, QString name, QString aconst, QString acd, QString fs, double K, double AL, double ACD);
 
 public:
     explicit formula(QWidget *parent = 0);

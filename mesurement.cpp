@@ -25,16 +25,6 @@ mesurement::mesurement(QWidget *parent) :
     QGridLayout *glPlot  = new QGridLayout(fmPlot);
     pPlot = new Plot(this);
 
-
-    double x[2024], y[2024];
-    for(int i=0; i<=1024; i++)
-    {
-        x[i] = i;
-        y[i] = 128;
-    }
-    pPlot->drawSample(x, y, 1024);
-
-
     glPlot->addWidget(pBigViewCur);
     glPlot->addWidget(pPlot,1,0);
 
@@ -106,11 +96,11 @@ mesurement::mesurement(QWidget *parent) :
     layoutBot->addWidget(pBigView,3,1);
 
 
-//    connect(pbMeasure, SIGNAL(pressed()), pSampleTable, SLOT(getFileSample()));
-    connect(pbMeasure, SIGNAL(pressed()), SLOT(openPort()));
+    connect(pbMeasure, SIGNAL(pressed()), pSampleTable, SLOT(getFileSample()));
+//    connect(pbMeasure, SIGNAL(pressed()), SLOT(openPort()));
     connect(pPlot, SIGNAL(refreshTable(stMainParam)), pSampleTable, SLOT(refreshTable(stMainParam)));
     connect(pSampleTable, SIGNAL(changeRow(QList<quint16>)), SLOT(changeRow(QList<quint16> )));
-//    connect(pSampleTable, SIGNAL(refreshMainParam()), SLOT(refreshMainParam()));
+    connect(pSampleTable, SIGNAL(refreshMainParam()), SLOT(refreshMainParam()));
     connect(pbDel, SIGNAL(clicked()), pSampleTable, SLOT(delSample()));
 //    connect(pbDel, SIGNAL(clicked()), SLOT(delSample()));
     connect(pKey,SIGNAL(changeEye(quint8)),SLOT(changeEye(quint8)));
@@ -162,6 +152,7 @@ void mesurement::refreshMainParam()
     pBigView->setDisplay(pSampleTable->resultParam.AvgAl, pSampleTable->resultParam.AvgAcd, pSampleTable->resultParam.AvgLt, pSampleTable->resultParam.AvgVit, pSampleTable->resultParam.devAl, pSampleTable->resultParam.devAcd, pSampleTable->resultParam.devLt, pSampleTable->resultParam.devVit);
     pBigViewCur->setDisplay(pSampleTable->resultParam.AL, pSampleTable->resultParam.ACD, pSampleTable->resultParam.LT, pSampleTable->resultParam.Vit);
     emit refreshAl(pSampleTable->resultParam.AvgAl);
+    emit refreshAcd(pSampleTable->resultParam.AvgAcd);
 //    average->setText(QString("Average (count %1)").arg(pSampleTable->resultParam.countSample));
 //    VALaverage->setText(QString("%1").arg(pSampleTable->resultParam.AvgAl));
 //    VALsd->setText(QString("%1").arg(pSampleTable->resultParam.SD));
@@ -203,15 +194,14 @@ void mesurement::openPort()
             model = (QStandardItemModel*)pSampleTable->twMeas->model();
             model->setRowCount(0);
 
-            double x[2024], y[2024];
-            quint16 kolvo = 0;
-            for(kolvo=0; kolvo<=1024; kolvo++)
-            {
-                x[kolvo] = kolvo;
-                y[kolvo] = double((unsigned char)kolvo);
-//                y[kolvo] = double(255);
-            }
-            pPlot->drawSample(x, y, 1024);
+//            double x[2024], y[2024];
+//            quint16 kolvo = 0;
+//            for(kolvo=0; kolvo<=1024; kolvo++)
+//            {
+//                x[kolvo] = kolvo;
+//                y[kolvo] = double((unsigned char)kolvo);
+//            }
+//            pPlot->drawSample(x, y, 1024);
             timer->start(1000);
         }
     }

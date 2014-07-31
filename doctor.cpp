@@ -42,10 +42,12 @@ doctor::doctor(QWidget *parent) :
     QCheckBox   *cbHofferQ       = new QCheckBox(tr("HOFFER Q"));
     QCheckBox   *cbSrkT          = new QCheckBox(tr("SRK T"));
     QCheckBox   *cbHolladay      = new QCheckBox(tr("HOLLADAY"));
+    QCheckBox   *cbHaigis        = new QCheckBox(tr("HAIGIS"));
     formulaLayout->addWidget(cbSrk2,    0, 0);
     formulaLayout->addWidget(cbHofferQ, 0, 1);
     formulaLayout->addWidget(cbSrkT,    1, 0);
     formulaLayout->addWidget(cbHolladay,1, 1);
+    formulaLayout->addWidget(cbHaigis  ,2, 0);
 //----------------------------------------------------------------
     model = new QSqlQueryModel();
     twLens = new adjview();

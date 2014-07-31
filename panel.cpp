@@ -34,6 +34,8 @@ Panel::Panel( QWidget *parent ):
     connect(page,SIGNAL(changeRow(quint8,quint16,QString,QString)),Mesur,SLOT(changeRow(quint8,quint16,QString,QString)));
     connect(page,SIGNAL(changeRow(quint8,quint16,QString,QString)),Calculator,SLOT(changeRow(quint8,quint16,QString,QString)));
     connect(Mesur,SIGNAL(refreshAl(double)),Calculator,SLOT(refreshAl(double)));
+    connect(Mesur,SIGNAL(refreshAcd(double)),Calculator,SLOT(refreshAcd(double)));
+
 
 }
 
