@@ -32,7 +32,7 @@ formula::formula(QWidget *parent) :
     columnPercent<<100;
     lst.clear();
     lst<<"Formula";
-    twFormula = new adjview(14, lst, columnPercent);
+    twFormula = new adjview(15, lst, columnPercent);
     twFormula->setFrameStyle(0);
     twFormula->setSpan(0, 0, 11, 1);
     twFormula->setStyleSheet(QLatin1String("gridline-color: rgba(255, 255, 255);\n"
@@ -53,7 +53,7 @@ formula::formula(QWidget *parent) :
 
     columnPercent.clear();
     columnPercent<<100;
-    twEmm = new adjview(4, 1, columnPercent);
+    twEmm = new adjview(5, 1, columnPercent);
     twEmm->setFrameStyle(0);
     twEmm->setStyleSheet(QLatin1String("gridline-color: rgba(255, 255, 255);\n"
                                            "background-color: rgb(200, 200, 200);\n"
@@ -69,6 +69,7 @@ formula::formula(QWidget *parent) :
     cbFormula->setItemData(2, Qt::AlignCenter, Qt::TextAlignmentRole);
     cbFormula->setItemData(3, Qt::AlignCenter, Qt::TextAlignmentRole);
     cbFormula->setItemData(4, Qt::AlignCenter, Qt::TextAlignmentRole);
+    cbFormula->setItemData(5, Qt::AlignCenter, Qt::TextAlignmentRole);
 
     layout->addWidget(cbFormula, 0, 0, 1, 2);
 //    layout->addWidget(twHead,    1, 0, 1, 2);
@@ -157,17 +158,19 @@ void formula::setValue(quint8 formula, QString name, QString aconst, QString acd
     lLens->setText(name);
 
     AConst = aconst.toDouble();
-    qDebug() << "AConst" << AConst ;
+//    qDebug() << "AConst" << AConst ;
     ACD = acd.toDouble();
-    qDebug() << "ACD" << ACD ;
+//    qDebug() << "ACD" << ACD ;
     SF = fs.toDouble();
-    qDebug() << "SF" << SF ;
+//    qDebug() << "SF" << SF ;
     K = dK;
-    qDebug() << "K" << K ;
+//    qDebug() << "K" << K ;
     AL = dAL;
     ACD_measure = dACD;
-    qDebug() << "AL_measure" << AL ;
-    qDebug() << "ACD_measure" << ACD_measure ;
+
+
+//    qDebug() << "AL_measure" << AL ;
+//    qDebug() << "ACD_measure" << ACD_measure ;
 //    calculateIOL(formula);
 //    refreshFormula(formula);
     changeFotmula(formula);
@@ -178,7 +181,7 @@ void formula::calculateIOL(quint8 formula)
 
     _formulae stFormula;
     QStandardItemModel *model;// = (QStandardItemModel*)twHead->model();
-    qDebug()<<formula;
+//    qDebug()<<formula;
     switch (formula)
     {
     case 0:
@@ -197,6 +200,7 @@ void formula::calculateIOL(quint8 formula)
         break;
     case HAIGIS:
         Calculator(formula, AL, AConst, K, ACD_measure, &stFormula);
+//            qDebug() << "ACD_Measure" << ACD_measure;
         break;
 
     }

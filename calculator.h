@@ -69,11 +69,12 @@ private:
         "Patient Name",
         "Doctor Name"
         };
-    QString baseMapK[4] = {
+    QString baseMapK[5] = {
         "AL",
         "K1-Value",
         "K2-Value",
-        "K-Value"
+        "K-Value",
+        "ACD"
         };
     QString baseMapA[4] = {
         "A Const",

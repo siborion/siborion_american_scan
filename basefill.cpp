@@ -8,7 +8,7 @@ basefill::basefill(quint32 id, const QObjectList &list, QString tableName) //:
     olParent = &list;
     uiId = id;
     qsTableName = tableName;
-    qDebug() << qsTableName;
+//    qDebug() << qsTableName;
 
 }
 
@@ -20,7 +20,7 @@ void basefill::fillData()
 
     str = "select * from %1 where id = %2 ;";
     str = str.arg(qsTableName).arg(uiId);
-    qDebug() << str;
+//    qDebug() << str;
     query = pBase->getData(str);
     if(query.first())
     {
@@ -164,17 +164,17 @@ void basefill::saveData()
     strInsertColumn.append(strInsertValue);
     strUpdate.append(QString(" where id=%1;").arg(uiId));
 
-    qDebug()<<"==========="<<strUpdate;
+//    qDebug()<<"==========="<<strUpdate;
 
     if(uiId>0)
     {
         query.prepare(strUpdate);
-        qDebug() << strUpdate;
+//        qDebug() << strUpdate;
     }
     else
     {
         query.prepare(strInsertColumn);
-        qDebug() << strInsertColumn;
+//        qDebug() << strInsertColumn;
     }
     query.exec();
 }

@@ -51,9 +51,9 @@ calculator::calculator(QWidget *parent) :
     //-------------------------------
     columnPercent.clear();
     columnPercent<<40<<40<<20;
-    twK = new adjview(4, 3, columnPercent);
+    twK = new adjview(5, 3, columnPercent);
     model = (QStandardItemModel*)twK->model();
-    for(quint8 i=0; i<4; i++)
+    for(quint8 i=0; i<5; i++)
     {
         model->setItem(i, 0, new QStandardItem(baseMapK[i]));
         model->item   (i, 0)->setBackground(Qt::lightGray);
@@ -130,15 +130,15 @@ void calculator::refreshPatientParam(quint16 id)
         sql.next();
         if(pbOD->text()=="OD")
         {
-            model->setData(model->index(1,1), sql.value(0).toString(), Qt::DisplayRole);
-            model->setData(model->index(2,1), sql.value(1).toString(), Qt::DisplayRole);
-            model->setData(model->index(3,1), sql.value(2).toString(), Qt::DisplayRole);
+            model->setData(model->index(1,1), sql.value(0).toDouble(), Qt::DisplayRole);
+            model->setData(model->index(2,1), sql.value(1).toDouble(), Qt::DisplayRole);
+            model->setData(model->index(3,1), sql.value(2).toDouble(), Qt::DisplayRole);
         }
         else
         {
-            model->setData(model->index(1,1), sql.value(3).toString(), Qt::DisplayRole);
-            model->setData(model->index(2,1), sql.value(4).toString(), Qt::DisplayRole);
-            model->setData(model->index(3,1), sql.value(5).toString(), Qt::DisplayRole);
+            model->setData(model->index(1,1), sql.value(3).toDouble(), Qt::DisplayRole);
+            model->setData(model->index(2,1), sql.value(4).toDouble(), Qt::DisplayRole);
+            model->setData(model->index(3,1), sql.value(5).toDouble(), Qt::DisplayRole);
         }
     }
 }
@@ -207,7 +207,7 @@ void calculator::refreshTable(quint16 id)
         lensFs = twLens->model()->itemData(twLens->model()->index(i,3)).value(0).toString();
         K  = twK->model()->itemData(twK->model()->index(3,1)).value(0).toDouble();
         AL_meausre = twK->model()->itemData(twK->model()->index(0,1)).value(0).toDouble();
-
+        ACD_measure = twK->model()->itemData(twK->model()->index(4,1)).value(0).toDouble();
 
 //        K=1;
 //        AL = 20;
@@ -229,6 +229,9 @@ void calculator::refreshTable(quint16 id)
         default:
             break;
         }
+
+        qDebug() << "ACD_measure2" << ACD_measure;
+
 //        nFormula = modelMainLens->itemData(modelMainLens->index(i,6))
 //        modelMainLens->itemData()
 //        Formula1->setValue(
@@ -245,15 +248,22 @@ void calculator::refreshAl(double AL)
 
 void calculator::refreshAcd(double Acd)
 {
-ACD_measure = Acd;
+    ACD_measure = Acd;
+    qDebug() << "ACD_measure1" << ACD_measure;
+
+    QStandardItemModel *model;
+    model = (QStandardItemModel*)twK->model();
+    model->setData(model->index(4,1), Acd, Qt::DisplayRole);
+
+
 }
 
 void calculator::setAL(QModelIndex val1, QModelIndex val2)
 {
-    if((val1.column()==1)&&(val1.row()==0))
+    if(val1.column()==1)
     {
-//        AL = val1.data().toDouble();
-        refreshTable(patientCurId);
+        if ((val1.row()==0) || (val1.row()==3) || (val1.row()==4))
+            refreshTable(patientCurId);
     }
 
 }

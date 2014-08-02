@@ -11,8 +11,8 @@ delegate_sample::delegate_sample(QObject *parent)
 void delegate_sample::paint(QPainter *painter, const QStyleOptionViewItem &option,
                              const QModelIndex &index) const
 {
-    qDebug()<<"row"<<index.row();
-    qDebug()<<"column"<<index.column();
+//    qDebug()<<"row"<<index.row();
+//    qDebug()<<"column"<<index.column();
     if(index.model()->index(index.row(), 1).data(Qt::UserRole).toDouble() > 0.2)
         painter->fillRect(option.rect, QColor(Qt::yellow));
     else

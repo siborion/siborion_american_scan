@@ -14,8 +14,8 @@ scanbase::scanbase()
 
     if(pDB.open())
     {
-        qDebug() <<QDir::currentPath();
-        qDebug() << sCurPath;
+//        qDebug() <<QDir::currentPath();
+//        qDebug() << sCurPath;
     }
     else
     {

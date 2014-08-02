@@ -66,9 +66,9 @@ bases::bases(QWidget *parent) :
     if(model->rowCount()>0)
     {
         twTable->setCurrentIndex(model->index(0,0));
-        qDebug()<<model->index(0,0);
+//        qDebug()<<model->index(0,0);
     }
-    qDebug()<<model->rowCount();
+//    qDebug()<<model->rowCount();
 
 
     connect(rbPatient, SIGNAL(clicked(bool)), SLOT(changeBasePatient(bool)));
@@ -80,7 +80,7 @@ bases::bases(QWidget *parent) :
 //    connect(twTable, SIGNAL(clicked(QModelIndex)), SLOT(DelIndex(QModelIndex)));
     connect(twTable, SIGNAL(doubleClicked(QModelIndex)), SLOT(EditIndex(QModelIndex)));
     connect(twTable->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), SLOT(changeRow(QModelIndex,QModelIndex)));
-    qDebug()<<twTable->selectionModel();
+//    qDebug()<<twTable->selectionModel();
 
 }
 

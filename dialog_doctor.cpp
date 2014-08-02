@@ -29,7 +29,7 @@ dialog_doctor::dialog_doctor(quint32 id, QWidget *parent) :
     QSqlQuery sql(str);
     sql.exec();
 
-    qDebug()<<str;
+//    qDebug()<<str;
 
     quint16 numRow=0;
 //    qint8 formula;
@@ -114,8 +114,8 @@ void dialog_doctor::saveData()
                   .arg(id_lens).arg(curId).arg(formula);
             QSqlQuery sql;
             sql.exec(str);
-            qDebug()<<"8888888888888888888888";
-            qDebug()<<str;
+//            qDebug()<<"8888888888888888888888";
+//            qDebug()<<str;
         }
     }
     accept();
