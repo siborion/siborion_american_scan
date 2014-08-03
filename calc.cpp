@@ -452,10 +452,11 @@ int HaigisCalc(double AL, double AConst,double ac,double K,double Rx,iol_formula
     qDebug()<<"z"<<z;
 
     Dl= (((n/(AL-ACDd))-(n/((n/z)-ACDd))));
+    Dl*=1000;
     qDebug()<<"Dl"<<Dl;
 
     haigis_PEmm = Dl;
-    HaigisValues->PEMM = haigis_PEmm;
+    haigis_PEmm_New = HaigisValues->PEMM = haigis_PEmm;
 
 //    haigis_PEmm = Dl;
 //    haigis_PEmm_New = floor(Dl);
@@ -498,7 +499,7 @@ int HaigisCalc(double AL, double AConst,double ac,double K,double Rx,iol_formula
 
 
 
-int Calculator(int FormulaType, double AL, double AConst, double K,double Rx,iol_formula* formula_values)
+int Calculator(int FormulaType, double AL, double AConst, double K, double ACD_measure,iol_formula* formula_values)
 {
    double i;
 
@@ -515,19 +516,19 @@ int Calculator(int FormulaType, double AL, double AConst, double K,double Rx,iol
    switch (FormulaType)
    {
    case SRKII:
-            SRKIICalc(AL,AConst,K, Rx,formula_values);
+            SRKIICalc(AL,AConst,K, 0,formula_values);
        break;
    case SRKT:
-            SRKTCalc(AL,AConst,K, Rx,formula_values);
+            SRKTCalc(AL,AConst,K, 0,formula_values);
        break;
    case HOFFERQ:
-            HofferCalc(AL,AConst,K, Rx,formula_values);
+            HofferCalc(AL,AConst,K, 0,formula_values);
        break;
    case HOLLADAY:
-            HolladayCalc(AL,AConst,K, Rx,formula_values);
+            HolladayCalc(AL,AConst,K, 0,formula_values);
        break;
    case HAIGIS:
-            HaigisCalc(AL, AConst, Rx/*ACD_Measure*/, K, 0, formula_values);
+            HaigisCalc(AL, AConst, ACD_measure, K, 0, formula_values);
 
        break;
    }
