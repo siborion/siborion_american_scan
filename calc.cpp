@@ -398,7 +398,7 @@ int HofferCalc(double A, double ACD, double K,double Rx,iol_formula* HofferValue
 
 int HaigisCalc(double AL, double AConst,double ac,double K,double Rx,iol_formula* HaigisValues)
 {
-    double R=336.0;
+    double R=337.5;
     double a0;
     double a1=0.4;
     double a2=0.1;
@@ -458,6 +458,12 @@ int HaigisCalc(double AL, double AConst,double ac,double K,double Rx,iol_formula
     haigis_PEmm = Dl;
     haigis_PEmm_New = HaigisValues->PEMM = haigis_PEmm;
 
+
+    haigis_PEmm_New = floor(haigis_PEmm);
+    DIE = haigis_PEmm - haigis_PEmm_New;
+    haigis_PEmm_New = haigis_PEmm_New + Diff(DIE);
+
+
 //    haigis_PEmm = Dl;
 //    haigis_PEmm_New = floor(Dl);
 //    DIE = haigis_PEmm - haigis_PEmm_New;
@@ -481,12 +487,26 @@ int HaigisCalc(double AL, double AConst,double ac,double K,double Rx,iol_formula
 
    Loop=0;
 
+   n*=1000;
+   Dc*=1000;
+
    for (P = haigis_PEmm_New - 1.5; P<=haigis_PEmm_New + 1.5; P= P + 0.5)
    {
        q1= n*(n-((P)*(AL-ACDd)));
+       qDebug()<<"q1"<<q1;
+
        q2=(n*(AL-ACDd)) + ACDd*(n-(P*(AL-ACDd)));
+       qDebug()<<"q2"<<q2;
        q=q1/q2;
+
+       qDebug() << "q" << q;
+       qDebug() << "Dc" << Dc;
+
        Refr=(q-Dc)/(1+0.012*(q-Dc));
+
+       qDebug()<<"Refr"<<Refr;
+
+
        HaigisValues->PORx[Loop] = Refr;
        HaigisValues->IOLPower[Loop] = P;
        Loop++;
