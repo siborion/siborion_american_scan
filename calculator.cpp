@@ -49,6 +49,9 @@ calculator::calculator(QWidget *parent) :
 
 
     //-------------------------------
+//    QFont font;
+//    font.setStyle();
+
     columnPercent.clear();
     columnPercent<<40<<40<<20;
     twK = new adjview(5, 3, columnPercent);
@@ -58,10 +61,29 @@ calculator::calculator(QWidget *parent) :
         model->setItem(i, 0, new QStandardItem(baseMapK[i]));
         model->item   (i, 0)->setBackground(Qt::lightGray);
         model->item   (i, 0)->setEditable(false);
+        model->item   (i, 0)->setEnabled(false);
         model->setItem(i, 2, i==0?new QStandardItem("mm"):new QStandardItem("D"));
         model->item   (i, 2)->setBackground(Qt::lightGray);
+//        model->item   (i, 2)->setFont(font);
         model->item   (i, 2)->setEditable(false);
+        model->item   (i, 2)->setEnabled(false);
+
     }
+    QPalette palette;
+    QBrush brush(QColor(0, 0, 0, 255));
+    brush.setStyle(Qt::SolidPattern);
+//    palette.setBrush(QPalette::Active, QPalette::WindowText, brush);
+//    palette.setBrush(QPalette::Active, QPalette::Text, brush);
+//    palette.setBrush(QPalette::Active, QPalette::ButtonText, brush);
+//    palette.setBrush(QPalette::Inactive, QPalette::WindowText, brush);
+//    palette.setBrush(QPalette::Inactive, QPalette::Text, brush);
+//    palette.setBrush(QPalette::Inactive, QPalette::ButtonText, brush);
+//    palette.setBrush(QPalette::Disabled, QPalette::WindowText, brush);
+    palette.setBrush(QPalette::Disabled, QPalette::Text, brush);
+//    palette.setBrush(QPalette::Disabled, QPalette::ButtonText, brush);
+    twK->setPalette(palette);
+
+
     //--------------------------------
     columnPercent.clear();
     columnPercent<<50<<50;
@@ -260,11 +282,20 @@ void calculator::refreshAcd(double Acd)
 
 void calculator::setAL(QModelIndex val1, QModelIndex val2)
 {
+    double dTmp;
     if(val1.column()==1)
     {
         if ((val1.row()==0) || (val1.row()==3) || (val1.row()==4))
             refreshTable(patientCurId);
+        else
+        {
+            QStandardItemModel *model;
+            model = (QStandardItemModel*)twK->model();
+            dTmp =  twK->model()->itemData(twK->model()->index(1,1)).value(0).toDouble();
+            dTmp += twK->model()->itemData(twK->model()->index(2,1)).value(0).toDouble();
+            dTmp /= 2;
+            model->setData(model->index(3, 1), dTmp, Qt::DisplayRole);
+        }
     }
-
 }
 

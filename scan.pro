@@ -61,7 +61,8 @@ SOURCES += main.cpp\
     bigviewnumcur.cpp \
     combo_delegate.cpp \
     delegate.cpp \
-    calc.cpp
+    calc.cpp \
+    calculator_patient.cpp
 
 
 HEADERS  += mainwindow.h\
@@ -92,7 +93,8 @@ HEADERS  += mainwindow.h\
     bigviewnumcur.h \
     combo_delegate.h \
     delegate.h \
-    calc.h
+    calc.h \
+    calculator_patient.h
 
 #FORMS    += mainwindow.ui
 
@@ -104,6 +106,7 @@ FORMS += \
     dialog_lens.ui \
     dialog_doctor.ui \
     bigviewnumhor.ui \
-    bigviewnumcur.ui
+    bigviewnumcur.ui \
+    calculator_patient.ui
 
 OTHER_FILES += plugins/sqldrivers/qsqlite.dll
