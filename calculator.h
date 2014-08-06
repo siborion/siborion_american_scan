@@ -15,6 +15,7 @@
 #include <QSqlQueryModel>
 #include "scanbase.h"
 #include "calc.h"
+#include "calculator_patient.h"
 
 class calculator : public QWidget
 {
@@ -63,6 +64,7 @@ private:
     formula *Formula1;
     formula *Formula2;
     formula *Formula3;
+    calculator_patient *pCalcPatient;
 
     QString baseMapName[3] = {
         "Patient ID",

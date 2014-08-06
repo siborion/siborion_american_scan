@@ -8,7 +8,6 @@ calculator::calculator(QWidget *parent) :
     QList<int> columnPercent;
     QStringList lst;
 
-
     pBase = scanbase::instanse();
 
     QStandardItemModel *model;
@@ -31,7 +30,8 @@ calculator::calculator(QWidget *parent) :
         model->item   (i, 0)->setBackground(Qt::lightGray);
         model->item   (i, 0)->setEditable(false);
     }
-    //-------------------------------
+
+//-------------------------------
     columnPercent.clear();
     columnPercent<<20<<20<<20<<20<<20;
     lst<<"Lens Name"<<"AConst"<<"ACD"<<"SF"<<"FORMULA";
@@ -49,9 +49,6 @@ calculator::calculator(QWidget *parent) :
 
 
     //-------------------------------
-//    QFont font;
-//    font.setStyle();
-
     columnPercent.clear();
     columnPercent<<40<<40<<20;
     twK = new adjview(5, 3, columnPercent);
@@ -72,19 +69,16 @@ calculator::calculator(QWidget *parent) :
     QPalette palette;
     QBrush brush(QColor(0, 0, 0, 255));
     brush.setStyle(Qt::SolidPattern);
-//    palette.setBrush(QPalette::Active, QPalette::WindowText, brush);
-//    palette.setBrush(QPalette::Active, QPalette::Text, brush);
-//    palette.setBrush(QPalette::Active, QPalette::ButtonText, brush);
-//    palette.setBrush(QPalette::Inactive, QPalette::WindowText, brush);
-//    palette.setBrush(QPalette::Inactive, QPalette::Text, brush);
-//    palette.setBrush(QPalette::Inactive, QPalette::ButtonText, brush);
-//    palette.setBrush(QPalette::Disabled, QPalette::WindowText, brush);
     palette.setBrush(QPalette::Disabled, QPalette::Text, brush);
-//    palette.setBrush(QPalette::Disabled, QPalette::ButtonText, brush);
     twK->setPalette(palette);
+//----------------------------------
+
+    pCalcPatient = new calculator_patient();
 
 
-    //--------------------------------
+
+
+//-----------------------------------
     columnPercent.clear();
     columnPercent<<50<<50;
     twA = new adjview(3, 2, columnPercent);
@@ -106,13 +100,16 @@ calculator::calculator(QWidget *parent) :
     pbOD = new QPushButton("OD");
     pbPersCalc = new QPushButton("Personalized Calculation");
 
-    layoutTopLeftDown->addWidget(twK,  0, 0, 2, 1, Qt::AlignTop);
-    layoutTopLeftDown->addWidget(twA,  0, 1, 1, 1, Qt::AlignTop);
-    layoutTopLeftDown->addWidget(twRx, 1, 1);
-    layoutTopLeftDown->addWidget(pbOD,       2, 0, 2, 1, Qt::AlignTop);
-    layoutTopLeftDown->addWidget(pbPersCalc, 2, 1, 1, 1, Qt::AlignTop);
 
-    layoutTopLeft->addWidget(twName);
+    layoutTopLeftDown->addWidget(pCalcPatient,  0, 0, 2, 1, Qt::AlignTop);
+
+//    layoutTopLeftDown->addWidget(twK,  0, 0, 2, 1, Qt::AlignTop);
+//    layoutTopLeftDown->addWidget(twA,  0, 1, 1, 1, Qt::AlignTop);
+//    layoutTopLeftDown->addWidget(twRx, 1, 1);
+//    layoutTopLeftDown->addWidget(pbOD,       2, 0, 2, 1, Qt::AlignTop);
+//    layoutTopLeftDown->addWidget(pbPersCalc, 2, 1, 1, 1, Qt::AlignTop);
+
+//    layoutTopLeft->addWidget(twName);
     layoutTopLeft->addLayout(layoutTopLeftDown);
     layoutTop->addLayout(layoutTopLeft);
     layoutTop->addWidget(twLens, 0, Qt::AlignTop);
