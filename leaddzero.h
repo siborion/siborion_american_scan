@@ -8,6 +8,7 @@ class leAddZero : public QLineEdit
     Q_OBJECT
 public:
     explicit leAddZero(QWidget *parent = 0);
+    void setTextZero(QString);
 
 private slots:
     void lineEditUpdate();

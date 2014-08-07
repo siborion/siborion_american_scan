@@ -86,14 +86,14 @@
        </widget>
       </item>
       <item row="0" column="5">
-       <widget class="leAddZero" name="lineEdit_4">
+       <widget class="leAddZero" name="leAL_measure">
         <property name="text">
          <string/>
         </property>
        </widget>
       </item>
       <item row="2" column="4" colspan="3">
-       <widget class="QPushButton" name="pushButton">
+       <widget class="QPushButton" name="pbSide">
         <property name="text">
          <string>OD</string>
         </property>
@@ -114,13 +114,13 @@
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="leAddZero" name="lineEdit_5"/>
+       <widget class="leAddZero" name="leK1"/>
       </item>
       <item row="1" column="1">
-       <widget class="leAddZero" name="lineEdit_6"/>
+       <widget class="leAddZero" name="leK2"/>
       </item>
       <item row="1" column="5">
-       <widget class="leAddZero" name="lineEdit_8"/>
+       <widget class="leAddZero" name="leACD_measure"/>
       </item>
       <item row="0" column="6">
        <widget class="QLabel" name="label_9">
@@ -130,7 +130,11 @@
        </widget>
       </item>
       <item row="2" column="1">
-       <widget class="leAddZero" name="lineEdit_7"/>
+       <widget class="leAddZero" name="leK">
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+       </widget>
       </item>
       <item row="0" column="0">
        <widget class="QLabel" name="label_5">
@@ -178,7 +182,7 @@
        <number>2</number>
       </property>
       <item row="0" column="3">
-       <widget class="QLineEdit" name="lineEdit_11"/>
+       <widget class="QLineEdit" name="leSF_personal"/>
       </item>
       <item row="0" column="2">
        <widget class="QLabel" name="label_16">
@@ -188,10 +192,10 @@
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="QLineEdit" name="lineEdit_10"/>
+       <widget class="QLineEdit" name="leACD_personal"/>
       </item>
       <item row="0" column="1">
-       <widget class="QLineEdit" name="lineEdit_9"/>
+       <widget class="QLineEdit" name="leAConst_personal"/>
       </item>
       <item row="0" column="0">
        <widget class="QLabel" name="label_14">
@@ -208,7 +212,7 @@
        </widget>
       </item>
       <item row="1" column="3">
-       <widget class="QLineEdit" name="lineEdit_12"/>
+       <widget class="QLineEdit" name="leRx_personal"/>
       </item>
       <item row="1" column="2">
        <widget class="QLabel" name="label_15">
@@ -269,13 +273,13 @@
        </spacer>
       </item>
       <item row="2" column="1" colspan="2">
-       <widget class="QLineEdit" name="lineEdit_3"/>
+       <widget class="QLineEdit" name="leDoctorName"/>
       </item>
       <item row="0" column="1">
-       <widget class="QLineEdit" name="lineEdit"/>
+       <widget class="QLineEdit" name="lePatientId"/>
       </item>
       <item row="1" column="1" colspan="2">
-       <widget class="QLineEdit" name="lineEdit_2"/>
+       <widget class="QLineEdit" name="lePatientName"/>
       </item>
       <item row="2" column="0">
        <widget class="QLabel" name="label_3">

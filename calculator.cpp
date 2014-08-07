@@ -14,8 +14,8 @@ calculator::calculator(QWidget *parent) :
 
     QVBoxLayout *layout              = new QVBoxLayout(this);
     QHBoxLayout *layoutTop           = new QHBoxLayout();
-    QVBoxLayout *layoutTopLeft       = new QVBoxLayout();
-    QGridLayout *layoutTopLeftDown   = new QGridLayout();
+//    QVBoxLayout *layoutTopLeft       = new QVBoxLayout();
+//    QGridLayout *layoutTopLeftDown   = new QGridLayout();
 
     QSpacerItem *vs2 = new QSpacerItem(20, 40, QSizePolicy::Expanding, QSizePolicy::Expanding);
 
@@ -35,7 +35,9 @@ calculator::calculator(QWidget *parent) :
     columnPercent.clear();
     columnPercent<<20<<20<<20<<20<<20;
     lst<<"Lens Name"<<"AConst"<<"ACD"<<"SF"<<"FORMULA";
-    twLens = new adjview(8, lst, columnPercent);
+    twLens = new adjview(3, lst, columnPercent);
+    twLens->setMinimumWidth(300);
+//    twLens->setMaximumWidth(300);
     modelMainLens = new QSqlQueryModel ();
     twLens->setModel(modelMainLens);
 //    QString str = "SELECT  name, mfg, aconst, acd from lens;";
@@ -101,7 +103,7 @@ calculator::calculator(QWidget *parent) :
     pbPersCalc = new QPushButton("Personalized Calculation");
 
 
-    layoutTopLeftDown->addWidget(pCalcPatient,  0, 0, 2, 1, Qt::AlignTop);
+//    layoutTop->addWidget(pCalcPatient,  0, 0, 2, 1, Qt::AlignTop);
 
 //    layoutTopLeftDown->addWidget(twK,  0, 0, 2, 1, Qt::AlignTop);
 //    layoutTopLeftDown->addWidget(twA,  0, 1, 1, 1, Qt::AlignTop);
@@ -110,9 +112,11 @@ calculator::calculator(QWidget *parent) :
 //    layoutTopLeftDown->addWidget(pbPersCalc, 2, 1, 1, 1, Qt::AlignTop);
 
 //    layoutTopLeft->addWidget(twName);
-    layoutTopLeft->addLayout(layoutTopLeftDown);
-    layoutTop->addLayout(layoutTopLeft);
-    layoutTop->addWidget(twLens, 0, Qt::AlignTop);
+//    layoutTopLeft->addLayout(layoutTopLeftDown);
+//    layoutTop->addLayout(layoutTopLeft);
+//    layoutTop->addWidget(twLens, 0, Qt::AlignTop);
+    layoutTop->addWidget(pCalcPatient);
+    layoutTop->addWidget(twLens);
     layout->addLayout(layoutTop);
 
      frCalculator = new QFrame();
@@ -164,13 +168,16 @@ void calculator::refreshPatientParam(quint16 id)
 
 void calculator::changeRow(quint8 numBase, quint16 id, QString Patient, QString Doctor)
 {
-    QStandardItemModel *model;
-    model = (QStandardItemModel*)twName->model();
-    model->setData(model->index(0,1), QString("%1").arg(id), Qt::DisplayRole);
-    model->setData(model->index(1,1), Patient, Qt::DisplayRole);
-    model->setData(model->index(2,1), Doctor, Qt::DisplayRole);
+//    QStandardItemModel *model;
+//    model = (QStandardItemModel*)twName->model();
+//    model->setData(model->index(0,1), QString("%1").arg(id), Qt::DisplayRole);
+//    model->setData(model->index(1,1), Patient, Qt::DisplayRole);
+//    model->setData(model->index(2,1), Doctor, Qt::DisplayRole);
     patientCurId = id;
-    refreshPatientParam(patientCurId);
+//    refreshPatientParam(patientCurId);
+    pCalcPatient->setPatient(id, Patient, Doctor);
+    pCalcPatient->refreshPatientParam(patientCurId);
+
     refreshTable(patientCurId);
 }
 
