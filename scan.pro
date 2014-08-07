@@ -62,7 +62,9 @@ SOURCES += main.cpp\
     combo_delegate.cpp \
     delegate.cpp \
     calc.cpp \
-    calculator_patient.cpp
+    calculator_patient.cpp \
+    delegate_lineedit.cpp \
+    leaddzero.cpp
 
 
 HEADERS  += mainwindow.h\
@@ -94,7 +96,9 @@ HEADERS  += mainwindow.h\
     combo_delegate.h \
     delegate.h \
     calc.h \
-    calculator_patient.h
+    calculator_patient.h \
+    delegate_lineedit.h \
+    leaddzero.h
 
 #FORMS    += mainwindow.ui
 

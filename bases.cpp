@@ -65,7 +65,7 @@ bases::bases(QWidget *parent) :
 
     if(model->rowCount()>0)
     {
-        twTable->setCurrentIndex(model->index(0,0));
+//        twTable->setCurrentIndex(model->index(0,0));
 //        qDebug()<<model->index(0,0);
     }
 //    qDebug()<<model->rowCount();

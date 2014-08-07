@@ -17,6 +17,9 @@ public:
 
 private:
     Ui::calculator_patient *ui;
+
+private slots:
+
 };
 
 #endif // CALCULATOR_PATIENT_H
