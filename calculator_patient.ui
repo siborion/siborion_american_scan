@@ -6,14 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>326</width>
-    <height>149</height>
+    <width>395</width>
+    <height>81</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout" columnstretch="3,1,0,1">
+  <layout class="QGridLayout" name="gridLayout" columnstretch="2,1,0,1">
    <property name="leftMargin">
     <number>3</number>
    </property>
@@ -50,75 +50,79 @@
       <property name="spacing">
        <number>2</number>
       </property>
-      <item row="0" column="0">
-       <widget class="QLabel" name="label_4">
-        <property name="text">
-         <string>AL</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="0">
-       <widget class="QLabel" name="label_7">
-        <property name="text">
-         <string>K-Value</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="2">
+      <item row="2" column="2">
        <widget class="QLabel" name="label_12">
         <property name="text">
          <string>D</string>
         </property>
        </widget>
       </item>
-      <item row="7" column="0">
-       <spacer name="verticalSpacer_2">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>40</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="2" column="2">
-       <widget class="QLabel" name="label_10">
+      <item row="0" column="4">
+       <widget class="QLabel" name="label_4">
         <property name="text">
-         <string>D</string>
+         <string>AL</string>
         </property>
        </widget>
       </item>
-      <item row="3" column="2">
+      <item row="1" column="2">
        <widget class="QLabel" name="label_11">
         <property name="text">
          <string>D</string>
         </property>
        </widget>
       </item>
-      <item row="3" column="1">
-       <widget class="QLineEdit" name="lineEdit_6"/>
-      </item>
-      <item row="4" column="1">
-       <widget class="QLineEdit" name="lineEdit_7"/>
-      </item>
       <item row="2" column="0">
-       <widget class="QLabel" name="label_5">
+       <widget class="QLabel" name="label_7">
         <property name="text">
-         <string>K1-Value</string>
+         <string>K-Value</string>
         </property>
        </widget>
       </item>
-      <item row="3" column="0">
+      <item row="1" column="4">
+       <widget class="QLabel" name="label_8">
+        <property name="text">
+         <string>ACD</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="5">
+       <widget class="leAddZero" name="lineEdit_4">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="4" colspan="3">
+       <widget class="QPushButton" name="pushButton">
+        <property name="text">
+         <string>OD</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="6">
+       <widget class="QLabel" name="label_13">
+        <property name="text">
+         <string>mm</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
        <widget class="QLabel" name="label_6">
         <property name="text">
          <string>K2-Value</string>
         </property>
        </widget>
       </item>
-      <item row="0" column="2">
+      <item row="0" column="1">
+       <widget class="leAddZero" name="lineEdit_5"/>
+      </item>
+      <item row="1" column="1">
+       <widget class="leAddZero" name="lineEdit_6"/>
+      </item>
+      <item row="1" column="5">
+       <widget class="leAddZero" name="lineEdit_8"/>
+      </item>
+      <item row="0" column="6">
        <widget class="QLabel" name="label_9">
         <property name="text">
          <string>mm</string>
@@ -126,36 +130,26 @@
        </widget>
       </item>
       <item row="2" column="1">
-       <widget class="QLineEdit" name="lineEdit_5"/>
+       <widget class="leAddZero" name="lineEdit_7"/>
       </item>
-      <item row="8" column="0" colspan="3">
-       <widget class="QPushButton" name="pushButton">
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_5">
         <property name="text">
-         <string>OD</string>
+         <string>K1-Value</string>
         </property>
        </widget>
       </item>
-      <item row="0" column="1">
-       <widget class="leAddZero" name="lineEdit_4">
+      <item row="0" column="2">
+       <widget class="QLabel" name="label_10">
         <property name="text">
-         <string/>
+         <string>D</string>
         </property>
        </widget>
       </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="label_8">
-        <property name="text">
-         <string>ACD</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QLineEdit" name="lineEdit_8"/>
-      </item>
-      <item row="1" column="2">
-       <widget class="QLabel" name="label_13">
-        <property name="text">
-         <string>mm</string>
+      <item row="0" column="3" rowspan="3">
+       <widget class="Line" name="line">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
         </property>
        </widget>
       </item>
@@ -183,23 +177,26 @@
       <property name="spacing">
        <number>2</number>
       </property>
-      <item row="2" column="0">
+      <item row="0" column="3">
+       <widget class="QLineEdit" name="lineEdit_11"/>
+      </item>
+      <item row="0" column="2">
        <widget class="QLabel" name="label_16">
         <property name="text">
          <string>SF</string>
         </property>
        </widget>
       </item>
+      <item row="1" column="1">
+       <widget class="QLineEdit" name="lineEdit_10"/>
+      </item>
       <item row="0" column="1">
        <widget class="QLineEdit" name="lineEdit_9"/>
       </item>
-      <item row="2" column="1">
-       <widget class="QLineEdit" name="lineEdit_11"/>
-      </item>
-      <item row="3" column="0">
-       <widget class="QLabel" name="label_15">
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_14">
         <property name="text">
-         <string>Rx</string>
+         <string>A Const</string>
         </property>
        </widget>
       </item>
@@ -210,38 +207,22 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="0">
-       <widget class="QLabel" name="label_14">
+      <item row="1" column="3">
+       <widget class="QLineEdit" name="lineEdit_12"/>
+      </item>
+      <item row="1" column="2">
+       <widget class="QLabel" name="label_15">
         <property name="text">
-         <string>A Const</string>
+         <string>Rx</string>
         </property>
        </widget>
       </item>
-      <item row="1" column="1">
-       <widget class="QLineEdit" name="lineEdit_10"/>
-      </item>
-      <item row="3" column="1">
-       <widget class="QLineEdit" name="lineEdit_12"/>
-      </item>
-      <item row="5" column="0" colspan="2">
+      <item row="4" column="0" colspan="4">
        <widget class="QPushButton" name="pushButton_2">
         <property name="text">
          <string>Personalized Calc</string>
         </property>
        </widget>
-      </item>
-      <item row="4" column="1">
-       <spacer name="verticalSpacer_3">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>40</height>
-         </size>
-        </property>
-       </spacer>
       </item>
      </layout>
     </widget>
@@ -267,14 +248,12 @@
       <property name="spacing">
        <number>2</number>
       </property>
-      <item row="2" column="1" colspan="2">
-       <widget class="QLineEdit" name="lineEdit_3"/>
-      </item>
-      <item row="0" column="1">
-       <widget class="QLineEdit" name="lineEdit"/>
-      </item>
-      <item row="1" column="1" colspan="2">
-       <widget class="QLineEdit" name="lineEdit_2"/>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>Patient ID</string>
+        </property>
+       </widget>
       </item>
       <item row="0" column="2">
        <spacer name="horizontalSpacer">
@@ -289,6 +268,15 @@
         </property>
        </spacer>
       </item>
+      <item row="2" column="1" colspan="2">
+       <widget class="QLineEdit" name="lineEdit_3"/>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="lineEdit"/>
+      </item>
+      <item row="1" column="1" colspan="2">
+       <widget class="QLineEdit" name="lineEdit_2"/>
+      </item>
       <item row="2" column="0">
        <widget class="QLabel" name="label_3">
         <property name="text">
@@ -302,26 +290,6 @@
          <string>Patient Name</string>
         </property>
        </widget>
-      </item>
-      <item row="0" column="0">
-       <widget class="QLabel" name="label">
-        <property name="text">
-         <string>Patient ID</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="0">
-       <spacer name="verticalSpacer">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>40</height>
-         </size>
-        </property>
-       </spacer>
       </item>
      </layout>
     </widget>
