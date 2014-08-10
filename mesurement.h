@@ -27,6 +27,7 @@
 #include <QSerialPortInfo>
 #include <QTimer>
 #include <QTextEdit>
+#include "typedef.h"
 
 
 #include <qwt_plot.h>
@@ -110,8 +111,9 @@ private:
         };
 
 signals:
-    void refreshAl(double);
-    void refreshAcd(double);
+//    void refreshAl(double);
+//    void refreshAcd(double);
+    void refreshMeasure(stMeasureParam);
 
 public slots:
     void changeRow(quint8 idType, quint16 idRow, QString Patient, QString Doctor);

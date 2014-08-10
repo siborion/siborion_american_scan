@@ -98,7 +98,8 @@ HEADERS  += mainwindow.h\
     calc.h \
     calculator_patient.h \
     delegate_lineedit.h \
-    leaddzero.h
+    leaddzero.h \
+    typedef.h
 
 #FORMS    += mainwindow.ui
 

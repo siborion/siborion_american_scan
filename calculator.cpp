@@ -77,9 +77,6 @@ calculator::calculator(QWidget *parent) :
 
     pCalcPatient = new calculator_patient();
 
-
-
-
 //-----------------------------------
     columnPercent.clear();
     columnPercent<<50<<50;
@@ -138,6 +135,7 @@ calculator::calculator(QWidget *parent) :
 
      connect(pbOD, SIGNAL(clicked()), SLOT(changeEye()));
      connect(twK->model(), SIGNAL(dataChanged(QModelIndex,QModelIndex)),  SLOT(setAL(QModelIndex,QModelIndex)));
+     connect(pCalcPatient, SIGNAL(refreshFormula()), SLOT(refreshFormuls()));
 }
 
 void calculator::refreshPatientParam(quint16 id)
@@ -173,12 +171,10 @@ void calculator::changeRow(quint8 numBase, quint16 id, QString Patient, QString 
 //    model->setData(model->index(0,1), QString("%1").arg(id), Qt::DisplayRole);
 //    model->setData(model->index(1,1), Patient, Qt::DisplayRole);
 //    model->setData(model->index(2,1), Doctor, Qt::DisplayRole);
-    patientCurId = id;
 //    refreshPatientParam(patientCurId);
     pCalcPatient->setPatient(id, Patient, Doctor);
-    pCalcPatient->refreshPatientParam(patientCurId);
-
-    refreshTable(patientCurId);
+    pCalcPatient->refreshPatientParam();
+    refreshFormuls();
 }
 
 void calculator::changeEye()
@@ -196,19 +192,18 @@ void calculator::changeEye()
     Formula1->saveParam(&stFormula);
 }
 
-void calculator::refreshTable(quint16 id)
+void calculator::refreshFormuls()
 {
     QList<int> columnPercent;
-    QStringList lst;
+    stPatientParam patientParam;
+
+    patientParam = pCalcPatient->getParam();
 
     columnPercent.clear();
     columnPercent<<20<<16<<22<<16<<15<<11;
-//    lst<<"Lens Name"<<"Lens Mfg"<<"Mfg A-Const"<<"pAConst"<<"MfgACD"<<"pACD";
-//    twLens = new adjview(8, lst, columnPercent);
-//  <<"AConst"<<"ACD"<<"SF"<<"FORMULA";
     modelMainLens = new QSqlQueryModel ();
     twLens->setModel(modelMainLens);
-    QString str = QString("SELECT lens.name as 'Lens Name',lens.aconst,lens.acd,lens.sf,doctor_lens.nom_formula FROM patient, doctor_lens, lens ON patient.doctor=doctor_lens.id_doctor AND lens.id=doctor_lens.id_lens WHERE patient.id=%1;").arg(id);
+    QString str = QString("SELECT lens.name as 'Lens Name',lens.aconst,lens.acd,lens.sf,doctor_lens.nom_formula FROM patient, doctor_lens, lens ON patient.doctor=doctor_lens.id_doctor AND lens.id=doctor_lens.id_lens WHERE patient.id=%1;").arg(patientParam.id);
     modelMainLens->setQuery(str);
 
     modelMainLens->setHeaderData(0, Qt::Horizontal, "Lens Name", Qt::DisplayRole);
@@ -223,7 +218,6 @@ void calculator::refreshTable(quint16 id)
 
     for(quint8 i=0; i<modelMainLens->rowCount() && i<3; i++)
     {
-        double K, AL_meausre;
         quint8 nFormula;
         QString lensName, lensAconst, lensAcd, lensFs;
         nFormula   = twLens->model()->itemData(twLens->model()->index(i,4)).value(0).toInt();
@@ -231,57 +225,47 @@ void calculator::refreshTable(quint16 id)
         lensAconst = twLens->model()->itemData(twLens->model()->index(i,1)).value(0).toString();
         lensAcd = twLens->model()->itemData(twLens->model()->index(i,2)).value(0).toString();
         lensFs = twLens->model()->itemData(twLens->model()->index(i,3)).value(0).toString();
-        K  = twK->model()->itemData(twK->model()->index(3,1)).value(0).toDouble();
-        AL_meausre = twK->model()->itemData(twK->model()->index(0,1)).value(0).toDouble();
-        ACD_measure = twK->model()->itemData(twK->model()->index(4,1)).value(0).toDouble();
-
-//        K=1;
-//        AL = 20;
-
 
         switch (i)
         {
         case 0:
-            Formula1->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, K, AL_meausre,ACD_measure);
+            Formula1->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, patientParam.K, patientParam.AL, patientParam.ACD);
             Formula1->setEnabled(true);
             break;
         case 1:
-            Formula2->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, K, AL_meausre,ACD_measure);
+            Formula2->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, patientParam.K, patientParam.AL, patientParam.ACD);
             Formula2->setEnabled(true);
             break;
         case 2:
-           Formula3->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, K, AL_meausre,ACD_measure);
-           Formula3->setEnabled(true);
+            Formula3->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, patientParam.K, patientParam.AL, patientParam.ACD);
+            Formula3->setEnabled(true);
         default:
             break;
         }
-
-        qDebug() << "ACD_measure2" << ACD_measure;
-
-//        nFormula = modelMainLens->itemData(modelMainLens->index(i,6))
-//        modelMainLens->itemData()
-//        Formula1->setValue(
     }
-//    modelMainLens->itemData()
 }
 
 void calculator::refreshAl(double AL)
 {
-    QStandardItemModel *model;
-    model = (QStandardItemModel*)twK->model();
-    model->setData(model->index(0,1), AL, Qt::DisplayRole);
+//    QStandardItemModel *model;
+//    model = (QStandardItemModel*)twK->model();
+//    model->setData(model->index(0,1), AL, Qt::DisplayRole);
+//    pCalcPatient->ref
 }
+
+
+void calculator::refreshMeasure(stMeasureParam measureParam)
+{
+pCalcPatient->refreshMeasure(measureParam);
+}
+
 
 void calculator::refreshAcd(double Acd)
 {
     ACD_measure = Acd;
-    qDebug() << "ACD_measure1" << ACD_measure;
-
     QStandardItemModel *model;
     model = (QStandardItemModel*)twK->model();
     model->setData(model->index(4,1), Acd, Qt::DisplayRole);
-
-
 }
 
 void calculator::setAL(QModelIndex val1, QModelIndex val2)
@@ -290,7 +274,7 @@ void calculator::setAL(QModelIndex val1, QModelIndex val2)
     if(val1.column()==1)
     {
         if ((val1.row()==0) || (val1.row()==3) || (val1.row()==4))
-            refreshTable(patientCurId);
+            refreshFormuls();
         else
         {
             QStandardItemModel *model;

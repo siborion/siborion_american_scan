@@ -1,5 +1,6 @@
 #include "calculator_patient.h"
 #include "ui_calculator_patient.h"
+#include <QDebug>
 
 calculator_patient::calculator_patient(QWidget *parent) :
     QWidget(parent),
@@ -8,12 +9,16 @@ calculator_patient::calculator_patient(QWidget *parent) :
     ui->setupUi(this);
     bLeft = true;
     connect(ui->leK1, SIGNAL(editingFinished()),SLOT(RefreshK()));
+    connect(ui->leK2, SIGNAL(editingFinished()),SLOT(RefreshK()));
+    connect(ui->leACD_measure, SIGNAL(editingFinished()), SLOT(updateParam()));
+    connect(ui->leAL_measure, SIGNAL(editingFinished()), SLOT(updateParam()));
     connect(ui->pbSide, SIGNAL(clicked()), SLOT(ChangeSide()));
 }
 
-void calculator_patient::refreshPatientParam(quint16 id)
+void calculator_patient::refreshPatientParam()
 {
-    curId = id;
+    quint16 id;
+    id = ui->lePatientId->text().toUInt();
     QString str = QString("SELECT k1left, k2left, k1right, k2right FROM patient WHERE id=%1;")
             .arg(id);
     QSqlQuery sql(str);
@@ -36,15 +41,46 @@ void calculator_patient::refreshPatientParam(quint16 id)
     }
 }
 
+void calculator_patient::refreshMeasure(stMeasureParam measureParam)
+{
+    ui->leAL_measure->setText(QString("%1").arg(measureParam.AL));
+    ui->leACD_measure->setText(QString("%1").arg(measureParam.ACD));
+    emit (refreshFormula());
+}
+
+
 void calculator_patient::RefreshK()
 {
-    ui->leK->setTextZero(QString("%1").arg((ui->leK1->text().toFloat()+ui->leK2->text().toFloat())/2));
+    float fTmp;
+    fTmp = (ui->leK1->text().toFloat()+ui->leK2->text().toFloat())/2;
+    ui->leK->setTextZero(QString("%1").arg(fTmp));
+    emit (refreshFormula());
+}
+
+//void calculator_patient::RefreshAL()
+//{
+//    ui->leK->setTextZero(QString("%1").arg((ui->leK1->text().toFloat()+ui->leK2->text().toFloat())/2));
+//}
+
+stPatientParam calculator_patient::getParam()
+{
+    stPatientParam stTmp;
+    stTmp.id  = ui->lePatientId->text().toUInt();
+    stTmp.K   = ui->leK->text().toFloat();
+    stTmp.ACD = ui->leACD_measure->text().toFloat();
+    stTmp.AL  = ui->leAL_measure->text().toFloat();
+    qDebug() << "----------------------------";
+    qDebug() << stTmp.K;
+    qDebug() << stTmp.ACD;
+    qDebug() << stTmp.AL;
+    qDebug() << "----------------------------";
+    return stTmp;
 }
 
 void calculator_patient::ChangeSide()
 {
     bLeft = (!bLeft);
-    refreshPatientParam(curId);
+    refreshPatientParam();
     ui->pbSide->setText(bLeft?"OD":"OS");
 }
 
@@ -53,7 +89,11 @@ void calculator_patient::setPatient(quint16 id, QString Patient, QString Doctor)
     ui->lePatientId->setText(QString("%1").arg(id));
     ui->lePatientName->setText(Patient);
     ui->leDoctorName->setText(Doctor);
+}
 
+void calculator_patient::updateParam()
+{
+    emit (refreshFormula());
 }
 
 calculator_patient::~calculator_patient()

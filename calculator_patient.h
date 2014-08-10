@@ -5,7 +5,7 @@
 #include <QStandardItemModel>
 #include <QSqlQuery>
 #include <QSqlRecord>
-
+#include "typedef.h"
 
 namespace Ui {
 class calculator_patient;
@@ -24,14 +24,20 @@ private:
 
 public:
     void setPatient(quint16 id, QString Patient, QString Doctor);
-    void refreshPatientParam(quint16 id);
-    double K, AL_measure, ACD_measure;
+    void refreshPatientParam();
+//    double K, AL_measure, ACD_measure;
     bool bLeft;
-    quint16 curId;
+    stPatientParam getParam();
+//    quint16 curId;
+    void refreshMeasure(stMeasureParam measureParam);
 
 private slots:
     void RefreshK();
     void ChangeSide();
+    void updateParam();
+
+signals:
+    void refreshFormula();
 
 };
 

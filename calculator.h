@@ -16,6 +16,8 @@
 #include "scanbase.h"
 #include "calc.h"
 #include "calculator_patient.h"
+#include "typedef.h"
+
 
 class calculator : public QWidget
 {
@@ -29,7 +31,6 @@ private:
     double ACD_measure;
     quint16 patientCurId;
     _formulae stFormula;
-    void refreshTable(quint16 id);
     QSqlQueryModel  *modelMainLens;
     void refreshPatientParam(quint16 id);
     scanbase *pBase;
@@ -93,6 +94,8 @@ public slots:
     void changeEye();
     void refreshAl(double);
     void refreshAcd(double);
+    void refreshFormuls();
+    void refreshMeasure(stMeasureParam);
 
 };
 

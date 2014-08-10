@@ -8,6 +8,7 @@
 #include <qwt_plot_curve.h>
 #include <qwt_slider.h>
 #include <qwt_symbol.h>
+#include "typedef.h"
                  
 
 Panel::Panel( QWidget *parent ):
@@ -33,7 +34,7 @@ Panel::Panel( QWidget *parent ):
     addTab( createOnlineTab( this ), "Print" );
     connect(page,SIGNAL(changeRow(quint8,quint16,QString,QString)),Mesur,SLOT(changeRow(quint8,quint16,QString,QString)));
     connect(page,SIGNAL(changeRow(quint8,quint16,QString,QString)),Calculator,SLOT(changeRow(quint8,quint16,QString,QString)));
-    connect(Mesur,SIGNAL(refreshAl(double)),Calculator,SLOT(refreshAl(double)));
+    connect(Mesur,SIGNAL(refreshMeasure(stMeasureParam)),Calculator,SLOT(refreshMeasure(stMeasureParam)));
     connect(Mesur,SIGNAL(refreshAcd(double)),Calculator,SLOT(refreshAcd(double)));
 
 
@@ -72,3 +73,5 @@ calculator *Panel::createCalculatorTab( QWidget *parent )
     calculator *Calculator = new calculator(parent);
     return Calculator;
 }
+
+
