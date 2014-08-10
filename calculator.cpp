@@ -199,6 +199,9 @@ void calculator::refreshFormuls()
 
     patientParam = pCalcPatient->getParam();
 
+    if(!((patientParam.ACD>0)&&(patientParam.AL>0)&&(patientParam.K>0)))
+        return;
+
     columnPercent.clear();
     columnPercent<<20<<16<<22<<16<<15<<11;
     modelMainLens = new QSqlQueryModel ();

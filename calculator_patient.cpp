@@ -45,7 +45,7 @@ void calculator_patient::refreshMeasure(stMeasureParam measureParam)
 {
     ui->leAL_measure->setText(QString("%1").arg(measureParam.AL));
     ui->leACD_measure->setText(QString("%1").arg(measureParam.ACD));
-    emit (refreshFormula());
+    updateParam();
 }
 
 
@@ -54,13 +54,8 @@ void calculator_patient::RefreshK()
     float fTmp;
     fTmp = (ui->leK1->text().toFloat()+ui->leK2->text().toFloat())/2;
     ui->leK->setTextZero(QString("%1").arg(fTmp));
-    emit (refreshFormula());
+    updateParam();
 }
-
-//void calculator_patient::RefreshAL()
-//{
-//    ui->leK->setTextZero(QString("%1").arg((ui->leK1->text().toFloat()+ui->leK2->text().toFloat())/2));
-//}
 
 stPatientParam calculator_patient::getParam()
 {
@@ -69,11 +64,6 @@ stPatientParam calculator_patient::getParam()
     stTmp.K   = ui->leK->text().toFloat();
     stTmp.ACD = ui->leACD_measure->text().toFloat();
     stTmp.AL  = ui->leAL_measure->text().toFloat();
-    qDebug() << "----------------------------";
-    qDebug() << stTmp.K;
-    qDebug() << stTmp.ACD;
-    qDebug() << stTmp.AL;
-    qDebug() << "----------------------------";
     return stTmp;
 }
 
