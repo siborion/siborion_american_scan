@@ -138,31 +138,31 @@ calculator::calculator(QWidget *parent) :
      connect(pCalcPatient, SIGNAL(refreshFormula()), SLOT(refreshFormuls()));
 }
 
-void calculator::refreshPatientParam(quint16 id)
-{
-    QStandardItemModel *model;
-    model = (QStandardItemModel*)twK->model();
+//void calculator::refreshPatientParam(quint16 id)
+//{
+//    QStandardItemModel *model;
+//    model = (QStandardItemModel*)twK->model();
 
-    QString str = QString("SELECT k1left, k2left, kleft, k1right, k2right, kright FROM patient WHERE id=%1;")
-            .arg(id);
-    QSqlQuery sql(str);
-    if(sql.exec())
-    {
-        sql.next();
-        if(pbOD->text()=="OD")
-        {
-            model->setData(model->index(1,1), sql.value(0).toDouble(), Qt::DisplayRole);
-            model->setData(model->index(2,1), sql.value(1).toDouble(), Qt::DisplayRole);
-            model->setData(model->index(3,1), sql.value(2).toDouble(), Qt::DisplayRole);
-        }
-        else
-        {
-            model->setData(model->index(1,1), sql.value(3).toDouble(), Qt::DisplayRole);
-            model->setData(model->index(2,1), sql.value(4).toDouble(), Qt::DisplayRole);
-            model->setData(model->index(3,1), sql.value(5).toDouble(), Qt::DisplayRole);
-        }
-    }
-}
+//    QString str = QString("SELECT k1left, k2left, kleft, k1right, k2right, kright FROM patient WHERE id=%1;")
+//            .arg(id);
+//    QSqlQuery sql(str);
+//    if(sql.exec())
+//    {
+//        sql.next();
+//        if(pbOD->text()=="OD")
+//        {
+//            model->setData(model->index(1,1), sql.value(0).toDouble(), Qt::DisplayRole);
+//            model->setData(model->index(2,1), sql.value(1).toDouble(), Qt::DisplayRole);
+//            model->setData(model->index(3,1), sql.value(2).toDouble(), Qt::DisplayRole);
+//        }
+//        else
+//        {
+//            model->setData(model->index(1,1), sql.value(3).toDouble(), Qt::DisplayRole);
+//            model->setData(model->index(2,1), sql.value(4).toDouble(), Qt::DisplayRole);
+//            model->setData(model->index(3,1), sql.value(5).toDouble(), Qt::DisplayRole);
+//        }
+//    }
+//}
 
 void calculator::changeRow(quint8 numBase, quint16 id, QString Patient, QString Doctor)
 {

@@ -32,7 +32,7 @@ private:
     quint16 patientCurId;
     _formulae stFormula;
     QSqlQueryModel  *modelMainLens;
-    void refreshPatientParam(quint16 id);
+//    void refreshPatientParam(quint16 id);
     scanbase *pBase;
     adjview *twName;
     QStandardItemModel *modelName;
