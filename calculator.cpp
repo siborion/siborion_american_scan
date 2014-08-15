@@ -36,7 +36,7 @@ calculator::calculator(QWidget *parent) :
     columnPercent<<20<<20<<20<<20<<20;
     lst<<"Lens Name"<<"AConst"<<"ACD"<<"SF"<<"FORMULA";
     twLens = new adjview(3, lst, columnPercent);
-    twLens->setMinimumWidth(300);
+    twLens->setMinimumWidth(400);
 //    twLens->setMaximumWidth(300);
     modelMainLens = new QSqlQueryModel ();
     twLens->setModel(modelMainLens);
@@ -166,54 +166,45 @@ calculator::calculator(QWidget *parent) :
 
 void calculator::changeRow(quint8 numBase, quint16 id, QString Patient, QString Doctor)
 {
-//    QStandardItemModel *model;
-//    model = (QStandardItemModel*)twName->model();
-//    model->setData(model->index(0,1), QString("%1").arg(id), Qt::DisplayRole);
-//    model->setData(model->index(1,1), Patient, Qt::DisplayRole);
-//    model->setData(model->index(2,1), Doctor, Qt::DisplayRole);
-//    refreshPatientParam(patientCurId);
     pCalcPatient->setPatient(id, Patient, Doctor);
     pCalcPatient->refreshPatientParam();
     refreshFormuls();
 }
 
-void calculator::changeEye()
-{
-//    double K;
-    pbOD->setText(pbOD->text()=="OD"?"OS":"OD");
-
-//    QStandardItemModel *model;
-//    model = (QStandardItemModel*)twK->model();
-//    model->setData(model->index(3,1), sql.value(2).toString(), Qt::DisplayRole);
-
-
-    Calculator(0, 12, 1, 2, 0, &stFormula);
+//void calculator::changeEye()
+//{
+//   pbOD->setText(pbOD->text()=="OD"?"OS":"OD");
 //    Calculator(0, 12, 1, 2, 0, &stFormula);
-    Formula1->saveParam(&stFormula);
-}
+//    Formula1->saveParam(&stFormula);
+//}
 
 void calculator::refreshFormuls()
 {
     QList<int> columnPercent;
     stPatientParam patientParam;
+    stPersonalParam personalParam;
 
     patientParam = pCalcPatient->getParam();
+    personalParam = pCalcPatient->getPersonalParam();
 
     if(!((patientParam.ACD>0)&&(patientParam.AL>0)&&(patientParam.K>0)))
         return;
 
     columnPercent.clear();
-    columnPercent<<20<<16<<22<<16<<15<<11;
+    columnPercent<<20<<16<<22<<16<<14<<1<<11;
     modelMainLens = new QSqlQueryModel ();
     twLens->setModel(modelMainLens);
-    QString str = QString("SELECT lens.name as 'Lens Name',lens.aconst,lens.acd,lens.sf,doctor_lens.nom_formula FROM patient, doctor_lens, lens ON patient.doctor=doctor_lens.id_doctor AND lens.id=doctor_lens.id_lens WHERE patient.id=%1;").arg(patientParam.id);
+    QString str = QString("SELECT lens.name AS 'Lens Name',lens.aconst,lens.acd, lens.sf, formula.id, formula.name FROM patient, doctor_lens, lens, formula ON patient.doctor=doctor_lens.id_doctor AND lens.id=doctor_lens.id_lens AND doctor_lens.nom_formula=formula.id WHERE patient.id=%1;").arg(patientParam.id);
     modelMainLens->setQuery(str);
 
     modelMainLens->setHeaderData(0, Qt::Horizontal, "Lens Name", Qt::DisplayRole);
     modelMainLens->setHeaderData(1, Qt::Horizontal, "AConst", Qt::DisplayRole);
     modelMainLens->setHeaderData(2, Qt::Horizontal, "ACD", Qt::DisplayRole);
     modelMainLens->setHeaderData(3, Qt::Horizontal, "SF", Qt::DisplayRole);
-    modelMainLens->setHeaderData(4, Qt::Horizontal, "FORMULA", Qt::DisplayRole);
+    modelMainLens->setHeaderData(4, Qt::Horizontal, "NUM", Qt::DisplayRole);
+    modelMainLens->setHeaderData(5, Qt::Horizontal, "FORMULA", Qt::DisplayRole);
+
+    twLens->setColumnHidden(4, true);
 
     Formula1->setEnabled(false);
     Formula2->setEnabled(false);
@@ -225,9 +216,21 @@ void calculator::refreshFormuls()
         QString lensName, lensAconst, lensAcd, lensFs;
         nFormula   = twLens->model()->itemData(twLens->model()->index(i,4)).value(0).toInt();
         lensName   = twLens->model()->itemData(twLens->model()->index(i,0)).value(0).toString();
-        lensAconst = twLens->model()->itemData(twLens->model()->index(i,1)).value(0).toString();
-        lensAcd = twLens->model()->itemData(twLens->model()->index(i,2)).value(0).toString();
-        lensFs = twLens->model()->itemData(twLens->model()->index(i,3)).value(0).toString();
+
+        if(personalParam.AConst>0)
+            lensAconst = QString("%1").arg(personalParam.AConst);
+        else
+            lensAconst = twLens->model()->itemData(twLens->model()->index(i,1)).value(0).toString();
+
+        if(personalParam.ACD>0)
+            lensAcd = QString("%1").arg(personalParam.ACD);
+        else
+            lensAcd = twLens->model()->itemData(twLens->model()->index(i,2)).value(0).toString();
+
+        if(personalParam.SF>0)
+            lensFs = QString("%1").arg(personalParam.SF);
+        else
+            lensFs = twLens->model()->itemData(twLens->model()->index(i,3)).value(0).toString();
 
         switch (i)
         {

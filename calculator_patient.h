@@ -28,6 +28,7 @@ public:
 //    double K, AL_measure, ACD_measure;
     bool bLeft;
     stPatientParam getParam();
+    stPersonalParam getPersonalParam();
 //    quint16 curId;
     void refreshMeasure(stMeasureParam measureParam);
 

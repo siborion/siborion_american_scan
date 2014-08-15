@@ -182,7 +182,7 @@
        <number>2</number>
       </property>
       <item row="0" column="3">
-       <widget class="QLineEdit" name="leSF_personal"/>
+       <widget class="leAddZero" name="leSF_personal"/>
       </item>
       <item row="0" column="2">
        <widget class="QLabel" name="label_16">
@@ -192,10 +192,10 @@
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="QLineEdit" name="leACD_personal"/>
+       <widget class="leAddZero" name="leACD_personal"/>
       </item>
       <item row="0" column="1">
-       <widget class="QLineEdit" name="leAConst_personal"/>
+       <widget class="leAddZero" name="leAConst_personal"/>
       </item>
       <item row="0" column="0">
        <widget class="QLabel" name="label_14">
@@ -212,7 +212,7 @@
        </widget>
       </item>
       <item row="1" column="3">
-       <widget class="QLineEdit" name="leRx_personal"/>
+       <widget class="leAddZero" name="leRx_personal"/>
       </item>
       <item row="1" column="2">
        <widget class="QLabel" name="label_15">

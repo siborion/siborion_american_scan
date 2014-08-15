@@ -12,6 +12,9 @@ calculator_patient::calculator_patient(QWidget *parent) :
     connect(ui->leK2, SIGNAL(editingFinished()),SLOT(RefreshK()));
     connect(ui->leACD_measure, SIGNAL(editingFinished()), SLOT(updateParam()));
     connect(ui->leAL_measure, SIGNAL(editingFinished()), SLOT(updateParam()));
+    connect(ui->leAConst_personal, SIGNAL(editingFinished()), SLOT(updateParam()));
+    connect(ui->leACD_personal, SIGNAL(editingFinished()), SLOT(updateParam()));
+    connect(ui->leSF_personal, SIGNAL(editingFinished()), SLOT(updateParam()));
     connect(ui->pbSide, SIGNAL(clicked()), SLOT(ChangeSide()));
 }
 
@@ -64,6 +67,15 @@ stPatientParam calculator_patient::getParam()
     stTmp.K   = ui->leK->text().toFloat();
     stTmp.ACD = ui->leACD_measure->text().toFloat();
     stTmp.AL  = ui->leAL_measure->text().toFloat();
+    return stTmp;
+}
+
+stPersonalParam calculator_patient::getPersonalParam()
+{
+    stPersonalParam stTmp;
+    stTmp.AConst = ui->leAConst_personal->text().toFloat();
+    stTmp.ACD    = ui->leACD_personal->text().toFloat();
+    stTmp.SF     = ui->leSF_personal->text().toFloat();
     return stTmp;
 }
 

@@ -15,5 +15,13 @@ struct stMeasureParam
     float ACD;
 };
 
+struct stPersonalParam
+{
+    float AConst;
+    float ACD;
+    float SF;
+};
+
+
 #endif // TYPEDEF_H
 
