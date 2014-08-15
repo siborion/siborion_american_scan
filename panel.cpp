@@ -22,6 +22,7 @@ Panel::Panel( QWidget *parent ):
     page = new bases( parent );
     Mesur = new mesurement(parent);
     Calculator = new calculator(parent);
+//    Print = new print(parent);
 
     setStyleSheet("QTabBar::tab { min-width: 100px; }");
     setTabPosition( QTabWidget::North );
@@ -31,7 +32,8 @@ Panel::Panel( QWidget *parent ):
     addTab( Mesur, "Measurement" );
 //    addTab( createHisTab( this ), "History" );
     addTab( Calculator, "Calculator" );
-    addTab( createOnlineTab( this ), "Print" );
+//    addTab( Print, "Print" );
+//    addTab( createOnlineTab( this ), "Print" );
     connect(page,SIGNAL(changeRow(quint8,quint16,QString,QString)),Mesur,SLOT(changeRow(quint8,quint16,QString,QString)));
     connect(page,SIGNAL(changeRow(quint8,quint16,QString,QString)),Calculator,SLOT(changeRow(quint8,quint16,QString,QString)));
     connect(Mesur,SIGNAL(refreshMeasure(stMeasureParam)),Calculator,SLOT(refreshMeasure(stMeasureParam)));

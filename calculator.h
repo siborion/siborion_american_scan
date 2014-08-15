@@ -1,6 +1,7 @@
-#ifndef CALCULATOR_H
-#define CALCULATOR_H
+#ifndef calculator_H
+#define calculator_H
 
+#include <QFrame>
 #include <QWidget>
 #include <QFormLayout>
 #include <QStandardItemModel>
@@ -15,6 +16,7 @@
 #include <QSqlQueryModel>
 #include "scanbase.h"
 #include "calc.h"
+#include "calculator.h"
 #include "calculator_patient.h"
 #include "typedef.h"
 
@@ -44,15 +46,15 @@ private:
     QStandardItemModel *modelA;
     adjview *twRx;
     QStandardItemModel *modelRx;
-    adjview *twCalculator;
-    QStandardItemModel *modelCalculator;
+//    adjview *twcalculator;
+//    QStandardItemModel *modelcalculator;
 //    adjview *twHead1;
 //    adjview *twHead2;
 //    adjview *twHead3;
-//    adjview *twCalculator1;
-//    adjview *twCalculator2;
-//    adjview *twCalculator3;
-//    QStandardItemModel *modelCalculator1;
+//    adjview *twcalculator1;
+//    adjview *twcalculator2;
+//    adjview *twcalculator3;
+//    QStandardItemModel *modelcalculator1;
     QFrame *frCalculator;
 //    QComboBox *cbFormula1;
 //    QComboBox *cbFormula2;
@@ -99,4 +101,4 @@ public slots:
 
 };
 
-#endif // CALCULATOR_H
+#endif // calculator_H
