@@ -125,6 +125,7 @@ private slots:
     void openPort();
     void doTimer();
     void delSample();
+//    void print( QPrinter* printer );
 //    void getFileSample();
 //    void changeRow(QModelIndex curIndex);
 //    void refreshTable(stMainParam);

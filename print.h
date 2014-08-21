@@ -2,6 +2,11 @@
 #define print_H
 
 #include <QWidget>
+#include <QPrinter>
+#include <QPainter>
+#include <QPrintDialog>
+#include <QPrintPreviewDialog>
+#include <QVBoxLayout>
 
 
 class print : public QWidget

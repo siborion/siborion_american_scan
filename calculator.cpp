@@ -96,8 +96,8 @@ calculator::calculator(QWidget *parent) :
     model->item   (0, 0)->setBackground(Qt::lightGray);
     model->item   (0, 0)->setEditable(false);
 
-    pbOD = new QPushButton("OD");
-    pbPersCalc = new QPushButton("Personalized Calculation");
+    pbPrint = new QPushButton("Print");
+//    pbPersCalc = new QPushButton("Personalized Calculation");
 
 
 //    layoutTop->addWidget(pCalcPatient,  0, 0, 2, 1, Qt::AlignTop);
@@ -131,11 +131,13 @@ calculator::calculator(QWidget *parent) :
 
 
      layout->addWidget(frCalculator);
-     layout->addItem(vs2);
+//     layout->addItem(vs2);
+     layout->addWidget(pbPrint);
 
-     connect(pbOD, SIGNAL(clicked()), SLOT(changeEye()));
+//     connect(pbOD, SIGNAL(clicked()), SLOT(changeEye()));
      connect(twK->model(), SIGNAL(dataChanged(QModelIndex,QModelIndex)),  SLOT(setAL(QModelIndex,QModelIndex)));
      connect(pCalcPatient, SIGNAL(refreshFormula()), SLOT(refreshFormuls()));
+     connect(pbPrint, SIGNAL(clicked()), SLOT(printPreview()));
 }
 
 //void calculator::refreshPatientParam(quint16 id)
@@ -292,4 +294,38 @@ void calculator::setAL(QModelIndex val1, QModelIndex val2)
         }
     }
 }
+
+void calculator::printPreview()
+{
+    QPrinter             printer( QPrinter::HighResolution );
+    QPrintPreviewDialog  preview( &printer, this );
+    connect( &preview, SIGNAL(paintRequested(QPrinter*)), SLOT(print(QPrinter*)) );
+    preview.exec();
+}
+
+void calculator::print( QPrinter* printer )
+{
+  // create painter for drawing print page
+  QPainter painter( printer );
+  int      w = printer->pageRect().width();
+  int      h = printer->pageRect().height();
+  QRect    page( 0, 0, w, h );
+
+  // create a font appropriate to page size
+  QFont    font = painter.font();
+  font.setPixelSize( (w+h) / 100 );
+  painter.setFont( font );
+
+  // draw labels in corners of page
+  painter.drawText( page, Qt::AlignTop    | Qt::AlignLeft, "QSimulate" );
+  painter.drawText( page, Qt::AlignBottom | Qt::AlignLeft, QString(getenv("USER")) );
+  painter.drawText( page, Qt::AlignBottom | Qt::AlignRight,
+                    QDateTime::currentDateTime().toString( Qt::DefaultLocaleShortDate ) );
+
+  // draw simulated landscape
+  page.adjust( w/20, h/20, -w/20, -h/20 );
+//  m_scene->render( &painter, page );
+}
+
+
 

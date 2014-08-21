@@ -109,15 +109,44 @@ mesurement::mesurement(QWidget *parent) :
 
 void mesurement::delSample()
 {
-    double x[2024], y[2024];
-    quint16 kolvo = 0;
-    for(kolvo=0; kolvo<=1024; kolvo++)
-    {
-        x[kolvo] = kolvo;
-        y[kolvo] = double(255);
-    }
-    pPlot->drawSample(x, y, 1024);
+//    double x[2024], y[2024];
+//    quint16 kolvo = 0;
+//    for(kolvo=0; kolvo<=1024; kolvo++)
+//    {
+//        x[kolvo] = kolvo;
+//        y[kolvo] = double(255);
+//    }
+//    pPlot->drawSample(x, y, 1024);
+
+//      QPrinter             printer( QPrinter::HighResolution );
+//      QPrintPreviewDialog  preview( &printer, this );
+//      connect( &preview, SIGNAL(paintRequested(QPrinter*)), SLOT(print(QPrinter*)) );
+//      preview.exec();
 }
+
+//void  mesurement::print( QPrinter* printer )
+//{
+//  // create painter for drawing print page
+//  QPainter painter( printer );
+//  int      w = printer->pageRect().width();
+//  int      h = printer->pageRect().height();
+//  QRect    page( 0, 0, w, h );
+
+//  // create a font appropriate to page size
+//  QFont    font = painter.font();
+//  font.setPixelSize( (w+h) / 100 );
+//  painter.setFont( font );
+
+//  // draw labels in corners of page
+//  painter.drawText( page, Qt::AlignTop    | Qt::AlignLeft, "QSimulate" );
+//  painter.drawText( page, Qt::AlignBottom | Qt::AlignLeft, QString(getenv("USER")) );
+//  painter.drawText( page, Qt::AlignBottom | Qt::AlignRight,
+//                    QDateTime::currentDateTime().toString( Qt::DefaultLocaleShortDate ) );
+
+//  // draw simulated landscape
+//  page.adjust( w/20, h/20, -w/20, -h/20 );
+////  m_scene->render( &painter, page );
+//}
 
 void mesurement::changeRow(QList<quint16> extremum)
 {

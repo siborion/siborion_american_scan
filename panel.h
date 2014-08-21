@@ -6,6 +6,7 @@
 #include <mesurement.h>
 #include <history.h>
 #include <calculator.h>
+#include <print.h>
 
 
 class QComboBox;
@@ -33,6 +34,7 @@ private:
     bases *page;
     mesurement *Mesur;
     calculator *Calculator;
+    print *Print;
 };
 
 #endif

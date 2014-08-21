@@ -18,6 +18,10 @@
 #include "calc.h"
 #include "calculator.h"
 #include "calculator_patient.h"
+#include <QPrinter>
+#include <QPrintPreviewDialog>
+#include <QPainter>
+#include <QDateTime>
 #include "typedef.h"
 
 
@@ -62,8 +66,8 @@ private:
 //    adjview *twVs1;
 //    adjview *twVs2;
 //    adjview *twVs3;
-    QPushButton *pbOD;
-    QPushButton *pbPersCalc;
+    QPushButton *pbPrint;
+//    QPushButton *pbPersCalc;
     formula *Formula1;
     formula *Formula2;
     formula *Formula3;
@@ -97,6 +101,8 @@ public slots:
     void refreshAl(double);
     void refreshAcd(double);
     void refreshFormuls();
+    void printPreview();
+    void print( QPrinter* printer );
     void refreshMeasure(stMeasureParam);
 
 };
