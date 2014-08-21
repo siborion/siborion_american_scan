@@ -64,8 +64,7 @@ SOURCES += main.cpp\
     calc.cpp \
     calculator_patient.cpp \
     delegate_lineedit.cpp \
-    leaddzero.cpp \
-    print.cpp
+    leaddzero.cpp
 
 
 HEADERS  += mainwindow.h\
@@ -101,7 +100,6 @@ HEADERS  += mainwindow.h\
     delegate_lineedit.h \
     leaddzero.h \
     typedef.h \
-    print.h \
     calculator.h
 
 #FORMS    += mainwindow.ui
