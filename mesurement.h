@@ -40,6 +40,7 @@ public:
     explicit mesurement(QWidget *parent = 0);
     enum ItemDataRole{TypeRole = Qt::UserRole + 1000,
                         SignalValueRole = Qt::UserRole + 1001};
+    sampletable *pSampleTable;
 
 private:
 //    QTextEdit *teTmp;
@@ -53,7 +54,6 @@ private:
     adjview *twLens;
     adjview *twVelocity;
     adjview *twMeas;
-    sampletable *pSampleTable;
     key_radio *pKey;
     Plot *pPlot;
     bigviewnum *pBigView;

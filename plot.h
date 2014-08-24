@@ -3,17 +3,11 @@
 
 #include <qwt_plot.h>
 #include <QApplication>
+#include "typedef.h"
 
 class QwtPlotCurve;
 class QwtPlotMarker;
 
-struct stMainParam
-{
-    quint16 Start;
-    quint16 L1;
-    quint16 L2;
-    quint16 Retina;
-};
 
 struct stResultParam
 {
@@ -42,7 +36,7 @@ class Plot: public QwtPlot
     Q_OBJECT
 
 public:
-    Plot( QWidget *parent );
+    Plot( QWidget *parent, bool print );
     void drawSample(const double *frequency, const double *amplitude, int count);
     void drawMarker(quint16 pos, QString title);
     void drawMarker(double x, double y, const QColor &);

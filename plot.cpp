@@ -12,7 +12,7 @@
 #include "plot.h"
 #include <qevent.h>
 
-Plot::Plot( QWidget *parent ):
+Plot::Plot( QWidget *parent, bool print):
     QwtPlot( parent )
 {
     setAutoReplot( false );
@@ -27,13 +27,25 @@ Plot::Plot( QWidget *parent ):
 
 
 //    setCanvasBackground(QColor("DarkSlateGray"));
-    setCanvasBackground(QColor("Black"));
+
+    if(print)
+        setCanvasBackground(Qt::white);
+    else
+        setCanvasBackground(QColor("Black"));
 
     // grid
     QwtPlotGrid *grid = new QwtPlotGrid;
     grid->enableXMin( true );
-    grid->setMajorPen( Qt::white, 0, Qt::DotLine );
-    grid->setMinorPen( Qt::gray, 0 , Qt::DotLine );
+    if(print)
+    {
+        grid->setMajorPen( Qt::darkGray, 0, Qt::SolidLine );
+        grid->setMinorPen( Qt::darkGray, 0 , Qt::DotLine );
+    }
+    else
+    {
+        grid->setMajorPen( Qt::white, 0, Qt::DotLine );
+        grid->setMinorPen( Qt::gray, 0 , Qt::DotLine );
+    }
     grid->attach( this );
 
     // axes
@@ -47,15 +59,20 @@ Plot::Plot( QWidget *parent ):
     setAxisScale(QwtPlot::yLeft, 0.0, 255.0);
 
 
+
+
     // curves
     d_curve1 = new QwtPlotCurve();
     d_curve1->setRenderHint( QwtPlotItem::RenderAntialiased );
-    d_curve1->setPen( Qt::yellow );
+    if(print)
+        d_curve1->setPen( Qt::black );
+    else
+        d_curve1->setPen( Qt::yellow );
     d_curve1->setLegendAttribute( QwtPlotCurve::LegendShowLine );
     d_curve1->setYAxis( QwtPlot::yLeft );
     d_curve1->attach( this );
     setAutoReplot( true );
-//    this->setMaximumSize(200,200);
+    //    this->setMaximumSize(200,200);
 
 }
 

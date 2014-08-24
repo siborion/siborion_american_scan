@@ -6,7 +6,6 @@
 #include <mesurement.h>
 #include <history.h>
 #include <calculator.h>
-#include <print.h>
 
 
 class QComboBox;
@@ -20,6 +19,7 @@ class Panel: public QTabWidget
 
 public:
     Panel( QWidget * = NULL );
+    mesurement *Mesur;
 
 Q_SIGNALS:
 
@@ -32,9 +32,8 @@ private:
     history *createHisTab( QWidget * );
     calculator *createCalculatorTab( QWidget * );
     bases *page;
-    mesurement *Mesur;
     calculator *Calculator;
-    print *Print;
+//    print *Print;
 };
 
 #endif

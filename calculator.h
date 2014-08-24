@@ -22,6 +22,7 @@
 #include <QPrintPreviewDialog>
 #include <QPainter>
 #include <QDateTime>
+#include "plot.h"
 #include "typedef.h"
 
 
@@ -34,6 +35,9 @@ public:
 signals:
 
 private:
+    Plot *pPlotPrint1;
+    Plot *pPlotPrint2;
+    Plot *pPlotPrint3;
     double ACD_measure;
     quint16 patientCurId;
     _formulae stFormula;

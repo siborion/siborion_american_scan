@@ -1,6 +1,14 @@
 #ifndef TYPEDEF_H
 #define TYPEDEF_H
 
+struct stMainParam
+{
+    quint16 Start;
+    quint16 L1;
+    quint16 L2;
+    quint16 Retina;
+};
+
 struct stPatientParam
 {
     quint16 id;
@@ -20,6 +28,16 @@ struct stPersonalParam
     float AConst;
     float ACD;
     float SF;
+};
+
+struct stPrintSample
+{
+    QByteArray sample1;
+    QByteArray sample2;
+    QByteArray sample3;
+    stMainParam mainParam1;
+    stMainParam mainParam2;
+    stMainParam mainParam3;
 };
 
 

@@ -24,6 +24,7 @@ public:
     QList<quint16> allExtremum;
     stResultParam resultParam;
     adjview *twMeas;
+    stPrintSample printSample();
 
 private:
     double AL;

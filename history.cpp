@@ -29,7 +29,7 @@ history::history(QWidget *parent) :
     fmPlot->setFrameShape(QFrame::WinPanel);
     fmPlot->setFrameShadow(QFrame::Raised);
     QGridLayout *glPlot  = new QGridLayout(fmPlot);
-    pPlot = new Plot(this);
+    pPlot = new Plot(this, false);
     glPlot->addWidget(pPlot);
 
 

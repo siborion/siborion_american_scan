@@ -23,7 +23,7 @@ mesurement::mesurement(QWidget *parent) :
     fmPlot->setFrameShape(QFrame::NoFrame);
     fmPlot->setFrameShadow(QFrame::Plain);
     QGridLayout *glPlot  = new QGridLayout(fmPlot);
-    pPlot = new Plot(this);
+    pPlot = new Plot(this, false);
 
     glPlot->addWidget(pBigViewCur);
     glPlot->addWidget(pPlot,1,0);
@@ -94,6 +94,8 @@ mesurement::mesurement(QWidget *parent) :
 //    layoutBot->addWidget(teTmp);
     layoutBot->addWidget(pbMeasure,2,1);
     layoutBot->addWidget(pBigView,3,1);
+
+
 
 
     connect(pbMeasure, SIGNAL(pressed()), pSampleTable, SLOT(getFileSample()));

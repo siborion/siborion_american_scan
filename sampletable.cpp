@@ -271,9 +271,7 @@ double sampletable::decRound(double Val, quint8 dec)
 void sampletable::changeRow(QModelIndex curIndex)
 {
     QList<quint16> extremum;
-
     tableIndex = curIndex;
-
     curIndex = twMeas->model()->index(curIndex.row(), 0);
     baSample=(twMeas->model()->data(curIndex, Qt::UserRole).toByteArray());
     curIndex = twMeas->model()->index(curIndex.row(), curIndex.column()+2);
@@ -284,45 +282,9 @@ void sampletable::changeRow(QModelIndex curIndex)
     mainParam.L2 = (twMeas->model()->data(curIndex, Qt::UserRole).toInt());
     curIndex = twMeas->model()->index(curIndex.row(), curIndex.column()+1);
     mainParam.Retina = (twMeas->model()->data(curIndex, Qt::UserRole).toInt());
-
-//    foreach (quint8 val, baTmp)
-//    {
-//        hSample.insert(kolvo, val);
-//        x[kolvo] = kolvo;
-//        y[kolvo] = double(val);
-//        kolvo++;
-//    }
-
-
-
-//    pPlot->drawSample(x, y, 1000);
-
-//    if(pPlot->findExtremum(&baTmp, extremum))
-//    {
-//        pPlot->drawMarker(mainParam.Start, "Start");
-//        pPlot->drawMarker((double)mainParam.Start,(double)60, Qt::yellow);
-//        pPlot->drawMarker(mainParam.L1, "L1");
-//        pPlot->drawMarker((double)mainParam.L1,(double)60, Qt::yellow);
-//        pPlot->drawMarker(mainParam.L2, "L2");
-//        pPlot->drawMarker((double)mainParam.L2,(double)60, Qt::yellow);
-//        pPlot->drawMarker(mainParam.Retina, "Retina");
-//        pPlot->drawMarker((double)mainParam.Retina,(double)60, Qt::yellow);
-//    }
-
-//    if(findExtremum(&baTmp, extremum))
-
-//    AL =  (twMeas->model()->data(twMeas->model()->index(twMeas->currentIndex().row(), 5), Qt::UserRole).toDouble());
-//    AL -= (twMeas->model()->data(twMeas->model()->index(twMeas->currentIndex().row(), 2), Qt::UserRole).toDouble());
- //   AL = decRound(AL, 2);
-//    pBigView->setDisplay(AL);
-
     extremum.clear();
     findExtremum(&baSample, extremum);
-
-//    qDebug()<<"changeRow";
-
     emit(changeRow(extremum));
-
     refreshResult(twMeas->currentIndex().row());
 }
 
@@ -437,4 +399,53 @@ void sampletable::addSampleToTable(QByteArray Sample, stMainParam curMainParam)
     refreshTable(kolVo, curMainParam);
 }
 
+stPrintSample sampletable::printSample()
+{
+    QModelIndex curIndex;
+    stPrintSample tmp;
 
+    curIndex = twMeas->model()->index(curIndex.row(), 0);
+    baSample=(twMeas->model()->data(curIndex, Qt::UserRole).toByteArray());
+    curIndex = twMeas->model()->index(curIndex.row(), curIndex.column()+2);
+    mainParam.Start = (twMeas->model()->data(curIndex, Qt::UserRole).toInt());
+    curIndex = twMeas->model()->index(curIndex.row(), curIndex.column()+1);
+    mainParam.L1 = (twMeas->model()->data(curIndex, Qt::UserRole).toInt());
+    curIndex = twMeas->model()->index(curIndex.row(), curIndex.column()+1);
+    mainParam.L2 = (twMeas->model()->data(curIndex, Qt::UserRole).toInt());
+    curIndex = twMeas->model()->index(curIndex.row(), curIndex.column()+1);
+
+    curIndex = twMeas->model()->index(0, 0);
+    tmp.sample1             = (twMeas->model()->data(curIndex, Qt::UserRole).toByteArray());
+    curIndex = twMeas->model()->index(curIndex.row(), curIndex.column()+2);
+    tmp.mainParam1.Start   = (twMeas->model()->data(curIndex, Qt::UserRole).toInt());
+    curIndex = twMeas->model()->index(curIndex.row(), curIndex.column()+1);
+    tmp.mainParam1.L1      = (twMeas->model()->data(curIndex, Qt::UserRole).toInt());
+    curIndex = twMeas->model()->index(curIndex.row(), curIndex.column()+1);
+    tmp.mainParam1.L2      = (twMeas->model()->data(curIndex, Qt::UserRole).toInt());
+    curIndex = twMeas->model()->index(curIndex.row(), curIndex.column()+1);
+    tmp.mainParam1.Retina  = (twMeas->model()->data(curIndex, Qt::UserRole).toInt());
+
+    curIndex = twMeas->model()->index(1, 0);
+    tmp.sample2             = (twMeas->model()->data(curIndex, Qt::UserRole).toByteArray());
+    curIndex = twMeas->model()->index(curIndex.row(), curIndex.column()+2);
+    tmp.mainParam2.Start   = (twMeas->model()->data(curIndex, Qt::UserRole).toInt());
+    curIndex = twMeas->model()->index(curIndex.row(), curIndex.column()+1);
+    tmp.mainParam2.L1      = (twMeas->model()->data(curIndex, Qt::UserRole).toInt());
+    curIndex = twMeas->model()->index(curIndex.row(), curIndex.column()+1);
+    tmp.mainParam2.L2      = (twMeas->model()->data(curIndex, Qt::UserRole).toInt());
+    curIndex = twMeas->model()->index(curIndex.row(), curIndex.column()+1);
+    tmp.mainParam2.Retina  = (twMeas->model()->data(curIndex, Qt::UserRole).toInt());
+
+    curIndex = twMeas->model()->index(2, 0);
+    tmp.sample3             = (twMeas->model()->data(curIndex, Qt::UserRole).toByteArray());
+    curIndex = twMeas->model()->index(curIndex.row(), curIndex.column()+2);
+    tmp.mainParam3.Start   = (twMeas->model()->data(curIndex, Qt::UserRole).toInt());
+    curIndex = twMeas->model()->index(curIndex.row(), curIndex.column()+1);
+    tmp.mainParam3.L1      = (twMeas->model()->data(curIndex, Qt::UserRole).toInt());
+    curIndex = twMeas->model()->index(curIndex.row(), curIndex.column()+1);
+    tmp.mainParam3.L2      = (twMeas->model()->data(curIndex, Qt::UserRole).toInt());
+    curIndex = twMeas->model()->index(curIndex.row(), curIndex.column()+1);
+    tmp.mainParam3.Retina  = (twMeas->model()->data(curIndex, Qt::UserRole).toInt());
+
+    return tmp;
+}
