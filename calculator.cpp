@@ -309,84 +309,82 @@ void calculator::printPreview()
 void calculator::print( QPrinter* printer )
 {
     stPrintSample printSample;
+    stPatientParam patientParam;
     double x[2048], y[2048];
     quint16 kolvo;
     QObject * parentClass = parent()->parent();  //get parent for current class
     Panel * pClass = qobject_cast<Panel *>(parentClass); //cast QObject * to ParentClass
     if(pClass == NULL)
-       return;
+        return;
 
-  // create painter for drawing print page
-  QPainter painter( printer );
-  int      w = printer->pageRect().width();
-  int      h = printer->pageRect().height();
-  QRect    page( 0, 0, w, h );
-  // create a font appropriate to page size
-  QFont    font = painter.font();
-  font.setPixelSize( (w+h) / 100 );
-  painter.setFont( font );
-  // draw labels in corners of page
-  painter.drawText( page, Qt::AlignTop    | Qt::AlignLeft, "QSimulate" );
-//  painter.drawText( page, Qt::AlignBottom | Qt::AlignLeft, QString(getenv("USER")) );
-//  painter.drawText( page, Qt::AlignBottom | Qt::AlignRight,
-//                    QDateTime::currentDateTime().toString( Qt::DefaultLocaleShortDate ) );
+    // create painter for drawing print page
+    QPainter painter( printer );
 
-//  QPixmap pixmap(Formula1->size());
-//  Formula1->render(&pixmap);
+    printSample = pClass->Mesur->pSampleTable->printSample();
+    patientParam = pCalcPatient->getParam();
 
-  printSample = pClass->Mesur->pSampleTable->printSample();
+    QwtPlotRenderer renderer;
+    pPlotPrint1 = new Plot(this, true);
+    kolvo = 0;
+    foreach (quint8 val, printSample.sample1)
+    {
+        x[kolvo] = kolvo;
+        y[kolvo] = double(val);
+        kolvo++;
+    }
+    pPlotPrint1->drawSample(x, y, 1024);
+    pPlotPrint1->enableAxis(QwtPlot::xTop,false);
+    pPlotPrint1->enableAxis(QwtPlot::xBottom,false);
+    pPlotPrint1->enableAxis(QwtPlot::yLeft,false);
+    pPlotPrint1->replot();
+    renderer.render(pPlotPrint1, &painter, QRectF(500,1000,2000,1800));
 
+    pPlotPrint2 = new Plot(this, true);
+    kolvo = 0;
+    foreach (quint8 val, printSample.sample2)
+    {
+        x[kolvo] = kolvo;
+        y[kolvo] = double(val);
+        kolvo++;
+    }
+    pPlotPrint2->drawSample(x, y, 1024);
+    pPlotPrint2->enableAxis(QwtPlot::xTop,false);
+    pPlotPrint2->enableAxis(QwtPlot::xBottom,false);
+    pPlotPrint2->enableAxis(QwtPlot::yLeft,false);
+    pPlotPrint2->replot();
+    renderer.render(pPlotPrint2, &painter, QRectF(2700,1000,2000,1800));
 
-  QwtPlotRenderer renderer;
-  pPlotPrint1 = new Plot(this, true);
-  kolvo = 0;
-  foreach (quint8 val, printSample.sample1)
-  {
-      x[kolvo] = kolvo;
-      y[kolvo] = double(val);
-      kolvo++;
-  }
-  pPlotPrint1->drawSample(x, y, 1024);
-  pPlotPrint1->enableAxis(QwtPlot::xTop,false);
-  pPlotPrint1->enableAxis(QwtPlot::xBottom,false);
-  pPlotPrint1->enableAxis(QwtPlot::yLeft,false);
-  pPlotPrint1->replot();
-  renderer.render(pPlotPrint1, &painter, QRectF(500,1000,2000,1800));
+    pPlotPrint3 = new Plot(this, true);
+    kolvo = 0;
+    foreach (quint8 val, printSample.sample3)
+    {
+        x[kolvo] = kolvo;
+        y[kolvo] = double(val);
+        kolvo++;
+    }
+    pPlotPrint3->drawSample(x, y, 1024);
+    pPlotPrint3->enableAxis(QwtPlot::xTop,false);
+    pPlotPrint3->enableAxis(QwtPlot::xBottom,false);
+    pPlotPrint3->enableAxis(QwtPlot::yLeft,false);
+    pPlotPrint3->replot();
+    renderer.render(pPlotPrint3, &painter, QRectF(500,3600,2000,1800));
 
-  pPlotPrint2 = new Plot(this, true);
-  kolvo = 0;
-  foreach (quint8 val, printSample.sample2)
-  {
-      x[kolvo] = kolvo;
-      y[kolvo] = double(val);
-      kolvo++;
-  }
-  pPlotPrint2->drawSample(x, y, 1024);
-  pPlotPrint2->enableAxis(QwtPlot::xTop,false);
-  pPlotPrint2->enableAxis(QwtPlot::xBottom,false);
-  pPlotPrint2->enableAxis(QwtPlot::yLeft,false);
-  pPlotPrint2->replot();
-  renderer.render(pPlotPrint2, &painter, QRectF(2700,1000,2000,1800));
+    painter.drawRect(500, 200, 4000, 400);
+    painter.drawRect(500, 800, 4000, 400);
 
-  pPlotPrint3 = new Plot(this, true);
-  kolvo = 0;
-  foreach (quint8 val, printSample.sample3)
-  {
-      x[kolvo] = kolvo;
-      y[kolvo] = double(val);
-      kolvo++;
-  }
-  pPlotPrint3->drawSample(x, y, 1024);
-  pPlotPrint3->enableAxis(QwtPlot::xTop,false);
-  pPlotPrint3->enableAxis(QwtPlot::xBottom,false);
-  pPlotPrint3->enableAxis(QwtPlot::yLeft,false);
-  pPlotPrint3->replot();
-  renderer.render(pPlotPrint3, &painter, QRectF(500,3600,2000,1800));
+    QFont    font = painter.font();
+    font.setPixelSize(80);
+    painter.setFont( font );
 
-//  painter.drawPixmap(500,500,pixmap.height(),pixmap.width(),pixmap);
-  painter.drawRect(500, 200, 4000, 300);
+    QRect    page0( 500, 200, 500, 400);
+    painter.drawText(page0, Qt::AlignRight, "Name:\r\nID:\r\nDate of Birth:\r\nExam Date:" );
 
-  page.adjust( w/20, h/20, -w/20, -h/20 );
+    font.setBold(true);
+    painter.setFont( font );
+    QRect    page1(1000, 200, 1000, 400);
+    painter.drawText(page1, Qt::AlignLeft, QString("%1\r\n%2\r\n%3\r\n%4").arg(patientParam.Name).arg(patientParam.id).arg(patientParam.BirthDay).arg("555"));
+
+     QPixmap pm = QPixmap::grabWidget(Formula1);
 
 }
 

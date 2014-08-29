@@ -21,6 +21,7 @@ public:
 
 private:
     Ui::calculator_patient *ui;
+    stPatientParam patientParam;
 
 public:
     void setPatient(quint16 id, QString Patient, QString Doctor);

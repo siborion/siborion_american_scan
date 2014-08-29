@@ -98,8 +98,8 @@ mesurement::mesurement(QWidget *parent) :
 
 
 
-    connect(pbMeasure, SIGNAL(pressed()), pSampleTable, SLOT(getFileSample()));
-//    connect(pbMeasure, SIGNAL(pressed()), SLOT(openPort()));
+//    connect(pbMeasure, SIGNAL(pressed()), pSampleTable, SLOT(getFileSample()));
+    connect(pbMeasure, SIGNAL(pressed()), SLOT(openPort()));
     connect(pPlot, SIGNAL(refreshTable(stMainParam)), pSampleTable, SLOT(refreshTable(stMainParam)));
     connect(pSampleTable, SIGNAL(changeRow(QList<quint16>)), SLOT(changeRow(QList<quint16> )));
     connect(pSampleTable, SIGNAL(refreshMainParam()), SLOT(refreshMainParam()));

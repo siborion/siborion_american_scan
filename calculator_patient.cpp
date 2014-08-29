@@ -22,13 +22,18 @@ void calculator_patient::refreshPatientParam()
 {
     quint16 id;
     id = ui->lePatientId->text().toUInt();
-    QString str = QString("SELECT k1left, k2left, k1right, k2right FROM patient WHERE id=%1;")
+    QString str = QString("SELECT k1left,k2left,k1right,k2right,birth FROM patient WHERE id=%1;")
             .arg(id);
     QSqlQuery sql(str);
     if(sql.exec())
     {
         if(sql.next())
         {
+            patientParam.K1Left = sql.value(sql.record().indexOf("k1left")).toFloat();
+            patientParam.K1Right = sql.value(sql.record().indexOf("k1right")).toFloat();
+            patientParam.K2Left = sql.value(sql.record().indexOf("k2left")).toFloat();
+            patientParam.K2Right = sql.value(sql.record().indexOf("k2right")).toFloat();
+            patientParam.BirthDay = sql.value(sql.record().indexOf("birth")).toString();
             if(bLeft)
             {
                 ui->leK1->setTextZero(QString("%1").arg(sql.value(sql.record().indexOf("k1left")).toFloat()));
@@ -63,10 +68,12 @@ void calculator_patient::RefreshK()
 stPatientParam calculator_patient::getParam()
 {
     stPatientParam stTmp;
-    stTmp.id  = ui->lePatientId->text().toUInt();
-    stTmp.K   = ui->leK->text().toFloat();
-    stTmp.ACD = ui->leACD_measure->text().toFloat();
-    stTmp.AL  = ui->leAL_measure->text().toFloat();
+    stTmp = patientParam;
+    stTmp.id  =  ui->lePatientId->text().toUInt();
+    stTmp.Name = ui->lePatientName->text();
+    stTmp.K   =  ui->leK->text().toFloat();
+    stTmp.ACD =  ui->leACD_measure->text().toFloat();
+    stTmp.AL  =  ui->leAL_measure->text().toFloat();
     return stTmp;
 }
 

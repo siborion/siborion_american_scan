@@ -12,7 +12,11 @@ struct stMainParam
 struct stPatientParam
 {
     quint16 id;
+    QString Name;
+    QString BirthDay;
     float K;
+    float K1Left, K1Right;
+    float K2Left, K2Right;
     float AL;
     float ACD;
 };
