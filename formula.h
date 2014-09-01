@@ -35,6 +35,7 @@ private:
 
 public:
     void setValue(quint8 formula, QString name, QString aconst, QString acd, QString fs, double K, double AL, double ACD);
+    QStandardItemModel *getModel();
 
 public:
     explicit formula(QWidget *parent = 0);

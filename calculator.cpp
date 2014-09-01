@@ -201,6 +201,7 @@ void calculator::refreshFormuls()
     twLens->setModel(modelMainLens);
     QString str = QString("SELECT lens.name AS 'Lens Name',lens.aconst,lens.acd, lens.sf, formula.id, formula.name FROM patient, doctor_lens, lens, formula ON patient.doctor=doctor_lens.id_doctor AND lens.id=doctor_lens.id_lens AND doctor_lens.nom_formula=formula.id WHERE patient.id=%1;").arg(patientParam.id);
     modelMainLens->setQuery(str);
+//    qDebug()<<"str"<<str;
 
     modelMainLens->setHeaderData(0, Qt::Horizontal, "Lens Name", Qt::DisplayRole);
     modelMainLens->setHeaderData(1, Qt::Horizontal, "AConst", Qt::DisplayRole);
@@ -310,6 +311,7 @@ void calculator::print( QPrinter* printer )
 {
     stPrintSample printSample;
     stPatientParam patientParam;
+    QStandardItemModel *pModel1, *pModel2, *pModel3;
     double x[2048], y[2048];
     quint16 kolvo;
     QObject * parentClass = parent()->parent();  //get parent for current class
@@ -367,10 +369,10 @@ void calculator::print( QPrinter* printer )
     pPlotPrint3->enableAxis(QwtPlot::xBottom,false);
     pPlotPrint3->enableAxis(QwtPlot::yLeft,false);
     pPlotPrint3->replot();
-    renderer.render(pPlotPrint3, &painter, QRectF(500,3600,2000,1800));
+    renderer.render(pPlotPrint3, &painter, QRectF(500,3000,2000,1800));
 
     painter.drawRect(500, 200, 4000, 400);
-    painter.drawRect(500, 800, 4000, 400);
+//    painter.drawRect(500, 800, 4000, 400);
 
     QFont    font = painter.font();
     font.setPixelSize(80);
@@ -384,9 +386,64 @@ void calculator::print( QPrinter* printer )
     QRect    page1(1000, 200, 1000, 400);
     painter.drawText(page1, Qt::AlignLeft, QString("%1\r\n%2\r\n%3\r\n%4").arg(patientParam.Name).arg(patientParam.id).arg(patientParam.BirthDay).arg("555"));
 
-     QPixmap pm = QPixmap::grabWidget(Formula1);
+
+//     QPixmap pm = QPixmap::grabWidget(Formula1);
+//     painter.drawPixmap(300,300,500,500,pm);
+
+    pModel1 = Formula1->getModel();
+    pModel2 = Formula2->getModel();
+    pModel3 = Formula3->getModel();
+
+
+    int kolLine = 0;
+#define kolColumn  3
+#define hightLine  100
+#define yPosTable  5000
+#define xPosTable  500
+#define widthTable 3900
+
+    kolLine = qMax(pModel1->rowCount(), pModel2->rowCount());
+    kolLine = qMax(kolLine, pModel3->rowCount());
+
+    for(quint8 i=0; i<kolLine; i++)
+    {
+        painter.drawRect(xPosTable, yPosTable+i*hightLine, widthTable, hightLine);
+    }
+
+    for(quint8 i=0; i<kolColumn; i++)
+    {
+        painter.drawRect(xPosTable+((widthTable/kolColumn)*i), yPosTable, (widthTable/kolColumn), kolLine*hightLine);
+    }
+
+    for(quint8 i=0; i<(kolColumn*2); i++)
+    {
+        painter.drawRect(xPosTable+(widthTable/(kolColumn*2)*i), yPosTable+hightLine, (widthTable/(kolColumn*2)), (kolLine-1)*hightLine);
+    }
+
+
+    for (quint8 i=0; i<pModel1->rowCount(); i++)
+    {
+        QRect    txt1(xPosTable+(widthTable/(kolColumn*2))*0, yPosTable+(i+3)*hightLine, (widthTable/(kolColumn*2)), 100);
+        QRect    txt2(xPosTable+(widthTable/(kolColumn*2))*1, yPosTable+(i+3)*hightLine, (widthTable/(kolColumn*2)), 100);
+        painter.drawText(txt1, Qt::AlignCenter, pModel1->data(pModel1->index(i, 0), Qt::DisplayRole).toString());
+        painter.drawText(txt2, Qt::AlignCenter, pModel1->data(pModel1->index(i, 1), Qt::DisplayRole).toString());
+    }
+
+    for (quint8 i=0; i<pModel2->rowCount(); i++)
+    {
+        QRect    txt1(xPosTable+(widthTable/(kolColumn*2))*2, yPosTable+(i+3)*hightLine, (widthTable/(kolColumn*2)), 100);
+        QRect    txt2(xPosTable+(widthTable/(kolColumn*2))*3, yPosTable+(i+3)*hightLine, (widthTable/(kolColumn*2)), 100);
+        painter.drawText(txt1, Qt::AlignCenter, pModel2->data(pModel2->index(i, 0), Qt::DisplayRole).toString());
+        painter.drawText(txt2, Qt::AlignCenter, pModel2->data(pModel2->index(i, 1), Qt::DisplayRole).toString());
+    }
+
+    for (quint8 i=0; i<pModel3->rowCount(); i++)
+    {
+        QRect    txt1(xPosTable+(widthTable/(kolColumn*2))*4, yPosTable+(i+3)*hightLine, (widthTable/(kolColumn*2)), 100);
+        QRect    txt2(xPosTable+(widthTable/(kolColumn*2))*5, yPosTable+(i+3)*hightLine, (widthTable/(kolColumn*2)), 100);
+        painter.drawText(txt1, Qt::AlignCenter, pModel3->data(pModel3->index(i, 0), Qt::DisplayRole).toString());
+        painter.drawText(txt2, Qt::AlignCenter, pModel3->data(pModel3->index(i, 1), Qt::DisplayRole).toString());
+    }
 
 }
-
-
 

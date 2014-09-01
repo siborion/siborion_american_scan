@@ -270,3 +270,8 @@ void formula::changeFotmula(int formula)
         break;
     }
 }
+
+QStandardItemModel *formula::getModel()
+{
+    return (QStandardItemModel*)twCalculator->model();
+}
