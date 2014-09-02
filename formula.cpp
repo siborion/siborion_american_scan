@@ -275,6 +275,8 @@ stFormulaInfo *formula::getModel()
 {
 //stFormulaInfo stTmp;
 //    return (QStandardItemModel*)twCalculator->model();
+    stInfo.lensName = cbFormula->currentText();
+//    stInfo.formulaName =
     stInfo.model = (QStandardItemModel*)twCalculator->model();
 return &stInfo;
 }

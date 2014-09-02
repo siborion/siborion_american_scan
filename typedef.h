@@ -50,7 +50,9 @@ struct stPrintSample
 struct stFormulaInfo
 {
     QStandardItemModel *model;
+    QString formulaName;
     QString lensName;
+    QString IOL;
 };
 
 #endif // TYPEDEF_H
