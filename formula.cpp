@@ -271,7 +271,10 @@ void formula::changeFotmula(int formula)
     }
 }
 
-QStandardItemModel *formula::getModel()
+stFormulaInfo *formula::getModel()
 {
-    return (QStandardItemModel*)twCalculator->model();
+//stFormulaInfo stTmp;
+//    return (QStandardItemModel*)twCalculator->model();
+    stInfo.model = (QStandardItemModel*)twCalculator->model();
+return &stInfo;
 }

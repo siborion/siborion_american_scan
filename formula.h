@@ -8,6 +8,7 @@
 #include <QComboBox>
 #include <QLabel>
 #include <QLineEdit>
+#include "typedef.h"
 
 
 class formula : public QWidget
@@ -32,10 +33,11 @@ private:
     QStandardItem *getItem(QString, Qt::AlignmentFlag);
     QStandardItem *getItem(double, Qt::AlignmentFlag);
     void calculateIOL(quint8 formula);
+    stFormulaInfo stInfo;
 
 public:
     void setValue(quint8 formula, QString name, QString aconst, QString acd, QString fs, double K, double AL, double ACD);
-    QStandardItemModel *getModel();
+    stFormulaInfo *getModel();
 
 public:
     explicit formula(QWidget *parent = 0);

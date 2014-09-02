@@ -1,6 +1,8 @@
 #ifndef TYPEDEF_H
 #define TYPEDEF_H
 
+#include <QStandardItemModel>
+
 struct stMainParam
 {
     quint16 Start;
@@ -44,6 +46,12 @@ struct stPrintSample
     stMainParam mainParam3;
 };
 
+
+struct stFormulaInfo
+{
+    QStandardItemModel *model;
+    QString lensName;
+};
 
 #endif // TYPEDEF_H
 
