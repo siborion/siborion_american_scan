@@ -37,6 +37,9 @@ void sampletable::getFileSample()
     QList <quint16> extremum;
     QList <quint16> mainParam;
     QStandardItemModel *model;
+
+    qDebug()<<"getFile";
+
     model = (QStandardItemModel*)twMeas->model();
     model->setRowCount(0);
 
@@ -73,6 +76,7 @@ void sampletable::getFileSample()
             }
         }
         kolVo++;
+        qDebug()<<"kolVo"<<kolVo;
     }
 }
 

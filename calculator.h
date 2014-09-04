@@ -16,7 +16,6 @@
 #include <QSqlQueryModel>
 #include "scanbase.h"
 #include "calc.h"
-#include "calculator.h"
 #include "calculator_patient.h"
 #include <QPrinter>
 #include <QPrintPreviewDialog>
