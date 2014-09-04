@@ -67,6 +67,7 @@ mesurement::mesurement(QWidget *parent) :
     timer->start(1000);
 
     cbPort  = new QComboBox();
+    cbPort->addItem("");
     foreach(const QSerialPortInfo &info, QSerialPortInfo::availablePorts())
     {
         cbPort->addItem(info.portName());
@@ -98,8 +99,8 @@ mesurement::mesurement(QWidget *parent) :
 
 
 
-    connect(pbMeasure, SIGNAL(pressed()), pSampleTable, SLOT(getFileSample()));
-//    connect(pbMeasure, SIGNAL(pressed()), SLOT(openPort()));
+//    connect(pbMeasure, SIGNAL(pressed()), pSampleTable, SLOT(getFileSample()));
+    connect(pbMeasure, SIGNAL(pressed()), SLOT(openPort()));
     connect(pPlot, SIGNAL(refreshTable(stMainParam)), pSampleTable, SLOT(refreshTable(stMainParam)));
     connect(pSampleTable, SIGNAL(changeRow(QList<quint16>)), SLOT(changeRow(QList<quint16> )));
     connect(pSampleTable, SIGNAL(refreshMainParam()), SLOT(refreshMainParam()));
@@ -209,6 +210,11 @@ void mesurement::changeEye(quint8 val)
 void mesurement::openPort()
 {
     QString str;
+    if(cbPort->currentText().isEmpty())
+    {
+        pSampleTable->getFileSample();
+        return;
+    }
     str = "\\\\.\\" + cbPort->currentText();
     port->setPortName(str);
     port->setBaudRate(QSerialPort::Baud19200);
