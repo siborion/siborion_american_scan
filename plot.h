@@ -59,7 +59,8 @@ private:
     void move( const QPoint &pos );
 
     QwtPlotCurve *d_curve1;
-    QwtPlotCurve *d_curve2;
+    QwtPlotCurve *startCurve;
+    QwtPlotCurve *d_selectedMarkCurve;
     QwtPlotMarker *d_marker1;
     QwtPlotMarker *d_marker2;
     QwtPlotMarker *d_marker3;

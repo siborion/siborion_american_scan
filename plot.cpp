@@ -71,9 +71,30 @@ Plot::Plot( QWidget *parent, bool print):
     d_curve1->setLegendAttribute( QwtPlotCurve::LegendShowLine );
     d_curve1->setYAxis( QwtPlot::yLeft );
     d_curve1->attach( this );
-    setAutoReplot( true );
-    //    this->setMaximumSize(200,200);
 
+
+
+    double x[10];
+    double y[10];
+
+    x[0]=y[0]=0;
+    x[1]=50;
+    y[1]=0;
+    x[2]=y[2]=100;
+
+    startCurve = new QwtPlotCurve();
+    startCurve->setPen( Qt::blue, 10 );
+    startCurve->setTitle("Retina");
+    const QColor &c = Qt::gray;
+    startCurve->setSymbol(new QwtSymbol(QwtSymbol::Triangle,Qt::gray,c,QSize(24,24)));
+    startCurve->setSamples(x,y,2);
+    x[0]=y[0]=0;
+    x[1]=200;
+    y[1]=0;
+    startCurve->setSamples(x,y,2);
+    startCurve->attach( this );
+
+    setAutoReplot( true );
 }
 
 
@@ -145,6 +166,7 @@ bool Plot::eventFilter( QObject *object, QEvent *event )
 void Plot::select( const QPoint &pos )
 {
     QwtPlotMarker *curve = NULL;
+    QwtPlotCurve  *markCurve = NULL;
     double dist = 10e10;
     int index = -1;
     const QwtPlotItemList& itmList = itemList();
@@ -186,16 +208,55 @@ void Plot::select( const QPoint &pos )
                 }
             }
         }
+        return;
     }
+
+
+
+    dist = 10e10;
+    for ( QwtPlotItemIterator it = itmList.begin();it != itmList.end(); ++it )
+    {
+        if ( ( *it )->rtti() == QwtPlotItem::Rtti_PlotCurve)
+        {
+            QwtPlotCurve *c = static_cast<QwtPlotCurve *>( *it );
+
+            double d;
+            int idx = c->closestPoint( pos, &d );
+
+            if ((d < dist) && (d>0.01))
+            {
+//                qDebug() << "d" << d;
+//                qDebug() << c->title().text();
+                markCurve = c;
+                index = idx;
+                dist = d;
+            }
+        }
+    }
+
+
+    d_selectedMarkCurve = NULL;
+    d_selectedPoint = -1;
+
+    if ( markCurve && dist < 10 ) // 10 pixels tolerance
+    {
+        d_selectedMarkCurve = markCurve;
+        qDebug() << d_selectedMarkCurve->title().text();
+        d_selectedPoint = index;
+//        showCursor( true );
+    }
+
+
+
+
 }
 
 void Plot::move( const QPoint &pos )
 {
     stMainParam mainParam;
     quint16 val, in=0, curDist, dist=0xffff;
-    if ( !d_selectedCurve )
-        return;
-
+    if ( d_selectedCurve )
+    {
     if (QApplication::keyboardModifiers().testFlag(Qt::ControlModifier) == false)
     {
         foreach(val, allExtremum)
@@ -227,9 +288,38 @@ void Plot::move( const QPoint &pos )
                 mainParam.L2 = c->xValue();
             if(c->title().text()=="Retina")
                 mainParam.Retina = c->xValue();
+            emit(refreshTable(mainParam));
         }
     }
-    emit(refreshTable(mainParam));
+    }
+
+    if ( d_selectedMarkCurve )
+    {
+
+    QVector<double> xData( d_selectedMarkCurve->dataSize() );
+    QVector<double> yData( d_selectedMarkCurve->dataSize() );
+
+    for ( int i = 0;
+        i < static_cast<int>( d_selectedMarkCurve->dataSize() ); i++ )
+    {
+        if ( i == d_selectedPoint )
+        {
+            xData[i] = this->invTransform(
+                d_selectedMarkCurve->xAxis(), pos.x() );
+//            yData[i] = this->invTransform(
+//                d_selectedMarkCurve->yAxis(), pos.y() );
+        }
+        else
+        {
+            const QPointF sample = d_selectedMarkCurve->sample( i );
+            xData[i] = sample.x();
+//            yData[i] = sample.y();
+        }
+    }
+    d_selectedMarkCurve->setSamples( xData, yData );
+    }
+
+
 }
 
 bool Plot::findExtremum(QByteArray *Sample, QList<quint16> &extremum)

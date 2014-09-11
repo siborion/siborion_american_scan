@@ -64,7 +64,8 @@ SOURCES += main.cpp\
     calc.cpp \
     calculator_patient.cpp \
     delegate_lineedit.cpp \
-    leaddzero.cpp
+    leaddzero.cpp \
+    lineselect.cpp
 
 
 HEADERS  += mainwindow.h\
@@ -99,7 +100,8 @@ HEADERS  += mainwindow.h\
     calculator_patient.h \
     delegate_lineedit.h \
     leaddzero.h \
-    typedef.h 
+    typedef.h \ 
+    lineselect.h
 
 #FORMS    += mainwindow.ui
 
@@ -112,6 +114,7 @@ FORMS += \
     dialog_doctor.ui \
     bigviewnumhor.ui \
     bigviewnumcur.ui \
-    calculator_patient.ui
+    calculator_patient.ui \
+    lineselect.ui
 
 OTHER_FILES += plugins/sqldrivers/qsqlite.dll
