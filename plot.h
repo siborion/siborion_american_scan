@@ -3,6 +3,7 @@
 
 #include <qwt_plot.h>
 #include <QApplication>
+#include "sampleinterval.h"
 #include "typedef.h"
 
 class QwtPlotCurve;
@@ -58,8 +59,12 @@ private:
     void select( const QPoint &pos );
     void move( const QPoint &pos );
 
+    QwtText *startIntervalText;
+
     QwtPlotCurve *d_curve1;
-    QwtPlotCurve *startCurve;
+    SampleInterval *startInterval;
+    SampleInterval *lensInterval;
+    SampleInterval *retinaInterval;
     QwtPlotCurve *d_selectedMarkCurve;
     QwtPlotMarker *d_marker1;
     QwtPlotMarker *d_marker2;

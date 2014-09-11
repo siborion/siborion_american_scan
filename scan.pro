@@ -65,7 +65,8 @@ SOURCES += main.cpp\
     calculator_patient.cpp \
     delegate_lineedit.cpp \
     leaddzero.cpp \
-    lineselect.cpp
+    lineselect.cpp \
+    sampleinterval.cpp
 
 
 HEADERS  += mainwindow.h\
@@ -101,7 +102,8 @@ HEADERS  += mainwindow.h\
     delegate_lineedit.h \
     leaddzero.h \
     typedef.h \ 
-    lineselect.h
+    lineselect.h \
+    sampleinterval.h
 
 #FORMS    += mainwindow.ui
 
