@@ -61,18 +61,11 @@ Plot::Plot( QWidget *parent, bool print):
     setAxisScale(QwtPlot::xTop, (dMin/27), (dMax/27));
     setAxisScale(QwtPlot::yLeft, -10.0, 255.0);
 
-
-//    this->axisWidget()
-//    QwtScaleWidget *qwtsw = this->axisWidget(QwtPlot::xBottom);
-    QPalette palette;// =  qwtsw->palette();
-    palette.setColor( QPalette::WindowText, Qt::gray);	// for ticks
-//    palette.setColor( QPalette::Text, Qt::gray);	                // for ticks' labels
-//    qwtsw->setPalette( palette );
-//    qwtsw = this->axisWidget(QwtPlot::yLeft);
+    QPalette palette;
+    palette.setColor( QPalette::WindowText, Qt::gray);
     this->axisWidget(QwtPlot::yLeft)->setPalette(palette);
+    palette.setColor( QPalette::Text, Qt::gray);
     this->axisWidget(QwtPlot::xBottom)->setPalette(palette);
-
-//    qwtsw->setPalette( palette );
 
     // curves
     d_curve1 = new QwtPlotCurve();
@@ -80,20 +73,20 @@ Plot::Plot( QWidget *parent, bool print):
     if(print)
         d_curve1->setPen( Qt::black );
     else
-        d_curve1->setPen( Qt::yellow );
+        d_curve1->setPen(QColor(255,170,0,255));   //( Qt::yellow );
     d_curve1->setLegendAttribute( QwtPlotCurve::LegendShowLine );
     d_curve1->setYAxis( QwtPlot::yLeft );
     d_curve1->attach( this );
 
 
 
-    double x[10];
-    double y[10];
+//    double x[10];
+//    double y[10];
 
-    x[0]=y[0]=0;
-    x[1]=50;
-    y[1]=0;
-    x[2]=y[2]=100;
+//    x[0]=y[0]=0;
+//    x[1]=50;
+//    y[1]=0;
+//    x[2]=y[2]=100;
 
     startInterval  = new SampleInterval(0,   50,  "Start_Interval");
     lensInterval   = new SampleInterval(100, 450, "Lens_Interval");
@@ -129,12 +122,13 @@ void Plot::drawMarker(quint16 pos, QString title)
     qT.setFont(qF);
     qT.setText(title);
     QColor color;
-    color.setRgb(0,0,0,255);
+    color.setRgb(0,0,0,0);
     qT.setBackgroundBrush(color);
     QwtPlotMarker *d_marker = new QwtPlotMarker();
     d_marker->setLineStyle( QwtPlotMarker::VLine );
     d_marker->setLinePen( Qt::red, 0, Qt::SolidLine );
     d_marker->setXValue((double)pos);
+    d_marker->setYAxis(10);
     d_marker->setTitle(title);
 //    d_marker->set
     d_marker->setLabel(qT);
