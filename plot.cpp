@@ -52,19 +52,19 @@ Plot::Plot( QWidget *parent, bool print):
 
     // axes
     enableAxis( QwtPlot::xTop );
-    setAxisMaxMajor( QwtPlot::xBottom, 6 );
-    setAxisMaxMinor( QwtPlot::xBottom, 9 );
+//    setAxisMaxMajor( QwtPlot::xBottom, 6 );
+//    setAxisMaxMinor( QwtPlot::xBottom, 9 );
     double dMin, dMax;
     dMin=(-20.0); dMax=(1024.0);
 
-    setAxisScale(QwtPlot::xBottom, dMin, dMax);
-    setAxisScale(QwtPlot::xTop, (dMin/27), (dMax/27));
+    setAxisScale(QwtPlot::xTop, dMin, dMax);
+    setAxisScale(QwtPlot::xBottom, (dMin/27), (dMax/27));
     setAxisScale(QwtPlot::yLeft, -10.0, 255.0);
 
     QPalette palette;
-    palette.setColor( QPalette::WindowText, Qt::gray);
+    palette.setColor(QPalette::WindowText, Qt::gray);
     this->axisWidget(QwtPlot::yLeft)->setPalette(palette);
-    palette.setColor( QPalette::Text, Qt::gray);
+    palette.setColor(QPalette::Text, Qt::gray);
     this->axisWidget(QwtPlot::xBottom)->setPalette(palette);
 
     // curves
@@ -75,8 +75,9 @@ Plot::Plot( QWidget *parent, bool print):
     else
         d_curve1->setPen(QColor(255,170,0,255));   //( Qt::yellow );
     d_curve1->setLegendAttribute( QwtPlotCurve::LegendShowLine );
-    d_curve1->setYAxis( QwtPlot::yLeft );
-    d_curve1->attach( this );
+    d_curve1->setYAxis(QwtPlot::yLeft);
+    d_curve1->setXAxis(QwtPlot::xTop);
+    d_curve1->attach(this);
 
 
 
@@ -95,8 +96,6 @@ Plot::Plot( QWidget *parent, bool print):
     startInterval->attach( this );
     lensInterval->attach( this );
     retinaInterval->attach( this );
-
-
 
     setAutoReplot( true );
 }
@@ -125,12 +124,11 @@ void Plot::drawMarker(quint16 pos, QString title)
     color.setRgb(0,0,0,0);
     qT.setBackgroundBrush(color);
     QwtPlotMarker *d_marker = new QwtPlotMarker();
+    d_marker->setXAxis(QwtPlot::xTop);
     d_marker->setLineStyle( QwtPlotMarker::VLine );
     d_marker->setLinePen( Qt::red, 0, Qt::SolidLine );
     d_marker->setXValue((double)pos);
-    d_marker->setYAxis(10);
     d_marker->setTitle(title);
-//    d_marker->set
     d_marker->setLabel(qT);
     d_marker->setLabelAlignment(Qt::AlignRight | Qt::AlignTop);
     d_marker->attach( this );
@@ -139,6 +137,7 @@ void Plot::drawMarker(quint16 pos, QString title)
 void Plot::drawMarker(double x, double y, const QColor &color)
 {
     QwtPlotMarker *d_marker = new QwtPlotMarker();
+    d_marker->setXAxis(QwtPlot::xTop);
     d_marker->setLineStyle( QwtPlotMarker::NoLine );
     d_marker->setLinePen( color, 0, Qt::SolidLine );
     d_marker->setSymbol( new QwtSymbol( QwtSymbol::Diamond,QColor( color ), QColor( color ), QSize( 8, 8 ) ) );
