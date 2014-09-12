@@ -7,6 +7,7 @@
 #include <qwt_legend.h>
 #include <qwt_text.h>
 #include <qwt_plot_canvas.h>
+#include <qwt_scale_widget.h>
 #include <qmath.h>
 #include "complexnumber.h"
 #include "plot.h"
@@ -35,19 +36,19 @@ Plot::Plot( QWidget *parent, bool print):
         setCanvasBackground(QColor("Black"));
 
     // grid
-    QwtPlotGrid *grid = new QwtPlotGrid;
-    grid->enableXMin( true );
-    if(print)
-    {
-        grid->setMajorPen( Qt::darkGray, 0, Qt::SolidLine );
-        grid->setMinorPen( Qt::darkGray, 0 , Qt::DotLine );
-    }
-    else
-    {
-        grid->setMajorPen( Qt::white, 0, Qt::DotLine );
-        grid->setMinorPen( Qt::gray, 0 , Qt::DotLine );
-    }
-    grid->attach( this );
+//    QwtPlotGrid *grid = new QwtPlotGrid;
+//    grid->enableXMin( true );
+//    if(print)
+//    {
+//        grid->setMajorPen( Qt::darkGray, 0, Qt::SolidLine );
+//        grid->setMinorPen( Qt::darkGray, 0 , Qt::DotLine );
+//    }
+//    else
+//    {
+//        grid->setMajorPen( Qt::white, 0, Qt::DotLine );
+//        grid->setMinorPen( Qt::gray, 0 , Qt::DotLine );
+//    }
+//    grid->attach( this );
 
     // axes
     enableAxis( QwtPlot::xTop );
@@ -55,12 +56,23 @@ Plot::Plot( QWidget *parent, bool print):
     setAxisMaxMinor( QwtPlot::xBottom, 9 );
     double dMin, dMax;
     dMin=(-20.0); dMax=(1024.0);
+
     setAxisScale(QwtPlot::xBottom, dMin, dMax);
     setAxisScale(QwtPlot::xTop, (dMin/27), (dMax/27));
-    setAxisScale(QwtPlot::yLeft, 0.0, 255.0);
+    setAxisScale(QwtPlot::yLeft, -10.0, 255.0);
 
 
+//    this->axisWidget()
+//    QwtScaleWidget *qwtsw = this->axisWidget(QwtPlot::xBottom);
+    QPalette palette;// =  qwtsw->palette();
+    palette.setColor( QPalette::WindowText, Qt::gray);	// for ticks
+//    palette.setColor( QPalette::Text, Qt::gray);	                // for ticks' labels
+//    qwtsw->setPalette( palette );
+//    qwtsw = this->axisWidget(QwtPlot::yLeft);
+    this->axisWidget(QwtPlot::yLeft)->setPalette(palette);
+    this->axisWidget(QwtPlot::xBottom)->setPalette(palette);
 
+//    qwtsw->setPalette( palette );
 
     // curves
     d_curve1 = new QwtPlotCurve();
@@ -290,18 +302,21 @@ void Plot::move( const QPoint &pos )
     {
         QVector<double> xData( d_selectedMarkCurve->dataSize() );
         QVector<double> yData( d_selectedMarkCurve->dataSize() );
-        for ( int i = 0;
-              i < static_cast<int>( d_selectedMarkCurve->dataSize() ); i++ )
+        for ( int i = 0; i < static_cast<int>( d_selectedMarkCurve->dataSize() ); i++ )
         {
+            const QPointF sample = d_selectedMarkCurve->sample( i );
             if ( i == d_selectedPoint )
             {
                 xData[i] = this->invTransform(
                             d_selectedMarkCurve->xAxis(), pos.x() );
+                //                yData[i] = this->invTransform(
+                //                            d_selectedMarkCurve->yAxis(), pos.y() );
+                yData[i] = sample.y();
             }
             else
             {
-                const QPointF sample = d_selectedMarkCurve->sample( i );
                 xData[i] = sample.x();
+                yData[i] = sample.y();
             }
         }
         d_selectedMarkCurve->setSamples( xData, yData );

@@ -66,7 +66,8 @@ SOURCES += main.cpp\
     delegate_lineedit.cpp \
     leaddzero.cpp \
     lineselect.cpp \
-    sampleinterval.cpp
+    sampleinterval.cpp \
+    curentparam.cpp
 
 
 HEADERS  += mainwindow.h\
@@ -103,7 +104,8 @@ HEADERS  += mainwindow.h\
     leaddzero.h \
     typedef.h \ 
     lineselect.h \
-    sampleinterval.h
+    sampleinterval.h \
+    curentparam.h
 
 #FORMS    += mainwindow.ui
 
