@@ -17,6 +17,7 @@
 #include <QPainter>
 #include <QSql>
 #include <QSqlQueryModel>
+#include <QDataWidgetMapper>
 #include "scanbase.h"
 #include "dialog_lens.h"
 #include "dialog_doctor.h"
@@ -54,6 +55,7 @@ private:
     QSqlQueryModel  *model;
     BaseType::Status TypeBase;
     QString *svg;
+    QLineEdit *leSearch;
 
 
 private slots:

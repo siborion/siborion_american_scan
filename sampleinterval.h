@@ -6,7 +6,7 @@
 class SampleInterval : public QwtPlotCurve
 {
 public:
-    SampleInterval(quint16 x1, quint16 x2, QString title);
+    SampleInterval(double x1, double x2, QString title);
 };
 
 #endif // SAMPLEINTERVAL_H

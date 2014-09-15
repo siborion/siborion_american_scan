@@ -1,7 +1,7 @@
 #include "sampleinterval.h"
 #include <qwt_plot.h>
 
-SampleInterval::SampleInterval(quint16 x1, quint16 x2, QString title):
+SampleInterval::SampleInterval(double x1, double x2, QString title):
     QwtPlotCurve()
 {
     double x[2];
@@ -11,7 +11,7 @@ SampleInterval::SampleInterval(quint16 x1, quint16 x2, QString title):
     x[1] = x2;
     y[0] = y[1] = -6;
 
-    setXAxis(QwtPlot::xTop);
+    setXAxis(QwtPlot::xBottom);
 
     setPen( Qt::darkBlue, 10 );
     setTitle(title);

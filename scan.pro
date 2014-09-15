@@ -67,7 +67,9 @@ SOURCES += main.cpp\
     leaddzero.cpp \
     lineselect.cpp \
     sampleinterval.cpp \
-    curentparam.cpp
+    curentparam.cpp \
+    buttonscan.cpp \
+    scanbutton.cpp
 
 
 HEADERS  += mainwindow.h\
@@ -105,7 +107,9 @@ HEADERS  += mainwindow.h\
     typedef.h \ 
     lineselect.h \
     sampleinterval.h \
-    curentparam.h
+    curentparam.h \
+    buttonscan.h \
+    scanbutton.h
 
 #FORMS    += mainwindow.ui
 
@@ -119,6 +123,7 @@ FORMS += \
     bigviewnumhor.ui \
     bigviewnumcur.ui \
     calculator_patient.ui \
-    lineselect.ui
+    lineselect.ui \
+    buttonscan.ui
 
 OTHER_FILES += plugins/sqldrivers/qsqlite.dll

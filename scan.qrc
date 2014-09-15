@@ -5,5 +5,9 @@
         <file alias="doctor">pic/doctor.png</file>
         <file alias="patient">pic/pacient.png</file>
         <file alias="Del">pic/bin_empty.png</file>
+        <file alias="scan4">scan4.png</file>
+        <file alias="scan1">scan1.png</file>
+        <file alias="scan2">scan2.png</file>
+        <file alias="scan3">scan3.png</file>
     </qresource>
 </RCC>

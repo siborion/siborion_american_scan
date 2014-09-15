@@ -53,13 +53,13 @@ mesurement::mesurement(QWidget *parent) :
 
 
     QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
-    QPushButton *pbMeasure = new QPushButton();
+    ScanButton *pbMeasure = new ScanButton();
     pbMeasure->setSizePolicy(sizePolicy);
     QIcon icon;
     icon.addFile(QStringLiteral(":/test/scan"), QSize(), QIcon::Normal, QIcon::Off);
-    pbMeasure->setIcon(icon);
-    pbMeasure->setIconSize(QSize(50, 50));
-//    pbMeasure->setCheckable(true);
+//    pbMeasure->setIcon(icon);
+//    pbMeasure->setIconSize(QSize(50, 50));
+    pbMeasure->setCheckable(true);
 
     layoutBot->addWidget(fmPlot, 0, 0, 4, 1);
     layoutBot->addWidget(pKey,5,0,1,1);

@@ -32,7 +32,7 @@ bases::bases(QWidget *parent) :
     rbDoctor->setIconSize(QSize(80, 80));
 
     QLabel    *lSearch  = new QLabel(tr("Search"));
-    QLineEdit *leSearch = new QLineEdit();
+    leSearch = new QLineEdit();
 
     model = new QSqlQueryModel ();
     pTest = new QPushButton();
@@ -69,6 +69,11 @@ bases::bases(QWidget *parent) :
 //        qDebug()<<model->index(0,0);
     }
 //    qDebug()<<model->rowCount();
+
+
+//    mapper->addMapping(myLineEdit, 1);
+//    mapper->addMapping(myCountryChooser, 2);
+//    mapper->toFirst();
 
 
     connect(rbPatient, SIGNAL(clicked(bool)), SLOT(changeBasePatient(bool)));
@@ -127,6 +132,12 @@ void bases::adjTable(BaseType::Status Val)
         pbPatientHistory->setVisible(false);
     twTable->setColumnPercent(columnPercent);
     fillModelHead(lst);
+
+    QDataWidgetMapper *mapper = new QDataWidgetMapper;
+    mapper->setModel(model);
+    mapper->addMapping(leSearch, 1);
+    connect(twTable->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),
+            mapper, SLOT(setCurrentModelIndex(QModelIndex)));
 }
 
 void bases::changeBasePatient(bool Val)

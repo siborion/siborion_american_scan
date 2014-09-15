@@ -59,7 +59,7 @@ Plot::Plot( QWidget *parent, bool print):
 
     setAxisScale(QwtPlot::xTop, dMin, dMax);
     setAxisScale(QwtPlot::xBottom, (dMin/27), (dMax/27));
-    setAxisScale(QwtPlot::yLeft, -10.0, 255.0);
+    setAxisScale(QwtPlot::yLeft, -4, 255.0);
 
     QPalette palette;
     palette.setColor(QPalette::WindowText, Qt::gray);
@@ -89,9 +89,9 @@ Plot::Plot( QWidget *parent, bool print):
 //    y[1]=0;
 //    x[2]=y[2]=100;
 
-    startInterval  = new SampleInterval(0,   50,  "Start_Interval");
-    lensInterval   = new SampleInterval(100, 450, "Lens_Interval");
-    retinaInterval = new SampleInterval(550, 1000, "Retina_Interval");
+    startInterval  = new SampleInterval(0.2, 0.8,  "Start_Interval");
+    lensInterval   = new SampleInterval(2.0, 13.0, "Lens_Interval");
+    retinaInterval = new SampleInterval(17.0,32.0, "Retina_Interval");
 
     startInterval->attach( this );
     lensInterval->attach( this );

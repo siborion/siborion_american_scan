@@ -28,6 +28,7 @@
 #include <QTimer>
 #include <QTextEdit>
 #include "lineselect.h"
+#include "scanbutton.h"
 #include "typedef.h"
 
 
@@ -88,7 +89,7 @@ private:
 //    basefill *pBaseFill;
 
     QPushButton *pbDel;
-    QPushButton *pbMeasure;
+    ScanButton *pbMeasure;
 
 //    QLabel *average;
 
