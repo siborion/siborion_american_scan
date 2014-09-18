@@ -18,9 +18,11 @@
 #include <QSql>
 #include <QSqlQueryModel>
 #include <QDataWidgetMapper>
+#include "curentparam.h"
 #include "scanbase.h"
 #include "dialog_lens.h"
 #include "dialog_doctor.h"
+#include "curentparam.h"
 
 namespace BaseType
 {
@@ -44,6 +46,7 @@ public slots:
 
 private:
     scanbase *pBase;
+    CurentParam *curentParam;
     void adjCol();
     void fillModelHead(QStringList sl);
     adjview *twTable;
@@ -55,8 +58,8 @@ private:
     QSqlQueryModel  *model;
     BaseType::Status TypeBase;
     QString *svg;
+    QLabel    *lSearch;
     QLineEdit *leSearch;
-
 
 private slots:
     void adjTable(BaseType::Status);

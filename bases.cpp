@@ -4,6 +4,7 @@ bases::bases(QWidget *parent) :
     QWidget(parent)
 {
     pBase = scanbase::instanse();
+    curentParam = CurentParam::instanse();
 
     QHBoxLayout *Layout = new QHBoxLayout(this);
     QVBoxLayout *leftLayout  = new QVBoxLayout();
@@ -31,7 +32,7 @@ bases::bases(QWidget *parent) :
     rbDoctor->setIcon(iconDoctor);
     rbDoctor->setIconSize(QSize(80, 80));
 
-    QLabel    *lSearch  = new QLabel(tr("Search"));
+    lSearch  = new QLabel(tr("Search"));
     leSearch = new QLineEdit();
 
     model = new QSqlQueryModel ();
@@ -133,11 +134,16 @@ void bases::adjTable(BaseType::Status Val)
     twTable->setColumnPercent(columnPercent);
     fillModelHead(lst);
 
-    QDataWidgetMapper *mapper = new QDataWidgetMapper;
-    mapper->setModel(model);
-    mapper->addMapping(leSearch, 1);
-    connect(twTable->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),
-            mapper, SLOT(setCurrentModelIndex(QModelIndex)));
+    if (TypeBase == BaseType::enPatient)
+    {
+        curentParam->maper.setModel(model);
+        curentParam->maper.addMapping(leSearch, 1);
+        connect(twTable->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),
+                &curentParam->maper, SLOT(setCurrentModelIndex(QModelIndex)));
+    }
+    else
+        disconnect(twTable->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),
+                &curentParam->maper, SLOT(setCurrentModelIndex(QModelIndex)));
 }
 
 void bases::changeBasePatient(bool Val)

@@ -1,10 +1,11 @@
 #ifndef CURENTPARAM_H
 #define CURENTPARAM_H
 #include <QObject>
+#include <QDataWidgetMapper>
 
-class CurentParam //: public QObject
+class CurentParam : public QObject
 {
-//    Q_OBJECT
+    Q_OBJECT
 private:
     static CurentParam *_instanse;
 
@@ -17,6 +18,10 @@ public:
         return _instanse;
     }
     quint16 idPatient;
+    QDataWidgetMapper maper;
+
+private slots:
+    void changeMaper(int num);
 };
 
 #endif // CURENTPARAM_H

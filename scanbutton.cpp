@@ -17,7 +17,10 @@ void ScanButton::doTimer()
         numPic++;
     }
     else
+    {
         icon.addFile(QStringLiteral(":/test/scan"), QSize(), QIcon::Normal, QIcon::Off);
+        numPic = 0;
+    }
     setIcon(icon);
     setIconSize(QSize(50, 50));
 }
