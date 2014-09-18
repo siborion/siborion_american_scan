@@ -1,6 +1,7 @@
 #ifndef BIGVIEWNUMCUR_H
 #define BIGVIEWNUMCUR_H
 
+#include "curentparam.h"
 #include <QWidget>
 #include <QDate>
 
@@ -21,6 +22,7 @@ public:
     void changeEye(quint8);
 private:
     Ui::bigviewnumcur *ui;
+    CurentParam *curentParam;
 };
 
 #endif // bigviewnumcur_H

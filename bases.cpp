@@ -105,7 +105,7 @@ void bases::adjTable(BaseType::Status Val)
         columnPercent<<10   <<   10        <<      20        <<      20       <<       20        <<     20;
         lst<<tr("Ref.№")<<tr("Patient ID")<<tr("First Name")<<tr("Last Name")<<tr("Doctor Name")<<tr("Notes");
         lstButton<<tr("Add Patient")<<tr("Edit Patient")<<tr("Delete Patient")<<tr("Patient History");
-        str = "SELECT  ref, id, name, last, doctor, notes from v_patient;";
+        str = "SELECT  ref, id, name||' '||last as name, '' as last, doctor, notes from v_patient;";
         break;
     case BaseType::enDoctor:
         columnPercent   <<       10        <<      30        <<      30       <<     30;
