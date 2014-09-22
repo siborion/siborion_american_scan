@@ -52,14 +52,19 @@ void CurentParam::changePatient(quint16 id)
     str.append("AND lens.id=doctor_lens.id_lens ");
     str.append("AND doctor_lens.nom_formula=formula.id ");
     str.append(QString("WHERE patient.id=%1;").arg(patientId));
-    qDebug()<<str;
+//    qDebug()<<str;
     lensModel->setQuery(str);
 }
 
 void CurentParam::changeSide()
 {
-    side^=1;
+    if(side)
+        side = false;
+    else
+        side = true;
+
     refreshPatientModel();
+//    qDebug()<<side;
 }
 
 void CurentParam::refreshPatientModel()

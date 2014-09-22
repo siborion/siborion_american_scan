@@ -95,7 +95,7 @@
       <item row="2" column="4" colspan="3">
        <widget class="QPushButton" name="pbSide">
         <property name="text">
-         <string>OD</string>
+         <string>Change eye</string>
         </property>
        </widget>
       </item>

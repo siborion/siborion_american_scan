@@ -14,12 +14,12 @@ private:
     static CurentParam *_instanse;
     scanbase *pBase;
     QSqlQueryModel patientModel;
-    bool side;
     void refreshPatientModel();
     quint16 patientId, doctorId;
 
 public:
     QSqlQueryModel *lensModel;
+    bool side;
 
     CurentParam();
     static CurentParam *instanse()

@@ -377,7 +377,7 @@
         <string notr="true">color: rgb(170, 170, 127);</string>
        </property>
        <property name="text">
-        <string>OD</string>
+        <string/>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>

@@ -110,7 +110,7 @@ mesurement::mesurement(QWidget *parent) :
     connect(pSampleTable, SIGNAL(refreshMainParam()), SLOT(refreshMainParam()));
     connect(pbDel, SIGNAL(clicked()), pSampleTable, SLOT(delSample()));
 //    connect(pbDel, SIGNAL(clicked()), SLOT(delSample()));
-    connect(pKey,SIGNAL(changeEye(quint8)),SLOT(changeEye(quint8)));
+//    connect(pKey,SIGNAL(changeEye(quint8)),SLOT(changeEye(quint8)));
     connect(timer, SIGNAL(timeout()), SLOT(doTimer()));
 }
 

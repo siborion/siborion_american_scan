@@ -9,13 +9,15 @@ calculator_patient::calculator_patient(QWidget *parent) :
     ui->setupUi(this);
     curentParam = CurentParam::instanse();
 
-    curentParam->patientMaper.addMapping(ui->lePatientId,0);
+    QByteArray ttt = "text";
+
+//    curentParam->patientMaper.addMapping(ui->lePatientId,0);                                         );
     curentParam->patientMaper.addMapping(ui->lePatientName,1);
     curentParam->patientMaper.addMapping(ui->leDoctorName,2);
     curentParam->patientMaper.addMapping(ui->leK1,4);
     curentParam->patientMaper.addMapping(ui->leK2,5);
     curentParam->patientMaper.addMapping(ui->leK,6);
-
+    curentParam->patientMaper.addMapping(ui->pbSide,7,"text");
 
     bLeft = true;
     connect(ui->leK1, SIGNAL(editingFinished()),SLOT(RefreshK()));
@@ -98,9 +100,6 @@ stPersonalParam calculator_patient::getPersonalParam()
 
 void calculator_patient::ChangeSide()
 {
-//    bLeft = (!bLeft);
-//    refreshPatientParam();
-//    ui->pbSide->setText(bLeft?"OD":"OS");
     curentParam->changeSide();
 }
 
