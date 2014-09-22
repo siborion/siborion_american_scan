@@ -12,10 +12,8 @@ bigviewnumcur::bigviewnumcur(QWidget *parent) :
     ui->setupUi(this);
     ui->lData->setText(curData.toString("dd.MM.yyyy"));
 
-    curentParam->maper.addMapping(ui->lFioPatient, 2);
-    //    mapper->addMapping(myLineEdit, 1);
-
-//    setMinimumSize(200,200);
+    curentParam->patientMaper.addMapping(ui->lFioPatient, 1);
+    curentParam->patientMaper.addMapping(ui->lFioDoctor,  2);
 }
 
 bigviewnumcur::~bigviewnumcur()
@@ -31,16 +29,15 @@ void bigviewnumcur::setDisplay(double AL, double ACD, double LT, double VIT)
     ui->lCurVIT->setText(QString("%1").arg(VIT,4,'f',2));
 }
 
-void bigviewnumcur::setPatient(QString FIO)
-{
+//void bigviewnumcur::setPatient(QString FIO)
+//{
 //    ui->lFioPatient->setText(FIO);
-}
+//}
 
-void bigviewnumcur::setDoctor(QString FIO)
-{
+//void bigviewnumcur::setDoctor(QString FIO)
+//{
 //    ui->lFioDoctor->setText(FIO);
-}
-
+//}
 
 void bigviewnumcur::changeEye(quint8 val)
 {

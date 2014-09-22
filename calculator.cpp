@@ -12,6 +12,7 @@ calculator::calculator(QWidget *parent) :
     QStringList lst;
 
     pBase = scanbase::instanse();
+    curentParam = CurentParam::instanse();
 
     QStandardItemModel *model;
 
@@ -41,7 +42,8 @@ calculator::calculator(QWidget *parent) :
     twLens = new adjview(3, lst, columnPercent);
     twLens->setMinimumWidth(400);
 //    twLens->setMaximumWidth(300);
-    modelMainLens = new QSqlQueryModel ();
+    modelMainLens = curentParam->lensModel;//new QSqlQueryModel();
+//    modelMainLens = new QSqlQueryModel();
     twLens->setModel(modelMainLens);
 //    QString str = "SELECT  name, mfg, aconst, acd from lens;";
     QString str = QString("SELECT lens.name as 'Lens Name',lens.aconst,lens.acd,lens.sf,doctor_lens.nom_formula FROM patient, doctor_lens, lens ON patient.doctor=doctor_lens.id_doctor AND lens.id=doctor_lens.id_lens WHERE 0=1;");
@@ -137,6 +139,7 @@ calculator::calculator(QWidget *parent) :
 //     layout->addItem(vs2);
      layout->addWidget(pbPrint);
 
+
 //     connect(pbOD, SIGNAL(clicked()), SLOT(changeEye()));
      connect(twK->model(), SIGNAL(dataChanged(QModelIndex,QModelIndex)),  SLOT(setAL(QModelIndex,QModelIndex)));
      connect(pCalcPatient, SIGNAL(refreshFormula()), SLOT(refreshFormuls()));
@@ -171,7 +174,7 @@ calculator::calculator(QWidget *parent) :
 
 void calculator::changeRow(quint8 numBase, quint16 id, QString Patient, QString Doctor)
 {
-    pCalcPatient->setPatient(id, Patient, Doctor);
+//    pCalcPatient->setPatient(id, Patient, Doctor);
     pCalcPatient->refreshPatientParam();
     refreshFormuls();
 }

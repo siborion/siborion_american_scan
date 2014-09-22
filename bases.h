@@ -73,7 +73,7 @@ private slots:
     void changeRow(QModelIndex cur, QModelIndex prev);
 
 Q_SIGNALS:
-    void changeRow(quint8 idType, quint16 idRow, QString Patient, QString Doctor);
+//    void changeRow(quint8 idType, quint16 idRow, QString Patient, QString Doctor);
 };
 
 #endif // BASES_H

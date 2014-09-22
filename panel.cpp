@@ -34,8 +34,8 @@ Panel::Panel( QWidget *parent ):
     addTab( Calculator, "Calculator" );
 //    addTab( Print, "Print" );
 //    addTab( createOnlineTab( this ), "Print" );
-    connect(page,SIGNAL(changeRow(quint8,quint16,QString,QString)),Mesur,SLOT(changeRow(quint8,quint16,QString,QString)));
-    connect(page,SIGNAL(changeRow(quint8,quint16,QString,QString)),Calculator,SLOT(changeRow(quint8,quint16,QString,QString)));
+//    connect(page,SIGNAL(changeRow(quint8,quint16,QString,QString)),Mesur,SLOT(changeRow(quint8,quint16,QString,QString)));
+//    connect(page,SIGNAL(changeRow(quint8,quint16,QString,QString)),Calculator,SLOT(changeRow(quint8,quint16,QString,QString)));
     connect(Mesur,SIGNAL(refreshMeasure(stMeasureParam)),Calculator,SLOT(refreshMeasure(stMeasureParam)));
 //    connect(Mesur,SIGNAL(refreshAcd(double)),Calculator,SLOT(refreshAcd(double)));
 

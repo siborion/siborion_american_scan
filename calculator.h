@@ -22,6 +22,7 @@
 #include <QPainter>
 #include <QDateTime>
 #include "plot.h"
+#include "curentparam.h"
 #include "typedef.h"
 
 
@@ -34,6 +35,7 @@ public:
 signals:
 
 private:
+    CurentParam *curentParam;
     Plot *pPlotPrint1;
     Plot *pPlotPrint2;
     Plot *pPlotPrint3;

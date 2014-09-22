@@ -102,10 +102,10 @@ void bases::adjTable(BaseType::Status Val)
     switch (TypeBase)
     {
     case BaseType::enPatient:
-        columnPercent<<10   <<   10        <<      20        <<      20       <<       20        <<     20;
-        lst<<tr("Ref.№")<<tr("Patient ID")<<tr("First Name")<<tr("Last Name")<<tr("Doctor Name")<<tr("Notes");
+        columnPercent<<10   <<   10        <<    40     <<       20        <<     20;
+        lst<<tr("Ref.№")<<tr("Patient ID")<<tr("Name")<<tr("Doctor Name")<<tr("Notes");
         lstButton<<tr("Add Patient")<<tr("Edit Patient")<<tr("Delete Patient")<<tr("Patient History");
-        str = "SELECT  ref, id, name||' '||last as name, '' as last, doctor, notes from v_patient;";
+        str = "SELECT  ref, id, name||' '||last as name, doctor, notes from v_patient;";
         break;
     case BaseType::enDoctor:
         columnPercent   <<       10        <<      30        <<      30       <<     30;
@@ -134,16 +134,16 @@ void bases::adjTable(BaseType::Status Val)
     twTable->setColumnPercent(columnPercent);
     fillModelHead(lst);
 
-    if (TypeBase == BaseType::enPatient)
-    {
-        curentParam->maper.setModel(model);
-        curentParam->maper.addMapping(leSearch, 1);
-        connect(twTable->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),
-                &curentParam->maper, SLOT(setCurrentModelIndex(QModelIndex)));
-    }
-    else
-        disconnect(twTable->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),
-                &curentParam->maper, SLOT(setCurrentModelIndex(QModelIndex)));
+//    if (TypeBase == BaseType::enPatient)
+//    {
+//        curentParam->maper.setModel(model);
+//        curentParam->maper.addMapping(leSearch, 1);
+//        connect(twTable->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),
+//                &curentParam->maper, SLOT(setCurrentModelIndex(QModelIndex)));
+//    }
+//    else
+//        disconnect(twTable->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),
+//                &curentParam->maper, SLOT(setCurrentModelIndex(QModelIndex)));
 }
 
 void bases::changeBasePatient(bool Val)
@@ -296,21 +296,26 @@ void bases::fillModelHead(QStringList sl)
 
 void bases::changeRow(QModelIndex cur, QModelIndex prev)
 {
-    quint16 id;
-    QString sFio;
-    QString sDoc;
-    switch(TypeBase)
-    {
-    case BaseType::enPatient:
-        id = model->data(model->index(cur.row(),1)).toInt();
-        sFio = model->data(model->index(cur.row(),2)).toString();
-        sFio += " ";
-        sFio += model->data(model->index(cur.row(),3)).toString();
-        sDoc = model->data(model->index(cur.row(),4)).toString();
-        break;
-    default:
-        return;
-        break;
-    }
-    emit changeRow(TypeBase, id, sFio, sDoc);
+    //    quint16 id;
+    //    QString sFio;
+    //    QString sDoc;
+    //    switch(TypeBase)
+    //    {
+
+
+    if(TypeBase ==  BaseType::enPatient)
+        curentParam->changePatient(model->data(model->index(cur.row(),1)).toInt());
+
+
+    //        id = model->data(model->index(cur.row(),1)).toInt();
+    //        sFio = model->data(model->index(cur.row(),2)).toString();
+    //        sFio += " ";
+    //        sFio += model->data(model->index(cur.row(),3)).toString();
+    //        sDoc = model->data(model->index(cur.row(),4)).toString();
+    //        break;
+    //    default:
+    //        return;
+    //        break;
+    //    }
+    //    emit changeRow(TypeBase, id, sFio, sDoc);
 }

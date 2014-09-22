@@ -5,6 +5,7 @@
 #include <QStandardItemModel>
 #include <QSqlQuery>
 #include <QSqlRecord>
+#include "curentparam.h"
 #include "typedef.h"
 
 namespace Ui {
@@ -22,6 +23,7 @@ public:
 private:
     Ui::calculator_patient *ui;
     stPatientParam patientParam;
+    CurentParam *curentParam;
 
 public:
     void setPatient(quint16 id, QString Patient, QString Doctor);
