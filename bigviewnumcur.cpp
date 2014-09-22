@@ -14,6 +14,7 @@ bigviewnumcur::bigviewnumcur(QWidget *parent) :
 
     curentParam->patientMaper.addMapping(ui->lFioPatient, 1);
     curentParam->patientMaper.addMapping(ui->lFioDoctor,  2);
+    curentParam->patientMaper.addMapping(ui->leSide, 7);
 }
 
 bigviewnumcur::~bigviewnumcur()
@@ -39,11 +40,11 @@ void bigviewnumcur::setDisplay(double AL, double ACD, double LT, double VIT)
 //    ui->lFioDoctor->setText(FIO);
 //}
 
-void bigviewnumcur::changeEye(quint8 val)
-{
-    if(val==0)
-        ui->lYeas->setText("OD");
-    else
-        ui->lYeas->setText("OS");
-}
+//void bigviewnumcur::changeEye(quint8 val)
+//{
+//    if(val==0)
+//        ui->lYeas->setText("OD");
+//    else
+//        ui->lYeas->setText("OS");
+//}
 

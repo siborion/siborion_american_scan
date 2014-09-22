@@ -124,7 +124,7 @@ public slots:
 private slots:
     void changeRow(QList<quint16> extremum);
     void refreshMainParam();
-    void changeEye(quint8);
+//    void changeEye(quint8);
     void openPort();
     void doTimer();
     void delSample();

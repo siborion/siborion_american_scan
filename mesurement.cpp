@@ -206,10 +206,10 @@ void mesurement::refreshMainParam()
 //            pBigViewCur->setDoctor("Doctor: " +Doctor);
 //}
 
-void mesurement::changeEye(quint8 val)
-{
-        pBigViewCur->changeEye(val);
-}
+//void mesurement::changeEye(quint8 val)
+//{
+//        pBigViewCur->changeEye(val);
+//}
 
 void mesurement::openPort()
 {
