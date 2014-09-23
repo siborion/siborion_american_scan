@@ -24,8 +24,6 @@ CurentParam::CurentParam()
 
     measureParamMaper.setModel(&measureParamModel);
     measureParamMaper.toFirst();
-
-
 }
 
 void CurentParam::changeMaper(int num)

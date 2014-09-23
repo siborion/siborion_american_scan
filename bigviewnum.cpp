@@ -13,10 +13,6 @@ bigviewnum::bigviewnum(QWidget *parent) :
     curentParam->measureParamMaper.addMapping(ui->lAveAL_2, 0,"text");
     curentParam->measureParamMaper.addMapping(ui->lAvgAcd_2,1,"text");
 
-//    curentParam->patientMaper.addMapping(ui->lAveAL_2,  4, "text");
-//    curentParam->patientMaper.addMapping(ui->lAvgAcd_2, 5, "text");
-
-
 }
 
 bigviewnum::~bigviewnum()
@@ -36,7 +32,6 @@ void bigviewnum::setDisplay(double Avg, double AvgAcd, double AvgLt, double AvgV
     ui->lDevAcd_2->setText(QString("%1").arg(DevAcd,4,'f',2));
     ui->lDevLt_2 ->setText(QString("%1").arg(DevLt, 4,'f',2));
     ui->lDevVit_2->setText(QString("%1").arg(DevVit,4,'f',2));
-
 
 }
 
