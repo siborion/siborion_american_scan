@@ -9,21 +9,24 @@ calculator_patient::calculator_patient(QWidget *parent) :
     ui->setupUi(this);
     curentParam = CurentParam::instanse();
 
-    QByteArray ttt = "text";
-
-//    curentParam->patientMaper.addMapping(ui->lePatientId,0);                                         );
-    curentParam->patientMaper.addMapping(ui->lePatientName,1);
-    curentParam->patientMaper.addMapping(ui->leDoctorName,2);
+    curentParam->patientMaper.addMapping(ui->lePatientId,   0);
+    curentParam->patientMaper.addMapping(ui->lePatientName, 1);
+    curentParam->patientMaper.addMapping(ui->leDoctorName,  2);
     curentParam->patientMaper.addMapping(ui->leK1,4);
     curentParam->patientMaper.addMapping(ui->leK2,5);
     curentParam->patientMaper.addMapping(ui->leK,6);
     curentParam->patientMaper.addMapping(ui->pbSide,7,"text");
+    curentParam->measureParamMaper.addMapping(ui->leAL_measure, 0);
+    curentParam->measureParamMaper.addMapping(ui->leACD_measure,1);
+
+//    curentParam->patientMaper.addMapping(ui->leAL_measure,  4);
+//    curentParam->patientMaper.addMapping(ui->leACD_measure, 5);
 
     bLeft = true;
     connect(ui->leK1, SIGNAL(editingFinished()),SLOT(RefreshK()));
     connect(ui->leK2, SIGNAL(editingFinished()),SLOT(RefreshK()));
-    connect(ui->leACD_measure, SIGNAL(editingFinished()), SLOT(updateParam()));
-    connect(ui->leAL_measure, SIGNAL(editingFinished()), SLOT(updateParam()));
+//    connect(ui->leACD_measure, SIGNAL(editingFinished()), SLOT(updateParam()));
+//    connect(ui->leAL_measure, SIGNAL(editingFinished()), SLOT(updateParam()));
     connect(ui->leAConst_personal, SIGNAL(editingFinished()), SLOT(updateParam()));
     connect(ui->leACD_personal, SIGNAL(editingFinished()), SLOT(updateParam()));
     connect(ui->leSF_personal, SIGNAL(editingFinished()), SLOT(updateParam()));
@@ -63,8 +66,8 @@ void calculator_patient::refreshPatientParam()
 
 void calculator_patient::refreshMeasure(stMeasureParam measureParam)
 {
-    ui->leAL_measure->setText(QString("%1").arg(measureParam.AL));
-    ui->leACD_measure->setText(QString("%1").arg(measureParam.ACD));
+//    ui->leAL_measure->setText(QString("%1").arg(measureParam.AL));
+//    ui->leACD_measure->setText(QString("%1").arg(measureParam.ACD));
     updateParam();
 }
 

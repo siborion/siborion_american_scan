@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QDataWidgetMapper>
 #include <QSqlQueryModel>
+#include <QStandardItemModel>
 
 #define SIDE_LEFT 0
 
@@ -14,6 +15,7 @@ private:
     static CurentParam *_instanse;
     scanbase *pBase;
     QSqlQueryModel patientModel;
+    QStandardItemModel measureParamModel;
     void refreshPatientModel();
     quint16 patientId, doctorId;
 
@@ -30,6 +32,7 @@ public:
     }
 //    quint16 idPatient;
     QDataWidgetMapper patientMaper;
+    QDataWidgetMapper measureParamMaper;
     void changePatient(quint16 idPatient);
     void changeSide();
 

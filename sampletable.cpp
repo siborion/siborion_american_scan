@@ -20,7 +20,7 @@ sampletable::sampletable(QWidget *parent) :
     layout->addWidget(twMeas);
 //    twMeas->model()->removeRows(0,10);
 
-    delegate = new delegate_sample();
+//    delegate = new delegate_sample();
 //    twMeas->setItemDelegate(delegate);
 
 

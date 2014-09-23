@@ -6,9 +6,26 @@ CurentParam *CurentParam::_instanse = NULL;
 CurentParam::CurentParam()
 {
     pBase = scanbase::instanse();
+
     patientMaper.setModel(&patientModel);
     lensModel = new QSqlQueryModel();
-//    connect(&patientMaper, SIGNAL(currentIndexChanged(int)), this, SLOT(changeMaper(int)));
+
+//    QString TTT;
+//    QString("%1").arg(10,4,'f',2)
+//    TTT = "10";
+//    measureParamModel.setRowCount(1);
+//    measureParamModel.setColumnCount(2);
+//    QStandardItem item1;
+//    item1.setData(TTT,Qt::EditRole);
+//    measureParamModel.setItem(0,0,&item1);
+//    QStandardItem item2;
+//    item2.setData(TTT,Qt::EditRole);
+//    measureParamModel.setItem(0,1,&item2);
+
+    measureParamMaper.setModel(&measureParamModel);
+    measureParamMaper.toFirst();
+
+
 }
 
 void CurentParam::changeMaper(int num)
@@ -64,6 +81,19 @@ void CurentParam::changeSide()
         side = true;
 
     refreshPatientModel();
+
+
+    QString TTT = QString("%1").arg(10,4,'f',2);
+    QStandardItem item1;
+    item1.setData(TTT,Qt::DisplayRole);
+    measureParamModel.setItem(0,0,&item1);
+    QStandardItem item2;
+    item2.setData(TTT,Qt::DisplayRole);
+    measureParamModel.setItem(0,1,&item2);
+
+
+    measureParamMaper.toFirst();
+
 //    qDebug()<<side;
 }
 

@@ -2,6 +2,7 @@
 #define BIGVIEWNUM_H
 
 #include <QWidget>
+#include "curentparam.h"
 
 namespace Ui {
 class bigviewnum;
@@ -20,6 +21,7 @@ public:
     
 private:
     Ui::bigviewnum *ui;
+    CurentParam *curentParam;
 };
 
 #endif // BIGVIEWNUM_H

@@ -7,7 +7,16 @@ bigviewnum::bigviewnum(QWidget *parent) :
     ui(new Ui::bigviewnum)
 {
     ui->setupUi(this);
+    curentParam = CurentParam::instanse();
     setMinimumSize(200,200);
+
+    curentParam->measureParamMaper.addMapping(ui->lAveAL_2, 0,"text");
+    curentParam->measureParamMaper.addMapping(ui->lAvgAcd_2,1,"text");
+
+//    curentParam->patientMaper.addMapping(ui->lAveAL_2,  4, "text");
+//    curentParam->patientMaper.addMapping(ui->lAvgAcd_2, 5, "text");
+
+
 }
 
 bigviewnum::~bigviewnum()
@@ -17,10 +26,10 @@ bigviewnum::~bigviewnum()
 
 void bigviewnum::setDisplay(double Avg, double AvgAcd, double AvgLt, double AvgVit, double Dev, double DevAcd, double DevLt, double DevVit)
 {
-    ui->lAveAL_2->setText(QString("%1").arg(Avg,4,'f',2));
+//    ui->lAveAL_2->setText(QString("%1").arg(Avg,4,'f',2));
     ui->lDevAL_2->setText(QString("%1").arg(Dev,4,'f',2));
 
-    ui->lAvgAcd_2->setText(QString("%1").arg(AvgAcd,4,'f',2));
+//    ui->lAvgAcd_2->setText(QString("%1").arg(AvgAcd,4,'f',2));
     ui->lAvgLt_2 ->setText(QString("%1").arg(AvgLt, 4,'f',2));
     ui->lAvgVit_2->setText(QString("%1").arg(AvgVit,4,'f',2));
 
