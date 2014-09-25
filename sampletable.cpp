@@ -6,6 +6,7 @@ sampletable::sampletable(QWidget *parent) :
 {
     QList<int> columnPercent;
     QStringList lst;
+    curentParam = CurentParam::instanse();
 
     QVBoxLayout *layout              = new QVBoxLayout(this);
 
@@ -18,11 +19,6 @@ sampletable::sampletable(QWidget *parent) :
     twMeas->setMaximumWidth(350);
     twMeas->setMinimumWidth(280);
     layout->addWidget(twMeas);
-//    twMeas->model()->removeRows(0,10);
-
-//    delegate = new delegate_sample();
-//    twMeas->setItemDelegate(delegate);
-
 
     connect(twMeas, SIGNAL(clicked(QModelIndex)), SLOT(changeRow(QModelIndex)));
     connect(twMeas, SIGNAL(activated(QModelIndex)), SLOT(changeRow(QModelIndex)));
@@ -67,12 +63,6 @@ void sampletable::getFileSample()
             if(findMainParam(&extremum, curMainParam))
             {
                 addSampleToTable(Sample, curMainParam);
-//                QStandardItem *ttt = new QStandardItem();
-//                model->appendRow(ttt);
-//                twMeas->model()->setData(twMeas->model()->index(kolVo, 0), kolVo, Qt::DisplayRole);
-//                twMeas->model()->setData(twMeas->model()->index(kolVo, 0), Sample, Qt::UserRole);
-//                twMeas->model()->setData(twMeas->model()->index(kolVo, 1), fileName, Qt::DisplayRole);
-//                refreshTable(kolVo, curMainParam);
             }
         }
         kolVo++;
@@ -149,25 +139,10 @@ bool sampletable::findMainParam(QList<quint16> *extremum, stMainParam &mainParam
         return false;
 }
 
-/*
-QList <double> Plot::intToMM(QList<quint16> *mainParam)
-{
-    QList <double> ret;
-    ret.clear();
-    ret.append((double)(round(mainParam->at(0)*100/27)/100));
-    ret.append((double)(round(mainParam->at(1)*100/27)/100));
-    ret.append((double)(round(mainParam->at(2)*100/27)/100));
-    ret.append((double)(round(mainParam->at(3)*100/27)/100));
-    return ret;
-}
-*/
-
 void sampletable::refreshTable(stMainParam mainParam)
 {
-//    qDebug()<<"refreshTable1";
     refreshTable((quint8)tableIndex.row(), mainParam);
 }
-
 
 void sampletable::refreshTable(quint8 rowNom, stMainParam mainParam)
 {
@@ -180,8 +155,6 @@ void sampletable::refreshTable(quint8 rowNom, stMainParam mainParam)
     curAl = curAcd = curLt = curVit = 0;
     sumAl = sumAcd = sumLt = sumVit = 0;
     devAl = devAcd = devLt = devVit = 0;
-
-//    qDebug()<<"refreshTable";
 
     resultParam.ACD = decRound(mainParam.L1 - mainParam.Start, 2);
     resultParam.LT = decRound(mainParam.L2 - mainParam.L1, 2);
@@ -198,7 +171,7 @@ void sampletable::refreshTable(quint8 rowNom, stMainParam mainParam)
     twMeas->model()->setData(twMeas->model()->index(rowNom, 5), mainParam.Retina,Qt::UserRole);
 
     modelCount = sumAl = devAl = 0;
-    for (int i=0; i<10; i++)
+    for (int i=0; i<twMeas->model()->rowCount(); i++)
     {
         curAl = twMeas->model()->data(twMeas->model()->index(i, 2), Qt::DisplayRole).toDouble();
         curAcd = twMeas->model()->data(twMeas->model()->index(i, 3), Qt::DisplayRole).toDouble();
@@ -222,7 +195,7 @@ void sampletable::refreshTable(quint8 rowNom, stMainParam mainParam)
         sumVit = (sumVit/modelCount); sumVit *= 100; sumVit =  round(sumVit); sumVit /= 100;
     }
 
-    for (int i=0; i<10; i++)
+    for (int i=0; i<twMeas->model()->rowCount(); i++)
     {
         curAl = 0;
         curAl = twMeas->model()->data(twMeas->model()->index(i, 2), Qt::DisplayRole).toDouble();
@@ -233,32 +206,35 @@ void sampletable::refreshTable(quint8 rowNom, stMainParam mainParam)
         if(curAl>0)
         {
             devAl  += pow((sumAl  - curAl), 2);
+            qDebug()<<"sumAl curAl"<< sumAl << curAl << devAl;
+
             devAcd += pow((sumAcd - curAcd), 2);
             devLt  += pow((sumLt  - curLt), 2);
             devVit += pow((sumVit - curVit), 2);
         }
     }
 
-    devAl  = pow(devAl,  0.5);
-    devAcd = pow(devAcd, 0.5);
-    devLt  = pow(devLt,  0.5);
-    devVit = pow(devVit, 0.5);
+    devAl  = pow(devAl/twMeas->model()->rowCount(),  0.5);
+    devAcd = pow(devAcd/twMeas->model()->rowCount(), 0.5);
+    devLt  = pow(devLt/twMeas->model()->rowCount(),  0.5);
+    devVit = pow(devVit/twMeas->model()->rowCount(), 0.5);
+
+    qDebug()<<devAl;
 
     AL =  decRound(twMeas->model()->data(twMeas->model()->index(twMeas->currentIndex().row(), 5), Qt::UserRole).toDouble(), 2);
     AL -= decRound(twMeas->model()->data(twMeas->model()->index(twMeas->currentIndex().row(), 2), Qt::UserRole).toDouble(), 2);
 
     resultParam.AL = AL;
 
-    resultParam.AvgAl = sumAl;
-    resultParam.AvgAcd = sumAcd;
-    resultParam.AvgLt = sumLt;
-    resultParam.AvgVit = sumVit;
+    curentParam->measureAveAL  = resultParam.AvgAl = sumAl;
+    curentParam->measureAveACD = resultParam.AvgAcd = sumAcd;
+    curentParam->measureAveLT  = resultParam.AvgLt = sumLt;
+    curentParam->measureAveVIT = sumVit;
 
-    resultParam.devAl  = devAl;
-    resultParam.devAcd = devAcd;
-    resultParam.devLt  = devLt;
-    resultParam.devVit = devVit;
-
+    curentParam->measureDevAL  = resultParam.devAl  = devAl;
+    curentParam->measureDevACD = resultParam.devAcd = devAcd;
+    curentParam->measureDevLT  = resultParam.devLt  = devLt;
+    curentParam->measureDevVIT = resultParam.devVit = devVit;
 
     refreshResult(rowNom);
 }
@@ -292,14 +268,11 @@ void sampletable::changeRow(QModelIndex curIndex)
     refreshResult(twMeas->currentIndex().row());
 }
 
-
 void sampletable::refreshResult(quint8 rowNom)
 {
-    double sumAl, curAl, devAl, sd;
+    double sumAl, curAl, devAl;
     quint8 modelCount;
     QColor color;
-
-//    qDebug()<<"refreshResult";
 
     resultParam.ACD = twMeas->model()->data(twMeas->model()->index(rowNom, 3), Qt::DisplayRole).toDouble();
     resultParam.LT =  twMeas->model()->data(twMeas->model()->index(rowNom, 4), Qt::DisplayRole).toDouble();
@@ -326,7 +299,6 @@ void sampletable::refreshResult(quint8 rowNom)
         sumAl /= 100;
     }
 
-    sd = 0;
     for (int i=0; i<10; i++)
     {
         curAl = 0;
@@ -343,13 +315,8 @@ void sampletable::refreshResult(quint8 rowNom)
                 if(devAl < (curAl-sumAl))
                     devAl = curAl-sumAl;
             }
-            sd += qPow(devAl, 2);
         }
     }
-
-    sd /= modelCount;
-    sd = qPow(sd, 0.5);
-    sd = decRound(sd, 4);
 
     for (int i=0; i<10; i++)
     {
@@ -359,11 +326,7 @@ void sampletable::refreshResult(quint8 rowNom)
         {
             curDev = round(abs(curAl*100 - sumAl*100));
             curDev /= 100;
-
-//            qDebug()<<curAl;
-//            qDebug()<<sd;
         }
-//                twMeas->model()->setData(twMeas->model()->index(i, 1), curDev, Qt::UserRole);
                 for(int j=0; j<=5; j++)
                 {
                     color.setNamedColor(curDev>=0.2?"yellow":"white");
@@ -374,8 +337,6 @@ void sampletable::refreshResult(quint8 rowNom)
     resultParam.AvgAl = sumAl;
     resultParam.devAl = devAl;
     resultParam.countSample = modelCount;
-    resultParam.SD = sd;
-
     emit (refreshMainParam());
 }
 

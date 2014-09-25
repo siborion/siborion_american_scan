@@ -8,6 +8,7 @@
 #include <QStandardItem>
 #include "plot.h"
 #include "delegate_sample.h"
+#include "curentparam.h"
 
 class sampletable : public QWidget
 {
@@ -33,6 +34,7 @@ private:
     double decRound(double Val, quint8 dec);
     QModelIndex tableIndex;
     void refreshResult(quint8 rowNom);
+    CurentParam *curentParam;
 //    delegate_sample *delegate;
 
 signals:

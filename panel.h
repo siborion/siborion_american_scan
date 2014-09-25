@@ -24,6 +24,7 @@ public:
 Q_SIGNALS:
 
 private Q_SLOTS:
+    void changeTab(int);
 
 private:
     QWidget *createOnlineTab( QWidget * );

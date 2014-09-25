@@ -112,6 +112,7 @@ mesurement::mesurement(QWidget *parent) :
 //    connect(pbDel, SIGNAL(clicked()), SLOT(delSample()));
 //    connect(pKey,SIGNAL(changeEye(quint8)),SLOT(changeEye(quint8)));
     connect(timer, SIGNAL(timeout()), SLOT(doTimer()));
+
 }
 
 void mesurement::delSample()
@@ -181,18 +182,19 @@ void mesurement::changeRow(QList<quint16> extremum)
 
 void mesurement::refreshMainParam()
 {
-    stMeasureParam measureParam;
+//    stMeasureParam measureParam;
 //    VALaxial->setText(QString("%1").arg(pSampleTable->resultParam.AL));
 //    VALacd->setText(QString("%1").arg(pSampleTable->resultParam.ACD));
 //    VALlt->setText(QString("%1").arg(pSampleTable->resultParam.LT));
 //    VALvit->setText(QString("%1").arg(pSampleTable->resultParam.Vit));
-    pBigView->setDisplay(pSampleTable->resultParam.AvgAl, pSampleTable->resultParam.AvgAcd, pSampleTable->resultParam.AvgLt, pSampleTable->resultParam.AvgVit, pSampleTable->resultParam.devAl, pSampleTable->resultParam.devAcd, pSampleTable->resultParam.devLt, pSampleTable->resultParam.devVit);
+//    pBigView->setDisplay(pSampleTable->resultParam.AvgAl, pSampleTable->resultParam.AvgAcd, pSampleTable->resultParam.AvgLt, pSampleTable->resultParam.AvgVit, pSampleTable->resultParam.devAl, pSampleTable->resultParam.devAcd, pSampleTable->resultParam.devLt, pSampleTable->resultParam.devVit);
+    pBigView->setDisplay();
     pBigViewCur->setDisplay(pSampleTable->resultParam.AL, pSampleTable->resultParam.ACD, pSampleTable->resultParam.LT, pSampleTable->resultParam.Vit);
 //    emit refreshAl(pSampleTable->resultParam.AvgAl);
 //    emit refreshAcd(pSampleTable->resultParam.AvgAcd);
-    measureParam.AL = pSampleTable->resultParam.AvgAl;
-    measureParam.ACD = pSampleTable->resultParam.AvgAcd;
-    emit refreshMeasure(measureParam);
+//    measureParam.AL = pSampleTable->resultParam.AvgAl;
+//    measureParam.ACD = pSampleTable->resultParam.AvgAcd;
+//    emit refreshMeasure(measureParam);
 
 
 //    average->setText(QString("Average (count %1)").arg(pSampleTable->resultParam.countSample));
@@ -305,8 +307,6 @@ void mesurement::doTimer()
             baTmp2.append(val);
             x[kolvo] = kolvo;
             y[kolvo] = double((unsigned char)val);
-//            ttt.append(QString::number(val,16));
-//            ttt.append(',');
             kolvo++;
             if(kolvo>=1024)
                 break;
@@ -314,7 +314,6 @@ void mesurement::doTimer()
 
         if(kolvo>=1000)
         {
-//            teTmp->setText(ttt);
             pPlot->drawSample(x, y, kolvo);
             if(pSampleTable->findExtremum(&baTmp2, extremum))
             {

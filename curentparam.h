@@ -32,9 +32,18 @@ public:
     }
 //    quint16 idPatient;
     QDataWidgetMapper patientMaper;
-    QDataWidgetMapper measureParamMaper;
+//    QDataWidgetMapper measureParamMaper;
     void changePatient(quint16 idPatient);
     void changeSide();
+    double measureAveAL;
+    double measureAveACD;
+    double measureAveLT;
+    double measureAveVIT;
+    double measureDevAL;
+    double measureDevACD;
+    double measureDevLT;
+    double measureDevVIT;
+
 
 private slots:
     void changeMaper(int num);

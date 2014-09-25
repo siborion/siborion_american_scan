@@ -28,7 +28,7 @@ struct stResultParam
     double devVit;
 
     quint8 countSample;
-    double SD;
+//    double SD;
 };
 
 

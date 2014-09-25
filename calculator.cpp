@@ -144,6 +144,7 @@ calculator::calculator(QWidget *parent) :
      connect(twK->model(), SIGNAL(dataChanged(QModelIndex,QModelIndex)),  SLOT(setAL(QModelIndex,QModelIndex)));
      connect(pCalcPatient, SIGNAL(refreshFormula()), SLOT(refreshFormuls()));
      connect(pbPrint, SIGNAL(clicked()), SLOT(printPreview()));
+
 }
 
 //void calculator::refreshPatientParam(quint16 id)

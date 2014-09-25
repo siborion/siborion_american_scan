@@ -38,8 +38,7 @@ Panel::Panel( QWidget *parent ):
 //    connect(page,SIGNAL(changeRow(quint8,quint16,QString,QString)),Calculator,SLOT(changeRow(quint8,quint16,QString,QString)));
     connect(Mesur,SIGNAL(refreshMeasure(stMeasureParam)),Calculator,SLOT(refreshMeasure(stMeasureParam)));
 //    connect(Mesur,SIGNAL(refreshAcd(double)),Calculator,SLOT(refreshAcd(double)));
-
-
+    connect(this, SIGNAL(currentChanged(int)), SLOT(changeTab(int)));
 }
 
 QWidget *Panel::createOnlineTab( QWidget *parent )
@@ -76,4 +75,9 @@ calculator *Panel::createCalculatorTab( QWidget *parent )
     return Calculator;
 }
 
+void Panel::changeTab(int nomTab)
+{
+    if(nomTab==2)
+        Calculator->refreshFormuls();
+}
 
