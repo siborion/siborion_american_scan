@@ -181,29 +181,6 @@
       <property name="spacing">
        <number>2</number>
       </property>
-      <item row="0" column="3">
-       <widget class="leAddZero" name="leSF_personal"/>
-      </item>
-      <item row="0" column="2">
-       <widget class="QLabel" name="label_16">
-        <property name="text">
-         <string>SF</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="leAddZero" name="leACD_personal"/>
-      </item>
-      <item row="0" column="1">
-       <widget class="leAddZero" name="leAConst_personal"/>
-      </item>
-      <item row="0" column="0">
-       <widget class="QLabel" name="label_14">
-        <property name="text">
-         <string>A Const</string>
-        </property>
-       </widget>
-      </item>
       <item row="1" column="0">
        <widget class="QLabel" name="label_17">
         <property name="text">
@@ -211,8 +188,14 @@
         </property>
        </widget>
       </item>
+      <item row="1" column="1">
+       <widget class="leAddZero" name="leACD_personal"/>
+      </item>
       <item row="1" column="3">
        <widget class="leAddZero" name="leRx_personal"/>
+      </item>
+      <item row="0" column="3">
+       <widget class="leAddZero" name="leSF_personal"/>
       </item>
       <item row="1" column="2">
        <widget class="QLabel" name="label_15">
@@ -221,10 +204,20 @@
         </property>
        </widget>
       </item>
-      <item row="4" column="0" colspan="4">
-       <widget class="QPushButton" name="pushButton_2">
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_14">
         <property name="text">
-         <string>Personalized Calc</string>
+         <string>A Const</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="leAddZero" name="leAConst_personal"/>
+      </item>
+      <item row="0" column="2">
+       <widget class="QLabel" name="label_16">
+        <property name="text">
+         <string>SF</string>
         </property>
        </widget>
       </item>
@@ -273,13 +266,25 @@
        </spacer>
       </item>
       <item row="2" column="1" colspan="2">
-       <widget class="QLineEdit" name="leDoctorName"/>
+       <widget class="QLineEdit" name="leDoctorName">
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+       </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QLineEdit" name="lePatientId"/>
+       <widget class="QLineEdit" name="lePatientId">
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+       </widget>
       </item>
       <item row="1" column="1" colspan="2">
-       <widget class="QLineEdit" name="lePatientName"/>
+       <widget class="QLineEdit" name="lePatientName">
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+       </widget>
       </item>
       <item row="2" column="0">
        <widget class="QLabel" name="label_3">

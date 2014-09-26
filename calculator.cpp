@@ -106,7 +106,6 @@ calculator::calculator(QWidget *parent) :
     layout->addWidget(frCalculator);
     layout->addWidget(pbPrint);
 
-    connect(twK->model(), SIGNAL(dataChanged(QModelIndex,QModelIndex)),  SLOT(setAL(QModelIndex,QModelIndex)));
     connect(pCalcPatient, SIGNAL(refreshFormula()), SLOT(refreshFormuls()));
     connect(pbPrint, SIGNAL(clicked()), SLOT(printPreview()));
 }

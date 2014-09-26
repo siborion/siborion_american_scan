@@ -68,18 +68,12 @@ bases::bases(QWidget *parent) :
     {
     }
 
-//    mapper->addMapping(myLineEdit, 1);
-//    mapper->addMapping(myCountryChooser, 2);
-//    mapper->toFirst();
-
-
     connect(rbPatient, SIGNAL(clicked(bool)), SLOT(changeBasePatient(bool)));
     connect(rbDoctor, SIGNAL(clicked(bool)), SLOT(changeBaseDoctor(bool)));
     connect(rbLens, SIGNAL(clicked(bool)), SLOT(changeBaseLens(bool)));
     connect(pbAdd,  SIGNAL(pressed()), SLOT(Add()));
     connect(pbEdit, SIGNAL(pressed()), SLOT(Edit()));
     connect(pbDel, SIGNAL(pressed()), SLOT(Del()));
-//    connect(twTable, SIGNAL(clicked(QModelIndex)), SLOT(DelIndex(QModelIndex)));
     connect(twTable, SIGNAL(doubleClicked(QModelIndex)), SLOT(EditIndex(QModelIndex)));
     connect(twTable->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), SLOT(changeRow(QModelIndex,QModelIndex)));
 }
@@ -127,17 +121,6 @@ void bases::adjTable(BaseType::Status Val)
         pbPatientHistory->setVisible(false);
     twTable->setColumnPercent(columnPercent);
     fillModelHead(lst);
-
-//    if (TypeBase == BaseType::enPatient)
-//    {
-//        curentParam->maper.setModel(model);
-//        curentParam->maper.addMapping(leSearch, 1);
-//        connect(twTable->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),
-//                &curentParam->maper, SLOT(setCurrentModelIndex(QModelIndex)));
-//    }
-//    else
-//        disconnect(twTable->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),
-//                &curentParam->maper, SLOT(setCurrentModelIndex(QModelIndex)));
 }
 
 void bases::changeBasePatient(bool Val)
@@ -212,7 +195,6 @@ void bases::Edit()
         }
     }
 
-
     if(TypeBase==BaseType::enLens)
     {
         dialog_lens *pLens = new dialog_lens(model->data(model->index(curRow, 0)).toUInt());
@@ -225,10 +207,9 @@ void bases::Edit()
 
 void bases::EditIndex(QModelIndex index)
 {
-
+    Q_UNUSED(index);
     Edit();
 }
-
 
 void bases::Del()
 {
@@ -270,46 +251,11 @@ void bases::fillModelHead(QStringList sl)
     {
         model->setHeaderData(i, Qt::Horizontal, sl.at(i), Qt::DisplayRole);
     }
-
-//    QSqlQuery sqData;
-//    switch (TypeBase)
-//    {
-//    case BaseType::enPatient:
-//        sqData = pBase->getData("select * from patient;");
-//      break;
-//    case BaseType::enDoctor:
-//        sqData = pBase->getData("select * from patient;");
-//        break;
-//    case BaseType::enLens:
-//        sqData = pBase->getData("select * from patient;");
-//        break;
-//    }
-//    model->setHeaderData(0, Qt::Horizontal, "454545", Qt::DisplayRole);
-//    model->setQuery("select id from patient;");
 }
 
 void bases::changeRow(QModelIndex cur, QModelIndex prev)
 {
-    //    quint16 id;
-    //    QString sFio;
-    //    QString sDoc;
-    //    switch(TypeBase)
-    //    {
-
-
+    Q_UNUSED(cur); Q_UNUSED(prev);
     if(TypeBase ==  BaseType::enPatient)
         curentParam->changePatient(model->data(model->index(cur.row(),1)).toInt());
-
-
-    //        id = model->data(model->index(cur.row(),1)).toInt();
-    //        sFio = model->data(model->index(cur.row(),2)).toString();
-    //        sFio += " ";
-    //        sFio += model->data(model->index(cur.row(),3)).toString();
-    //        sDoc = model->data(model->index(cur.row(),4)).toString();
-    //        break;
-    //    default:
-    //        return;
-    //        break;
-    //    }
-    //    emit changeRow(TypeBase, id, sFio, sDoc);
 }

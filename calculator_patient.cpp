@@ -16,8 +16,6 @@ calculator_patient::calculator_patient(QWidget *parent) :
     curentParam->patientMaper.addMapping(ui->leK2,5);
     curentParam->patientMaper.addMapping(ui->leK,6);
     curentParam->patientMaper.addMapping(ui->pbSide,7,"text");
-//    curentParam->measureParamMaper.addMapping(ui->leAL_measure, 0);
-//    curentParam->measureParamMaper.addMapping(ui->leACD_measure,1);
 
     bLeft = true;
     connect(ui->leK1, SIGNAL(editingFinished()),SLOT(RefreshK()));
