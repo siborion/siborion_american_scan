@@ -22,8 +22,8 @@ calculator_patient::calculator_patient(QWidget *parent) :
     bLeft = true;
     connect(ui->leK1, SIGNAL(editingFinished()),SLOT(RefreshK()));
     connect(ui->leK2, SIGNAL(editingFinished()),SLOT(RefreshK()));
-//    connect(ui->leACD_measure, SIGNAL(editingFinished()), SLOT(updateParam()));
-//    connect(ui->leAL_measure, SIGNAL(editingFinished()), SLOT(updateParam()));
+    connect(ui->leACD_measure, SIGNAL(editingFinished()), SLOT(updateParam()));
+    connect(ui->leAL_measure, SIGNAL(editingFinished()), SLOT(updateParam()));
     connect(ui->leAConst_personal, SIGNAL(editingFinished()), SLOT(updateParam()));
     connect(ui->leACD_personal, SIGNAL(editingFinished()), SLOT(updateParam()));
     connect(ui->leSF_personal, SIGNAL(editingFinished()), SLOT(updateParam()));
@@ -100,6 +100,7 @@ stPersonalParam calculator_patient::getPersonalParam()
 void calculator_patient::ChangeSide()
 {
     curentParam->changeSide();
+    updateParam();
 }
 
 void calculator_patient::setPatient(quint16 id, QString Patient, QString Doctor)

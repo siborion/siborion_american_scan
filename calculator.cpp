@@ -173,27 +173,16 @@ calculator::calculator(QWidget *parent) :
 //    }
 //}
 
-void calculator::changeRow(quint8 numBase, quint16 id, QString Patient, QString Doctor)
-{
-//    pCalcPatient->setPatient(id, Patient, Doctor);
-    pCalcPatient->refreshPatientParam();
-    refreshFormuls();
-}
-
-//void calculator::changeEye()
+//void calculator::changeRow(quint8 numBase, quint16 id, QString Patient, QString Doctor)
 //{
-//   pbOD->setText(pbOD->text()=="OD"?"OS":"OD");
-//    Calculator(0, 12, 1, 2, 0, &stFormula);
-//    Formula1->saveParam(&stFormula);
+//    pCalcPatient->refreshPatientParam();
+//    refreshFormuls();
 //}
 
 void calculator::refreshFormuls()
 {
-//    QList<int> columnPercent;
     stPatientParam patientParam;
     stPersonalParam personalParam;
-
-    qDebug()<<"999999999";
 
     patientParam = pCalcPatient->getParam();
     personalParam = pCalcPatient->getPersonalParam();
@@ -201,39 +190,18 @@ void calculator::refreshFormuls()
     if(!((patientParam.ACD>0)&&(patientParam.AL>0)&&(patientParam.K>0)))
         return;
 
-//    modelMainLens = twLens->model();
-//    columnPercent.clear();
-//    columnPercent<<20<<16<<22<<16<<14<<1<<11;
-//    modelMainLens = new QSqlQueryModel ();
-//    twLens->setModel(modelMainLens);
-//    QString str = QString("SELECT lens.name AS 'Lens Name',lens.aconst,lens.acd, lens.sf, formula.id, formula.name FROM patient, doctor_lens, lens, formula ON patient.doctor=doctor_lens.id_doctor AND lens.id=doctor_lens.id_lens AND doctor_lens.nom_formula=formula.id WHERE patient.id=%1;").arg(patientParam.id);
-//    modelMainLens->setQuery(str);
-//    modelMainLens->setHeaderData(0, Qt::Horizontal, "Lens Name", Qt::DisplayRole);
-//    modelMainLens->setHeaderData(1, Qt::Horizontal, "AConst", Qt::DisplayRole);
-//    modelMainLens->setHeaderData(2, Qt::Horizontal, "ACD", Qt::DisplayRole);
-//    modelMainLens->setHeaderData(3, Qt::Horizontal, "SF", Qt::DisplayRole);
-//    modelMainLens->setHeaderData(4, Qt::Horizontal, "NUM", Qt::DisplayRole);
-//    modelMainLens->setHeaderData(5, Qt::Horizontal, "FORMULA", Qt::DisplayRole);
-//    twLens->setColumnHidden(4, true);
-
-    qDebug()<<"000000";
-
     Formula1->setEnabled(false);
     Formula2->setEnabled(false);
     Formula3->setEnabled(false);
-
-    qDebug()<<"111111";
-
-    qDebug()<<"modelMainLens->rowCount()"<<modelMainLens->rowCount();
 
     for(quint8 i=0; i<modelMainLens->rowCount() && i<3; i++)
     {
         quint8 nFormula;
         QString lensName, lensAconst, lensAcd, lensFs;
-        qDebug()<<"22222";
+
         nFormula   = twLens->model()->itemData(twLens->model()->index(i,4)).value(0).toInt();
         lensName   = twLens->model()->itemData(twLens->model()->index(i,0)).value(0).toString();
-        qDebug()<<"333333";
+
         if(personalParam.AConst>0)
             lensAconst = QString("%1").arg(personalParam.AConst);
         else
@@ -249,27 +217,20 @@ void calculator::refreshFormuls()
         else
             lensFs = twLens->model()->itemData(twLens->model()->index(i,3)).value(0).toString();
 
-        qDebug()<<"444444";
 
         switch (i)
         {
         case 0:
-            qDebug()<<"5555";
             Formula1->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, patientParam.K, patientParam.AL, patientParam.ACD);
             Formula1->setEnabled(true);
-            qDebug()<<"6666";
             break;
         case 1:
-            qDebug()<<"7777";
             Formula2->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, patientParam.K, patientParam.AL, patientParam.ACD);
             Formula2->setEnabled(true);
-            qDebug()<<"88888";
             break;
         case 2:
-            qDebug()<<"9999";
             Formula3->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, patientParam.K, patientParam.AL, patientParam.ACD);
             Formula3->setEnabled(true);
-            qDebug()<<"aaaaa";
         default:
             break;
         }
