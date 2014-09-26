@@ -57,13 +57,11 @@ SOURCES += main.cpp\
     history.cpp \
     bigviewnumhor.cpp \
     sampletable.cpp \
-    delegate_sample.cpp \
     bigviewnumcur.cpp \
     combo_delegate.cpp \
     delegate.cpp \
     calc.cpp \
     calculator_patient.cpp \
-    delegate_lineedit.cpp \
     leaddzero.cpp \
     lineselect.cpp \
     sampleinterval.cpp \
@@ -96,13 +94,11 @@ HEADERS  += mainwindow.h\
     history.h \
     bigviewnumhor.h \
     sampletable.h \
-    delegate_sample.h \
     bigviewnumcur.h \
     combo_delegate.h \
     delegate.h \
     calc.h \
     calculator_patient.h \
-    delegate_lineedit.h \
     leaddzero.h \
     typedef.h \ 
     lineselect.h \
