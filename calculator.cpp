@@ -18,10 +18,6 @@ calculator::calculator(QWidget *parent) :
 
     QVBoxLayout *layout              = new QVBoxLayout(this);
     QHBoxLayout *layoutTop           = new QHBoxLayout();
-//    QVBoxLayout *layoutTopLeft       = new QVBoxLayout();
-//    QGridLayout *layoutTopLeftDown   = new QGridLayout();
-
-//    QSpacerItem *vs2 = new QSpacerItem(20, 40, QSizePolicy::Expanding, QSizePolicy::Expanding);
 
     columnPercent.clear();
     columnPercent<<50<<50;
@@ -34,27 +30,19 @@ calculator::calculator(QWidget *parent) :
         model->item   (i, 0)->setBackground(Qt::lightGray);
         model->item   (i, 0)->setEditable(false);
     }
-
-//-------------------------------
+    //-------------------------------
     columnPercent.clear();
     columnPercent<<20<<20<<20<<20<<20;
     lst<<"Lens Name"<<"AConst"<<"ACD"<<"SF"<<"FORMULA";
     twLens = new adjview(3, lst, columnPercent);
     twLens->setMinimumWidth(400);
-//    twLens->setMaximumWidth(300);
     modelMainLens = curentParam->lensModel;//new QSqlQueryModel();
-//    modelMainLens = new QSqlQueryModel();
     twLens->setModel(modelMainLens);
-//    QString str = "SELECT  name, mfg, aconst, acd from lens;";
-//    QString str = QString("SELECT lens.name as 'Lens Name',lens.aconst,lens.acd,lens.sf,doctor_lens.nom_formula FROM patient, doctor_lens, lens ON patient.doctor=doctor_lens.id_doctor AND lens.id=doctor_lens.id_lens WHERE 0=1;");
-//    modelMainLens->setQuery(str);
     modelMainLens->setHeaderData(0, Qt::Horizontal, "Lens Name", Qt::DisplayRole);
     modelMainLens->setHeaderData(1, Qt::Horizontal, "AConst", Qt::DisplayRole);
     modelMainLens->setHeaderData(2, Qt::Horizontal, "ACD", Qt::DisplayRole);
     modelMainLens->setHeaderData(3, Qt::Horizontal, "SF", Qt::DisplayRole);
     modelMainLens->setHeaderData(4, Qt::Horizontal, "FORMULA", Qt::DisplayRole);
-
-
     //-------------------------------
     columnPercent.clear();
     columnPercent<<40<<40<<20;
@@ -68,21 +56,17 @@ calculator::calculator(QWidget *parent) :
         model->item   (i, 0)->setEnabled(false);
         model->setItem(i, 2, i==0?new QStandardItem("mm"):new QStandardItem("D"));
         model->item   (i, 2)->setBackground(Qt::lightGray);
-//        model->item   (i, 2)->setFont(font);
         model->item   (i, 2)->setEditable(false);
         model->item   (i, 2)->setEnabled(false);
-
     }
     QPalette palette;
     QBrush brush(QColor(0, 0, 0, 255));
     brush.setStyle(Qt::SolidPattern);
     palette.setBrush(QPalette::Disabled, QPalette::Text, brush);
     twK->setPalette(palette);
-//----------------------------------
 
     pCalcPatient = new calculator_patient();
 
-//-----------------------------------
     columnPercent.clear();
     columnPercent<<50<<50;
     twA = new adjview(3, 2, columnPercent);
@@ -93,7 +77,6 @@ calculator::calculator(QWidget *parent) :
         model->item   (i, 0)->setBackground(Qt::lightGray);
         model->item   (i, 0)->setEditable(false);
     }
-    //--------------------------------
 
     twRx = new adjview(1, 2, columnPercent);
     model = (QStandardItemModel*)twRx->model();
@@ -102,82 +85,31 @@ calculator::calculator(QWidget *parent) :
     model->item   (0, 0)->setEditable(false);
 
     pbPrint = new QPushButton("Print");
-//    pbPersCalc = new QPushButton("Personalized Calculation");
 
-
-//    layoutTop->addWidget(pCalcPatient,  0, 0, 2, 1, Qt::AlignTop);
-
-//    layoutTopLeftDown->addWidget(twK,  0, 0, 2, 1, Qt::AlignTop);
-//    layoutTopLeftDown->addWidget(twA,  0, 1, 1, 1, Qt::AlignTop);
-//    layoutTopLeftDown->addWidget(twRx, 1, 1);
-//    layoutTopLeftDown->addWidget(pbOD,       2, 0, 2, 1, Qt::AlignTop);
-//    layoutTopLeftDown->addWidget(pbPersCalc, 2, 1, 1, 1, Qt::AlignTop);
-
-//    layoutTopLeft->addWidget(twName);
-//    layoutTopLeft->addLayout(layoutTopLeftDown);
-//    layoutTop->addLayout(layoutTopLeft);
-//    layoutTop->addWidget(twLens, 0, Qt::AlignTop);
     layoutTop->addWidget(pCalcPatient);
     layoutTop->addWidget(twLens);
     layout->addLayout(layoutTop);
 
-     frCalculator = new QFrame();
-     frCalculator->setFrameShape(QFrame::WinPanel);
-     frCalculator->setFrameShadow(QFrame::Raised);
-     QHBoxLayout *frLayout = new QHBoxLayout(frCalculator);
+    frCalculator = new QFrame();
+    frCalculator->setFrameShape(QFrame::WinPanel);
+    frCalculator->setFrameShadow(QFrame::Raised);
+    QHBoxLayout *frLayout = new QHBoxLayout(frCalculator);
 
-     Formula1 = new formula();
-     Formula2 = new formula();
-     Formula3 = new formula();
+    Formula1 = new formula();
+    Formula2 = new formula();
+    Formula3 = new formula();
 
-     frLayout->addWidget(Formula1);
-     frLayout->addWidget(Formula2);
-     frLayout->addWidget(Formula3);
+    frLayout->addWidget(Formula1);
+    frLayout->addWidget(Formula2);
+    frLayout->addWidget(Formula3);
 
+    layout->addWidget(frCalculator);
+    layout->addWidget(pbPrint);
 
-     layout->addWidget(frCalculator);
-//     layout->addItem(vs2);
-     layout->addWidget(pbPrint);
-
-
-//     connect(pbOD, SIGNAL(clicked()), SLOT(changeEye()));
-     connect(twK->model(), SIGNAL(dataChanged(QModelIndex,QModelIndex)),  SLOT(setAL(QModelIndex,QModelIndex)));
-     connect(pCalcPatient, SIGNAL(refreshFormula()), SLOT(refreshFormuls()));
-     connect(pbPrint, SIGNAL(clicked()), SLOT(printPreview()));
-
+    connect(twK->model(), SIGNAL(dataChanged(QModelIndex,QModelIndex)),  SLOT(setAL(QModelIndex,QModelIndex)));
+    connect(pCalcPatient, SIGNAL(refreshFormula()), SLOT(refreshFormuls()));
+    connect(pbPrint, SIGNAL(clicked()), SLOT(printPreview()));
 }
-
-//void calculator::refreshPatientParam(quint16 id)
-//{
-//    QStandardItemModel *model;
-//    model = (QStandardItemModel*)twK->model();
-
-//    QString str = QString("SELECT k1left, k2left, kleft, k1right, k2right, kright FROM patient WHERE id=%1;")
-//            .arg(id);
-//    QSqlQuery sql(str);
-//    if(sql.exec())
-//    {
-//        sql.next();
-//        if(pbOD->text()=="OD")
-//        {
-//            model->setData(model->index(1,1), sql.value(0).toDouble(), Qt::DisplayRole);
-//            model->setData(model->index(2,1), sql.value(1).toDouble(), Qt::DisplayRole);
-//            model->setData(model->index(3,1), sql.value(2).toDouble(), Qt::DisplayRole);
-//        }
-//        else
-//        {
-//            model->setData(model->index(1,1), sql.value(3).toDouble(), Qt::DisplayRole);
-//            model->setData(model->index(2,1), sql.value(4).toDouble(), Qt::DisplayRole);
-//            model->setData(model->index(3,1), sql.value(5).toDouble(), Qt::DisplayRole);
-//        }
-//    }
-//}
-
-//void calculator::changeRow(quint8 numBase, quint16 id, QString Patient, QString Doctor)
-//{
-//    pCalcPatient->refreshPatientParam();
-//    refreshFormuls();
-//}
 
 void calculator::refreshFormuls()
 {
@@ -235,56 +167,12 @@ void calculator::refreshFormuls()
             break;
         }
     }
-
 }
-
 
 void calculator::refreshMeasure()
 {
     pCalcPatient->refreshMeasure();
 }
-
-//void calculator::refreshAl()
-//{
-//    QStandardItemModel *model;
-//    model = (QStandardItemModel*)twK->model();
-//    model->setData(model->index(0,1), AL, Qt::DisplayRole);
-//    pCalcPatient->ref
-//}
-
-
-//void calculator::refreshMeasure(stMeasureParam measureParam)
-//{
-//pCalcPatient->refreshMeasure(measureParam);
-//}
-
-
-//void calculator::refreshAcd()
-//{
-//    ACD_measure = Acd;
-//    QStandardItemModel *model;
-//    model = (QStandardItemModel*)twK->model();
-//    model->setData(model->index(4,1), Acd, Qt::DisplayRole);
-//}
-
-//void calculator::setAL(QModelIndex val1, QModelIndex val2)
-//{
-//    double dTmp;
-//    if(val1.column()==1)
-//    {
-//        if ((val1.row()==0) || (val1.row()==3) || (val1.row()==4))
-//            refreshFormuls();
-//        else
-//        {
-//            QStandardItemModel *model;
-//            model = (QStandardItemModel*)twK->model();
-//            dTmp =  twK->model()->itemData(twK->model()->index(1,1)).value(0).toDouble();
-//            dTmp += twK->model()->itemData(twK->model()->index(2,1)).value(0).toDouble();
-//            dTmp /= 2;
-//            model->setData(model->index(3, 1), dTmp, Qt::DisplayRole);
-//        }
-//    }
-//}
 
 void calculator::printPreview()
 {
@@ -298,7 +186,6 @@ void calculator::print( QPrinter* printer )
 {
     stPrintSample printSample;
     stPatientParam patientParam;
-//    QStandardItemModel *pModel1, *pModel2, *pModel3;
     stFormulaInfo *pModel1, *pModel2, *pModel3;
     double x[2048], y[2048];
     quint16 kolvo;
@@ -360,7 +247,6 @@ void calculator::print( QPrinter* printer )
     renderer.render(pPlotPrint3, &painter, QRectF(500,3000,2000,1800));
 
     painter.drawRect(500, 200, 4000, 400);
-//    painter.drawRect(500, 800, 4000, 400);
 
     QFont    font = painter.font();
     font.setPixelSize(80);
@@ -374,16 +260,9 @@ void calculator::print( QPrinter* printer )
     QRect    page1(1000, 200, 1000, 400);
     painter.drawText(page1, Qt::AlignLeft, QString("%1\r\n%2\r\n%3\r\n%4").arg(patientParam.Name).arg(patientParam.id).arg(patientParam.BirthDay).arg("555"));
 
-
-//     QPixmap pm = QPixmap::grabWidget(Formula1);
-//     painter.drawPixmap(300,300,500,500,pm);
-
-
     pModel1 = Formula1->getModel();
     pModel2 = Formula2->getModel();
     pModel3 = Formula3->getModel();
-
-
 
     int kolLine = 0;
 #define kolColumn  3
@@ -391,7 +270,6 @@ void calculator::print( QPrinter* printer )
 #define yPosTable  5000
 #define xPosTable  500
 #define widthTable 3900
-
 
     kolLine = qMax(pModel1->model->rowCount(), pModel2->model->rowCount());
     kolLine = qMax(kolLine, pModel3->model->rowCount());
@@ -434,6 +312,5 @@ void calculator::print( QPrinter* printer )
         painter.drawText(txt1, Qt::AlignCenter, pModel3->model->data(pModel3->model->index(i, 0), Qt::DisplayRole).toString());
         painter.drawText(txt2, Qt::AlignCenter, pModel3->model->data(pModel3->model->index(i, 1), Qt::DisplayRole).toString());
     }
-
 }
 

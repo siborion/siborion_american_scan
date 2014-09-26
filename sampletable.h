@@ -7,7 +7,6 @@
 #include <QFileDialog>
 #include <QStandardItem>
 #include "plot.h"
-#include "delegate_sample.h"
 #include "curentparam.h"
 
 class sampletable : public QWidget
