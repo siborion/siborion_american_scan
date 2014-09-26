@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>395</width>
+    <width>477</width>
     <height>81</height>
    </rect>
   </property>
@@ -50,22 +50,15 @@
       <property name="spacing">
        <number>2</number>
       </property>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_5">
+        <property name="text">
+         <string>K1-Value</string>
+        </property>
+       </widget>
+      </item>
       <item row="2" column="2">
        <widget class="QLabel" name="label_12">
-        <property name="text">
-         <string>D</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="4">
-       <widget class="QLabel" name="label_4">
-        <property name="text">
-         <string>AL</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="2">
-       <widget class="QLabel" name="label_11">
         <property name="text">
          <string>D</string>
         </property>
@@ -78,33 +71,22 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="4">
-       <widget class="QLabel" name="label_8">
+      <item row="0" column="2">
+       <widget class="QLabel" name="label_10">
         <property name="text">
-         <string>ACD</string>
+         <string>D</string>
         </property>
        </widget>
       </item>
-      <item row="0" column="5">
-       <widget class="leAddZero" name="leAL_measure">
+      <item row="1" column="2">
+       <widget class="QLabel" name="label_11">
         <property name="text">
-         <string/>
+         <string>D</string>
         </property>
        </widget>
       </item>
-      <item row="2" column="4" colspan="3">
-       <widget class="QPushButton" name="pbSide">
-        <property name="text">
-         <string>Change eye</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="6">
-       <widget class="QLabel" name="label_13">
-        <property name="text">
-         <string>mm</string>
-        </property>
-       </widget>
+      <item row="0" column="1">
+       <widget class="leAddZero" name="leK1"/>
       </item>
       <item row="1" column="0">
        <widget class="QLabel" name="label_6">
@@ -113,19 +95,13 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="1">
-       <widget class="leAddZero" name="leK1"/>
-      </item>
       <item row="1" column="1">
        <widget class="leAddZero" name="leK2"/>
       </item>
-      <item row="1" column="5">
-       <widget class="leAddZero" name="leACD_measure"/>
-      </item>
-      <item row="0" column="6">
-       <widget class="QLabel" name="label_9">
-        <property name="text">
-         <string>mm</string>
+      <item row="0" column="3" rowspan="3">
+       <widget class="Line" name="line">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
         </property>
        </widget>
       </item>
@@ -136,26 +112,67 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="0">
-       <widget class="QLabel" name="label_5">
-        <property name="text">
-         <string>K1-Value</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="2">
-       <widget class="QLabel" name="label_10">
-        <property name="text">
-         <string>D</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="3" rowspan="3">
-       <widget class="Line" name="line">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-       </widget>
+      <item row="0" column="7" rowspan="3" colspan="3">
+       <layout class="QGridLayout" name="gridLayout_5">
+        <item row="0" column="1">
+         <widget class="leAddZero" name="leAL_measure">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="leAddZero" name="leACD_measure"/>
+        </item>
+        <item row="0" column="2">
+         <widget class="QLabel" name="label_9">
+          <property name="text">
+           <string>mm</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="2">
+         <widget class="QLabel" name="label_13">
+          <property name="text">
+           <string>mm</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="3" rowspan="2">
+         <widget class="QPushButton" name="pbSide">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>20</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>OD</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_4">
+          <property name="text">
+           <string>AL</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="label_8">
+          <property name="text">
+           <string>ACD</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
      </layout>
     </widget>
