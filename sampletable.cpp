@@ -34,7 +34,6 @@ void sampletable::getFileSample()
     QList <quint16> mainParam;
     QStandardItemModel *model;
 
-
     model = (QStandardItemModel*)twMeas->model();
     model->setRowCount(0);
 
@@ -176,7 +175,7 @@ void sampletable::refreshTable(quint8 rowNom, stMainParam mainParam)
         curLt = twMeas->model()->data(twMeas->model()->index(i, 4), Qt::DisplayRole).toDouble();
         curVit = twMeas->model()->data(twMeas->model()->index(i, 5), Qt::DisplayRole).toDouble();
         if(curAl>0)
-            {sumAl += curAl; modelCount++;}
+        {sumAl += curAl; modelCount++;}
         if(curAcd>0)
             sumAcd += curAcd;
         if(curLt>0)
@@ -214,7 +213,6 @@ void sampletable::refreshTable(quint8 rowNom, stMainParam mainParam)
     devAcd = pow(devAcd/twMeas->model()->rowCount(), 0.5);
     devLt  = pow(devLt/twMeas->model()->rowCount(),  0.5);
     devVit = pow(devVit/twMeas->model()->rowCount(), 0.5);
-
 
     AL =  decRound(twMeas->model()->data(twMeas->model()->index(twMeas->currentIndex().row(), 5), Qt::UserRole).toDouble(), 2);
     AL -= decRound(twMeas->model()->data(twMeas->model()->index(twMeas->currentIndex().row(), 2), Qt::UserRole).toDouble(), 2);
@@ -315,18 +313,19 @@ void sampletable::refreshResult(quint8 rowNom)
 
     for (int i=0; i<10; i++)
     {
-                double curDev;
+        double curDev;
         curAl = twMeas->model()->data(twMeas->model()->index(i, 2), Qt::DisplayRole).toDouble();
         if(curAl>0)
         {
             curDev = round(abs(curAl*100 - sumAl*100));
             curDev /= 100;
+
+            for(int j=0; j<=5; j++)
+            {
+                color.setNamedColor(curDev>=0.2?"yellow":"white");
+                twMeas->model()->setData(twMeas->model()->index(i, j), color, Qt::BackgroundRole);
+            }
         }
-                for(int j=0; j<=5; j++)
-                {
-                    color.setNamedColor(curDev>=0.2?"yellow":"white");
-                    twMeas->model()->setData(twMeas->model()->index(i, j), color, Qt::BackgroundRole);
-                }
     }
 
     resultParam.AvgAl = sumAl;
