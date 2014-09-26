@@ -225,6 +225,7 @@ void bases::Edit()
 
 void bases::EditIndex(QModelIndex index)
 {
+
     Edit();
 }
 

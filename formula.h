@@ -44,7 +44,7 @@ public:
     void saveParam(_formulae *val);
     
 public slots:
-    void setAL(QModelIndex,QModelIndex);
+//    void setAL(QModelIndex,QModelIndex);
     
 private slots:
     void refreshFormula(int);

@@ -141,10 +141,10 @@ QStandardItem* formula::getItem(double val, Qt::AlignmentFlag align)
 }
 
 
-void formula::setAL(QModelIndex prev, QModelIndex post)
-{
+//void formula::setAL(QModelIndex prev, QModelIndex post)
+//{
     //AL = dAL;
-}
+//}
 
 void formula::setValue(quint8 formula, QString name, QString aconst, QString acd, QString fs, double dK, double dAL, double dACD)
 {
