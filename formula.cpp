@@ -76,7 +76,7 @@ formula::formula(QWidget *parent) :
     layout->addWidget(lLens,    1, 0, 1, 1);
     layout->addWidget(leLens,   1, 1, 1, 1);
 
-    layout->addWidget(twFormula,    3, 0, 2, 1);
+    layout->addWidget(twFormula,    2, 0, 4, 1);
     layout->addWidget(twCalculator, 3, 1, 1, 1, Qt::AlignTop);
     layout->addWidget(twEmm, 4, 1, 1, 1, Qt::AlignTop);
 
