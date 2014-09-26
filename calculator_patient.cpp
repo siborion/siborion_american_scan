@@ -61,13 +61,12 @@ void calculator_patient::refreshPatientParam()
     }
 }
 
-void calculator_patient::refreshMeasure(stMeasureParam measureParam)
+void calculator_patient::refreshMeasure()
 {
-//    ui->leAL_measure->setText(QString("%1").arg(measureParam.AL));
-//    ui->leACD_measure->setText(QString("%1").arg(measureParam.ACD));
-    updateParam();
+    ui->leAL_measure->setText(QString("%1").arg(curentParam->measureAveAL));
+    ui->leACD_measure->setText(QString("%1").arg(curentParam->measureAveACD));
+//    updateParam();
 }
-
 
 void calculator_patient::RefreshK()
 {

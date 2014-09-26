@@ -9,6 +9,7 @@ CurentParam::CurentParam()
 
     patientMaper.setModel(&patientModel);
     lensModel = new QSqlQueryModel();
+    this->measureAveACD = this->measureAveAL = 0;
 
 //    QString TTT;
 //    QString("%1").arg(10,4,'f',2)
@@ -30,7 +31,6 @@ void CurentParam::changeMaper(int num)
 {
 //    QAbstractItemModel  *model;
 //    model = patientMaper.model();
-//    qDebug() << model->data(model->index(num,1));
 }
 
 void CurentParam::changePatient(quint16 id)
@@ -49,7 +49,6 @@ void CurentParam::changePatient(quint16 id)
 //    str.append("FROM patient ");
 //    str.append("LEFT JOIN doctor doc ON (doc.id = patient.doctor) ");
 //    str.append(QString("where patient.id=%1;").arg(patientId));
-//    qDebug()<<str;
 //    patientModel.setQuery(str);
 //    patientMaper.toFirst();
 
@@ -67,8 +66,8 @@ void CurentParam::changePatient(quint16 id)
     str.append("AND lens.id=doctor_lens.id_lens ");
     str.append("AND doctor_lens.nom_formula=formula.id ");
     str.append(QString("WHERE patient.id=%1;").arg(patientId));
-//    qDebug()<<str;
     lensModel->setQuery(str);
+
 }
 
 void CurentParam::changeSide()
@@ -89,7 +88,6 @@ void CurentParam::changeSide()
 //    item2.setData(TTT,Qt::DisplayRole);
 //    measureParamModel.setItem(0,1,&item2);
 //    measureParamMaper.toFirst();
-//    qDebug()<<side;
 }
 
 void CurentParam::refreshPatientModel()
@@ -106,7 +104,6 @@ void CurentParam::refreshPatientModel()
     str.append("FROM patient ");
     str.append("LEFT JOIN doctor doc ON (doc.id = patient.doctor) ");
     str.append(QString("where patient.id=%1;").arg(patientId));
-    qDebug()<<str;
     patientModel.setQuery(str);
     patientMaper.toFirst();
 }

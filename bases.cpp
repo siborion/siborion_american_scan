@@ -66,11 +66,7 @@ bases::bases(QWidget *parent) :
 
     if(model->rowCount()>0)
     {
-//        twTable->setCurrentIndex(model->index(0,0));
-//        qDebug()<<model->index(0,0);
     }
-//    qDebug()<<model->rowCount();
-
 
 //    mapper->addMapping(myLineEdit, 1);
 //    mapper->addMapping(myCountryChooser, 2);
@@ -86,8 +82,6 @@ bases::bases(QWidget *parent) :
 //    connect(twTable, SIGNAL(clicked(QModelIndex)), SLOT(DelIndex(QModelIndex)));
     connect(twTable, SIGNAL(doubleClicked(QModelIndex)), SLOT(EditIndex(QModelIndex)));
     connect(twTable->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), SLOT(changeRow(QModelIndex,QModelIndex)));
-//    qDebug()<<twTable->selectionModel();
-
 }
 
 void bases::adjTable(BaseType::Status Val)
@@ -291,7 +285,6 @@ void bases::fillModelHead(QStringList sl)
 //    }
 //    model->setHeaderData(0, Qt::Horizontal, "454545", Qt::DisplayRole);
 //    model->setQuery("select id from patient;");
-//    qDebug() << model->lastError();
 }
 
 void bases::changeRow(QModelIndex cur, QModelIndex prev)

@@ -267,20 +267,14 @@ void SRKTCalc(double AL, double AConst,double K,double Rx,iol_formula* SRKTValue
 
  int Loop=0;
 
-// qDebug()<<"AL"<<AL;
-//qDebug()<<"AConst"<<AConst;
-// qDebug()<<"K"<<K;
 
  //print("\r\nSRKT");
  ACD = 0.62467 * AConst - 68.747;
- //ACD = 0.58352 * AConst - 63.896;
-// qDebug()<<"ACD"<<ACD;
 
  if (AL > 24.2)
    ALCORR = (1.716 - 0.0237 * AL) * AL - 3.446;
  else
    ALCORR = AL;
-// qDebug()<<"ALCORR"<<ALCORR;
 
  C0 = K;
  C1 = 337.5 / C0;
@@ -290,21 +284,19 @@ void SRKTCalc(double AL, double AConst,double K,double Rx,iol_formula* SRKTValue
    SQRTR1 = 0.0;
 
  ACCORR = C1 - sqrt(SQRTR1) + ACD - 3.3357;
-// qDebug()<<"ACCORR"<<ACCORR;
-
 
  C3 = AL * 0.97971 + 0.65696;
-// qDebug()<<"C3"<<C3;
+
  C4 = C3 - ACCORR;
-// qDebug()<<"C4"<<C4;
+
  C5 = 1.336 * C1 - 0.333 * ACCORR;
-// qDebug()<<"C5"<<C5;
+
  C6 = 1.336 * C1 - 0.333 * C3;
-// qDebug()<<"C6"<<C6;
+
  C8 = 12.0 * C6 + C3 * C1;
-// qDebug()<<"C8"<<C8;
+
  C9 = 12.0 * C5 + ACCORR * C1;
-// qDebug()<<"C9"<<C9;
+
 
  REFR1 = Rx;
 
@@ -431,29 +423,29 @@ int HaigisCalc(double AL, double AConst,double ac,double K,double Rx,iol_formula
     else
         ACDd = (a0 + u*a1) +(a2+v*a1) * AL;
 
-    qDebug()<<"========================================";
-    qDebug()<<"ACDd"<<ACDd;
 
-    qDebug()<<"K"<<K;
-    qDebug()<<"R"<<R;
+
+
+
+
 
 
 //    R = 336.0;
     R /= K;
     Dc= ((nc -1))/R;
 
-    qDebug()<<"K"<<K;
-    qDebug()<<"R"<<R;
-    qDebug()<<"Dc"<<Dc;
+
+
+
 
 
 /// P_Emmetropia
     z = Dc  +  (Rx/(1-Rx*dx));
-    qDebug()<<"z"<<z;
+
 
     Dl= (((n/(AL-ACDd))-(n/((n/z)-ACDd))));
     Dl*=1000;
-    qDebug()<<"Dl"<<Dl;
+
 
     haigis_PEmm = Dl;
     haigis_PEmm_New = HaigisValues->PEMM = haigis_PEmm;
@@ -469,11 +461,11 @@ int HaigisCalc(double AL, double AConst,double ac,double K,double Rx,iol_formula
 //    DIE = haigis_PEmm - haigis_PEmm_New;
 //    HaigisValues->PEMM = haigis_PEmm_New = haigis_PEmm_New + Diff(DIE);
 
-    qDebug() << "haigis_PEmm_New" << haigis_PEmm_New;
-    qDebug() << "AL" << AL;
-    qDebug() << "ACDd" << ac;
 
-    qDebug()<<"========================================";
+
+
+
+
 
 
  //   printf("\r\nL=%5.2lf,AC=%5.2lf,R=%5.2lf,Rx=%5.3lf",AL,ac,R,Rx);
@@ -493,18 +485,18 @@ int HaigisCalc(double AL, double AConst,double ac,double K,double Rx,iol_formula
    for (P = haigis_PEmm_New - 1.5; P<=haigis_PEmm_New + 1.5; P= P + 0.5)
    {
        q1= n*(n-((P)*(AL-ACDd)));
-       qDebug()<<"q1"<<q1;
+
 
        q2=(n*(AL-ACDd)) + ACDd*(n-(P*(AL-ACDd)));
-       qDebug()<<"q2"<<q2;
+
        q=q1/q2;
 
-       qDebug() << "q" << q;
-       qDebug() << "Dc" << Dc;
+
+
 
        Refr=(q-Dc)/(1+0.012*(q-Dc));
 
-       qDebug()<<"Refr"<<Refr;
+
 
 
        HaigisValues->PORx[Loop] = Refr;
@@ -530,8 +522,8 @@ int Calculator(int FormulaType, double AL, double AConst, double K, double ACD_m
 //   printf("\r\nSRKII");
 //   SRKIICalc(AL,AConst,K);
 
-//   qDebug()<<"FormulaType"<<FormulaType;
-//   qDebug()<<"double AConst"<<AConst;
+
+
 
    switch (FormulaType)
    {

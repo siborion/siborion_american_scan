@@ -33,7 +33,7 @@ public:
     stPatientParam getParam();
     stPersonalParam getPersonalParam();
 //    quint16 curId;
-    void refreshMeasure(stMeasureParam measureParam);
+    void refreshMeasure();
 
 private slots:
     void RefreshK();

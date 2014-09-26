@@ -16,9 +16,6 @@ history::history(QWidget *parent) :
     pBigView = new bigviewnumhor();
     pBigView->setMinimumHeight(70);
     pBigView->setMaximumHeight(100);
-//    qDebug() << pBigView->minimumHeight();
-//    qDebug() << pBigView->maximumHeight();
-
 
     QFrame *fmTop = new QFrame();
     fmTop->setFrameShape(QFrame::WinPanel);
@@ -272,7 +269,6 @@ double history::decRound(double Val, quint8 dec)
 
 void history::save()
 {
-//    qDebug() << "Save";
     pBaseFill->saveData();
 }
 

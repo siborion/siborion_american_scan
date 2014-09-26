@@ -8,8 +8,6 @@ basefill::basefill(quint32 id, const QObjectList &list, QString tableName) //:
     olParent = &list;
     uiId = id;
     qsTableName = tableName;
-//    qDebug() << qsTableName;
-
 }
 
 void basefill::fillData()
@@ -20,7 +18,7 @@ void basefill::fillData()
 
     str = "select * from %1 where id = %2 ;";
     str = str.arg(qsTableName).arg(uiId);
-//    qDebug() << str;
+
     query = pBase->getData(str);
     if(query.first())
     {
@@ -43,8 +41,6 @@ void basefill::fillData()
                     if(recNum>=0)
                     {
                         sTmp = (query.value(recNum).toString());
-                        qDebug()<<"**********************"<<sTmp;
-//                        sTmp = "11.11.2011";
                         QDate dTmp = QDate::fromString(sTmp, "MM.dd.yyyy");
                         d->setDate(dTmp);
                     }
@@ -107,9 +103,6 @@ void basefill::saveData()
     QString strInsertColumn;
     QString strInsertValue;
 
-//    qDebug() << "ttttttttttttttt";
-//    qDebug() << qsTableName;
-
     strUpdate = QString("update %1 set id=id").arg(qsTableName);
     strInsertColumn = QString("insert into %1 (").arg(qsTableName);
     strInsertValue = " values (";
@@ -164,17 +157,14 @@ void basefill::saveData()
     strInsertColumn.append(strInsertValue);
     strUpdate.append(QString(" where id=%1;").arg(uiId));
 
-//    qDebug()<<"==========="<<strUpdate;
 
     if(uiId>0)
     {
         query.prepare(strUpdate);
-//        qDebug() << strUpdate;
     }
     else
     {
         query.prepare(strInsertColumn);
-//        qDebug() << strInsertColumn;
     }
     query.exec();
 }

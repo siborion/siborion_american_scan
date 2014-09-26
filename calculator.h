@@ -31,6 +31,9 @@ class calculator : public QWidget
     Q_OBJECT
 public:
     explicit calculator(QWidget *parent = 0);
+    void refreshAl();
+    void refreshAcd();
+
     
 signals:
 
@@ -42,7 +45,8 @@ private:
     double ACD_measure;
     quint16 patientCurId;
     _formulae stFormula;
-    QSqlQueryModel  *modelMainLens;
+//    QSqlQueryModel  *modelMainLens;
+    QAbstractItemModel  *modelMainLens;
 //    void refreshPatientParam(quint16 id);
     scanbase *pBase;
     adjview *twName;
@@ -97,18 +101,19 @@ private:
         "Rx"
         };
 
+public:
+    void refreshMeasure();
+
 private slots:
-    void setAL(QModelIndex,QModelIndex);
+//    void setAL(QModelIndex,QModelIndex);
 
 public slots:
     void changeRow(quint8 id ,quint16 id1 ,QString sTmp1, QString sTmp2);
 //    void changeEye();
-    void refreshAl(double);
-    void refreshAcd(double);
     void refreshFormuls();
     void printPreview();
     void print( QPrinter* printer );
-    void refreshMeasure(stMeasureParam);
+//    void refreshMeasure(stMeasureParam);
 
 };
 

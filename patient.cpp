@@ -163,5 +163,4 @@ void patient::calculateAge(QDate val)
     quint8 age;
     age = (QDate::currentDate().year() - val.year());
     leAge->setText(QString("%1").arg(age));
-//    qDebug()<<age;
 }

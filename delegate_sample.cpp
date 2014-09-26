@@ -11,8 +11,6 @@ delegate_sample::delegate_sample(QObject *parent)
 void delegate_sample::paint(QPainter *painter, const QStyleOptionViewItem &option,
                              const QModelIndex &index) const
 {
-//    qDebug()<<"row"<<index.row();
-//    qDebug()<<"column"<<index.column();
     if(index.model()->index(index.row(), 1).data(Qt::UserRole).toDouble() > 0.2)
         painter->fillRect(option.rect, QColor(Qt::yellow));
     else
@@ -33,7 +31,6 @@ void delegate_sample::paint(QPainter *painter, const QStyleOptionViewItem &optio
 //void delegate_sample::setEditorData(QWidget *editor,
 //                                     const QModelIndex &index) const
 //{
-//    qDebug()<<index.column();
 //    if(index.column()==0)
 //    {
 //        int value = index.model()->data(index, Qt::EditRole).toInt();
@@ -45,7 +42,6 @@ void delegate_sample::paint(QPainter *painter, const QStyleOptionViewItem &optio
 //void delegate_sample::setModelData(QWidget *editor, QAbstractItemModel *model,
 //                                   const QModelIndex &index) const
 //{
-//    qDebug()<<index.column();
 //    if(index.column()==0)
 //    {
 //        QCheckBox *CheckBox = static_cast<QCheckBox*>(editor);

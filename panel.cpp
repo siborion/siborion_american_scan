@@ -78,6 +78,11 @@ calculator *Panel::createCalculatorTab( QWidget *parent )
 void Panel::changeTab(int nomTab)
 {
     if(nomTab==2)
+    {
+        qDebug()<<"panel0000";
+        Calculator->refreshMeasure();
+        qDebug()<<"panel1111";
         Calculator->refreshFormuls();
+    }
 }
 

@@ -34,7 +34,6 @@ void sampletable::getFileSample()
     QList <quint16> mainParam;
     QStandardItemModel *model;
 
-    qDebug()<<"getFile";
 
     model = (QStandardItemModel*)twMeas->model();
     model->setRowCount(0);
@@ -66,7 +65,6 @@ void sampletable::getFileSample()
             }
         }
         kolVo++;
-        qDebug()<<"kolVo"<<kolVo;
     }
 }
 
@@ -206,8 +204,6 @@ void sampletable::refreshTable(quint8 rowNom, stMainParam mainParam)
         if(curAl>0)
         {
             devAl  += pow((sumAl  - curAl), 2);
-            qDebug()<<"sumAl curAl"<< sumAl << curAl << devAl;
-
             devAcd += pow((sumAcd - curAcd), 2);
             devLt  += pow((sumLt  - curLt), 2);
             devVit += pow((sumVit - curVit), 2);
@@ -219,7 +215,6 @@ void sampletable::refreshTable(quint8 rowNom, stMainParam mainParam)
     devLt  = pow(devLt/twMeas->model()->rowCount(),  0.5);
     devVit = pow(devVit/twMeas->model()->rowCount(), 0.5);
 
-    qDebug()<<devAl;
 
     AL =  decRound(twMeas->model()->data(twMeas->model()->index(twMeas->currentIndex().row(), 5), Qt::UserRole).toDouble(), 2);
     AL -= decRound(twMeas->model()->data(twMeas->model()->index(twMeas->currentIndex().row(), 2), Qt::UserRole).toDouble(), 2);

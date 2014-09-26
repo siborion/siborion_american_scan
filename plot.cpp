@@ -241,7 +241,6 @@ void Plot::select( const QPoint &pos )
     if ( markCurve && dist < 10 ) // 10 pixels tolerance
     {
         d_selectedMarkCurve = markCurve;
-        qDebug() << d_selectedMarkCurve->title().text();
         d_selectedPoint = index;
     }
 }

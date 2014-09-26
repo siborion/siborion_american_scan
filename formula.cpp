@@ -148,32 +148,32 @@ void formula::setAL(QModelIndex prev, QModelIndex post)
 
 void formula::setValue(quint8 formula, QString name, QString aconst, QString acd, QString fs, double dK, double dAL, double dACD)
 {
-//    QStringList lensName;
-//    lensName<<name;
-
-    cbFormula->setCurrentIndex(formula);
-//    QStandardItemModel *model = (QStandardItemModel*)twHead->model();
-//    model->setHorizontalHeaderLabels(lensName);
-
-    lLens->setText(name);
-
     AConst = aconst.toDouble();
-//    qDebug() << "AConst" << AConst ;
     ACD = acd.toDouble();
-//    qDebug() << "ACD" << ACD ;
     SF = fs.toDouble();
-//    qDebug() << "SF" << SF ;
     K = dK;
-//    qDebug() << "K" << K ;
     AL = dAL;
     ACD_measure = dACD;
+    lLens->setText(name);
+
+    qDebug()<<"formula0";
+    qDebug()<<formula;
+    if(formula==cbFormula->currentIndex())
+        changeFotmula(formula);
+    else
+        cbFormula->setCurrentIndex(formula);
+    //    cbFormula->setCurrentIndex(1);
+//    qDebug()<<cbFormula->currentIndex();
+
+    qDebug()<<"formula1";
 
 
-//    qDebug() << "AL_measure" << AL ;
-//    qDebug() << "ACD_measure" << ACD_measure ;
-//    calculateIOL(formula);
-//    refreshFormula(formula);
-    changeFotmula(formula);
+    qDebug()<<"formula2";
+
+
+    qDebug()<<"formula1";
+//    changeFotmula(formula);
+    qDebug()<<"formula2";
 }
 
 void formula::calculateIOL(quint8 formula)
@@ -181,7 +181,6 @@ void formula::calculateIOL(quint8 formula)
 
     _formulae stFormula;
     QStandardItemModel *model;// = (QStandardItemModel*)twHead->model();
-//    qDebug()<<formula;
     switch (formula)
     {
     case 0:
@@ -200,7 +199,6 @@ void formula::calculateIOL(quint8 formula)
         break;
     case HAIGIS:
         Calculator(formula, AL, AConst, K, ACD_measure, &stFormula);
-//            qDebug() << "ACD_Measure" << ACD_measure;
         break;
 
     }
