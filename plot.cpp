@@ -173,7 +173,12 @@ void Plot::select( const QPoint &pos )
     QwtPlotCurve  *markCurve = NULL;
     double dist = 10e10;
     int index = -1;
+    int yValue;
     const QwtPlotItemList& itmList = itemList();
+
+    d_selectedCurve = NULL;
+    d_selectedMarkCurve = NULL;
+
     for ( QwtPlotItemIterator it = itmList.begin();it != itmList.end(); ++it )
     {
         if ( ( *it )->rtti() == QwtPlotItem::Rtti_PlotMarker)
@@ -193,7 +198,7 @@ void Plot::select( const QPoint &pos )
             }
         }
     }
-    if ( curve && dist < 10 ) // 10 pixels tolerance
+    if ( curve && (dist < 10)) // 10 pixels tolerance
     {
         d_selectedCurve = curve;
         d_selectedPoint = index;
@@ -238,7 +243,7 @@ void Plot::select( const QPoint &pos )
     d_selectedMarkCurve = NULL;
     d_selectedPoint = -1;
 
-    if ( markCurve && dist < 10 ) // 10 pixels tolerance
+    if ( markCurve && (dist < 10)) // 10 pixels tolerance
     {
         d_selectedMarkCurve = markCurve;
         d_selectedPoint = index;
