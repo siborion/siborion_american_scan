@@ -14,7 +14,8 @@ class key_radio : public QWidget
 
 Q_SIGNALS:
 //signals:
-    void changeEye(quint8);
+//    void changeEye(quint8);
+    void changeCataractSignal(bool cataract);
 //    void keyAuto();
 //    void keySave();
 
@@ -33,6 +34,7 @@ private slots:
 //    void key_radioOs(bool );
     void changeSideSlot();
     void doChangeSide();
+    void doChangeCataract();
 //    void key_radioAutoClicked();
 
 };

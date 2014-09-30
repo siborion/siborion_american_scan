@@ -32,6 +32,8 @@ key_radio::key_radio(QWidget *parent) :
     QHBoxLayout  *ltCataract = new QHBoxLayout(gbCataract);
     QRadioButton *rbCataract = new QRadioButton(tr("Cataract"));
     QRadioButton *rbAphakic = new QRadioButton(tr("Aphakic"));
+    rbCataract->setObjectName("rbCataract");
+    rbAphakic->setObjectName("rbAphakic");
     rbAphakic->setChecked(true);
     ltCataract->addWidget(rbCataract);
     ltCataract->addWidget(rbAphakic);
@@ -57,6 +59,8 @@ key_radio::key_radio(QWidget *parent) :
     layoutkey_radio->addItem(hs4);
     layoutkey_radio->addWidget(gbEye);
 
+    connect(rbAphakic,  SIGNAL(clicked(bool)), SLOT(doChangeCataract()));
+    connect(rbCataract, SIGNAL(clicked(bool)), SLOT(doChangeCataract()));
     connect(rbOd, SIGNAL(clicked(bool)), SLOT(doChangeSide()));
     connect(rbOs, SIGNAL(clicked(bool)), SLOT(doChangeSide()));
     connect(curentParam, SIGNAL(changeSideSignal()), SLOT(changeSideSlot()));
@@ -76,3 +80,8 @@ void key_radio::doChangeSide()
     curentParam->refreshPatientModel();
 }
 
+void key_radio::doChangeCataract()
+{
+    qDebug()<<(QObject::sender()->objectName()=="rbAphakic");
+    emit changeCataractSignal((QObject::sender()->objectName()=="rbAphakic"));
+}

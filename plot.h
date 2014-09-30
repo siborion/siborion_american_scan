@@ -48,8 +48,10 @@ public:
     QList <double> intToMM(QList<quint16> *mainParam);
     QList<quint16> allExtremum;
 
-public Q_SLOTS:
+//public Q_SLOTS:
 //    void setDamp( double damping );
+public slots:
+    void changeCataractSlot(bool);
 
 private:
 //    void showData( const double *frequency, const double *amplitude,

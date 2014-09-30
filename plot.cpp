@@ -399,3 +399,8 @@ QList <double> Plot::intToMM(QList<quint16> *mainParam)
     ret.append((double)(round(mainParam->at(3)*100/27)/100));
     return ret;
 }
+
+void Plot::changeCataractSlot(bool visible)
+{
+    lensInterval->setVisible(visible);
+}
