@@ -6,6 +6,7 @@
 #include <QHBoxLayout>
 #include <QGroupBox>
 #include <QRadioButton>
+#include "curentparam.h"
 
 class key_radio : public QWidget
 {
@@ -17,14 +18,20 @@ Q_SIGNALS:
 //    void keyAuto();
 //    void keySave();
 
+private:
+    CurentParam *curentParam;
+    QRadioButton *rbOd;
+    QRadioButton *rbOs;
+    QGroupBox    *gbEye;
+
 
 public:
     explicit key_radio(QWidget *parent = 0);
     
-    
 private slots:
-    void key_radioOd(bool );
-    void key_radioOs(bool );
+//    void key_radioOd(bool );
+//    void key_radioOs(bool );
+    void changeSideSlot();
 //    void key_radioAutoClicked();
 
 };

@@ -24,10 +24,10 @@ mesurement::mesurement(QWidget *parent) :
     fmPlot->setFrameShadow(QFrame::Plain);
     QGridLayout *glPlot  = new QGridLayout(fmPlot);
     pPlot = new Plot(this, false);
-    lineSelect = new LineSelect(this);
+//    lineSelect = new LineSelect(this);
 
     glPlot->addWidget(pBigViewCur);
-    glPlot->addWidget(lineSelect);
+//    glPlot->addWidget(lineSelect);
     glPlot->addWidget(pPlot,1,0);
 //    glPlot->addWidget(lineSelect,2,2);
 
@@ -98,7 +98,7 @@ mesurement::mesurement(QWidget *parent) :
 //    layoutBot->addWidget(teTmp);
     layoutBot->addWidget(pbMeasure,2,1);
     layoutBot->addWidget(pBigView,3,1);
-    layoutBot->addWidget(lineSelect,4,1);
+//    layoutBot->addWidget(lineSelect,4,1);
 
 
 

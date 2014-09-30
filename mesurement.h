@@ -27,7 +27,6 @@
 #include <QSerialPortInfo>
 #include <QTimer>
 #include <QTextEdit>
-#include "lineselect.h"
 #include "scanbutton.h"
 #include "typedef.h"
 
@@ -68,7 +67,7 @@ private:
     double decRound(double Val, quint8 dec);
     QModelIndex tableIndex;
     void refreshTable(quint8 rowNom, stMainParam mainParam);
-    LineSelect *lineSelect;
+//    LineSelect *lineSelect;
 
 //    QComboBox *VALname;
 //    QLineEdit *VALdata;

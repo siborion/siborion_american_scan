@@ -3,6 +3,7 @@
 key_radio::key_radio(QWidget *parent) :
     QWidget(parent)
 {
+    curentParam = CurentParam::instanse();
     //----------------------------------------- Button
     QHBoxLayout *layoutkey_radio = new QHBoxLayout(this);
 
@@ -44,10 +45,10 @@ key_radio::key_radio(QWidget *parent) :
 
 
     QSpacerItem  *hs4 = new QSpacerItem(50, 5, QSizePolicy::Expanding, QSizePolicy::Minimum);
-    QGroupBox    *gbEye = new QGroupBox();
+    gbEye = new QGroupBox();
     QHBoxLayout  *ltEye = new QHBoxLayout(gbEye);
-    QRadioButton *rbOd = new QRadioButton(tr("OD"));
-    QRadioButton *rbOs = new QRadioButton(tr("OS"));
+    rbOd = new QRadioButton(tr("OD"));
+    rbOs = new QRadioButton(tr("OS"));
     rbOd->setChecked(true);
     ltEye->addWidget(rbOd);
     ltEye->addWidget(rbOs);
@@ -79,10 +80,25 @@ key_radio::key_radio(QWidget *parent) :
 //    layoutkey_radio->addItem(hs4);
 //    layoutkey_radio->addWidget(pbSave);
 
+
+//    rbOs->setChecked(true);
+
  //   connect(pbMeasure, SIGNAL(clicked()), SLOT(key_radioAutoClicked()));
  //   connect(pbSave, SIGNAL(clicked()), SLOT(key_radioSaveClicked()));
-    connect(rbOd, SIGNAL(clicked(bool)), SLOT(key_radioOd(bool)));
-    connect(rbOs, SIGNAL(clicked(bool)), SLOT(key_radioOs(bool)));
+//    connect(rbOd, SIGNAL(clicked(bool)), SLOT(key_radioOd(bool)));
+//    connect(rbOs, SIGNAL(clicked(bool)), SLOT(key_radioOs(bool)));
+
+    connect(rbOd, SIGNAL(clicked(bool)), SLOT(changeSideSlot()));
+    connect(curentParam, SIGNAL(changeSideSignal()), SLOT(changeSideSlot()));
+}
+
+void key_radio::changeSideSlot()
+{
+    if(curentParam->sideOD)
+        rbOd->setChecked(true);
+    else
+        rbOs->setChecked(true);
+    qDebug()<<"8888888888888888";
 }
 
 //void key_radio::key_radioAutoClicked()
@@ -90,15 +106,15 @@ key_radio::key_radio(QWidget *parent) :
 //    emit keyAuto();
 //}
 
-void key_radio::key_radioOd(bool val)
-{
-    emit changeEye((quint8)0);
-}
+//void key_radio::key_radioOd(bool val)
+//{
+//    emit changeEye((quint8)0);
+//}
 
-void key_radio::key_radioOs(bool val)
-{
-   emit changeEye((quint8)1);
-}
+//void key_radio::key_radioOs(bool val)
+//{
+//   emit changeEye((quint8)1);
+//}
 
 
 
