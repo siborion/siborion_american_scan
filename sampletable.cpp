@@ -20,8 +20,17 @@ sampletable::sampletable(QWidget *parent) :
     twMeas->setMinimumWidth(280);
     layout->addWidget(twMeas);
 
-    connect(twMeas, SIGNAL(clicked(QModelIndex)), SLOT(changeRow(QModelIndex)));
+    modelOD = new QStandardItemModel();
+    modelOS = new QStandardItemModel();
+
+    modelOD->setHorizontalHeaderLabels(lst);
+    modelOS->setHorizontalHeaderLabels(lst);
+
+    twMeas->setModel(modelOD);
+
+    connect(twMeas, SIGNAL(clicked(QModelIndex)),   SLOT(changeRow(QModelIndex)));
     connect(twMeas, SIGNAL(activated(QModelIndex)), SLOT(changeRow(QModelIndex)));
+    connect(curentParam, SIGNAL(changeSideSignal()), SLOT(changeSide()));
 }
 
 void sampletable::getFileSample()
@@ -230,6 +239,16 @@ void sampletable::refreshTable(quint8 rowNom, stMainParam mainParam)
     curentParam->measureDevVIT = resultParam.devVit = devVit;
 
     refreshResult(rowNom);
+}
+
+void sampletable::changeSide()
+{
+    if(curentParam->sideOD)
+        twMeas->setModel(modelOD);
+    else
+        twMeas->setModel(modelOS);
+
+    qDebug()<<"twMeas->setModel(modelOS);";
 }
 
 double sampletable::decRound(double Val, quint8 dec)

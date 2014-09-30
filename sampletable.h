@@ -35,6 +35,8 @@ private:
     void refreshResult(quint8 rowNom);
     CurentParam *curentParam;
 //    delegate_sample *delegate;
+    QStandardItemModel *modelOD;
+    QStandardItemModel *modelOS;
 
 signals:
     void changeRow(QList<quint16> extremum);
@@ -45,6 +47,7 @@ public slots:
     void refreshTable(stMainParam mainParam);
     void changeRow(QModelIndex curIndex);
     void delSample();
+    void changeSide();
 
 
 };

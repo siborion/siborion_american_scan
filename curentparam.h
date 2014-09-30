@@ -21,7 +21,7 @@ private:
 
 public:
     QSqlQueryModel *lensModel;
-    bool side;
+    bool sideOD;
 
     CurentParam();
     static CurentParam *instanse()
@@ -47,6 +47,9 @@ public:
 
 private slots:
     void changeMaper(int num);
+
+Q_SIGNALS:
+    void changeSideSignal();
 };
 
 #endif // CURENTPARAM_H
