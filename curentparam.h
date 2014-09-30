@@ -16,10 +16,10 @@ private:
     scanbase *pBase;
     QSqlQueryModel patientModel;
     QStandardItemModel measureParamModel;
-    void refreshPatientModel();
     quint16 patientId, doctorId;
 
 public:
+    void refreshPatientModel();
     QSqlQueryModel *lensModel;
     bool sideOD;
 

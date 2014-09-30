@@ -78,7 +78,6 @@ void CurentParam::changeSide()
     else
         sideOD = true;
 
-    emit changeSideSignal();
     refreshPatientModel();
 
 
@@ -95,6 +94,9 @@ void CurentParam::changeSide()
 void CurentParam::refreshPatientModel()
 {
     QString str;
+
+    emit changeSideSignal();
+
     str = "SELECT patient.id,";
     str.append("patient.name||' '||patient.last as name,");
     str.append("doc.name,");

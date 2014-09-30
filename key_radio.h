@@ -32,6 +32,7 @@ private slots:
 //    void key_radioOd(bool );
 //    void key_radioOs(bool );
     void changeSideSlot();
+    void doChangeSide();
 //    void key_radioAutoClicked();
 
 };
