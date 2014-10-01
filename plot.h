@@ -52,6 +52,7 @@ public:
 //    void setDamp( double damping );
 public slots:
     void changeCataractSlot(bool);
+    void changeContactSlot(bool contact);
 
 private:
 //    void showData( const double *frequency, const double *amplitude,

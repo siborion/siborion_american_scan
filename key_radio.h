@@ -13,30 +13,25 @@ class key_radio : public QWidget
     Q_OBJECT
 
 Q_SIGNALS:
-//signals:
-//    void changeEye(quint8);
     void changeCataractSignal(bool cataract);
-//    void keyAuto();
-//    void keySave();
+    void changeContactSignal (bool contact);
 
 private:
     CurentParam *curentParam;
     QRadioButton *rbOd;
     QRadioButton *rbOs;
     QGroupBox    *gbEye;
-
+    QRadioButton *rbContact;
+    QRadioButton *rbImmersion;
 
 public:
     explicit key_radio(QWidget *parent = 0);
     
 private slots:
-//    void key_radioOd(bool );
-//    void key_radioOs(bool );
     void changeSideSlot();
     void doChangeSide();
     void doChangeCataract();
-//    void key_radioAutoClicked();
-
+    void doChangeContact();
 };
 
 #endif // key_radio_H

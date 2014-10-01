@@ -20,8 +20,10 @@ key_radio::key_radio(QWidget *parent) :
     QSpacerItem  *hs2 = new QSpacerItem(50, 5, QSizePolicy::Expanding, QSizePolicy::Minimum);
     QGroupBox    *gbContact = new QGroupBox();
     QHBoxLayout  *ltContact = new QHBoxLayout(gbContact);
-    QRadioButton *rbContact = new QRadioButton(tr("Contact"));
-    QRadioButton *rbImmersion = new QRadioButton(tr("Immersion"));
+    rbContact = new QRadioButton(tr("Contact"));
+    rbImmersion = new QRadioButton(tr("Immersion"));
+    rbContact->setObjectName("Contact");
+    rbImmersion->setObjectName("Immersion");
     rbContact->setChecked(true);
     ltContact->addWidget(rbContact);
     ltContact->addWidget(rbImmersion);
@@ -32,8 +34,8 @@ key_radio::key_radio(QWidget *parent) :
     QHBoxLayout  *ltCataract = new QHBoxLayout(gbCataract);
     QRadioButton *rbCataract = new QRadioButton(tr("Cataract"));
     QRadioButton *rbAphakic = new QRadioButton(tr("Aphakic"));
-    rbCataract->setObjectName("rbCataract");
-    rbAphakic->setObjectName("rbAphakic");
+    rbCataract->setObjectName("Cataract");
+    rbAphakic->setObjectName("Aphakic");
     rbAphakic->setChecked(true);
     ltCataract->addWidget(rbCataract);
     ltCataract->addWidget(rbAphakic);
@@ -61,6 +63,10 @@ key_radio::key_radio(QWidget *parent) :
 
     connect(rbAphakic,  SIGNAL(clicked(bool)), SLOT(doChangeCataract()));
     connect(rbCataract, SIGNAL(clicked(bool)), SLOT(doChangeCataract()));
+
+    connect(rbImmersion, SIGNAL(clicked(bool)), SLOT(doChangeContact()));
+    connect(rbContact,   SIGNAL(clicked(bool)), SLOT(doChangeContact()));
+
     connect(rbOd, SIGNAL(clicked(bool)), SLOT(doChangeSide()));
     connect(rbOs, SIGNAL(clicked(bool)), SLOT(doChangeSide()));
     connect(curentParam, SIGNAL(changeSideSignal()), SLOT(changeSideSlot()));
@@ -82,6 +88,12 @@ void key_radio::doChangeSide()
 
 void key_radio::doChangeCataract()
 {
-    qDebug()<<(QObject::sender()->objectName()=="rbAphakic");
-    emit changeCataractSignal((QObject::sender()->objectName()=="rbAphakic"));
+    emit changeCataractSignal((QObject::sender()->objectName()=="Aphakic"));
 }
+
+void key_radio::doChangeContact()
+{
+    emit changeContactSignal((QObject::sender()->objectName()=="Contact"));
+}
+
+

@@ -87,32 +87,21 @@ mesurement::mesurement(QWidget *parent) :
     glSample->addWidget(cbPort,1,0,1,1);
     glSample->addWidget(pbDel,1,2,1,1);
     fmSample->setFixedHeight(230);
-//    fmSample->setMinimumHeight(240);
-//    fmSample->setMaximumHeight(250);
-
-
-//    teTmp = new QTextEdit();
 
     layoutBot->addWidget(fmSample,0,1);
     layoutBot->addItem(vs,1,1);
-//    layoutBot->addWidget(teTmp);
+
     layoutBot->addWidget(pbMeasure,2,1);
     layoutBot->addWidget(pBigView,3,1);
-//    layoutBot->addWidget(lineSelect,4,1);
 
-
-
-
-//    connect(pbMeasure, SIGNAL(pressed()), pSampleTable, SLOT(getFileSample()));
     connect(pbMeasure, SIGNAL(pressed()), SLOT(openPort()));
     connect(pPlot, SIGNAL(refreshTable(stMainParam)), pSampleTable, SLOT(refreshTable(stMainParam)));
     connect(pSampleTable, SIGNAL(changeRow(QList<quint16>)), SLOT(changeRow(QList<quint16> )));
     connect(pSampleTable, SIGNAL(refreshMainParam()), SLOT(refreshMainParam()));
     connect(pbDel, SIGNAL(clicked()), pSampleTable, SLOT(delSample()));
-//    connect(pbDel, SIGNAL(clicked()), SLOT(delSample()));
     connect(pKey,  SIGNAL(changeCataractSignal(bool)), pPlot, SLOT(changeCataractSlot(bool)));
+    connect(pKey,  SIGNAL(changeContactSignal(bool)), pPlot, SLOT(changeContactSlot(bool)));
     connect(timer, SIGNAL(timeout()), SLOT(doTimer()));
-
 }
 
 void mesurement::delSample()

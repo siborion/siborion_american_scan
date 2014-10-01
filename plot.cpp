@@ -23,40 +23,15 @@ Plot::Plot( QWidget *parent, bool print):
     QwtPlotCanvas *canvas = new QwtPlotCanvas();
     setCanvas( canvas );
 
-
-//    setCanvasBackground( QColor( "MidnightBlue" ) );
-//    setStyleSheet(QStringLiteral("background-color: rgb(234, 234, 234);"));
-
-
-//    setCanvasBackground(QColor("DarkSlateGray"));
-
     if(print)
         setCanvasBackground(Qt::white);
     else
         setCanvasBackground(QColor("Black"));
 
-    // grid
-//    QwtPlotGrid *grid = new QwtPlotGrid;
-//    grid->enableXMin( true );
-//    if(print)
-//    {
-//        grid->setMajorPen( Qt::darkGray, 0, Qt::SolidLine );
-//        grid->setMinorPen( Qt::darkGray, 0 , Qt::DotLine );
-//    }
-//    else
-//    {
-//        grid->setMajorPen( Qt::white, 0, Qt::DotLine );
-//        grid->setMinorPen( Qt::gray, 0 , Qt::DotLine );
-//    }
-//    grid->attach( this );
-
     // axes
     enableAxis( QwtPlot::xTop );
-//    setAxisMaxMajor( QwtPlot::xBottom, 6 );
-//    setAxisMaxMinor( QwtPlot::xBottom, 9 );
     double dMin, dMax;
     dMin=(-20.0); dMax=(1024.0);
-
     setAxisScale(QwtPlot::xTop, dMin, dMax);
     setAxisScale(QwtPlot::xBottom, (dMin/27), (dMax/27));
     setAxisScale(QwtPlot::yLeft, -4, 255.0);
@@ -78,16 +53,6 @@ Plot::Plot( QWidget *parent, bool print):
     d_curve1->setYAxis(QwtPlot::yLeft);
     d_curve1->setXAxis(QwtPlot::xTop);
     d_curve1->attach(this);
-
-
-
-//    double x[10];
-//    double y[10];
-
-//    x[0]=y[0]=0;
-//    x[1]=50;
-//    y[1]=0;
-//    x[2]=y[2]=100;
 
     startInterval  = new SampleInterval(0.2, 0.8,  "Start_Interval");
     lensInterval   = new SampleInterval(2.0, 13.0, "Lens_Interval");
@@ -304,10 +269,7 @@ void Plot::move( const QPoint &pos )
             const QPointF sample = d_selectedMarkCurve->sample( i );
             if ( i == d_selectedPoint )
             {
-                xData[i] = this->invTransform(
-                            d_selectedMarkCurve->xAxis(), pos.x() );
-                //                yData[i] = this->invTransform(
-                //                            d_selectedMarkCurve->yAxis(), pos.y() );
+                xData[i] = this->invTransform(d_selectedMarkCurve->xAxis(), pos.x());
                 yData[i] = sample.y();
             }
             else
@@ -404,3 +366,17 @@ void Plot::changeCataractSlot(bool visible)
 {
     lensInterval->setVisible(visible);
 }
+
+void Plot::changeContactSlot(bool contact)
+{
+    double dMin, dMax;
+    if(contact)
+    {dMin=(-20.0); dMax=(1024.0);}
+    else
+    {dMin=(-(20.0+27*3)); dMax=(1024.0);}
+//    setAxisScale(QwtPlot::xTop, dMin, dMax);
+    setAxisScale(QwtPlot::xBottom, (dMin/27), (dMax/27));
+    qDebug()<<contact;
+}
+
+
