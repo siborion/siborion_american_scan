@@ -23,5 +23,6 @@ private:
     Plot *d_plot;
     Panel *d_panel;
     scanbase *pBase;
+    void moveWindowToCenter();
 //    dbacces db;
 };

@@ -15,6 +15,8 @@
 #include <qwt_math.h>
 #include "panel.h"
 #include "mainwindow.h"
+#include <QRect>
+#include <QDesktopWidget>
 
 class Zoomer: public QwtPlotZoomer
 {
@@ -38,4 +40,12 @@ MainWindow::MainWindow( QWidget *parent ):
 
 //    scanbase *sdb = new scanbase();
     pBase = scanbase::instanse();
+    moveWindowToCenter();
+}
+
+void MainWindow::moveWindowToCenter()
+{
+    QRect frect = frameGeometry();
+    frect.moveCenter(QDesktopWidget().availableGeometry().center());
+    move(frect.topLeft());
 }

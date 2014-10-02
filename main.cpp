@@ -12,7 +12,9 @@ int main ( int argc, char **argv )
     QApplication a( argc, argv );
     a.addLibraryPath(a.applicationDirPath()+"/plugins");
     MainWindow w;
-    w.resize( 900, 400 );
-    w.show();
+
+//    w.resize( 900, 400 );
+//    w.show();
+    w.showMaximized();
     return a.exec();
 }
