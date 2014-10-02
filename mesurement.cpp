@@ -263,6 +263,7 @@ void mesurement::doTimer()
     if(port->isOpen())
     {
         timer->start(62);
+        timer->start(100);
         baTmp = port->readAll();
 
 
