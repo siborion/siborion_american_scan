@@ -36,7 +36,7 @@ key_radio::key_radio(QWidget *parent) :
     QRadioButton *rbAphakic = new QRadioButton(tr("Aphakic"));
     rbCataract->setObjectName("Cataract");
     rbAphakic->setObjectName("Aphakic");
-    rbAphakic->setChecked(true);
+    rbCataract->setChecked(true);
     ltCataract->addWidget(rbCataract);
     ltCataract->addWidget(rbAphakic);
 
@@ -88,7 +88,7 @@ void key_radio::doChangeSide()
 
 void key_radio::doChangeCataract()
 {
-    emit changeCataractSignal((QObject::sender()->objectName()=="Aphakic"));
+    emit changeCataractSignal((QObject::sender()->objectName()=="Cataract"));
 }
 
 void key_radio::doChangeContact()
