@@ -44,8 +44,8 @@ public:
     void drawMarker(double x, double y, const QColor &);
     virtual bool eventFilter( QObject *, QEvent * );
 //    virtual bool event( QEvent * );
-    bool findMainParam(QList<quint16> *extremum, stMainParam &mainParam);
-    bool findExtremum(QByteArray *Sample, QList<quint16> &extremum);
+//    bool findMainParam(QList<quint16> *extremum, stMainParam &mainParam);
+//    bool findExtremum(QByteArray *Sample, QList<quint16> &extremum);
     QList <double> intToMM(QList<quint16> *mainParam);
     QList<quint16> allExtremum;
 

@@ -124,9 +124,9 @@ void history::getFileSample()
         file.close();
         extremum.clear();
         mainParam.clear();
-        if (pPlot->findExtremum(&Sample, extremum))
+//        if (pPlot->findExtremum(&Sample, extremum))
         {
-            if(pPlot->findMainParam(&extremum, curMainParam))
+//            if(pPlot->findMainParam(&extremum, curMainParam))
             {
                 twMeas->model()->setData(twMeas->model()->index(kolVo, 0), kolVo, Qt::DisplayRole);
                 twMeas->model()->setData(twMeas->model()->index(kolVo, 0), Sample, Qt::UserRole);
@@ -170,7 +170,7 @@ void history::changeRow(QModelIndex curIndex)
     }
     pPlot->drawSample(x, y, 1000);
 
-    if(pPlot->findExtremum(&baTmp, extremum))
+//    if(pPlot->findExtremum(&baTmp, extremum))
     {
         pPlot->drawMarker(mainParam.Start, "Start");
         pPlot->drawMarker((double)mainParam.Start,(double)60, Qt::yellow);

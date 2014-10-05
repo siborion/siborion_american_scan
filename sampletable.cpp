@@ -232,26 +232,73 @@ bool sampletable::findMainParam(QList<quint16> *extremum, stMainParam &mainParam
 {
     quint16 Start, L1, L2, Retina, val;
     Start=L1=L2=Retina=0;
-    for(int i=0; i<extremum->count();i++)
+
+//    for(quint16 i=curentParam->corneaX1; i<=curentParam->corneaX2; i++)
+//    {
+
+//    qDebug()<<extremum->count();
+
+//    if(curentParam->cataract)
+//    {
+//        if(extremum->count()>=4)
+//        {
+//            val = extremum->at(0);
+//            if((val>=curentParam->corneaX1)&&(val<=curentParam->corneaX2))
+//                mainParam.Start=Start = extremum->at(0);
+//            else
+//                return false;
+
+//            val = extremum->at(1);
+//            if((val>=curentParam->lensX1)&&(val<=curentParam->lensX2))
+
+//            mainParam.L1=L1 = extremum->at(1);
+//            mainParam.L2=L2 = extremum->at(2);
+//            mainParam.Retina=Retina = extremum->at(extremum->count()-1);
+//            return true;
+//        }
+//    }
+//    else
+//    {
+//        if(extremum->count()==2)
+//        {
+//            mainParam.Start=Start = extremum->at(0);
+//            mainParam.Start=Retina = extremum->at(1);
+//            return true;
+//        }
+    //    }
+
+    for(int i=0; i<extremum->count(); i++)
     {
         val = extremum->at(i);
-        if(Start==0)
+        if((Start==0)&&(val>=curentParam->corneaX1)&&(val<=curentParam->corneaX2))
             Start = val;
-        if((L1==0)&&(val>(Start+54))&&(val<(Start+162)))
-            L1 = val;
-        if((L2==0)&&(val>(L1+54))&&(val<(L1+162)))
-            L2 = val;
-        if((Retina==0)&&(val>(Start+459)))
-            Retina = val;
+        else
+        {
+            if((L1==0)&&(val>=curentParam->lensX1)&&(val<=curentParam->lensX2))
+                L1 = val;
+            else
+            {
+                if((L2==0)&&(val>=curentParam->lensX1)&&(val<=curentParam->lensX2))
+                    L2 = val;
+                else
+                {
+                    if((Retina==0)&&(val>=curentParam->retinaX1)&&(val<=curentParam->retinaX2))
+                        Retina = val;
+                }
+            }
+        }
     }
-    if((Start>0)&&(L1>0)&&(L2>0)&&(Retina>0))
-    {
-        mainParam.Start = Start;
-        mainParam.L1 = L1;
-        mainParam.L2 = L2;
-        mainParam.Retina = Retina;
+
+    mainParam.Start=Start;
+    mainParam.L1=L1;
+    mainParam.L2=L2;
+    mainParam.Retina=Retina;
+
+    qDebug()<<"Start"<<Start;
+    qDebug()<<"Retina"<<Retina;
+
+    if((Start>0)&&(Retina>0))
         return true;
-    }
     else
         return false;
 }

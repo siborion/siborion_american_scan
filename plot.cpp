@@ -290,74 +290,74 @@ void Plot::move( const QPoint &pos )
     }
 }
 
-bool Plot::findExtremum(QByteArray *Sample, QList<quint16> &extremum)
-{
-#define sampleStart 5
-#define sampleEnd   1024
-#define pik         (255*0.9)
-#define spad        (60)
-    quint16 kolvo = 0;
-    bool front = true;
-    foreach (quint8 val, *Sample)
-    {
-        if(kolvo>sampleStart)
-        {
-            if(val>pik)
-            {
-                if (front)
-                {
-                    for(int i=1; i<=5; i++)
-                    {
-                        if(((quint8)(Sample->at(kolvo-i)))<spad)
-                        {
-                            extremum.append((kolvo-i)+1);
-                            break;
-                        }
-                    }
-                }
-                front = false;
-            }
-            else
-            {
-                if(val<spad)
-                    front = true;
-            }
-        }
-        kolvo++;
-        if(kolvo>sampleEnd)
-            break;
-    }
-    allExtremum = extremum;
-    return (extremum.count()>=3?true:false) ;
-}
+//bool Plot::findExtremum(QByteArray *Sample, QList<quint16> &extremum)
+//{
+//#define sampleStart 5
+//#define sampleEnd   1024
+//#define pik         (255*0.9)
+//#define spad        (60)
+//    quint16 kolvo = 0;
+//    bool front = true;
+//    foreach (quint8 val, *Sample)
+//    {
+//        if(kolvo>sampleStart)
+//        {
+//            if(val>pik)
+//            {
+//                if (front)
+//                {
+//                    for(int i=1; i<=5; i++)
+//                    {
+//                        if(((quint8)(Sample->at(kolvo-i)))<spad)
+//                        {
+//                            extremum.append((kolvo-i)+1);
+//                            break;
+//                        }
+//                    }
+//                }
+//                front = false;
+//            }
+//            else
+//            {
+//                if(val<spad)
+//                    front = true;
+//            }
+//        }
+//        kolvo++;
+//        if(kolvo>sampleEnd)
+//            break;
+//    }
+//    allExtremum = extremum;
+//    return (extremum.count()>=3?true:false) ;
+//}
 
-bool Plot::findMainParam(QList<quint16> *extremum, stMainParam &mainParam)
-{
-    quint16 Start, L1, L2, Retina, val;
-    Start=L1=L2=Retina=0;
-    for(int i=0; i<extremum->count();i++)
-    {
-        val = extremum->at(i);
-        if(Start==0)
-            Start = val;
-        if((L1==0)&&(val>(Start+54))&&(val<(Start+162)))
-            L1 = val;
-        if((L2==0)&&(val>(L1+54))&&(val<(L1+162)))
-            L2 = val;
-        if((Retina==0)&&(val>(Start+459)))
-            Retina = val;
-    }
-    if((Start>0)&&(L1>0)&&(L2>0)&&(Retina>0))
-    {
-        mainParam.Start = Start;
-        mainParam.L1 = L1;
-        mainParam.L2 = L2;
-        mainParam.Retina = Retina;
-        return true;
-    }
-    else
-        return false;
-}
+//bool Plot::findMainParam(QList<quint16> *extremum, stMainParam &mainParam)
+//{
+//    quint16 Start, L1, L2, Retina, val;
+//    Start=L1=L2=Retina=0;
+//    for(int i=0; i<extremum->count();i++)
+//    {
+//        val = extremum->at(i);
+//        if(Start==0)
+//            Start = val;
+//        if((L1==0)&&(val>(Start+54))&&(val<(Start+162)))
+//            L1 = val;
+//        if((L2==0)&&(val>(L1+54))&&(val<(L1+162)))
+//            L2 = val;
+//        if((Retina==0)&&(val>(Start+459)))
+//            Retina = val;
+//    }
+//    if((Start>0)&&(L1>0)&&(L2>0)&&(Retina>0))
+//    {
+//        mainParam.Start = Start;
+//        mainParam.L1 = L1;
+//        mainParam.L2 = L2;
+//        mainParam.Retina = Retina;
+//        return true;
+//    }
+//    else
+//        return false;
+//}
 
 QList <double> Plot::intToMM(QList<quint16> *mainParam)
 {
@@ -396,9 +396,12 @@ void Plot::changeContactSlot(bool contact)
     curentParam->lensX1 = 54+offSet;    curentParam->lensX2 = 351+offSet;
     curentParam->retinaX1 = 459+offSet; curentParam->retinaX2 = 864+offSet;
 
+    if(!curentParam->cataract)
+    {
+        curentParam->lensX1 = 0;    curentParam->lensX2 = 0;
+    }
+
     startInterval->setSample (curentParam->corneaX1, curentParam->corneaX2);
     lensInterval->setSample  (curentParam->lensX1,   curentParam->lensX2);
     retinaInterval->setSample(curentParam->retinaX1, curentParam->retinaX2);
 }
-
-

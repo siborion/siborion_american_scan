@@ -161,10 +161,16 @@ void mesurement::changeRow(QList<quint16> extremum)
     pPlot->allExtremum = extremum;
     pPlot->drawMarker(pSampleTable->mainParam.Start, "Start");
     pPlot->drawMarker((double)pSampleTable->mainParam.Start,(double)60, Qt::yellow);
-    pPlot->drawMarker(pSampleTable->mainParam.L1, "L1");
-    pPlot->drawMarker((double)pSampleTable->mainParam.L1,(double)60, Qt::yellow);
-    pPlot->drawMarker(pSampleTable->mainParam.L2, "L2");
-    pPlot->drawMarker((double)pSampleTable->mainParam.L2,(double)60, Qt::yellow);
+    if(pSampleTable->mainParam.L1>0)
+    {
+        pPlot->drawMarker(pSampleTable->mainParam.L1, "L1");
+        pPlot->drawMarker((double)pSampleTable->mainParam.L1,(double)60, Qt::yellow);
+    }
+    if(pSampleTable->mainParam.L2>0)
+    {
+        pPlot->drawMarker(pSampleTable->mainParam.L2, "L2");
+        pPlot->drawMarker((double)pSampleTable->mainParam.L2,(double)60, Qt::yellow);
+    }
     pPlot->drawMarker(pSampleTable->mainParam.Retina, "Retina");
     pPlot->drawMarker((double)pSampleTable->mainParam.Retina,(double)60, Qt::yellow);
 }
