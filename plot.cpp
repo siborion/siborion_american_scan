@@ -380,9 +380,8 @@ void Plot::changeCataractSlot(bool visible)
     {
         curentParam->lensX1 = 0;    curentParam->lensX2 = 0;
     }
-
     lensInterval->setVisible(visible);
-
+    qDebug()<<"0000"<<curentParam->cataract;
 }
 
 void Plot::changeContactSlot(bool contact)
@@ -396,12 +395,16 @@ void Plot::changeContactSlot(bool contact)
     curentParam->lensX1 = 54+offSet;    curentParam->lensX2 = 351+offSet;
     curentParam->retinaX1 = 459+offSet; curentParam->retinaX2 = 864+offSet;
 
-    if(!curentParam->cataract)
+    if(!(curentParam->cataract))
     {
         curentParam->lensX1 = 0;    curentParam->lensX2 = 0;
+        lensInterval->setVisible(false);
     }
+    else
+        lensInterval->setVisible(true);
 
     startInterval->setSample (curentParam->corneaX1, curentParam->corneaX2);
     lensInterval->setSample  (curentParam->lensX1,   curentParam->lensX2);
     retinaInterval->setSample(curentParam->retinaX1, curentParam->retinaX2);
+    qDebug()<<"11111"<<curentParam->cataract;
 }

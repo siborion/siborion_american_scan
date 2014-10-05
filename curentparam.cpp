@@ -11,6 +11,8 @@ CurentParam::CurentParam()
     lensModel = new QSqlQueryModel();
     this->measureAveACD = this->measureAveAL = 0;
     sideOD = false;
+    cataract = true;
+    contact = true;
 }
 
 void CurentParam::changeMaper(int num)
