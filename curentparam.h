@@ -23,6 +23,7 @@ public:
     quint16 lensX1,   lensX2;       //intervals
     quint16 retinaX1, retinaX2;     //
     bool cataract;                  //lens enabled
+    bool contact;
 
     void refreshPatientModel();
     QSqlQueryModel *lensModel;

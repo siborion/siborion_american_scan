@@ -372,14 +372,25 @@ QList <double> Plot::intToMM(QList<quint16> *mainParam)
 
 void Plot::changeCataractSlot(bool visible)
 {
-    lensInterval->setVisible(visible);
+    double offSet;
+    offSet=(curentParam->contact?0:3.5*27);
+    curentParam->lensX1 = 54+offSet;    curentParam->lensX2 = 351+offSet;
     curentParam->cataract = visible;
+    if(!curentParam->cataract)
+    {
+        curentParam->lensX1 = 0;    curentParam->lensX2 = 0;
+    }
+
+    lensInterval->setVisible(visible);
+
 }
 
 void Plot::changeContactSlot(bool contact)
 {
     double offSet;
-    offSet=(contact?0:3.5*27);
+    curentParam->contact = contact;
+
+    offSet=(curentParam->contact?0:3.5*27);
 
     curentParam->corneaX1 = 0+offSet;   curentParam->corneaX2 = 22+offSet;
     curentParam->lensX1 = 54+offSet;    curentParam->lensX2 = 351+offSet;

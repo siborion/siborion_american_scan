@@ -120,6 +120,7 @@ bool front = true;
 
     if(Sample->count()==1024)
     {
+        qDebug()<<"---------------------------";
         front = true;
         for(quint16 i=curentParam->corneaX1; i<=curentParam->corneaX2; i++)
         {
@@ -172,7 +173,7 @@ bool front = true;
                     {
                         front = false;
                         extremum.append((i-1));
-                        qDebug()<<i;
+                        qDebug()<<"extrim"<<i;
                     }
                 }
             }
@@ -208,7 +209,7 @@ bool front = true;
                     {
                         front = false;
                         extremum.append((i-1));
-                        qDebug()<<i;
+                        qDebug()<<"extrim"<<i;
                     }
                 }
             }
@@ -221,7 +222,10 @@ bool front = true;
     }
 
     allExtremum = extremum;
-    return (extremum.count()>=3?true:false) ;
+    if(curentParam->cataract)
+        return (extremum.count()>=3?true:false) ;
+    else
+        return (extremum.count()>=2?true:false) ;
 }
 
 bool sampletable::findMainParam(QList<quint16> *extremum, stMainParam &mainParam)
