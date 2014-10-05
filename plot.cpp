@@ -21,6 +21,8 @@ Plot::Plot( QWidget *parent, bool print):
     setAutoDelete(true);
 
     QwtPlotCanvas *canvas = new QwtPlotCanvas();
+    curentParam = CurentParam::instanse();
+
     setCanvas( canvas );
 
     if(print)
@@ -54,13 +56,19 @@ Plot::Plot( QWidget *parent, bool print):
     d_curve1->setXAxis(QwtPlot::xTop);
     d_curve1->attach(this);
 
-    startInterval  = new SampleInterval(0.2, 0.8,  "Start_Interval");
-    lensInterval   = new SampleInterval(2.0, 13.0, "Lens_Interval");
-    retinaInterval = new SampleInterval(17.0,32.0, "Retina_Interval");
+    startInterval  = new SampleInterval(0, 0, "Start_Interval");
+    lensInterval   = new SampleInterval(0, 0, "Lens_Interval");
+    retinaInterval = new SampleInterval(0, 0, "Retina_Interval");
+
+    startInterval->setXAxis(QwtPlot::xTop);
+    lensInterval->setXAxis(QwtPlot::xTop);
+    retinaInterval->setXAxis(QwtPlot::xTop);
 
     startInterval->attach( this );
     lensInterval->attach( this );
     retinaInterval->attach( this );
+
+    changeContactSlot(true);
 
     setAutoReplot( true );
 }
@@ -365,18 +373,21 @@ QList <double> Plot::intToMM(QList<quint16> *mainParam)
 void Plot::changeCataractSlot(bool visible)
 {
     lensInterval->setVisible(visible);
+    curentParam->cataract = visible;
 }
 
 void Plot::changeContactSlot(bool contact)
 {
-    double dMin, dMax;
-    if(contact)
-    {dMin=(-20.0); dMax=(1024.0);}
-    else
-    {dMin=(-(20.0+27*3)); dMax=(1024.0);}
-//    setAxisScale(QwtPlot::xTop, dMin, dMax);
-    setAxisScale(QwtPlot::xBottom, (dMin/27), (dMax/27));
-    qDebug()<<contact;
+    double offSet;
+    offSet=(contact?0:3.5*27);
+
+    curentParam->corneaX1 = 0+offSet;   curentParam->corneaX2 = 22+offSet;
+    curentParam->lensX1 = 54+offSet;    curentParam->lensX2 = 351+offSet;
+    curentParam->retinaX1 = 459+offSet; curentParam->retinaX2 = 864+offSet;
+
+    startInterval->setSample (curentParam->corneaX1, curentParam->corneaX2);
+    lensInterval->setSample  (curentParam->lensX1,   curentParam->lensX2);
+    retinaInterval->setSample(curentParam->retinaX1, curentParam->retinaX2);
 }
 
 

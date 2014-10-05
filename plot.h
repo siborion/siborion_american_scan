@@ -4,6 +4,7 @@
 #include <qwt_plot.h>
 #include <QApplication>
 #include "sampleinterval.h"
+#include "curentparam.h"
 #include "typedef.h"
 
 class QwtPlotCurve;
@@ -59,6 +60,7 @@ private:
 //        const double *phase, int count );
 //    void showPeak( double freq, double amplitude );
 //    void show3dB( double freq );
+    CurentParam *curentParam;
     void select( const QPoint &pos );
     void move( const QPoint &pos );
 

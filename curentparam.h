@@ -16,9 +16,14 @@ private:
     scanbase *pBase;
     QSqlQueryModel patientModel;
     QStandardItemModel measureParamModel;
-    quint16 patientId, doctorId;
 
 public:
+    quint16 patientId, doctorId;    //
+    quint16 corneaX1, corneaX2;     //
+    quint16 lensX1,   lensX2;       //intervals
+    quint16 retinaX1, retinaX2;     //
+    bool cataract;                  //lens enabled
+
     void refreshPatientModel();
     QSqlQueryModel *lensModel;
     bool sideOD;

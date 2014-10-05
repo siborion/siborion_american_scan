@@ -55,7 +55,7 @@ void sampletable::getFileSample()
         file.setFileName(fileName);
         if (!file.open(QIODevice::ReadOnly))
             return;
-        file.read(144);
+        file.read(146);
         while (!file.atEnd())
         {
             Val = (file.read(1).toHex().toUInt(&bOk, 16));
@@ -82,26 +82,63 @@ bool sampletable::findExtremum(QByteArray *Sample, QList<quint16> &extremum)
 #define sampleEnd   1024
 #define pik         (255*0.9)
 #define spad        (60)
-    quint16 kolvo = 0;
-    bool front = true;
-    foreach (quint8 val, *Sample)
+quint8 val;
+bool validFront;
+//    quint16 kolvo = 0;
+bool front = true;
+//    foreach (quint8 val, *Sample)
+//    {
+//        if(kolvo>sampleStart)
+//        {
+//            if(val>pik)
+//            {
+//                if (front)
+//                {
+//                    for(int i=1; i<=5; i++)
+//                    {
+//                        if(((quint8)(Sample->at(kolvo-i)))<spad)
+//                        {
+//                            extremum.append((kolvo-i)+1);
+//                            break;
+//                        }
+//                    }
+//                }
+//                front = false;
+//            }
+//            else
+//            {
+//                if(val<spad)
+//                    front = true;
+//            }
+//        }
+//        kolvo++;
+//        if(kolvo>sampleEnd)
+//            break;
+//    }
+
+//    qDebug()<<"Sample->count()"<<Sample->count();
+
+    if(Sample->count()==1024)
     {
-        if(kolvo>sampleStart)
+        front = true;
+        for(quint16 i=curentParam->corneaX1; i<=curentParam->corneaX2; i++)
         {
-            if(val>pik)
+            val = Sample->at(i);
+            if(front)
             {
-                if (front)
+                if(val>pik)
                 {
-                    for(int i=1; i<=5; i++)
+                    for(int j=1; j<=5; j++)
                     {
-                        if(((quint8)(Sample->at(kolvo-i)))<spad)
+                        if(((quint8)(Sample->at(i-j)))==0)
                         {
-                            extremum.append((kolvo-i)+1);
+                            front = false;
+                            extremum.append((i-1));
+                            qDebug()<<"extrim"<<i;
                             break;
                         }
                     }
                 }
-                front = false;
             }
             else
             {
@@ -109,10 +146,80 @@ bool sampletable::findExtremum(QByteArray *Sample, QList<quint16> &extremum)
                     front = true;
             }
         }
-        kolvo++;
-        if(kolvo>sampleEnd)
-            break;
+
+        front = true;
+        for(quint16 i=curentParam->lensX1; i<=curentParam->lensX2; i++)
+        {
+            val = Sample->at(i);
+            if(front)
+            {
+                if(val>pik)
+                {
+                    validFront = false;
+                    for(int j=1; j<=5; j++)
+                    {
+                        if(((quint8)(Sample->at(i-j)))==0)
+                        {
+                            validFront = true;
+                            for(int k=1; k<=27; k++)
+                            {
+                                if(((quint8)(Sample->at(i-j-k))) > 30)
+                                    validFront = false;
+                            }
+                        }
+                    }
+                    if(validFront)
+                    {
+                        front = false;
+                        extremum.append((i-1));
+                        qDebug()<<i;
+                    }
+                }
+            }
+            else
+            {
+                if(val<spad)
+                    front = true;
+            }
+        }
+
+        front = true;
+        for(quint16 i=curentParam->retinaX1; i<=curentParam->retinaX2; i++)
+        {
+            val = Sample->at(i);
+            if(front)
+            {
+                if(val>pik)
+                {
+                    validFront = false;
+                    for(int j=1; j<=5; j++)
+                    {
+                        if(((quint8)(Sample->at(i-j)))==0)
+                        {
+                            validFront = true;
+                            for(int k=1; k<=54; k++)
+                            {
+                                if(((quint8)(Sample->at(i-j-k))) > 0)
+                                    validFront = false;
+                            }
+                        }
+                    }
+                    if(validFront)
+                    {
+                        front = false;
+                        extremum.append((i-1));
+                        qDebug()<<i;
+                    }
+                }
+            }
+            else
+            {
+                if(val<spad)
+                    front = true;
+            }
+        }
     }
+
     allExtremum = extremum;
     return (extremum.count()>=3?true:false) ;
 }
