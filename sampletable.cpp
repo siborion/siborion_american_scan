@@ -82,47 +82,48 @@ bool sampletable::findExtremum(QByteArray *Sample, QList<quint16> &extremum)
 #define sampleEnd   1024
 #define pik         (255*0.9)
 #define spad        (60)
-quint8 val;
-quint8 startCount;
-quint8 lensCount;
-quint8 retinaCount;
+    quint8 val;
+    quint8 startCount;
+    quint8 lensCount;
+    quint8 retinaCount;
+    quint16 level60;
 
-bool validFront;
-bool front = true;
+    bool validFront;
+    bool front = true;
 
-startCount = lensCount = retinaCount = 0;
+    startCount = lensCount = retinaCount = 0;
 
-//    foreach (quint8 val, *Sample)
-//    {
-//        if(kolvo>sampleStart)
-//        {
-//            if(val>pik)
-//            {
-//                if (front)
-//                {
-//                    for(int i=1; i<=5; i++)
-//                    {
-//                        if(((quint8)(Sample->at(kolvo-i)))<spad)
-//                        {
-//                            extremum.append((kolvo-i)+1);
-//                            break;
-//                        }
-//                    }
-//                }
-//                front = false;
-//            }
-//            else
-//            {
-//                if(val<spad)
-//                    front = true;
-//            }
-//        }
-//        kolvo++;
-//        if(kolvo>sampleEnd)
-//            break;
-//    }
+    //    foreach (quint8 val, *Sample)
+    //    {
+    //        if(kolvo>sampleStart)
+    //        {
+    //            if(val>pik)
+    //            {
+    //                if (front)
+    //                {
+    //                    for(int i=1; i<=5; i++)
+    //                    {
+    //                        if(((quint8)(Sample->at(kolvo-i)))<spad)
+    //                        {
+    //                            extremum.append((kolvo-i)+1);
+    //                            break;
+    //                        }
+    //                    }
+    //                }
+    //                front = false;
+    //            }
+    //            else
+    //            {
+    //                if(val<spad)
+    //                    front = true;
+    //            }
+    //        }
+    //        kolvo++;
+    //        if(kolvo>sampleEnd)
+    //            break;
+    //    }
 
-//    qDebug()<<"Sample->count()"<<Sample->count();
+    //    qDebug()<<"Sample->count()"<<Sample->count();
 
     if(Sample->count()==1024)
     {
@@ -135,14 +136,18 @@ startCount = lensCount = retinaCount = 0;
             {
                 if(val>pik)
                 {
+                    level60 = 0;
                     for(int j=1; j<=5; j++)
                     {
+                        if((((quint8)(Sample->at(i-j)))<60)&&(level60==0))
+                            level60 = (i-j);
+
                         if(((quint8)(Sample->at(i-j)))==0)
                         {
                             front = false;
-                            extremum.append((i-1));
+                            extremum.append(level60);
+                            qDebug()<<"level601"<<level60;
                             startCount++;
-//                            qDebug()<<"extrim"<<i;
                             break;
                         }
                     }
@@ -164,8 +169,13 @@ startCount = lensCount = retinaCount = 0;
                 if(val>pik)
                 {
                     validFront = false;
+                    level60 = 0;
                     for(int j=1; j<=5; j++)
                     {
+
+                        if((((quint8)(Sample->at(i-j)))<60)&&(level60==0))
+                            level60 = (i-j);
+
                         if(((quint8)(Sample->at(i-j)))==0)
                         {
                             validFront = true;
@@ -179,7 +189,8 @@ startCount = lensCount = retinaCount = 0;
                     if(validFront)
                     {
                         front = false;
-                        extremum.append((i-1));
+                        extremum.append(level60);
+                        qDebug()<<"level602"<<level60;
                         lensCount++;
                     }
                 }
@@ -199,9 +210,17 @@ startCount = lensCount = retinaCount = 0;
             {
                 if(val>pik)
                 {
+                    level60 = 0;
                     validFront = false;
                     for(int j=1; j<=5; j++)
                     {
+                        if((((quint8)(Sample->at(i-j)))<60)&&(level60==0))
+                        {
+                            qDebug()<<"i"<<i;
+                            qDebug()<<"j"<<j;
+                            level60 = (i-j);
+                        }
+
                         if(((quint8)(Sample->at(i-j)))==0)
                         {
                             validFront = true;
@@ -215,7 +234,8 @@ startCount = lensCount = retinaCount = 0;
                     if(validFront)
                     {
                         front = false;
-                        extremum.append((i-1));
+                        extremum.append(level60);
+                        qDebug()<<"level603"<<level60;
                         retinaCount++;
                     }
                 }
@@ -240,38 +260,38 @@ bool sampletable::findMainParam(QList<quint16> *extremum, stMainParam &mainParam
     quint16 Start, L1, L2, Retina, val;
     Start=L1=L2=Retina=0;
 
-//    for(quint16 i=curentParam->corneaX1; i<=curentParam->corneaX2; i++)
-//    {
+    //    for(quint16 i=curentParam->corneaX1; i<=curentParam->corneaX2; i++)
+    //    {
 
-//    qDebug()<<extremum->count();
+    //    qDebug()<<extremum->count();
 
-//    if(curentParam->cataract)
-//    {
-//        if(extremum->count()>=4)
-//        {
-//            val = extremum->at(0);
-//            if((val>=curentParam->corneaX1)&&(val<=curentParam->corneaX2))
-//                mainParam.Start=Start = extremum->at(0);
-//            else
-//                return false;
+    //    if(curentParam->cataract)
+    //    {
+    //        if(extremum->count()>=4)
+    //        {
+    //            val = extremum->at(0);
+    //            if((val>=curentParam->corneaX1)&&(val<=curentParam->corneaX2))
+    //                mainParam.Start=Start = extremum->at(0);
+    //            else
+    //                return false;
 
-//            val = extremum->at(1);
-//            if((val>=curentParam->lensX1)&&(val<=curentParam->lensX2))
+    //            val = extremum->at(1);
+    //            if((val>=curentParam->lensX1)&&(val<=curentParam->lensX2))
 
-//            mainParam.L1=L1 = extremum->at(1);
-//            mainParam.L2=L2 = extremum->at(2);
-//            mainParam.Retina=Retina = extremum->at(extremum->count()-1);
-//            return true;
-//        }
-//    }
-//    else
-//    {
-//        if(extremum->count()==2)
-//        {
-//            mainParam.Start=Start = extremum->at(0);
-//            mainParam.Start=Retina = extremum->at(1);
-//            return true;
-//        }
+    //            mainParam.L1=L1 = extremum->at(1);
+    //            mainParam.L2=L2 = extremum->at(2);
+    //            mainParam.Retina=Retina = extremum->at(extremum->count()-1);
+    //            return true;
+    //        }
+    //    }
+    //    else
+    //    {
+    //        if(extremum->count()==2)
+    //        {
+    //            mainParam.Start=Start = extremum->at(0);
+    //            mainParam.Start=Retina = extremum->at(1);
+    //            return true;
+    //        }
     //    }
 
     for(int i=0; i<extremum->count(); i++)
