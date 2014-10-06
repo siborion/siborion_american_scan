@@ -83,9 +83,15 @@ bool sampletable::findExtremum(QByteArray *Sample, QList<quint16> &extremum)
 #define pik         (255*0.9)
 #define spad        (60)
 quint8 val;
+quint8 startCount;
+quint8 lensCount;
+quint8 retinaCount;
+
 bool validFront;
-//    quint16 kolvo = 0;
 bool front = true;
+
+startCount = lensCount = retinaCount = 0;
+
 //    foreach (quint8 val, *Sample)
 //    {
 //        if(kolvo>sampleStart)
@@ -135,7 +141,8 @@ bool front = true;
                         {
                             front = false;
                             extremum.append((i-1));
-                            qDebug()<<"extrim"<<i;
+                            startCount++;
+//                            qDebug()<<"extrim"<<i;
                             break;
                         }
                     }
@@ -173,7 +180,7 @@ bool front = true;
                     {
                         front = false;
                         extremum.append((i-1));
-                        qDebug()<<"extrim"<<i;
+                        lensCount++;
                     }
                 }
             }
@@ -209,7 +216,7 @@ bool front = true;
                     {
                         front = false;
                         extremum.append((i-1));
-                        qDebug()<<"extrim"<<i;
+                        retinaCount++;
                     }
                 }
             }
@@ -223,9 +230,9 @@ bool front = true;
 
     allExtremum = extremum;
     if(curentParam->cataract)
-        return (extremum.count()>=3?true:false) ;
+        return ((startCount>0) && (lensCount>1) && (retinaCount>0));
     else
-        return (extremum.count()>=2?true:false) ;
+        return ((startCount>0) && (retinaCount>0));
 }
 
 bool sampletable::findMainParam(QList<quint16> *extremum, stMainParam &mainParam)
