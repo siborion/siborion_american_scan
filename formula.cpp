@@ -29,22 +29,25 @@ formula::formula(QWidget *parent) :
 //    model->setItem(0, 0, getItem(QString("A-Const = 116.5"), Qt::AlignRight));
 
     columnPercent.clear();
-    columnPercent<<100;
+    columnPercent<<33<<33<<34;
     lst.clear();
-    lst<<"Formula";
+    lst<<"Formula"<<"IOL"<<"REF";
     twFormula = new adjview(15, lst, columnPercent);
     twFormula->setFrameStyle(0);
-    twFormula->setSpan(0, 0, 11, 1);
-    twFormula->setStyleSheet(QLatin1String("gridline-color: rgba(255, 255, 255);\n"
-                                           "background-color: rgb(200, 200, 200);\n"
-                                           "border-color: rgba(255, 255, 255);"));
+    twFormula->setSpan(0,  0, 11, 1);
+    twFormula->setSpan(11, 1, 1,  2);
+    twFormula->setSpan(12, 1, 1,  2);
+    twFormula->setSpan(13, 1, 1,  2);
+    twFormula->setSpan(14, 1, 1,  2);
+//    twFormula->setStyleSheet(QLatin1String("gridline-color: rgba(255, 255, 255);\n""background-color: rgb(200, 200, 200);\n""border-color: rgba(255, 255, 255);"));
 
     columnPercent.clear();
     columnPercent<<45<<45;
     lst.clear();
     lst<<"IOL"<<"REF";
-    twCalculator = new adjview(10, lst, columnPercent);
-    twCalculator->setFrameStyle(0);
+//    twCalculator = new adjview(10, lst, columnPercent);
+    twCalculator = twFormula;
+//    twCalculator->setFrameStyle(0);
     twCalculator->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     quint8 uiHeight;
     uiHeight = twCalculator->height()-2;
@@ -53,11 +56,10 @@ formula::formula(QWidget *parent) :
 
     columnPercent.clear();
     columnPercent<<100;
-    twEmm = new adjview(5, 1, columnPercent);
-    twEmm->setFrameStyle(0);
-    twEmm->setStyleSheet(QLatin1String("gridline-color: rgba(255, 255, 255);\n"
-                                           "background-color: rgb(200, 200, 200);\n"
-                                           "border-color: rgba(255, 255, 255);"));
+//    twEmm = new adjview(5, 1, columnPercent);
+    twEmm = twFormula;
+//    twEmm->setFrameStyle(0);
+//    twEmm->setStyleSheet(QLatin1String("gridline-color: rgba(255, 255, 255);\n""background-color: rgb(200, 200, 200);\n"                                   "border-color: rgba(255, 255, 255);"));
 
     lst.clear();
     lst=getListFormula();
@@ -76,9 +78,9 @@ formula::formula(QWidget *parent) :
     layout->addWidget(lLens,    1, 0, 1, 1);
     layout->addWidget(leLens,   1, 1, 1, 1);
 
-    layout->addWidget(twFormula,    2, 0, 4, 1);
-    layout->addWidget(twCalculator, 3, 1, 1, 1, Qt::AlignTop);
-    layout->addWidget(twEmm, 4, 1, 1, 1, Qt::AlignTop);
+    layout->addWidget(twFormula,    2, 0, 1, 2);
+//    layout->addWidget(twCalculator, 3, 1, 1, 1, Qt::AlignTop);
+//    layout->addWidget(twEmm, 4, 1, 1, 1, Qt::AlignTop);
 
     connect(cbFormula, SIGNAL(currentIndexChanged(int)), this, SLOT(changeFotmula(int)));
 //    refreshFormula();
@@ -111,7 +113,7 @@ void formula::refreshFormula(int curIndex)
             case HAIGIS:  Calculator(i, AL, AConst, K, ACD_measure, &stFormula);  break;
 
             }
-            model1->setItem(j, 0, getItem(stFormula.PEMM, Qt::AlignCenter));
+            model1->setItem(10+j, 1, getItem(stFormula.PEMM, Qt::AlignCenter));
             model->setItem(10+j, 0, getItem(slTmp.at(i), Qt::AlignCenter));
         }
     }
@@ -221,12 +223,12 @@ void formula::saveParam(_formulae *val)
         QString str = QString("%1").arg(dTmp, 0, 'f', 1);
         QStandardItem *sTmp1 = new QStandardItem(str);
         sTmp1->setTextAlignment(Qt::AlignCenter);
-        model->setItem(i, 0, sTmp1);
+        model->setItem(i, 1, sTmp1);
         dTmp = round(val->PORx[i]*100)/100;
         str = QString("%1").arg(dTmp, 0, 'f', 2);
         QStandardItem *sTmp2 = new QStandardItem(str);
         sTmp2->setTextAlignment(Qt::AlignCenter);
-        model->setItem(i, 1, sTmp2);
+        model->setItem(i, 2, sTmp2);
     }
 }
 
