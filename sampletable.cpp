@@ -87,6 +87,7 @@ bool sampletable::findExtremum(QByteArray *Sample, QList<quint16> &extremum)
     quint8 lensCount;
     quint8 retinaCount;
     quint16 level60;
+    quint16 i, j, k;
 
     bool validFront;
     bool front = true;
@@ -129,7 +130,7 @@ bool sampletable::findExtremum(QByteArray *Sample, QList<quint16> &extremum)
     {
         qDebug()<<"---------------------------";
         front = true;
-        for(quint16 i=curentParam->corneaX1; i<=curentParam->corneaX2; i++)
+        for(i=curentParam->corneaX1; i<=curentParam->corneaX2; i++)
         {
             val = Sample->at(i);
             if(front)
@@ -137,7 +138,7 @@ bool sampletable::findExtremum(QByteArray *Sample, QList<quint16> &extremum)
                 if(val>pik)
                 {
                     level60 = 0;
-                    for(int j=1; j<=5; j++)
+                    for(j=1; j<=5; j++)
                     {
                         if((((quint8)(Sample->at(i-j)))<60)&&(level60==0))
                             level60 = (i-j);
@@ -161,7 +162,7 @@ bool sampletable::findExtremum(QByteArray *Sample, QList<quint16> &extremum)
         }
 
         front = true;
-        for(quint16 i=curentParam->lensX1; i<=curentParam->lensX2; i++)
+        for(i=curentParam->lensX1; i<=curentParam->lensX2; i++)
         {
             val = Sample->at(i);
             if(front)
@@ -170,7 +171,7 @@ bool sampletable::findExtremum(QByteArray *Sample, QList<quint16> &extremum)
                 {
                     validFront = false;
                     level60 = 0;
-                    for(int j=1; j<=5; j++)
+                    for(j=1; j<=5; j++)
                     {
 
                         if((((quint8)(Sample->at(i-j)))<60)&&(level60==0))
@@ -203,7 +204,7 @@ bool sampletable::findExtremum(QByteArray *Sample, QList<quint16> &extremum)
         }
 
         front = true;
-        for(quint16 i=curentParam->retinaX1; i<=curentParam->retinaX2; i++)
+        for(i=curentParam->retinaX1; i<=curentParam->retinaX2; i++)
         {
             val = Sample->at(i);
             if(front)
@@ -212,25 +213,26 @@ bool sampletable::findExtremum(QByteArray *Sample, QList<quint16> &extremum)
                 {
                     level60 = 0;
                     validFront = false;
-                    for(int j=1; j<=5; j++)
+                    for(j=1; j<=5; j++)
                     {
-                        if((((quint8)(Sample->at(i-j)))<60)&&(level60==0))
-                        {
-                            qDebug()<<"i"<<i;
-                            qDebug()<<"j"<<j;
-                            level60 = (i-j);
-                        }
-
                         if(((quint8)(Sample->at(i-j)))==0)
                         {
+	                    if((((quint8)(Sample->at(i-j)))<60)&&(level60==0))
+                                 level60 = (i-j);
                             validFront = true;
+			    break;
+			}
+		    }
+			
+		    if(validFront)
+			{
                             for(int k=1; k<=54; k++)
                             {
                                 if(((quint8)(Sample->at(i-j-k))) > 0)
                                     validFront = false;
                             }
-                        }
-                    }
+			}
+
                     if(validFront)
                     {
                         front = false;
