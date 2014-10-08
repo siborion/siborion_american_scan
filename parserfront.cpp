@@ -16,8 +16,10 @@ qint16 parserFront::parser(quint16 pos, quint8 val)
     if(val<=maxZero)
     {
         level60 = 0;
-        countFront = 0;
         countZero++;
+	if(countFront>0)
+		countZero = 0;	
+        countFront = 0;
         extremum = false;
     }
     else

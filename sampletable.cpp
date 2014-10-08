@@ -83,9 +83,10 @@ bool sampletable::findExtremum(QByteArray *Sample, QList<quint16> &extremum, stM
     qint16 tmp;
 
     allExtremum.clear();
+    mainParam.Start = mainParam.L1 = mainParam.L2 = mainParam.Retina = 0;
 
     parseCornea =  new  parserFront(curentParam->corneaX1, curentParam->corneaX2, 7, 0,  0);
-    parseLens   =  new  parserFront(curentParam->lensX1,   curentParam->lensX2,   7, 27, 0);
+    parseLens   =  new  parserFront(curentParam->lensX1,   curentParam->lensX2,   7, 27, 30);
     parseRetina =  new  parserFront(curentParam->retinaX1, curentParam->retinaX2, 7, 54, 0);
 
     for(int i=0; i<Sample->count(); i++)
