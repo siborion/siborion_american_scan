@@ -311,9 +311,9 @@ void mesurement::doTimer()
         if(kolvo>=1000)
         {
             pPlot->drawSample(x, y, kolvo);
-            if(pSampleTable->findExtremum(&baTmp2, extremum))
+            if(pSampleTable->findExtremum(&baTmp2, extremum, mainParam))
             {
-                if (pSampleTable->findMainParam(&extremum, mainParam))
+//                if (pSampleTable->findMainParam(&extremum, mainParam))
                     pSampleTable->addSampleToTable(baTmp2, mainParam);
             }
         }

@@ -66,7 +66,8 @@ SOURCES += main.cpp\
     sampleinterval.cpp \
     curentparam.cpp \
     buttonscan.cpp \
-    scanbutton.cpp
+    scanbutton.cpp \
+    parserfront.cpp
 
 
 HEADERS  += mainwindow.h\
@@ -103,7 +104,8 @@ HEADERS  += mainwindow.h\
     sampleinterval.h \
     curentparam.h \
     buttonscan.h \
-    scanbutton.h
+    scanbutton.h \
+    parserfront.h
 
 #FORMS    += mainwindow.ui
 

@@ -8,14 +8,15 @@
 #include <QStandardItem>
 #include "plot.h"
 #include "curentparam.h"
+#include "parserfront.h"
 
 class sampletable : public QWidget
 {
     Q_OBJECT
 public:
     explicit sampletable(QWidget *parent = 0);
-    bool findExtremum(QByteArray *Sample, QList<quint16> &extremum);
-    bool findMainParam(QList<quint16> *extremum, stMainParam &mainParam);
+    bool findExtremum(QByteArray *Sample, QList<quint16> &extremum, stMainParam &mainParam);
+//    bool findMainParam(QList<quint16> *extremum, stMainParam &mainParam);
     void addSampleToTable();
     void addSampleToTable(QByteArray Sample, stMainParam curMainParam);
 //    QHash<quint16, quint8> hSample;
@@ -37,6 +38,10 @@ private:
 //    delegate_sample *delegate;
     QStandardItemModel *modelOD;
     QStandardItemModel *modelOS;
+    parserFront *parseCornea;
+    parserFront *parseLens;
+    parserFront *parseRetina;
+
 
 signals:
     void changeRow(QList<quint16> extremum);

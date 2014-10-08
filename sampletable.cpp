@@ -65,258 +65,85 @@ void sampletable::getFileSample()
         file.close();
         extremum.clear();
         mainParam.clear();
-        if (findExtremum(&Sample, extremum))
+        if (findExtremum(&Sample, extremum, curMainParam))
         {
-            if(findMainParam(&extremum, curMainParam))
-            {
-                addSampleToTable(Sample, curMainParam);
-            }
+            //            if(findMainParam(&extremum, curMainParam))
+            //            {
+            addSampleToTable(Sample, curMainParam);
+            //            }
         }
         kolVo++;
     }
 }
 
-bool sampletable::findExtremum(QByteArray *Sample, QList<quint16> &extremum)
+bool sampletable::findExtremum(QByteArray *Sample, QList<quint16> &extremum, stMainParam &mainParam)
 {
-#define sampleStart 5
-#define sampleEnd   1024
-#define pik         (255*0.9)
-#define spad        (60)
-    quint8 val;
-    quint8 startCount;
-    quint8 lensCount;
-    quint8 retinaCount;
-    quint16 level60;
-    quint16 i, j, k;
+    bool corneaEn, lens1En, lens2En, retinaEn;
+    corneaEn = lens1En = lens2En =retinaEn = false;
+    qint16 tmp;
 
-    bool validFront;
-    bool front = true;
+    allExtremum.clear();
 
-    startCount = lensCount = retinaCount = 0;
+    parseCornea =  new  parserFront(curentParam->corneaX1, curentParam->corneaX2, 7, 0,  0);
+    parseLens   =  new  parserFront(curentParam->lensX1,   curentParam->lensX2,   7, 27, 0);
+    parseRetina =  new  parserFront(curentParam->retinaX1, curentParam->retinaX2, 7, 54, 0);
 
-    //    foreach (quint8 val, *Sample)
-    //    {
-    //        if(kolvo>sampleStart)
-    //        {
-    //            if(val>pik)
-    //            {
-    //                if (front)
-    //                {
-    //                    for(int i=1; i<=5; i++)
-    //                    {
-    //                        if(((quint8)(Sample->at(kolvo-i)))<spad)
-    //                        {
-    //                            extremum.append((kolvo-i)+1);
-    //                            break;
-    //                        }
-    //                    }
-    //                }
-    //                front = false;
-    //            }
-    //            else
-    //            {
-    //                if(val<spad)
-    //                    front = true;
-    //            }
-    //        }
-    //        kolvo++;
-    //        if(kolvo>sampleEnd)
-    //            break;
-    //    }
-
-    //    qDebug()<<"Sample->count()"<<Sample->count();
-
-    if(Sample->count()==1024)
+    for(int i=0; i<Sample->count(); i++)
     {
-        qDebug()<<"---------------------------";
-        front = true;
-        for(i=curentParam->corneaX1; i<=curentParam->corneaX2; i++)
+        tmp=parseCornea->parser(i,Sample->at(i));
+        if(tmp>=0)
         {
-            val = Sample->at(i);
-            if(front)
-            {
-                if(val>pik)
-                {
-                    level60 = 0;
-                    for(j=1; j<=5; j++)
-                    {
-                        if((((quint8)(Sample->at(i-j)))<60)&&(level60==0))
-                            level60 = (i-j);
-
-                        if(((quint8)(Sample->at(i-j)))==0)
-                        {
-                            front = false;
-                            extremum.append(level60);
-                            qDebug()<<"level601"<<level60;
-                            startCount++;
-                            break;
-                        }
-                    }
-                }
-            }
-            else
-            {
-                if(val<spad)
-                    front = true;
-            }
+            if(!corneaEn)
+                mainParam.Start = tmp;
+            corneaEn = true;
+            extremum.append(tmp);
+            qDebug()<<"Cornea"<<tmp;
         }
 
-        front = true;
-        for(i=curentParam->lensX1; i<=curentParam->lensX2; i++)
+        tmp=parseLens->parser(i,Sample->at(i));
+        if(tmp>=0)
         {
-            val = Sample->at(i);
-            if(front)
+            if(!lens1En)
             {
-                if(val>pik)
-                {
-                    validFront = false;
-                    level60 = 0;
-                    for(j=1; j<=5; j++)
-                    {
-
-                        if((((quint8)(Sample->at(i-j)))<60)&&(level60==0))
-                            level60 = (i-j);
-
-                        if(((quint8)(Sample->at(i-j)))==0)
-                        {
-                            validFront = true;
-                            for(int k=1; k<=27; k++)
-                            {
-                                if(((quint8)(Sample->at(i-j-k))) > 30)
-                                    validFront = false;
-                            }
-                        }
-                    }
-                    if(validFront)
-                    {
-                        front = false;
-                        extremum.append(level60);
-                        qDebug()<<"level602"<<level60;
-                        lensCount++;
-                    }
-                }
+                mainParam.L1 = tmp;
+                lens1En = true;
             }
             else
             {
-                if(val<spad)
-                    front = true;
+                if(!lens2En)
+                {
+                    mainParam.L2 = tmp;
+                    lens2En = true;
+                }
             }
+            extremum.append(tmp);
+            qDebug()<<"Lens"<<tmp;
         }
 
-        front = true;
-        for(i=curentParam->retinaX1; i<=curentParam->retinaX2; i++)
+        tmp=parseRetina->parser(i,Sample->at(i));
+        if(tmp>=0)
         {
-            val = Sample->at(i);
-            if(front)
-            {
-                if(val>pik)
-                {
-                    level60 = 0;
-                    validFront = false;
-                    for(j=1; j<=5; j++)
-                    {
-                        if(((quint8)(Sample->at(i-j)))==0)
-                        {
-	                    if((((quint8)(Sample->at(i-j)))<60)&&(level60==0))
-                                 level60 = (i-j);
-                            validFront = true;
-			    break;
-			}
-		    }
-			
-		    if(validFront)
-			{
-                            for(int k=1; k<=54; k++)
-                            {
-                                if(((quint8)(Sample->at(i-j-k))) > 0)
-                                    validFront = false;
-                            }
-			}
-
-                    if(validFront)
-                    {
-                        front = false;
-                        extremum.append(level60);
-                        qDebug()<<"level603"<<level60;
-                        retinaCount++;
-                    }
-                }
-            }
-            else
-            {
-                if(val<spad)
-                    front = true;
-            }
+            if(!retinaEn)
+                mainParam.Retina = tmp;
+            retinaEn = true;
+            extremum.append(tmp);
+            qDebug()<<"Retina"<<tmp;
         }
     }
 
     allExtremum = extremum;
+
     if(curentParam->cataract)
-        return ((startCount>0) && (lensCount>1) && (retinaCount>0));
+        return (corneaEn && lens1En && lens2En && retinaEn);
     else
-        return ((startCount>0) && (retinaCount>0));
+        return (corneaEn && retinaEn);
 }
 
+/*
 bool sampletable::findMainParam(QList<quint16> *extremum, stMainParam &mainParam)
 {
     quint16 Start, L1, L2, Retina, val;
     Start=L1=L2=Retina=0;
-
-    //    for(quint16 i=curentParam->corneaX1; i<=curentParam->corneaX2; i++)
-    //    {
-
-    //    qDebug()<<extremum->count();
-
-    //    if(curentParam->cataract)
-    //    {
-    //        if(extremum->count()>=4)
-    //        {
-    //            val = extremum->at(0);
-    //            if((val>=curentParam->corneaX1)&&(val<=curentParam->corneaX2))
-    //                mainParam.Start=Start = extremum->at(0);
-    //            else
-    //                return false;
-
-    //            val = extremum->at(1);
-    //            if((val>=curentParam->lensX1)&&(val<=curentParam->lensX2))
-
-    //            mainParam.L1=L1 = extremum->at(1);
-    //            mainParam.L2=L2 = extremum->at(2);
-    //            mainParam.Retina=Retina = extremum->at(extremum->count()-1);
-    //            return true;
-    //        }
-    //    }
-    //    else
-    //    {
-    //        if(extremum->count()==2)
-    //        {
-    //            mainParam.Start=Start = extremum->at(0);
-    //            mainParam.Start=Retina = extremum->at(1);
-    //            return true;
-    //        }
-    //    }
-
-    for(int i=0; i<extremum->count(); i++)
-    {
-        val = extremum->at(i);
-        if((Start==0)&&(val>=curentParam->corneaX1)&&(val<=curentParam->corneaX2))
-            Start = val;
-        else
-        {
-            if((L1==0)&&(val>=curentParam->lensX1)&&(val<=curentParam->lensX2))
-                L1 = val;
-            else
-            {
-                if((L2==0)&&(val>=curentParam->lensX1)&&(val<=curentParam->lensX2))
-                    L2 = val;
-                else
-                {
-                    if((Retina==0)&&(val>=curentParam->retinaX1)&&(val<=curentParam->retinaX2))
-                        Retina = val;
-                }
-            }
-        }
-    }
 
     mainParam.Start=Start;
     mainParam.L1=L1;
@@ -331,6 +158,7 @@ bool sampletable::findMainParam(QList<quint16> *extremum, stMainParam &mainParam
     else
         return false;
 }
+*/
 
 void sampletable::refreshTable(stMainParam mainParam)
 {
@@ -453,16 +281,16 @@ void sampletable::changeRow(QModelIndex curIndex)
     tableIndex = curIndex;
     curIndex = twMeas->model()->index(curIndex.row(), 0);
     baSample=(twMeas->model()->data(curIndex, Qt::UserRole).toByteArray());
-    curIndex = twMeas->model()->index(curIndex.row(), curIndex.column()+2);
-    mainParam.Start = (twMeas->model()->data(curIndex, Qt::UserRole).toInt());
-    curIndex = twMeas->model()->index(curIndex.row(), curIndex.column()+1);
-    mainParam.L1 = (twMeas->model()->data(curIndex, Qt::UserRole).toInt());
-    curIndex = twMeas->model()->index(curIndex.row(), curIndex.column()+1);
-    mainParam.L2 = (twMeas->model()->data(curIndex, Qt::UserRole).toInt());
-    curIndex = twMeas->model()->index(curIndex.row(), curIndex.column()+1);
-    mainParam.Retina = (twMeas->model()->data(curIndex, Qt::UserRole).toInt());
-    extremum.clear();
-    findExtremum(&baSample, extremum);
+    //    curIndex = twMeas->model()->index(curIndex.row(), curIndex.column()+2);
+    //    mainParam.Start = (twMeas->model()->data(curIndex, Qt::UserRole).toInt());
+    //    curIndex = twMeas->model()->index(curIndex.row(), curIndex.column()+1);
+    //    mainParam.L1 = (twMeas->model()->data(curIndex, Qt::UserRole).toInt());
+    //    curIndex = twMeas->model()->index(curIndex.row(), curIndex.column()+1);
+    //    mainParam.L2 = (twMeas->model()->data(curIndex, Qt::UserRole).toInt());
+    //    curIndex = twMeas->model()->index(curIndex.row(), curIndex.column()+1);
+    //    mainParam.Retina = (twMeas->model()->data(curIndex, Qt::UserRole).toInt());
+    //    extremum.clear();
+    findExtremum(&baSample, extremum, mainParam);
     emit(changeRow(extremum));
     refreshResult(twMeas->currentIndex().row());
 }
