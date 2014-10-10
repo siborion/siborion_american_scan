@@ -67,7 +67,8 @@ SOURCES += main.cpp\
     curentparam.cpp \
     buttonscan.cpp \
     scanbutton.cpp \
-    parserfront.cpp
+    parserfront.cpp \
+    checkboxdelegate1.cpp
 
 
 HEADERS  += mainwindow.h\
@@ -105,7 +106,8 @@ HEADERS  += mainwindow.h\
     curentparam.h \
     buttonscan.h \
     scanbutton.h \
-    parserfront.h
+    parserfront.h \
+    checkboxdelegate1.h
 
 #FORMS    += mainwindow.ui
 

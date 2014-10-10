@@ -8,6 +8,7 @@
 #include <QSqlRelationalTableModel>
 #include "combo_delegate.h"
 #include "delegate.h"
+#include "checkboxdelegate1.h"
 
 namespace Ui {
 class dialog_doctor;
@@ -28,6 +29,7 @@ private:
     QStandardItemModel  *model;
 //    CheckBoxDelegate *delegate;
     quint32 curId;
+//    void changeModel(QModelIndex index);
 
 private slots:
     void saveData();
