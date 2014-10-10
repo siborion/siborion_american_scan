@@ -32,6 +32,8 @@ private slots:
     void doChangeSide();
     void doChangeCataract();
     void doChangeContact();
+    void doChangeRegim();
+
 };
 
 #endif // key_radio_H

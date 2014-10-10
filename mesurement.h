@@ -29,6 +29,7 @@
 #include <QTextEdit>
 #include "scanbutton.h"
 #include "typedef.h"
+#include "curentparam.h"
 
 
 #include <qwt_plot.h>
@@ -45,6 +46,8 @@ public:
 
 private:
 //    QTextEdit *teTmp;
+    CurentParam *curentParam;
+    quint8 countMeasure;
     quint8 offset;
     QComboBox *cbPort;
     QSerialPort *port;

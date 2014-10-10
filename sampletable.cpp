@@ -66,12 +66,7 @@ void sampletable::getFileSample()
         extremum.clear();
         mainParam.clear();
         if (findExtremum(&Sample, extremum, curMainParam))
-        {
-            //            if(findMainParam(&extremum, curMainParam))
-            //            {
-            addSampleToTable(Sample, curMainParam);
-            //            }
-        }
+            addSampleToTable(Sample, curMainParam, true);
         kolVo++;
     }
 }
@@ -378,7 +373,7 @@ void sampletable::delSample()
     changeRow(twMeas->currentIndex());
 }
 
-void sampletable::addSampleToTable(QByteArray Sample, stMainParam curMainParam)
+void sampletable::addSampleToTable(QByteArray Sample, stMainParam curMainParam, bool newRecord)
 {
     quint8 kolVo;
     QString fileName = "";
@@ -386,7 +381,10 @@ void sampletable::addSampleToTable(QByteArray Sample, stMainParam curMainParam)
     model = (QStandardItemModel*)twMeas->model();
     kolVo = twMeas->model()->rowCount();
     QStandardItem *ttt = new QStandardItem();
-    model->appendRow(ttt);
+    if(newRecord||(kolVo==0))
+        model->appendRow(ttt);
+    else
+        kolVo--;
     twMeas->model()->setData(twMeas->model()->index(kolVo, 0), kolVo, Qt::DisplayRole);
     twMeas->model()->setData(twMeas->model()->index(kolVo, 0), Sample, Qt::UserRole);
     twMeas->model()->setData(twMeas->model()->index(kolVo, 1), fileName, Qt::DisplayRole);

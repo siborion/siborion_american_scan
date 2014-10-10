@@ -18,7 +18,7 @@ public:
     bool findExtremum(QByteArray *Sample, QList<quint16> &extremum, stMainParam &mainParam);
 //    bool findMainParam(QList<quint16> *extremum, stMainParam &mainParam);
     void addSampleToTable();
-    void addSampleToTable(QByteArray Sample, stMainParam curMainParam);
+    void addSampleToTable(QByteArray Sample, stMainParam curMainParam, bool newRecord);
 //    QHash<quint16, quint8> hSample;
     stMainParam mainParam;
     QByteArray baSample;

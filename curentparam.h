@@ -10,6 +10,8 @@
 
 class CurentParam : public QObject
 {
+
+
     Q_OBJECT
 private:
     static CurentParam *_instanse;
@@ -18,12 +20,18 @@ private:
     QStandardItemModel measureParamModel;
 
 public:
+    enum WorkRegim {regimAuto=0, regimAutoFreez=1, regimManual=2};
+//    enum ItemDataRole{TypeRole = Qt::UserRole + 1000,
+//                        SignalValueRole = Qt::UserRole + 1001};
+
+
     quint16 patientId, doctorId;    //
     quint16 corneaX1, corneaX2;     //
     quint16 lensX1,   lensX2;       //intervals
     quint16 retinaX1, retinaX2;     //
     bool cataract;                  //lens enabled
     bool contact;
+    quint8 workRegim;
 
     void refreshPatientModel();
     QSqlQueryModel *lensModel;

@@ -10,8 +10,12 @@ key_radio::key_radio(QWidget *parent) :
     QGroupBox    *gbAuto = new QGroupBox();
     QHBoxLayout  *ltAuto = new QHBoxLayout(gbAuto);
     QRadioButton *rbAutoFreeze = new QRadioButton(tr("Auto Freeze"));
-    QRadioButton *rbAuto = new QRadioButton(tr("Auto"));
-    QRadioButton *rbManual = new QRadioButton(tr("Manual"));
+    QRadioButton *rbAuto       = new QRadioButton(tr("Auto"));
+    QRadioButton *rbManual     = new QRadioButton(tr("Manual"));
+    rbAutoFreeze->setObjectName("AutoFreeze");
+    rbAuto->setObjectName      ("Auto");
+    rbManual->setObjectName    ("Manual");
+
     rbManual->setChecked(true);
     ltAuto->addWidget(rbAutoFreeze);
     ltAuto->addWidget(rbAuto);
@@ -61,6 +65,11 @@ key_radio::key_radio(QWidget *parent) :
     layoutkey_radio->addItem(hs4);
     layoutkey_radio->addWidget(gbEye);
 
+
+    connect(rbAutoFreeze,  SIGNAL(clicked(bool)), SLOT(doChangeRegim()));
+    connect(rbAuto,        SIGNAL(clicked(bool)), SLOT(doChangeRegim()));
+    connect(rbManual,      SIGNAL(clicked(bool)), SLOT(doChangeRegim()));
+
     connect(rbAphakic,  SIGNAL(clicked(bool)), SLOT(doChangeCataract()));
     connect(rbCataract, SIGNAL(clicked(bool)), SLOT(doChangeCataract()));
 
@@ -94,6 +103,18 @@ void key_radio::doChangeCataract()
 void key_radio::doChangeContact()
 {
     emit changeContactSignal((QObject::sender()->objectName()=="Contact"));
+}
+
+void key_radio::doChangeRegim()
+{
+    if (QObject::sender()->objectName()=="AutoFreeze")
+        curentParam->workRegim =  curentParam->WorkRegim::regimAutoFreez;
+
+    if (QObject::sender()->objectName()=="Auto")
+        curentParam->workRegim =  curentParam->WorkRegim::regimAuto;
+
+    if (QObject::sender()->objectName()=="Manual")
+        curentParam->workRegim =  curentParam->WorkRegim::regimManual;
 }
 
 

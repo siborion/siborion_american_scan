@@ -4,6 +4,7 @@ mesurement::mesurement(QWidget *parent) :
     QWidget(parent)
 {
     pBase = scanbase::instanse();
+    curentParam = CurentParam::instanse();
 
     QList<int> columnPercent;
     QStringList lst;
@@ -177,36 +178,9 @@ void mesurement::changeRow(QList<quint16> extremum)
 
 void mesurement::refreshMainParam()
 {
-//    stMeasureParam measureParam;
-//    VALaxial->setText(QString("%1").arg(pSampleTable->resultParam.AL));
-//    VALacd->setText(QString("%1").arg(pSampleTable->resultParam.ACD));
-//    VALlt->setText(QString("%1").arg(pSampleTable->resultParam.LT));
-//    VALvit->setText(QString("%1").arg(pSampleTable->resultParam.Vit));
-//    pBigView->setDisplay(pSampleTable->resultParam.AvgAl, pSampleTable->resultParam.AvgAcd, pSampleTable->resultParam.AvgLt, pSampleTable->resultParam.AvgVit, pSampleTable->resultParam.devAl, pSampleTable->resultParam.devAcd, pSampleTable->resultParam.devLt, pSampleTable->resultParam.devVit);
     pBigView->setDisplay();
     pBigViewCur->setDisplay(pSampleTable->resultParam.AL, pSampleTable->resultParam.ACD, pSampleTable->resultParam.LT, pSampleTable->resultParam.Vit);
-//    emit refreshAl(pSampleTable->resultParam.AvgAl);
-//    emit refreshAcd(pSampleTable->resultParam.AvgAcd);
-//    measureParam.AL = pSampleTable->resultParam.AvgAl;
-//    measureParam.ACD = pSampleTable->resultParam.AvgAcd;
-//    emit refreshMeasure(measureParam);
-
-
-//    average->setText(QString("Average (count %1)").arg(pSampleTable->resultParam.countSample));
-//    VALaverage->setText(QString("%1").arg(pSampleTable->resultParam.AvgAl));
-//    VALsd->setText(QString("%1").arg(pSampleTable->resultParam.SD));
 }
-
-//void mesurement::changeRow(quint8 idType, quint16 idRow, QString Patient, QString Doctor)
-//{
-//            pBigViewCur->setPatient("Patient: "+Patient);
-//            pBigViewCur->setDoctor("Doctor: " +Doctor);
-//}
-
-//void mesurement::changeEye(quint8 val)
-//{
-//        pBigViewCur->changeEye(val);
-//}
 
 void mesurement::openPort()
 {
@@ -226,9 +200,7 @@ void mesurement::openPort()
     if(port->isOpen())
     {
         port->close();
-//        pbPort->setText("Подключить");
         timer->start(1000);
-
     }
     else
     {
@@ -237,16 +209,8 @@ void mesurement::openPort()
             QStandardItemModel *model;
             model = (QStandardItemModel*)pSampleTable->twMeas->model();
             model->setRowCount(0);
-
-//            double x[2024], y[2024];
-//            quint16 kolvo = 0;
-//            for(kolvo=0; kolvo<=1024; kolvo++)
-//            {
-//                x[kolvo] = kolvo;
-//                y[kolvo] = double((unsigned char)kolvo);
-//            }
-//            pPlot->drawSample(x, y, 1024);
-            timer->start(1000);
+            timer->start(100);
+            countMeasure=0;
         }
     }
 }
@@ -259,44 +223,11 @@ void mesurement::doTimer()
     double x[2024], y[2024];
     quint16 kolvo = 0;
 
-//    QString ttt;
-//    ttt.clear();
-//    baTmp.clear();
-
-//    for(int i=0; i<=1024;i++)
-//    {baTmp.append(254);}
-
     if(port->isOpen())
     {
         timer->start(62);
-        timer->start(100);
         baTmp = port->readAll();
-
-
-
-//        QMessageBox msgBox;
-//        msgBox.setText(QString("%1").arg(x[0]));
-//        msgBox.exec();
-
-
-//        quint8 Val;
-//        QFile file;
-//        bool bOk;
-//            baTmp.clear();
-//            file.setFileName("2.txt");
-//            if (!file.open(QIODevice::ReadOnly))
-//                return;
-//            file.read(144);
-//            while (!file.atEnd())
-//            {
-//                Val = (file.read(1).toHex().toUInt(&bOk, 16));
-//                file.read(1);
-//                baTmp.append(Val);
-//            }
-//            file.close();
-
         baTmp2.clear();
-
         foreach(quint8 val, baTmp)
         {
             val = (val*2);
@@ -307,14 +238,39 @@ void mesurement::doTimer()
             if(kolvo>=1024)
                 break;
         }
-
         if(kolvo>=1000)
         {
             pPlot->drawSample(x, y, kolvo);
             if(pSampleTable->findExtremum(&baTmp2, extremum, mainParam))
             {
-//                if (pSampleTable->findMainParam(&extremum, mainParam))
-                    pSampleTable->addSampleToTable(baTmp2, mainParam);
+                switch(curentParam->workRegim)
+                {
+                case curentParam->regimAuto:
+                    countMeasure++;
+                    pSampleTable->addSampleToTable(baTmp2, mainParam, true);
+                    if(countMeasure>=1)
+                    {
+                        port->close();
+                        timer->start(1000);
+                    }
+                    break;
+                case curentParam->regimAutoFreez:
+                    countMeasure++;
+                    pSampleTable->addSampleToTable(baTmp2, mainParam, true);
+                    if(countMeasure>=10)
+                    {
+                        port->close();
+                        timer->start(1000);
+                    }
+                    break;
+                case curentParam->regimManual:
+                    if(countMeasure==0)
+                        pSampleTable->addSampleToTable(baTmp2, mainParam, true);
+                    else
+                        pSampleTable->addSampleToTable(baTmp2, mainParam, false);
+                    countMeasure=1;
+                    break;
+                }
             }
         }
         port->write("A");
