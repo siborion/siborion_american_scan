@@ -66,6 +66,6 @@ void CheckBoxDelegate1::setModelData( QWidget *editor,QAbstractItemModel *model,
 
 void CheckBoxDelegate1::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-//    drawCheck(painter, option, option.rect, index.data().toBool() ? Qt::Checked : Qt::Unchecked);
+    drawCheck(painter, option, option.rect, index.data().toBool() ? Qt::Checked : Qt::Unchecked);
     drawFocus(painter, option, option.rect);
 }

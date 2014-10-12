@@ -58,7 +58,7 @@ dialog_doctor::dialog_doctor(quint32 id, QWidget *parent) :
     pCombo_Delegate->values().insert( 5, "HAIGIS" );
     ui->tableView->setItemDelegateForColumn(5, pCombo_Delegate);
 
-    CheckBoxDelegate1 * pCheck_Delegate = new CheckBoxDelegate1( ui->tableView );
+    CheckBoxDelegate * pCheck_Delegate = new CheckBoxDelegate( ui->tableView );
     ui->tableView->setItemDelegateForColumn(0, pCheck_Delegate);
 
     ui->tableView->setModel(model);
