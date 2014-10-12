@@ -53,7 +53,7 @@ public slots:
     void changeRow(QModelIndex curIndex);
     void delSample();
     void changeSide();
-
+    void clearModel();
 
 };
 

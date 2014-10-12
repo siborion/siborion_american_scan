@@ -64,6 +64,7 @@ private slots:
 
 Q_SIGNALS:
     void changeSideSignal();
+    void changePatientSignal();
 };
 
 #endif // CURENTPARAM_H

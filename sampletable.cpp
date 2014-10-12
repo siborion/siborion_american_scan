@@ -31,6 +31,7 @@ sampletable::sampletable(QWidget *parent) :
     connect(twMeas, SIGNAL(clicked(QModelIndex)),   SLOT(changeRow(QModelIndex)));
     connect(twMeas, SIGNAL(activated(QModelIndex)), SLOT(changeRow(QModelIndex)));
     connect(curentParam, SIGNAL(changeSideSignal()), SLOT(changeSide()));
+    connect(curentParam, SIGNAL(changePatientSignal()), SLOT(clearModel()));
 }
 
 void sampletable::getFileSample()
@@ -440,4 +441,10 @@ stPrintSample sampletable::printSample()
     tmp.mainParam3.Retina  = (twMeas->model()->data(curIndex, Qt::UserRole).toInt());
 
     return tmp;
+}
+
+void sampletable::clearModel()
+{
+    modelOD->setRowCount(0);
+    modelOS->setRowCount(0);
 }

@@ -26,6 +26,8 @@ void CurentParam::changePatient(quint16 id)
     QString str;
     patientId = id;
 
+    emit changePatientSignal();
+
 //    str = "SELECT patient.id,";
 //    str.append("patient.name||' '||patient.last as name,");
 //    str.append("doc.name,");
