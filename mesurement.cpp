@@ -197,6 +197,7 @@ void mesurement::openPort()
     port->setParity(QSerialPort::NoParity);
     port->setStopBits(QSerialPort::OneStop);
     port->setFlowControl(QSerialPort::NoFlowControl);
+    port->setReadBufferSize(0);
     if(port->isOpen())
     {
         port->close();
