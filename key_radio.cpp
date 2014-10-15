@@ -16,7 +16,9 @@ key_radio::key_radio(QWidget *parent) :
     rbAuto->setObjectName      ("Auto");
     rbManual->setObjectName    ("Manual");
 
-    rbManual->setChecked(true);
+    rbAutoFreeze->setChecked(true);
+    curentParam->workRegim =  curentParam->WorkRegim::regimAutoFreez;
+    emit changeCataractSignal(true);
     ltAuto->addWidget(rbAutoFreeze);
     ltAuto->addWidget(rbAuto);
     ltAuto->addWidget(rbManual);
@@ -115,6 +117,9 @@ void key_radio::doChangeRegim()
 
     if (QObject::sender()->objectName()=="Manual")
         curentParam->workRegim =  curentParam->WorkRegim::regimManual;
+
+    emit changeCataractSignal(!(QObject::sender()->objectName()=="Manual"));
+
 }
 
 

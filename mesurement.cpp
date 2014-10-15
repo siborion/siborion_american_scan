@@ -192,12 +192,12 @@ void mesurement::openPort()
     }
     str = "\\\\.\\" + cbPort->currentText();
     port->setPortName(str);
-    port->setBaudRate(QSerialPort::Baud19200);
+    port->setBaudRate(QSerialPort::Baud115200);
     port->setDataBits(QSerialPort::Data8);
     port->setParity(QSerialPort::NoParity);
     port->setStopBits(QSerialPort::OneStop);
     port->setFlowControl(QSerialPort::NoFlowControl);
-    port->setReadBufferSize(0);
+    port->setReadBufferSize(1024);
     if(port->isOpen())
     {
         port->close();
@@ -239,7 +239,7 @@ void mesurement::doTimer()
             if(kolvo>=1024)
                 break;
         }
-        if(kolvo>=1000)
+        if(kolvo>=1024)
         {
             pPlot->drawSample(x, y, kolvo);
             if(pSampleTable->findExtremum(&baTmp2, extremum, mainParam))
@@ -274,6 +274,7 @@ void mesurement::doTimer()
                 }
             }
         }
-        port->write("A");
+        port->readAll();
+        port->write("A", 1);
     }
 }
