@@ -6,6 +6,7 @@
 #include <QComboBox>
 #include <QSerialPort>
 #include <QSerialPortInfo>
+#include <QPushButton>
 #include "plot.h"
 
 namespace Ui {
@@ -24,6 +25,11 @@ private:
     Ui::MainWindow *ui;
     Plot *plot;
     QComboBox *cbPort;
+    QPushButton *pbPort;
+    double x[1024], y[1024];
+
+public slots:
+    void moveSample(quint16, quint8);
 
 };
 

@@ -186,7 +186,7 @@ void Plot::select( const QPoint &pos )
         if ( ( *it )->rtti() == QwtPlotItem::Rtti_PlotCurve)
         {
             QwtPlotCurve *c = static_cast<QwtPlotCurve *>( *it );
-            if((c->title().text()=="Start_Interval")||(c->title().text()=="Lens_Interval")||(c->title().text()=="Retina_Interval"))
+//            if((c->title().text()=="Start_Interval")||(c->title().text()=="Lens_Interval")||(c->title().text()=="Retina_Interval"))
             {
                 double d;
                 int idx = c->closestPoint( pos, &d );
@@ -253,8 +253,11 @@ void Plot::move( const QPoint &pos )
             const QPointF sample = d_selectedMarkCurve->sample( i );
             if ( i == d_selectedPoint )
             {
-                xData[i] = this->invTransform(d_selectedMarkCurve->xAxis(), pos.x());
-                yData[i] = sample.y();
+//                xData[i] = this->invTransform(d_selectedMarkCurve->xAxis(), pos.x());
+                xData[i] = sample.x();
+                yData[i] = this->invTransform(d_selectedMarkCurve->yAxis(), pos.y());
+                emit moveSample(xData[i], yData[i]);
+//                yData[i] = sample.y();
             }
             else
             {

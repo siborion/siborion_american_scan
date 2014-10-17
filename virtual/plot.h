@@ -69,7 +69,7 @@ private:
     int d_selectedPoint;
 
 Q_SIGNALS:
-
+    void moveSample(quint16 x, quint8 y);
 };
 
 #endif
