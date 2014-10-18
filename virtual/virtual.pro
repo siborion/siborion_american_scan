@@ -4,18 +4,23 @@
 #
 #-------------------------------------------------
 
-QT       += core gui serialport
+
+QT       += core gui 
+QT       += serialport
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 include(qwt.prf)
 
-CONFIG(debug, debug|release)
-{
+config -= debug
+config += debug_and_release
+CONFIG += build_all
+
+CONFIG(debug, debug|release) {
   LIBS += -lqwtd -LC:\Qt\Qwt-6.1.0\lib
+#  LIBS += -L"C:\Qt\Qwt-6.1.0\lib" -lqwt
 }
-CONFIG(release, debug|release)
-{
+CONFIG(release, debug|release) {
   LIBS +=  -lqwt -LC:\Qt\Qwt-6.1.0\lib
 }
 

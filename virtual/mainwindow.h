@@ -27,10 +27,12 @@ private:
     QComboBox *cbPort;
     QPushButton *pbPort;
     double x[1024], y[1024];
+    QSerialPort *port;
 
 public slots:
     void moveSample(quint16, quint8);
-
+    void openPort();
+    void readPort();
 };
 
 #endif // MAINWINDOW_H
