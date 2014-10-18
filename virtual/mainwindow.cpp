@@ -20,13 +20,13 @@ MainWindow::MainWindow(QWidget *parent) :
 
     for(int i=0; i<1024; i++)
         {x[i]=i;}
-    plot->drawSample(x, y, 1024);
+//    plot->drawSample(x, y, 1024);
 
-    ui->gridLayout->addWidget(plot,   0, 0, 1, 10);
+//    ui->gridLayout->addWidget(plot,   0, 0, 1, 10);
     ui->gridLayout->addWidget(cbPort, 1, 0);
     ui->gridLayout->addWidget(pbPort, 1, 1);
 
-    connect (plot, SIGNAL(moveSample(quint16,quint8)), SLOT(moveSample(quint16,quint8)));
+//    connect (plot, SIGNAL(moveSample(quint16,quint8)), SLOT(moveSample(quint16,quint8)));
 }
 
 
