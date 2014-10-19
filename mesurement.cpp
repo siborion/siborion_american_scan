@@ -32,13 +32,13 @@ mesurement::mesurement(QWidget *parent) :
     glPlot->addWidget(pPlot,1,0);
 //    glPlot->addWidget(lineSelect,2,2);
 
-    lst.clear();
-    columnPercent.clear();
-    columnPercent<<10      <<30            <<15      <<15       <<15      <<15;
-    lst          <<tr("No")<<tr("AveVelAl")<<tr("AL")<<tr("ACD")<<tr("LT")<<tr("VIT");
-    twMeas  = new adjview(10, lst, columnPercent);
-    twMeas->setSelectionBehavior(QAbstractItemView::SelectRows);
-    twMeas->setMinimumWidth(250);
+//    lst.clear();
+//    columnPercent.clear();
+//    columnPercent<<10      <<15            <<15      <<15       <<15      <<15;
+//    lst          <<tr("No")<<tr("AveVelAl")<<tr("AL")<<tr("ACD")<<tr("LT")<<tr("VIT");
+//    twMeas  = new adjview(10, lst, columnPercent);
+//    twMeas->setSelectionBehavior(QAbstractItemView::SelectRows);
+//    twMeas->setMinimumWidth(300);
 
     pSampleTable = new sampletable();
 
@@ -54,13 +54,13 @@ mesurement::mesurement(QWidget *parent) :
 
 
     QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
-    ScanButton *pbMeasure = new ScanButton();
+    pbMeasure = new ScanButton();
     pbMeasure->setSizePolicy(sizePolicy);
     QIcon icon;
     icon.addFile(QStringLiteral(":/test/scan"), QSize(), QIcon::Normal, QIcon::Off);
 //    pbMeasure->setIcon(icon);
 //    pbMeasure->setIconSize(QSize(50, 50));
-    pbMeasure->setCheckable(true);
+//    pbMeasure->setCheckable(true);
 
     layoutBot->addWidget(fmPlot, 0, 0, 4, 1);
     layoutBot->addWidget(pKey,5,0,1,1);
@@ -197,16 +197,15 @@ void mesurement::openPort()
     port->setParity(QSerialPort::NoParity);
     port->setStopBits(QSerialPort::OneStop);
     port->setFlowControl(QSerialPort::NoFlowControl);
-    port->setReadBufferSize(1024);
+//    port->setReadBufferSize(1024);
+    port->waitForBytesWritten(-1);
     if(port->isOpen())
-    {
-        port->close();
-        timer->start(1000);
-    }
+        stopMeasure();
     else
     {
         if(port->open(QIODevice::ReadWrite))
         {
+            pbMeasure->doMeasure = true;
             QStandardItemModel *model;
             model = (QStandardItemModel*)pSampleTable->twMeas->model();
             model->setRowCount(0);
@@ -229,6 +228,7 @@ void mesurement::doTimer()
         timer->start(100);
         baTmp = port->readAll();
         baTmp2.clear();
+//        qDebug()<<baTmp.length();
         foreach(quint8 val, baTmp)
         {
             val = (val*2);
@@ -250,19 +250,13 @@ void mesurement::doTimer()
                     countMeasure++;
                     pSampleTable->addSampleToTable(baTmp2, mainParam, true);
                     if(countMeasure>=1)
-                    {
-                        port->close();
-                        timer->start(1000);
-                    }
+                        stopMeasure();
                     break;
                 case curentParam->regimAutoFreez:
                     countMeasure++;
                     pSampleTable->addSampleToTable(baTmp2, mainParam, true);
-                    if(countMeasure>=10)
-                    {
-                        port->close();
-                        timer->start(1000);
-                    }
+                    if(countMeasure>=6)
+                        stopMeasure();
                     break;
                 case curentParam->regimManual:
                     if(countMeasure==0)
@@ -274,7 +268,14 @@ void mesurement::doTimer()
                 }
             }
         }
-        port->readAll();
+//        port->readAll();
         port->write("A", 1);
     }
+}
+
+void mesurement::stopMeasure()
+{
+    port->close();
+    timer->start(1000);
+    pbMeasure->doMeasure = false;
 }

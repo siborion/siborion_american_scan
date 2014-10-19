@@ -5,11 +5,13 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-
     ui->setupUi(this);
 
     plot = new Plot(this, false);
     port = new QSerialPort();
+
+//    timer = new QTimer();
+//    timer->start(1000);
 
     cbPort  = new QComboBox();
     cbPort->addItem("");
@@ -29,11 +31,13 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(plot, SIGNAL(moveSample(quint16,quint8)), SLOT(moveSample(quint16,quint8)));
     connect(pbPort, SIGNAL(clicked()), SLOT(openPort()));
-//    connect(port,)
+    connect(port, SIGNAL(readyRead()), SLOT(readPort()));
+//    connect(timer, SIGNAL(timeout()), SLOT(readPort()));
 }
 
 void MainWindow::moveSample(quint16 newX, quint8 newY)
 {
+    qDebug()<<newX<<" "<<newY;
     y[newX] = newY;
 }
 
@@ -58,6 +62,14 @@ void MainWindow::openPort()
 
 void MainWindow::readPort()
 {
+    QByteArray baTmp;
+    port->readAll();
+    for(quint16 i=0; i<1024; i++)
+    {
+        baTmp.append((char)(y[i]/2));
+    }
+//    qDebug()<<baTmp;
+    port->write(baTmp);
 }
 
 MainWindow::~MainWindow()

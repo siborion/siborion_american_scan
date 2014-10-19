@@ -9,6 +9,7 @@ class ScanButton : public QPushButton
 
 public:
     ScanButton();
+    bool doMeasure;
 
 private:
     QTimer *timer;

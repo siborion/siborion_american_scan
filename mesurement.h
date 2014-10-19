@@ -57,7 +57,7 @@ private:
     adjview *twPatient;
     adjview *twLens;
     adjview *twVelocity;
-    adjview *twMeas;
+//    adjview *twMeas;
     key_radio *pKey;
     Plot *pPlot;
     bigviewnum *pBigView;
@@ -70,6 +70,7 @@ private:
     double decRound(double Val, quint8 dec);
     QModelIndex tableIndex;
     void refreshTable(quint8 rowNom, stMainParam mainParam);
+    void stopMeasure();
 //    LineSelect *lineSelect;
 
 //    QComboBox *VALname;

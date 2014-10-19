@@ -31,10 +31,10 @@ Plot::Plot( QWidget *parent, bool print):
     // axes
     enableAxis( QwtPlot::xTop );
     double dMin, dMax;
-    dMin=(-20.0); dMax=(1024.0);
+    dMin=(0.0); dMax=(1023.0);
     setAxisScale(QwtPlot::xTop, dMin, dMax);
     setAxisScale(QwtPlot::xBottom, (dMin/27), (dMax/27));
-    setAxisScale(QwtPlot::yLeft, -4, 280.0);
+    setAxisScale(QwtPlot::yLeft, 0, 255);
 
     QPalette palette;
     palette.setColor(QPalette::WindowText, Qt::gray);
@@ -256,6 +256,8 @@ void Plot::move( const QPoint &pos )
 //                xData[i] = this->invTransform(d_selectedMarkCurve->xAxis(), pos.x());
                 xData[i] = sample.x();
                 yData[i] = this->invTransform(d_selectedMarkCurve->yAxis(), pos.y());
+                if(yData[i]>255)
+                    yData[i] = 255;
                 emit moveSample(xData[i], yData[i]);
 //                yData[i] = sample.y();
             }

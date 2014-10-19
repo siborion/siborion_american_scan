@@ -12,12 +12,13 @@ sampletable::sampletable(QWidget *parent) :
 
     lst.clear();
     columnPercent.clear();
-    columnPercent<<10      <<30            <<15      <<15       <<15      <<15;
+    columnPercent<<10      <<25            <<15      <<15       <<15      <<15;
     lst          <<tr("No")<<tr("AveVelAl")<<tr("AL")<<tr("ACD")<<tr("LT")<<tr("VIT");
     twMeas  = new adjview(10, lst, columnPercent);
     twMeas->setSelectionBehavior(QAbstractItemView::SelectRows);
     twMeas->setMaximumWidth(350);
     twMeas->setMinimumWidth(280);
+    twMeas->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     layout->addWidget(twMeas);
 
     modelOD = new QStandardItemModel();
