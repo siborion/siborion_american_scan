@@ -63,10 +63,21 @@ void MainWindow::openPort()
 void MainWindow::readPort()
 {
     QByteArray baTmp;
+    double dTmp;
+    unsigned char rnd;
     port->readAll();
     for(quint16 i=0; i<1024; i++)
     {
-        baTmp.append((char)(y[i]/2));
+        dTmp = (y[i]/2);
+        rnd = 0;
+        if(dTmp>80)
+        {
+            rnd = qrand();
+            rnd /= 10;
+        }
+
+
+        baTmp.append((char)(dTmp-rnd));
     }
 //    qDebug()<<baTmp;
     port->write(baTmp);

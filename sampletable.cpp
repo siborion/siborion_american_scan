@@ -18,6 +18,8 @@ sampletable::sampletable(QWidget *parent) :
     twMeas->setSelectionBehavior(QAbstractItemView::SelectRows);
     twMeas->setMaximumWidth(350);
     twMeas->setMinimumWidth(280);
+    twMeas->setMaximumHeight(16777215);
+    twMeas->setMinimumHeight(0);
     twMeas->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     layout->addWidget(twMeas);
 
@@ -448,4 +450,16 @@ void sampletable::clearModel()
 {
     modelOD->setRowCount(0);
     modelOS->setRowCount(0);
+}
+
+void sampletable::goToLastSample()
+{
+    quint8 rowCount;
+    rowCount = twMeas->model()->rowCount();
+    if(rowCount>0)
+    {
+        QModelIndex newIndex = twMeas->model()->index(rowCount-1, 0);
+        twMeas->setCurrentIndex(newIndex);
+        changeRow(newIndex);
+    }
 }

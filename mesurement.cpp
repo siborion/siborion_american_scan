@@ -206,9 +206,12 @@ void mesurement::openPort()
         if(port->open(QIODevice::ReadWrite))
         {
             pbMeasure->doMeasure = true;
-            QStandardItemModel *model;
-            model = (QStandardItemModel*)pSampleTable->twMeas->model();
-            model->setRowCount(0);
+            if(curentParam->workRegim == curentParam->regimAutoFreez)
+            {
+                QStandardItemModel *model;
+                model = (QStandardItemModel*)pSampleTable->twMeas->model();
+                model->setRowCount(0);
+            }
             timer->start(100);
             countMeasure=0;
         }
@@ -225,7 +228,7 @@ void mesurement::doTimer()
 
     if(port->isOpen())
     {
-        timer->start(100);
+        timer->start(62);
         baTmp = port->readAll();
         baTmp2.clear();
 //        qDebug()<<baTmp.length();
@@ -255,7 +258,7 @@ void mesurement::doTimer()
                 case curentParam->regimAutoFreez:
                     countMeasure++;
                     pSampleTable->addSampleToTable(baTmp2, mainParam, true);
-                    if(countMeasure>=6)
+                    if(countMeasure>=8)
                         stopMeasure();
                     break;
                 case curentParam->regimManual:
@@ -278,4 +281,5 @@ void mesurement::stopMeasure()
     port->close();
     timer->start(1000);
     pbMeasure->doMeasure = false;
+    pSampleTable->goToLastSample();
 }

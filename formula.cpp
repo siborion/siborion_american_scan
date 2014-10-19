@@ -48,7 +48,7 @@ formula::formula(QWidget *parent) :
 //    twCalculator = new adjview(10, lst, columnPercent);
     twCalculator = twFormula;
 //    twCalculator->setFrameStyle(0);
-    twCalculator->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+//    twCalculator->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     quint8 uiHeight;
     uiHeight = twCalculator->height()-2;
     twCalculator->setMinimumHeight(uiHeight);

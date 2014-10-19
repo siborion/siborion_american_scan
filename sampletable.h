@@ -26,6 +26,7 @@ public:
     stResultParam resultParam;
     adjview *twMeas;
     stPrintSample printSample();
+    void goToLastSample();
 
 private:
     double AL;
