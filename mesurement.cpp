@@ -6,8 +6,8 @@ mesurement::mesurement(QWidget *parent) :
     pBase = scanbase::instanse();
     curentParam = CurentParam::instanse();
 
-    QList<int> columnPercent;
-    QStringList lst;
+//    QList<int> columnPercent;
+//    QStringList lst;
 
     QGridLayout *layoutBot = new QGridLayout(this);
 
@@ -50,8 +50,6 @@ mesurement::mesurement(QWidget *parent) :
     iconDel.addFile(QStringLiteral(":/test/Del"), QSize(), QIcon::Normal, QIcon::Off);
     pbDel->setIcon(iconDel);
     pbDel->setIconSize(QSize(30, 30));
-
-
 
     QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
     pbMeasure = new ScanButton();
@@ -230,6 +228,7 @@ void mesurement::doTimer()
     {
         timer->start(62);
         baTmp = port->readAll();
+        port->write("A", 1);
         baTmp2.clear();
 //        qDebug()<<baTmp.length();
         foreach(quint8 val, baTmp)
@@ -272,7 +271,7 @@ void mesurement::doTimer()
             }
         }
 //        port->readAll();
-        port->write("A", 1);
+//        port->write("A", 1);
     }
 }
 
