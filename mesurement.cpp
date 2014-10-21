@@ -257,7 +257,7 @@ void mesurement::doTimer()
                 case curentParam->regimAutoFreez:
                     countMeasure++;
                     pSampleTable->addSampleToTable(baTmp2, mainParam, true);
-                    if(countMeasure>=8)
+                    if(countMeasure>=10)
                         stopMeasure();
                     break;
                 case curentParam->regimManual:

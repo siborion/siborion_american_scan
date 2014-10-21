@@ -12,7 +12,7 @@ sampletable::sampletable(QWidget *parent) :
 
     lst.clear();
     columnPercent.clear();
-    columnPercent<<10      <<25            <<15      <<15       <<15      <<15;
+    columnPercent<<10      <<23            <<15      <<15       <<15      <<15;
     lst          <<tr("No")<<tr("AveVelAl")<<tr("AL")<<tr("ACD")<<tr("LT")<<tr("VIT");
     twMeas  = new adjview(10, lst, columnPercent);
     twMeas->setSelectionBehavior(QAbstractItemView::SelectRows);
@@ -35,6 +35,7 @@ sampletable::sampletable(QWidget *parent) :
     connect(twMeas, SIGNAL(activated(QModelIndex)), SLOT(changeRow(QModelIndex)));
     connect(curentParam, SIGNAL(changeSideSignal()), SLOT(changeSide()));
     connect(curentParam, SIGNAL(changePatientSignal()), SLOT(clearModel()));
+    connect(twMeas->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), SLOT(changeRow(QModelIndex)));
 }
 
 void sampletable::getFileSample()
@@ -383,16 +384,15 @@ void sampletable::addSampleToTable(QByteArray Sample, stMainParam curMainParam, 
     QString fileName = "";
     QStandardItemModel *model;
     model = (QStandardItemModel*)twMeas->model();
-    kolVo = twMeas->model()->rowCount();
+    kolVo = twMeas->model()->rowCount()+1;
     QStandardItem *ttt = new QStandardItem();
-    if(newRecord||(kolVo==0))
+    if(newRecord||(kolVo==1))
         model->appendRow(ttt);
-    else
-        kolVo--;
-    twMeas->model()->setData(twMeas->model()->index(kolVo, 0), kolVo, Qt::DisplayRole);
-    twMeas->model()->setData(twMeas->model()->index(kolVo, 0), Sample, Qt::UserRole);
-    twMeas->model()->setData(twMeas->model()->index(kolVo, 1), fileName, Qt::DisplayRole);
-    refreshTable(kolVo, curMainParam);
+
+    twMeas->model()->setData(twMeas->model()->index(kolVo-1, 0), kolVo, Qt::DisplayRole);
+    twMeas->model()->setData(twMeas->model()->index(kolVo-1, 0), Sample, Qt::UserRole);
+    twMeas->model()->setData(twMeas->model()->index(kolVo-1, 1), fileName, Qt::DisplayRole);
+    refreshTable(kolVo-1, curMainParam);
 }
 
 stPrintSample sampletable::printSample()
@@ -461,5 +461,6 @@ void sampletable::goToLastSample()
         QModelIndex newIndex = twMeas->model()->index(rowCount-1, 0);
         twMeas->setCurrentIndex(newIndex);
         changeRow(newIndex);
+        twMeas->setFocus();
     }
 }
