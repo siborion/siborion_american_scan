@@ -140,27 +140,6 @@ bool sampletable::findExtremum(QByteArray *Sample, QList<quint16> &extremum, stM
         return (corneaEn && retinaEn);
 }
 
-/*
-bool sampletable::findMainParam(QList<quint16> *extremum, stMainParam &mainParam)
-{
-    quint16 Start, L1, L2, Retina, val;
-    Start=L1=L2=Retina=0;
-
-    mainParam.Start=Start;
-    mainParam.L1=L1;
-    mainParam.L2=L2;
-    mainParam.Retina=Retina;
-
-    qDebug()<<"Start"<<Start;
-    qDebug()<<"Retina"<<Retina;
-
-    if((Start>0)&&(Retina>0))
-        return true;
-    else
-        return false;
-}
-*/
-
 void sampletable::refreshTable(stMainParam mainParam)
 {
     refreshTable((quint8)tableIndex.row(), mainParam);
@@ -282,15 +261,6 @@ void sampletable::changeRow(QModelIndex curIndex)
     tableIndex = curIndex;
     curIndex = twMeas->model()->index(curIndex.row(), 0);
     baSample=(twMeas->model()->data(curIndex, Qt::UserRole).toByteArray());
-    //    curIndex = twMeas->model()->index(curIndex.row(), curIndex.column()+2);
-    //    mainParam.Start = (twMeas->model()->data(curIndex, Qt::UserRole).toInt());
-    //    curIndex = twMeas->model()->index(curIndex.row(), curIndex.column()+1);
-    //    mainParam.L1 = (twMeas->model()->data(curIndex, Qt::UserRole).toInt());
-    //    curIndex = twMeas->model()->index(curIndex.row(), curIndex.column()+1);
-    //    mainParam.L2 = (twMeas->model()->data(curIndex, Qt::UserRole).toInt());
-    //    curIndex = twMeas->model()->index(curIndex.row(), curIndex.column()+1);
-    //    mainParam.Retina = (twMeas->model()->data(curIndex, Qt::UserRole).toInt());
-    //    extremum.clear();
     findExtremum(&baSample, extremum, mainParam);
     emit(changeRow(extremum));
     refreshResult(twMeas->currentIndex().row());
