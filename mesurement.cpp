@@ -6,9 +6,6 @@ mesurement::mesurement(QWidget *parent) :
     pBase = scanbase::instanse();
     curentParam = CurentParam::instanse();
 
-//    QList<int> columnPercent;
-//    QStringList lst;
-
     QGridLayout *layoutBot = new QGridLayout(this);
 
     pBigView = new bigviewnum();
@@ -25,20 +22,8 @@ mesurement::mesurement(QWidget *parent) :
     fmPlot->setFrameShadow(QFrame::Plain);
     QGridLayout *glPlot  = new QGridLayout(fmPlot);
     pPlot = new Plot(this, false);
-//    lineSelect = new LineSelect(this);
-
     glPlot->addWidget(pBigViewCur);
-//    glPlot->addWidget(lineSelect);
     glPlot->addWidget(pPlot,1,0);
-//    glPlot->addWidget(lineSelect,2,2);
-
-//    lst.clear();
-//    columnPercent.clear();
-//    columnPercent<<10      <<15            <<15      <<15       <<15      <<15;
-//    lst          <<tr("No")<<tr("AveVelAl")<<tr("AL")<<tr("ACD")<<tr("LT")<<tr("VIT");
-//    twMeas  = new adjview(10, lst, columnPercent);
-//    twMeas->setSelectionBehavior(QAbstractItemView::SelectRows);
-//    twMeas->setMinimumWidth(300);
 
     pSampleTable = new sampletable();
 
@@ -56,16 +41,12 @@ mesurement::mesurement(QWidget *parent) :
     pbMeasure->setSizePolicy(sizePolicy);
     QIcon icon;
     icon.addFile(QStringLiteral(":/test/scan"), QSize(), QIcon::Normal, QIcon::Off);
-//    pbMeasure->setIcon(icon);
-//    pbMeasure->setIconSize(QSize(50, 50));
-//    pbMeasure->setCheckable(true);
 
     layoutBot->addWidget(fmPlot, 0, 0, 4, 1);
     layoutBot->addWidget(pKey,5,0,1,1);
 
     port = new QSerialPort(this);
     timer = new QTimer();
-//    timer->start(62);
     timer->start(1000);
 
     cbPort  = new QComboBox();
@@ -73,12 +54,10 @@ mesurement::mesurement(QWidget *parent) :
     foreach(const QSerialPortInfo &info, QSerialPortInfo::availablePorts())
     {
         cbPort->addItem(info.portName());
-//        cbPort->addItem(info.description());
     }
 
 
     QFrame *fmSample = new QFrame();
-//    fmSample->setStyleSheet(QStringLiteral("background-color: rgb(0, 0, 100);"));
     fmSample->setFrameShape(QFrame::WinPanel);
     fmSample->setFrameShadow(QFrame::Raised);
     QGridLayout *glSample  = new QGridLayout(fmSample);
@@ -103,46 +82,6 @@ mesurement::mesurement(QWidget *parent) :
     connect(timer, SIGNAL(timeout()), SLOT(doTimer()));
 }
 
-void mesurement::delSample()
-{
-//    double x[2024], y[2024];
-//    quint16 kolvo = 0;
-//    for(kolvo=0; kolvo<=1024; kolvo++)
-//    {
-//        x[kolvo] = kolvo;
-//        y[kolvo] = double(255);
-//    }
-//    pPlot->drawSample(x, y, 1024);
-
-//      QPrinter             printer( QPrinter::HighResolution );
-//      QPrintPreviewDialog  preview( &printer, this );
-//      connect( &preview, SIGNAL(paintRequested(QPrinter*)), SLOT(print(QPrinter*)) );
-//      preview.exec();
-}
-
-//void  mesurement::print( QPrinter* printer )
-//{
-//  // create painter for drawing print page
-//  QPainter painter( printer );
-//  int      w = printer->pageRect().width();
-//  int      h = printer->pageRect().height();
-//  QRect    page( 0, 0, w, h );
-
-//  // create a font appropriate to page size
-//  QFont    font = painter.font();
-//  font.setPixelSize( (w+h) / 100 );
-//  painter.setFont( font );
-
-//  // draw labels in corners of page
-//  painter.drawText( page, Qt::AlignTop    | Qt::AlignLeft, "QSimulate" );
-//  painter.drawText( page, Qt::AlignBottom | Qt::AlignLeft, QString(getenv("USER")) );
-//  painter.drawText( page, Qt::AlignBottom | Qt::AlignRight,
-//                    QDateTime::currentDateTime().toString( Qt::DefaultLocaleShortDate ) );
-
-//  // draw simulated landscape
-//  page.adjust( w/20, h/20, -w/20, -h/20 );
-////  m_scene->render( &painter, page );
-//}
 
 void mesurement::changeRow(QList<quint16> extremum)
 {
@@ -210,7 +149,7 @@ void mesurement::openPort()
                 model = (QStandardItemModel*)pSampleTable->twMeas->model();
                 model->setRowCount(0);
             }
-            timer->start(100);
+            timer->start(62);
             countMeasure=0;
         }
     }
@@ -226,7 +165,7 @@ void mesurement::doTimer()
 
     if(port->isOpen())
     {
-        timer->start(62);
+//        timer->start(62);
         baTmp = port->readAll();
         port->write("A", 1);
         baTmp2.clear();
@@ -270,8 +209,6 @@ void mesurement::doTimer()
                 }
             }
         }
-//        port->readAll();
-//        port->write("A", 1);
     }
 }
 

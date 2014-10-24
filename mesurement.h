@@ -130,12 +130,6 @@ private slots:
 //    void changeEye(quint8);
     void openPort();
     void doTimer();
-    void delSample();
-//    void print( QPrinter* printer );
-//    void getFileSample();
-//    void changeRow(QModelIndex curIndex);
-//    void refreshTable(stMainParam);
-//    void save();
 };
 
 #endif // MESUREMENT_H
