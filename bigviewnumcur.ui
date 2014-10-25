@@ -383,7 +383,7 @@
         <string notr="true">color: rgb(170, 170, 127);</string>
        </property>
        <property name="text">
-        <string>OS</string>
+        <string>OD</string>
        </property>
        <property name="frame">
         <bool>false</bool>

@@ -72,13 +72,16 @@ mesurement::mesurement(QWidget *parent) :
     layoutBot->addWidget(pbMeasure,2,1);
     layoutBot->addWidget(pBigView,3,1);
 
+    pPlot->changeKeySlot();
+
     connect(pbMeasure, SIGNAL(pressed()), SLOT(openPort()));
     connect(pPlot, SIGNAL(refreshTable(stMainParam)), pSampleTable, SLOT(refreshTable(stMainParam)));
     connect(pSampleTable, SIGNAL(changeRow(QList<quint16>)), SLOT(changeRow(QList<quint16> )));
     connect(pSampleTable, SIGNAL(refreshMainParam()), SLOT(refreshMainParam()));
     connect(pbDel, SIGNAL(clicked()), pSampleTable, SLOT(delSample()));
-    connect(pKey,  SIGNAL(changeCataractSignal(bool)), pPlot, SLOT(changeCataractSlot(bool)));
-    connect(pKey,  SIGNAL(changeContactSignal(bool)), pPlot, SLOT(changeContactSlot(bool)));
+//    connect(pKey,  SIGNAL(changeCataractSignal(bool)), pPlot, SLOT(changeCataractSlot(bool)));
+//    connect(pKey,  SIGNAL(changeContactSignal(bool)), pPlot, SLOT(changeContactSlot(bool)));
+    connect(pKey,  SIGNAL(change()), pPlot, SLOT(changeKeySlot()));
     connect(timer, SIGNAL(timeout()), SLOT(doTimer()));
 }
 
@@ -143,7 +146,7 @@ void mesurement::openPort()
         if(port->open(QIODevice::ReadWrite))
         {
             pbMeasure->doMeasure = true;
-            if(curentParam->workRegim == curentParam->regimAutoFreez)
+            if(curentParam->regimMeasure == RegimMeasure::AUTOFREEZ)
             {
                 QStandardItemModel *model;
                 model = (QStandardItemModel*)pSampleTable->twMeas->model();
@@ -191,21 +194,21 @@ void mesurement::doTimer()
             pPlot->drawSample(x, y, kolvo);
             if(pSampleTable->findExtremum(&baTmp2, extremum, mainParam))
             {
-                switch(curentParam->workRegim)
+                switch(curentParam->regimMeasure)
                 {
-                case curentParam->regimAuto:
+                case RegimMeasure::AUTO:
                     countMeasure++;
                     pSampleTable->addSampleToTable(baTmp2, mainParam, true);
                     if(countMeasure>=1)
                         stopMeasure();
                     break;
-                case curentParam->regimAutoFreez:
+                case RegimMeasure::AUTOFREEZ:
                     countMeasure++;
                     pSampleTable->addSampleToTable(baTmp2, mainParam, true);
                     if(countMeasure>=10)
                         stopMeasure();
                     break;
-                case curentParam->regimManual:
+                case RegimMeasure::MANUAL:
                     if(countMeasure==0)
                         pSampleTable->addSampleToTable(baTmp2, mainParam, true);
                     else

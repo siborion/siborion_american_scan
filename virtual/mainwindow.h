@@ -8,6 +8,7 @@
 #include <QSerialPortInfo>
 #include <QPushButton>
 #include <QTimer>
+#include <QLabel>
 #include "plot.h"
 
 namespace Ui {
@@ -30,6 +31,8 @@ private:
     double x[1024], y[1024];
     QSerialPort *port;
     QTimer *timer;
+    QLabel *leCount;
+    quint16 count;
 
 public slots:
     void moveSample(quint16, quint8);

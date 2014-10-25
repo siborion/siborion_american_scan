@@ -14,8 +14,8 @@ class key_radio : public QWidget
     Q_OBJECT
 
 Q_SIGNALS:
-    void changeCataractSignal(bool cataract);
-    void changeContactSignal (bool contact);
+//    void changeCataractSignal(bool cataract);
+    void change();
 
 private:
     void refresh();
@@ -32,18 +32,18 @@ private:
     QRadioButton *rbAphakic;
 
 public:
-    RegimMeasure  regimMeasure;
-    RegimContact  regimContact;
-    RegimCataract regimCataract;
-    RegimSide     regimSide;
+//    RegimMeasure  regimMeasure;
+//    RegimContact  regimContact;
+//    RegimCataract regimCataract;
+//    RegimSide     regimSide;
 
     explicit key_radio(QWidget *parent = 0);
     
 private slots:
     void changeSideSlot();
-    void doChangeSide();
-    void doChangeCataract();
-    void doChangeContact();
+//    void doChangeSide();
+//    void doChangeCataract();
+//    void doChangeContact();
     void doChangeRegim();
 
 };

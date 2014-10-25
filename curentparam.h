@@ -1,6 +1,7 @@
 #ifndef CURENTPARAM_H
 #define CURENTPARAM_H
 #include "scanbase.h"
+#include "typedef.h"
 #include <QObject>
 #include <QDataWidgetMapper>
 #include <QSqlQueryModel>
@@ -29,13 +30,16 @@ public:
     quint16 corneaX1, corneaX2;     //
     quint16 lensX1,   lensX2;       //intervals
     quint16 retinaX1, retinaX2;     //
-    bool cataract;                  //lens enabled
-    bool contact;
-    quint8 workRegim;
+
+    RegimMeasure  regimMeasure;
+    RegimContact  regimContact;                  //lens enabled
+    RegimCataract regimCataract;
+    RegimSide     regimSide;
 
     void refreshPatientModel();
     QSqlQueryModel *lensModel;
-    bool sideOD;
+
+
 
     CurentParam();
     static CurentParam *instanse()

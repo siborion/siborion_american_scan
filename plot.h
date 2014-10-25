@@ -52,8 +52,8 @@ public:
 //public Q_SLOTS:
 //    void setDamp( double damping );
 public slots:
-    void changeCataractSlot(bool);
-    void changeContactSlot(bool contact);
+//    void changeCataractSlot(bool);
+    void changeKeySlot();
 
 private:
 //    void showData( const double *frequency, const double *amplitude,

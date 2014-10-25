@@ -10,9 +10,9 @@ CurentParam::CurentParam()
     patientMaper.setModel(&patientModel);
     lensModel = new QSqlQueryModel();
     this->measureAveACD = this->measureAveAL = 0;
-    sideOD = false;
-    cataract = true;
-    contact = true;
+//    sideOD = false;
+//    cataract = true;
+//    contact = true;
 }
 
 void CurentParam::changeMaper(int num)
@@ -62,10 +62,10 @@ void CurentParam::changePatient(quint16 id)
 
 void CurentParam::changeSide()
 {
-    if(sideOD)
-        sideOD = false;
+    if(regimSide == RegimSide::OD)
+        regimSide = RegimSide::OS;
     else
-        sideOD = true;
+        regimSide = RegimSide::OD;
 
     refreshPatientModel();
 
@@ -90,7 +90,7 @@ void CurentParam::refreshPatientModel()
     str.append("patient.name||' '||patient.last as name,");
     str.append("doc.name,");
     str.append("patient.doctor as id_doctor,");
-    if(sideOD==true)
+    if(regimSide == RegimSide::OD)
         str.append("patient.k1left as k1,  patient.k2left as k2,  (patient.k1left+patient.k2left)/2 as k,   'OD' as side ");
     else
         str.append("patient.k1right as k1, patient.k2right as k2, (patient.k1right+patient.k2right)/2 as k, 'OS' as side ");

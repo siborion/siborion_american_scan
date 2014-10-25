@@ -21,6 +21,8 @@ MainWindow::MainWindow(QWidget *parent) :
     pbPort = new QPushButton();
     pbPort->setText("Open");
 
+    leCount = new QLabel("0");
+
     for(int i=0; i<1024; i++)
         {x[i]=i;y[i]=0;}
     plot->drawSample(x, y, 1024);
@@ -28,6 +30,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->gridLayout->addWidget(plot,   0, 0, 1, 10);
     ui->gridLayout->addWidget(cbPort, 1, 0);
     ui->gridLayout->addWidget(pbPort, 1, 1);
+    ui->gridLayout->addWidget(leCount,1, 2);
 
     connect(plot, SIGNAL(moveSample(quint16,quint8)), SLOT(moveSample(quint16,quint8)));
     connect(pbPort, SIGNAL(clicked()), SLOT(openPort()));
@@ -62,12 +65,29 @@ void MainWindow::openPort()
 
 void MainWindow::readPort()
 {
+
     QByteArray baTmp;
     double dTmp;
     unsigned char rnd;
     port->readAll();
+
+
     for(quint16 i=0; i<1024; i++)
     {
+        if(i==500)
+        {
+            rnd = qrand();
+            rnd /= 10;
+            qDebug()<<rnd;
+            for(quint16 j=0; j<rnd; j++)
+            {
+//                i++;
+                qDebug()<<"------------------------";
+                baTmp.append((char)0);
+            }
+        }
+
+
         dTmp = (y[i]/2);
         rnd = 0;
         if(dTmp>80)
@@ -75,12 +95,11 @@ void MainWindow::readPort()
             rnd = qrand();
             rnd /= 10;
         }
-
-
         baTmp.append((char)(dTmp-rnd));
     }
-//    qDebug()<<baTmp;
     port->write(baTmp);
+    count++;
+    leCount->setText(QString("%1").arg(count));
 }
 
 MainWindow::~MainWindow()

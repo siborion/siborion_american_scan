@@ -98,7 +98,6 @@ bool sampletable::findExtremum(QByteArray *Sample, QList<quint16> &extremum, stM
                 mainParam.Start = tmp;
             corneaEn = true;
             extremum.append(tmp);
-            qDebug()<<"Cornea"<<tmp;
         }
 
         tmp=parseLens->parser(i,Sample->at(i));
@@ -118,7 +117,6 @@ bool sampletable::findExtremum(QByteArray *Sample, QList<quint16> &extremum, stM
                 }
             }
             extremum.append(tmp);
-            qDebug()<<"Lens"<<tmp;
         }
 
         tmp=parseRetina->parser(i,Sample->at(i));
@@ -128,16 +126,15 @@ bool sampletable::findExtremum(QByteArray *Sample, QList<quint16> &extremum, stM
                 mainParam.Retina = tmp;
             retinaEn = true;
             extremum.append(tmp);
-            qDebug()<<"Retina"<<tmp;
         }
     }
 
     allExtremum = extremum;
 
-    if(curentParam->cataract)
-        return (corneaEn && lens1En && lens2En && retinaEn);
-    else
+    if((curentParam->regimCataract == RegimCataract::APHAKIC)||(curentParam->regimMeasure == RegimMeasure::MANUAL))
         return (corneaEn && retinaEn);
+    else
+        return (corneaEn && lens1En && lens2En && retinaEn);
 }
 
 void sampletable::refreshTable(stMainParam mainParam)
@@ -238,12 +235,12 @@ void sampletable::refreshTable(quint8 rowNom, stMainParam mainParam)
 
 void sampletable::changeSide()
 {
-    if(curentParam->sideOD)
+    if(curentParam->regimSide == RegimSide::OD)
         twMeas->setModel(modelOD);
     else
         twMeas->setModel(modelOS);
 
-    qDebug()<<"twMeas->setModel(modelOS);";
+//    qDebug()<<"twMeas->setModel(modelOS);";
 }
 
 double sampletable::decRound(double Val, quint8 dec)
@@ -259,11 +256,15 @@ void sampletable::changeRow(QModelIndex curIndex)
 {
     QList<quint16> extremum;
     tableIndex = curIndex;
-    curIndex = twMeas->model()->index(curIndex.row(), 0);
-    baSample=(twMeas->model()->data(curIndex, Qt::UserRole).toByteArray());
-    findExtremum(&baSample, extremum, mainParam);
-    emit(changeRow(extremum));
-    refreshResult(twMeas->currentIndex().row());
+    if(curIndex.row()>0)
+    {
+        curIndex = twMeas->model()->index(curIndex.row(), 0);
+        baSample=(twMeas->model()->data(curIndex, Qt::UserRole).toByteArray());
+        findExtremum(&baSample, extremum, mainParam);
+        emit(changeRow(extremum));
+        refreshResult(twMeas->currentIndex().row());
+        emit refreshMainParam();
+    }
 }
 
 void sampletable::refreshResult(quint8 rowNom)
@@ -336,7 +337,6 @@ void sampletable::refreshResult(quint8 rowNom)
     resultParam.AvgAl = sumAl;
     resultParam.devAl = devAl;
     resultParam.countSample = modelCount;
-//    emit (refreshMainParam());
 }
 
 void sampletable::delSample()

@@ -68,7 +68,7 @@ Plot::Plot( QWidget *parent, bool print):
     lensInterval->attach( this );
     retinaInterval->attach( this );
 
-    changeContactSlot(true);
+//    changeContactSlot(true);
 
     setAutoReplot( true );
 }
@@ -370,41 +370,56 @@ QList <double> Plot::intToMM(QList<quint16> *mainParam)
     return ret;
 }
 
-void Plot::changeCataractSlot(bool visible)
+void Plot::changeKeySlot()
 {
     double offSet;
-    offSet=(curentParam->contact?0:3.5*27);
-    curentParam->lensX1 = 54+offSet;    curentParam->lensX2 = 351+offSet;
-    curentParam->cataract = visible;
-    if(!curentParam->cataract)
-    {
-        curentParam->lensX1 = 0;    curentParam->lensX2 = 0;
-    }
-    lensInterval->setVisible(visible);
-    qDebug()<<"0000"<<curentParam->cataract;
-}
-
-void Plot::changeContactSlot(bool contact)
-{
-    double offSet;
-    curentParam->contact = contact;
-
-    offSet=(curentParam->contact?0:3.5*27);
-
+    offSet=((curentParam->regimContact==RegimContact::CONTACT)?0:3.5*27);
     curentParam->corneaX1 = 0+offSet;   curentParam->corneaX2 = 22+offSet;
     curentParam->lensX1 = 54+offSet;    curentParam->lensX2 = 351+offSet;
     curentParam->retinaX1 = 459+offSet; curentParam->retinaX2 = 864+offSet;
-
-    if(!(curentParam->cataract))
-    {
-        curentParam->lensX1 = 0;    curentParam->lensX2 = 0;
-        lensInterval->setVisible(false);
-    }
-    else
-        lensInterval->setVisible(true);
-
+    if((curentParam->regimMeasure == RegimMeasure::MANUAL)||(curentParam->regimCataract == RegimCataract::APHAKIC))
+    {curentParam->lensX1 = 0;    curentParam->lensX2 = 0;}
     startInterval->setSample (curentParam->corneaX1, curentParam->corneaX2);
     lensInterval->setSample  (curentParam->lensX1,   curentParam->lensX2);
     retinaInterval->setSample(curentParam->retinaX1, curentParam->retinaX2);
-    qDebug()<<"11111"<<curentParam->cataract;
 }
+
+//void Plot::changeCataractSlot(bool visible)
+//{
+//    double offSet;
+//    offSet=(curentParam->contact?0:3.5*27);
+//    curentParam->lensX1 = 54+offSet;    curentParam->lensX2 = 351+offSet;
+//    curentParam->cataract = visible;
+//    if(!curentParam->cataract)
+//    {
+//        curentParam->lensX1 = 0;    curentParam->lensX2 = 0;
+//    }
+//    lensInterval->setVisible(visible);
+//    qDebug()<<"0000"<<curentParam->cataract;
+//}
+
+//void Plot::changeContactSlot(bool contact)
+//{
+//    double offSet;
+//    curentParam->contact = contact;
+
+//    offSet=(curentParam->contact?0:3.5*27);
+
+//    curentParam->corneaX1 = 0+offSet;   curentParam->corneaX2 = 22+offSet;
+//    curentParam->lensX1 = 54+offSet;    curentParam->lensX2 = 351+offSet;
+//    curentParam->retinaX1 = 459+offSet; curentParam->retinaX2 = 864+offSet;
+
+//    if(!(curentParam->cataract))
+//    {
+//        curentParam->lensX1 = 0;    curentParam->lensX2 = 0;
+//        lensInterval->setVisible(false);
+//    }
+//    else
+//        lensInterval->setVisible(true);
+
+//    startInterval->setSample (curentParam->corneaX1, curentParam->corneaX2);
+//    lensInterval->setSample  (curentParam->lensX1,   curentParam->lensX2);
+//    retinaInterval->setSample(curentParam->retinaX1, curentParam->retinaX2);
+//    qDebug()<<"11111"<<curentParam->cataract;
+//}
+
