@@ -7,6 +7,7 @@
 #include <QGroupBox>
 #include <QRadioButton>
 #include "curentparam.h"
+#include "typedef.h"
 
 class key_radio : public QWidget
 {
@@ -17,14 +18,25 @@ Q_SIGNALS:
     void changeContactSignal (bool contact);
 
 private:
+    void refresh();
     CurentParam *curentParam;
     QRadioButton *rbOd;
     QRadioButton *rbOs;
     QGroupBox    *gbEye;
     QRadioButton *rbContact;
     QRadioButton *rbImmersion;
+    QRadioButton *rbAutoFreeze;
+    QRadioButton *rbAuto;
+    QRadioButton *rbManual;
+    QRadioButton *rbCataract;
+    QRadioButton *rbAphakic;
 
 public:
+    RegimMeasure  regimMeasure;
+    RegimContact  regimContact;
+    RegimCataract regimCataract;
+    RegimSide     regimSide;
+
     explicit key_radio(QWidget *parent = 0);
     
 private slots:

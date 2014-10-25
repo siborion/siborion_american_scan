@@ -32,6 +32,5 @@ void bigviewnum::setDisplay()
     ui->lDevAcd_2->setText(QString("%1").arg(curentParam->measureDevACD,4,'f',2));
     ui->lDevLt_2 ->setText(QString("%1").arg(curentParam->measureDevLT, 4,'f',2));
     ui->lDevVit_2->setText(QString("%1").arg(curentParam->measureDevVIT,4,'f',2));
-
 }
 

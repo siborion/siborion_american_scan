@@ -336,7 +336,7 @@ void sampletable::refreshResult(quint8 rowNom)
     resultParam.AvgAl = sumAl;
     resultParam.devAl = devAl;
     resultParam.countSample = modelCount;
-    emit (refreshMainParam());
+//    emit (refreshMainParam());
 }
 
 void sampletable::delSample()

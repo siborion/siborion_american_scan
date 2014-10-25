@@ -148,9 +148,15 @@ void mesurement::openPort()
                 QStandardItemModel *model;
                 model = (QStandardItemModel*)pSampleTable->twMeas->model();
                 model->setRowCount(0);
+
+                curentParam->measureAveAL=curentParam->measureDevAL=curentParam->measureAveACD=0;
+                curentParam->measureAveLT=curentParam->measureAveVIT=curentParam->measureDevACD=0;
+                curentParam->measureDevLT=curentParam->measureDevVIT=0;
             }
             timer->start(62);
             countMeasure=0;
+            pSampleTable->resultParam.AL = pSampleTable->resultParam.ACD = pSampleTable->resultParam.LT = pSampleTable->resultParam.Vit = 0;
+            refreshMainParam();
         }
     }
 }
@@ -218,4 +224,5 @@ void mesurement::stopMeasure()
     timer->start(1000);
     pbMeasure->doMeasure = false;
     pSampleTable->goToLastSample();
+    refreshMainParam();
 }

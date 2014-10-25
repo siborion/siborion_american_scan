@@ -55,5 +55,10 @@ struct stFormulaInfo
     QString IOL;
 };
 
+enum RegimMeasure  {AUTOFREEZ, AUTO, MANUAL};
+enum RegimContact  {CONTACT,   IMMERSION};
+enum RegimCataract {CATARACT,  APHAKIC};
+enum RegimSide     {OD, OS};
+
 #endif // TYPEDEF_H
 

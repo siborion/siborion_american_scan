@@ -46,7 +46,7 @@ private:
 
 signals:
     void changeRow(QList<quint16> extremum);
-    void refreshMainParam();
+//    void refreshMainParam();
 
 public slots:
     void getFileSample();

@@ -9,16 +9,16 @@ key_radio::key_radio(QWidget *parent) :
 
     QGroupBox    *gbAuto = new QGroupBox();
     QHBoxLayout  *ltAuto = new QHBoxLayout(gbAuto);
-    QRadioButton *rbAutoFreeze = new QRadioButton(tr("Auto Freeze"));
-    QRadioButton *rbAuto       = new QRadioButton(tr("Auto"));
-    QRadioButton *rbManual     = new QRadioButton(tr("Manual"));
+    rbAutoFreeze = new QRadioButton(tr("Auto Freeze"));
+    rbAuto       = new QRadioButton(tr("Auto"));
+    rbManual     = new QRadioButton(tr("Manual"));
     rbAutoFreeze->setObjectName("AutoFreeze");
     rbAuto->setObjectName      ("Auto");
     rbManual->setObjectName    ("Manual");
 
     rbAutoFreeze->setChecked(true);
     curentParam->workRegim =  curentParam->WorkRegim::regimAutoFreez;
-    emit changeCataractSignal(true);
+//    emit changeCataractSignal(true);
     ltAuto->addWidget(rbAutoFreeze);
     ltAuto->addWidget(rbAuto);
     ltAuto->addWidget(rbManual);
@@ -38,8 +38,8 @@ key_radio::key_radio(QWidget *parent) :
     QSpacerItem  *hs3 = new QSpacerItem(50, 5, QSizePolicy::Expanding, QSizePolicy::Minimum);
     QGroupBox    *gbCataract = new QGroupBox();
     QHBoxLayout  *ltCataract = new QHBoxLayout(gbCataract);
-    QRadioButton *rbCataract = new QRadioButton(tr("Cataract"));
-    QRadioButton *rbAphakic = new QRadioButton(tr("Aphakic"));
+    rbCataract = new QRadioButton(tr("Cataract"));
+    rbAphakic = new QRadioButton(tr("Aphakic"));
     rbCataract->setObjectName("Cataract");
     rbAphakic->setObjectName("Aphakic");
     rbCataract->setChecked(true);
@@ -67,19 +67,27 @@ key_radio::key_radio(QWidget *parent) :
     layoutkey_radio->addItem(hs4);
     layoutkey_radio->addWidget(gbEye);
 
+    regimMeasure  = RegimMeasure::AUTOFREEZ;
+    regimContact  = RegimContact::CONTACT;
+    regimCataract = RegimCataract::CATARACT;
+    regimSide     = RegimSide::OD;
+    refresh();
 
-    connect(rbAutoFreeze,  SIGNAL(clicked(bool)), SLOT(doChangeRegim()));
-    connect(rbAuto,        SIGNAL(clicked(bool)), SLOT(doChangeRegim()));
-    connect(rbManual,      SIGNAL(clicked(bool)), SLOT(doChangeRegim()));
 
-    connect(rbAphakic,  SIGNAL(clicked(bool)), SLOT(doChangeCataract()));
-    connect(rbCataract, SIGNAL(clicked(bool)), SLOT(doChangeCataract()));
+    connect(gbAuto, SIGNAL(toggled(bool))   , SLOT(doChangeRegim()));
 
-    connect(rbImmersion, SIGNAL(clicked(bool)), SLOT(doChangeContact()));
-    connect(rbContact,   SIGNAL(clicked(bool)), SLOT(doChangeContact()));
+//    connect(rbAutoFreeze,  SIGNAL(clicked(bool)), SLOT(doChangeRegim()));
+//    connect(rbAuto,        SIGNAL(clicked(bool)), SLOT(doChangeRegim()));
+//    connect(rbManual,      SIGNAL(clicked(bool)), SLOT(doChangeRegim()));
 
-    connect(rbOd, SIGNAL(clicked(bool)), SLOT(doChangeSide()));
-    connect(rbOs, SIGNAL(clicked(bool)), SLOT(doChangeSide()));
+//    connect(rbAphakic,  SIGNAL(clicked(bool)), SLOT(doChangeCataract()));
+//    connect(rbCataract, SIGNAL(clicked(bool)), SLOT(doChangeCataract()));
+
+//    connect(rbImmersion, SIGNAL(clicked(bool)), SLOT(doChangeContact()));
+//    connect(rbContact,   SIGNAL(clicked(bool)), SLOT(doChangeContact()));
+
+//    connect(rbOd, SIGNAL(clicked(bool)), SLOT(doChangeSide()));
+//    connect(rbOs, SIGNAL(clicked(bool)), SLOT(doChangeSide()));
     connect(curentParam, SIGNAL(changeSideSignal()), SLOT(changeSideSlot()));
 }
 
@@ -107,18 +115,72 @@ void key_radio::doChangeContact()
     emit changeContactSignal((QObject::sender()->objectName()=="Contact"));
 }
 
+void key_radio::refresh()
+{
+    if(regimMeasure  == RegimMeasure::AUTOFREEZ)
+        rbAutoFreeze->setChecked(true);
+
+    if(regimMeasure  == RegimMeasure::AUTO)
+        rbAuto->setChecked(true);
+
+    if(regimMeasure == RegimMeasure::MANUAL)
+        rbManual->setChecked(true);
+
+    if(regimContact  == RegimContact::CONTACT)
+        rbContact->setChecked(true);
+
+    if(regimContact  == RegimContact::IMMERSION)
+        rbImmersion->setChecked(true);
+
+    if(regimCataract == RegimCataract::CATARACT)
+        rbCataract->setChecked(true);
+
+    if(regimCataract == RegimCataract::APHAKIC)
+        rbAphakic->setChecked(true);
+
+    if(regimSide     == RegimSide::OD)
+        rbOd->setChecked(true);
+
+    if(regimSide     == RegimSide::OS)
+        rbOs->setChecked(true);
+}
+
 void key_radio::doChangeRegim()
 {
-    if (QObject::sender()->objectName()=="AutoFreeze")
-        curentParam->workRegim =  curentParam->WorkRegim::regimAutoFreez;
+    if(rbAutoFreeze->isChecked())
+        regimMeasure  = RegimMeasure::AUTOFREEZ;
+    if(rbAuto->isChecked())
+        regimMeasure  = RegimMeasure::AUTO;
+    if(rbManual->isChecked())
+        regimMeasure  = RegimMeasure::MANUAL;
 
-    if (QObject::sender()->objectName()=="Auto")
-        curentParam->workRegim =  curentParam->WorkRegim::regimAuto;
+    if(rbContact->isChecked())
+        regimContact  = RegimContact::CONTACT;
+    if(rbImmersion->isChecked())
+        regimContact  = RegimContact::IMMERSION;
 
-    if (QObject::sender()->objectName()=="Manual")
-        curentParam->workRegim =  curentParam->WorkRegim::regimManual;
+    if(rbCataract->isChecked())
+        regimCataract = RegimCataract::CATARACT;
+    if(rbAphakic->isChecked())
+        regimCataract = RegimCataract::APHAKIC;
 
-    emit changeCataractSignal(!(QObject::sender()->objectName()=="Manual"));
+    if(rbOd->isChecked())
+        regimSide     = RegimSide::OD;
+    if(rbOs->isChecked())
+        regimSide     = RegimSide::OS;
+
+    qDebug()<<regimMeasure;
+
+//    if (QObject::sender()->objectName()=="AutoFreeze")
+//        curentParam->workRegim =  curentParam->WorkRegim::regimAutoFreez;
+
+//    if (QObject::sender()->objectName()=="Auto")
+//        curentParam->workRegim =  curentParam->WorkRegim::regimAuto;
+
+//    if (QObject::sender()->objectName()=="Manual")
+//        curentParam->workRegim =  curentParam->WorkRegim::regimManual;
+
+//    emit changeCataractSignal(!(QObject::sender()->objectName()=="Manual"));
 
 }
 
