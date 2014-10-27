@@ -55,6 +55,8 @@ public slots:
     void delSample();
     void changeSide();
     void clearModel();
+    void changeKeySlot();
+
 
 };
 

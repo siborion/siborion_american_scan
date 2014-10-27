@@ -434,3 +434,10 @@ void sampletable::goToLastSample()
         twMeas->setFocus();
     }
 }
+
+
+void sampletable::changeKeySlot()
+{
+}
+
+

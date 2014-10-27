@@ -82,6 +82,7 @@ mesurement::mesurement(QWidget *parent) :
 //    connect(pKey,  SIGNAL(changeCataractSignal(bool)), pPlot, SLOT(changeCataractSlot(bool)));
 //    connect(pKey,  SIGNAL(changeContactSignal(bool)), pPlot, SLOT(changeContactSlot(bool)));
     connect(pKey,  SIGNAL(change()), pPlot, SLOT(changeKeySlot()));
+    connect(pKey,  SIGNAL(change()), pSampleTable, SLOT(changeKeySlot()));
     connect(timer, SIGNAL(timeout()), SLOT(doTimer()));
 }
 
@@ -156,7 +157,8 @@ void mesurement::openPort()
                 curentParam->measureAveLT=curentParam->measureAveVIT=curentParam->measureDevACD=0;
                 curentParam->measureDevLT=curentParam->measureDevVIT=0;
             }
-            timer->start(62);
+//            timer->start(62);
+            timer->start(55);
             countMeasure=0;
             pSampleTable->resultParam.AL = pSampleTable->resultParam.ACD = pSampleTable->resultParam.LT = pSampleTable->resultParam.Vit = 0;
             refreshMainParam();
