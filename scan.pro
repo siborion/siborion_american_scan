@@ -28,6 +28,8 @@ CONFIG(debug, debug|release) {
 }
 CONFIG(release, debug|release) {
   LIBS +=  -lqwt -LC:\Qt\Qwt-6.1.0\lib
+  LIBS += ftd2xx.lib
+#  LIBS += -lftd2xx
 }
 
 #LIBS      += -L"C:\Qt\Qwt-6.1.0\lib" -lqwt
@@ -107,7 +109,8 @@ HEADERS  += mainwindow.h\
     buttonscan.h \
     scanbutton.h \
     parserfront.h \
-    checkboxdelegate1.h
+    checkboxdelegate1.h \
+    ftd2xx.h
 
 #FORMS    += mainwindow.ui
 
@@ -124,3 +127,4 @@ FORMS += \
     buttonscan.ui
 
 OTHER_FILES += plugins/sqldrivers/qsqlite.dll
+#OTHER_FILES += c:/ftdi/ftd2xx.dll
