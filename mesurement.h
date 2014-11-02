@@ -50,7 +50,8 @@ public:
     sampletable *pSampleTable;
 
 private:
-#ifdef FT_DLL
+
+
     FT_STATUS ftStatus;
     DWORD ftNumDevice;
     FT_DEVICE_LIST_INFO_NODE *devInfo;
@@ -59,8 +60,10 @@ private:
     DWORD BytesWritten;
     DWORD BytesReceived;
     DWORD BytesReceivedCount;
-    char RxBuffer[256];
-#endif
+    char RxBuffer[2048];
+    bool doDll;
+
+
     Thread *thread;
     CurentParam *curentParam;
     quint8 countMeasure;

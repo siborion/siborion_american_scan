@@ -55,7 +55,7 @@ mesurement::mesurement(QWidget *parent) :
     {
         cbPort->addItem(info.portName());
     }
-
+    cbPort->addItem("dll");
 
     QFrame *fmSample = new QFrame();
     fmSample->setFrameShape(QFrame::WinPanel);
@@ -141,54 +141,58 @@ void mesurement::openPort()
     port->setStopBits(QSerialPort::OneStop);
     port->setFlowControl(QSerialPort::NoFlowControl);
     port->waitForBytesWritten(-1);
-//    if(port->isOpen())
+    doDll = ((cbPort->currentIndex()+1)==cbPort->count());
+    qDebug()<<"cbPort->currentIndex()"<<cbPort->currentIndex();
+    qDebug()<<"cbPort->count()"<<cbPort->count();
+
     if(pbMeasure->doMeasure)
         stopMeasure();
     else
     {
-#ifdef FT_DLL
-        ftStatus = FT_CreateDeviceInfoList (&ftNumDevice);
-        if((ftStatus != FT_OK)||(ftNumDevice==0))
-            return;
-        FT_Out_Buffer[0] = 'A';
-        FT_Out_Buffer[1] = 'T';
-        FT_Out_Buffer[2] = 0x0d;
-        FT_Out_Buffer[3] = 0x0a;
-        ftStatus = FT_Open(0, &ftHandle);
-
-        if(ftStatus)
+        if(doDll)
         {
+            ftStatus = FT_CreateDeviceInfoList (&ftNumDevice);
+            if((ftStatus != FT_OK)||(ftNumDevice==0))
+                return;
+            FT_Out_Buffer[0] = 'A';
+            FT_Out_Buffer[1] = 'T';
+            FT_Out_Buffer[2] = 0x0d;
+            FT_Out_Buffer[3] = 0x0a;
+            ftStatus = FT_Open(0, &ftHandle);
+            if(ftStatus!=FT_OK)
+                return;
             FT_SetBaudRate(ftHandle,9600);
             FT_SetFlowControl(ftHandle, FT_FLOW_NONE, 0x00, 0x00);
             FT_SetDtr(ftHandle);
             FT_SetRts(ftHandle);
-#else
-        if(port->open(QIODevice::ReadWrite))
-            {
-#endif
-            pbMeasure->doMeasure = true;
-
-            qDebug()<<"GOOOOO";
-            if(curentParam->regimMeasure == RegimMeasure::AUTOFREEZ)
-            {
-                QStandardItemModel *model;
-                model = (QStandardItemModel*)pSampleTable->twMeas->model();
-                model->setRowCount(0);
-                curentParam->measureAveAL=curentParam->measureDevAL=curentParam->measureAveACD=0;
-                curentParam->measureAveLT=curentParam->measureAveVIT=curentParam->measureDevACD=0;
-                curentParam->measureDevLT=curentParam->measureDevVIT=0;
-            }
-            timer->start(55);
-            countMeasure=0;
-            pSampleTable->resultParam.AL = pSampleTable->resultParam.ACD = pSampleTable->resultParam.LT = pSampleTable->resultParam.Vit = 0;
-            refreshMainParam();
+//            FT_ClrDtr(ftHandle);
+//            FT_ClrRts(ftHandle);
         }
+        else
+        {
+            if(!port->open(QIODevice::ReadWrite))
+                return;
+        }
+        pbMeasure->doMeasure = true;
+        qDebug()<<"GOOOOO";
+        if(curentParam->regimMeasure == RegimMeasure::AUTOFREEZ)
+        {
+            QStandardItemModel *model;
+            model = (QStandardItemModel*)pSampleTable->twMeas->model();
+            model->setRowCount(0);
+            curentParam->measureAveAL=curentParam->measureDevAL=curentParam->measureAveACD=0;
+            curentParam->measureAveLT=curentParam->measureAveVIT=curentParam->measureDevACD=0;
+            curentParam->measureDevLT=curentParam->measureDevVIT=0;
+        }
+        timer->start(50);
+        countMeasure=0;
+        pSampleTable->resultParam.AL = pSampleTable->resultParam.ACD = pSampleTable->resultParam.LT = pSampleTable->resultParam.Vit = 0;
+        refreshMainParam();
     }
 }
 
 void mesurement::doTimer()
 {
-    QByteArray ttt;
     QList <quint16> extremum;
     stMainParam mainParam;
     QByteArray baTmp, baTmp2;
@@ -196,16 +200,20 @@ void mesurement::doTimer()
     quint16 kolvo = 0;
     if(pbMeasure->doMeasure)
     {
-#ifdef FT_DLL
-        FT_GetQueueStatus(ftHandle, &BytesReceivedCount);
-        qDebug()<<BytesReceivedCount;
-        FT_Read(ftHandle,RxBuffer,BytesReceivedCount,&BytesReceived);
-        ftStatus = FT_Write(ftHandle, FT_Out_Buffer, 4,  &BytesWritten);
-        ttt.append(RxBuffer,BytesReceived);
-        qDebug()<<ttt;
-#else
-        baTmp = port->readAll();
-        port->write("A", 1);
+        if(doDll)
+        {
+            ftStatus = FT_Write(ftHandle, FT_Out_Buffer, 1,  &BytesWritten);
+            FT_GetQueueStatus(ftHandle, &BytesReceivedCount);
+            if(BytesReceivedCount>=1024)
+                FT_Read(ftHandle,RxBuffer,BytesReceivedCount,&BytesReceived);
+            baTmp.append(RxBuffer,BytesReceived);
+        }
+        else
+        {
+            baTmp = port->readAll();
+            port->write("A", 1);
+        }
+
         baTmp2.clear();
         foreach(quint8 val, baTmp)
         {
@@ -247,13 +255,14 @@ void mesurement::doTimer()
             }
         }
     }
-#endif
-}
 }
 
 void mesurement::stopMeasure()
 {
-    port->close();
+    if(doDll)
+        FT_Close(ftHandle);
+    else
+        port->close();
     timer->start(1000);
     pbMeasure->doMeasure = false;
     pSampleTable->goToLastSample();
