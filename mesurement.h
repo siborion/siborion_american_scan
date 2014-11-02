@@ -30,6 +30,11 @@
 #include "scanbutton.h"
 #include "typedef.h"
 #include "curentparam.h"
+#include "thread.h"
+#include "typedef.h"
+#include <qt_windows.h>
+#include "ftd2xx.h"
+
 
 
 #include <qwt_plot.h>
@@ -45,7 +50,18 @@ public:
     sampletable *pSampleTable;
 
 private:
-//    QTextEdit *teTmp;
+#ifdef FT_DLL
+    FT_STATUS ftStatus;
+    DWORD ftNumDevice;
+    FT_DEVICE_LIST_INFO_NODE *devInfo;
+    FT_HANDLE ftHandle;
+    char FT_Out_Buffer[10];
+    DWORD BytesWritten;
+    DWORD BytesReceived;
+    DWORD BytesReceivedCount;
+    char RxBuffer[256];
+#endif
+    Thread *thread;
     CurentParam *curentParam;
     quint8 countMeasure;
     quint8 offset;

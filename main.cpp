@@ -1,70 +1,71 @@
 #include "qapplication.h"
 #include "mainwindow.h"
+#include "typedef.h"
 #include <qt_windows.h>
 #include "ftd2xx.h"
 
 int main ( int argc, char **argv )
 {
+
     QStringList paths = QCoreApplication::libraryPaths();
     paths.append(".");
-//    paths.append("imageformats");
     paths.append("platforms");
-//    paths.append("sqldrivers");
     QCoreApplication::setLibraryPaths(paths);
     QApplication a( argc, argv );
     a.addLibraryPath(a.applicationDirPath()+"/plugins");
-    MainWindow w;
 
+//#ifdef FT_DLL
+//    FT_STATUS ftStatus;
+//    DWORD ftNumDevice;
+//    FT_DEVICE_LIST_INFO_NODE *devInfo;
+//    FT_HANDLE ftHandle;
+//    char FT_Out_Buffer[10];
+//    DWORD BytesWritten;
+//    DWORD BytesReceived;
+//    DWORD BytesReceivedCount;
+//    char RxBuffer[256];
 
-FT_STATUS ftStatus;
-DWORD ftNumDevice;
-FT_DEVICE_LIST_INFO_NODE *devInfo;
-ftStatus = FT_CreateDeviceInfoList (&ftNumDevice);
-if (ftStatus==FT_OK)
-{
-    if(ftNumDevice>0)
-    {
-        devInfo =(FT_DEVICE_LIST_INFO_NODE*)malloc(sizeof(FT_DEVICE_LIST_INFO_NODE)*ftNumDevice);
-        //Получить информацию о каждом устройстве в массиве
-        ftStatus = FT_GetDeviceInfoList(devInfo,&ftNumDevice);
-        if (ftStatus == FT_OK) {
-            //Если успешно
-            for (int i = 0; i < ftNumDevice; i++) {
-                printf("Dev %d:\n",i);                                  //Напечатать номер устройства, начиная с 0
-                printf("  Flags=0x%x\n",devInfo[i].Flags);              //Напечатать все поля каждой структуры
-                printf("  Type=0x%x\n",devInfo[i].Type);
-                printf("  ID=0x%x\n",devInfo[i].ID);
-                printf("  LocId=0x%x\n",devInfo[i].LocId);
-                printf("  SerialNumber=%s\n",devInfo[i].SerialNumber);
-                printf("  Description=%s\n",devInfo[i].Description);
-                printf("  ftHandle=0x%x\n",devInfo[i].ftHandle);
-            }
-        }
-    }
-}
-
-//qDebug()<<hhh;
-//qDebug()<<ttt;
-
-
-//FT_STATUS ftStatus = FT_ListDevices(0, 0, FT_LIST_BY_INDEX | FT_OPEN_BY_SERIAL_NUMBER);
-//        if (ftStatus!=FT_OK) //Get first device serial number
+//    ftStatus = FT_CreateDeviceInfoList (&ftNumDevice);
+//    if (ftStatus==FT_OK)
+//    {
+//        if(ftNumDevice>0)
 //        {
-//                printf("Couldn't get FTDI device name");
+//            devInfo =(FT_DEVICE_LIST_INFO_NODE*)malloc(sizeof(FT_DEVICE_LIST_INFO_NODE)*ftNumDevice);
+//            ftStatus = FT_GetDeviceInfoList(devInfo,&ftNumDevice);
+//            if (ftStatus == FT_OK)
+//            {
+//                FT_Out_Buffer[0] = 'A';
+//                FT_Out_Buffer[1] = 'T';
+//                FT_Out_Buffer[2] = 0x0d;
+//                FT_Out_Buffer[3] = 0x0a;
+//                ftStatus = FT_Open(0, &ftHandle);
+
+//                FT_SetBaudRate(ftHandle,9600);
+//                FT_SetFlowControl(ftHandle, FT_FLOW_NONE, 0x00, 0x00);
+//                FT_SetDtr(ftHandle);
+//                FT_SetRts(ftHandle);
+
+//                qDebug()<<"ftStatus"<<ftStatus;
+//                if(ftStatus == FT_OK)
+//                {
+//                    ftStatus = FT_Write(ftHandle, FT_Out_Buffer, 4,  &BytesWritten);
+//                    ftStatus = FT_Write(ftHandle, FT_Out_Buffer, 4,  &BytesWritten);
+//                    ftStatus = FT_Write(ftHandle, FT_Out_Buffer, 4,  &BytesWritten);
+//                    qDebug()<<"FT_GetQueueStatus"<<FT_GetQueueStatus(ftHandle, &BytesReceivedCount);
+//                    BytesReceivedCount = 1;
+//                    ftStatus = FT_Read(ftHandle,RxBuffer,BytesReceivedCount,&BytesReceived);
+//                    qDebug()<<"BytesReceived"<<BytesReceived;
+//                    ftStatus = FT_Read(ftHandle,RxBuffer,BytesReceivedCount,&BytesReceived);
+//                    qDebug()<<"BytesReceived"<<BytesReceived;
+//                    FT_Close(ftHandle);
+//                }
+//            }
 //        }
- 
-//        FT_HANDLE ftHandle = FT_W32_CreateFile(0,
-//                GENERIC_READ|GENERIC_WRITE,
-//                0,
-//                0,
-//                OPEN_EXISTING,
-//                FILE_ATTRIBUTE_NORMAL | FILE_FLAG_OVERLAPPED | 	FT_OPEN_BY_SERIAL_NUMBER,
-//                0); //
+//    }
 
+//#endif
 
-
-//    w.resize( 900, 400 );
-//    w.show();
+    MainWindow w;
     w.showMaximized();
     return a.exec();
 }

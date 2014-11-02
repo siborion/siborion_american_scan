@@ -1,7 +1,8 @@
 #ifndef TYPEDEF_H
 #define TYPEDEF_H
-
 #include <QStandardItemModel>
+
+#define FT_DLL 1
 
 struct stMainParam
 {
