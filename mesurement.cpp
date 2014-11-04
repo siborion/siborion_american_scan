@@ -198,6 +198,7 @@ void mesurement::doTimer()
     QByteArray baTmp, baTmp2;
     double x[2024], y[2024];
     char tmpBuf[10000];
+    DWORD BytesReceivedTmp;
     quint16 kolvo = 0;
     if(pbMeasure->doMeasure)
     {
@@ -210,7 +211,7 @@ void mesurement::doTimer()
 
             FT_GetQueueStatus(ftHandle, &BytesReceivedCount);
             if(BytesReceivedCount>0)
-                FT_Read(ftHandle,tmpBuf,BytesReceivedCount,&BytesReceived);
+                FT_Read(ftHandle,tmpBuf,BytesReceivedCount,&BytesReceivedTmp);
 
             baTmp.append(RxBuffer,BytesReceived);
         }
