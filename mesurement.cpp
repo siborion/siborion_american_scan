@@ -184,7 +184,7 @@ void mesurement::openPort()
             curentParam->measureAveLT=curentParam->measureAveVIT=curentParam->measureDevACD=0;
             curentParam->measureDevLT=curentParam->measureDevVIT=0;
         }
-        timer->start(50);
+        timer->start(150);
         countMeasure=0;
         pSampleTable->resultParam.AL = pSampleTable->resultParam.ACD = pSampleTable->resultParam.LT = pSampleTable->resultParam.Vit = 0;
         refreshMainParam();
@@ -197,6 +197,7 @@ void mesurement::doTimer()
     stMainParam mainParam;
     QByteArray baTmp, baTmp2;
     double x[2024], y[2024];
+    char tmpBuf[10000];
     quint16 kolvo = 0;
     if(pbMeasure->doMeasure)
     {
@@ -205,7 +206,12 @@ void mesurement::doTimer()
             ftStatus = FT_Write(ftHandle, FT_Out_Buffer, 1,  &BytesWritten);
             FT_GetQueueStatus(ftHandle, &BytesReceivedCount);
             if(BytesReceivedCount>=1024)
-                FT_Read(ftHandle,RxBuffer,BytesReceivedCount,&BytesReceived);
+                FT_Read(ftHandle,RxBuffer,1024,&BytesReceived);
+
+            FT_GetQueueStatus(ftHandle, &BytesReceivedCount);
+            if(BytesReceivedCount>0)
+                FT_Read(ftHandle,tmpBuf,BytesReceivedCount,&BytesReceived);
+
             baTmp.append(RxBuffer,BytesReceived);
         }
         else

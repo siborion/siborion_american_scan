@@ -93,7 +93,7 @@ void MainWindow::readPort()
         if(dTmp>80)
         {
             rnd = qrand();
-            rnd /= 10;
+            rnd /= 100;
         }
         baTmp.append((char)(dTmp-rnd));
     }
