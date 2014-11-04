@@ -204,16 +204,20 @@ void mesurement::doTimer()
     {
         if(doDll)
         {
+            FT_Read(ftHandle,RxBuffer,1024,&BytesReceived);
+            FT_Read(ftHandle,tmpBuf,  1024,&BytesReceivedTmp);
+
             ftStatus = FT_Write(ftHandle, FT_Out_Buffer, 1,  &BytesWritten);
-            FT_GetQueueStatus(ftHandle, &BytesReceivedCount);
-            if(BytesReceivedCount>=1024)
-                FT_Read(ftHandle,RxBuffer,1024,&BytesReceived);
 
-            FT_GetQueueStatus(ftHandle, &BytesReceivedCount);
-            if(BytesReceivedCount>0)
-                FT_Read(ftHandle,tmpBuf,BytesReceivedCount,&BytesReceivedTmp);
+//            FT_GetQueueStatus(ftHandle, &BytesReceivedCount);
+//            if(BytesReceivedCount>=1024)
+//                FT_Read(ftHandle,RxBuffer,1024,&BytesReceived);
 
-            baTmp.append(RxBuffer,BytesReceived);
+//            FT_GetQueueStatus(ftHandle, &BytesReceivedCount);
+//            if(BytesReceivedCount>0)
+//                FT_Read(ftHandle,tmpBuf,BytesReceivedCount,&BytesReceivedTmp);
+            if(BytesReceived==1024)
+                baTmp.append(RxBuffer,BytesReceived);
         }
         else
         {
