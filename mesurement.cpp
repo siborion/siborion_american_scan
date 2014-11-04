@@ -205,8 +205,17 @@ void mesurement::doTimer()
     {
         if(doDll)
         {
-            FT_Read(ftHandle,RxBuffer,2048,&BytesReceived);
+            FT_GetQueueStatus(ftHandle, &BytesReceivedCount);
+            qDebug()<<BytesReceivedCount;
+            if(BytesReceivedCount==1024)
+            {
+                FT_Read(ftHandle,RxBuffer,BytesReceivedCount,&BytesReceived);
+                if(BytesReceived==1024)
+                    baTmp.append(RxBuffer,1024);
+            }
+
             FT_Purge(ftHandle,1);
+
 //            FT_Read(ftHandle,tmpBuf,  1024,&BytesReceivedTmp);
 
             ftStatus = FT_Write(ftHandle, FT_Out_Buffer, 1,  &BytesWritten);
@@ -218,8 +227,10 @@ void mesurement::doTimer()
 //            FT_GetQueueStatus(ftHandle, &BytesReceivedCount);
 //            if(BytesReceivedCount>0)
 //                FT_Read(ftHandle,tmpBuf,BytesReceivedCount,&BytesReceivedTmp);
-            if(BytesReceived>=1024)
-                baTmp.append(RxBuffer,1024);
+
+
+//            if(BytesReceived>=1024)
+//                baTmp.append(RxBuffer,1024);
         }
         else
         {
