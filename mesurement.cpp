@@ -165,6 +165,7 @@ void mesurement::openPort()
             FT_SetFlowControl(ftHandle, FT_FLOW_NONE, 0x00, 0x00);
             FT_SetDtr(ftHandle);
             FT_SetRts(ftHandle);
+            FT_Purge(ftHandle,3);
 //            FT_ClrDtr(ftHandle);
 //            FT_ClrRts(ftHandle);
         }
@@ -204,8 +205,9 @@ void mesurement::doTimer()
     {
         if(doDll)
         {
-            FT_Read(ftHandle,RxBuffer,1024,&BytesReceived);
-            FT_Read(ftHandle,tmpBuf,  1024,&BytesReceivedTmp);
+            FT_Read(ftHandle,RxBuffer,2048,&BytesReceived);
+            FT_Purge(ftHandle,1);
+//            FT_Read(ftHandle,tmpBuf,  1024,&BytesReceivedTmp);
 
             ftStatus = FT_Write(ftHandle, FT_Out_Buffer, 1,  &BytesWritten);
 
@@ -216,8 +218,8 @@ void mesurement::doTimer()
 //            FT_GetQueueStatus(ftHandle, &BytesReceivedCount);
 //            if(BytesReceivedCount>0)
 //                FT_Read(ftHandle,tmpBuf,BytesReceivedCount,&BytesReceivedTmp);
-            if(BytesReceived==1024)
-                baTmp.append(RxBuffer,BytesReceived);
+            if(BytesReceived>=1024)
+                baTmp.append(RxBuffer,1024);
         }
         else
         {
