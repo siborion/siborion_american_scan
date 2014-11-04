@@ -184,7 +184,7 @@ void mesurement::openPort()
             curentParam->measureAveLT=curentParam->measureAveVIT=curentParam->measureDevACD=0;
             curentParam->measureDevLT=curentParam->measureDevVIT=0;
         }
-        timer->start(150);
+        timer->start(50);
         countMeasure=0;
         pSampleTable->resultParam.AL = pSampleTable->resultParam.ACD = pSampleTable->resultParam.LT = pSampleTable->resultParam.Vit = 0;
         refreshMainParam();
