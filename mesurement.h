@@ -51,7 +51,7 @@ public:
 
 private:
 
-
+    quint8 countRequest;
     FT_STATUS ftStatus;
     DWORD ftNumDevice;
     FT_DEVICE_LIST_INFO_NODE *devInfo;

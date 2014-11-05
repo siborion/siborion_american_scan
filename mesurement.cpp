@@ -79,8 +79,8 @@ mesurement::mesurement(QWidget *parent) :
     connect(pSampleTable, SIGNAL(changeRow(QList<quint16>)), SLOT(changeRow(QList<quint16> )));
     connect(pSampleTable, SIGNAL(refreshMainParam()), SLOT(refreshMainParam()));
     connect(pbDel, SIGNAL(clicked()), pSampleTable, SLOT(delSample()));
-//    connect(pKey,  SIGNAL(changeCataractSignal(bool)), pPlot, SLOT(changeCataractSlot(bool)));
-//    connect(pKey,  SIGNAL(changeContactSignal(bool)), pPlot, SLOT(changeContactSlot(bool)));
+    //    connect(pKey,  SIGNAL(changeCataractSignal(bool)), pPlot, SLOT(changeCataractSlot(bool)));
+    //    connect(pKey,  SIGNAL(changeContactSignal(bool)), pPlot, SLOT(changeContactSlot(bool)));
     connect(pKey,  SIGNAL(change()), pPlot, SLOT(changeKeySlot()));
     connect(pKey,  SIGNAL(change()), pSampleTable, SLOT(changeKeySlot()));
     connect(timer, SIGNAL(timeout()), SLOT(doTimer()));
@@ -166,8 +166,8 @@ void mesurement::openPort()
             FT_SetDtr(ftHandle);
             FT_SetRts(ftHandle);
             FT_Purge(ftHandle,3);
-//            FT_ClrDtr(ftHandle);
-//            FT_ClrRts(ftHandle);
+            //            FT_ClrDtr(ftHandle);
+            //            FT_ClrRts(ftHandle);
         }
         else
         {
@@ -185,7 +185,7 @@ void mesurement::openPort()
             curentParam->measureAveLT=curentParam->measureAveVIT=curentParam->measureDevACD=0;
             curentParam->measureDevLT=curentParam->measureDevVIT=0;
         }
-        timer->start(50);
+        timer->start(10);
         countMeasure=0;
         pSampleTable->resultParam.AL = pSampleTable->resultParam.ACD = pSampleTable->resultParam.LT = pSampleTable->resultParam.Vit = 0;
         refreshMainParam();
@@ -198,28 +198,36 @@ void mesurement::doTimer()
     stMainParam mainParam;
     QByteArray baTmp, baTmp2;
     double x[2024], y[2024];
-//    char tmpBuf[10000];
-//    DWORD BytesReceivedTmp;
+    //    char tmpBuf[10000];
+    //    DWORD BytesReceivedTmp;
     quint16 kolvo = 0;
     if(pbMeasure->doMeasure)
     {
         if(doDll)
         {
+            countRequest++;
             FT_GetQueueStatus(ftHandle, &BytesReceivedCount);
-            if(BytesReceivedCount==1024)
-                FT_Read(ftHandle,RxBuffer,BytesReceivedCount,&BytesReceived);
-
-            FT_Purge(ftHandle,1);
-            ftStatus = FT_Write(ftHandle, FT_Out_Buffer, 1,  &BytesWritten);
-
-            for(int i=0; i<=1023; i++)
+            if(BytesReceivedCount>=1024)
             {
-                x[kolvo] = kolvo;
-                y[kolvo] = double((unsigned char)(RxBuffer[i])*2);
-                baTmp2.append((unsigned char)(RxBuffer[i])*2);
+                countRequest = 0;
+                FT_Read(ftHandle,RxBuffer,BytesReceivedCount,&BytesReceived);
+                FT_Purge(ftHandle,1);
+                ftStatus = FT_Write(ftHandle, FT_Out_Buffer, 1,  &BytesWritten);
+                for(int i=0; i<=1023; i++)
+                {
+                    x[kolvo] = kolvo;
+                    y[kolvo] = double((unsigned char)(RxBuffer[i])*2);
+                    baTmp2.append((unsigned char)(RxBuffer[i])*2);
+                    kolvo++;
+                }
                 kolvo++;
             }
-            kolvo++;
+            if(countRequest>=10)
+            {
+                FT_Purge(ftHandle,1);
+                ftStatus = FT_Write(ftHandle, FT_Out_Buffer, 1,  &BytesWritten);
+                countRequest = 0;
+            }
         }
         else
         {
