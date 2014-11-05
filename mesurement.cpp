@@ -198,58 +198,46 @@ void mesurement::doTimer()
     stMainParam mainParam;
     QByteArray baTmp, baTmp2;
     double x[2024], y[2024];
-    char tmpBuf[10000];
-    DWORD BytesReceivedTmp;
+//    char tmpBuf[10000];
+//    DWORD BytesReceivedTmp;
     quint16 kolvo = 0;
     if(pbMeasure->doMeasure)
     {
         if(doDll)
         {
             FT_GetQueueStatus(ftHandle, &BytesReceivedCount);
-            qDebug()<<BytesReceivedCount;
             if(BytesReceivedCount==1024)
-            {
                 FT_Read(ftHandle,RxBuffer,BytesReceivedCount,&BytesReceived);
-                if(BytesReceived==1024)
-                    baTmp.append(RxBuffer,1024);
-            }
 
             FT_Purge(ftHandle,1);
-
-//            FT_Read(ftHandle,tmpBuf,  1024,&BytesReceivedTmp);
-
             ftStatus = FT_Write(ftHandle, FT_Out_Buffer, 1,  &BytesWritten);
 
-//            FT_GetQueueStatus(ftHandle, &BytesReceivedCount);
-//            if(BytesReceivedCount>=1024)
-//                FT_Read(ftHandle,RxBuffer,1024,&BytesReceived);
-
-//            FT_GetQueueStatus(ftHandle, &BytesReceivedCount);
-//            if(BytesReceivedCount>0)
-//                FT_Read(ftHandle,tmpBuf,BytesReceivedCount,&BytesReceivedTmp);
-
-
-//            if(BytesReceived>=1024)
-//                baTmp.append(RxBuffer,1024);
+            for(int i=0; i<=1023; i++)
+            {
+                x[kolvo] = kolvo;
+                y[kolvo] = double((unsigned char)(RxBuffer[i])*2);
+                baTmp2.append((unsigned char)(RxBuffer[i])*2);
+                kolvo++;
+            }
+            kolvo++;
         }
         else
         {
             baTmp = port->readAll();
             port->write("A", 1);
+            foreach(quint8 val, baTmp)
+            {
+                val = (val*2);
+                baTmp2.append(val);
+                x[kolvo] = kolvo;
+                y[kolvo] = double((unsigned char)val);
+                kolvo++;
+                if(kolvo>=1024)
+                    break;
+            }
         }
 
-        baTmp2.clear();
-        foreach(quint8 val, baTmp)
-        {
-            val = (val*2);
-            baTmp2.append(val);
-            x[kolvo] = kolvo;
-            y[kolvo] = double((unsigned char)val);
-            kolvo++;
-            if(kolvo>=1024)
-                break;
-        }
-        if(kolvo>=1024)
+        if(kolvo==1024)
         {
             pPlot->drawSample(x, y, kolvo);
             if(pSampleTable->findExtremum(&baTmp2, extremum, mainParam))

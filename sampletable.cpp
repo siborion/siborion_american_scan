@@ -359,6 +359,8 @@ void sampletable::addSampleToTable(QByteArray Sample, stMainParam curMainParam, 
     if(newRecord||(kolVo==1))
         model->appendRow(ttt);
 
+    fileName.append(QString("%1 %2 %3 %4").arg(curMainParam.Start).arg(curMainParam.L1).arg(curMainParam.L2).arg(curMainParam.Retina));
+
     twMeas->model()->setData(twMeas->model()->index(kolVo-1, 0), kolVo, Qt::DisplayRole);
     twMeas->model()->setData(twMeas->model()->index(kolVo-1, 0), Sample, Qt::UserRole);
     twMeas->model()->setData(twMeas->model()->index(kolVo-1, 1), fileName, Qt::DisplayRole);
