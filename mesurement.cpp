@@ -207,10 +207,10 @@ void mesurement::doTimer()
         {
             countRequest++;
             FT_GetQueueStatus(ftHandle, &BytesReceivedCount);
-            if(BytesReceivedCount>=1024)
+            if(BytesReceivedCount>=1023)
             {
                 countRequest = 0;
-                FT_Read(ftHandle,RxBuffer,1024,&BytesReceived);
+                FT_Read(ftHandle,RxBuffer,BytesReceivedCount,&BytesReceived);
                 FT_Purge(ftHandle,1);
                 ftStatus = FT_Write(ftHandle, FT_Out_Buffer, 1,  &BytesWritten);
                 for(int i=0; i<=1023; i++)
