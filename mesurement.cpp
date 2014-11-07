@@ -216,7 +216,7 @@ void mesurement::doTimer()
                 for(int i=0; i<=1023; i++)
                 {
                     x[kolvo] = kolvo;
-                    y[kolvo] = double((unsigned char)(RxBuffer[i])*2);
+                    y[kolvo] = double((unsigned char)(RxBuffer[i]));
                     baTmp2.append((unsigned char)(RxBuffer[i])*2);
                     kolvo++;
                 }
