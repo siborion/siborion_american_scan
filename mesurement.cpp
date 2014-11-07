@@ -220,7 +220,7 @@ void mesurement::doTimer()
                     baTmp2.append((unsigned char)(RxBuffer[i])*2);
                     kolvo++;
                 }
-                kolvo++;
+//                kolvo++;
             }
             if(countRequest>=10)
             {
@@ -245,7 +245,7 @@ void mesurement::doTimer()
             }
         }
 
-        if(kolvo==1024)
+        if(kolvo>=1024)
         {
             pPlot->drawSample(x, y, kolvo);
             if(pSampleTable->findExtremum(&baTmp2, extremum, mainParam))
