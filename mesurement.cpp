@@ -211,7 +211,7 @@ void mesurement::doTimer()
             {
 //                countRequest = 0;
                 FT_Read(ftHandle,RxBuffer,BytesReceivedCount,&BytesReceived);
-//                FT_Purge(ftHandle,1);
+                FT_Purge(ftHandle,1);
                 for(int i=0; i<=1023; i++)
                 {
                     x[kolvo] = kolvo;
