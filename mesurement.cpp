@@ -185,7 +185,7 @@ void mesurement::openPort()
             curentParam->measureAveLT=curentParam->measureAveVIT=curentParam->measureDevACD=0;
             curentParam->measureDevLT=curentParam->measureDevVIT=0;
         }
-        timer->start(10);
+        timer->start(50);
         countMeasure=0;
         pSampleTable->resultParam.AL = pSampleTable->resultParam.ACD = pSampleTable->resultParam.LT = pSampleTable->resultParam.Vit = 0;
         refreshMainParam();
@@ -205,14 +205,13 @@ void mesurement::doTimer()
     {
         if(doDll)
         {
-            countRequest++;
+//            countRequest++;
             FT_GetQueueStatus(ftHandle, &BytesReceivedCount);
             if(BytesReceivedCount>=1023)
             {
-                countRequest = 0;
+//                countRequest = 0;
                 FT_Read(ftHandle,RxBuffer,BytesReceivedCount,&BytesReceived);
-                FT_Purge(ftHandle,1);
-                ftStatus = FT_Write(ftHandle, FT_Out_Buffer, 1,  &BytesWritten);
+//                FT_Purge(ftHandle,1);
                 for(int i=0; i<=1023; i++)
                 {
                     x[kolvo] = kolvo;
@@ -222,12 +221,13 @@ void mesurement::doTimer()
                 }
 //                kolvo++;
             }
-            if(countRequest>=10)
-            {
-                FT_Purge(ftHandle,1);
-                ftStatus = FT_Write(ftHandle, FT_Out_Buffer, 1,  &BytesWritten);
-                countRequest = 0;
-            }
+            ftStatus = FT_Write(ftHandle, FT_Out_Buffer, 1,  &BytesWritten);
+//            if(countRequest>=10)
+//            {
+//                FT_Purge(ftHandle,1);
+//                ftStatus = FT_Write(ftHandle, FT_Out_Buffer, 1,  &BytesWritten);
+//                countRequest = 0;
+//            }
         }
         else
         {
