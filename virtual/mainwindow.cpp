@@ -25,6 +25,12 @@ MainWindow::MainWindow(QWidget *parent) :
 
     for(int i=0; i<1024; i++)
         {x[i]=i;y[i]=0;}
+
+    y[9]=255;
+    y[148]=255;
+    y[239]=255;
+    y[695]=255;
+
     plot->drawSample(x, y, 1024);
 
     ui->gridLayout->addWidget(plot,   0, 0, 1, 10);
@@ -83,7 +89,7 @@ void MainWindow::readPort()
             {
 //                i++;
                 qDebug()<<"------------------------";
-                baTmp.append((char)0);
+//                baTmp.append((char)0);
             }
         }
 

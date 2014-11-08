@@ -154,12 +154,13 @@ void sampletable::refreshTable(quint8 rowNom, stMainParam mainParam)
     sumAl = sumAcd = sumLt = sumVit = 0;
     devAl = devAcd = devLt = devVit = 0;
 
-    resultParam.ACD = decRound(mainParam.L1 - mainParam.Start, 2);
-    resultParam.LT = decRound(mainParam.L2 - mainParam.L1, 2);
-    resultParam.AL = decRound(mainParam.Retina - mainParam.Start, 2);
-    resultParam.Vit = decRound(mainParam.Retina - mainParam.L2, 2);
+    resultParam.ACD = decRound(mainParam.L1 - mainParam.Start, 2,   1534);
+    resultParam.LT = decRound(mainParam.L2 - mainParam.L1, 2,       1641);
+    resultParam.AL = decRound(mainParam.Retina - mainParam.Start, 2,1555);
+    resultParam.Vit = decRound(mainParam.Retina - mainParam.L2, 2,  1532);
 
-    twMeas->model()->setData(twMeas->model()->index(rowNom, 2), resultParam.AL,  Qt::DisplayRole);
+    twMeas->model()->setData(twMeas->model()->index(rowNom, 1), resultParam.AL, Qt::DisplayRole);
+    twMeas->model()->setData(twMeas->model()->index(rowNom, 2), resultParam.ACD+resultParam.LT+resultParam.Vit,  Qt::DisplayRole);
     twMeas->model()->setData(twMeas->model()->index(rowNom, 2), mainParam.Start, Qt::UserRole);
     twMeas->model()->setData(twMeas->model()->index(rowNom, 3), resultParam.ACD, Qt::DisplayRole);
     twMeas->model()->setData(twMeas->model()->index(rowNom, 3), mainParam.L1,    Qt::UserRole);
@@ -215,10 +216,10 @@ void sampletable::refreshTable(quint8 rowNom, stMainParam mainParam)
     devLt  = pow(devLt/twMeas->model()->rowCount(),  0.5);
     devVit = pow(devVit/twMeas->model()->rowCount(), 0.5);
 
-    AL =  decRound(twMeas->model()->data(twMeas->model()->index(twMeas->currentIndex().row(), 5), Qt::UserRole).toDouble(), 2);
-    AL -= decRound(twMeas->model()->data(twMeas->model()->index(twMeas->currentIndex().row(), 2), Qt::UserRole).toDouble(), 2);
-
-    resultParam.AL = AL;
+//    AL =  decRound(twMeas->model()->data(twMeas->model()->index(twMeas->currentIndex().row(), 5), Qt::UserRole).toDouble(), 2);
+//    AL -= decRound(twMeas->model()->data(twMeas->model()->index(twMeas->currentIndex().row(), 2), Qt::UserRole).toDouble(), 2);
+//    AL = 88;
+//    resultParam.AL = AL;
 
     curentParam->measureAveAL  = resultParam.AvgAl = sumAl;
     curentParam->measureAveACD = resultParam.AvgAcd = sumAcd;
@@ -243,11 +244,16 @@ void sampletable::changeSide()
 //    qDebug()<<"twMeas->setModel(modelOS);";
 }
 
-double sampletable::decRound(double Val, quint8 dec)
+double sampletable::decRound(double Val, quint8 dec, quint16 speed)
 {
+    double koef = 1.0;
+    koef /= speed;
+    koef *= 2000000;
+    koef /= 50;
+    qDebug()<<koef;
     Val *= pow(10, dec);
-    Val /=27;
-    Val = round(Val);
+    Val /= koef;
+    Val =  round(Val);
     Val /= pow(10, dec);
     return Val;
 }
@@ -361,9 +367,11 @@ void sampletable::addSampleToTable(QByteArray Sample, stMainParam curMainParam, 
 
     fileName.append(QString("%1 %2 %3 %4").arg(curMainParam.Start).arg(curMainParam.L1).arg(curMainParam.L2).arg(curMainParam.Retina));
 
+
     twMeas->model()->setData(twMeas->model()->index(kolVo-1, 0), kolVo, Qt::DisplayRole);
     twMeas->model()->setData(twMeas->model()->index(kolVo-1, 0), Sample, Qt::UserRole);
-    twMeas->model()->setData(twMeas->model()->index(kolVo-1, 1), fileName, Qt::DisplayRole);
+//    twMeas->model()->setData(twMeas->model()->index(kolVo-1, 1), fileName, Qt::DisplayRole);
+    twMeas->model()->setData(twMeas->model()->index(kolVo-1, 1), fileName, Qt::ToolTipRole);
     refreshTable(kolVo-1, curMainParam);
 }
 
