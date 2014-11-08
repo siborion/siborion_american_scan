@@ -202,8 +202,6 @@ void mesurement::doTimer()
     stMainParam mainParam;
     QByteArray baTmp, baTmp2;
     double x[2024], y[2024];
-    //    char tmpBuf[10000];
-    //    DWORD BytesReceivedTmp;
     quint16 kolvo = 0;
     if(pbMeasure->doMeasure)
     {
