@@ -29,7 +29,7 @@ mesurement::mesurement(QWidget *parent) :
 
     pSampleTable = new sampletable();
 
-//    QSpacerItem *vs = new QSpacerItem(20, 40, QSizePolicy::Expanding, QSizePolicy::Expanding);
+    //    QSpacerItem *vs = new QSpacerItem(20, 40, QSizePolicy::Expanding, QSizePolicy::Expanding);
 
     pKey = new key_radio();
     QPushButton *pbDel = new QPushButton(tr(""));
@@ -38,15 +38,15 @@ mesurement::mesurement(QWidget *parent) :
     pbDel->setIcon(iconDel);
     pbDel->setIconSize(QSize(20, 20));
 
-//    QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
+    //    QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
     pbMeasure = new ScanButton();
-//    pbMeasure->setSizePolicy(sizePolicy);
+    //    pbMeasure->setSizePolicy(sizePolicy);
     QIcon icon;
     icon.addFile(QStringLiteral(":/test/scan"), QSize(), QIcon::Normal, QIcon::Off);
 
     layoutBot->addWidget(fmPlot, 0, 0, 4, 1);
     layoutBot->addWidget(pKey,   5, 0, 1, 2);
-//    layoutBot->addWidget(pbMeasure,5,1,1,1);
+    //    layoutBot->addWidget(pbMeasure,5,1,1,1);
 
     port = new QSerialPort(this);
     timer = new QTimer();
@@ -77,7 +77,7 @@ mesurement::mesurement(QWidget *parent) :
 
     pPlot->changeKeySlot();
 
-//    connect(pbMeasure, SIGNAL(pressed()), SLOT(openPort()));
+    //    connect(pbMeasure, SIGNAL(pressed()), SLOT(openPort()));
     connect(velosity, SIGNAL(pressed()), SLOT(openPort()));
     connect(pPlot, SIGNAL(refreshTable(stMainParam)), pSampleTable, SLOT(refreshTable(stMainParam)));
     connect(pSampleTable, SIGNAL(changeRow(QList<quint16>)), SLOT(changeRow(QList<quint16> )));
@@ -89,7 +89,7 @@ mesurement::mesurement(QWidget *parent) :
     connect(pKey,  SIGNAL(change()), pSampleTable, SLOT(changeKeySlot()));
     connect(timer, SIGNAL(timeout()), SLOT(doTimer()));
 
-//    thread = new Thread();
+    //    thread = new Thread();
 }
 
 
@@ -209,11 +209,9 @@ void mesurement::doTimer()
     {
         if(doDll)
         {
-//            countRequest++;
             FT_GetQueueStatus(ftHandle, &BytesReceivedCount);
             if(BytesReceivedCount>=1023)
             {
-//                countRequest = 0;
                 FT_Read(ftHandle,RxBuffer,BytesReceivedCount,&BytesReceived);
                 FT_Purge(ftHandle,1);
                 for(int i=0; i<=1023; i++)
@@ -223,15 +221,8 @@ void mesurement::doTimer()
                     baTmp2.append((unsigned char)(RxBuffer[i])*2);
                     kolvo++;
                 }
-//                kolvo++;
             }
             ftStatus = FT_Write(ftHandle, FT_Out_Buffer, 1,  &BytesWritten);
-//            if(countRequest>=10)
-//            {
-//                FT_Purge(ftHandle,1);
-//                ftStatus = FT_Write(ftHandle, FT_Out_Buffer, 1,  &BytesWritten);
-//                countRequest = 0;
-//            }
         }
         else
         {
