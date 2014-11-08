@@ -34,6 +34,7 @@
 #include "typedef.h"
 #include <qt_windows.h>
 #include "ftd2xx.h"
+#include "velosity.h"
 
 
 
@@ -64,7 +65,8 @@ private:
     bool doDll;
 
 
-    Thread *thread;
+    Velosity *velosity;
+//    Thread *thread;
     CurentParam *curentParam;
     quint8 countMeasure;
     quint8 offset;

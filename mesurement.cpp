@@ -1,5 +1,6 @@
 #include "mesurement.h"
 
+
 mesurement::mesurement(QWidget *parent) :
     QWidget(parent)
 {
@@ -7,6 +8,7 @@ mesurement::mesurement(QWidget *parent) :
     curentParam = CurentParam::instanse();
 
     QGridLayout *layoutBot = new QGridLayout(this);
+    layoutBot->setVerticalSpacing(2);
 
     pBigView = new bigviewnum();
     pBigView->setMinimumHeight(120);
@@ -34,7 +36,7 @@ mesurement::mesurement(QWidget *parent) :
     QIcon iconDel;
     iconDel.addFile(QStringLiteral(":/test/Del"), QSize(), QIcon::Normal, QIcon::Off);
     pbDel->setIcon(iconDel);
-    pbDel->setIconSize(QSize(30, 30));
+    pbDel->setIconSize(QSize(20, 20));
 
 //    QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
     pbMeasure = new ScanButton();
@@ -43,8 +45,8 @@ mesurement::mesurement(QWidget *parent) :
     icon.addFile(QStringLiteral(":/test/scan"), QSize(), QIcon::Normal, QIcon::Off);
 
     layoutBot->addWidget(fmPlot, 0, 0, 4, 1);
-    layoutBot->addWidget(pKey,5,0,1,1);
-    layoutBot->addWidget(pbMeasure,5,1,1,1);
+    layoutBot->addWidget(pKey,   5, 0, 1, 2);
+//    layoutBot->addWidget(pbMeasure,5,1,1,1);
 
     port = new QSerialPort(this);
     timer = new QTimer();
@@ -65,17 +67,18 @@ mesurement::mesurement(QWidget *parent) :
     glSample->addWidget(pSampleTable,0,0,1,3);
     glSample->addWidget(cbPort,1,0,1,1);
     glSample->addWidget(pbDel,1,2,1,1);
-    fmSample->setFixedHeight(260);
+    fmSample->setFixedHeight(250);
+
+    velosity = new Velosity();
 
     layoutBot->addWidget(fmSample,0,1);
-//    layoutBot->addItem(vs,1,1);
-
-//    layoutBot->addWidget(pbMeasure,2,1);
-    layoutBot->addWidget(pBigView,3,1);
+    layoutBot->addWidget(velosity,2,1);
+    layoutBot->addWidget(pBigView,1,1);
 
     pPlot->changeKeySlot();
 
-    connect(pbMeasure, SIGNAL(pressed()), SLOT(openPort()));
+//    connect(pbMeasure, SIGNAL(pressed()), SLOT(openPort()));
+    connect(velosity, SIGNAL(pressed()), SLOT(openPort()));
     connect(pPlot, SIGNAL(refreshTable(stMainParam)), pSampleTable, SLOT(refreshTable(stMainParam)));
     connect(pSampleTable, SIGNAL(changeRow(QList<quint16>)), SLOT(changeRow(QList<quint16> )));
     connect(pSampleTable, SIGNAL(refreshMainParam()), SLOT(refreshMainParam()));
@@ -86,7 +89,7 @@ mesurement::mesurement(QWidget *parent) :
     connect(pKey,  SIGNAL(change()), pSampleTable, SLOT(changeKeySlot()));
     connect(timer, SIGNAL(timeout()), SLOT(doTimer()));
 
-    thread = new Thread();
+//    thread = new Thread();
 }
 
 
@@ -105,19 +108,19 @@ void mesurement::changeRow(QList<quint16> extremum)
     pPlot->drawSample(x, y, 1024);
     pPlot->allExtremum = extremum;
     pPlot->drawMarker(pSampleTable->mainParam.Start, "Start");
-    pPlot->drawMarker((double)pSampleTable->mainParam.Start,(double)60, Qt::yellow);
+    pPlot->drawMarker((double)pSampleTable->mainParam.Start,(double)60, Qt::white);
     if(pSampleTable->mainParam.L1>0)
     {
         pPlot->drawMarker(pSampleTable->mainParam.L1, "L1");
-        pPlot->drawMarker((double)pSampleTable->mainParam.L1,(double)60, Qt::yellow);
+        pPlot->drawMarker((double)pSampleTable->mainParam.L1,(double)60, Qt::white);
     }
     if(pSampleTable->mainParam.L2>0)
     {
         pPlot->drawMarker(pSampleTable->mainParam.L2, "L2");
-        pPlot->drawMarker((double)pSampleTable->mainParam.L2,(double)60, Qt::yellow);
+        pPlot->drawMarker((double)pSampleTable->mainParam.L2,(double)60, Qt::white);
     }
     pPlot->drawMarker(pSampleTable->mainParam.Retina, "Retina");
-    pPlot->drawMarker((double)pSampleTable->mainParam.Retina,(double)60, Qt::yellow);
+    pPlot->drawMarker((double)pSampleTable->mainParam.Retina,(double)60, Qt::white);
 }
 
 void mesurement::refreshMainParam()

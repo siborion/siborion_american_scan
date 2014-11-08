@@ -7,6 +7,11 @@ key_radio::key_radio(QWidget *parent) :
     //----------------------------------------- Button
     QHBoxLayout *layoutkey_radio = new QHBoxLayout(this);
 
+    QFont font;
+    font.setBold(true);
+    font.setPointSize(12);
+    font.setFamily(QStringLiteral("Arial"));
+
     QGroupBox    *gbAuto = new QGroupBox();
     QHBoxLayout  *ltAuto = new QHBoxLayout(gbAuto);
     rbAutoFreeze = new QRadioButton(tr("Auto Freeze"));
@@ -15,6 +20,9 @@ key_radio::key_radio(QWidget *parent) :
     rbAutoFreeze->setObjectName("AutoFreeze");
     rbAuto->setObjectName      ("Auto");
     rbManual->setObjectName    ("Manual");
+    rbAutoFreeze->setFont(font);
+    rbAuto->setFont(font);
+    rbManual->setFont(font);
 
     ltAuto->addWidget(rbAutoFreeze);
     ltAuto->addWidget(rbAuto);
@@ -29,6 +37,9 @@ key_radio::key_radio(QWidget *parent) :
     rbImmersion->setObjectName("Immersion");
     ltContact->addWidget(rbContact);
     ltContact->addWidget(rbImmersion);
+    rbContact->setFont(font);
+    rbImmersion->setFont(font);
+
 
     QSpacerItem  *hs3 = new QSpacerItem(50, 5, QSizePolicy::Expanding, QSizePolicy::Minimum);
     QGroupBox    *gbCataract = new QGroupBox();
@@ -39,6 +50,9 @@ key_radio::key_radio(QWidget *parent) :
     rbAphakic->setObjectName("Aphakic");
     ltCataract->addWidget(rbCataract);
     ltCataract->addWidget(rbAphakic);
+    rbCataract->setFont(font);
+    rbAphakic->setFont(font);
+
 
     QSpacerItem  *hs4 = new QSpacerItem(50, 5, QSizePolicy::Expanding, QSizePolicy::Minimum);
     gbEye = new QGroupBox();
@@ -47,9 +61,13 @@ key_radio::key_radio(QWidget *parent) :
     rbOs = new QRadioButton(tr("OS"));
     rbOd->setObjectName("OD");
     rbOs->setObjectName("OS");
+    rbOd->setFont(font);
+    rbOs->setFont(font);
 
     ltEye->addWidget(rbOd);
     ltEye->addWidget(rbOs);
+
+    QSpacerItem  *hs5 = new QSpacerItem(50, 5, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
     layoutkey_radio->setSpacing(0);
     layoutkey_radio->addWidget(gbAuto);
@@ -59,6 +77,7 @@ key_radio::key_radio(QWidget *parent) :
     layoutkey_radio->addWidget(gbCataract);
     layoutkey_radio->addItem(hs4);
     layoutkey_radio->addWidget(gbEye);
+    layoutkey_radio->addItem(hs5);
 
     curentParam->regimMeasure  = RegimMeasure::AUTOFREEZ;
     curentParam->regimContact  = RegimContact::CONTACT;

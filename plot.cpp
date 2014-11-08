@@ -50,7 +50,8 @@ Plot::Plot( QWidget *parent, bool print):
     if(print)
         d_curve1->setPen( Qt::black );
     else
-        d_curve1->setPen(QColor(255,170,0,255));   //( Qt::yellow );
+//        d_curve1->setPen(QColor(255,170,0,255));   //( Qt::yellow );
+        d_curve1->setPen(QColor(255,255,255,255));   //( Qt::yellow );
     d_curve1->setLegendAttribute( QwtPlotCurve::LegendShowLine );
     d_curve1->setYAxis(QwtPlot::yLeft);
     d_curve1->setXAxis(QwtPlot::xTop);

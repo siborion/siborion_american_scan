@@ -72,7 +72,8 @@ SOURCES += main.cpp\
     scanbutton.cpp \
     parserfront.cpp \
     checkboxdelegate1.cpp \
-    thread.cpp
+    thread.cpp \
+    velosity.cpp
 
 
 HEADERS  += mainwindow.h\
@@ -113,7 +114,8 @@ HEADERS  += mainwindow.h\
     parserfront.h \
     checkboxdelegate1.h \
     ftd2xx.h \
-    thread.h
+    thread.h \
+    velosity.h
 
 #FORMS    += mainwindow.ui
 
@@ -127,7 +129,8 @@ FORMS += \
     bigviewnumhor.ui \
     bigviewnumcur.ui \
     calculator_patient.ui \
-    buttonscan.ui
+    buttonscan.ui \
+    velosity.ui
 
 OTHER_FILES += plugins/sqldrivers/qsqlite.dll
 #OTHER_FILES += c:/ftdi/ftd2xx.dll
