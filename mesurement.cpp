@@ -27,7 +27,7 @@ mesurement::mesurement(QWidget *parent) :
 
     pSampleTable = new sampletable();
 
-    QSpacerItem *vs = new QSpacerItem(20, 40, QSizePolicy::Expanding, QSizePolicy::Expanding);
+//    QSpacerItem *vs = new QSpacerItem(20, 40, QSizePolicy::Expanding, QSizePolicy::Expanding);
 
     pKey = new key_radio();
     QPushButton *pbDel = new QPushButton(tr(""));
@@ -36,14 +36,15 @@ mesurement::mesurement(QWidget *parent) :
     pbDel->setIcon(iconDel);
     pbDel->setIconSize(QSize(30, 30));
 
-    QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
+//    QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
     pbMeasure = new ScanButton();
-    pbMeasure->setSizePolicy(sizePolicy);
+//    pbMeasure->setSizePolicy(sizePolicy);
     QIcon icon;
     icon.addFile(QStringLiteral(":/test/scan"), QSize(), QIcon::Normal, QIcon::Off);
 
     layoutBot->addWidget(fmPlot, 0, 0, 4, 1);
     layoutBot->addWidget(pKey,5,0,1,1);
+    layoutBot->addWidget(pbMeasure,5,1,1,1);
 
     port = new QSerialPort(this);
     timer = new QTimer();
@@ -64,12 +65,12 @@ mesurement::mesurement(QWidget *parent) :
     glSample->addWidget(pSampleTable,0,0,1,3);
     glSample->addWidget(cbPort,1,0,1,1);
     glSample->addWidget(pbDel,1,2,1,1);
-    fmSample->setFixedHeight(230);
+    fmSample->setFixedHeight(260);
 
     layoutBot->addWidget(fmSample,0,1);
-    layoutBot->addItem(vs,1,1);
+//    layoutBot->addItem(vs,1,1);
 
-    layoutBot->addWidget(pbMeasure,2,1);
+//    layoutBot->addWidget(pbMeasure,2,1);
     layoutBot->addWidget(pBigView,3,1);
 
     pPlot->changeKeySlot();

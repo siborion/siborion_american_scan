@@ -23,6 +23,6 @@ void ScanButton::doTimer()
         numPic = 0;
     }
     setIcon(icon);
-    setIconSize(QSize(50, 50));
+    setIconSize(QSize(30, 30));
 }
 
