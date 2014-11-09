@@ -10,7 +10,7 @@ bigviewnumcur::bigviewnumcur(QWidget *parent) :
     curData=QDate::currentDate();
     curentParam = CurentParam::instanse();
     ui->setupUi(this);
-    ui->lData->setText(curData.toString("dd.MM.yyyy"));
+    ui->leData->setText(curData.toString("dd.MM.yyyy"));
 
     curentParam->patientMaper.addMapping(ui->lFioPatient, 1);
     curentParam->patientMaper.addMapping(ui->lFioDoctor,  2);

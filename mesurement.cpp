@@ -15,8 +15,8 @@ mesurement::mesurement(QWidget *parent) :
     pBigView->setMaximumHeight(150);
 
     pBigViewCur = new bigviewnumcur();
-    pBigViewCur->setMinimumHeight(50);
-    pBigViewCur->setMaximumHeight(50);
+//    pBigViewCur->setMinimumHeight(50);
+//    pBigViewCur->setMaximumHeight(50);
 
     QFrame *fmPlot = new QFrame();
     fmPlot->setStyleSheet(QStringLiteral("background-color: rgb(0, 0, 0);"));
