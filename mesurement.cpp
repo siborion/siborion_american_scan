@@ -67,7 +67,7 @@ mesurement::mesurement(QWidget *parent) :
     glSample->addWidget(pSampleTable,0,0,1,3);
     glSample->addWidget(cbPort,1,0,1,1);
     glSample->addWidget(pbDel,1,2,1,1);
-    fmSample->setFixedHeight(250);
+    fmSample->setFixedHeight(260);
 
     velosity = new Velosity();
 

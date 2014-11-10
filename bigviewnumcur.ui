@@ -33,7 +33,7 @@
     <number>0</number>
    </property>
    <item row="0" column="0">
-    <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,0" columnstretch="0,1,0,0,0,0,0,0,0">
+    <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,0" columnstretch="0,0,3,0,0,0,0,0">
      <property name="leftMargin">
       <number>2</number>
      </property>
@@ -52,23 +52,8 @@
      <property name="verticalSpacing">
       <number>2</number>
      </property>
-     <item row="1" column="1">
-      <widget class="QLineEdit" name="lFioPatient">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>100</width>
-         <height>0</height>
-        </size>
-       </property>
+     <item row="2" column="6">
+      <widget class="QLabel" name="label_4">
        <property name="font">
         <font>
          <pointsize>11</pointsize>
@@ -78,37 +63,35 @@
         </font>
        </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(170, 170, 127);</string>
+        <string notr="true">color: rgb(255, 255, 255);</string>
        </property>
        <property name="text">
-        <string>Select patient</string>
+        <string>VIT</string>
        </property>
-       <property name="frame">
-        <bool>false</bool>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
        </property>
       </widget>
      </item>
-     <item row="0" column="5" rowspan="3" colspan="2">
-      <widget class="QLabel" name="lCurAL">
+     <item row="0" column="7">
+      <widget class="QLabel" name="lCurACD">
        <property name="font">
         <font>
-         <pointsize>36</pointsize>
+         <pointsize>11</pointsize>
          <weight>75</weight>
          <bold>true</bold>
+         <kerning>false</kerning>
         </font>
        </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(117, 117, 117);</string>
+        <string notr="true">color: rgb(255, 255, 255);</string>
        </property>
        <property name="text">
         <string>00.00</string>
        </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
       </widget>
      </item>
-     <item row="1" column="8">
+     <item row="1" column="7">
       <widget class="QLabel" name="lCurLT">
        <property name="font">
         <font>
@@ -119,32 +102,34 @@
         </font>
        </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(117, 117, 117);</string>
+        <string notr="true">color: rgb(255, 255, 255);</string>
        </property>
        <property name="text">
         <string>00.00</string>
        </property>
       </widget>
      </item>
-     <item row="2" column="0">
-      <widget class="QLabel" name="label_6">
+     <item row="0" column="4" rowspan="3" colspan="2">
+      <widget class="QLabel" name="lCurAL">
        <property name="font">
         <font>
-         <pointsize>11</pointsize>
+         <pointsize>36</pointsize>
          <weight>75</weight>
          <bold>true</bold>
-         <kerning>false</kerning>
         </font>
        </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(170, 170, 127);</string>
+        <string notr="true">color: rgb(255, 255, 255);</string>
        </property>
        <property name="text">
-        <string>Doctor:</string>
+        <string>00.00</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
        </property>
       </widget>
      </item>
-     <item row="1" column="7">
+     <item row="1" column="6">
       <widget class="QLabel" name="label_2">
        <property name="font">
         <font>
@@ -155,17 +140,17 @@
         </font>
        </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(117, 117, 117);</string>
+        <string notr="true">color: rgb(255, 255, 255);</string>
        </property>
        <property name="text">
         <string>LT</string>
        </property>
        <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
        </property>
       </widget>
      </item>
-     <item row="2" column="4">
+     <item row="2" column="3">
       <widget class="QLabel" name="label">
        <property name="font">
         <font>
@@ -179,7 +164,7 @@
         <enum>Qt::LeftToRight</enum>
        </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(117, 117, 117);</string>
+        <string notr="true">color: rgb(255, 255, 255);</string>
        </property>
        <property name="text">
         <string>AL</string>
@@ -189,8 +174,8 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="8">
-      <widget class="QLabel" name="lCurACD">
+     <item row="0" column="6">
+      <widget class="QLabel" name="label_1">
        <property name="font">
         <font>
          <pointsize>11</pointsize>
@@ -200,10 +185,63 @@
         </font>
        </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(117, 117, 117);</string>
+        <string notr="true">color: rgb(255, 255, 255);</string>
        </property>
        <property name="text">
-        <string>00.00</string>
+        <string>ACD</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="lData">
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+         <kerning>false</kerning>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: rgb(255, 255, 255);</string>
+       </property>
+       <property name="text">
+        <string>Data:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="2" rowspan="3">
+      <widget class="QLineEdit" name="leSide">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>36</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: rgb(255, 255, 255);</string>
+       </property>
+       <property name="text">
+        <string>OD</string>
+       </property>
+       <property name="frame">
+        <bool>false</bool>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -232,121 +270,13 @@
         </font>
        </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(170, 170, 127);</string>
+        <string notr="true">color: rgb(255, 255, 255);</string>
        </property>
        <property name="text">
         <string/>
        </property>
        <property name="frame">
         <bool>false</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="4">
-      <widget class="QLabel" name="label_3">
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="7">
-      <widget class="QLabel" name="label_1">
-       <property name="font">
-        <font>
-         <pointsize>11</pointsize>
-         <weight>75</weight>
-         <bold>true</bold>
-         <kerning>false</kerning>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">color: rgb(117, 117, 117);</string>
-       </property>
-       <property name="text">
-        <string>ACD</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="lData">
-       <property name="font">
-        <font>
-         <pointsize>11</pointsize>
-         <weight>75</weight>
-         <bold>true</bold>
-         <kerning>false</kerning>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">color: rgb(170, 170, 127);</string>
-       </property>
-       <property name="text">
-        <string>Data:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="7">
-      <widget class="QLabel" name="label_4">
-       <property name="font">
-        <font>
-         <pointsize>11</pointsize>
-         <weight>75</weight>
-         <bold>true</bold>
-         <kerning>false</kerning>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">color: rgb(117, 117, 117);</string>
-       </property>
-       <property name="text">
-        <string>VIT</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="2" rowspan="3">
-      <spacer name="horizontalSpacer_2">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item row="2" column="8">
-      <widget class="QLabel" name="lCurVIT">
-       <property name="font">
-        <font>
-         <pointsize>11</pointsize>
-         <weight>75</weight>
-         <bold>true</bold>
-         <kerning>false</kerning>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">color: rgb(117, 117, 117);</string>
-       </property>
-       <property name="text">
-        <string>00.00</string>
        </property>
       </widget>
      </item>
@@ -376,10 +306,81 @@
         </font>
        </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(170, 170, 127);</string>
+        <string notr="true">color: rgb(255, 255, 255);</string>
        </property>
        <property name="text">
         <string>Select doctor</string>
+       </property>
+       <property name="frame">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="3">
+      <widget class="QLabel" name="label_3">
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="label_6">
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+         <kerning>false</kerning>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: rgb(255, 255, 255);</string>
+       </property>
+       <property name="text">
+        <string>Doctor:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLineEdit" name="lFioPatient">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>100</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+         <kerning>false</kerning>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: rgb(255, 255, 255);</string>
+       </property>
+       <property name="text">
+        <string>Select patient</string>
        </property>
        <property name="frame">
         <bool>false</bool>
@@ -397,42 +398,28 @@
         </font>
        </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(170, 170, 127);</string>
+        <string notr="true">color: rgb(255, 255, 255);</string>
        </property>
        <property name="text">
         <string>Patient:</string>
        </property>
       </widget>
      </item>
-     <item row="0" column="3" rowspan="3">
-      <widget class="QLineEdit" name="leSide">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
+     <item row="2" column="7">
+      <widget class="QLabel" name="lCurVIT">
        <property name="font">
         <font>
-         <pointsize>36</pointsize>
+         <pointsize>11</pointsize>
          <weight>75</weight>
          <bold>true</bold>
+         <kerning>false</kerning>
         </font>
        </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(170, 170, 127);</string>
+        <string notr="true">color: rgb(255, 255, 255);</string>
        </property>
        <property name="text">
-        <string>OD</string>
-       </property>
-       <property name="frame">
-        <bool>false</bool>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-       <property name="readOnly">
-        <bool>true</bool>
+        <string>00.00</string>
        </property>
       </widget>
      </item>

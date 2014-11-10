@@ -7,7 +7,7 @@ Velosity::Velosity(QWidget *parent) :
 {
     ui->setupUi(this);
     pbMeasure = new ScanButton();
-    ui->gridLayout_2->addWidget(pbMeasure,0,2,2,1);
+    ui->gridLayout_2->addWidget(pbMeasure,0,3,2,1);
     connect(pbMeasure,SIGNAL(pressed()),SLOT(doScan()));
 }
 

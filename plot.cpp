@@ -100,7 +100,7 @@ void Plot::drawMarker(quint16 pos, QString title)
     QwtPlotMarker *d_marker = new QwtPlotMarker();
     d_marker->setXAxis(QwtPlot::xTop);
     d_marker->setLineStyle( QwtPlotMarker::VLine );
-    d_marker->setLinePen( Qt::red, 0, Qt::SolidLine );
+    d_marker->setLinePen( Qt::blue, 0, Qt::SolidLine );
     d_marker->setXValue((double)pos);
     d_marker->setTitle(title);
     d_marker->setLabel(qT);
