@@ -154,6 +154,9 @@ void sampletable::refreshTable(quint8 rowNom, stMainParam mainParam)
     sumAl = sumAcd = sumLt = sumVit = 0;
     devAl = devAcd = devLt = devVit = 0;
 
+    if(curentParam->regimContact == RegimContact::CONTACT)
+        mainParam.Start = 3;
+
     resultParam.ACD = decRound(mainParam.L1 - mainParam.Start, 2,   1534);
     resultParam.LT = decRound(mainParam.L2 - mainParam.L1, 2,       1641);
     resultParam.AL = decRound(mainParam.Retina - mainParam.Start, 2,1555);
