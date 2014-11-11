@@ -30,7 +30,6 @@
 #include "scanbutton.h"
 #include "typedef.h"
 #include "curentparam.h"
-#include "thread.h"
 #include "typedef.h"
 #include <qt_windows.h>
 #include "ftd2xx.h"
