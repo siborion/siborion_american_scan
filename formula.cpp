@@ -152,24 +152,24 @@ void formula::setValue(quint8 formula, QString name, QString aconst, QString acd
     ACD_measure = dACD;
     lLens->setText(name);
 
-    qDebug()<<"formula0";
-    qDebug()<<formula;
+
+
     if(formula==cbFormula->currentIndex())
         changeFotmula(formula);
     else
         cbFormula->setCurrentIndex(formula);
     //    cbFormula->setCurrentIndex(1);
-//    qDebug()<<cbFormula->currentIndex();
-
-    qDebug()<<"formula1";
 
 
-    qDebug()<<"formula2";
 
 
-    qDebug()<<"formula1";
+
+
+
+
+
 //    changeFotmula(formula);
-    qDebug()<<"formula2";
+
 }
 
 void formula::calculateIOL(quint8 formula)

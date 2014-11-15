@@ -146,8 +146,8 @@ void mesurement::openPort()
     port->setFlowControl(QSerialPort::NoFlowControl);
     port->waitForBytesWritten(-1);
     doDll = ((cbPort->currentIndex()+1)==cbPort->count());
-    qDebug()<<"cbPort->currentIndex()"<<cbPort->currentIndex();
-    qDebug()<<"cbPort->count()"<<cbPort->count();
+
+
 
     if(pbMeasure->doMeasure)
         stopMeasure();
@@ -179,7 +179,7 @@ void mesurement::openPort()
                 return;
         }
         pbMeasure->doMeasure = true;
-        qDebug()<<"GOOOOO";
+
         if(curentParam->regimMeasure == RegimMeasure::AUTOFREEZ)
         {
             QStandardItemModel *model;

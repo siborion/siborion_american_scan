@@ -11,7 +11,6 @@
  {
      drawCheck(painter, option, option.rect, index.data().toBool() ? Qt::Checked : Qt::Unchecked);
 //     drawFocus(painter, option, option.rect);
-     qDebug()<<"edit0";
  }
 
  QWidget *CheckBoxDelegate::createEditor(QWidget *parent,
@@ -19,7 +18,7 @@
      const QModelIndex &/* index */) const
  {
      QCheckBox *editor = new QCheckBox(parent);
-     qDebug()<<"edit1";
+
      return editor;
  }
 
@@ -29,7 +28,7 @@
      int value = index.model()->data(index, Qt::EditRole).toInt();
      QCheckBox *CheckBox = static_cast<QCheckBox*>(editor);
      CheckBox->setChecked(value);
-     qDebug()<<"edit2";
+
  }
 
  void CheckBoxDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
@@ -45,6 +44,6 @@
      const QStyleOptionViewItem &option, const QModelIndex &/* index */) const
  {
      editor->setGeometry(option.rect);
-     qDebug()<<"edit4";
+
  }
 

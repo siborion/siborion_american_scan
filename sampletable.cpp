@@ -253,7 +253,7 @@ double sampletable::decRound(double Val, quint8 dec, quint16 speed)
     koef /= speed;
     koef *= 2000000;
     koef /= 50;
-    qDebug()<<koef;
+
     Val *= pow(10, dec);
     Val /= koef;
     Val =  round(Val);

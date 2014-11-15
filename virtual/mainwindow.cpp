@@ -46,7 +46,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 void MainWindow::moveSample(quint16 newX, quint8 newY)
 {
-    qDebug()<<newX<<" "<<newY;
+
     y[newX] = newY;
 }
 
@@ -84,7 +84,7 @@ void MainWindow::readPort()
         {
             rnd = qrand();
             rnd /= 10;
-            qDebug()<<rnd;
+
             for(quint16 j=0; j<rnd; j++)
             {
 //                i++;
