@@ -41,8 +41,8 @@ mesurement::mesurement(QWidget *parent) :
     //    QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
     pbMeasure = new ScanButton();
     //    pbMeasure->setSizePolicy(sizePolicy);
-    QIcon icon;
-    icon.addFile(QStringLiteral(":/test/scan"), QSize(), QIcon::Normal, QIcon::Off);
+//    QIcon icon;
+//    icon.addFile(QStringLiteral(":/test/scan2"), QSize(), QIcon::Normal, QIcon::Off);
 
     layoutBot->addWidget(fmPlot, 0, 0, 4, 1);
     layoutBot->addWidget(pKey,   5, 0, 1, 2);

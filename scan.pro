@@ -10,7 +10,7 @@ QMAKE_CXXFLAGS += -std=gnu++11
 QT       += core gui
 QT	 += serialport
 QT       += sql
-CONFIG   += thread
+#CONFIG   += thread
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 

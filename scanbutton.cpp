@@ -1,11 +1,19 @@
 #include "scanbutton.h"
+#include "qdebug.h"
 
 ScanButton::ScanButton()
 {
     doMeasure = false;
-    timer = new QTimer();
-    timer->start(200);
-    connect(timer, SIGNAL(timeout()), SLOT(doTimer()));
+    //    timer = new QTimer();
+    //    timer->start(200);
+    //    connect(timer, SIGNAL(timeout()), SLOT(doTimer()));
+
+    QIcon icon;
+
+    icon.addFile(QStringLiteral(":/test/scan"), QSize(), QIcon::Normal, QIcon::Off);
+    setIcon(icon);
+    setIconSize(QSize(30, 30));
+
 }
 
 void ScanButton::doTimer()
@@ -25,4 +33,3 @@ void ScanButton::doTimer()
     setIcon(icon);
     setIconSize(QSize(30, 30));
 }
-
