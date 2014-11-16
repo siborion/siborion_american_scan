@@ -18,5 +18,5 @@ void leAddZero::lineEditUpdate()
 {
     float val;
     val = this->text().toFloat();
-    this->setText(QString("%1").arg(val, 0, 'f', 2));
+    this->setText(QString("%1").arg(val, 5, 'f', 2, '0'));
 }
