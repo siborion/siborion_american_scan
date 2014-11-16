@@ -24,10 +24,10 @@ bigviewnumcur::~bigviewnumcur()
 
 void bigviewnumcur::setDisplay(double AL, double ACD, double LT, double VIT)
 {
-    ui->lCurAL->setText(QString("%1").arg(AL,4,'f',2));
-    ui->lCurACD->setText(QString("%1").arg(ACD,4,'f',2));
-    ui->lCurLT->setText(QString("%1").arg(LT,4,'f',2));
-    ui->lCurVIT->setText(QString("%1").arg(VIT,4,'f',2));
+    ui->lCurAL->setText(QString("%1").arg(AL,5,'f',2,'0'));
+    ui->lCurACD->setText(QString("%1").arg(ACD,5,'f',2,'0'));
+    ui->lCurLT->setText(QString("%1").arg(LT,5,'f',2,'0'));
+    ui->lCurVIT->setText(QString("%1").arg(VIT,5,'f',2,'0'));
 }
 
 //void bigviewnumcur::setPatient(QString FIO)
