@@ -19,7 +19,7 @@ patient::patient(quint32 id, QWidget *parent) :
     QPushButton *pbCancel = new QPushButton(tr("Cancel"));
     QPushButton *pbOk = new QPushButton(tr("Save"));
 
-    QLabel  *lRef        = new QLabel(tr("Ref. No"));
+//    QLabel  *lRef        = new QLabel(tr("Ref. No"));
     QLabel  *lId         = new QLabel(tr("Patient ID"));
     QLabel  *lFirstName  = new QLabel(tr("First Name"));
     QLabel  *lLastName   = new QLabel(tr("Last Name"));
@@ -39,8 +39,9 @@ patient::patient(quint32 id, QWidget *parent) :
     QLabel  *lK2         = new QLabel(tr("K2 - Value"));
     QLabel  *lK          = new QLabel(tr("K  - Value"));
 
-    QLineEdit  *leRef        = new QLineEdit(); leRef->setObjectName("VALref");
-    QLineEdit  *leId         = new QLineEdit(); leId->setObjectName("id");
+//    QLineEdit  *leRef        = new QLineEdit(); leRef->setObjectName("VALref");
+    QLineEdit  *leId         = new QLineEdit(); leId->setObjectName("VALid");
+    leId->setEnabled(false);
     QLineEdit  *leFirstName  = new QLineEdit(); leFirstName->setObjectName("VALname");
     QLineEdit  *leLastName   = new QLineEdit(); leLastName->setObjectName("VALlast");
     QDateEdit  *leBirth      = new QDateEdit(); leBirth->setObjectName("VALbirth");
@@ -48,7 +49,7 @@ patient::patient(quint32 id, QWidget *parent) :
     leAge        = new QLineEdit(); leAge->setObjectName("VALage");
     QRadioButton *rbMale     = new QRadioButton(tr("Male"));   rbMale->setObjectName("VALsex0");
     QRadioButton *rbFemale   = new QRadioButton(tr("Female")); rbFemale->setObjectName("VALsex1");
-    QLineEdit  *leAddress    = new QLineEdit(); leAddress->setObjectName(" VALadress");
+    QLineEdit  *leAddress    = new QLineEdit(); leAddress->setObjectName("VALadress");
     QLineEdit  *leCity       = new QLineEdit(); leCity->setObjectName("VALcity");
     QLineEdit  *leState      = new QLineEdit(); leState->setObjectName("VALstate");
     QLineEdit  *leZip        = new QLineEdit(); leZip->setObjectName("VALzip");
@@ -63,7 +64,7 @@ patient::patient(quint32 id, QWidget *parent) :
     leKRight    = new QLineEdit();  leKRight->setObjectName("VALkright");
     QSpacerItem *buttonSpacerBot = new QSpacerItem(20, 40, QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-    layout->addWidget(lRef,      0, 0);
+//    layout->addWidget(lRef,      0, 0);
     layout->addWidget(lId,       1, 0);
     layout->addWidget(lFirstName,2, 0);
     layout->addWidget(lLastName, 3, 0);
@@ -78,7 +79,7 @@ patient::patient(quint32 id, QWidget *parent) :
     layout->addWidget(lNotes,    12, 0);
     layout->addWidget(lDoctor,   13, 0);
 
-    layout->addWidget(leRef,      0, 1, 1, 1);
+//    layout->addWidget(leRef,      0, 1, 1, 1);
     layout->addWidget(leId,       1, 1, 1, 1);
     layout->addWidget(leFirstName,2, 1, 1, 2);
     layout->addWidget(leLastName, 3, 1, 1, 2);

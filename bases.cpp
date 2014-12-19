@@ -90,19 +90,19 @@ void bases::adjTable(BaseType::Status Val)
     switch (TypeBase)
     {
     case BaseType::enPatient:
-        columnPercent<<10   <<   10        <<    40     <<       20        <<     20;
-        lst<<tr("Ref.№")<<tr("Patient ID")<<tr("Name")<<tr("Doctor Name")<<tr("Notes");
+        columnPercent<<   8        <<    30     <<       30        <<     30;
+        lst<<tr("Patient ID")<<tr("Name")<<tr("Doctor Name")<<tr("Notes");
         lstButton<<tr("Add Patient")<<tr("Edit Patient")<<tr("Delete Patient")<<tr("Patient History");
-        str = "SELECT  ref, id, name||' '||last as name, doctor, notes from v_patient;";
+        str = "SELECT id, name||' '||last as name, doctor, notes from v_patient;";
         break;
     case BaseType::enDoctor:
-        columnPercent   <<       10        <<      30        <<      30       <<     30;
+        columnPercent   <<       8        <<      30        <<      30       <<     30;
         lst             <<tr("Doctor Id") <<tr("First Name")<<tr("Last Name")<<tr("Notes");
         lstButton<<tr("Add Doctor")<<tr("Edit Doctor")<<tr("Delete Doctor");
         str = "SELECT id, name, last, note from doctor;";
         break;
     case BaseType::enLens:
-        columnPercent   << 0 <<            10       <<      20      <<      20         <<     20    <<      20    <<      10;
+        columnPercent   << 0 <<            8       <<      20      <<      20         <<     20    <<      20    <<      10;
         lst             <<tr("id") <<tr("Lens Name")<<tr("Mfg Name")<<tr("Mfg A_Const")<<tr("Mfg ACD")<<tr("Mfg SF")<<tr("Hoffer ACD");
         lstButton<<tr("Add Lens")<<tr("Edit Lens")<<tr("Delete Lens");
         str = "SELECT id, name, mfg, aconst, acd, sf, hacd from lens;";
@@ -179,7 +179,7 @@ void bases::Edit()
 
     if(TypeBase==BaseType::enPatient)
     {
-        patient *pPatient = new patient(model->data(model->index(curRow, 1)).toUInt());
+        patient *pPatient = new patient(model->data(model->index(curRow, 0)).toUInt());
         if(pPatient->exec() == QDialog::Accepted)
         {
             adjTable(BaseType::enPatient);
