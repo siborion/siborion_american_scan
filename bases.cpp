@@ -257,5 +257,5 @@ void bases::changeRow(QModelIndex cur, QModelIndex prev)
 {
     Q_UNUSED(cur); Q_UNUSED(prev);
     if(TypeBase ==  BaseType::enPatient)
-        curentParam->changePatient(model->data(model->index(cur.row(),1)).toInt());
+        curentParam->changePatient(model->data(model->index(cur.row(), 0)).toInt());
 }
