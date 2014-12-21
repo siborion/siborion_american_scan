@@ -147,10 +147,12 @@ void mesurement::openPort()
     port->waitForBytesWritten(-1);
     doDll = ((cbPort->currentIndex()+1)==cbPort->count());
 
-
-
     if(pbMeasure->doMeasure)
+    {
         stopMeasure();
+        if((countMeasure>0)&&(curentParam->regimMeasure == RegimMeasure::MANUAL))
+            pSampleTable->addSampleToTable(baManualTmp2, mainManualParam, true);
+    }
     else
     {
         if(doDll)
@@ -191,8 +193,11 @@ void mesurement::openPort()
         }
         timer->start(50);
         countMeasure=0;
-        pSampleTable->resultParam.AL = pSampleTable->resultParam.ACD = pSampleTable->resultParam.LT = pSampleTable->resultParam.Vit = 0;
-        refreshMainParam();
+        if(curentParam->regimMeasure != RegimMeasure::MANUAL)
+        {
+            pSampleTable->resultParam.AL = pSampleTable->resultParam.ACD = pSampleTable->resultParam.LT = pSampleTable->resultParam.Vit = 0;
+            refreshMainParam();
+        }
     }
 }
 
@@ -258,10 +263,13 @@ void mesurement::doTimer()
                         stopMeasure();
                     break;
                 case RegimMeasure::MANUAL:
-                    if(countMeasure==0)
-                        pSampleTable->addSampleToTable(baTmp2, mainParam, true);
-                    else
-                        pSampleTable->addSampleToTable(baTmp2, mainParam, false);
+//                    if(countMeasure==0)
+//                        pSampleTable->addSampleToTable(baTmp2, mainParam, true);
+//                    else
+//                        pSampleTable->addSampleToTable(baTmp2, mainParam, false);
+                    baManualTmp2 = baTmp2;
+                    mainManualParam = mainParam;
+
                     countMeasure=1;
                     break;
                 }

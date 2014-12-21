@@ -265,7 +265,7 @@ void sampletable::changeRow(QModelIndex curIndex)
 {
     QList<quint16> extremum;
     tableIndex = curIndex;
-    if(curIndex.row()>0)
+    if(curIndex.row()>=0)
     {
         curIndex = twMeas->model()->index(curIndex.row(), 0);
         baSample=(twMeas->model()->data(curIndex, Qt::UserRole).toByteArray());
@@ -448,7 +448,6 @@ void sampletable::goToLastSample()
     }
 }
 
-
 void sampletable::changeKeySlot()
 {
     QList<int> columnPercent;
@@ -457,15 +456,15 @@ void sampletable::changeKeySlot()
 
     if (curentParam->regimMeasure  == RegimMeasure::MANUAL)
     {
-        columnPercent<<10      <<80           <<00      <<00       <<00      <<00;
+        columnPercent<<10      <<80            <<00      <<00       <<00      <<00;
         lst          <<tr("No")<<tr("Distance");
-        model = (QStandardItemModel*)twMeas->model();
     }
     else
     {
         columnPercent<<10      <<23            <<15      <<15       <<15      <<15;
         lst          <<tr("No")<<tr("AveVelAl")<<tr("AL")<<tr("ACD")<<tr("LT")<<tr("VIT");
     }
+    model = (QStandardItemModel*)twMeas->model();
     model->setHorizontalHeaderLabels(lst);
     twMeas->setColumnPercent(columnPercent);
 }

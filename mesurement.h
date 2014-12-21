@@ -50,7 +50,8 @@ public:
     sampletable *pSampleTable;
 
 private:
-
+    QByteArray  baManualTmp2;
+    stMainParam mainManualParam;
     quint8 countRequest;
     FT_STATUS ftStatus;
     DWORD ftNumDevice;
