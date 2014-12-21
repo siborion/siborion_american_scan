@@ -451,6 +451,23 @@ void sampletable::goToLastSample()
 
 void sampletable::changeKeySlot()
 {
+    QList<int> columnPercent;
+    QStringList lst;
+    QStandardItemModel *model = new QStandardItemModel();
+
+    if (curentParam->regimMeasure  == RegimMeasure::MANUAL)
+    {
+        columnPercent<<10      <<80           <<00      <<00       <<00      <<00;
+        lst          <<tr("No")<<tr("Distance");
+        model = (QStandardItemModel*)twMeas->model();
+    }
+    else
+    {
+        columnPercent<<10      <<23            <<15      <<15       <<15      <<15;
+        lst          <<tr("No")<<tr("AveVelAl")<<tr("AL")<<tr("ACD")<<tr("LT")<<tr("VIT");
+    }
+    model->setHorizontalHeaderLabels(lst);
+    twMeas->setColumnPercent(columnPercent);
 }
 
 

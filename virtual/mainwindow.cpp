@@ -89,7 +89,7 @@ void MainWindow::readPort()
             {
 //                i++;
                 qDebug()<<"------------------------";
-//                baTmp.append((char)0);
+                baTmp.append((char)0);
             }
         }
 
