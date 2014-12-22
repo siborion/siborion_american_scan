@@ -26,6 +26,7 @@
 #include <QSerialPort>
 #include <QSerialPortInfo>
 #include <QTimer>
+#include <QTime>
 #include <QTextEdit>
 #include "scanbutton.h"
 #include "typedef.h"
@@ -63,6 +64,7 @@ private:
     DWORD BytesReceivedCount;
     char RxBuffer[2048];
     bool doDll;
+    QTime curTime;
 
 
     Velosity *velosity;

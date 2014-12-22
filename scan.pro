@@ -23,13 +23,16 @@ config -= debug
 config += debug_and_release
 CONFIG += build_all
 
+  LIBS += ftd2xx.lib
+
 CONFIG(debug, debug|release) {
   LIBS += -lqwtd -LC:\Qt\Qwt-6.1.0\lib
+#  LIBS += ftd2xx.lib
 #  LIBS += -L"C:\Qt\Qwt-6.1.0\lib" -lqwt
 }
 CONFIG(release, debug|release) {
   LIBS +=  -lqwt -LC:\Qt\Qwt-6.1.0\lib
-  LIBS += ftd2xx.lib
+#  LIBS += ftd2xx.lib
 #  LIBS += -lftd2xx
 }
 

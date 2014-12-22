@@ -149,9 +149,9 @@ void mesurement::openPort()
 
     if(pbMeasure->doMeasure)
     {
-        stopMeasure();
         if((countMeasure>0)&&(curentParam->regimMeasure == RegimMeasure::MANUAL))
             pSampleTable->addSampleToTable(baManualTmp2, mainManualParam, true);
+        stopMeasure();
     }
     else
     {
@@ -263,14 +263,19 @@ void mesurement::doTimer()
                         stopMeasure();
                     break;
                 case RegimMeasure::MANUAL:
-//                    if(countMeasure==0)
-//                        pSampleTable->addSampleToTable(baTmp2, mainParam, true);
-//                    else
-//                        pSampleTable->addSampleToTable(baTmp2, mainParam, false);
                     baManualTmp2 = baTmp2;
                     mainManualParam = mainParam;
+                    if(curentParam->regimContact == RegimContact::CONTACT)
+                        mainParam.Start = 4;
+                    pSampleTable->resultParam.AL=pSampleTable->decRound(mainParam.Retina - mainParam.Start, 2,1555);
 
-                    countMeasure=1;
+                    if(curTime.addMSecs(500)<QTime::currentTime())
+                    {
+                        curTime = QTime::currentTime();
+                        refreshMainParam();
+                    }
+                    else
+                        countMeasure=1;
                     break;
                 }
             }

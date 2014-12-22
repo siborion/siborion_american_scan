@@ -27,12 +27,13 @@ public:
     adjview *twMeas;
     stPrintSample printSample();
     void goToLastSample();
+    double decRound(double Val, quint8 dec, quint16 speed);
+
 
 private:
     double AL;
 //    bool findMainParam(QList<quint16> *extremum, stMainParam &mainParam);
     void refreshTable(quint8 rowNom, stMainParam mainParam);
-    double decRound(double Val, quint8 dec, quint16 speed);
     QModelIndex tableIndex;
     void refreshResult(quint8 rowNom);
     CurentParam *curentParam;
