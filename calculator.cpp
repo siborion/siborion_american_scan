@@ -115,6 +115,9 @@ void calculator::refreshFormuls()
     stPatientParam patientParam;
     stPersonalParam personalParam;
 
+    quint8 nFormula;
+    QString lensName, lensAconst, lensAcd, lensFs;
+
     patientParam = pCalcPatient->getParam();
     personalParam = pCalcPatient->getPersonalParam();
 
@@ -125,46 +128,60 @@ void calculator::refreshFormuls()
     Formula2->setEnabled(false);
     Formula3->setEnabled(false);
 
-    for(quint8 i=0; i<modelMainLens->rowCount() && i<3; i++)
+    if(modelMainLens->rowCount()>0)
     {
-        quint8 nFormula;
-        QString lensName, lensAconst, lensAcd, lensFs;
+        for(quint8 i=0; i<modelMainLens->rowCount() && i<3; i++)
+        {
 
-        nFormula   = twLens->model()->itemData(twLens->model()->index(i,4)).value(0).toInt();
-        lensName   = twLens->model()->itemData(twLens->model()->index(i,0)).value(0).toString();
+            nFormula   = twLens->model()->itemData(twLens->model()->index(i,4)).value(0).toInt();
+            lensName   = twLens->model()->itemData(twLens->model()->index(i,0)).value(0).toString();
 
+            if(personalParam.AConst>0)
+                lensAconst = QString("%1").arg(personalParam.AConst);
+            else
+                lensAconst = twLens->model()->itemData(twLens->model()->index(i,1)).value(0).toString();
+
+            if(personalParam.ACD>0)
+                lensAcd = QString("%1").arg(personalParam.ACD);
+            else
+                lensAcd = twLens->model()->itemData(twLens->model()->index(i,2)).value(0).toString();
+
+            if(personalParam.SF>0)
+                lensFs = QString("%1").arg(personalParam.SF);
+            else
+                lensFs = twLens->model()->itemData(twLens->model()->index(i,3)).value(0).toString();
+
+
+            switch (i)
+            {
+            case 0:
+                Formula1->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, patientParam.K, patientParam.AL, patientParam.ACD);
+                Formula1->setEnabled(true);
+                break;
+            case 1:
+                Formula2->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, patientParam.K, patientParam.AL, patientParam.ACD);
+                Formula2->setEnabled(true);
+                break;
+            case 2:
+                Formula3->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, patientParam.K, patientParam.AL, patientParam.ACD);
+                Formula3->setEnabled(true);
+            default:
+                break;
+            }
+        }
+    }
+    else
+    {
+        nFormula = 0;
+        lensName   = "no Name";
         if(personalParam.AConst>0)
             lensAconst = QString("%1").arg(personalParam.AConst);
-        else
-            lensAconst = twLens->model()->itemData(twLens->model()->index(i,1)).value(0).toString();
-
         if(personalParam.ACD>0)
             lensAcd = QString("%1").arg(personalParam.ACD);
-        else
-            lensAcd = twLens->model()->itemData(twLens->model()->index(i,2)).value(0).toString();
-
         if(personalParam.SF>0)
             lensFs = QString("%1").arg(personalParam.SF);
-        else
-            lensFs = twLens->model()->itemData(twLens->model()->index(i,3)).value(0).toString();
-
-
-        switch (i)
-        {
-        case 0:
             Formula1->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, patientParam.K, patientParam.AL, patientParam.ACD);
             Formula1->setEnabled(true);
-            break;
-        case 1:
-            Formula2->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, patientParam.K, patientParam.AL, patientParam.ACD);
-            Formula2->setEnabled(true);
-            break;
-        case 2:
-            Formula3->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, patientParam.K, patientParam.AL, patientParam.ACD);
-            Formula3->setEnabled(true);
-        default:
-            break;
-        }
     }
 }
 
