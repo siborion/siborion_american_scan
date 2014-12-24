@@ -172,7 +172,7 @@ void calculator::refreshFormuls()
     }
     else
     {
-        nFormula = 0;
+        nFormula = 1;
         lensName   = "no Name";
         if(personalParam.AConst>0)
             lensAconst = QString("%1").arg(personalParam.AConst);
@@ -180,8 +180,8 @@ void calculator::refreshFormuls()
             lensAcd = QString("%1").arg(personalParam.ACD);
         if(personalParam.SF>0)
             lensFs = QString("%1").arg(personalParam.SF);
-            Formula1->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, patientParam.K, patientParam.AL, patientParam.ACD);
-            Formula1->setEnabled(true);
+        Formula1->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, patientParam.K, patientParam.AL, patientParam.ACD);
+        Formula1->setEnabled(true);
     }
 }
 
