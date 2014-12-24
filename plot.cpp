@@ -289,6 +289,23 @@ void Plot::move( const QPoint &pos )
                 yData[i] = sample.y();
             }
         }
+
+        if(d_selectedMarkCurve->title().text()== "Start_Interval")
+        {
+            curentParam->corneaX1 = qMin(xData[0], xData[1]);
+            curentParam->corneaX2 = qMax(xData[0], xData[1]);
+        }
+        if(d_selectedMarkCurve->title().text()== "Lens_Interval")
+        {
+            curentParam->lensX1 = qMin(xData[0], xData[1]);
+            curentParam->lensX2 = qMax(xData[0], xData[1]);
+        }
+        if(d_selectedMarkCurve->title().text()== "Retina_Interval")
+        {
+            curentParam->retinaX1 = qMin(xData[0], xData[1]);
+            curentParam->retinaX2 = qMax(xData[0], xData[1]);
+        }
+
         d_selectedMarkCurve->setSamples( xData, yData );
     }
 }
