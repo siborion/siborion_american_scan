@@ -279,6 +279,8 @@ void Plot::move( const QPoint &pos )
             if ( i == d_selectedPoint )
             {
                 xData[i] = this->invTransform(d_selectedMarkCurve->xAxis(), pos.x());
+                if(xData[i]<0)
+                    xData[i]=0;
                 yData[i] = sample.y();
             }
             else
