@@ -45,6 +45,8 @@ bases::bases(QWidget *parent) :
     twTable = new adjview();
     twTable->setModel(model);
     twTable->setSelectionBehavior(QAbstractItemView::SelectRows);
+    twTable->setSelectionMode(QAbstractItemView::SingleSelection);
+
 
     topRightLayout->addWidget(gbSelect);
     topRightLayout->addWidget(lSearch);

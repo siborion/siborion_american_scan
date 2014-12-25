@@ -9,9 +9,9 @@ class leAddZero : public QLineEdit
 public:
     explicit leAddZero(QWidget *parent = 0);
     void setTextZero(QString);
+    void lineEditUpdate();
 
 private slots:
-    void lineEditUpdate();
 };
 
 #endif // LEADDZERO_H

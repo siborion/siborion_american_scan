@@ -110,6 +110,49 @@ void calculator_patient::setPatient(quint16 id, QString Patient, QString Doctor)
 
 void calculator_patient::updateParam()
 {
+    double dTmp;
+//    ui->leAConst_personal
+//    ui->leACD_personal
+//    ui->leSF_personal
+    QObject* sender = const_cast<QObject*>(QObject::sender());
+    if(sender->objectName()=="leAConst_personal")
+    {
+        dTmp =  ui->leAConst_personal->text().toDouble();
+        dTmp =  (0.5663 * dTmp) - 65.60;
+        ui->leSF_personal->setText(QString("%1").arg(dTmp));
+        ui->leSF_personal->lineEditUpdate();
+
+        dTmp =  ui->leAConst_personal->text().toDouble();
+        dTmp = (0.5663* dTmp - 65.60 +3.595) / 0.9704;
+        ui->leACD_personal->setText(QString("%1").arg(dTmp));
+        ui->leACD_personal->lineEditUpdate();
+    }
+    if(sender->objectName()=="leACD_personal")
+    {
+        dTmp = ui->leACD_personal->text().toDouble();
+        dTmp = (0.9704 * dTmp) - 3.595;
+        ui->leSF_personal->setText(QString("%1").arg(dTmp));
+        ui->leSF_personal->lineEditUpdate();
+
+        dTmp = ui->leACD_personal->text().toDouble();
+        dTmp = (0.9704 * dTmp - 3.595 + 65.60) / 0.5663;
+        ui->leAConst_personal->setText(QString("%1").arg(dTmp));
+        ui->leAConst_personal->lineEditUpdate();
+    }
+    if(sender->objectName()=="leSF_personal")
+    {
+        dTmp = ui->leSF_personal->text().toDouble();
+        dTmp += 65.60;
+        dTmp /= 0.5663;
+        ui->leAConst_personal->setText(QString("%1").arg(dTmp));
+        ui->leAConst_personal->lineEditUpdate();
+
+        dTmp = ui->leSF_personal->text().toDouble();
+        dTmp += 3.595;
+        dTmp /= 0.9704;
+        ui->leACD_personal->setText(QString("%1").arg(dTmp));
+        ui->leACD_personal->lineEditUpdate();
+    }
     emit (refreshFormula());
 }
 
