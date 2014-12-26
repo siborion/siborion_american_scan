@@ -20,3 +20,8 @@ void leAddZero::lineEditUpdate()
     val = this->text().toFloat();
     this->setText(QString("%1").arg(val, 5, 'f', 2, '0'));
 }
+
+void leAddZero::lineEditRefresh()
+{
+    lineEditUpdate();
+}

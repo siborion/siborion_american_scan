@@ -60,6 +60,7 @@ private:
     QString *svg;
     QLabel    *lSearch;
     QLineEdit *leSearch;
+    QModelIndex curPatient;
 
 private slots:
     void adjTable(BaseType::Status);

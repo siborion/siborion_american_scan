@@ -5,7 +5,7 @@ bases::bases(QWidget *parent) :
 {
     pBase = scanbase::instanse();
     curentParam = CurentParam::instanse();
-
+//    curPatient = 0;
     QHBoxLayout *Layout = new QHBoxLayout(this);
     QVBoxLayout *leftLayout  = new QVBoxLayout();
     QGridLayout *rightLayout = new QGridLayout();
@@ -123,6 +123,9 @@ void bases::adjTable(BaseType::Status Val)
         pbPatientHistory->setVisible(false);
     twTable->setColumnPercent(columnPercent);
     fillModelHead(lst);
+
+    if(TypeBase==BaseType::enPatient)
+        twTable->setCurrentIndex(curPatient);
 }
 
 void bases::changeBasePatient(bool Val)
@@ -259,5 +262,8 @@ void bases::changeRow(QModelIndex cur, QModelIndex prev)
 {
     Q_UNUSED(cur); Q_UNUSED(prev);
     if(TypeBase ==  BaseType::enPatient)
+    {
         curentParam->changePatient(model->data(model->index(cur.row(), 0)).toInt());
+       curPatient = twTable->currentIndex();
+    }
 }

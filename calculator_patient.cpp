@@ -120,24 +120,24 @@ void calculator_patient::updateParam()
         dTmp =  ui->leAConst_personal->text().toDouble();
         dTmp =  (0.5663 * dTmp) - 65.60;
         ui->leSF_personal->setText(QString("%1").arg(dTmp));
-        ui->leSF_personal->lineEditUpdate();
+//        ui->leSF_personal->lineEditRefresh();
 
         dTmp =  ui->leAConst_personal->text().toDouble();
         dTmp = (0.5663* dTmp - 65.60 +3.595) / 0.9704;
         ui->leACD_personal->setText(QString("%1").arg(dTmp));
-        ui->leACD_personal->lineEditUpdate();
+//        ui->leACD_personal->lineEditRefresh();
     }
     if(sender->objectName()=="leACD_personal")
     {
         dTmp = ui->leACD_personal->text().toDouble();
         dTmp = (0.9704 * dTmp) - 3.595;
         ui->leSF_personal->setText(QString("%1").arg(dTmp));
-        ui->leSF_personal->lineEditUpdate();
+//        ui->leSF_personal->lineEditRefresh();
 
         dTmp = ui->leACD_personal->text().toDouble();
         dTmp = (0.9704 * dTmp - 3.595 + 65.60) / 0.5663;
         ui->leAConst_personal->setText(QString("%1").arg(dTmp));
-        ui->leAConst_personal->lineEditUpdate();
+//        ui->leAConst_personal->lineEditRefresh();
     }
     if(sender->objectName()=="leSF_personal")
     {
@@ -145,13 +145,13 @@ void calculator_patient::updateParam()
         dTmp += 65.60;
         dTmp /= 0.5663;
         ui->leAConst_personal->setText(QString("%1").arg(dTmp));
-        ui->leAConst_personal->lineEditUpdate();
+//        ui->leAConst_personal->lineEditRefresh();
 
         dTmp = ui->leSF_personal->text().toDouble();
         dTmp += 3.595;
         dTmp /= 0.9704;
         ui->leACD_personal->setText(QString("%1").arg(dTmp));
-        ui->leACD_personal->lineEditUpdate();
+//        ui->leACD_personal->lineEditRefresh();
     }
     emit (refreshFormula());
 }

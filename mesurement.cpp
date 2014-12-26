@@ -265,8 +265,8 @@ void mesurement::doTimer()
                 case RegimMeasure::MANUAL:
                     baManualTmp2 = baTmp2;
                     mainManualParam = mainParam;
-                    if(curentParam->regimContact == RegimContact::CONTACT)
-                        mainParam.Start = 4;
+//                    if(curentParam->regimContact == RegimContact::CONTACT)
+//                        mainParam.Start = 4;
                     pSampleTable->resultParam.AL=pSampleTable->decRound(mainParam.Retina - mainParam.Start, 2,1555);
 
                     if(curTime.addMSecs(500)<QTime::currentTime())

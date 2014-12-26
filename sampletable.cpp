@@ -456,7 +456,7 @@ void sampletable::changeKeySlot()
 
     if (curentParam->regimMeasure  == RegimMeasure::MANUAL)
     {
-        columnPercent<<10      <<00            <<80      <<00       <<00      <<00;
+        columnPercent<<10      <<5            <<60      <<5       <<5      <<5;
         lst          <<tr("No")<<tr("AveVelAl")<<tr("Distance");
     }
     else
