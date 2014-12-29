@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/test">
+        <file alias="doctor">pic/doctor.png</file>
+        <file alias="patient">pic/pacient.png</file>
+        <file alias="Del">pic/bin_empty.png</file>
+        <file alias="scan4">pic/scan4.png</file>
+        <file alias="scan1">pic/scan1.png</file>
+        <file alias="scan2">pic/scan2.png</file>
+        <file alias="scan3">pic/scan3.png</file>
+    </qresource>
+</RCC>

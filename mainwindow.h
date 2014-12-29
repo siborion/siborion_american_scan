@@ -1,6 +1,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "bases.h"
+#include "scanbase.h"
 #include <QMainWindow>
 
 namespace Ui {
@@ -17,6 +19,9 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    Bases *bases;
+    Scanbase *scanbase;
+    StPatient *curPatient;
 
 signals:
     void refreshFormula();
