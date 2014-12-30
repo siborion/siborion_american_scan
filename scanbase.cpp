@@ -12,6 +12,7 @@ Scanbase::Scanbase(QObject *parent)
 
     if(pDB.open())
     {
+
     }
     else
     {
@@ -19,19 +20,38 @@ Scanbase::Scanbase(QObject *parent)
 //        msgBox.exec();
     }
 
-    StPatient  curPatient;
-    StDoctor   curDoctor;
-    StLens     curLensl;
+
+//    getBasesTable(Base::enPatient);
 
 }
 
-void Scanbase::getBasesTable(QString str)
+void Scanbase::getBasesModel(Base::TypeBase typeBase)
 {
-//    qDebug()<<str;
-//    modelBases = (QSqlQueryModel)pDB.exec(str);
+    QString str;
+    QStringList lst;
+
+    switch (typeBase)
+    {
+    case Base::enPatient:
+        lst<<tr("Patient ID")<<tr("Name")<<tr("Doctor Name")<<tr("Notes");
+        str = "SELECT id, name||' '||last as name, doctor, notes from v_patient;";
+        break;
+    case Base::enDoctor:
+        lst             <<tr("Doctor Id") <<tr("First Name")<<tr("Last Name")<<tr("Notes");
+        str = "SELECT id, name, last, note from doctor;";
+        break;
+    case Base::enLens:
+        lst             <<tr("id") <<tr("Lens Name")<<tr("Mfg Name")<<tr("Mfg A_Const")<<tr("Mfg ACD")<<tr("Mfg SF")<<tr("Hoffer ACD");
+        str = "SELECT id, name, mfg, aconst, acd, sf, hacd from lens;";
+        break;
+    }
     modelBases->setQuery(str);
-//    qDebug()<<modelBases->rowCount();
-    emit setModel(modelBases);
+    qDebug()<<modelBases->rowCount();
+    for(int i=0; i<lst.count(); i++)
+    {
+        modelBases->setHeaderData(i, Qt::Horizontal, lst.at(i), Qt::DisplayRole);
+    }
+    emit setBasesModel(modelBases);
 }
 
 QSqlQuery Scanbase::getData(QString str)

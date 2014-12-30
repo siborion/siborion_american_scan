@@ -12,6 +12,7 @@
 #include <QDir>
 #include <QMessageBox>
 #include <QDate>
+#include "typedef.h"
 
 struct StPatient
 {
@@ -49,17 +50,20 @@ class Scanbase : public QObject //QSqlDataguardbase
     Q_OBJECT
 private:
     QSqlDatabase    pDB;
-    QSqlQueryModel *modelBases;
 
 public:
     explicit Scanbase(QObject *parent = 0);
     QSqlQuery getData(QString str);
+    StPatient  curPatient;
+    StDoctor   curDoctor;
+    StLens     curLensl;
+    QSqlQueryModel *modelBases;
 
 public slots:
-    void getBasesTable(QString);
+    void getBasesModel(Base::TypeBase);
 
 Q_SIGNALS:
-    void setModel(QSqlQueryModel*);
+    void setBasesModel(QSqlQueryModel*);
 
 };
 

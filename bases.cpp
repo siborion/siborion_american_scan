@@ -12,9 +12,12 @@ Bases::Bases(QWidget *parent) :
     QGroupBox *gbSelect = new QGroupBox();
     QHBoxLayout *groupBoxLayout  = new QHBoxLayout(gbSelect);
     QRadioButton *rbPatient = new QRadioButton(tr(""), gbSelect);
+    rbPatient->setObjectName("rbPatient");
     rbPatient->setChecked(true);
     QRadioButton *rbDoctor  = new QRadioButton(tr(""), gbSelect);
+    rbDoctor->setObjectName("rbDoctor");
     QRadioButton *rbLens    = new QRadioButton(tr("Lens Styles"), gbSelect);
+    rbLens->setObjectName("rbLens");
     groupBoxLayout->addWidget(rbPatient);
     groupBoxLayout->addWidget(rbDoctor);
     groupBoxLayout->addWidget(rbLens);
@@ -44,7 +47,6 @@ Bases::Bases(QWidget *parent) :
     twTable->setSelectionBehavior(QAbstractItemView::SelectRows);
     twTable->setSelectionMode(QAbstractItemView::SingleSelection);
 
-
     topRightLayout->addWidget(gbSelect);
     topRightLayout->addWidget(lSearch);
     topRightLayout->addWidget(leSearch);
@@ -61,50 +63,43 @@ Bases::Bases(QWidget *parent) :
     Layout->addLayout(leftLayout);
     Layout->addLayout(rightLayout);
 
-    adjTable(BaseType::enPatient);
+    numRowPatient = -1;
+    typeBase = Base::enPatient;
 
-    if(model->rowCount()>0)
-    {
-    }
-
-    connect(rbPatient, SIGNAL(clicked(bool)), SLOT(changeBasePatient(bool)));
-    connect(rbDoctor, SIGNAL(clicked(bool)), SLOT(changeBaseDoctor(bool)));
-    connect(rbLens, SIGNAL(clicked(bool)), SLOT(changeBaseLens(bool)));
+    connect(rbPatient, SIGNAL(clicked(bool)), SLOT(changeBase(bool)));
+    connect(rbDoctor, SIGNAL(clicked(bool)), SLOT(changeBase(bool)));
+    connect(rbLens, SIGNAL(clicked(bool)), SLOT(changeBase(bool)));
     connect(pbAdd,  SIGNAL(pressed()), SLOT(Add()));
     connect(pbEdit, SIGNAL(pressed()), SLOT(Edit()));
     connect(pbDel, SIGNAL(pressed()), SLOT(Del()));
     connect(twTable, SIGNAL(doubleClicked(QModelIndex)), SLOT(EditIndex(QModelIndex)));
-    connect(twTable->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), SLOT(changeRow(QModelIndex,QModelIndex)));
 }
 
-void Bases::adjTable(BaseType::Status Val)
+void Bases::adjTable()
 {
-    QString str;
-    QStringList lst;
+    emit getModel(typeBase);
+}
+
+void Bases::setModel(QSqlQueryModel *modelBases)
+{
     QStringList lstButton;
     QList<int>  columnPercent;
-
-    columnPercent.clear();
-    TypeBase = Val;
-    switch (TypeBase)
+    model = modelBases;
+    twTable->setModel(model);
+    switch (typeBase)
     {
-    case BaseType::enPatient:
+    case Base::enPatient:
         columnPercent<<   8        <<    30     <<       30        <<     30;
-        lst<<tr("Patient ID")<<tr("Name")<<tr("Doctor Name")<<tr("Notes");
         lstButton<<tr("Add Patient")<<tr("Edit Patient")<<tr("Delete Patient")<<tr("Patient History");
-        str = "SELECT id, name||' '||last as name, doctor, notes from v_patient;";
+        twTable->selectRow(numRowPatient);
         break;
-    case BaseType::enDoctor:
+    case Base::enDoctor:
         columnPercent   <<       8        <<      30        <<      30       <<     30;
-        lst             <<tr("Doctor Id") <<tr("First Name")<<tr("Last Name")<<tr("Notes");
         lstButton<<tr("Add Doctor")<<tr("Edit Doctor")<<tr("Delete Doctor");
-        str = "SELECT id, name, last, note from doctor;";
         break;
-    case BaseType::enLens:
+    case Base::enLens:
         columnPercent   << 0 <<            8       <<      20      <<      20         <<     20    <<      20    <<      10;
-        lst             <<tr("id") <<tr("Lens Name")<<tr("Mfg Name")<<tr("Mfg A_Const")<<tr("Mfg ACD")<<tr("Mfg SF")<<tr("Hoffer ACD");
         lstButton<<tr("Add Lens")<<tr("Edit Lens")<<tr("Delete Lens");
-        str = "SELECT id, name, mfg, aconst, acd, sf, hacd from lens;";
         break;
     }
     pbAdd->setText (lstButton.at(0));
@@ -118,62 +113,49 @@ void Bases::adjTable(BaseType::Status Val)
     else
         pbPatientHistory->setVisible(false);
     twTable->setColumnPercent(columnPercent);
-    fillModelHead(lst);
-
-    if(TypeBase==BaseType::enPatient)
-        twTable->setCurrentIndex(curPatient);
-
-    emit getBasesTable(str);
 }
 
-void Bases::setModel(QSqlQueryModel *modelBases)
-{
-    model = modelBases;
-    twTable->setModel(model);
-}
-
-void Bases::changeBasePatient(bool Val)
+void Bases::changeBase(bool Val)
 {
     if(Val)
-        adjTable(BaseType::enPatient);
-}
-void Bases::changeBaseDoctor(bool Val)
-{
-    if(Val)
-        adjTable(BaseType::enDoctor);
-}
-void Bases::changeBaseLens(bool Val)
-{
-    if(Val)
-        adjTable(BaseType::enLens);
+    {
+        QObject* sender = const_cast<QObject*>(QObject::sender());
+        if(sender->objectName() == "rbPatient")
+            typeBase = Base::enPatient;
+        if(sender->objectName() == "rbDoctor")
+            typeBase = Base::enDoctor;
+        if(sender->objectName() == "rbLens")
+            typeBase = Base::enLens;
+        adjTable();
+    }
 }
 
 void Bases::Add()
 {
-    if(TypeBase==BaseType::enPatient)
+    if(typeBase==Base::enPatient)
     {
         Dialog_Patient *pPatient = new Dialog_Patient(0);
         if(pPatient->exec() == QDialog::Accepted)
         {
-            adjTable(BaseType::enPatient);
+            adjTable();
         }
         delete pPatient;
     }
-    if(TypeBase==BaseType::enDoctor)
+    if(typeBase==Base::enDoctor)
     {
         Dialog_Doctor *pDoctor = new Dialog_Doctor(0);
         if(pDoctor->exec() == QDialog::Accepted)
         {
-            adjTable(BaseType::enDoctor);
+            adjTable();
         }
         delete pDoctor;
     }
-    if(TypeBase==BaseType::enLens)
+    if(typeBase==Base::enLens)
     {
         Dialog_Lens *pLens = new Dialog_Lens(0);
         if(pLens->exec() == QDialog::Accepted)
         {
-            adjTable(BaseType::enLens);
+            adjTable();
         }
         delete pLens;
     }
@@ -254,20 +236,16 @@ void Bases::Del()
 //    }
 }
 
-void Bases::fillModelHead(QStringList sl)
-{
-    for(int i=0; i<sl.count(); i++)
-    {
-        model->setHeaderData(i, Qt::Horizontal, sl.at(i), Qt::DisplayRole);
-    }
-}
-
 void Bases::changeRow(QModelIndex cur, QModelIndex prev)
 {
     Q_UNUSED(cur); Q_UNUSED(prev);
-//    if(TypeBase ==  BaseType::enPatient)
-//    {
-//        curentParam->changePatient(model->data(model->index(cur.row(), 0)).toInt());
-//       curPatient = twTable->currentIndex();
-//    }
+    if(typeBase == Base::enPatient)
+       numRowPatient = twTable->currentIndex().row();
+}
+
+void Bases::Init()
+{
+    typeBase = Base::enPatient;
+    adjTable();
+    connect(twTable->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), SLOT(changeRow(QModelIndex,QModelIndex)));
 }

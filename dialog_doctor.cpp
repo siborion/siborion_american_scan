@@ -13,8 +13,8 @@ Dialog_Doctor::Dialog_Doctor(quint32 id, QWidget *parent) :
 
     ui->setupUi(this);
 
-    pBaseFill = new basefill(id, children(), (QString)"doctor");
-    pBaseFill->fillData();
+//    pBaseFill = new basefill(id, children(), (QString)"doctor");
+//    pBaseFill->fillData();
 
     model = new QStandardItemModel();
 

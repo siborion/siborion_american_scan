@@ -20,47 +20,38 @@
 #include "dialog_lens.h"
 #include "dialog_doctor.h"
 #include "dialog_patient.h"
+#include "typedef.h"
 
-
-namespace BaseType
-{
-    enum Status
-    {
-        enPatient = 0,
-        enDoctor = 1,
-        enLens = 2
-    };
-}
 
 class Bases : public QWidget
 {
     Q_OBJECT
 public:
     explicit Bases(QWidget *parent = 0);
-
+    void Init();
 signals:
 
 private:
+    QSqlQueryModel  *model;
     void adjCol();
-    void fillModelHead(QStringList sl);
+//    void fillModelHead(QStringList sl);
     adjview *twTable;
     QPushButton *pTest;
     QPushButton *pbAdd;
     QPushButton *pbDel;
     QPushButton *pbEdit;
     QPushButton *pbPatientHistory;
-    QSqlQueryModel  *model;
-    BaseType::Status TypeBase;
+    Base::TypeBase  typeBase;
     QString *svg;
     QLabel    *lSearch;
     QLineEdit *leSearch;
-    QModelIndex curPatient;
+    quint16   numRowPatient;
 
 private slots:
-    void adjTable(BaseType::Status);
-    void changeBasePatient(bool Val);
-    void changeBaseDoctor(bool Val);
-    void changeBaseLens(bool Val);
+    void adjTable();
+    void changeBase(bool Val);
+//    void changeBaseDoctor(bool Val);
+//    void changeBaseLens(bool Val);
     void Add();
     void Edit();
     void Del();
@@ -73,7 +64,7 @@ public slots:
 
 Q_SIGNALS:
 //    void changeRow(quint8 idType, quint16 idRow, QString Patient, QString Doctor);
-    void getBasesTable(QString str);
+    void getModel(Base::TypeBase);
 };
 
 #endif // BASES_H
