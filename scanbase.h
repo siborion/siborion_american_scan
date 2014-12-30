@@ -61,6 +61,7 @@ public:
 
 public slots:
     void getBasesModel(Base::TypeBase);
+    void updateCurPatient(quint16);
 
 Q_SIGNALS:
     void setBasesModel(QSqlQueryModel*);

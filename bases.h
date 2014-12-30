@@ -21,7 +21,7 @@
 #include "dialog_doctor.h"
 #include "dialog_patient.h"
 #include "typedef.h"
-
+#include "scanbase.h"
 
 class Bases : public QWidget
 {
@@ -29,12 +29,13 @@ class Bases : public QWidget
 public:
     explicit Bases(QWidget *parent = 0);
     void Init();
+    StPatient *stPatient;
+
 signals:
 
 private:
     QSqlQueryModel  *model;
     void adjCol();
-//    void fillModelHead(QStringList sl);
     adjview *twTable;
     QPushButton *pTest;
     QPushButton *pbAdd;
@@ -47,11 +48,10 @@ private:
     QLineEdit *leSearch;
     quint16   numRowPatient;
 
+
 private slots:
     void adjTable();
     void changeBase(bool Val);
-//    void changeBaseDoctor(bool Val);
-//    void changeBaseLens(bool Val);
     void Add();
     void Edit();
     void Del();
@@ -61,10 +61,9 @@ private slots:
 public slots:
     void setModel(QSqlQueryModel *modelBases);
 
-
 Q_SIGNALS:
-//    void changeRow(quint8 idType, quint16 idRow, QString Patient, QString Doctor);
     void getModel(Base::TypeBase);
+    void updateCurPatient(quint16);
 };
 
 #endif // BASES_H

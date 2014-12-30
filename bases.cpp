@@ -134,7 +134,7 @@ void Bases::Add()
 {
     if(typeBase==Base::enPatient)
     {
-        Dialog_Patient *pPatient = new Dialog_Patient(0);
+        Dialog_Patient *pPatient = new Dialog_Patient(stPatient);
         if(pPatient->exec() == QDialog::Accepted)
         {
             adjTable();
@@ -163,19 +163,14 @@ void Bases::Add()
 
 void Bases::Edit()
 {
-//    qint32 curRow;
-//    curRow = twTable->currentIndex().row();
-//    if(curRow<0)
-//        return;
-
-//    if(TypeBase==BaseType::enPatient)
-//    {
-//        patient *pPatient = new patient(model->data(model->index(curRow, 0)).toUInt());
-//        if(pPatient->exec() == QDialog::Accepted)
-//        {
-//            adjTable(BaseType::enPatient);
-//        }
-//    }
+    if(typeBase==Base::enPatient)
+    {
+        Dialog_Patient *pPatient = new Dialog_Patient(stPatient);
+        if(pPatient->exec() == QDialog::Accepted)
+        {
+            adjTable();
+        }
+    }
 
 //    if(TypeBase==BaseType::enDoctor)
 //    {
@@ -240,7 +235,10 @@ void Bases::changeRow(QModelIndex cur, QModelIndex prev)
 {
     Q_UNUSED(cur); Q_UNUSED(prev);
     if(typeBase == Base::enPatient)
+    {
        numRowPatient = twTable->currentIndex().row();
+       emit updateCurPatient((quint16) model->data(twTable->model()->index(twTable->currentIndex().row(), 0), Qt::DisplayRole).toUInt());
+    }
 }
 
 void Bases::Init()

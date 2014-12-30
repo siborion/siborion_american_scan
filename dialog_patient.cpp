@@ -1,10 +1,8 @@
 #include "dialog_patient.h"
 
-Dialog_Patient::Dialog_Patient(quint32 id, QWidget *parent) :
+Dialog_Patient::Dialog_Patient(StPatient *stPatient, QWidget *parent) :
     QDialog(parent)
 {
-    patientId = id;
-
     model = new QSqlTableModel ();
     model->setTable("v_cbdoctor");
     model->select();
@@ -17,7 +15,6 @@ Dialog_Patient::Dialog_Patient(quint32 id, QWidget *parent) :
     QPushButton *pbCancel = new QPushButton(tr("Cancel"));
     QPushButton *pbOk = new QPushButton(tr("Save"));
 
-//    QLabel  *lRef        = new QLabel(tr("Ref. No"));
     QLabel  *lId         = new QLabel(tr("Patient ID"));
     QLabel  *lFirstName  = new QLabel(tr("First Name"));
     QLabel  *lLastName   = new QLabel(tr("Last Name"));
@@ -37,12 +34,11 @@ Dialog_Patient::Dialog_Patient(quint32 id, QWidget *parent) :
     QLabel  *lK2         = new QLabel(tr("K2 - Value"));
     QLabel  *lK          = new QLabel(tr("K  - Value"));
 
-//    QLineEdit  *leRef        = new QLineEdit(); leRef->setObjectName("VALref");
-    QLineEdit  *leId         = new QLineEdit(); leId->setObjectName("VALid");
+    QLineEdit  *leId         = new QLineEdit(); leId->setText(QString("%1").arg(stPatient->id));
     leId->setEnabled(false);
-    QLineEdit  *leFirstName  = new QLineEdit(); leFirstName->setObjectName("VALname");
-    QLineEdit  *leLastName   = new QLineEdit(); leLastName->setObjectName("VALlast");
-    QDateEdit  *leBirth      = new QDateEdit(); leBirth->setObjectName("VALbirth");
+    QLineEdit  *leFirstName  = new QLineEdit(); leFirstName->setText(stPatient->name);
+    QLineEdit  *leLastName   = new QLineEdit(); leLastName->setText(stPatient->last);
+    QDateEdit  *leBirth      = new QDateEdit(); //leBirth->setText(QString("%1").arg(stPatient->birth));
     leBirth->setDisplayFormat("MM.dd.yyyy");
     leAge        = new QLineEdit(); leAge->setObjectName("VALage");
     QRadioButton *rbMale     = new QRadioButton(tr("Male"));   rbMale->setObjectName("VALsex0");
@@ -62,7 +58,6 @@ Dialog_Patient::Dialog_Patient(quint32 id, QWidget *parent) :
     leKRight    = new QLineEdit();  leKRight->setObjectName("VALkright");
     QSpacerItem *buttonSpacerBot = new QSpacerItem(20, 40, QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-//    layout->addWidget(lRef,      0, 0);
     layout->addWidget(lId,       1, 0);
     layout->addWidget(lFirstName,2, 0);
     layout->addWidget(lLastName, 3, 0);
@@ -77,7 +72,6 @@ Dialog_Patient::Dialog_Patient(quint32 id, QWidget *parent) :
     layout->addWidget(lNotes,    12, 0);
     layout->addWidget(lDoctor,   13, 0);
 
-//    layout->addWidget(leRef,      0, 1, 1, 1);
     layout->addWidget(leId,       1, 1, 1, 1);
     layout->addWidget(leFirstName,2, 1, 1, 2);
     layout->addWidget(leLastName, 3, 1, 1, 2);

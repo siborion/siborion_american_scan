@@ -14,7 +14,7 @@
 #include <QDebug>
 #include <QDateEdit>
 #include "scanbase.h"
-//#include "basefill.h"
+#include "scanbase.h"
 #include <QSqlTableModel>
 #include <QStandardItem>
 
@@ -22,7 +22,7 @@ class Dialog_Patient : public QDialog
 {
     Q_OBJECT
 public:
-    explicit Dialog_Patient(quint32 id, QWidget *parent = 0);
+    explicit Dialog_Patient(StPatient *stPatient, QWidget *parent = 0);
 
 private:
 //    scanbase *pBase;

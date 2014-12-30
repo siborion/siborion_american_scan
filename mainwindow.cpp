@@ -16,8 +16,11 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->tabWidget->removeTab(0);
     ui->tabWidget->addTab(bases, "Data Bases");
 
+    bases->stPatient = &scanbase->curPatient;
+
     connect(bases,SIGNAL(getModel(Base::TypeBase)),scanbase,SLOT(getBasesModel(Base::TypeBase)));
-    connect(scanbase, SIGNAL(setBasesModel(QSqlQueryModel*)),bases,SLOT(setModel(QSqlQueryModel*)));
+    connect(scanbase,SIGNAL(setBasesModel(QSqlQueryModel*)),bases,SLOT(setModel(QSqlQueryModel*)));
+    connect(bases,SIGNAL(updateCurPatient(quint16)),scanbase,SLOT(updateCurPatient(quint16)));
 
     bases->Init();
 }
