@@ -25,7 +25,7 @@ Scanbase::Scanbase(QObject *parent)
 
 }
 
-void Scanbase::getBasesModel(Base::TypeBase typeBase)
+void Scanbase::getBasesModel(Base::TypeBase typeBase, QSqlQueryModel** model)
 {
     QString str;
     QStringList lst;
@@ -51,7 +51,8 @@ void Scanbase::getBasesModel(Base::TypeBase typeBase)
     {
         modelBases->setHeaderData(i, Qt::Horizontal, lst.at(i), Qt::DisplayRole);
     }
-    emit setBasesModel(modelBases);
+//    emit setBasesModel(modelBases);
+    *model = modelBases;
 }
 
 QSqlQuery Scanbase::getData(QString str)

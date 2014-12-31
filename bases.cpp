@@ -77,15 +77,12 @@ Bases::Bases(QWidget *parent) :
 
 void Bases::adjTable()
 {
-    emit getModel(typeBase);
-}
+    emit getModel(typeBase, &model);
 
-void Bases::setModel(QSqlQueryModel *modelBases)
-{
     QStringList lstButton;
     QList<int>  columnPercent;
-    model = modelBases;
     twTable->setModel(model);
+
     switch (typeBase)
     {
     case Base::enPatient:
@@ -118,7 +115,6 @@ void Bases::setModel(QSqlQueryModel *modelBases)
 void Bases::setStPatient(StPatient *stPatientBases)
 {
     stPatient = stPatientBases;
-    qDebug()<<"890";
 }
 
 void Bases::changeBase(bool Val)

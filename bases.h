@@ -57,11 +57,11 @@ private slots:
     void changeRow(QModelIndex cur, QModelIndex prev);
 
 public slots:
-    void setModel(QSqlQueryModel *modelBases);
+//    void setModel(QSqlQueryModel *modelBases);
     void setStPatient(StPatient *stPatientBases);
 
 Q_SIGNALS:
-    void getModel(Base::TypeBase);
+    void getModel(Base::TypeBase, QSqlQueryModel **);
     void updateCurPatient(quint16);
 };
 

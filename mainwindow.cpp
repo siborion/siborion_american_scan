@@ -18,8 +18,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
 //    bases->stPatient = &scanbase->curPatient;
 
-    connect(bases,SIGNAL(getModel(Base::TypeBase)),scanbase,SLOT(getBasesModel(Base::TypeBase)));
-    connect(scanbase,SIGNAL(setBasesModel(QSqlQueryModel*)),bases,SLOT(setModel(QSqlQueryModel*)));
+    connect(bases,SIGNAL(getModel(Base::TypeBase,QSqlQueryModel**)),scanbase,SLOT(getBasesModel(Base::TypeBase,QSqlQueryModel**)));
+//    connect(scanbase,SIGNAL(setBasesModel(QSqlQueryModel*)),bases,SLOT(setModel(QSqlQueryModel*)));
 
     connect(bases,SIGNAL(updateCurPatient(quint16)),scanbase,SLOT(updateCurPatient(quint16)));
     connect(scanbase,SIGNAL(setStPatient(StPatient*)),bases,SLOT(setStPatient(StPatient*)));
