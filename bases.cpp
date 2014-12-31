@@ -115,6 +115,12 @@ void Bases::setModel(QSqlQueryModel *modelBases)
     twTable->setColumnPercent(columnPercent);
 }
 
+void Bases::setStPatient(StPatient *stPatientBases)
+{
+    stPatient = stPatientBases;
+    qDebug()<<"890";
+}
+
 void Bases::changeBase(bool Val)
 {
     if(Val)
@@ -237,7 +243,7 @@ void Bases::changeRow(QModelIndex cur, QModelIndex prev)
     if(typeBase == Base::enPatient)
     {
        numRowPatient = twTable->currentIndex().row();
-       emit updateCurPatient((quint16) model->data(twTable->model()->index(twTable->currentIndex().row(), 0), Qt::DisplayRole).toUInt());
+       emit updateCurPatient((quint16)model->data(twTable->model()->index(twTable->currentIndex().row(),0),Qt::DisplayRole).toUInt());
     }
 }
 
@@ -246,4 +252,5 @@ void Bases::Init()
     typeBase = Base::enPatient;
     adjTable();
     connect(twTable->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), SLOT(changeRow(QModelIndex,QModelIndex)));
+    emit updateCurPatient(0);
 }

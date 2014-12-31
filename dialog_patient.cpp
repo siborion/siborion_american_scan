@@ -38,7 +38,7 @@ Dialog_Patient::Dialog_Patient(StPatient *stPatient, QWidget *parent) :
     leId->setEnabled(false);
     QLineEdit  *leFirstName  = new QLineEdit(); leFirstName->setText(stPatient->name);
     QLineEdit  *leLastName   = new QLineEdit(); leLastName->setText(stPatient->last);
-    QDateEdit  *leBirth      = new QDateEdit(); //leBirth->setText(QString("%1").arg(stPatient->birth));
+    QDateEdit  *leBirth      = new QDateEdit(); leBirth->setDate(stPatient->birth);
     leBirth->setDisplayFormat("MM.dd.yyyy");
     leAge        = new QLineEdit(); leAge->setObjectName("VALage");
     QRadioButton *rbMale     = new QRadioButton(tr("Male"));   rbMale->setObjectName("VALsex0");

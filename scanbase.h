@@ -65,6 +65,7 @@ public slots:
 
 Q_SIGNALS:
     void setBasesModel(QSqlQueryModel*);
+    void setStPatient(StPatient *);
 
 };
 

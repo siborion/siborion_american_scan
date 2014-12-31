@@ -29,8 +29,6 @@ class Bases : public QWidget
 public:
     explicit Bases(QWidget *parent = 0);
     void Init();
-    StPatient *stPatient;
-
 signals:
 
 private:
@@ -47,7 +45,7 @@ private:
     QLabel    *lSearch;
     QLineEdit *leSearch;
     quint16   numRowPatient;
-
+    StPatient *stPatient;
 
 private slots:
     void adjTable();
@@ -60,6 +58,7 @@ private slots:
 
 public slots:
     void setModel(QSqlQueryModel *modelBases);
+    void setStPatient(StPatient *stPatientBases);
 
 Q_SIGNALS:
     void getModel(Base::TypeBase);

@@ -66,30 +66,38 @@ void Scanbase::updateCurPatient(quint16 id)
 {
     QString str = QString("SELECT * FROM patient WHERE id=%1;").arg(id);
     QSqlQuery sql(str);
-    if(sql.exec())
+    curPatient.id = id;
+    if(id==0)
     {
-        if(sql.next())
+        curPatient.name   = "New";
+    }
+    else
+    {
+        if(sql.exec())
         {
-            curPatient.id = id;
-            curPatient.adress = sql.value(sql.record().indexOf("adress")).toString();
-            curPatient.age    = sql.value(sql.record().indexOf("age")).toUInt();
-            curPatient.birth  = sql.value(sql.record().indexOf("birth")).toDate();
-            curPatient.doctor = sql.value(sql.record().indexOf("doctor")).toUInt();
-            curPatient.k1left = sql.value(sql.record().indexOf("k1left")).toDouble();
-            curPatient.k1right= sql.value(sql.record().indexOf("k1right")).toDouble();
-            curPatient.k2left = sql.value(sql.record().indexOf("k2left")).toDouble();
-            curPatient.k2right= sql.value(sql.record().indexOf("k2right")).toDouble();
-            curPatient.kleft  = sql.value(sql.record().indexOf("kleft")).toDouble();
-            curPatient.kright = sql.value(sql.record().indexOf("kright")).toDouble();
-            curPatient.last   = sql.value(sql.record().indexOf("last")).toString();
-            curPatient.name   = sql.value(sql.record().indexOf("name")).toString();
-            curPatient.phone  = sql.value(sql.record().indexOf("phone")).toString();
-            curPatient.ref    = sql.value(sql.record().indexOf("ref")).toString();
-            curPatient.sex    = sql.value(sql.record().indexOf("sex")).toUInt();
-            curPatient.state  = sql.value(sql.record().indexOf("state")).toString();
-            curPatient.zip    = sql.value(sql.record().indexOf("zip")).toString();
+            if(sql.next())
+            {
+                curPatient.adress = sql.value(sql.record().indexOf("adress")).toString();
+                curPatient.age    = sql.value(sql.record().indexOf("age")).toUInt();
+                curPatient.birth  = sql.value(sql.record().indexOf("birth")).toDate();
+                curPatient.doctor = sql.value(sql.record().indexOf("doctor")).toUInt();
+                curPatient.k1left = sql.value(sql.record().indexOf("k1left")).toDouble();
+                curPatient.k1right= sql.value(sql.record().indexOf("k1right")).toDouble();
+                curPatient.k2left = sql.value(sql.record().indexOf("k2left")).toDouble();
+                curPatient.k2right= sql.value(sql.record().indexOf("k2right")).toDouble();
+                curPatient.kleft  = sql.value(sql.record().indexOf("kleft")).toDouble();
+                curPatient.kright = sql.value(sql.record().indexOf("kright")).toDouble();
+                curPatient.last   = sql.value(sql.record().indexOf("last")).toString();
+                curPatient.name   = sql.value(sql.record().indexOf("name")).toString();
+                curPatient.phone  = sql.value(sql.record().indexOf("phone")).toString();
+                curPatient.ref    = sql.value(sql.record().indexOf("ref")).toString();
+                curPatient.sex    = sql.value(sql.record().indexOf("sex")).toUInt();
+                curPatient.state  = sql.value(sql.record().indexOf("state")).toString();
+                curPatient.zip    = sql.value(sql.record().indexOf("zip")).toString();
+            }
         }
     }
+    emit (setStPatient(&curPatient));
 }
 
 
