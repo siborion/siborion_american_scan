@@ -235,11 +235,13 @@ void Bases::Del()
 
 void Bases::changeRow(QModelIndex cur, QModelIndex prev)
 {
+    quint16 rowId;
     Q_UNUSED(cur); Q_UNUSED(prev);
     if(typeBase == Base::enPatient)
     {
        numRowPatient = twTable->currentIndex().row();
-       emit updateCurPatient((quint16)model->data(twTable->model()->index(twTable->currentIndex().row(),0),Qt::DisplayRole).toUInt());
+       rowId = (quint16)model->data(twTable->model()->index(twTable->currentIndex().row(),0),Qt::DisplayRole).toUInt();
+       emit updateCurPatient(rowId);
     }
 }
 
