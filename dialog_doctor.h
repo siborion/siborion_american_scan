@@ -8,6 +8,7 @@
 #include "combo_delegate.h"
 #include "delegate.h"
 #include "checkboxdelegate1.h"
+#include "basefill.h"
 
 namespace Ui {
 class Dialog_Doctor;
@@ -18,13 +19,14 @@ class Dialog_Doctor : public QDialog
     Q_OBJECT
     
 public:
-    explicit Dialog_Doctor(quint32 id, QWidget *parent = 0);
+    explicit Dialog_Doctor(QMap <QString, QString> *stDoctor, QWidget *parent = 0);
     ~Dialog_Doctor();
     
 private:
     Ui::Dialog_Doctor *ui;
     QStandardItemModel  *model;
     quint32 curId;
+    basefill   *pBaseFill;
 
 private slots:
     void saveData();

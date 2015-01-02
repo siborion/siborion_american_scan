@@ -35,15 +35,13 @@ struct StPatient
     QString state;
     QString zip;
 };
-*/
 struct StDoctor
 {
 };
-
 struct StLens
 {
 };
-
+*/
 
 class Scanbase : public QObject //QSqlDataguardbase
 {
@@ -54,21 +52,27 @@ private:
 public:
     explicit Scanbase(QObject *parent = 0);
     QSqlQuery getData(QString str);
-//    StPatient  curPatient;
-    StDoctor   curDoctor;
-    StLens     curLensl;
     QSqlQueryModel *modelBases;
     QMap <QString, QString> curPatient;
+    QMap <QString, QString> curDoctor;
 
 public slots:
     void getBasesModel(Base::TypeBase, QSqlQueryModel**);
+
     void updateCurPatient(quint16);
     void saveCurPatient(quint16 *id);
     void delPatient();
 
+    void updateCurDoctor(quint16);
+    void saveCurDoctor(quint16 *id);
+    void delDoctor();
+
+
 Q_SIGNALS:
     void setBasesModel(QSqlQueryModel*);
+
     void setStPatient(QMap <QString, QString> *);
+    void setStDoctor(QMap <QString, QString> *);
 };
 
 #endif // guardbase_H

@@ -1,7 +1,7 @@
 #include "dialog_doctor.h"
 #include "ui_dialog_doctor.h"
 
-Dialog_Doctor::Dialog_Doctor(quint32 id, QWidget *parent) :
+Dialog_Doctor::Dialog_Doctor(QMap <QString, QString> *stDoctor, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Dialog_Doctor)
 {
@@ -9,12 +9,7 @@ Dialog_Doctor::Dialog_Doctor(quint32 id, QWidget *parent) :
     QStringList lst;
     quint16 tableWidth;
 
-    curId = id;
-
     ui->setupUi(this);
-
-//    pBaseFill = new basefill(id, children(), (QString)"doctor");
-//    pBaseFill->fillData();
 
     model = new QStandardItemModel();
 
@@ -22,7 +17,7 @@ Dialog_Doctor::Dialog_Doctor(quint32 id, QWidget *parent) :
                           "from lens "
                           "LEFT JOIN doctor_lens doc "
                           "ON (lens.id = doc.id_lens) AND doc.id_doctor=%1;")
-                          .arg(id);
+                          .arg(stDoctor->value("id"));
 
     QSqlQuery sql(str);
     sql.exec();
@@ -80,6 +75,10 @@ Dialog_Doctor::Dialog_Doctor(quint32 id, QWidget *parent) :
 //    connect(ui->radioButton_2,  SIGNAL(clicked()) , SLOT(selectFormula()));
 //    connect(ui->radioButton_3,  SIGNAL(clicked()) , SLOT(selectFormula()));
 //    connect(ui->radioButton_4,  SIGNAL(clicked()) , SLOT(selectFormula()));
+
+    pBaseFill = new basefill(children(), stDoctor);
+    pBaseFill->fillData();
+
 }
 
 Dialog_Doctor::~Dialog_Doctor()
@@ -110,6 +109,7 @@ void Dialog_Doctor::saveData()
             sql.exec(str);
         }
     }
+    pBaseFill->saveData();
     accept();
 }
 /*

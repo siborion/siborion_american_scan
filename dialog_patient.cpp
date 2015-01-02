@@ -107,7 +107,6 @@ Dialog_Patient::Dialog_Patient(QMap <QString, QString> *stPatient, QWidget *pare
     leKRight->setEnabled(false);
     leAge->setEnabled(false);
 
-
     buttonLayout->addWidget(pbCancel);
     buttonLayout->addWidget(pbOk);
     layout->addLayout(buttonLayout, 18, 0, 1, 5);

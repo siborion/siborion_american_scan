@@ -20,7 +20,6 @@ public:
     void fillData(void);
 
 private:
-    int findRecord(QSqlTableModel *tableModel, quint32 id);
     const QObjectList *olParent;
     quint32 uiId;
     QString qsTableName;

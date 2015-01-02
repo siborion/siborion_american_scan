@@ -119,6 +119,11 @@ void Bases::setStPatient(QMap <QString, QString> *stPatientBases)
     stPatient = stPatientBases;
 }
 
+void Bases::setStDoctor(QMap <QString, QString> *stDoctorBases)
+{
+    stDoctor = stDoctorBases;
+}
+
 void Bases::changeBase(bool Val)
 {
     if(Val)
@@ -150,9 +155,8 @@ void Bases::Add()
     {
         Dialog_Doctor *pDoctor = new Dialog_Doctor(0);
         if(pDoctor->exec() == QDialog::Accepted)
-        {
-            adjTable();
-        }
+            emit saveDoctor(&newId);
+        adjTable();
         delete pDoctor;
     }
     if(typeBase==Base::enLens)
@@ -175,6 +179,15 @@ void Bases::Edit()
         if(pPatient->exec() == QDialog::Accepted)
         {
             emit savePatient(&newId);
+            adjTable();
+        }
+    }
+    if(typeBase==Base::enDoctor)
+    {
+        Dialog_Doctor *pDoctor = new Dialog_Doctor(stDoctor);
+        if(pDoctor->exec() == QDialog::Accepted)
+        {
+            emit saveDoctor(&newId);
             adjTable();
         }
     }
@@ -202,6 +215,11 @@ void Bases::changeRow(QModelIndex cur, QModelIndex prev)
        numRowPatient = twTable->currentIndex().row();
        rowId = (quint16)model->data(twTable->model()->index(twTable->currentIndex().row(),0),Qt::DisplayRole).toUInt();
        emit updateCurPatient(rowId);
+    }
+    if(typeBase == Base::enDoctor)
+    {
+       rowId = (quint16)model->data(twTable->model()->index(twTable->currentIndex().row(),0),Qt::DisplayRole).toUInt();
+       emit updateCurDoctor(rowId);
     }
 }
 

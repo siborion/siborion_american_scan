@@ -114,13 +114,4 @@ void basefill::saveData()
     }
 }
 
-int basefill::findRecord(QSqlTableModel *tableModel, quint32 id)
-{
-    for(int i=0; i<tableModel->rowCount(); i++)
-    {
-        if(id == tableModel->index(i, 0).data(Qt::DisplayRole).toUInt())
-            return i;
-    }
-    return (-1);
-}
 
