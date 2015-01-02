@@ -60,14 +60,15 @@ void basefill::fillData()
             QComboBox *b = dynamic_cast<QComboBox *>(olParent->at(i));
             if(b)
             {
-                qDebug()<<sObName;
                 if(qmTable->contains(sObName))
                 {
-                    qDebug()<<sObName;
-                    qint8 recNum = qmTable->value(sObName,"").toInt();
-                    qDebug()<<recNum;
-//                    b->setCurrentIndex(1);
-//                    qDebug()<<b->findData()
+                    qint16 recNum = qmTable->value(sObName,"").toInt();
+                    for(uint i=0; i<b->model()->rowCount(); i++)
+                    {
+                        QModelIndex parentIndex = b->model()->index(i, 0);
+                        if(parentIndex.data().toInt() == recNum)
+                            b->setCurrentIndex(i);
+                    }
                 }
             }
         }

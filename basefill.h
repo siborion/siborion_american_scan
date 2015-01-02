@@ -8,6 +8,7 @@
 #include <QComboBox>
 #include <QDateEdit>
 #include <QSqlTableModel>
+#include <QStandardItem>
 #include "scanbase.h"
 
 class basefill : public QObject
