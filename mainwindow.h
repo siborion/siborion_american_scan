@@ -21,7 +21,7 @@ private:
     Ui::MainWindow *ui;
     Bases *bases;
     Scanbase *scanbase;
-    StPatient *curPatient;
+    QMap <QString, QString> *curPatient;
 
 signals:
     void refreshFormula();

@@ -1,6 +1,6 @@
 #include "dialog_patient.h"
 
-Dialog_Patient::Dialog_Patient(StPatient *stPatient, QWidget *parent) :
+Dialog_Patient::Dialog_Patient(QMap <QString, QString> *stPatient, QWidget *parent) :
     QDialog(parent)
 {
     model = new QSqlTableModel ();
@@ -34,11 +34,10 @@ Dialog_Patient::Dialog_Patient(StPatient *stPatient, QWidget *parent) :
     QLabel  *lK2         = new QLabel(tr("K2 - Value"));
     QLabel  *lK          = new QLabel(tr("K  - Value"));
 
-    QLineEdit  *leId         = new QLineEdit(); leId->setText(QString("%1").arg(stPatient->id));
-    leId->setEnabled(false);
-    QLineEdit  *leFirstName  = new QLineEdit(); leFirstName->setText(stPatient->name);
-    QLineEdit  *leLastName   = new QLineEdit(); leLastName->setText(stPatient->last);
-    QDateEdit  *leBirth      = new QDateEdit(); leBirth->setDate(stPatient->birth);
+    QLineEdit  *leId         = new QLineEdit(); leId->setObjectName("VALid");    leId->setEnabled(false);
+    QLineEdit  *leFirstName  = new QLineEdit(); leFirstName->setObjectName("VALname");
+    QLineEdit  *leLastName   = new QLineEdit(); leLastName->setObjectName("VALlast");
+    QDateEdit  *leBirth      = new QDateEdit(); leBirth->setObjectName("VALbirth");
     leBirth->setDisplayFormat("MM.dd.yyyy");
     leAge        = new QLineEdit(); leAge->setObjectName("VALage");
     QRadioButton *rbMale     = new QRadioButton(tr("Male"));   rbMale->setObjectName("VALsex0");
@@ -125,11 +124,13 @@ Dialog_Patient::Dialog_Patient(StPatient *stPatient, QWidget *parent) :
     cbDoctor->setModel(model);
     cbDoctor->setModelColumn(model->fieldIndex("name"));
 
+    pBaseFill = new basefill(children(), stPatient);
+    pBaseFill->fillData();
 }
 
 void Dialog_Patient::saveData()
 {
-
+    pBaseFill->saveData();
     accept();
 }
 

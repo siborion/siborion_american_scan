@@ -112,9 +112,10 @@ void Bases::adjTable()
     twTable->setColumnPercent(columnPercent);
 }
 
-void Bases::setStPatient(StPatient *stPatientBases)
+void Bases::setStPatient(QMap <QString, QString> *stPatientBases)
 {
     stPatient = stPatientBases;
+    qDebug()<<"bases"<<stPatient->count();
 }
 
 void Bases::changeBase(bool Val)

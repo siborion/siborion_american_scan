@@ -13,7 +13,7 @@
 #include <QMessageBox>
 #include <QDate>
 #include "typedef.h"
-
+/*
 struct StPatient
 {
     quint16 id;
@@ -35,7 +35,7 @@ struct StPatient
     QString state;
     QString zip;
 };
-
+*/
 struct StDoctor
 {
 };
@@ -54,10 +54,11 @@ private:
 public:
     explicit Scanbase(QObject *parent = 0);
     QSqlQuery getData(QString str);
-    StPatient  curPatient;
+//    StPatient  curPatient;
     StDoctor   curDoctor;
     StLens     curLensl;
     QSqlQueryModel *modelBases;
+    QMap <QString, QString> curPatient;
 
 public slots:
     void getBasesModel(Base::TypeBase, QSqlQueryModel**);
@@ -65,7 +66,7 @@ public slots:
 
 Q_SIGNALS:
     void setBasesModel(QSqlQueryModel*);
-    void setStPatient(StPatient *);
+    void setStPatient(QMap <QString, QString> *);
 
 };
 

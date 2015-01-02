@@ -19,7 +19,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(bases,SIGNAL(getModel(Base::TypeBase,QSqlQueryModel**)),scanbase,SLOT(getBasesModel(Base::TypeBase,QSqlQueryModel**)));
 
     connect(bases,SIGNAL(updateCurPatient(quint16)),scanbase,SLOT(updateCurPatient(quint16)));
-    connect(scanbase,SIGNAL(setStPatient(StPatient*)),bases,SLOT(setStPatient(StPatient*)));
+    connect(scanbase,SIGNAL(setStPatient(QMap<QString,QString>*)),bases,SLOT(setStPatient(QMap<QString,QString>*)));
 
     bases->Init();
 }

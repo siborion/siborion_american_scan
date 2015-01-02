@@ -45,7 +45,7 @@ private:
     QLabel    *lSearch;
     QLineEdit *leSearch;
     quint16   numRowPatient;
-    StPatient *stPatient;
+    QMap <QString, QString> *stPatient;
 
 private slots:
     void adjTable();
@@ -58,7 +58,7 @@ private slots:
 
 public slots:
 //    void setModel(QSqlQueryModel *modelBases);
-    void setStPatient(StPatient *stPatientBases);
+    void setStPatient(QMap <QString, QString> *stPatientBases);
 
 Q_SIGNALS:
     void getModel(Base::TypeBase, QSqlQueryModel **);
