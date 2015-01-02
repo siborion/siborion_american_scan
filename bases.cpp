@@ -88,6 +88,8 @@ void Bases::adjTable()
     case Base::enPatient:
         columnPercent<<   8        <<    30     <<       30        <<     30;
         lstButton<<tr("Add Patient")<<tr("Edit Patient")<<tr("Delete Patient")<<tr("Patient History");
+        if(model->rowCount()<=numRowPatient)
+            numRowPatient = model->rowCount()-1;
         twTable->selectRow(numRowPatient);
         break;
     case Base::enDoctor:
@@ -115,7 +117,6 @@ void Bases::adjTable()
 void Bases::setStPatient(QMap <QString, QString> *stPatientBases)
 {
     stPatient = stPatientBases;
-    qDebug()<<"bases"<<stPatient->count();
 }
 
 void Bases::changeBase(bool Val)
@@ -135,13 +136,14 @@ void Bases::changeBase(bool Val)
 
 void Bases::Add()
 {
+    quint16 newId;
     if(typeBase==Base::enPatient)
     {
+        emit updateCurPatient(0);
         Dialog_Patient *pPatient = new Dialog_Patient(stPatient);
         if(pPatient->exec() == QDialog::Accepted)
-        {
-            adjTable();
-        }
+            emit savePatient(&newId);
+        adjTable();
         delete pPatient;
     }
     if(typeBase==Base::enDoctor)
@@ -166,32 +168,16 @@ void Bases::Add()
 
 void Bases::Edit()
 {
+    quint16 newId;
     if(typeBase==Base::enPatient)
     {
         Dialog_Patient *pPatient = new Dialog_Patient(stPatient);
         if(pPatient->exec() == QDialog::Accepted)
         {
+            emit savePatient(&newId);
             adjTable();
         }
     }
-
-//    if(TypeBase==BaseType::enDoctor)
-//    {
-//        dialog_doctor *pDoctor = new dialog_doctor(model->data(model->index(curRow, 0)).toUInt());
-//        if(pDoctor->exec() == QDialog::Accepted)
-//        {
-//            adjTable(BaseType::enDoctor);
-//        }
-//    }
-
-//    if(TypeBase==BaseType::enLens)
-//    {
-//        dialog_lens *pLens = new dialog_lens(model->data(model->index(curRow, 0)).toUInt());
-//        if(pLens->exec() == QDialog::Accepted)
-//        {
-//            adjTable(BaseType::enLens);
-//        }
-//    }
 }
 
 void Bases::EditIndex(QModelIndex index)
@@ -202,36 +188,9 @@ void Bases::EditIndex(QModelIndex index)
 
 void Bases::Del()
 {
-//    QString str;
-//    quint32 curId;
-//    QSqlQuery query;
-//    switch (TypeBase)
-//    {
-//    case BaseType::enPatient:
-//        curId = model->data(twTable->model()->index(twTable->currentIndex().row(), 1), Qt::DisplayRole).toUInt();
-//        str = QString(" DELETE FROM \"patient\" WHERE \"id\"=%1; ")
-//                .arg(curId);
-//        query.prepare(str);
-//        query.exec();
-//        adjTable(BaseType::enPatient);
-//        break;
-//    case BaseType::enDoctor:
-//        curId = model->data(twTable->model()->index(twTable->currentIndex().row(), 0), Qt::DisplayRole).toUInt();
-//        str = QString(" DELETE FROM \"doctor\" WHERE \"id\"=%1; ")
-//                .arg(curId);
-//        query.prepare(str);
-//        query.exec();
-//        adjTable(BaseType::enDoctor);
-//        break;
-//    case BaseType::enLens:
-//        curId = model->data(twTable->model()->index(twTable->currentIndex().row(), 0), Qt::DisplayRole).toUInt();
-//        str = QString(" DELETE FROM \"lens\" WHERE \"id\"=%1; ")
-//                .arg(curId);
-//        query.prepare(str);
-//        query.exec();
-//        adjTable(BaseType::enLens);
-//        break;
-//    }
+    if(typeBase==Base::enPatient)
+        emit delPatient();
+    adjTable();
 }
 
 void Bases::changeRow(QModelIndex cur, QModelIndex prev)

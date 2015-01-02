@@ -63,11 +63,12 @@ public:
 public slots:
     void getBasesModel(Base::TypeBase, QSqlQueryModel**);
     void updateCurPatient(quint16);
+    void saveCurPatient(quint16 *id);
+    void delPatient();
 
 Q_SIGNALS:
     void setBasesModel(QSqlQueryModel*);
     void setStPatient(QMap <QString, QString> *);
-
 };
 
 #endif // guardbase_H

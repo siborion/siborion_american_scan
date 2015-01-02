@@ -46,12 +46,10 @@ void Scanbase::getBasesModel(Base::TypeBase typeBase, QSqlQueryModel** model)
         break;
     }
     modelBases->setQuery(str);
-    qDebug()<<modelBases->rowCount();
     for(int i=0; i<lst.count(); i++)
     {
         modelBases->setHeaderData(i, Qt::Horizontal, lst.at(i), Qt::DisplayRole);
     }
-//    emit setBasesModel(modelBases);
     *model = modelBases;
 }
 
@@ -67,21 +65,75 @@ void Scanbase::updateCurPatient(quint16 id)
 {
     QString str = QString("SELECT * FROM patient WHERE id=%1;").arg(id);
     QSqlQuery sql(str);
-//    curPatient.id = id;
     if(sql.exec())
     {
         if(sql.next())
         {
-            for(uint i=0; i<sql.record().count(); i++)
+            for(int i=0; i<sql.record().count(); i++)
             {
                 curPatient[sql.record().fieldName(i)] = sql.record().value(i).toString();
+            }
+        }
+        else
+        {
+            for(int i=0; i<sql.record().count(); i++)
+            {
+                curPatient[sql.record().fieldName(i)] = "";
             }
         }
     }
     emit (setStPatient(&curPatient));
 }
 
+void Scanbase::saveCurPatient(quint16 *id)
+{
+    QSqlQuery  query;
+    QString sql;
+    QString str;
+    QString field, value;
+    *id = 0;
 
+    QMap<QString,QString>::iterator it = curPatient.begin();
+    for(;it != curPatient.end(); ++it)
+    {
+        if(!(it.key() == "id"))
+        {
+            str.append(",");
+            str.append(it.key());
+            str.append("=");
+            str.append('"');
+            str.append(it.value());
+            str.append('"');
+
+            field.append(it.key());
+            field.append(",");
+
+            value.append('"');
+            value.append(it.value());
+            value.append('"');
+            value.append(",");
+        }
+    }
+    field.resize(field.length()-1);
+    value.resize(value.length()-1);
+
+    if(curPatient["id"].toInt()>0)
+        sql.append(QString("update patient set id=id %1 where id=%2").arg(str).arg(curPatient["id"].toInt()));
+    else
+        sql.append(QString("insert into patient (%1) values (%2)").arg(field).arg(value));
+
+    query.prepare(sql);
+    query.exec();
+}
+
+void Scanbase::delPatient()
+{
+    QSqlQuery  query;
+    QString sql;
+    sql.append(QString("delete from patient where id=%1").arg(curPatient["id"].toInt()));
+    query.prepare(sql);
+    query.exec();
+}
 
 
 

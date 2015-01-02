@@ -25,12 +25,10 @@ public:
     explicit Dialog_Patient(QMap <QString, QString> *stPatient, QWidget *parent = 0);
 
 private:
-//    scanbase *pBase;
-    basefill *pBaseFill;
     QSqlTableModel *model;
     quint32 patientId;
     void test (const QObjectList &t);
-
+    basefill   *pBaseFill;
     QLineEdit  *leK1Left;
     QLineEdit  *leK1Right;
     QLineEdit  *leK2Left;

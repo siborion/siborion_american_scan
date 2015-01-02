@@ -44,7 +44,7 @@ private:
     QString *svg;
     QLabel    *lSearch;
     QLineEdit *leSearch;
-    quint16   numRowPatient;
+    qint16   numRowPatient;
     QMap <QString, QString> *stPatient;
 
 private slots:
@@ -63,6 +63,8 @@ public slots:
 Q_SIGNALS:
     void getModel(Base::TypeBase, QSqlQueryModel **);
     void updateCurPatient(quint16);
+    void savePatient(quint16 *);
+    void delPatient();
 };
 
 #endif // BASES_H

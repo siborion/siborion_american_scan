@@ -21,6 +21,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(bases,SIGNAL(updateCurPatient(quint16)),scanbase,SLOT(updateCurPatient(quint16)));
     connect(scanbase,SIGNAL(setStPatient(QMap<QString,QString>*)),bases,SLOT(setStPatient(QMap<QString,QString>*)));
 
+    connect(bases,SIGNAL(savePatient(quint16*)),scanbase,SLOT(saveCurPatient(quint16*)));
+    connect(bases,SIGNAL(delPatient()),scanbase,SLOT(delPatient()));
+
     bases->Init();
 }
 
