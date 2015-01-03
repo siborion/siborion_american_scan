@@ -55,6 +55,7 @@ public:
     QSqlQueryModel *modelBases;
     QMap <QString, QString> curPatient;
     QMap <QString, QString> curDoctor;
+    QMap <QString, QString> curLens;
 
 public slots:
     void getBasesModel(Base::TypeBase, QSqlQueryModel**);
@@ -68,11 +69,17 @@ public slots:
     void delDoctor();
     void saveDocLens(quint16 idDoc, QMap<quint16,quint16> *idLens);
 
+    void updateCurLens(quint16);
+    void saveCurLens(quint16 *id);
+    void delLens();
+
+
 Q_SIGNALS:
     void setBasesModel(QSqlQueryModel*);
 
     void setStPatient(QMap <QString, QString> *);
     void setStDoctor(QMap <QString, QString> *);
+    void setStLens(QMap <QString, QString> *);
 };
 
 #endif // guardbase_H

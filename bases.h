@@ -47,6 +47,7 @@ private:
     qint16   numRowPatient;
     QMap <QString, QString> *stPatient;
     QMap <QString, QString> *stDoctor;
+    QMap <QString, QString> *stLens;
 
 private slots:
     void adjTable();
@@ -61,6 +62,7 @@ public slots:
 //    void setModel(QSqlQueryModel *modelBases);
     void setStPatient(QMap <QString, QString> *stPatientBases);
     void setStDoctor(QMap <QString, QString> *stDoctorBases);
+    void setStLens(QMap <QString, QString> *stDoctorLens);
 
 Q_SIGNALS:
     void getModel(Base::TypeBase, QSqlQueryModel **);
@@ -73,6 +75,11 @@ Q_SIGNALS:
     void saveDoctor(quint16 *);
     void delDoctor();
     void saveDocLens(quint16 idDoc, QMap<quint16,quint16> *idLens);
+
+    void updateCurLens(quint16);
+    void saveLens(quint16 *);
+    void delLens();
+
 
 };
 

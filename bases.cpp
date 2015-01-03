@@ -124,6 +124,11 @@ void Bases::setStDoctor(QMap <QString, QString> *stDoctorBases)
     stDoctor = stDoctorBases;
 }
 
+void Bases::setStLens(QMap <QString, QString> *stLensBases)
+{
+    stLens = stLensBases;
+}
+
 void Bases::changeBase(bool Val)
 {
     if(Val)
@@ -165,11 +170,13 @@ void Bases::Add()
     }
     if(typeBase==Base::enLens)
     {
-        Dialog_Lens *pLens = new Dialog_Lens(0);
+        emit updateCurLens(0);
+        Dialog_Lens *pLens = new Dialog_Lens(stLens);
         if(pLens->exec() == QDialog::Accepted)
         {
-            adjTable();
+            emit saveLens(&newId);
         }
+        adjTable();
         delete pLens;
     }
 }
@@ -196,6 +203,16 @@ void Bases::Edit()
             adjTable();
         }
     }
+    if(typeBase==Base::enLens)
+    {
+        Dialog_Lens *pLens = new Dialog_Lens(stLens);
+        if(pLens->exec() == QDialog::Accepted)
+        {
+            emit saveLens(&newId);
+            adjTable();
+        }
+    }
+
 }
 
 void Bases::EditIndex(QModelIndex index)
@@ -208,6 +225,10 @@ void Bases::Del()
 {
     if(typeBase==Base::enPatient)
         emit delPatient();
+    if(typeBase==Base::enDoctor)
+        emit delDoctor();
+    if(typeBase==Base::enLens)
+        emit delLens();
     adjTable();
 }
 
@@ -225,6 +246,11 @@ void Bases::changeRow(QModelIndex cur, QModelIndex prev)
     {
        rowId = (quint16)model->data(twTable->model()->index(twTable->currentIndex().row(),0),Qt::DisplayRole).toUInt();
        emit updateCurDoctor(rowId);
+    }
+    if(typeBase == Base::enLens)
+    {
+       rowId = (quint16)model->data(twTable->model()->index(twTable->currentIndex().row(),0),Qt::DisplayRole).toUInt();
+       emit updateCurLens(rowId);
     }
 }
 

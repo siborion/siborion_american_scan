@@ -3,7 +3,7 @@
 
 #include <QDialog>
 #include "scanbase.h"
-//#include "basefill.h"
+#include "basefill.h"
 
 
 namespace Ui {
@@ -15,13 +15,13 @@ class Dialog_Lens : public QDialog
     Q_OBJECT
     
 public:
-    explicit Dialog_Lens(quint32 id, QWidget *parent = 0);
+    explicit Dialog_Lens(QMap <QString, QString> *stLens, QWidget *parent = 0);
     ~Dialog_Lens();
     
 private:
     Ui::Dialog_Lens *ui;
 //    scanbase *pBase;
-//    basefill *pBaseFill;
+    basefill *pBaseFill;
 
 private slots:
     void saveData();

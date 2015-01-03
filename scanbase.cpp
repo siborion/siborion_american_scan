@@ -224,7 +224,6 @@ void Scanbase::delDoctor()
     query.exec();
 }
 
-
 void Scanbase::saveDocLens(quint16 idDoc, QMap<quint16,quint16> *idLens)
 {
     QString str;
@@ -247,5 +246,89 @@ void Scanbase::saveDocLens(quint16 idDoc, QMap<quint16,quint16> *idLens)
 
 
 
+
+void Scanbase::updateCurLens(quint16 id)
+{
+    QString str = QString("SELECT * FROM lens WHERE id=%1;").arg(id);
+    QSqlQuery sql(str);
+    if(sql.exec())
+    {
+        if(sql.next())
+        {
+            for(int i=0; i<sql.record().count(); i++)
+            {
+                curLens[sql.record().fieldName(i)] = sql.record().value(i).toString();
+            }
+        }
+        else
+        {
+            for(int i=0; i<sql.record().count(); i++)
+            {
+                curLens[sql.record().fieldName(i)] = "";
+            }
+        }
+    }
+    curLens["id"]=QString("%1").arg(id);
+    emit (setStLens(&curLens));
+}
+
+void Scanbase::saveCurLens(quint16 *id)
+{
+    QSqlQuery  query;
+    QString sql;
+    QString str;
+    QString field, value;
+    *id = 0;
+
+    QMap<QString,QString>::iterator it = curLens.begin();
+    for(;it != curLens.end(); ++it)
+    {
+        if(!(it.key() == "id"))
+        {
+            str.append(",");
+            str.append(it.key());
+            str.append("=");
+            str.append('"');
+            str.append(it.value());
+            str.append('"');
+
+            field.append(it.key());
+            field.append(",");
+
+            value.append('"');
+            value.append(it.value());
+            value.append('"');
+            value.append(",");
+        }
+    }
+    field.resize(field.length()-1);
+    value.resize(value.length()-1);
+
+    if(curLens["id"].toInt()>0)
+    {
+        sql.append(QString("update lens set id=id %1 where id=%2").arg(str).arg(curLens["id"].toInt()));
+        query.prepare(sql);
+        query.exec();
+        *id = curLens.value("id").toInt();
+    }
+    else
+    {
+        sql.append(QString("insert into lens (%1) values (%2)").arg(field).arg(value));
+        query.prepare(sql);
+        query.exec();
+        *id = query.lastInsertId().toInt();
+    }
+//    qDebug()<<sql;
+}
+
+void Scanbase::delLens()
+{
+    QSqlQuery  query;
+    QString sql;
+    sql.append(QString("delete from lens where id=%1").arg(curLens["id"].toInt()));
+    query.prepare(sql);
+    qDebug()<<sql;
+    query.exec();
+}
 
 

@@ -30,6 +30,12 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(bases,SIGNAL(delDoctor()),scanbase,SLOT(delDoctor()));
     connect(bases,SIGNAL(saveDocLens(quint16,QMap<quint16,quint16>*)),scanbase,SLOT(saveDocLens(quint16,QMap<quint16,quint16>*)));
 
+    connect(bases,SIGNAL(updateCurLens(quint16)),scanbase,SLOT(updateCurLens(quint16)));
+    connect(scanbase,SIGNAL(setStLens(QMap<QString,QString>*)),bases,SLOT(setStLens(QMap<QString,QString>*)));
+    connect(bases,SIGNAL(saveLens(quint16*)),scanbase,SLOT(saveCurLens(quint16*)));
+    connect(bases,SIGNAL(delLens()),scanbase,SLOT(delLens()));
+
+
 
     bases->Init();
 }

@@ -21,7 +21,9 @@ SOURCES += main.cpp\
     dialog_doctor.cpp \
     dialog_lens.cpp \
     dialog_patient.cpp \
-    basefill.cpp
+    basefill.cpp \
+    combo_delegate.cpp \
+    delegate.cpp
 
 HEADERS  += mainwindow.h \
     bases.h \
@@ -31,7 +33,9 @@ HEADERS  += mainwindow.h \
     dialog_lens.h \
     dialog_patient.h \
     typedef.h \
-    basefill.h
+    basefill.h \
+    delegate.h \
+    combo_delegate.h
 
 FORMS    += mainwindow.ui \
     dialog_doctor.ui \

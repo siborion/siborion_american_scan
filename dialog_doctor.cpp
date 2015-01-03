@@ -36,6 +36,19 @@ Dialog_Doctor::Dialog_Doctor(QMap <QString, QString> *stDoctor, QWidget *parent)
         numRow++;
     }
 
+    CCombo_Delegate * pCombo_Delegate = new CCombo_Delegate( ui->tableView );
+    pCombo_Delegate->values().insert( 0, " " );
+    pCombo_Delegate->values().insert( 1, "SRK II" );
+    pCombo_Delegate->values().insert( 2, "SRK T" );
+    pCombo_Delegate->values().insert( 3, "HOFFER Q" );
+    pCombo_Delegate->values().insert( 4, "HOLLADAY" );
+    pCombo_Delegate->values().insert( 5, "HAIGIS" );
+    ui->tableView->setItemDelegateForColumn(5, pCombo_Delegate);
+
+    CheckBoxDelegate * pCheck_Delegate = new CheckBoxDelegate( ui->tableView );
+    ui->tableView->setItemDelegateForColumn(0, pCheck_Delegate);
+
+
     ui->tableView->setModel(model);
     ui->tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
 
