@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include "bases.h"
+#include "measure.h"
 #include "scanbase.h"
 #include <QMainWindow>
 
@@ -20,6 +21,7 @@ public:
 private:
     Ui::MainWindow *ui;
     Bases *bases;
+    Measure *measure;
     Scanbase *scanbase;
     QMap <QString, QString> *curPatient;
 

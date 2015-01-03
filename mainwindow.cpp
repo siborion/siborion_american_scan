@@ -12,12 +12,14 @@ MainWindow::MainWindow(QWidget *parent) :
     scanbase = new Scanbase(parent);
 
     bases = new Bases(parent);
+    measure = new Measure(parent);
+
     ui->tabWidget->removeTab(0);
     ui->tabWidget->removeTab(0);
     ui->tabWidget->addTab(bases, "Data Bases");
+    ui->tabWidget->addTab(measure, "Measurement");
 
     connect(bases,SIGNAL(getModel(Base::TypeBase,QSqlQueryModel**)),scanbase,SLOT(getBasesModel(Base::TypeBase,QSqlQueryModel**)));
-
 
     connect(bases,SIGNAL(updateCurPatient(quint16)),scanbase,SLOT(updateCurPatient(quint16)));
     connect(scanbase,SIGNAL(setStPatient(QMap<QString,QString>*)),bases,SLOT(setStPatient(QMap<QString,QString>*)));

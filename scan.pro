@@ -12,6 +12,17 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = scan
 TEMPLATE = app
 
+include(qwt.prf)
+
+CONFIG(debug, debug|release)
+{
+  LIBS += -lqwt -LC:\Qt\Qwt-6.1.0\lib
+}
+CONFIG(release, debug|release)
+{
+  LIBS +=  -lqwt -LC:\Qt\Qwt-6.1.0\lib
+}
+
 
 SOURCES += main.cpp\
         mainwindow.cpp \
@@ -23,7 +34,10 @@ SOURCES += main.cpp\
     dialog_patient.cpp \
     basefill.cpp \
     combo_delegate.cpp \
-    delegate.cpp
+    delegate.cpp \
+    plot.cpp \
+    sampleinterval.cpp \
+    measure.cpp
 
 HEADERS  += mainwindow.h \
     bases.h \
@@ -35,7 +49,10 @@ HEADERS  += mainwindow.h \
     typedef.h \
     basefill.h \
     delegate.h \
-    combo_delegate.h
+    combo_delegate.h \
+    plot.h \
+    sampleinterval.h \
+    measure.h
 
 FORMS    += mainwindow.ui \
     dialog_doctor.ui \
@@ -43,3 +60,6 @@ FORMS    += mainwindow.ui \
 
 RESOURCES += \
     scan.qrc
+
+OTHER_FILES += \
+    qwt.prf
