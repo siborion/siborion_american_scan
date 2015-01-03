@@ -7,7 +7,7 @@
 #include <QSqlRelationalTableModel>
 #include "combo_delegate.h"
 #include "delegate.h"
-#include "checkboxdelegate1.h"
+//#include "checkboxdelegate1.h"
 #include "basefill.h"
 
 namespace Ui {
