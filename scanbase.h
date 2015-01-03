@@ -66,7 +66,7 @@ public slots:
     void updateCurDoctor(quint16);
     void saveCurDoctor(quint16 *id);
     void delDoctor();
-
+    void saveDocLens(quint16 idDoc, QMap<quint16,quint16> *idLens);
 
 Q_SIGNALS:
     void setBasesModel(QSqlQueryModel*);

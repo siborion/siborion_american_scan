@@ -82,6 +82,7 @@ void Scanbase::updateCurPatient(quint16 id)
             }
         }
     }
+    curPatient["id"]=QString("%1").arg(id);
     emit (setStPatient(&curPatient));
 }
 
@@ -142,6 +143,7 @@ void Scanbase::delPatient()
 
 void Scanbase::updateCurDoctor(quint16 id)
 {
+    qDebug()<<"b";
     QString str = QString("SELECT * FROM doctor WHERE id=%1;").arg(id);
     QSqlQuery sql(str);
     if(sql.exec())
@@ -161,6 +163,7 @@ void Scanbase::updateCurDoctor(quint16 id)
             }
         }
     }
+    curDoctor["id"]=QString("%1").arg(id);
     emit (setStDoctor(&curDoctor));
 }
 
@@ -197,13 +200,19 @@ void Scanbase::saveCurDoctor(quint16 *id)
     value.resize(value.length()-1);
 
     if(curDoctor["id"].toInt()>0)
+    {
         sql.append(QString("update doctor set id=id %1 where id=%2").arg(str).arg(curDoctor["id"].toInt()));
+        query.prepare(sql);
+        query.exec();
+        *id = curDoctor.value("id").toInt();
+    }
     else
+    {
         sql.append(QString("insert into doctor (%1) values (%2)").arg(field).arg(value));
-
-    qDebug()<<sql;
-    query.prepare(sql);
-    query.exec();
+        query.prepare(sql);
+        query.exec();
+        *id = query.lastInsertId().toInt();
+    }
 }
 
 void Scanbase::delDoctor()
@@ -214,6 +223,29 @@ void Scanbase::delDoctor()
     query.prepare(sql);
     query.exec();
 }
+
+
+void Scanbase::saveDocLens(quint16 idDoc, QMap<quint16,quint16> *idLens)
+{
+    QString str;
+    qDebug()<<idDoc;
+    QSqlQuery sql(QString("DELETE FROM doctor_lens WHERE id_doctor=%1;").arg(idDoc));
+    sql.exec();
+    qDebug()<<idLens->count();
+
+
+    QMap<quint16,quint16>::iterator it = idLens->begin();
+    for(;it != idLens->end(); ++it)
+    {
+    str = QString("INSERT INTO doctor_lens (id_lens, id_doctor, nom_formula) "
+                  "VALUES (%1, %2, %3) ;")
+          .arg(it.key()).arg(idDoc).arg(it.value());
+    QSqlQuery sql;
+    sql.exec(str);
+    }
+}
+
+
 
 
 

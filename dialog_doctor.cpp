@@ -23,8 +23,6 @@ Dialog_Doctor::Dialog_Doctor(QMap <QString, QString> *stDoctor, QWidget *parent)
     sql.exec();
 
     quint16 numRow=0;
-//    qint8 formula;
-//    quint8 include;
     quint16 id_lens;
     while(sql.next())
     {
@@ -33,31 +31,14 @@ Dialog_Doctor::Dialog_Doctor(QMap <QString, QString> *stDoctor, QWidget *parent)
             model->setItem(numRow,i,new QStandardItem());
             model->item(numRow,i)->setData(sql.value(i).toString(),Qt::DisplayRole);
         }
-//        include = sql.value(5).toUInt();
-//        formula = sql.value(5).isNull()?(-1):sql.value(5).toUInt();
         id_lens = sql.value(6).toUInt();
-//        model->item(numRow,0)->setData(include, Qt::UserRole);
-//        model->item(numRow,0)->setData(formula, Qt::UserRole+1);
         model->item(numRow,0)->setData(id_lens, Qt::UserRole+2);
         numRow++;
     }
 
-//    CCombo_Delegate * pCombo_Delegate = new CCombo_Delegate( ui->tableView );
-//    pCombo_Delegate->values().insert( 0, " " );
-//    pCombo_Delegate->values().insert( 1, "SRK II" );
-//    pCombo_Delegate->values().insert( 2, "SRK T" );
-//    pCombo_Delegate->values().insert( 3, "HOFFER Q" );
-//    pCombo_Delegate->values().insert( 4, "HOLLADAY" );
-//    pCombo_Delegate->values().insert( 5, "HAIGIS" );
-//    ui->tableView->setItemDelegateForColumn(5, pCombo_Delegate);
-
-//    CheckBoxDelegate * pCheck_Delegate = new CheckBoxDelegate( ui->tableView );
-//    ui->tableView->setItemDelegateForColumn(0, pCheck_Delegate);
-
     ui->tableView->setModel(model);
     ui->tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
-//    delegate = new CheckBoxDelegate();
-//    ui->tableView->setItemDelegate(delegate);
+
     lst.clear();
     columnPercent << 5 << 20  <<     15 <<            15 <<           15       <<     30;
     lst<<tr("On")<<tr("Lens Name")<<tr("Lens Mfg")<<tr("Mfg A-Const")<<tr("Mfr ACD")<<tr("Primary formula");
@@ -69,13 +50,6 @@ Dialog_Doctor::Dialog_Doctor(QMap <QString, QString> *stDoctor, QWidget *parent)
     }
 
     connect(ui->buttonBox, SIGNAL(accepted()), SLOT(saveData()));
-//    connect(ui->tableView, SIGNAL(clicked(QModelIndex)),SLOT(changeModel(QModelIndex)));
-//    connect(ui->cbInclude, SIGNAL(clicked(bool)), SLOT(include(bool)));
-//    connect(ui->radioButton,  SIGNAL(clicked()) , SLOT(selectFormula()));
-//    connect(ui->radioButton_2,  SIGNAL(clicked()) , SLOT(selectFormula()));
-//    connect(ui->radioButton_3,  SIGNAL(clicked()) , SLOT(selectFormula()));
-//    connect(ui->radioButton_4,  SIGNAL(clicked()) , SLOT(selectFormula()));
-
     pBaseFill = new basefill(children(), stDoctor);
     pBaseFill->fillData();
 
@@ -88,25 +62,16 @@ Dialog_Doctor::~Dialog_Doctor()
 
 void Dialog_Doctor::saveData()
 {
-    quint8 formula;
+    quint16 formula;
     quint16 id_lens;
-    QString str;
-
-    QSqlQuery sql(QString("DELETE FROM doctor_lens WHERE id_doctor=%1;")
-                  .arg(curId));
-    sql.exec();
-
+    idLens.clear();
     for(quint16 i=0; i<model->rowCount(); i++)
     {
         if(model->data(model->index(i,0)).toInt())
         {
             formula = model->data(model->index(i,5)).toInt();
             id_lens = model->data(model->index(i,0),Qt::UserRole+2).toInt();
-            str = QString("INSERT INTO doctor_lens (id_lens, id_doctor, nom_formula) "
-                          "VALUES (%1, %2, %3) ;")
-                  .arg(id_lens).arg(curId).arg(formula);
-            QSqlQuery sql;
-            sql.exec(str);
+            idLens[id_lens] = formula;
         }
     }
     pBaseFill->saveData();

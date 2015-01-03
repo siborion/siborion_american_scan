@@ -21,11 +21,12 @@ class Dialog_Doctor : public QDialog
 public:
     explicit Dialog_Doctor(QMap <QString, QString> *stDoctor, QWidget *parent = 0);
     ~Dialog_Doctor();
-    
+    QMap<quint16,quint16> idLens;
+    quint16 idDoc;
+
 private:
     Ui::Dialog_Doctor *ui;
     QStandardItemModel  *model;
-    quint32 curId;
     basefill   *pBaseFill;
 
 private slots:

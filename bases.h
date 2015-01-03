@@ -72,6 +72,7 @@ Q_SIGNALS:
     void updateCurDoctor(quint16);
     void saveDoctor(quint16 *);
     void delDoctor();
+    void saveDocLens(quint16 idDoc, QMap<quint16,quint16> *idLens);
 
 };
 

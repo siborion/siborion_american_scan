@@ -153,9 +153,13 @@ void Bases::Add()
     }
     if(typeBase==Base::enDoctor)
     {
-        Dialog_Doctor *pDoctor = new Dialog_Doctor(0);
+        emit updateCurDoctor(0);
+        Dialog_Doctor *pDoctor = new Dialog_Doctor(stDoctor);
         if(pDoctor->exec() == QDialog::Accepted)
+        {
             emit saveDoctor(&newId);
+            emit saveDocLens(newId, &pDoctor->idLens);
+        }
         adjTable();
         delete pDoctor;
     }
@@ -188,6 +192,7 @@ void Bases::Edit()
         if(pDoctor->exec() == QDialog::Accepted)
         {
             emit saveDoctor(&newId);
+            emit saveDocLens(newId, &pDoctor->idLens);
             adjTable();
         }
     }
