@@ -37,7 +37,8 @@ SOURCES += main.cpp\
     delegate.cpp \
     plot.cpp \
     sampleinterval.cpp \
-    measure.cpp
+    measure.cpp \
+    bigviewnumcur.cpp
 
 HEADERS  += mainwindow.h \
     bases.h \
@@ -52,11 +53,13 @@ HEADERS  += mainwindow.h \
     combo_delegate.h \
     plot.h \
     sampleinterval.h \
-    measure.h
+    measure.h \
+    bigviewnumcur.h
 
 FORMS    += mainwindow.ui \
     dialog_doctor.ui \
-    dialog_lens.ui
+    dialog_lens.ui \
+    bigviewnumcur.ui
 
 RESOURCES += \
     scan.qrc

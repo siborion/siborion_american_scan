@@ -5,6 +5,7 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include "plot.h"
+#include "bigviewnumcur.h"
 
 
 class Measure : public QWidget
@@ -15,6 +16,7 @@ public:
 
 private:
     Plot *pPlot;
+    Bigviewnumcur *pBigViewCur;
 
 signals:
 
