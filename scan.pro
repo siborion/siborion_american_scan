@@ -40,7 +40,9 @@ SOURCES += main.cpp\
     measure.cpp \
     bigviewnumcur.cpp \
     key_radio.cpp \
-    sampletable.cpp
+    sampletable.cpp \
+    velosity.cpp \
+    scanbutton.cpp
 
 HEADERS  += mainwindow.h \
     bases.h \
@@ -58,12 +60,15 @@ HEADERS  += mainwindow.h \
     measure.h \
     bigviewnumcur.h \
     key_radio.h \
-    sampletable.h
+    sampletable.h \
+    velosity.h \
+    scanbutton.h
 
 FORMS    += mainwindow.ui \
     dialog_doctor.ui \
     dialog_lens.ui \
-    bigviewnumcur.ui
+    bigviewnumcur.ui \
+    velosity.ui
 
 RESOURCES += \
     scan.qrc

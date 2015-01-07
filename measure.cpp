@@ -19,8 +19,11 @@ Measure::Measure(QWidget *parent) :
 
     pSampleTable = new sampletable();
 
-    layout->addWidget(fmPlot,0,0);
-    layout->addWidget(pKey,1,0,1,2);
-    layout->addWidget(pSampleTable,0,1,1,1);
+    velosity = new Velosity();
+
+    layout->addWidget(fmPlot      ,0,0,2,1);
+    layout->addWidget(pKey        ,2,0,1,2);
+    layout->addWidget(pSampleTable,0,1);
+    layout->addWidget(velosity    ,1,1);
 
 }

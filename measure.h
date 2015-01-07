@@ -8,6 +8,7 @@
 #include "bigviewnumcur.h"
 #include "key_radio.h"
 #include "sampletable.h"
+#include "velosity.h"
 
 
 class Measure : public QWidget
@@ -21,6 +22,7 @@ private:
     Bigviewnumcur *pBigViewCur;
     key_radio *pKey;
     sampletable *pSampleTable;
+    Velosity *velosity;
 
 signals:
 
