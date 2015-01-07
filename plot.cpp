@@ -17,6 +17,9 @@
 Plot::Plot( QWidget *parent, bool print):
     QwtPlot( parent )
 {
+    setMinimumHeight(150);
+    setMinimumWidth (150);
+
     setAutoReplot( false );
     setAutoDelete(true);
 
@@ -57,9 +60,9 @@ Plot::Plot( QWidget *parent, bool print):
     d_curve1->setXAxis(QwtPlot::xTop);
     d_curve1->attach(this);
 
-    startInterval  = new SampleInterval(0, 0, "Start_Interval");
-    lensInterval   = new SampleInterval(0, 0, "Lens_Interval");
-    retinaInterval = new SampleInterval(0, 0, "Retina_Interval");
+    startInterval  = new SampleInterval(0, 100, "Start_Interval");
+    lensInterval   = new SampleInterval(200, 300, "Lens_Interval");
+    retinaInterval = new SampleInterval(400, 500, "Retina_Interval");
 
     startInterval->setXAxis(QwtPlot::xTop);
     lensInterval->setXAxis(QwtPlot::xTop);
