@@ -7,7 +7,7 @@
 #include "plot.h"
 #include "bigviewnumcur.h"
 #include "key_radio.h"
-
+#include "sampletable.h"
 
 
 class Measure : public QWidget
@@ -20,6 +20,7 @@ private:
     Plot *pPlot;
     Bigviewnumcur *pBigViewCur;
     key_radio *pKey;
+    sampletable *pSampleTable;
 
 signals:
 

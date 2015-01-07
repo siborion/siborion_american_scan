@@ -17,6 +17,10 @@ Measure::Measure(QWidget *parent) :
 
     pKey = new key_radio();
 
+    pSampleTable = new sampletable();
+
     layout->addWidget(fmPlot,0,0);
     layout->addWidget(pKey,1,0,1,2);
+    layout->addWidget(pSampleTable,0,1,1,1);
+
 }
