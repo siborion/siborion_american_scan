@@ -38,7 +38,8 @@ SOURCES += main.cpp\
     plot.cpp \
     sampleinterval.cpp \
     measure.cpp \
-    bigviewnumcur.cpp
+    bigviewnumcur.cpp \
+    key_radio.cpp
 
 HEADERS  += mainwindow.h \
     bases.h \
@@ -54,7 +55,8 @@ HEADERS  += mainwindow.h \
     plot.h \
     sampleinterval.h \
     measure.h \
-    bigviewnumcur.h
+    bigviewnumcur.h \
+    key_radio.h
 
 FORMS    += mainwindow.ui \
     dialog_doctor.ui \
