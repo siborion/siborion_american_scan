@@ -15,5 +15,8 @@ Measure::Measure(QWidget *parent) :
     glPlot->addWidget(pBigViewCur, 0, 0);
     glPlot->addWidget(pPlot,       1, 0);
 
+    pKey = new key_radio();
+
     layout->addWidget(fmPlot,0,0);
+    layout->addWidget(pKey,1,0,1,2);
 }

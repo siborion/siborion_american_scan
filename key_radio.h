@@ -6,7 +6,7 @@
 #include <QHBoxLayout>
 #include <QGroupBox>
 #include <QRadioButton>
-#include "curentparam.h"
+//#include "curentparam.h"
 #include "typedef.h"
 
 class key_radio : public QWidget
@@ -19,7 +19,7 @@ Q_SIGNALS:
 
 private:
     void refresh();
-    CurentParam *curentParam;
+//    CurentParam *curentParam;
     QRadioButton *rbOd;
     QRadioButton *rbOs;
     QGroupBox    *gbEye;

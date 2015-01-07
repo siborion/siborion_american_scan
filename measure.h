@@ -6,6 +6,8 @@
 #include <QHBoxLayout>
 #include "plot.h"
 #include "bigviewnumcur.h"
+#include "key_radio.h"
+
 
 
 class Measure : public QWidget
@@ -17,6 +19,7 @@ public:
 private:
     Plot *pPlot;
     Bigviewnumcur *pBigViewCur;
+    key_radio *pKey;
 
 signals:
 
