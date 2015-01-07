@@ -1,5 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <QDesktopWidget>
+
 
 //#include "control.h"
 
@@ -37,9 +39,15 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(bases,SIGNAL(saveLens(quint16*)),scanbase,SLOT(saveCurLens(quint16*)));
     connect(bases,SIGNAL(delLens()),scanbase,SLOT(delLens()));
 
-
-
     bases->Init();
+    moveWindowToCenter();
+}
+
+void MainWindow::moveWindowToCenter()
+{
+    QRect frect = frameGeometry();
+    frect.moveCenter(QDesktopWidget().availableGeometry().center());
+    move(frect.topLeft());
 }
 
 MainWindow::~MainWindow()

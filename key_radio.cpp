@@ -5,6 +5,7 @@ key_radio::key_radio(QWidget *parent) :
 {
     QHBoxLayout *layoutkey_radio = new QHBoxLayout(this);
 
+
     QFont font;
     font.setBold(true);
     font.setPointSize(12);
@@ -38,7 +39,6 @@ key_radio::key_radio(QWidget *parent) :
     rbContact->setFont(font);
     rbImmersion->setFont(font);
 
-
     QSpacerItem  *hs3 = new QSpacerItem(50, 5, QSizePolicy::Expanding, QSizePolicy::Minimum);
     QGroupBox    *gbCataract = new QGroupBox();
     QHBoxLayout  *ltCataract = new QHBoxLayout(gbCataract);
@@ -65,7 +65,7 @@ key_radio::key_radio(QWidget *parent) :
     ltEye->addWidget(rbOd);
     ltEye->addWidget(rbOs);
 
-    QSpacerItem  *hs5 = new QSpacerItem(50, 5, QSizePolicy::Expanding, QSizePolicy::Minimum);
+//    QSpacerItem  *hs5 = new QSpacerItem(50, 5, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
     layoutkey_radio->setSpacing(0);
     layoutkey_radio->addWidget(gbAuto);
@@ -75,7 +75,7 @@ key_radio::key_radio(QWidget *parent) :
     layoutkey_radio->addWidget(gbCataract);
     layoutkey_radio->addItem(hs4);
     layoutkey_radio->addWidget(gbEye);
-    layoutkey_radio->addItem(hs5);
+//    layoutkey_radio->addItem(hs5);
 
 //    curentParam->regimMeasure  = RegimMeasure::AUTOFREEZ;
 //    curentParam->regimContact  = RegimContact::CONTACT;

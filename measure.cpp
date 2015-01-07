@@ -5,6 +5,8 @@ Measure::Measure(QWidget *parent) :
 {
     QGridLayout *layout     = new QGridLayout(this);
 
+    layout->setVerticalSpacing(2);
+
     pBigViewCur = new Bigviewnumcur();
     QFrame *fmPlot = new QFrame();
     fmPlot->setStyleSheet(QStringLiteral("background-color: rgb(100, 100, 100);"));
@@ -20,9 +22,10 @@ Measure::Measure(QWidget *parent) :
     velosity = new Velosity();
     pBigView = new bigviewnum();
 
-    layout->addWidget(fmPlot      ,0,0,2,1);
-    layout->addWidget(pKey        ,2,0,1,2);
+    layout->addWidget(fmPlot      ,0,0,3,1);
+    layout->addWidget(pKey        ,3,0,1,2);
     layout->addWidget(pSampleTable,0,1);
     layout->addWidget(velosity    ,1,1);
+    layout->addWidget(pBigView    ,2,1);
 
 }

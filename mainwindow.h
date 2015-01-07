@@ -24,6 +24,7 @@ private:
     Measure *measure;
     Scanbase *scanbase;
     QMap <QString, QString> *curPatient;
+    void moveWindowToCenter();
 
 signals:
     void refreshFormula();

@@ -6,7 +6,6 @@ sampletable::sampletable(QWidget *parent) :
 {
     QList<int> columnPercent;
     QStringList lst;
-//    curentParam = CurentParam::instanse();
 
     QVBoxLayout *layout              = new QVBoxLayout(this);
 
@@ -16,10 +15,10 @@ sampletable::sampletable(QWidget *parent) :
     lst          <<tr("No")<<tr("AveVelAl")<<tr("AL")<<tr("ACD")<<tr("LT")<<tr("VIT");
     twMeas  = new adjview(10, lst, columnPercent);
     twMeas->setSelectionBehavior(QAbstractItemView::SelectRows);
-    twMeas->setMaximumWidth(350);
-    twMeas->setMinimumWidth(280);
-    twMeas->setMaximumHeight(16777215);
-    twMeas->setMinimumHeight(0);
+//    twMeas->setMaximumWidth(350);
+//    twMeas->setMinimumWidth(280);
+//    twMeas->setMaximumHeight(16777215);
+//    twMeas->setMinimumHeight(0);
     twMeas->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     layout->addWidget(twMeas);
 
