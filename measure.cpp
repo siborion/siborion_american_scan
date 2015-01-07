@@ -16,10 +16,9 @@ Measure::Measure(QWidget *parent) :
     glPlot->addWidget(pPlot,       1, 0);
 
     pKey = new key_radio();
-
     pSampleTable = new sampletable();
-
     velosity = new Velosity();
+    pBigView = new bigviewnum();
 
     layout->addWidget(fmPlot      ,0,0,2,1);
     layout->addWidget(pKey        ,2,0,1,2);
