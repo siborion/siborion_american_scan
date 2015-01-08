@@ -36,3 +36,8 @@ sampletable::sampletable(QWidget *parent) :
 //    connect(curentParam, SIGNAL(changePatientSignal()), SLOT(clearModel()));
     connect(twMeas->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), SLOT(changeRow(QModelIndex)));
 }
+
+void sampletable::changeRow(QModelIndex index)
+{
+    Q_UNUSED(index);
+}

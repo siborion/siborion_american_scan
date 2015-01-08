@@ -11,10 +11,11 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    curParam = new CurParam(this);
     scanbase = new Scanbase(parent);
-
     bases = new Bases(parent);
     measure = new Measure(parent);
+    device = new Device();
 
     ui->tabWidget->removeTab(0);
     ui->tabWidget->removeTab(0);
@@ -47,7 +48,10 @@ void MainWindow::moveWindowToCenter()
 {
     QRect frect = frameGeometry();
     frect.moveCenter(QDesktopWidget().availableGeometry().center());
-    move(frect.topLeft());
+    qDebug()<<"x"<<frect.height();
+    qDebug()<<"y"<<frect.width();
+    move(10,10);
+//    move(frect.topLeft());
 }
 
 MainWindow::~MainWindow()

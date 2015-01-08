@@ -28,4 +28,11 @@ Measure::Measure(QWidget *parent) :
     layout->addWidget(velosity    ,1,1);
     layout->addWidget(pBigView    ,2,1);
 
+    connect(velosity,SIGNAL(doScan(bool*)),SLOT(doScanSlot(bool*)));
+}
+
+void Measure::doScanSlot(bool *doMeasure)
+{
+    qDebug()<<(*doMeasure);
+    *doMeasure^=1;
 }

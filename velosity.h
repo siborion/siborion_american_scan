@@ -18,13 +18,13 @@ public:
 
 private:
     Ui::Velosity *ui;
-    ScanButton *pbMeasure;
+    ScanButton    *pbMeasure;
 
 private slots:
-    void doScan();
+    void doScanSlot(bool*);
 
 signals:
-    void pressed();
+    void doScan(bool*);
 
 
 };

@@ -17,6 +17,11 @@ private:
 
 private slots:
     void doTimer();
+    void doScanSlot();
+
+Q_SIGNALS:
+    void doScan(bool*);
+
 
 };
 

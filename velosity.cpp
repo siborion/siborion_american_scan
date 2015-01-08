@@ -1,5 +1,6 @@
 #include "velosity.h"
 #include "ui_velosity.h"
+#include <qdebug.h>
 
 Velosity::Velosity(QWidget *parent) :
     QWidget(parent),
@@ -8,12 +9,12 @@ Velosity::Velosity(QWidget *parent) :
     ui->setupUi(this);
     pbMeasure = new ScanButton();
     ui->gridLayout_2->addWidget(pbMeasure,0,3,2,1);
-    connect(pbMeasure,SIGNAL(pressed()),SLOT(doScan()));
+    connect(pbMeasure,SIGNAL(doScan(bool*)),SLOT(doScanSlot(bool*)));
 }
 
-void Velosity::doScan()
+void Velosity::doScanSlot(bool *doMeasure)
 {
-    emit pressed();
+    emit doScan(doMeasure);
 }
 
 Velosity::~Velosity()

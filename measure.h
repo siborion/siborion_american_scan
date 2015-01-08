@@ -26,9 +26,11 @@ private:
     Velosity *velosity;
     bigviewnum *pBigView;
 
-signals:
-
 public slots:
+    void doScanSlot(bool*);
+
+Q_SIGNALS:
+    void doScan(bool*);
 
 };
 

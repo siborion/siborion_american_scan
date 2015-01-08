@@ -6,6 +6,8 @@
 
 QT       += sql
 QT       += core gui
+QT	 += serialport
+
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -43,7 +45,9 @@ SOURCES += main.cpp\
     sampletable.cpp \
     velosity.cpp \
     scanbutton.cpp \
-    bigviewnum.cpp
+    bigviewnum.cpp \
+    device.cpp \
+    curparam.cpp
 
 HEADERS  += mainwindow.h \
     bases.h \
@@ -64,7 +68,9 @@ HEADERS  += mainwindow.h \
     sampletable.h \
     velosity.h \
     scanbutton.h \
-    bigviewnum.h
+    bigviewnum.h \
+    device.h \
+    curparam.h
 
 FORMS    += mainwindow.ui \
     dialog_doctor.ui \

@@ -4,6 +4,8 @@
 #include "bases.h"
 #include "measure.h"
 #include "scanbase.h"
+#include "curparam.h"
+#include "device.h"
 #include <QMainWindow>
 
 namespace Ui {
@@ -24,6 +26,8 @@ private:
     Measure *measure;
     Scanbase *scanbase;
     QMap <QString, QString> *curPatient;
+    CurParam *curParam;
+    Device *device;
     void moveWindowToCenter();
 
 signals:

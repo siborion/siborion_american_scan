@@ -51,13 +51,11 @@ signals:
 
 public slots:
 //    void getFileSample();
-//    void changeRow(QModelIndex curIndex);
+    void changeRow(QModelIndex curIndex);
 //    void delSample();
 //    void changeSide();
 //    void clearModel();
 //    void changeKeySlot();
-
-
 };
 
 #endif // SAMPLETABLE_H

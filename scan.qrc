@@ -7,5 +7,6 @@
         <file alias="scan1">pic/scan1.png</file>
         <file alias="scan2">pic/scan2.png</file>
         <file alias="scan3">pic/scan3.png</file>
+        <file alias="scan">scan.png</file>
     </qresource>
 </RCC>
