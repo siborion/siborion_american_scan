@@ -47,7 +47,8 @@ SOURCES += main.cpp\
     scanbutton.cpp \
     bigviewnum.cpp \
     device.cpp \
-    curparam.cpp
+    curparam.cpp \
+    parcer.cpp
 
 HEADERS  += mainwindow.h \
     bases.h \
@@ -70,7 +71,8 @@ HEADERS  += mainwindow.h \
     scanbutton.h \
     bigviewnum.h \
     device.h \
-    curparam.h
+    curparam.h \
+    parcer.h
 
 FORMS    += mainwindow.ui \
     dialog_doctor.ui \

@@ -15,11 +15,14 @@ public:
 private:
     QSerialPort *port;
     QTimer *timer;
+    bool doDll;
 
 signals:
+    void resiveData(QByteArray);
 
 private slots:
     void openDevice(bool *doMeasure);
+    void doTimer();
 
 
 };

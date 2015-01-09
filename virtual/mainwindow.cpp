@@ -88,7 +88,6 @@ void MainWindow::readPort()
             for(quint16 j=0; j<rnd; j++)
             {
 //                i++;
-                qDebug()<<"------------------------";
                 baTmp.append((char)0);
             }
         }

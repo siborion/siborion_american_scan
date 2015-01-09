@@ -28,9 +28,11 @@ private:
 
 public slots:
     void doScanSlot(bool*);
+    void resiveDataSlot(QByteArray);
 
 Q_SIGNALS:
     void doScan(bool*);
+    void resiveData(QByteArray);
 
 };
 

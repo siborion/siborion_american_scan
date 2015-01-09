@@ -33,6 +33,11 @@ Measure::Measure(QWidget *parent) :
 
 void Measure::doScanSlot(bool *doMeasure)
 {
-    qDebug()<<(*doMeasure);
-    *doMeasure^=1;
+    emit doScan(doMeasure);
 }
+
+void Measure::resiveDataSlot(QByteArray Sample)
+{
+    pPlot->drawSample(Sample);
+}
+

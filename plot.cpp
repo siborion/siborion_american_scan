@@ -77,6 +77,25 @@ Plot::Plot( QWidget *parent, bool print):
     setAutoReplot( true );
 }
 
+void Plot::drawSample(QByteArray Sample)
+{
+    QVector<double>  xData, yData;
+    quint16 kolvo = 0;
+    foreach(quint8 val, Sample)
+    {
+        xData.append(kolvo);
+        yData.append(val*2);
+        kolvo++;
+    }
+    foreach (QwtPlotItem *p, itemList())
+    {
+        if(p->rtti() == QwtPlotItem::Rtti_PlotMarker)
+        {
+            removeItem(p);
+        }
+    }
+    d_curve1->setSamples(xData, yData);
+}
 
 void Plot::drawSample(const double *x, const double *y, int count)
 {

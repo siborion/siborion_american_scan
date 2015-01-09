@@ -30,13 +30,12 @@ private:
     Device *device;
     void moveWindowToCenter();
 
-signals:
-    void refreshFormula();
+
+public slots:
+    void resiveDataSlot(QByteArray);
 
 Q_SIGNALS:
-    void changeSideSignal();
-
-
+    void resiveData(QByteArray);
 };
 
 #endif // MAINWINDOW_H
