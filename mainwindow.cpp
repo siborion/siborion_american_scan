@@ -40,10 +40,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(bases,SIGNAL(saveLens(quint16*)),scanbase,SLOT(saveCurLens(quint16*)));
     connect(bases,SIGNAL(delLens()),scanbase,SLOT(delLens()));
 
-
-
     connect(measure,SIGNAL(doScan(bool*)),device,SLOT(openDevice(bool*)));
-    connect(device,SIGNAL(resiveData(QByteArray)),measure,SLOT(resiveDataSlot(QByteArray)));
+    connect(device,SIGNAL(resiveData(QByteArray)),SLOT(resiveDataSlot(QByteArray)));
 
     bases->Init();
     moveWindowToCenter();
@@ -61,11 +59,9 @@ void MainWindow::moveWindowToCenter()
 
 void MainWindow::resiveDataSlot(QByteArray Sample)
 {
-    emit resiveData(Sample);
+    qDebug()<<"main";
+    measure->resiveData(Sample);
 }
-
-
-
 
 MainWindow::~MainWindow()
 {

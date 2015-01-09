@@ -17,6 +17,7 @@ class Measure : public QWidget
     Q_OBJECT
 public:
     explicit Measure(QWidget *parent = 0);
+    void resiveData(QByteArray);
 
 private:
     Plot *pPlot;
@@ -28,12 +29,9 @@ private:
 
 public slots:
     void doScanSlot(bool*);
-    void resiveDataSlot(QByteArray);
 
 Q_SIGNALS:
     void doScan(bool*);
-    void resiveData(QByteArray);
-
 };
 
 #endif // MEASURE_H

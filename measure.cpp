@@ -36,7 +36,7 @@ void Measure::doScanSlot(bool *doMeasure)
     emit doScan(doMeasure);
 }
 
-void Measure::resiveDataSlot(QByteArray Sample)
+void Measure::resiveData(QByteArray Sample)
 {
     pPlot->drawSample(Sample);
 }

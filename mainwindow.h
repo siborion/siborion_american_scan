@@ -30,12 +30,11 @@ private:
     Device *device;
     void moveWindowToCenter();
 
-
 public slots:
     void resiveDataSlot(QByteArray);
 
 Q_SIGNALS:
-    void resiveData(QByteArray);
+
 };
 
 #endif // MAINWINDOW_H
