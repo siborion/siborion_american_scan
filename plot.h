@@ -4,7 +4,7 @@
 #include <qwt_plot.h>
 //#include <QApplication>
 #include "sampleinterval.h"
-//#include "curentparam.h"
+#include "curparam.h"
 //#include "typedef.h"
 
 class QwtPlotCurve;
@@ -45,7 +45,9 @@ public:
     virtual bool eventFilter( QObject *, QEvent * );
     QList <double> intToMM(QList<quint16> *mainParam);
     QList<quint16> allExtremum;
-    void drawSample(QByteArray Sample);
+    void drawSample(QByteArray *Sample);
+    Plot *pPlot;
+    CurParam *curParam;
 
 public slots:
     void changeKeySlot();

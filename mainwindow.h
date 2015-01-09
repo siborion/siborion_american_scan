@@ -6,6 +6,7 @@
 #include "scanbase.h"
 #include "curparam.h"
 #include "device.h"
+#include "parcer.h"
 #include <QMainWindow>
 
 namespace Ui {
@@ -28,6 +29,7 @@ private:
     QMap <QString, QString> *curPatient;
     CurParam *curParam;
     Device *device;
+    Parcer *parcer;
     void moveWindowToCenter();
 
 public slots:

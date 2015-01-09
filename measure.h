@@ -17,10 +17,10 @@ class Measure : public QWidget
     Q_OBJECT
 public:
     explicit Measure(QWidget *parent = 0);
-    void resiveData(QByteArray);
+    void resiveData(QByteArray*);
+    Plot *pPlot;
 
 private:
-    Plot *pPlot;
     Bigviewnumcur *pBigViewCur;
     key_radio *pKey;
     sampletable *pSampleTable;

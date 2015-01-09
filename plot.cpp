@@ -9,7 +9,6 @@
 #include <qwt_plot_canvas.h>
 #include <qwt_scale_widget.h>
 #include <qmath.h>
-//#include "complexnumber.h"
 #include "plot.h"
 #include <qevent.h>
 #include <qwt_plot_textlabel.h>
@@ -24,7 +23,6 @@ Plot::Plot( QWidget *parent, bool print):
     setAutoDelete(true);
 
     QwtPlotCanvas *canvas = new QwtPlotCanvas();
-//    curentParam = CurentParam::instanse();
 
     setCanvas( canvas );
 
@@ -72,16 +70,14 @@ Plot::Plot( QWidget *parent, bool print):
     lensInterval->attach( this );
     retinaInterval->attach( this );
 
-//    changeContactSlot(true);
-
     setAutoReplot( true );
 }
 
-void Plot::drawSample(QByteArray Sample)
+void Plot::drawSample(QByteArray *Sample)
 {
     QVector<double>  xData, yData;
     quint16 kolvo = 0;
-    foreach(quint8 val, Sample)
+    foreach(quint8 val, *Sample)
     {
         xData.append(kolvo);
         yData.append(val*2);
@@ -169,7 +165,7 @@ void Plot::select( const QPoint &pos )
     QwtPlotCurve  *markCurve = NULL;
     double dist = 10e10;
     int index = -1;
-    int yValue;
+//    int yValue;
     const QwtPlotItemList& itmList = itemList();
 
     d_selectedCurve = NULL;
@@ -311,23 +307,21 @@ void Plot::move( const QPoint &pos )
                 yData[i] = sample.y();
             }
         }
-
-//        if(d_selectedMarkCurve->title().text()== "Start_Interval")
-//        {
-//            curentParam->corneaX1 = qMin(xData[0], xData[1]);
-//            curentParam->corneaX2 = qMax(xData[0], xData[1]);
-//        }
-//        if(d_selectedMarkCurve->title().text()== "Lens_Interval")
-//        {
-//            curentParam->lensX1 = qMin(xData[0], xData[1]);
-//            curentParam->lensX2 = qMax(xData[0], xData[1]);
-//        }
-//        if(d_selectedMarkCurve->title().text()== "Retina_Interval")
-//        {
-//            curentParam->retinaX1 = qMin(xData[0], xData[1]);
-//            curentParam->retinaX2 = qMax(xData[0], xData[1]);
-//        }
-
+        if(d_selectedMarkCurve->title().text()== "Start_Interval")
+        {
+            curParam->corneaX1 = qMin(xData[0], xData[1]);
+            curParam->corneaX2 = qMax(xData[0], xData[1]);
+        }
+        if(d_selectedMarkCurve->title().text()== "Lens_Interval")
+        {
+            curParam->lensX1 = qMin(xData[0], xData[1]);
+            curParam->lensX2 = qMax(xData[0], xData[1]);
+        }
+        if(d_selectedMarkCurve->title().text()== "Retina_Interval")
+        {
+            curParam->retinaX1 = qMin(xData[0], xData[1]);
+            curParam->retinaX2 = qMax(xData[0], xData[1]);
+        }
         d_selectedMarkCurve->setSamples( xData, yData );
     }
 }

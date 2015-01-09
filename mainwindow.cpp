@@ -12,10 +12,13 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     curParam = new CurParam(this);
-    scanbase = new Scanbase(parent);
-    bases = new Bases(parent);
-    measure = new Measure(parent);
-    device = new Device();
+    scanbase = new Scanbase(this);
+    bases = new Bases(this);
+    measure = new Measure(this);
+    device = new Device(this);
+    parcer = new Parcer(this, curParam);
+
+    measure->pPlot->curParam = curParam;
 
     ui->tabWidget->removeTab(0);
     ui->tabWidget->removeTab(0);
@@ -51,16 +54,12 @@ void MainWindow::moveWindowToCenter()
 {
     QRect frect = frameGeometry();
     frect.moveCenter(QDesktopWidget().availableGeometry().center());
-    qDebug()<<"x"<<frect.height();
-    qDebug()<<"y"<<frect.width();
     move(10,10);
-//    move(frect.topLeft());
 }
 
 void MainWindow::resiveDataSlot(QByteArray Sample)
 {
-    qDebug()<<"main";
-    measure->resiveData(Sample);
+    measure->resiveData(&Sample);
 }
 
 MainWindow::~MainWindow()

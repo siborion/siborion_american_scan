@@ -27,7 +27,6 @@ void Device::openDevice(bool *doMeasure)
         port->close();
         *doMeasure = false;
         timer->stop();
-        qDebug()<<"Close";
     }
     else
     {
@@ -35,7 +34,6 @@ void Device::openDevice(bool *doMeasure)
         {
             *doMeasure = true;
             timer->start();
-            qDebug()<<"Open";
         }
     }
 }

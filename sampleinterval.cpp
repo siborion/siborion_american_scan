@@ -16,6 +16,7 @@ SampleInterval::SampleInterval(quint16 x1, quint16 x2, QString title):
     setPen( Qt::darkBlue, 10 );
     setTitle(title);
     setSamples(x,y,2);
+
 }
 
 void SampleInterval::setSample(quint16 x1, quint16 x2)
