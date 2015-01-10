@@ -278,15 +278,15 @@ void Plot::move( const QPoint &pos )
                 {
                     QwtPlotMarker *c = static_cast<QwtPlotMarker *>( *it );
                     if(c->title().text()=="Cornea")
-                        measureParam->Cornea = c->xValue();
+                        measureParam.Cornea = c->xValue();
                     if(c->title().text()=="L1")
-                        measureParam->L1 = c->xValue();
+                        measureParam.L1 = c->xValue();
                     if(c->title().text()=="L2")
-                        measureParam->L2 = c->xValue();
+                        measureParam.L2 = c->xValue();
                     if(c->title().text()=="Retina")
-                        measureParam->Retina = c->xValue();
+                        measureParam.Retina = c->xValue();
 //                    qDebug()<<measureParam->Retina;
-                    emit(refreshTable(measureParam));
+                    emit(refreshTable(&measureParam));
                 }
             }
         }
@@ -466,16 +466,16 @@ void Plot::changeKeySlot()
 
 void Plot::updateSample(stMeasureParam *link)
 {
-    measureParam = link;
-    qDebug()<<measureParam->Retina;
-    drawSample(&measureParam->Sample);
-    drawMarker(measureParam->Cornea,"Cornea");
-    drawMarker((double)measureParam->Cornea,(double)60, Qt::white);
-    drawMarker(measureParam->L1,"L1");
-    drawMarker((double)measureParam->L1,(double)60, Qt::white);
-    drawMarker(measureParam->L2,"L2");
-    drawMarker((double)measureParam->L2,(double)60, Qt::white);
-    drawMarker(measureParam->Retina,"Retina");
-    drawMarker((double)measureParam->Retina,(double)60, Qt::white);
-    allExtremum = measureParam->extremum;
+    measureParam = *link;
+    qDebug()<<measureParam.Retina;
+    drawSample(&measureParam.Sample);
+    drawMarker(measureParam.Cornea,"Cornea");
+    drawMarker((double)measureParam.Cornea,(double)60, Qt::white);
+    drawMarker(measureParam.L1,"L1");
+    drawMarker((double)measureParam.L1,(double)60, Qt::white);
+    drawMarker(measureParam.L2,"L2");
+    drawMarker((double)measureParam.L2,(double)60, Qt::white);
+    drawMarker(measureParam.Retina,"Retina");
+    drawMarker((double)measureParam.Retina,(double)60, Qt::white);
+    allExtremum = measureParam.extremum;
 }

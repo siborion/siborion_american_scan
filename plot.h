@@ -56,7 +56,7 @@ public slots:
 private:
     void select( const QPoint &pos );
     void move( const QPoint &pos );
-    stMeasureParam *measureParam;
+    stMeasureParam measureParam;
     QwtText *startIntervalText;
 
     QwtPlotCurve *d_curve1;
