@@ -10,13 +10,14 @@
 #include "sampletable.h"
 #include "velosity.h"
 #include "bigviewnum.h"
+#include "curparam.h"
 
 
 class Measure : public QWidget
 {
     Q_OBJECT
 public:
-    explicit Measure(QWidget *parent = 0);
+    explicit Measure(QWidget *parent = 0, CurParam *curParam=0);
     void resiveData(QByteArray*);
     void addSample(QByteArray *Sample, QList<quint16> *extremum, stMeasureParam*);
     Plot *pPlot;

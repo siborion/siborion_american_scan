@@ -1,6 +1,6 @@
 #include "measure.h"
 
-Measure::Measure(QWidget *parent) :
+Measure::Measure(QWidget *parent, CurParam *curParam) :
     QWidget(parent)
 {
     QGridLayout *layout     = new QGridLayout(this);
@@ -13,7 +13,7 @@ Measure::Measure(QWidget *parent) :
     fmPlot->setFrameShape(QFrame::NoFrame);
     fmPlot->setFrameShadow(QFrame::Plain);
     QGridLayout *glPlot  = new QGridLayout(fmPlot);
-    pPlot = new Plot(this, false);
+    pPlot = new Plot(this, false, curParam);
     glPlot->addWidget(pBigViewCur, 0, 0);
     glPlot->addWidget(pPlot,       1, 0);
 

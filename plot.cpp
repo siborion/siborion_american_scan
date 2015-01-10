@@ -13,11 +13,13 @@
 #include <qevent.h>
 #include <qwt_plot_textlabel.h>
 
-Plot::Plot( QWidget *parent, bool print):
+Plot::Plot( QWidget *parent, bool print, CurParam *link):
     QwtPlot( parent )
 {
     setMinimumHeight(150);
     setMinimumWidth (150);
+
+    curParam = link;
 
     setAutoReplot( false );
     setAutoDelete(true);
@@ -58,9 +60,9 @@ Plot::Plot( QWidget *parent, bool print):
     d_curve1->setXAxis(QwtPlot::xTop);
     d_curve1->attach(this);
 
-    startInterval  = new SampleInterval(0, 100, "Start_Interval");
-    lensInterval   = new SampleInterval(200, 300, "Lens_Interval");
-    retinaInterval = new SampleInterval(400, 500, "Retina_Interval");
+    startInterval  = new SampleInterval(0, 100, "Start_Interval",   curParam);
+    lensInterval   = new SampleInterval(200, 300, "Lens_Interval",  curParam);
+    retinaInterval = new SampleInterval(400, 500, "Retina_Interval",curParam);
 
     startInterval->setXAxis(QwtPlot::xTop);
     lensInterval->setXAxis(QwtPlot::xTop);

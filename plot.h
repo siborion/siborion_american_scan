@@ -38,7 +38,7 @@ class Plot: public QwtPlot
     Q_OBJECT
 
 public:
-    Plot( QWidget *parent, bool print );
+    Plot( QWidget *parent, bool print, CurParam *link = 0);
     void drawSample(const double *frequency, const double *amplitude, int count);
     void drawMarker(quint16 pos, QString title);
     void drawMarker(double x, double y, const QColor &);

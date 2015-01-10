@@ -14,11 +14,9 @@ MainWindow::MainWindow(QWidget *parent) :
     curParam = new CurParam(this);
     scanbase = new Scanbase(this);
     bases = new Bases(this);
-    measure = new Measure(this);
+    measure = new Measure(this, curParam);
     device = new Device(this);
     parcer = new Parcer(this, curParam);
-
-    measure->pPlot->curParam = curParam;
 
     ui->tabWidget->removeTab(0);
     ui->tabWidget->removeTab(0);
