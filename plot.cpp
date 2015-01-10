@@ -12,6 +12,7 @@
 #include "plot.h"
 #include <qevent.h>
 #include <qwt_plot_textlabel.h>
+#include <QApplication>
 
 Plot::Plot( QWidget *parent, bool print, CurParam *link):
     QwtPlot( parent )
@@ -251,9 +252,9 @@ void Plot::move( const QPoint &pos )
     quint16 val, in=0, curDist, dist=0xffff;
     if ( d_selectedCurve )
     {
-//        if((d_selectedCurve->title().text()=="Start")||(d_selectedCurve->title().text()=="L1")||(d_selectedCurve->title().text()=="L2")||(d_selectedCurve->title().text()=="Retina"))
+        if((d_selectedCurve->title().text()=="Cornea")||(d_selectedCurve->title().text()=="L1")||(d_selectedCurve->title().text()=="L2")||(d_selectedCurve->title().text()=="Retina"))
         {
-            if (1==1)//(QApplication::keyboardModifiers().testFlag(Qt::ControlModifier) == false)
+            if (QApplication::keyboardModifiers().testFlag(Qt::ControlModifier) == false)
             {
                 foreach(val, allExtremum)
                 {
@@ -276,7 +277,7 @@ void Plot::move( const QPoint &pos )
                 if ( ( *it )->rtti() == QwtPlotItem::Rtti_PlotMarker)
                 {
                     QwtPlotMarker *c = static_cast<QwtPlotMarker *>( *it );
-//                    if(c->title().text()=="Start")
+//                    if(c->title().text()=="Cornea")
 //                        mainParam.Start = c->xValue();
 //                    if(c->title().text()=="L1")
 //                        mainParam.L1 = c->xValue();
@@ -411,7 +412,7 @@ void Plot::move( const QPoint &pos )
 
 void Plot::changeKeySlot()
 {
-    double offSet;
+//    double offSet;
 //    offSet=((curentParam->regimContact==RegimContact::CONTACT)?0:3.5*27);
 //    curentParam->corneaX1 = 0+offSet;   curentParam->corneaX2 = 22+offSet;
 //    curentParam->lensX1 = 54+offSet;    curentParam->lensX2 = 351+offSet;
@@ -462,11 +463,17 @@ void Plot::changeKeySlot()
 //    qDebug()<<"11111"<<curentParam->cataract;
 //}
 
-void Plot::updateSample(stMeasureParam *measureParam)
+void Plot::updateSample(stMeasureParam *link)
 {
+    measureParam = link;
     drawSample(&measureParam->Sample);
     drawMarker(measureParam->Cornea,"Cornea");
+    drawMarker((double)measureParam->Cornea,(double)60, Qt::white);
     drawMarker(measureParam->L1,"L1");
+    drawMarker((double)measureParam->L1,(double)60, Qt::white);
     drawMarker(measureParam->L2,"L2");
+    drawMarker((double)measureParam->L2,(double)60, Qt::white);
     drawMarker(measureParam->Retina,"Retina");
+    drawMarker((double)measureParam->Retina,(double)60, Qt::white);
+    allExtremum = measureParam->extremum;
 }

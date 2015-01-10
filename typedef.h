@@ -32,6 +32,7 @@ struct stMeasureParam
     double ACD;
     double LT;
     double VIT;
+    QList<quint16> extremum;
 };
 
 #define roleSample   Qt::UserRole+1
@@ -39,7 +40,7 @@ struct stMeasureParam
 #define roleL1       Qt::UserRole+3
 #define roleL2       Qt::UserRole+4
 #define roleRetina   Qt::UserRole+5
-//#define roleExtremum Qt::UserRole+5
+#define roleExtremum Qt::UserRole+6
 
 
 #endif // TYPEDEF_H

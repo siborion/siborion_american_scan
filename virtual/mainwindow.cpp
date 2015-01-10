@@ -29,6 +29,7 @@ MainWindow::MainWindow(QWidget *parent) :
     y[9]=255;
     y[148]=255;
     y[239]=255;
+    y[400]=255;
     y[695]=255;
 
     plot->drawSample(x, y, 1024);

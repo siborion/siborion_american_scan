@@ -12,6 +12,7 @@ class Parcer : public QObject
 public:
     explicit Parcer(QObject *parent = 0, CurParam *link=0);
     bool findExtremum(QByteArray *Sample, QList<quint16> *extremum, stMeasureParam*);
+    void calculateParam(stMeasureParam *measureParam);
 
 private:
     CurParam *curParam;

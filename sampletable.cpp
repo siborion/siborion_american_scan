@@ -32,12 +32,20 @@ sampletable::sampletable(QWidget *parent) :
 void sampletable::changeRowSlot(QModelIndex index)
 {
     stMeasureParam measureParam;
+    QStringList listExtremum;
     index = twMeas->model()->index(index.row(), 0);
     measureParam.Sample = twMeas->model()->data(index, roleSample).toByteArray();
     measureParam.Cornea = twMeas->model()->data(index, roleCornea).toDouble();
     measureParam.L1 =     twMeas->model()->data(index, roleL1).toDouble();
     measureParam.L2 =     twMeas->model()->data(index, roleL2).toDouble();
     measureParam.Retina = twMeas->model()->data(index, roleRetina).toDouble();
+    listExtremum =        twMeas->model()->data(index, roleExtremum).toStringList();
+
+    foreach (QString val, listExtremum)
+    {
+        measureParam.extremum.append(val.toUInt());
+    }
+
     emit changeRow(&measureParam);
 }
 
@@ -45,17 +53,25 @@ void sampletable::addSample(QByteArray *Sample, QList<quint16> *extremum, stMeas
 {
     QModelIndex index;
     quint8 rowNom;
+    QStringList listExtremum;
+
+    foreach (quint16 val, *extremum)
+    {
+        listExtremum.append(QString("%1").arg(val));
+    }
 
     rowNom = twMeas->model()->rowCount();
     twMeas->model()->insertRow(rowNom);
 
     index = twMeas->model()->index(rowNom, 0);
+    twMeas->model()->setData(index, rowNom+1, Qt::DisplayRole);
+
     twMeas->model()->setData(index, *Sample,              roleSample);
     twMeas->model()->setData(index, measureParam->Cornea, roleCornea);
     twMeas->model()->setData(index, measureParam->L1,     roleL1);
     twMeas->model()->setData(index, measureParam->L2,     roleL2);
     twMeas->model()->setData(index, measureParam->Retina, roleRetina);
-    twMeas->model()->setData(index, rowNom+1, Qt::DisplayRole);
+    twMeas->model()->setData(index, listExtremum,         roleExtremum);
 
     index = twMeas->model()->index(rowNom, 1);
     twMeas->model()->setData(index, measureParam->ALave, Qt::DisplayRole);
@@ -69,4 +85,7 @@ void sampletable::addSample(QByteArray *Sample, QList<quint16> *extremum, stMeas
     twMeas->model()->setData(index, measureParam->VIT, Qt::DisplayRole);
 }
 
+//void sampletable::editSample(QByteArray *Sample, QList<quint16> *extremum, stMeasureParam* measureParam)
+//{
 
+//}
