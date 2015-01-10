@@ -40,6 +40,9 @@ signals:
 
 public slots:
 
+signals:
+    void change();
+
 };
 
 #endif // CURPARAM_H

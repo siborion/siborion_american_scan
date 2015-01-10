@@ -22,6 +22,7 @@ enum RegimSide     {OD, OS};
 
 struct stMeasureParam
 {
+    QByteArray Sample;
     quint16 Cornea;
     quint16 L1;
     quint16 L2;
@@ -38,7 +39,7 @@ struct stMeasureParam
 #define roleL1       Qt::UserRole+3
 #define roleL2       Qt::UserRole+4
 #define roleRetina   Qt::UserRole+5
-#define roleExtremum Qt::UserRole+5
+//#define roleExtremum Qt::UserRole+5
 
 
 #endif // TYPEDEF_H

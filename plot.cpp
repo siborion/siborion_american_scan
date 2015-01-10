@@ -73,6 +73,7 @@ Plot::Plot( QWidget *parent, bool print, CurParam *link):
     retinaInterval->attach( this );
 
     setAutoReplot( true );
+
 }
 
 void Plot::drawSample(QByteArray *Sample)
@@ -397,16 +398,16 @@ void Plot::move( const QPoint &pos )
 //        return false;
 //}
 
-QList <double> Plot::intToMM(QList<quint16> *mainParam)
-{
-    QList <double> ret;
-    ret.clear();
-    ret.append((double)(round(mainParam->at(0)*100/27)/100));
-    ret.append((double)(round(mainParam->at(1)*100/27)/100));
-    ret.append((double)(round(mainParam->at(2)*100/27)/100));
-    ret.append((double)(round(mainParam->at(3)*100/27)/100));
-    return ret;
-}
+//QList <double> Plot::intToMM(QList<quint16> *mainParam)
+//{
+//    QList <double> ret;
+//    ret.clear();
+//    ret.append((double)(round(mainParam->at(0)*100/27)/100));
+//    ret.append((double)(round(mainParam->at(1)*100/27)/100));
+//    ret.append((double)(round(mainParam->at(2)*100/27)/100));
+//    ret.append((double)(round(mainParam->at(3)*100/27)/100));
+//    return ret;
+//}
 
 void Plot::changeKeySlot()
 {
@@ -461,3 +462,11 @@ void Plot::changeKeySlot()
 //    qDebug()<<"11111"<<curentParam->cataract;
 //}
 
+void Plot::updateSample(stMeasureParam *measureParam)
+{
+    drawSample(&measureParam->Sample);
+    drawMarker(measureParam->Cornea,"Cornea");
+    drawMarker(measureParam->L1,"L1");
+    drawMarker(measureParam->L2,"L2");
+    drawMarker(measureParam->Retina,"Retina");
+}

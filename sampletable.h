@@ -24,9 +24,10 @@ private:
     QStandardItemModel *modelOS;
 
 signals:
+    void changeRow(stMeasureParam*);
 
 public slots:
-    void changeRow(QModelIndex curIndex);
+    void changeRowSlot(QModelIndex curIndex);
 };
 
 #endif // SAMPLETABLE_H

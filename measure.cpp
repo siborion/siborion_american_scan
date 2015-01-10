@@ -29,6 +29,7 @@ Measure::Measure(QWidget *parent, CurParam *curParam) :
     layout->addWidget(pBigView    ,2,1);
 
     connect(velosity,SIGNAL(doScan(bool*)),SLOT(doScanSlot(bool*)));
+    connect(pSampleTable,SIGNAL(changeRow(stMeasureParam*)),pPlot,SLOT(updateSample(stMeasureParam*)));
 }
 
 void Measure::doScanSlot(bool *doMeasure)

@@ -15,10 +15,6 @@ sampletable::sampletable(QWidget *parent) :
     lst          <<tr("No")<<tr("AveVelAl")<<tr("AL")<<tr("ACD")<<tr("LT")<<tr("VIT");
     twMeas  = new adjview(10, lst, columnPercent);
     twMeas->setSelectionBehavior(QAbstractItemView::SelectRows);
-//    twMeas->setMaximumWidth(350);
-//    twMeas->setMinimumWidth(280);
-//    twMeas->setMaximumHeight(16777215);
-//    twMeas->setMinimumHeight(0);
     twMeas->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     layout->addWidget(twMeas);
 
@@ -30,16 +26,19 @@ sampletable::sampletable(QWidget *parent) :
 
     twMeas->setModel(modelOD);
 
-    connect(twMeas, SIGNAL(clicked(QModelIndex)),   SLOT(changeRow(QModelIndex)));
-    connect(twMeas, SIGNAL(activated(QModelIndex)), SLOT(changeRow(QModelIndex)));
-//    connect(curentParam, SIGNAL(changeSideSignal()), SLOT(changeSide()));
-//    connect(curentParam, SIGNAL(changePatientSignal()), SLOT(clearModel()));
-    connect(twMeas->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), SLOT(changeRow(QModelIndex)));
+    connect(twMeas->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), SLOT(changeRowSlot(QModelIndex)));
 }
 
-void sampletable::changeRow(QModelIndex index)
+void sampletable::changeRowSlot(QModelIndex index)
 {
-    Q_UNUSED(index);
+    stMeasureParam measureParam;
+    index = twMeas->model()->index(index.row(), 0);
+    measureParam.Sample = twMeas->model()->data(index, roleSample).toByteArray();
+    measureParam.Cornea = twMeas->model()->data(index, roleCornea).toDouble();
+    measureParam.L1 =     twMeas->model()->data(index, roleL1).toDouble();
+    measureParam.L2 =     twMeas->model()->data(index, roleL2).toDouble();
+    measureParam.Retina = twMeas->model()->data(index, roleRetina).toDouble();
+    emit changeRow(&measureParam);
 }
 
 void sampletable::addSample(QByteArray *Sample, QList<quint16> *extremum, stMeasureParam* measureParam)
@@ -56,9 +55,8 @@ void sampletable::addSample(QByteArray *Sample, QList<quint16> *extremum, stMeas
     twMeas->model()->setData(index, measureParam->L1,     roleL1);
     twMeas->model()->setData(index, measureParam->L2,     roleL2);
     twMeas->model()->setData(index, measureParam->Retina, roleRetina);
-    twMeas->model()->setData(index, measureParam->Retina, roleExtremum);
+    twMeas->model()->setData(index, rowNom+1, Qt::DisplayRole);
 
-    twMeas->model()->setData(index, rowNom, Qt::DisplayRole);
     index = twMeas->model()->index(rowNom, 1);
     twMeas->model()->setData(index, measureParam->ALave, Qt::DisplayRole);
     index = twMeas->model()->index(rowNom, 2);
@@ -69,8 +67,6 @@ void sampletable::addSample(QByteArray *Sample, QList<quint16> *extremum, stMeas
     twMeas->model()->setData(index, measureParam->LT, Qt::DisplayRole);
     index = twMeas->model()->index(rowNom, 5);
     twMeas->model()->setData(index, measureParam->VIT, Qt::DisplayRole);
-
-
 }
 
 
