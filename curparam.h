@@ -21,10 +21,18 @@ public:
     quint16 retinaX1;
     quint16 retinaX2;
 
-    quint16 Start;
-    quint16 L1;
-    quint16 L2;
-    quint16 Retina;
+//    quint16 Start;
+//    quint16 L1;
+//    quint16 L2;
+//    quint16 Retina;
+
+//    stMeasureParam measureParam;
+
+//    double ALave;
+//    double AL;
+//    double ACD;
+//    double LT;
+//    double Vit;
 
 private:
 

@@ -18,6 +18,7 @@ class Measure : public QWidget
 public:
     explicit Measure(QWidget *parent = 0);
     void resiveData(QByteArray*);
+    void addSample(QByteArray *Sample, QList<quint16> *extremum, stMeasureParam*);
     Plot *pPlot;
 
 private:

@@ -41,3 +41,36 @@ void sampletable::changeRow(QModelIndex index)
 {
     Q_UNUSED(index);
 }
+
+void sampletable::addSample(QByteArray *Sample, QList<quint16> *extremum, stMeasureParam* measureParam)
+{
+    QModelIndex index;
+    quint8 rowNom;
+
+    rowNom = twMeas->model()->rowCount();
+    twMeas->model()->insertRow(rowNom);
+
+    index = twMeas->model()->index(rowNom, 0);
+    twMeas->model()->setData(index, *Sample,              roleSample);
+    twMeas->model()->setData(index, measureParam->Cornea, roleCornea);
+    twMeas->model()->setData(index, measureParam->L1,     roleL1);
+    twMeas->model()->setData(index, measureParam->L2,     roleL2);
+    twMeas->model()->setData(index, measureParam->Retina, roleRetina);
+    twMeas->model()->setData(index, measureParam->Retina, roleExtremum);
+
+    twMeas->model()->setData(index, rowNom, Qt::DisplayRole);
+    index = twMeas->model()->index(rowNom, 1);
+    twMeas->model()->setData(index, measureParam->ALave, Qt::DisplayRole);
+    index = twMeas->model()->index(rowNom, 2);
+    twMeas->model()->setData(index, measureParam->AL, Qt::DisplayRole);
+    index = twMeas->model()->index(rowNom, 3);
+    twMeas->model()->setData(index, measureParam->ACD, Qt::DisplayRole);
+    index = twMeas->model()->index(rowNom, 4);
+    twMeas->model()->setData(index, measureParam->LT, Qt::DisplayRole);
+    index = twMeas->model()->index(rowNom, 5);
+    twMeas->model()->setData(index, measureParam->VIT, Qt::DisplayRole);
+
+
+}
+
+

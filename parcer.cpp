@@ -1,25 +1,22 @@
 #include "parcer.h"
 #include <QDebug>
+#include <math.h>
 
 Parcer::Parcer(QObject *parent, CurParam *link) :
     QObject(parent)
 {
     curParam = link;
-//    qDebug()<<link;
-//    link->regimCataract = REGIM::CATARACT;
-//    curParam->regimCataract = REGIM::CATARACT;
-
-    //RegimCataract::APHAKIC;//   RegimMeasure::AUTOFREEZ;
 }
 
-bool Parcer::findExtremum(QByteArray *Sample, QList<quint16> *extremum)
+bool Parcer::findExtremum(QByteArray *Sample, QList<quint16> *extremum, stMeasureParam *measureParam)
 {
+    bool bValid = false;
     bool corneaEn, lens1En, lens2En, retinaEn;
     corneaEn = lens1En = lens2En = retinaEn = false;
     qint16 tmp;
 
     extremum->clear();
-    curParam->Start = curParam->L1 = curParam->L2 = curParam->Retina = 0;
+    measureParam->Cornea = measureParam->L1 = measureParam->L2 = measureParam->Retina = 0;
 
     parseCornea =  new  parserFront(curParam->corneaX1, curParam->corneaX2, 7, 0,  0);
     parseLens   =  new  parserFront(curParam->lensX1,   curParam->lensX2,   7, 27, 30);
@@ -31,7 +28,7 @@ bool Parcer::findExtremum(QByteArray *Sample, QList<quint16> *extremum)
         if(tmp>=0)
         {
             if(!corneaEn)
-                curParam->Start = tmp;
+                measureParam->Cornea = tmp;
             corneaEn = true;
             extremum->append(tmp);
         }
@@ -41,14 +38,14 @@ bool Parcer::findExtremum(QByteArray *Sample, QList<quint16> *extremum)
         {
             if(!lens1En)
             {
-                curParam->L1 = tmp;
+                measureParam->L1 = tmp;
                 lens1En = true;
             }
             else
             {
                 if(!lens2En)
                 {
-                    curParam->L2 = tmp;
+                    measureParam->L2 = tmp;
                     lens2En = true;
                 }
             }
@@ -59,16 +56,46 @@ bool Parcer::findExtremum(QByteArray *Sample, QList<quint16> *extremum)
         if(tmp>=0)
         {
             if(!retinaEn)
-                curParam->Retina = tmp;
+                measureParam->Retina = tmp;
             retinaEn = true;
             extremum->append(tmp);
         }
     }
 
-//    allExtremum = extremum;
-
     if((curParam->regimCataract == REGIM::APHAKIC)||(curParam->regimMeasure == REGIM::MANUAL))
-        return (corneaEn && retinaEn);
+    {
+        if (corneaEn && retinaEn)
+            bValid = true;
+    }
     else
-        return (corneaEn && lens1En && lens2En && retinaEn);
+    {
+        if (corneaEn && lens1En && lens2En && retinaEn)
+            bValid = true;
+    }
+
+    if(bValid)
+    {
+        if(curParam->regimContact == REGIM::CONTACT)
+            measureParam->Cornea = 4;
+        measureParam->ALave  = decRound(measureParam->Retina - measureParam->Cornea, 2, 1555);
+        measureParam->ACD    = decRound(measureParam->L1 - measureParam->Cornea,     2, 1534);
+        measureParam->LT     = decRound(measureParam->L2 - measureParam->L1,         2, 1641);
+        measureParam->VIT    = decRound(measureParam->Retina - measureParam->L2,     2, 1532);
+        measureParam->AL     = measureParam->ACD + measureParam->LT + measureParam->VIT;
+    }
+    return (bValid);
+}
+
+double Parcer::decRound(double Val, quint8 dec, quint16 speed)
+{
+    double koef = 1.0;
+    koef /= speed;
+    koef *= 2000000;
+    koef /= 50;
+
+    Val *= pow(10, dec);
+    Val /= koef;
+    Val =  round(Val);
+    Val /= pow(10, dec);
+    return Val;
 }

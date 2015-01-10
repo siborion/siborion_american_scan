@@ -59,10 +59,13 @@ void MainWindow::moveWindowToCenter()
 
 void MainWindow::resiveDataSlot(QByteArray Sample)
 {
-    QList<quint16> ttt;
+    stMeasureParam measureParam;
+    QList<quint16> exstremum;
     measure->resiveData(&Sample);
-    if(parcer->findExtremum(&Sample, &ttt))
-        qDebug()<<"000000";
+    if(parcer->findExtremum(&Sample, &exstremum, &measureParam))
+    {
+        measure->addSample(&Sample, &exstremum, &measureParam);
+    }
 }
 
 MainWindow::~MainWindow()

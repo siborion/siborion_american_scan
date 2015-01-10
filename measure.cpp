@@ -41,3 +41,9 @@ void Measure::resiveData(QByteArray *Sample)
     pPlot->drawSample(Sample);
 }
 
+void Measure::addSample(QByteArray *Sample, QList<quint16> *extremum, stMeasureParam *measureParam)
+{
+    pSampleTable->addSample(Sample, extremum, measureParam);
+}
+
+

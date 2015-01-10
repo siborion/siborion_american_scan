@@ -7,6 +7,7 @@
 #include "curparam.h"
 #include "device.h"
 #include "parcer.h"
+#include "typedef.h"
 #include <QMainWindow>
 
 namespace Ui {
