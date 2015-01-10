@@ -48,7 +48,8 @@ SOURCES += main.cpp\
     bigviewnum.cpp \
     device.cpp \
     curparam.cpp \
-    parcer.cpp
+    parcer.cpp \
+    parserfront.cpp
 
 HEADERS  += mainwindow.h \
     bases.h \
@@ -72,7 +73,8 @@ HEADERS  += mainwindow.h \
     bigviewnum.h \
     device.h \
     curparam.h \
-    parcer.h
+    parcer.h \
+    parserfront.h
 
 FORMS    += mainwindow.ui \
     dialog_doctor.ui \
