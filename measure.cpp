@@ -30,6 +30,7 @@ Measure::Measure(QWidget *parent, CurParam *curParam) :
 
     connect(velosity,SIGNAL(doScan(bool*)),SLOT(doScanSlot(bool*)));
     connect(pSampleTable,SIGNAL(changeRow(stMeasureParam*)),pPlot,SLOT(updateSample(stMeasureParam*)));
+    connect(pPlot,SIGNAL(refreshTable(stMeasureParam*)),SLOT(refreshTableSlot(stMeasureParam*)));
 }
 
 void Measure::doScanSlot(bool *doMeasure)
@@ -47,4 +48,9 @@ void Measure::addSample(QByteArray *Sample, QList<quint16> *extremum, stMeasureP
     pSampleTable->addSample(Sample, extremum, measureParam);
 }
 
+void Measure::refreshTableSlot(stMeasureParam *measureParam)
+{
+    emit refreshTable(measureParam);
+    pSampleTable->editSample(measureParam);
+}
 

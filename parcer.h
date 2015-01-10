@@ -12,7 +12,6 @@ class Parcer : public QObject
 public:
     explicit Parcer(QObject *parent = 0, CurParam *link=0);
     bool findExtremum(QByteArray *Sample, QList<quint16> *extremum, stMeasureParam*);
-    void calculateParam(stMeasureParam *measureParam);
 
 private:
     CurParam *curParam;
@@ -21,10 +20,10 @@ private:
     parserFront *parseRetina;
     double decRound(double Val, quint8 dec, quint16 speed);
 
-
 signals:
 
 public slots:
+    void calculateParam(stMeasureParam *measureParam);
 
 };
 

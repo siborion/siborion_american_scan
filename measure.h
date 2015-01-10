@@ -31,9 +31,11 @@ private:
 
 public slots:
     void doScanSlot(bool*);
+    void refreshTableSlot(stMeasureParam *);
 
 Q_SIGNALS:
     void doScan(bool*);
+    void refreshTable(stMeasureParam *);
 };
 
 #endif // MEASURE_H

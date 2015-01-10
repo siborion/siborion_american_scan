@@ -54,7 +54,6 @@ void sampletable::addSample(QByteArray *Sample, QList<quint16> *extremum, stMeas
     QModelIndex index;
     quint8 rowNom;
     QStringList listExtremum;
-
     foreach (quint16 val, *extremum)
     {
         listExtremum.append(QString("%1").arg(val));
@@ -64,14 +63,21 @@ void sampletable::addSample(QByteArray *Sample, QList<quint16> *extremum, stMeas
     twMeas->model()->insertRow(rowNom);
 
     index = twMeas->model()->index(rowNom, 0);
-    twMeas->model()->setData(index, rowNom+1, Qt::DisplayRole);
+    twMeas->model()->setData(index, rowNom+1,     Qt::DisplayRole);
+    twMeas->model()->setData(index, *Sample,      roleSample);
+    twMeas->model()->setData(index, listExtremum, roleExtremum);
 
-    twMeas->model()->setData(index, *Sample,              roleSample);
+    editSample(rowNom, measureParam);
+}
+
+void sampletable::editSample(quint16 rowNom, stMeasureParam* measureParam)
+{
+    QModelIndex index;
+    index = twMeas->model()->index(rowNom, 0);
     twMeas->model()->setData(index, measureParam->Cornea, roleCornea);
     twMeas->model()->setData(index, measureParam->L1,     roleL1);
     twMeas->model()->setData(index, measureParam->L2,     roleL2);
     twMeas->model()->setData(index, measureParam->Retina, roleRetina);
-    twMeas->model()->setData(index, listExtremum,         roleExtremum);
 
     index = twMeas->model()->index(rowNom, 1);
     twMeas->model()->setData(index, measureParam->ALave, Qt::DisplayRole);
@@ -85,7 +91,9 @@ void sampletable::addSample(QByteArray *Sample, QList<quint16> *extremum, stMeas
     twMeas->model()->setData(index, measureParam->VIT, Qt::DisplayRole);
 }
 
-//void sampletable::editSample(QByteArray *Sample, QList<quint16> *extremum, stMeasureParam* measureParam)
-//{
-
-//}
+void sampletable::editSample(stMeasureParam* measureParam)
+{
+    quint8 rowNom;
+    rowNom = twMeas->currentIndex().row();
+    editSample(rowNom, measureParam);
+}

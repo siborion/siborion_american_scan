@@ -15,6 +15,7 @@ public:
     explicit sampletable(QWidget *parent = 0);
     adjview *twMeas;
     void addSample(QByteArray *Sample, QList<quint16> *extremum, stMeasureParam*);
+    void editSample(quint16 rowNom, stMeasureParam* measureParam);
 
 private:
     double AL;
@@ -28,6 +29,8 @@ signals:
 
 public slots:
     void changeRowSlot(QModelIndex curIndex);
+    void editSample(stMeasureParam* measureParam);
+
 };
 
 #endif // SAMPLETABLE_H

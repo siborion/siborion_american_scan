@@ -71,7 +71,8 @@ private:
     QwtPlotMarker *romb_selectedCurve;
     int d_selectedPoint;
 
-Q_SIGNALS:
+signals:
+    void refreshTable(stMeasureParam *);
 
 };
 

@@ -277,15 +277,16 @@ void Plot::move( const QPoint &pos )
                 if ( ( *it )->rtti() == QwtPlotItem::Rtti_PlotMarker)
                 {
                     QwtPlotMarker *c = static_cast<QwtPlotMarker *>( *it );
-//                    if(c->title().text()=="Cornea")
-//                        mainParam.Start = c->xValue();
-//                    if(c->title().text()=="L1")
-//                        mainParam.L1 = c->xValue();
-//                    if(c->title().text()=="L2")
-//                        mainParam.L2 = c->xValue();
-//                    if(c->title().text()=="Retina")
-//                        mainParam.Retina = c->xValue();
-//                    emit(refreshTable(mainParam));
+                    if(c->title().text()=="Cornea")
+                        measureParam->Cornea = c->xValue();
+                    if(c->title().text()=="L1")
+                        measureParam->L1 = c->xValue();
+                    if(c->title().text()=="L2")
+                        measureParam->L2 = c->xValue();
+                    if(c->title().text()=="Retina")
+                        measureParam->Retina = c->xValue();
+//                    qDebug()<<measureParam->Retina;
+                    emit(refreshTable(measureParam));
                 }
             }
         }
@@ -466,6 +467,7 @@ void Plot::changeKeySlot()
 void Plot::updateSample(stMeasureParam *link)
 {
     measureParam = link;
+    qDebug()<<measureParam->Retina;
     drawSample(&measureParam->Sample);
     drawMarker(measureParam->Cornea,"Cornea");
     drawMarker((double)measureParam->Cornea,(double)60, Qt::white);

@@ -42,6 +42,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(bases,SIGNAL(delLens()),scanbase,SLOT(delLens()));
 
     connect(measure,SIGNAL(doScan(bool*)),device,SLOT(openDevice(bool*)));
+    connect(measure,SIGNAL(refreshTable(stMeasureParam*)),parcer,SLOT(calculateParam(stMeasureParam*)));
     connect(device,SIGNAL(resiveData(QByteArray)),SLOT(resiveDataSlot(QByteArray)));
 
     bases->Init();
@@ -65,6 +66,8 @@ void MainWindow::resiveDataSlot(QByteArray Sample)
         measure->addSample(&Sample, &exstremum, &measureParam);
     }
 }
+
+
 
 MainWindow::~MainWindow()
 {

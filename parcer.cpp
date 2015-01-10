@@ -90,7 +90,6 @@ void Parcer::calculateParam(stMeasureParam *measureParam)
     measureParam->AL     = measureParam->ACD + measureParam->LT + measureParam->VIT;
 }
 
-
 double Parcer::decRound(double Val, quint8 dec, quint16 speed)
 {
     double koef = 1.0;
