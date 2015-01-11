@@ -1,5 +1,6 @@
 #include "sampletable.h"
 #include <QtCore/qmath.h>
+#include <QMessageBox>
 
 sampletable::sampletable(QWidget *parent, CurParam *link) :
     QWidget(parent)

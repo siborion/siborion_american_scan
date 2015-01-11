@@ -26,11 +26,14 @@ key_radio::key_radio(QWidget *parent, CurParam *link) :
     rbAutoFreeze->setFont(font);
     rbAuto->setFont(font);
     rbManual->setFont(font);
-
+    rbManual->setObjectName("rbManual");
+    rbAuto->setObjectName("rbAuto");
+    rbAutoFreeze->setObjectName("rbAutoFreeze");
+    rbAutoFreeze->setChecked(true);
     ltAuto->addWidget(rbAutoFreeze);
     ltAuto->addWidget(rbAuto);
     ltAuto->addWidget(rbManual);
-    rbAutoFreeze->setChecked(true);
+
 
     QSpacerItem  *hs2 = new QSpacerItem(50, 5, QSizePolicy::Expanding, QSizePolicy::Minimum);
     QGroupBox    *gbContact = new QGroupBox();
@@ -93,12 +96,12 @@ key_radio::key_radio(QWidget *parent, CurParam *link) :
     connect(rbAutoFreeze,  SIGNAL(clicked(bool)), SLOT(doChangeRegim()));
     connect(rbAuto,        SIGNAL(clicked(bool)), SLOT(doChangeRegim()));
     connect(rbManual,      SIGNAL(clicked(bool)), SLOT(doChangeRegim()));
-    connect(rbAphakic,  SIGNAL(clicked(bool)), SLOT(doChangeRegim()));
-    connect(rbCataract, SIGNAL(clicked(bool)), SLOT(doChangeRegim()));
-    connect(rbImmersion, SIGNAL(clicked(bool)), SLOT(doChangeRegim()));
-    connect(rbContact,   SIGNAL(clicked(bool)), SLOT(doChangeRegim()));
-    connect(rbOd, SIGNAL(clicked(bool)), SLOT(doChangeRegim()));
-    connect(rbOs, SIGNAL(clicked(bool)), SLOT(doChangeRegim()));
+    connect(rbAphakic,     SIGNAL(clicked(bool)), SLOT(doChangeRegim()));
+    connect(rbCataract,    SIGNAL(clicked(bool)), SLOT(doChangeRegim()));
+    connect(rbImmersion,   SIGNAL(clicked(bool)), SLOT(doChangeRegim()));
+    connect(rbContact,     SIGNAL(clicked(bool)), SLOT(doChangeRegim()));
+    connect(rbOd,          SIGNAL(clicked(bool)), SLOT(doChangeRegim()));
+    connect(rbOs,          SIGNAL(clicked(bool)), SLOT(doChangeRegim()));
 //    connect(curentParam, SIGNAL(changeSideSignal()), SLOT(changeSideSlot()));
 }
 
@@ -134,6 +137,12 @@ void key_radio::refresh()
 
 void key_radio::doChangeRegim()
 {
+//    QObject* sender = const_cast<QObject*>(QObject::sender());
+//    qDebug()<<sender->objectName();
+//    if(sender->objectName()=="leAConst_personal")
+//    {
+//    }
+
     if(rbAutoFreeze->isChecked())
         curentParam->regimMeasure  = REGIM::AUTOFREEZ;
     if(rbAuto->isChecked())

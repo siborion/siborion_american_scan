@@ -21,6 +21,8 @@ public:
     quint16 retinaX1;
     quint16 retinaX2;
 
+    quint64 randSession;
+
 //    quint16 Start;
 //    quint16 L1;
 //    quint16 L2;
