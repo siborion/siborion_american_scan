@@ -61,9 +61,9 @@ Plot::Plot( QWidget *parent, bool print, CurParam *link):
     d_curve1->setXAxis(QwtPlot::xTop);
     d_curve1->attach(this);
 
-    startInterval  = new SampleInterval(curParam->corneaX1, curParam->corneaX2, "Start_Interval",   curParam);
-    lensInterval   = new SampleInterval(curParam->lensX1,   curParam->lensX2,   "Lens_Interval",  curParam);
-    retinaInterval = new SampleInterval(curParam->retinaX1, curParam->retinaX2, "Retina_Interval",curParam);
+    startInterval  = new SampleInterval(0, 0, "Start_Interval", curParam);
+    lensInterval   = new SampleInterval(0, 0, "Lens_Interval",  curParam);
+    retinaInterval = new SampleInterval(0, 0, "Retina_Interval",curParam);
 
     startInterval->setXAxis(QwtPlot::xTop);
     lensInterval->setXAxis(QwtPlot::xTop);
@@ -74,6 +74,8 @@ Plot::Plot( QWidget *parent, bool print, CurParam *link):
     retinaInterval->attach( this );
 
     setAutoReplot( true );
+
+    updateInterval();
 
 }
 
@@ -330,136 +332,6 @@ void Plot::move( const QPoint &pos )
     }
 }
 
-//bool Plot::findExtremum(QByteArray *Sample, QList<quint16> &extremum)
-//{
-//#define sampleStart 5
-//#define sampleEnd   1024
-//#define pik         (255*0.9)
-//#define spad        (60)
-//    quint16 kolvo = 0;
-//    bool front = true;
-//    foreach (quint8 val, *Sample)
-//    {
-//        if(kolvo>sampleStart)
-//        {
-//            if(val>pik)
-//            {
-//                if (front)
-//                {
-//                    for(int i=1; i<=5; i++)
-//                    {
-//                        if(((quint8)(Sample->at(kolvo-i)))<spad)
-//                        {
-//                            extremum.append((kolvo-i)+1);
-//                            break;
-//                        }
-//                    }
-//                }
-//                front = false;
-//            }
-//            else
-//            {
-//                if(val<spad)
-//                    front = true;
-//            }
-//        }
-//        kolvo++;
-//        if(kolvo>sampleEnd)
-//            break;
-//    }
-//    allExtremum = extremum;
-//    return (extremum.count()>=3?true:false) ;
-//}
-
-//bool Plot::findMainParam(QList<quint16> *extremum, stMainParam &mainParam)
-//{
-//    quint16 Start, L1, L2, Retina, val;
-//    Start=L1=L2=Retina=0;
-//    for(int i=0; i<extremum->count();i++)
-//    {
-//        val = extremum->at(i);
-//        if(Start==0)
-//            Start = val;
-//        if((L1==0)&&(val>(Start+54))&&(val<(Start+162)))
-//            L1 = val;
-//        if((L2==0)&&(val>(L1+54))&&(val<(L1+162)))
-//            L2 = val;
-//        if((Retina==0)&&(val>(Start+459)))
-//            Retina = val;
-//    }
-//    if((Start>0)&&(L1>0)&&(L2>0)&&(Retina>0))
-//    {
-//        mainParam.Start = Start;
-//        mainParam.L1 = L1;
-//        mainParam.L2 = L2;
-//        mainParam.Retina = Retina;
-//        return true;
-//    }
-//    else
-//        return false;
-//}
-
-//QList <double> Plot::intToMM(QList<quint16> *mainParam)
-//{
-//    QList <double> ret;
-//    ret.clear();
-//    ret.append((double)(round(mainParam->at(0)*100/27)/100));
-//    ret.append((double)(round(mainParam->at(1)*100/27)/100));
-//    ret.append((double)(round(mainParam->at(2)*100/27)/100));
-//    ret.append((double)(round(mainParam->at(3)*100/27)/100));
-//    return ret;
-//}
-
-void Plot::changeKeySlot()
-{
-//    double offSet;
-//    offSet=((curentParam->regimContact==RegimContact::CONTACT)?0:3.5*27);
-//    curentParam->corneaX1 = 0+offSet;   curentParam->corneaX2 = 22+offSet;
-//    curentParam->lensX1 = 54+offSet;    curentParam->lensX2 = 351+offSet;
-//    curentParam->retinaX1 = 459+offSet; curentParam->retinaX2 = 864+offSet;
-//    if((curentParam->regimMeasure == RegimMeasure::MANUAL)||(curentParam->regimCataract == RegimCataract::APHAKIC))
-//    {curentParam->lensX1 = 0;    curentParam->lensX2 = 0;}
-//    startInterval->setSample (curentParam->corneaX1, curentParam->corneaX2);
-//    lensInterval->setSample  (curentParam->lensX1,   curentParam->lensX2);
-//    retinaInterval->setSample(curentParam->retinaX1, curentParam->retinaX2);
-}
-
-//void Plot::changeCataractSlot(bool visible)
-//{
-//    double offSet;
-//    offSet=(curentParam->contact?0:3.5*27);
-//    curentParam->lensX1 = 54+offSet;    curentParam->lensX2 = 351+offSet;
-//    curentParam->cataract = visible;
-//    if(!curentParam->cataract)
-//    {
-//        curentParam->lensX1 = 0;    curentParam->lensX2 = 0;
-//    }
-//    lensInterval->setVisible(visible);
-//}
-
-//void Plot::changeContactSlot(bool contact)
-//{
-//    double offSet;
-//    curentParam->contact = contact;
-
-//    offSet=(curentParam->contact?0:3.5*27);
-
-//    curentParam->corneaX1 = 0+offSet;   curentParam->corneaX2 = 22+offSet;
-//    curentParam->lensX1 = 54+offSet;    curentParam->lensX2 = 351+offSet;
-//    curentParam->retinaX1 = 459+offSet; curentParam->retinaX2 = 864+offSet;
-
-//    if(!(curentParam->cataract))
-//    {
-//        curentParam->lensX1 = 0;    curentParam->lensX2 = 0;
-//        lensInterval->setVisible(false);
-//    }
-//    else
-//        lensInterval->setVisible(true);
-
-//    startInterval->setSample (curentParam->corneaX1, curentParam->corneaX2);
-//    lensInterval->setSample  (curentParam->lensX1,   curentParam->lensX2);
-//    retinaInterval->setSample(curentParam->retinaX1, curentParam->retinaX2);
-//}
 
 void Plot::updateSample(stMeasureParam *link)
 {
@@ -478,22 +350,13 @@ void Plot::updateSample(stMeasureParam *link)
 
 void Plot::updateInterval()
 {
-    curParam->corneaX1=0;
-    curParam->corneaX2=100;
-    curParam->lensX1=200;
-    curParam->lensX2=300;
-    curParam->retinaX1=400;
-    curParam->retinaX2=500;
-
-    if(curParam->regimContact!=REGIM::CONTACT)
-    {
-        curParam->corneaX1+=100;
-        curParam->corneaX2+=100;
-        curParam->lensX1+=100;
-        curParam->lensX2+=100;
-        curParam->retinaX1+=100;
-        curParam->retinaX2+=100;
-    }
+    double offSet;
+    offSet=((curParam->regimContact==REGIM::CONTACT)?0:3.5*27);
+    curParam->corneaX1 = 0+offSet;   curParam->corneaX2 = 22+offSet;
+    curParam->lensX1 = 54+offSet;    curParam->lensX2 = 351+offSet;
+    curParam->retinaX1 = 459+offSet; curParam->retinaX2 = 864+offSet;
+    if((curParam->regimMeasure == REGIM::MANUAL)||(curParam->regimCataract == REGIM::APHAKIC))
+    {curParam->lensX1 = 0;    curParam->lensX2 = 0;}
 
     startInterval->setSample (curParam->corneaX1, curParam->corneaX2);
     lensInterval->setSample  (curParam->lensX1,   curParam->lensX2);

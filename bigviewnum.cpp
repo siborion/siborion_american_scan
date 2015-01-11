@@ -2,11 +2,12 @@
 #include "ui_bigviewnum.h"
 #include <qDebug>
 
-bigviewnum::bigviewnum(QWidget *parent) :
+bigviewnum::bigviewnum(QWidget *parent, CurParam *link) :
     QWidget(parent),
     ui(new Ui::bigviewnum)
 {
     ui->setupUi(this);
+    curParam = link;
     //    curentParam = CurentParam::instanse();
     //    setMinimumSize(200,200);
 
@@ -34,4 +35,26 @@ void bigviewnum::setDisplay(stAverageParam *averageParam)
     ui->lAvgVit_2->setText(QString("%1").arg(averageParam->VIT,5,'f',2,'0'));
     ui->lDevVit_2->setText(QString("%1").arg(averageParam->VITdiv,5,'f',2,'0'));
 }
+
+void bigviewnum::setRegim()
+{
+    bool bVal;
+    bVal = (curParam->regimMeasure  != REGIM::MANUAL);
+    ui->lAveACD->setVisible(bVal);
+    ui->lAveLT->setVisible(bVal);
+    ui->lAveVIT->setVisible(bVal);
+    ui->lAvgAcd_2->setVisible(bVal);
+    ui->lDevAcd_2->setVisible(bVal);
+    ui->lAvgLt_2 ->setVisible(bVal);
+    ui->lDevLt_2 ->setVisible(bVal);
+    ui->lAvgVit_2->setVisible(bVal);
+    ui->lDevVit_2->setVisible(bVal);
+    ui->lStdACD->setVisible(bVal);
+    ui->lStdLT->setVisible(bVal);
+    ui->lStdVIT->setVisible(bVal);
+    ui->lAveAL->setText(bVal?"AL":"Dist");
+    ui->lStdAL->setText(bVal?"AL":"Dist");
+
+}
+
 

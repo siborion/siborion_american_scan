@@ -11,4 +11,9 @@ CurParam::CurParam(QObject *parent) :
 
     retinaX1 = 400;
     retinaX2 = 500;
+
+    regimMeasure = REGIM::AUTOFREEZ;
+    regimContact = REGIM::CONTACT;
+    regimCataract= REGIM::CATARACT;
+    regimSide    = REGIM::OD;
 }

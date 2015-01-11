@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+   <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
@@ -59,7 +59,7 @@
       <number>2</number>
      </property>
      <item row="2" column="6">
-      <widget class="QLabel" name="label_4">
+      <widget class="QLabel" name="lVIT">
        <property name="font">
         <font>
          <pointsize>11</pointsize>
@@ -136,7 +136,7 @@
       </widget>
      </item>
      <item row="1" column="6">
-      <widget class="QLabel" name="label_2">
+      <widget class="QLabel" name="lLT">
        <property name="font">
         <font>
          <pointsize>11</pointsize>
@@ -157,7 +157,7 @@
       </widget>
      </item>
      <item row="2" column="3">
-      <widget class="QLabel" name="label">
+      <widget class="QLabel" name="lAL">
        <property name="font">
         <font>
          <pointsize>11</pointsize>
@@ -181,7 +181,7 @@
       </widget>
      </item>
      <item row="0" column="6">
-      <widget class="QLabel" name="label_1">
+      <widget class="QLabel" name="lACD">
        <property name="font">
         <font>
          <pointsize>11</pointsize>

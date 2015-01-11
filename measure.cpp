@@ -1,13 +1,14 @@
 #include "measure.h"
 
-Measure::Measure(QWidget *parent, CurParam *curParam) :
+Measure::Measure(QWidget *parent, CurParam *link) :
     QWidget(parent)
 {
-    QGridLayout *layout     = new QGridLayout(this);
+    curParam = link;
 
+    QGridLayout *layout     = new QGridLayout(this);
     layout->setVerticalSpacing(2);
 
-    pBigViewCur = new Bigviewnumcur();
+    pBigViewCur = new Bigviewnumcur(this, curParam);
     QFrame *fmPlot = new QFrame();
     fmPlot->setStyleSheet(QStringLiteral("background-color: rgb(100, 100, 100);"));
     fmPlot->setFrameShape(QFrame::NoFrame);
@@ -18,9 +19,9 @@ Measure::Measure(QWidget *parent, CurParam *curParam) :
     glPlot->addWidget(pPlot,       1, 0);
 
     pKey = new key_radio(this, curParam);
-    pSampleTable = new sampletable();
+    pSampleTable = new sampletable(this, curParam);
     velosity = new Velosity();
-    pBigView = new bigviewnum();
+    pBigView = new bigviewnum(this, curParam);
 
     layout->addWidget(fmPlot      ,0,0,3,1);
     layout->addWidget(pKey        ,3,0,1,2);
@@ -29,16 +30,26 @@ Measure::Measure(QWidget *parent, CurParam *curParam) :
     layout->addWidget(pBigView    ,2,1);
 
     connect(velosity,SIGNAL(doScan(bool*)),SLOT(doScanSlot(bool*)));
+    connect(velosity,SIGNAL(doStop()),SLOT(stopMeasureSlot()));
+
     connect(pSampleTable,SIGNAL(changeRow(stMeasureParam*)),pPlot,SLOT(updateSample(stMeasureParam*)));
     connect(pSampleTable,SIGNAL(changeRow(stMeasureParam*)),pBigViewCur,SLOT(setDisplay(stMeasureParam*)));
     connect(pSampleTable,SIGNAL(sendAvg(stAverageParam*)),pBigView,SLOT(setDisplay(stAverageParam*)));
+    connect(pSampleTable,SIGNAL(stopMeasure()),SLOT(stopMeasureSlot()));
     connect(pPlot,SIGNAL(refreshTable(stMeasureParam*)),SLOT(refreshTableSlot(stMeasureParam*)));
+    connect(pKey,SIGNAL(changeInterval()),pSampleTable,SLOT(changeRegimManual()));
     connect(pKey,SIGNAL(changeInterval()),pPlot,SLOT(updateInterval()));
+    connect(pKey,SIGNAL(changeInterval()),pBigViewCur,SLOT(setRegim()));
+    connect(pKey,SIGNAL(changeInterval()),pBigView,SLOT(setRegim()));
+
 }
 
 void Measure::doScanSlot(bool *doMeasure)
 {
+    SampleManual.clear();
     emit doScan(doMeasure);
+    if(*doMeasure)
+        pSampleTable->startMeasure();
 }
 
 void Measure::resiveData(QByteArray *Sample)
@@ -48,8 +59,23 @@ void Measure::resiveData(QByteArray *Sample)
 
 void Measure::addSample(QByteArray *Sample, QList<quint16> *extremum, stMeasureParam *measureParam)
 {
-    pSampleTable->addSample(Sample, extremum, measureParam);
-    pBigViewCur->setDisplay(measureParam);
+    if(curParam->regimMeasure != REGIM::MANUAL)
+    {
+        pSampleTable->addSample(Sample, extremum, measureParam);
+        pBigViewCur->setDisplay(measureParam);
+    }
+    else
+    {
+        //Сохраняем последнюю удачнуювыборку
+        SampleManual   = *Sample;
+        extremumManual = *extremum;
+        measureParamManual = *measureParam;
+        if(curTime.addMSecs(500)<QTime::currentTime())
+        {
+            curTime = QTime::currentTime();
+            pBigViewCur->setDisplay(measureParam);
+        }
+    }
 }
 
 void Measure::refreshTableSlot(stMeasureParam *measureParam)
@@ -59,3 +85,15 @@ void Measure::refreshTableSlot(stMeasureParam *measureParam)
     pBigViewCur->setDisplay(measureParam);
 }
 
+void Measure::stopMeasureSlot()
+{
+    if(curParam->regimMeasure == REGIM::MANUAL)
+    {
+        if(SampleManual.length()>0)
+        {
+            pSampleTable->addSample(&SampleManual, &extremumManual, &measureParamManual);
+            pBigViewCur->setDisplay(&measureParamManual);
+        }
+    }
+    emit stopMeasure();
+}

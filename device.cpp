@@ -10,8 +10,9 @@ Device::Device(QObject *parent) :
     connect(timer,SIGNAL(timeout()),SLOT(doTimer()));
 }
 
-void Device::openDevice(bool *doMeasure)
+void Device::openDevice(bool *link)
 {
+    doMeasure = link;
     QString str;
     str.append("\\\\.\\");
     str.append("COM1");
@@ -45,4 +46,10 @@ void Device::doTimer()
     port->write("A", 1);
     if(baTmp.count()>=1024)
         emit resiveData(baTmp.left(1024));
+}
+
+void Device::stopMeasure()
+{
+//    bool bMeasure=true;
+    openDevice(doMeasure);
 }

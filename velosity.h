@@ -22,9 +22,11 @@ private:
 
 private slots:
     void doScanSlot(bool*);
+    void doStopSlot();
 
 signals:
     void doScan(bool*);
+    void doStop();
 
 
 };

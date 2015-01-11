@@ -93,7 +93,7 @@
            </widget>
           </item>
           <item row="3" column="2">
-           <widget class="QLabel" name="label_12">
+           <widget class="QLabel" name="lAveVIT">
             <property name="font">
              <font>
               <weight>75</weight>
@@ -109,7 +109,7 @@
            </widget>
           </item>
           <item row="8" column="0">
-           <widget class="QLabel" name="label_18">
+           <widget class="QLabel" name="lStdAL">
             <property name="font">
              <font>
               <weight>75</weight>
@@ -138,7 +138,7 @@
            </widget>
           </item>
           <item row="2" column="2">
-           <widget class="QLabel" name="label_14">
+           <widget class="QLabel" name="lAveLT">
             <property name="font">
              <font>
               <weight>75</weight>
@@ -170,7 +170,7 @@
            </widget>
           </item>
           <item row="3" column="0">
-           <widget class="QLabel" name="label_15">
+           <widget class="QLabel" name="lAveAL">
             <property name="font">
              <font>
               <pointsize>10</pointsize>
@@ -190,7 +190,7 @@
            </widget>
           </item>
           <item row="7" column="2">
-           <widget class="QLabel" name="label_19">
+           <widget class="QLabel" name="lStdLT">
             <property name="font">
              <font>
               <weight>75</weight>
@@ -219,7 +219,7 @@
            </widget>
           </item>
           <item row="1" column="2">
-           <widget class="QLabel" name="label_17">
+           <widget class="QLabel" name="lAveACD">
             <property name="font">
              <font>
               <weight>75</weight>
@@ -242,7 +242,7 @@
            </widget>
           </item>
           <item row="8" column="2">
-           <widget class="QLabel" name="label_20">
+           <widget class="QLabel" name="lStdVIT">
             <property name="font">
              <font>
               <weight>75</weight>
@@ -330,7 +330,7 @@
            </widget>
           </item>
           <item row="6" column="2">
-           <widget class="QLabel" name="label_16">
+           <widget class="QLabel" name="lStdACD">
             <property name="font">
              <font>
               <pointsize>10</pointsize>

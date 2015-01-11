@@ -33,5 +33,8 @@ void ScanButton::doTimer()
 
 void ScanButton::doScanSlot()
 {
-    emit doScan(&doMeasure);
+    if(!doMeasure)
+        emit doScan(&doMeasure);
+    else
+        emit doStop();
 }

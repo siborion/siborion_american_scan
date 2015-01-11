@@ -21,8 +21,7 @@ private slots:
 
 Q_SIGNALS:
     void doScan(bool*);
-
-
+    void doStop();
 };
 
 #endif // SCANBUTTON_H

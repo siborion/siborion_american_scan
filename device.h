@@ -16,6 +16,7 @@ private:
     QSerialPort *port;
     QTimer *timer;
     bool doDll;
+    bool *doMeasure;
 
 signals:
     void resiveData(QByteArray);
@@ -23,6 +24,7 @@ signals:
 private slots:
     void openDevice(bool *doMeasure);
     void doTimer();
+    void stopMeasure();
 
 
 };

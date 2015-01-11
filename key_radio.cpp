@@ -85,10 +85,10 @@ key_radio::key_radio(QWidget *parent, CurParam *link) :
     layoutkey_radio->addWidget(gbEye);
 //    layoutkey_radio->addItem(hs5);
 
-    curentParam->regimMeasure  = REGIM::AUTOFREEZ;
-    curentParam->regimContact  = REGIM::CONTACT;
-    curentParam->regimCataract = REGIM::CATARACT;
-    curentParam->regimSide     = REGIM::OD;
+//    curentParam->regimMeasure  = REGIM::AUTOFREEZ;
+//    curentParam->regimContact  = REGIM::CONTACT;
+//    curentParam->regimCataract = REGIM::CATARACT;
+//    curentParam->regimSide     = REGIM::OD;
 
     connect(rbAutoFreeze,  SIGNAL(clicked(bool)), SLOT(doChangeRegim()));
     connect(rbAuto,        SIGNAL(clicked(bool)), SLOT(doChangeRegim()));
@@ -141,15 +141,9 @@ void key_radio::doChangeRegim()
     if(rbManual->isChecked())
         curentParam->regimMeasure  = REGIM::MANUAL;
     if(rbContact->isChecked())
-    {
         curentParam->regimContact  = REGIM::CONTACT;
-        emit changeInterval();
-    }
     if(rbImmersion->isChecked())
-    {
         curentParam->regimContact  = REGIM::IMMERSION;
-        emit changeInterval();
-    }
     if(rbCataract->isChecked())
         curentParam->regimCataract = REGIM::CATARACT;
     if(rbAphakic->isChecked())
@@ -158,4 +152,5 @@ void key_radio::doChangeRegim()
         curentParam->regimSide     = REGIM::OD;
     if(rbOs->isChecked())
         curentParam->regimSide     = REGIM::OS;
+    emit changeInterval();
 }

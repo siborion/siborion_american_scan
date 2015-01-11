@@ -43,14 +43,12 @@ public:
     void drawMarker(quint16 pos, QString title);
     void drawMarker(double x, double y, const QColor &);
     virtual bool eventFilter( QObject *, QEvent * );
-//    QList <double> intToMM(QList<quint16> *mainParam);
     QList<quint16> allExtremum;
     void drawSample(QByteArray *Sample);
     Plot *pPlot;
     CurParam *curParam;
 
 public slots:
-    void changeKeySlot();
     void updateSample(stMeasureParam *);
     void updateInterval();
 

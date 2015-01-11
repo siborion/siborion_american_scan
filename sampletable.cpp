@@ -1,9 +1,11 @@
 #include "sampletable.h"
 #include <QtCore/qmath.h>
 
-sampletable::sampletable(QWidget *parent) :
+sampletable::sampletable(QWidget *parent, CurParam *link) :
     QWidget(parent)
 {
+    curParam = link;
+
     QList<int> columnPercent;
     QStringList lst;
 
@@ -74,6 +76,16 @@ void sampletable::addSample(QByteArray *Sample, QList<quint16> *extremum, stMeas
     twMeas->model()->setData(index, *Sample,      roleSample);
     twMeas->model()->setData(index, listExtremum, roleExtremum);
     editSample(rowNom, measureParam);
+
+    if (curParam->regimMeasure  == REGIM::AUTOFREEZ)
+    {
+        if(twMeas->model()->rowCount()>=10)
+            emit stopMeasure();
+    }
+
+    if (curParam->regimMeasure  == REGIM::AUTO)
+            emit stopMeasure();
+
 }
 
 void sampletable::editSample(quint16 rowNom, stMeasureParam* measureParam)
@@ -207,4 +219,36 @@ void sampletable::calculateAvg()
         }
     }
     emit sendAvg(&averageParam);
+}
+
+
+void sampletable::changeRegimManual()
+{
+    QList<int> columnPercent;
+    QStringList lst;
+    QStandardItemModel *model = new QStandardItemModel();
+
+    if (curParam->regimMeasure  == REGIM::MANUAL)
+    {
+        columnPercent<<10      <<5            <<60      <<5       <<5      <<5;
+        lst          <<tr("No")<<tr("AveVelAl")<<tr("Distance");
+    }
+    else
+    {
+        columnPercent<<10      <<23            <<15      <<15       <<15      <<15;
+        lst          <<tr("No")<<tr("AveVelAl")<<tr("AL")<<tr("ACD")<<tr("LT")<<tr("VIT");
+    }
+    model = (QStandardItemModel*)twMeas->model();
+    model->setHorizontalHeaderLabels(lst);
+    twMeas->setColumnPercent(columnPercent);
+}
+
+void sampletable::startMeasure()
+{
+    QStandardItemModel *model;
+    if (curParam->regimMeasure  == REGIM::AUTOFREEZ)
+    {
+        model = (QStandardItemModel*)twMeas->model();
+        model->setRowCount(0);
+    }
 }

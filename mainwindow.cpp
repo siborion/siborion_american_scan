@@ -45,6 +45,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(measure,SIGNAL(refreshTable(stMeasureParam*)),parcer,SLOT(calculateParam(stMeasureParam*)));
     connect(device,SIGNAL(resiveData(QByteArray)),SLOT(resiveDataSlot(QByteArray)));
 
+    connect(measure,SIGNAL(stopMeasure()),device,SLOT(stopMeasure()));
+
     bases->Init();
     moveWindowToCenter();
 }
