@@ -31,6 +31,7 @@ Measure::Measure(QWidget *parent, CurParam *curParam) :
     connect(velosity,SIGNAL(doScan(bool*)),SLOT(doScanSlot(bool*)));
     connect(pSampleTable,SIGNAL(changeRow(stMeasureParam*)),pPlot,SLOT(updateSample(stMeasureParam*)));
     connect(pSampleTable,SIGNAL(changeRow(stMeasureParam*)),pBigViewCur,SLOT(setDisplay(stMeasureParam*)));
+    connect(pSampleTable,SIGNAL(sendAvg(stAverageParam*)),pBigView,SLOT(setDisplay(stAverageParam*)));
     connect(pPlot,SIGNAL(refreshTable(stMeasureParam*)),SLOT(refreshTableSlot(stMeasureParam*)));
 }
 

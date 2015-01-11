@@ -2,6 +2,7 @@
 #define BIGVIEWNUM_H
 
 #include <QWidget>
+#include "typedef.h"
 
 namespace Ui {
 class bigviewnum;
@@ -20,7 +21,9 @@ public:
 private:
     Ui::bigviewnum *ui;
 //    CurentParam *curentParam;
-//    void setDisplay(double Avg, double AvgAcd, double AvgLt, double AvgVit, double Dev, double DevAcd, double DevLt, double DevVit);
+
+public slots:
+    void setDisplay(stAverageParam*);
 };
 
 #endif // BIGVIEWNUM_H

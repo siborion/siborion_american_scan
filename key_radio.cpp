@@ -26,6 +26,7 @@ key_radio::key_radio(QWidget *parent) :
     ltAuto->addWidget(rbAutoFreeze);
     ltAuto->addWidget(rbAuto);
     ltAuto->addWidget(rbManual);
+    rbAutoFreeze->setChecked(true);
 
     QSpacerItem  *hs2 = new QSpacerItem(50, 5, QSizePolicy::Expanding, QSizePolicy::Minimum);
     QGroupBox    *gbContact = new QGroupBox();
@@ -38,6 +39,7 @@ key_radio::key_radio(QWidget *parent) :
     ltContact->addWidget(rbImmersion);
     rbContact->setFont(font);
     rbImmersion->setFont(font);
+    rbContact->setChecked(true);
 
     QSpacerItem  *hs3 = new QSpacerItem(50, 5, QSizePolicy::Expanding, QSizePolicy::Minimum);
     QGroupBox    *gbCataract = new QGroupBox();
@@ -50,6 +52,7 @@ key_radio::key_radio(QWidget *parent) :
     ltCataract->addWidget(rbAphakic);
     rbCataract->setFont(font);
     rbAphakic->setFont(font);
+    rbCataract->setChecked(true);
 
 
     QSpacerItem  *hs4 = new QSpacerItem(50, 5, QSizePolicy::Expanding, QSizePolicy::Minimum);
@@ -61,6 +64,7 @@ key_radio::key_radio(QWidget *parent) :
     rbOs->setObjectName("OS");
     rbOd->setFont(font);
     rbOs->setFont(font);
+    rbOd->setChecked(true);
 
     ltEye->addWidget(rbOd);
     ltEye->addWidget(rbOs);

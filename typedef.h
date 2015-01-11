@@ -18,7 +18,7 @@ enum RegimMeasure  {AUTOFREEZ, AUTO, MANUAL};
 enum RegimContact  {CONTACT,   IMMERSION};
 enum RegimCataract {CATARACT,  APHAKIC};
 enum RegimSide     {OD, OS};
-};
+}
 
 struct stMeasureParam
 {
@@ -35,12 +35,23 @@ struct stMeasureParam
     QList<quint16> extremum;
 };
 
+struct stAverageParam
+{
+    double AL;
+    double ACD;
+    double LT;
+    double VIT;
+    double ALdiv;
+    double ACDdiv;
+    double LTdiv;
+    double VITdiv;
+};
+
 #define roleSample   Qt::UserRole+1
 #define roleCornea   Qt::UserRole+2
 #define roleL1       Qt::UserRole+3
 #define roleL2       Qt::UserRole+4
 #define roleRetina   Qt::UserRole+5
 #define roleExtremum Qt::UserRole+6
-
 
 #endif // TYPEDEF_H

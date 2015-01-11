@@ -23,9 +23,11 @@ private:
     void refreshResult(quint8 rowNom);
     QStandardItemModel *modelOD;
     QStandardItemModel *modelOS;
+    void calculateAvg();
 
 signals:
     void changeRow(stMeasureParam*);
+    void sendAvg(stAverageParam*);
 
 public slots:
     void changeRowSlot(QModelIndex curIndex);

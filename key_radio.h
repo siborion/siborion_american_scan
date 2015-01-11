@@ -32,18 +32,10 @@ private:
     QRadioButton *rbAphakic;
 
 public:
-//    RegimMeasure  regimMeasure;
-//    RegimContact  regimContact;
-//    RegimCataract regimCataract;
-//    RegimSide     regimSide;
-
     explicit key_radio(QWidget *parent = 0);
     
 private slots:
     void changeSideSlot();
-//    void doChangeSide();
-//    void doChangeCataract();
-//    void doChangeContact();
     void doChangeRegim();
 
 };
