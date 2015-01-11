@@ -17,7 +17,7 @@ Measure::Measure(QWidget *parent, CurParam *curParam) :
     glPlot->addWidget(pBigViewCur, 0, 0);
     glPlot->addWidget(pPlot,       1, 0);
 
-    pKey = new key_radio();
+    pKey = new key_radio(this, curParam);
     pSampleTable = new sampletable();
     velosity = new Velosity();
     pBigView = new bigviewnum();
@@ -33,6 +33,7 @@ Measure::Measure(QWidget *parent, CurParam *curParam) :
     connect(pSampleTable,SIGNAL(changeRow(stMeasureParam*)),pBigViewCur,SLOT(setDisplay(stMeasureParam*)));
     connect(pSampleTable,SIGNAL(sendAvg(stAverageParam*)),pBigView,SLOT(setDisplay(stAverageParam*)));
     connect(pPlot,SIGNAL(refreshTable(stMeasureParam*)),SLOT(refreshTableSlot(stMeasureParam*)));
+    connect(pKey,SIGNAL(changeInterval()),pPlot,SLOT(updateInterval()));
 }
 
 void Measure::doScanSlot(bool *doMeasure)

@@ -52,6 +52,7 @@ public:
 public slots:
     void changeKeySlot();
     void updateSample(stMeasureParam *);
+    void updateInterval();
 
 private:
     void select( const QPoint &pos );

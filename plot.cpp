@@ -61,9 +61,9 @@ Plot::Plot( QWidget *parent, bool print, CurParam *link):
     d_curve1->setXAxis(QwtPlot::xTop);
     d_curve1->attach(this);
 
-    startInterval  = new SampleInterval(0, 100, "Start_Interval",   curParam);
-    lensInterval   = new SampleInterval(200, 300, "Lens_Interval",  curParam);
-    retinaInterval = new SampleInterval(400, 500, "Retina_Interval",curParam);
+    startInterval  = new SampleInterval(curParam->corneaX1, curParam->corneaX2, "Start_Interval",   curParam);
+    lensInterval   = new SampleInterval(curParam->lensX1,   curParam->lensX2,   "Lens_Interval",  curParam);
+    retinaInterval = new SampleInterval(curParam->retinaX1, curParam->retinaX2, "Retina_Interval",curParam);
 
     startInterval->setXAxis(QwtPlot::xTop);
     lensInterval->setXAxis(QwtPlot::xTop);
@@ -475,3 +475,29 @@ void Plot::updateSample(stMeasureParam *link)
     drawMarker((double)measureParam.Retina,(double)60, Qt::white);
     allExtremum = measureParam.extremum;
 }
+
+void Plot::updateInterval()
+{
+    curParam->corneaX1=0;
+    curParam->corneaX2=100;
+    curParam->lensX1=200;
+    curParam->lensX2=300;
+    curParam->retinaX1=400;
+    curParam->retinaX2=500;
+
+    if(curParam->regimContact!=REGIM::CONTACT)
+    {
+        curParam->corneaX1+=100;
+        curParam->corneaX2+=100;
+        curParam->lensX1+=100;
+        curParam->lensX2+=100;
+        curParam->retinaX1+=100;
+        curParam->retinaX2+=100;
+    }
+
+    startInterval->setSample (curParam->corneaX1, curParam->corneaX2);
+    lensInterval->setSample  (curParam->lensX1,   curParam->lensX2);
+    retinaInterval->setSample(curParam->retinaX1, curParam->retinaX2);
+}
+
+

@@ -1,10 +1,14 @@
 #include "key_radio.h"
+#include <QDebug>
 
-key_radio::key_radio(QWidget *parent) :
+key_radio::key_radio(QWidget *parent, CurParam *link) :
     QWidget(parent)
 {
     QHBoxLayout *layoutkey_radio = new QHBoxLayout(this);
 
+    qDebug()<<link;
+
+    curentParam = link;
 
     QFont font;
     font.setBold(true);
@@ -81,13 +85,10 @@ key_radio::key_radio(QWidget *parent) :
     layoutkey_radio->addWidget(gbEye);
 //    layoutkey_radio->addItem(hs5);
 
-//    curentParam->regimMeasure  = RegimMeasure::AUTOFREEZ;
-//    curentParam->regimContact  = RegimContact::CONTACT;
-//    curentParam->regimCataract = RegimCataract::CATARACT;
-//    curentParam->regimSide     = RegimSide::OD;
-//    refresh();
-//    emit change();
-//    doChangeRegim();
+    curentParam->regimMeasure  = REGIM::AUTOFREEZ;
+    curentParam->regimContact  = REGIM::CONTACT;
+    curentParam->regimCataract = REGIM::CATARACT;
+    curentParam->regimSide     = REGIM::OD;
 
     connect(rbAutoFreeze,  SIGNAL(clicked(bool)), SLOT(doChangeRegim()));
     connect(rbAuto,        SIGNAL(clicked(bool)), SLOT(doChangeRegim()));
@@ -133,25 +134,28 @@ void key_radio::refresh()
 
 void key_radio::doChangeRegim()
 {
-//    if(rbAutoFreeze->isChecked())
-//        curentParam->regimMeasure  = RegimMeasure::AUTOFREEZ;
-//    if(rbAuto->isChecked())
-//        curentParam->regimMeasure  = RegimMeasure::AUTO;
-//    if(rbManual->isChecked())
-//        curentParam->regimMeasure  = RegimMeasure::MANUAL;
-//    if(rbContact->isChecked())
-//        curentParam->regimContact  = RegimContact::CONTACT;
-//    if(rbImmersion->isChecked())
-//        curentParam->regimContact  = RegimContact::IMMERSION;
-//    if(rbCataract->isChecked())
-//        curentParam->regimCataract = RegimCataract::CATARACT;
-//    if(rbAphakic->isChecked())
-//        curentParam->regimCataract = RegimCataract::APHAKIC;
-//    if(rbOd->isChecked())
-//        curentParam->regimSide     = RegimSide::OD;
-//    if(rbOs->isChecked())
-//        curentParam->regimSide     = RegimSide::OS;
-//    if ((QObject::sender()->objectName()=="OD")||(QObject::sender()->objectName()=="OS"))
-//        curentParam->refreshPatientModel();
-//    emit change();
+    if(rbAutoFreeze->isChecked())
+        curentParam->regimMeasure  = REGIM::AUTOFREEZ;
+    if(rbAuto->isChecked())
+        curentParam->regimMeasure  = REGIM::AUTO;
+    if(rbManual->isChecked())
+        curentParam->regimMeasure  = REGIM::MANUAL;
+    if(rbContact->isChecked())
+    {
+        curentParam->regimContact  = REGIM::CONTACT;
+        emit changeInterval();
+    }
+    if(rbImmersion->isChecked())
+    {
+        curentParam->regimContact  = REGIM::IMMERSION;
+        emit changeInterval();
+    }
+    if(rbCataract->isChecked())
+        curentParam->regimCataract = REGIM::CATARACT;
+    if(rbAphakic->isChecked())
+        curentParam->regimCataract = REGIM::APHAKIC;
+    if(rbOd->isChecked())
+        curentParam->regimSide     = REGIM::OD;
+    if(rbOs->isChecked())
+        curentParam->regimSide     = REGIM::OS;
 }

@@ -6,7 +6,7 @@
 #include <QHBoxLayout>
 #include <QGroupBox>
 #include <QRadioButton>
-//#include "curentparam.h"
+#include "curparam.h"
 #include "typedef.h"
 
 class key_radio : public QWidget
@@ -14,12 +14,12 @@ class key_radio : public QWidget
     Q_OBJECT
 
 Q_SIGNALS:
-//    void changeCataractSignal(bool cataract);
-    void change();
+    void changeInterval();
+//    void change();
 
 private:
     void refresh();
-//    CurentParam *curentParam;
+    CurParam *curentParam;
     QRadioButton *rbOd;
     QRadioButton *rbOs;
     QGroupBox    *gbEye;
@@ -32,7 +32,7 @@ private:
     QRadioButton *rbAphakic;
 
 public:
-    explicit key_radio(QWidget *parent = 0);
+    explicit key_radio(QWidget *parent = 0, CurParam *link = 0);
     
 private slots:
     void changeSideSlot();
