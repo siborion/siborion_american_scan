@@ -143,7 +143,6 @@ void Scanbase::delPatient()
 
 void Scanbase::updateCurDoctor(quint16 id)
 {
-    qDebug()<<"b";
     QString str = QString("SELECT * FROM doctor WHERE id=%1;").arg(id);
     QSqlQuery sql(str);
     if(sql.exec())
@@ -227,11 +226,8 @@ void Scanbase::delDoctor()
 void Scanbase::saveDocLens(quint16 idDoc, QMap<quint16,quint16> *idLens)
 {
     QString str;
-    qDebug()<<idDoc;
     QSqlQuery sql(QString("DELETE FROM doctor_lens WHERE id_doctor=%1;").arg(idDoc));
     sql.exec();
-    qDebug()<<idLens->count();
-
 
     QMap<quint16,quint16>::iterator it = idLens->begin();
     for(;it != idLens->end(); ++it)
@@ -318,7 +314,6 @@ void Scanbase::saveCurLens(quint16 *id)
         query.exec();
         *id = query.lastInsertId().toInt();
     }
-//    qDebug()<<sql;
 }
 
 void Scanbase::delLens()
@@ -327,7 +322,6 @@ void Scanbase::delLens()
     QString sql;
     sql.append(QString("delete from lens where id=%1").arg(curLens["id"].toInt()));
     query.prepare(sql);
-    qDebug()<<sql;
     query.exec();
 }
 

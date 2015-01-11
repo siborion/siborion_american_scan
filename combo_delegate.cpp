@@ -66,10 +66,6 @@ void CCombo_Delegate::paint( QPainter * painter, const QStyleOptionViewItem &opt
         int value = index.data().toInt();
         s = m_values[ value ];
 
-//    qDebug()<<index.data();
-//    qDebug()<<value;
-//    qDebug()<<s;
-
     QVariant color = index.data( Qt::TextColorRole );
 
     if ( color.isValid() && qvariant_cast<QColor>(color).isValid() )

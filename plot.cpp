@@ -285,7 +285,6 @@ void Plot::move( const QPoint &pos )
                         measureParam.L2 = c->xValue();
                     if(c->title().text()=="Retina")
                         measureParam.Retina = c->xValue();
-//                    qDebug()<<measureParam->Retina;
                     emit(refreshTable(&measureParam));
                 }
             }
@@ -436,7 +435,6 @@ void Plot::changeKeySlot()
 //        curentParam->lensX1 = 0;    curentParam->lensX2 = 0;
 //    }
 //    lensInterval->setVisible(visible);
-//    qDebug()<<"0000"<<curentParam->cataract;
 //}
 
 //void Plot::changeContactSlot(bool contact)
@@ -461,13 +459,11 @@ void Plot::changeKeySlot()
 //    startInterval->setSample (curentParam->corneaX1, curentParam->corneaX2);
 //    lensInterval->setSample  (curentParam->lensX1,   curentParam->lensX2);
 //    retinaInterval->setSample(curentParam->retinaX1, curentParam->retinaX2);
-//    qDebug()<<"11111"<<curentParam->cataract;
 //}
 
 void Plot::updateSample(stMeasureParam *link)
 {
     measureParam = *link;
-    qDebug()<<measureParam.Retina;
     drawSample(&measureParam.Sample);
     drawMarker(measureParam.Cornea,"Cornea");
     drawMarker((double)measureParam.Cornea,(double)60, Qt::white);

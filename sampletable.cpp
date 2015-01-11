@@ -41,11 +41,20 @@ void sampletable::changeRowSlot(QModelIndex index)
     measureParam.Retina = twMeas->model()->data(index, roleRetina).toDouble();
     listExtremum =        twMeas->model()->data(index, roleExtremum).toStringList();
 
+    index = twMeas->model()->index(index.row(), 1);
+    measureParam.ALave = twMeas->model()->data(index, Qt::DisplayRole).toDouble();
+    index = twMeas->model()->index(index.row(), 2);
+    measureParam.AL    = twMeas->model()->data(index, Qt::DisplayRole).toDouble();
+    index = twMeas->model()->index(index.row(), 3);
+    measureParam.ACD   = twMeas->model()->data(index, Qt::DisplayRole).toDouble();
+    index = twMeas->model()->index(index.row(), 4);
+    measureParam.LT    = twMeas->model()->data(index, Qt::DisplayRole).toDouble();
+    index = twMeas->model()->index(index.row(), 5);
+    measureParam.VIT   = twMeas->model()->data(index, Qt::DisplayRole).toDouble();
     foreach (QString val, listExtremum)
     {
         measureParam.extremum.append(val.toUInt());
     }
-
     emit changeRow(&measureParam);
 }
 
@@ -58,15 +67,12 @@ void sampletable::addSample(QByteArray *Sample, QList<quint16> *extremum, stMeas
     {
         listExtremum.append(QString("%1").arg(val));
     }
-
     rowNom = twMeas->model()->rowCount();
     twMeas->model()->insertRow(rowNom);
-
     index = twMeas->model()->index(rowNom, 0);
     twMeas->model()->setData(index, rowNom+1,     Qt::DisplayRole);
     twMeas->model()->setData(index, *Sample,      roleSample);
     twMeas->model()->setData(index, listExtremum, roleExtremum);
-
     editSample(rowNom, measureParam);
 }
 

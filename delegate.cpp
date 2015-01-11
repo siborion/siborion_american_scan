@@ -37,7 +37,6 @@
      QCheckBox *CheckBox = static_cast<QCheckBox*>(editor);
      int value = CheckBox->isChecked();
      model->setData(index, value, Qt::EditRole);
-     qDebug()<<"edit3";
  }
 
  void CheckBoxDelegate::updateEditorGeometry(QWidget *editor,
