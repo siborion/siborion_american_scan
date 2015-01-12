@@ -40,5 +40,10 @@ void Bigviewnumcur::setRegim()
 
     bVal = (curParam->regimSide == REGIM::OD);
     ui->leSide->setText(bVal?"OD":"OS");
+}
 
+void Bigviewnumcur::updatePatient()
+{
+    ui->lFioPatient->setText(curParam->patientName);
+    ui->lFioDoctor->setText (curParam->doctorName);
 }

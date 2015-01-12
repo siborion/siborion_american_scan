@@ -12,7 +12,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     curParam = new CurParam(this);
-    scanbase = new Scanbase(this);
+    scanbase = new Scanbase(this, curParam);
+    pCalculator = new calculator(this, curParam);
     bases = new Bases(this);
     measure = new Measure(this, curParam);
     device = new Device(this);
@@ -22,11 +23,14 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->tabWidget->removeTab(0);
     ui->tabWidget->addTab(bases, "Data Bases");
     ui->tabWidget->addTab(measure, "Measurement");
+    ui->tabWidget->addTab(pCalculator, "Calculator");
 
     connect(bases,SIGNAL(getModel(Base::TypeBase,QSqlQueryModel**)),scanbase,SLOT(getBasesModel(Base::TypeBase,QSqlQueryModel**)));
 
     connect(bases,SIGNAL(updateCurPatient(quint16)),scanbase,SLOT(updateCurPatient(quint16)));
-    connect(scanbase,SIGNAL(setStPatient(QMap<QString,QString>*)),bases,SLOT(setStPatient(QMap<QString,QString>*)));
+    connect(bases,SIGNAL(updateCurPatient(quint16)),pCalculator,SLOT(updatePatient()));
+    connect(measure,SIGNAL(stopMeasure()),pCalculator,SLOT(updatePatient()));
+    connect(scanbase,SIGNAL(setStPatient(QMap<QString,QString>*)),SLOT(setStPatient(QMap<QString,QString>*)));
     connect(bases,SIGNAL(savePatient(quint16*)),scanbase,SLOT(saveCurPatient(quint16*)));
     connect(bases,SIGNAL(delPatient()),scanbase,SLOT(delPatient()));
 
@@ -46,6 +50,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(device,SIGNAL(resiveData(QByteArray)),SLOT(resiveDataSlot(QByteArray)));
 
     connect(measure,SIGNAL(stopMeasure()),device,SLOT(stopMeasure()));
+
+    connect(scanbase,SIGNAL(setLens(QSqlQueryModel*)),pCalculator,SLOT(refreshLens(QSqlQueryModel*)));
 
     bases->Init();
     moveWindowToCenter();
@@ -69,7 +75,11 @@ void MainWindow::resiveDataSlot(QByteArray Sample)
     }
 }
 
-
+void MainWindow::setStPatient(QMap <QString, QString> *stPatientBases)
+{
+    bases->setStPatient(stPatientBases);
+    measure->updatePatient();
+}
 
 MainWindow::~MainWindow()
 {

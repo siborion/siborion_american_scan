@@ -2,6 +2,8 @@
 #define CURPARAM_H
 
 #include <QObject>
+#include <QSqlQueryModel>
+#include "curparam.h"
 #include "typedef.h"
 
 class CurParam : public QObject
@@ -22,6 +24,20 @@ public:
     quint16 retinaX2;
 
     quint64 randSession;
+
+    QSqlQueryModel *lensModel;
+
+    quint16 patientId;
+    quint16 doctorId;
+    QString patientName;
+    QString doctorName;
+    double k1left;
+    double k2left;
+    double k1right;
+    double k2right;
+    double AL;
+    double ACD;
+
 
 //    quint16 Start;
 //    quint16 L1;

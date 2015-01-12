@@ -97,3 +97,8 @@ void Measure::stopMeasureSlot()
     }
     emit stopMeasure();
 }
+
+void Measure::updatePatient()
+{
+    pBigViewCur->updatePatient();
+}

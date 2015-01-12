@@ -16,4 +16,11 @@ CurParam::CurParam(QObject *parent) :
     regimContact = REGIM::CONTACT;
     regimCataract= REGIM::CATARACT;
     regimSide    = REGIM::OD;
+
+    lensModel = new QSqlQueryModel();
+
+    patientName = "Select Patient";
+    doctorName  = "Select Doctor";
+    doctorId = patientId = 0;
+
 }

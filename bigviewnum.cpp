@@ -34,6 +34,9 @@ void bigviewnum::setDisplay(stAverageParam *averageParam)
 
     ui->lAvgVit_2->setText(QString("%1").arg(averageParam->VIT,5,'f',2,'0'));
     ui->lDevVit_2->setText(QString("%1").arg(averageParam->VITdiv,5,'f',2,'0'));
+
+    curParam->AL  = averageParam->AL;
+    curParam->ACD = averageParam->ACD;
 }
 
 void bigviewnum::setRegim()
@@ -54,7 +57,6 @@ void bigviewnum::setRegim()
     ui->lStdVIT->setVisible(bVal);
     ui->lAveAL->setText(bVal?"AL":"Dist");
     ui->lStdAL->setText(bVal?"AL":"Dist");
-
 }
 
 

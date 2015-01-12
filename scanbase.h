@@ -12,50 +12,24 @@
 #include <QDir>
 #include <QMessageBox>
 #include <QDate>
+#include "curparam.h"
 #include "typedef.h"
-/*
-struct StPatient
-{
-    quint16 id;
-    QString adress;
-    quint8  age;
-    QDate   birth;
-    quint16 doctor;
-    double k1left;
-    double k1right;
-    double k2left;
-    double k2right;
-    double kleft;
-    double kright;
-    QString last;
-    QString name;
-    QString phone;
-    QString ref;
-    quint8 sex;
-    QString state;
-    QString zip;
-};
-struct StDoctor
-{
-};
-struct StLens
-{
-};
-*/
 
 class Scanbase : public QObject //QSqlDataguardbase
 {
     Q_OBJECT
 private:
     QSqlDatabase    pDB;
+    CurParam *curParam;
 
 public:
-    explicit Scanbase(QObject *parent = 0);
+    explicit Scanbase(QObject *parent = 0, CurParam *link = 0);
     QSqlQuery getData(QString str);
     QSqlQueryModel *modelBases;
     QMap <QString, QString> curPatient;
     QMap <QString, QString> curDoctor;
-    QMap <QString, QString> curLens;
+    QMap <QString, QString> curLens;\
+    QSqlQueryModel lensModel;
 
 public slots:
     void getBasesModel(Base::TypeBase, QSqlQueryModel**);
@@ -80,6 +54,7 @@ Q_SIGNALS:
     void setStPatient(QMap <QString, QString> *);
     void setStDoctor(QMap <QString, QString> *);
     void setStLens(QMap <QString, QString> *);
+    void setLens(QSqlQueryModel*);
 };
 
 #endif // guardbase_H

@@ -24,6 +24,7 @@ private:
 public slots:
     void setDisplay(stMeasureParam *);
     void setRegim();
+    void updatePatient();
 };
 
 #endif // bigviewnumcur_H

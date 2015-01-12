@@ -3,6 +3,7 @@
 
 #include "bases.h"
 #include "measure.h"
+#include "calculator.h"
 #include "scanbase.h"
 #include "curparam.h"
 #include "device.h"
@@ -26,6 +27,7 @@ private:
     Ui::MainWindow *ui;
     Bases *bases;
     Measure *measure;
+    calculator *pCalculator;
     Scanbase *scanbase;
     QMap <QString, QString> *curPatient;
     CurParam *curParam;
@@ -35,6 +37,7 @@ private:
 
 public slots:
     void resiveDataSlot(QByteArray);
+    void setStPatient(QMap <QString, QString> *stPatientBases);
 
 Q_SIGNALS:
 

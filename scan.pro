@@ -49,7 +49,12 @@ SOURCES += main.cpp\
     device.cpp \
     curparam.cpp \
     parcer.cpp \
-    parserfront.cpp
+    parserfront.cpp \
+    calculator.cpp \
+    formula.cpp \
+    calc.cpp \
+    calculator_patient.cpp \
+    leaddzero.cpp
 
 HEADERS  += mainwindow.h \
     bases.h \
@@ -74,14 +79,20 @@ HEADERS  += mainwindow.h \
     device.h \
     curparam.h \
     parcer.h \
-    parserfront.h
+    parserfront.h \
+    calculator.h \
+    formula.h \
+    calculator_patient.h \
+    calc.h \
+    leaddzero.h
 
 FORMS    += mainwindow.ui \
     dialog_doctor.ui \
     dialog_lens.ui \
     bigviewnumcur.ui \
     velosity.ui \
-    bigviewnum.ui
+    bigviewnum.ui \
+    calculator_patient.ui
 
 RESOURCES += \
     scan.qrc

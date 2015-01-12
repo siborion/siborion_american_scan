@@ -40,6 +40,7 @@ public slots:
     void doScanSlot(bool*);
     void refreshTableSlot(stMeasureParam *);
     void stopMeasureSlot();
+    void updatePatient();
 
 Q_SIGNALS:
     void doScan(bool*);

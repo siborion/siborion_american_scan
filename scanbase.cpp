@@ -1,8 +1,9 @@
 #include "scanbase.h"
 
-Scanbase::Scanbase(QObject *parent)
+Scanbase::Scanbase(QObject *parent, CurParam *link)
 {
     QString sCurPath;
+    curParam = link;
     sCurPath = QDir::currentPath();
     sCurPath.append("/base.db");
     pDB = QSqlDatabase::addDatabase("QSQLITE");
@@ -73,6 +74,14 @@ void Scanbase::updateCurPatient(quint16 id)
             {
                 curPatient[sql.record().fieldName(i)] = sql.record().value(i).toString();
             }
+            curPatient["id"]=QString("%1").arg(id);
+            curParam->patientId   = id;
+            curParam->doctorId    = curPatient.value("doctor").toUInt();
+            curParam->patientName = curPatient.value("name")+" "+curPatient.value("last");
+            curParam->k1left = curPatient.value("k1left").toDouble();
+            curParam->k2left = curPatient.value("k2left").toDouble();
+            curParam->k1right = curPatient.value("k1right").toDouble();
+            curParam->k2right = curPatient.value("k2right").toDouble();
         }
         else
         {
@@ -82,8 +91,30 @@ void Scanbase::updateCurPatient(quint16 id)
             }
         }
     }
-    curPatient["id"]=QString("%1").arg(id);
+
+    str = QString("SELECT name, last FROM doctor WHERE id=%1;").arg(curParam->doctorId);
+    if(sql.exec(str))
+    {
+        if(sql.next())
+            curParam->doctorName = sql.record().value(0).toString()+" "+sql.record().value(1).toString();
+    }
+
     emit (setStPatient(&curPatient));
+
+    str = "SELECT lens.name,";
+    str.append("lens.aconst,");
+    str.append("lens.acd,");
+    str.append("lens.sf,");
+    str.append("formula.id,");
+    str.append("formula.name ");
+    str.append("FROM patient, doctor_lens, lens, formula ");
+    str.append("ON patient.doctor=doctor_lens.id_doctor ");
+    str.append("AND lens.id=doctor_lens.id_lens ");
+    str.append("AND doctor_lens.nom_formula=formula.id ");
+    str.append(QString("WHERE patient.id=%1;").arg(id));
+    lensModel.setQuery(str);
+//    qDebug()<<"adr"<<(&lensModel);
+    emit (setLens(&lensModel));
 }
 
 void Scanbase::saveCurPatient(quint16 *id)
@@ -125,6 +156,7 @@ void Scanbase::saveCurPatient(quint16 *id)
 
     query.prepare(sql);
     query.exec();
+    qDebug()<<sql;
 }
 
 void Scanbase::delPatient()

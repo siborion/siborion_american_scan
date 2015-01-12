@@ -225,6 +225,10 @@ void sampletable::calculateAvg()
             twMeas->model()->setData(twMeas->model()->index(i, j), color, Qt::BackgroundRole);
         }
     }
+
+    curParam->ACD = averageParam.ACD;
+    curParam->AL = averageParam.AL;
+
     emit sendAvg(&averageParam);
 }
 
