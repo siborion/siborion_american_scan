@@ -41,7 +41,13 @@ Measure::Measure(QWidget *parent, CurParam *link) :
     connect(pKey,SIGNAL(changeInterval()),pPlot,SLOT(updateInterval()));
     connect(pKey,SIGNAL(changeInterval()),pBigViewCur,SLOT(setRegim()));
     connect(pKey,SIGNAL(changeInterval()),pBigView,SLOT(setRegim()));
+    connect(pKey,SIGNAL(changeInterval()),SLOT(changeGlasSlot()));
 
+}
+
+void Measure::changeGlasSlot()
+{
+    emit changeGlas();
 }
 
 void Measure::doScanSlot(bool *doMeasure)

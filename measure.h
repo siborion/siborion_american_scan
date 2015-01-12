@@ -41,11 +41,13 @@ public slots:
     void refreshTableSlot(stMeasureParam *);
     void stopMeasureSlot();
     void updatePatient();
+    void changeGlasSlot();
 
 Q_SIGNALS:
     void doScan(bool*);
     void refreshTable(stMeasureParam *);
     void stopMeasure();
+    void changeGlas();
 };
 
 #endif // MEASURE_H

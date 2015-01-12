@@ -8,62 +8,62 @@ calculator_patient::calculator_patient(QWidget *parent, CurParam *link) :
 {
     ui->setupUi(this);
     curParam = link;
-//    curentParam = CurentParam::instanse();
-//    curentParam->patientMaper.addMapping(ui->lePatientId,   0);
-//    curentParam->patientMaper.addMapping(ui->lePatientName, 1);
-//    curentParam->patientMaper.addMapping(ui->leDoctorName,  2);
-//    curentParam->patientMaper.addMapping(ui->leK1,4);
-//    curentParam->patientMaper.addMapping(ui->leK2,5);
-//    curentParam->patientMaper.addMapping(ui->leK,6);
-//    curentParam->patientMaper.addMapping(ui->pbSide,7,"text");
+
+    softUpdate = false;
 
     bLeft = true;
     connect(ui->leK1, SIGNAL(editingFinished()),SLOT(RefreshK()));
     connect(ui->leK2, SIGNAL(editingFinished()),SLOT(RefreshK()));
-    connect(ui->leACD_measure, SIGNAL(editingFinished()), SLOT(updateParam()));
-    connect(ui->leAL_measure, SIGNAL(editingFinished()), SLOT(updateParam()));
+    connect(ui->leACD_measure, SIGNAL(editingFinished()), SLOT(refreshAlACD()));
+    connect(ui->leAL_measure, SIGNAL(editingFinished()), SLOT(refreshAlACD()));
     connect(ui->leAConst_personal, SIGNAL(editingFinished()), SLOT(updateParam()));
     connect(ui->leACD_personal, SIGNAL(editingFinished()), SLOT(updateParam()));
     connect(ui->leSF_personal, SIGNAL(editingFinished()), SLOT(updateParam()));
     connect(ui->pbSide, SIGNAL(clicked()), SLOT(ChangeSide()));
 }
 
+void calculator_patient::refreshAlACD()
+{
+    if(softUpdate)
+        return;
+    softUpdate = true;
+    curParam->ACD = ui->leACD_measure->text().toDouble();
+    curParam->AL  = ui->leAL_measure->text().toDouble();
+    emit (refreshFormula());
+    softUpdate = false;
+}
+
 void calculator_patient::refreshPatientParam()
 {
-//    quint16 id;
-//    id = ui->lePatientId->text().toUInt();
-//    QString str = QString("SELECT k1left,k2left,k1right,k2right,birth FROM patient WHERE id=%1;")
-//            .arg(id);
-//    QSqlQuery sql(str);
-//    if(sql.exec())
-//    {
-//        if(sql.next())
-//        {
-            patientParam.K1Left  = curParam->k1left;
-            patientParam.K1Right = curParam->k1right;
-            patientParam.K2Left  = curParam->k2left;
-            patientParam.K2Right = curParam->k2right;
-//            patientParam.BirthDay = sql.value(sql.record().indexOf("birth")).toString();
-            if(bLeft)
-            {
-                ui->leK1->setTextZero(QString("%1").arg(curParam->k1left));
-                ui->leK2->setTextZero(QString("%1").arg(curParam->k2left));
-            }
-            else
-            {
-                ui->leK1->setTextZero(QString("%1").arg(curParam->k1right));
-                ui->leK2->setTextZero(QString("%1").arg(curParam->k2right));
-            }
-            ui->lePatientId->setText(QString("%1").arg(curParam->patientId));
-            ui->lePatientName->setText(curParam->patientName);
-            ui->leDoctorName->setText(curParam->doctorName);
-            ui->leACD_measure->setTextZero(QString("%1").arg(curParam->ACD));
-            ui->leAL_measure->setTextZero(QString("%1").arg(curParam->AL));
-
-            RefreshK();
-//        }
-//    }
+    if(softUpdate)
+        return;
+    softUpdate = true;
+    patientParam.K1Left  = curParam->k1left;
+    patientParam.K1Right = curParam->k1right;
+    patientParam.K2Left  = curParam->k2left;
+    patientParam.K2Right = curParam->k2right;
+    if(curParam->regimSide == REGIM::OD)
+    {
+        ui->leK1->setTextZero(QString("%1").arg(curParam->k1left));
+        ui->leK2->setTextZero(QString("%1").arg(curParam->k2left));
+        ui->pbSide->setText("OD");
+    }
+    else
+    {
+        ui->leK1->setTextZero(QString("%1").arg(curParam->k1right));
+        ui->leK2->setTextZero(QString("%1").arg(curParam->k2right));
+        ui->pbSide->setText("OS");
+    }
+    ui->lePatientId->setText(QString("%1").arg(curParam->patientId));
+    ui->lePatientName->setText(curParam->patientName);
+    ui->leDoctorName->setText(curParam->doctorName);
+    ui->leACD_measure->setTextZero(QString("%1").arg(curParam->ACD));
+    ui->leAL_measure->setTextZero(QString("%1").arg(curParam->AL));
+    RefreshK();
+    softUpdate = false;
 }
+
+
 
 void calculator_patient::refreshMeasure()
 {
@@ -77,20 +77,21 @@ void calculator_patient::RefreshK()
     float fTmp;
     fTmp = (ui->leK1->text().toFloat()+ui->leK2->text().toFloat())/2;
     ui->leK->setTextZero(QString("%1").arg(fTmp));
-    updateParam();
+    curParam->K = fTmp;
+    emit (refreshFormula());
 }
 
-stPatientParam calculator_patient::getParam()
-{
-    stPatientParam stTmp;
-    stTmp = patientParam;
-    stTmp.id  =  ui->lePatientId->text().toUInt();
-    stTmp.Name = ui->lePatientName->text();
-    stTmp.K   =  ui->leK->text().toFloat();
-    stTmp.ACD =  ui->leACD_measure->text().toFloat();
-    stTmp.AL  =  ui->leAL_measure->text().toFloat();
-    return stTmp;
-}
+//stPatientParam calculator_patient::getParam()
+//{
+//    stPatientParam stTmp;
+//    stTmp = patientParam;
+//    stTmp.id  =  ui->lePatientId->text().toUInt();
+//    stTmp.Name = ui->lePatientName->text();
+//    stTmp.K   =  ui->leK->text().toFloat();
+//    stTmp.ACD =  ui->leACD_measure->text().toFloat();
+//    stTmp.AL  =  ui->leAL_measure->text().toFloat();
+//    return stTmp;
+//}
 
 stPersonalParam calculator_patient::getPersonalParam()
 {
@@ -152,13 +153,14 @@ void calculator_patient::updateParam()
             dTmp /= 0.9704;
             ui->leACD_personal->setText(QString("%1").arg(dTmp));
         }
+    emit (refreshFormula());
     }
-    //    emit (refreshFormula());
 }
 
 void calculator_patient::updatePatient()
 {
     refreshPatientParam();
+    emit (refreshFormula());
 }
 
 calculator_patient::~calculator_patient()

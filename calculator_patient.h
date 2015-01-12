@@ -19,18 +19,19 @@ class calculator_patient : public QWidget
 public:
     explicit calculator_patient(QWidget *parent = 0, CurParam *link = 0);
     ~calculator_patient();
+    Ui::calculator_patient *ui;
 
 private:
-    Ui::calculator_patient *ui;
+
     stPatientParam patientParam;
     CurParam *curParam;
+    bool softUpdate;
 
 public:
     void setPatient(quint16 id, QString Patient, QString Doctor);
-    void refreshPatientParam();
 //    double K, AL_measure, ACD_measure;
     bool bLeft;
-    stPatientParam getParam();
+//    stPatientParam getParam();
     stPersonalParam getPersonalParam();
 //    quint16 curId;
     void refreshMeasure();
@@ -40,6 +41,8 @@ private slots:
     void RefreshK();
     void ChangeSide();
     void updateParam();
+    void refreshPatientParam();
+    void refreshAlACD();
 
 signals:
     void refreshFormula();

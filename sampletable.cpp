@@ -241,7 +241,7 @@ void sampletable::changeRegimManual()
 
     if (curParam->regimMeasure  == REGIM::MANUAL)
     {
-        columnPercent<<10      <<5            <<60      <<5       <<5      <<5;
+        columnPercent<<10      <<0            <<90      <<0       <<0      <<0;
         lst          <<tr("No")<<tr("AveVelAl")<<tr("Distance");
     }
     else

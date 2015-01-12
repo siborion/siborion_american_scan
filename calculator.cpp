@@ -39,7 +39,7 @@ calculator::calculator(QWidget *parent, CurParam *link) :
     columnPercent<<20<<20<<20<<20<<20;
     lst<<"Lens Name"<<"AConst"<<"ACD"<<"SF"<<"FORMULA";
     twLens = new adjview(3, lst, columnPercent);
-    twLens->setMinimumWidth(200);
+    twLens->setMinimumWidth(250);
     modelMainLens = curParam->lensModel;
     twLens->setModel(modelMainLens);
     modelMainLens->setHeaderData(0, Qt::Horizontal, "Lens Name", Qt::DisplayRole);
@@ -124,27 +124,32 @@ calculator::calculator(QWidget *parent, CurParam *link) :
 
 void calculator::refreshFormuls()
 {
-    stPatientParam patientParam;
+//    stPatientParam patientParam;
     stPersonalParam personalParam;
 
     quint8 nFormula;
     QString lensName, lensAconst, lensAcd, lensFs;
 
-    patientParam = pCalcPatient->getParam();
+//    patientParam = pCalcPatient->getParam();
     personalParam = pCalcPatient->getPersonalParam();
 
-    if(!((patientParam.ACD>0)&&(patientParam.AL>0)&&(patientParam.K>0)))
+    qDebug()<<"curParam->ACD"<<curParam->ACD;
+    qDebug()<<"curParam->AL" <<curParam->AL;
+    qDebug()<<"curParam->K"  <<curParam->K;
+
+    if(!((curParam->ACD>0)&&(curParam->AL>0)&&(curParam->K>0)))
         return;
 
     Formula1->setEnabled(false);
     Formula2->setEnabled(false);
     Formula3->setEnabled(false);
 
-    if(modelMainLens->rowCount()>0)
-    {
-        for(quint8 i=0; i<modelMainLens->rowCount() && i<3; i++)
-        {
+    qDebug()<<"modelMainLens->rowCount()"<<twLens->model()->rowCount();
 
+    if(twLens->model()->rowCount()>0)
+    {
+        for(quint8 i=0; i<twLens->model()->rowCount() && i<3; i++)
+        {
             nFormula   = twLens->model()->itemData(twLens->model()->index(i,4)).value(0).toInt();
             lensName   = twLens->model()->itemData(twLens->model()->index(i,0)).value(0).toString();
 
@@ -164,18 +169,22 @@ void calculator::refreshFormuls()
                 lensFs = twLens->model()->itemData(twLens->model()->index(i,3)).value(0).toString();
 
 
+            qDebug()<<"lensAconst"<<lensAconst;
+            qDebug()<<"lensAcd"<<lensAcd;
+            qDebug()<<"lensFs"<<lensFs;
+
             switch (i)
             {
             case 0:
-                Formula1->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, patientParam.K, patientParam.AL, patientParam.ACD);
+                Formula1->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, curParam->K, curParam->AL, curParam->ACD);
                 Formula1->setEnabled(true);
                 break;
             case 1:
-                Formula2->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, patientParam.K, patientParam.AL, patientParam.ACD);
+                Formula2->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, curParam->K, curParam->AL, curParam->ACD);
                 Formula2->setEnabled(true);
                 break;
             case 2:
-                Formula3->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, patientParam.K, patientParam.AL, patientParam.ACD);
+                Formula3->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, curParam->K, curParam->AL, curParam->ACD);
                 Formula3->setEnabled(true);
             default:
                 break;
@@ -192,7 +201,7 @@ void calculator::refreshFormuls()
             lensAcd = QString("%1").arg(personalParam.ACD);
         if(personalParam.SF>0)
             lensFs = QString("%1").arg(personalParam.SF);
-        Formula1->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, patientParam.K, patientParam.AL, patientParam.ACD);
+        Formula1->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, curParam->K, curParam->AL, curParam->ACD);
         Formula1->setEnabled(true);
     }
 }
@@ -213,7 +222,7 @@ void calculator::printPreview()
 void calculator::print( QPrinter* printer )
 {
     stPrintSample printSample;
-    stPatientParam patientParam;
+//    stPatientParam patientParam;
     stFormulaInfo *pModel1, *pModel2, *pModel3;
     double x[2048], y[2048];
     quint16 kolvo;
@@ -226,7 +235,7 @@ void calculator::print( QPrinter* printer )
     QPainter painter( printer );
 
 //    printSample = pClass->Mesur->pSampleTable->printSample();
-    patientParam = pCalcPatient->getParam();
+//    patientParam = pCalcPatient->getParam();
 
     QwtPlotRenderer renderer;
     pPlotPrint1 = new Plot(this, true);
@@ -286,7 +295,7 @@ void calculator::print( QPrinter* printer )
     font.setBold(true);
     painter.setFont( font );
     QRect    page1(1000, 200, 1000, 400);
-    painter.drawText(page1, Qt::AlignLeft, QString("%1\r\n%2\r\n%3\r\n%4").arg(patientParam.Name).arg(patientParam.id).arg(patientParam.BirthDay).arg("555"));
+//    painter.drawText(page1, Qt::AlignLeft, QString("%1\r\n%2\r\n%3\r\n%4").arg(patientParam.Name).arg(patientParam.id).arg(patientParam.BirthDay).arg("555"));
 
     pModel1 = Formula1->getModel();
     pModel2 = Formula2->getModel();

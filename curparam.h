@@ -35,22 +35,9 @@ public:
     double k2left;
     double k1right;
     double k2right;
+    double K;
     double AL;
     double ACD;
-
-
-//    quint16 Start;
-//    quint16 L1;
-//    quint16 L2;
-//    quint16 Retina;
-
-//    stMeasureParam measureParam;
-
-//    double ALave;
-//    double AL;
-//    double ACD;
-//    double LT;
-//    double Vit;
 
 private:
 

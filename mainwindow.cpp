@@ -29,6 +29,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(bases,SIGNAL(updateCurPatient(quint16)),scanbase,SLOT(updateCurPatient(quint16)));
     connect(bases,SIGNAL(updateCurPatient(quint16)),pCalculator,SLOT(updatePatient()));
+    connect(measure,SIGNAL(changeGlas()),pCalculator,SLOT(updatePatient()));
+
+
     connect(measure,SIGNAL(stopMeasure()),pCalculator,SLOT(updatePatient()));
     connect(scanbase,SIGNAL(setStPatient(QMap<QString,QString>*)),SLOT(setStPatient(QMap<QString,QString>*)));
     connect(bases,SIGNAL(savePatient(quint16*)),scanbase,SLOT(saveCurPatient(quint16*)));
