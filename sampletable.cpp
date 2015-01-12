@@ -10,7 +10,7 @@ sampletable::sampletable(QWidget *parent, CurParam *link) :
     QList<int> columnPercent;
     QStringList lst;
 
-    QVBoxLayout *layout              = new QVBoxLayout(this);
+    QGridLayout *layout              = new QGridLayout(this);
 
     lst.clear();
     columnPercent.clear();
@@ -19,7 +19,13 @@ sampletable::sampletable(QWidget *parent, CurParam *link) :
     twMeas  = new adjview(10, lst, columnPercent);
     twMeas->setSelectionBehavior(QAbstractItemView::SelectRows);
     twMeas->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-    layout->addWidget(twMeas);
+
+    QPushButton *pbSave = new QPushButton("Save");
+    QPushButton *pbDel  = new QPushButton("Delete");
+
+    layout->addWidget(twMeas,0,0,1,2);
+    layout->addWidget(pbSave,1,0);
+    layout->addWidget(pbDel, 1,1);
 
     modelOD = new QStandardItemModel();
     modelOS = new QStandardItemModel();

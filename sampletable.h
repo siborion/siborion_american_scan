@@ -6,6 +6,7 @@
 #include <adjview.h>
 #include <QFileDialog>
 #include <QStandardItem>
+#include <QPushButton>
 #include "plot.h"
 #include "curparam.h"
 

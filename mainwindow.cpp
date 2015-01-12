@@ -55,7 +55,7 @@ void MainWindow::moveWindowToCenter()
 {
     QRect frect = frameGeometry();
     frect.moveCenter(QDesktopWidget().availableGeometry().center());
-    move(10,10);
+    move(0,0);
 }
 
 void MainWindow::resiveDataSlot(QByteArray Sample)
