@@ -42,12 +42,14 @@ public slots:
     void stopMeasureSlot();
     void updatePatient();
     void changeGlasSlot();
+    void saveSlot(QStandardItemModel *,QStandardItemModel *);
 
 Q_SIGNALS:
     void doScan(bool*);
     void refreshTable(stMeasureParam *);
     void stopMeasure();
     void changeGlas();
+    void save(QStandardItemModel *,QStandardItemModel *);
 };
 
 #endif // MEASURE_H

@@ -1,4 +1,6 @@
 #include "scanbase.h"
+#include <QDateTime>
+//#include <QtGlobal>
 
 Scanbase::Scanbase(QObject *parent, CurParam *link)
 {
@@ -167,10 +169,6 @@ void Scanbase::delPatient()
     query.prepare(sql);
     query.exec();
 }
-
-
-
-
 
 
 void Scanbase::updateCurDoctor(quint16 id)
@@ -355,6 +353,85 @@ void Scanbase::delLens()
     sql.append(QString("delete from lens where id=%1").arg(curLens["id"].toInt()));
     query.prepare(sql);
     query.exec();
+}
+
+void Scanbase::saveSlot(QStandardItemModel *OD, QStandardItemModel *OS)
+{
+    qDebug()<<"saveSlot2";
+    QSqlQuery   query;
+    QString     sql;
+    quint16     rowCount;
+    QModelIndex index;
+    quint64 session;
+    QDateTime session_time;
+
+    session = qrand();
+    session_time = QDateTime::currentDateTime();
+
+    rowCount = OD->rowCount();
+    for(quint16 i=0; i<rowCount; i++)
+    {
+
+        sql = "insert into history (";
+        sql += "acd,";
+        sql += "al,";
+        sql += "al_ave,";
+        sql += "cornea,";
+        sql += "l1,";
+        sql += "l2,";
+        sql += "lt,";
+        sql += "nom,";
+        sql += "retina,";
+        sql += "sample,";
+        sql += "vit,";
+        sql += "patient,";
+        sql += "session,";
+        sql += "session_time,";
+        sql += "regim_side";
+        sql += ") ";
+
+        sql += "values (";
+        sql += ":acd,";
+        sql += ":al,";
+        sql += ":al_ave,";
+        sql += ":cornea,";
+        sql += ":l1,";
+        sql += ":l2,";
+        sql += ":lt,";
+        sql += ":nom,";
+        sql += ":retina,";
+        sql += ":sample,";
+        sql += ":vit,";
+        sql += ":patient,";
+        sql += ":session,";
+        sql += ":session_time,";
+        sql += ":regim_side";
+        sql += ")";
+        query.prepare(sql);
+
+        index = OD->index(i,0);
+        query.bindValue(":cornea", OD->data(index,roleCornea).toUInt());
+        query.bindValue(":l1",     OD->data(index,roleL1).toUInt());
+        query.bindValue(":l2",     OD->data(index,roleL2).toUInt());
+        query.bindValue(":retina", OD->data(index,roleRetina).toUInt());
+        query.bindValue(":sample", OD->data(index,roleSample).toByteArray());
+        query.bindValue(":nom",    OD->data(index,Qt::DisplayRole).toUInt());
+        index = OD->index(i,1);
+        query.bindValue(":al_ave", OD->data(index,Qt::DisplayRole).toDouble());
+        index = OD->index(i,2);
+        query.bindValue(":al", OD->data(index,Qt::DisplayRole).toDouble());
+        index = OD->index(i,3);
+        query.bindValue(":acd", OD->data(index,Qt::DisplayRole).toDouble());
+        index = OD->index(i,4);
+        query.bindValue(":lt", OD->data(index,Qt::DisplayRole).toDouble());
+        index = OD->index(i,5);
+        query.bindValue(":vit", OD->data(index,Qt::DisplayRole).toDouble());
+        query.bindValue(":patient", curParam->patientId);
+        query.bindValue(":session", session);
+        query.bindValue(":session_time", session_time);
+        query.bindValue(":regim_side", curParam->regimSide);
+        query.exec();
+    }
 }
 
 

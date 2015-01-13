@@ -27,17 +27,22 @@ private:
     QStandardItemModel *modelOS;
     void calculateAvg();
     CurParam *curParam;
+    QPushButton *pbSave;
+    QPushButton *pbLoad;
+    QPushButton *pbClear;
 
 signals:
     void changeRow(stMeasureParam*);
     void sendAvg(stAverageParam*);
     void stopMeasure();
+    void save(QStandardItemModel *,QStandardItemModel *);
 
 public slots:
     void changeRowSlot(QModelIndex curIndex);
     void editSample(stMeasureParam* measureParam);
     void changeRegimManual();
     void startMeasure();
+    void saveSlot();
 
 
 };

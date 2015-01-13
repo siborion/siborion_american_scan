@@ -20,12 +20,16 @@ sampletable::sampletable(QWidget *parent, CurParam *link) :
     twMeas->setSelectionBehavior(QAbstractItemView::SelectRows);
     twMeas->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 
-    QPushButton *pbSave = new QPushButton("Save");
-    QPushButton *pbDel  = new QPushButton("Delete");
+    pbSave = new QPushButton("Save");
+    pbLoad = new QPushButton("Load");
+    pbClear  = new QPushButton("Clear");
 
-    layout->addWidget(twMeas,0,0,1,2);
+    pbSave->setEnabled(false);
+
+    layout->addWidget(twMeas,0,0,1,3);
     layout->addWidget(pbSave,1,0);
-    layout->addWidget(pbDel, 1,1);
+    layout->addWidget(pbLoad,1,1);
+    layout->addWidget(pbClear, 1,2);
 
     modelOD = new QStandardItemModel();
     modelOS = new QStandardItemModel();
@@ -36,6 +40,13 @@ sampletable::sampletable(QWidget *parent, CurParam *link) :
     twMeas->setModel(modelOD);
 
     connect(twMeas->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), SLOT(changeRowSlot(QModelIndex)));
+    connect(pbSave,SIGNAL(pressed()),SLOT(saveSlot()));
+}
+
+void sampletable::saveSlot()
+{
+    emit save(modelOD, modelOS);
+    pbSave->setEnabled(false);
 }
 
 void sampletable::changeRowSlot(QModelIndex index)
@@ -83,16 +94,14 @@ void sampletable::addSample(QByteArray *Sample, QList<quint16> *extremum, stMeas
     twMeas->model()->setData(index, *Sample,      roleSample);
     twMeas->model()->setData(index, listExtremum, roleExtremum);
     editSample(rowNom, measureParam);
-
     if (curParam->regimMeasure  == REGIM::AUTOFREEZ)
     {
         if(twMeas->model()->rowCount()>=10)
             emit stopMeasure();
     }
-
     if (curParam->regimMeasure  == REGIM::AUTO)
             emit stopMeasure();
-
+    pbSave->setEnabled(true);
 }
 
 void sampletable::editSample(quint16 rowNom, stMeasureParam* measureParam)

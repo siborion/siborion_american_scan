@@ -56,6 +56,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(scanbase,SIGNAL(setLens(QSqlQueryModel*)),pCalculator,SLOT(refreshLens(QSqlQueryModel*)));
 
+    connect(measure,SIGNAL(save(QStandardItemModel*,QStandardItemModel*)),scanbase,SLOT(saveSlot(QStandardItemModel*,QStandardItemModel*)));
+
     bases->Init();
     moveWindowToCenter();
 }

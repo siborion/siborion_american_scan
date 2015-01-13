@@ -47,6 +47,8 @@ public slots:
     void saveCurLens(quint16 *id);
     void delLens();
 
+    void saveSlot(QStandardItemModel *,QStandardItemModel *);
+
 
 Q_SIGNALS:
     void setBasesModel(QSqlQueryModel*);

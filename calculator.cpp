@@ -124,13 +124,10 @@ calculator::calculator(QWidget *parent, CurParam *link) :
 
 void calculator::refreshFormuls()
 {
-//    stPatientParam patientParam;
     stPersonalParam personalParam;
-
     quint8 nFormula;
     QString lensName, lensAconst, lensAcd, lensFs;
 
-//    patientParam = pCalcPatient->getParam();
     personalParam = pCalcPatient->getPersonalParam();
 
     qDebug()<<"curParam->ACD"<<curParam->ACD;
@@ -167,7 +164,6 @@ void calculator::refreshFormuls()
                 lensFs = QString("%1").arg(personalParam.SF);
             else
                 lensFs = twLens->model()->itemData(twLens->model()->index(i,3)).value(0).toString();
-
 
             qDebug()<<"lensAconst"<<lensAconst;
             qDebug()<<"lensAcd"<<lensAcd;

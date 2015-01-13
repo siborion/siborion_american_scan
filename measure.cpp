@@ -42,7 +42,14 @@ Measure::Measure(QWidget *parent, CurParam *link) :
     connect(pKey,SIGNAL(changeInterval()),pBigViewCur,SLOT(setRegim()));
     connect(pKey,SIGNAL(changeInterval()),pBigView,SLOT(setRegim()));
     connect(pKey,SIGNAL(changeInterval()),SLOT(changeGlasSlot()));
+    connect(pSampleTable,SIGNAL(save(QStandardItemModel*,QStandardItemModel*)),SLOT(saveSlot(QStandardItemModel*,QStandardItemModel*)));
 
+}
+
+void Measure::saveSlot(QStandardItemModel *OD, QStandardItemModel *OS)
+{
+    qDebug()<<"saveSlot1";
+    emit save(OD, OS);
 }
 
 void Measure::changeGlasSlot()
