@@ -46,8 +46,6 @@ sampletable::sampletable(QWidget *parent, CurParam *link) :
     connect(pbSave,SIGNAL(pressed()),SLOT(saveSlot()));
     connect(pbLoad,SIGNAL(pressed()),SLOT(loadSlot()));
     connect(pbClear,SIGNAL(pressed()),SLOT(clearAll()));
-    connect(twMeas,SIGNAL(pressed(QModelIndex)),SLOT(deleteRow(QModelIndex)));
-
 }
 
 void sampletable::saveSlot()
@@ -61,7 +59,7 @@ void sampletable::loadSlot()
     QDateTime selectTime;
     QSqlQuery query;
     QModelIndex index;
-    quint16 i=0;
+//    quint16 i=0;
     stMeasureParam measureParam;
     QByteArray Sample;
     QList<quint16> extremum;
@@ -328,11 +326,6 @@ void sampletable::clearAll()
     model = (QStandardItemModel*)twMeas->model();
     model->setRowCount(0);
     emit clearAllSignal();
-}
-
-void sampletable::deleteRow(QModelIndex index)
-{
-    qDebug()<<"delete";
 }
 
 void sampletable::keyPressEvent(QKeyEvent * keyEvent)

@@ -25,6 +25,7 @@ CONFIG(release, debug|release)
   LIBS +=  -lqwt -LC:\Qt\Qwt-6.1.0\lib
 }
 
+  LIBS += ftd2xx.lib
 
 SOURCES += main.cpp\
         mainwindow.cpp \
@@ -102,3 +103,5 @@ RESOURCES += \
 
 OTHER_FILES += \
     qwt.prf
+
+OTHER_FILES += plugins/sqldrivers/qsqlite.dll

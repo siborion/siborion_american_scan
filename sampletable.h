@@ -49,8 +49,6 @@ public slots:
     void saveSlot();
     void loadSlot();
     void clearAll();
-    void deleteRow(QModelIndex);
-
 };
 
 #endif // SAMPLETABLE_H
