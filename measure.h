@@ -43,6 +43,7 @@ public slots:
     void updatePatient();
     void changeGlasSlot();
     void saveSlot(QStandardItemModel *,QStandardItemModel *);
+    void clearAll();
 
 Q_SIGNALS:
     void doScan(bool*);

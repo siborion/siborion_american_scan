@@ -46,6 +46,8 @@ sampletable::sampletable(QWidget *parent, CurParam *link) :
     connect(pbSave,SIGNAL(pressed()),SLOT(saveSlot()));
     connect(pbLoad,SIGNAL(pressed()),SLOT(loadSlot()));
     connect(pbClear,SIGNAL(pressed()),SLOT(clearAll()));
+    connect(twMeas,SIGNAL(pressed(QModelIndex)),SLOT(deleteRow(QModelIndex)));
+
 }
 
 void sampletable::saveSlot()
@@ -266,7 +268,6 @@ void sampletable::calculateAvg()
     averageParam.LTdiv  = pow(averageParam.LTdiv,  0.5);
     averageParam.VITdiv = pow(averageParam.VITdiv, 0.5);
 
-
     averageParam.ACD = round(averageParam.ACD*100)/100;
     averageParam.AL  = round(averageParam.AL*100) /100;
     averageParam.LT  = round(averageParam.LT*100) /100;
@@ -289,13 +290,10 @@ void sampletable::calculateAvg()
             twMeas->model()->setData(twMeas->model()->index(i, j), color, Qt::BackgroundRole);
         }
     }
-
     curParam->ACD = averageParam.ACD;
     curParam->AL = averageParam.AL;
-
     emit sendAvg(&averageParam);
 }
-
 
 void sampletable::changeRegimManual()
 {
@@ -329,5 +327,19 @@ void sampletable::clearAll()
     QStandardItemModel *model;
     model = (QStandardItemModel*)twMeas->model();
     model->setRowCount(0);
+    emit clearAllSignal();
+}
+
+void sampletable::deleteRow(QModelIndex index)
+{
+    qDebug()<<"delete";
+}
+
+void sampletable::keyPressEvent(QKeyEvent * keyEvent)
+{
+    if(keyEvent->key() == Qt::Key_Delete)
+    {
+        twMeas->model()->removeRow(twMeas->currentIndex().row());
+    }
 }
 

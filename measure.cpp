@@ -47,9 +47,8 @@ Measure::Measure(QWidget *parent, CurParam *link) :
     connect(pSampleTable,SIGNAL(changeGlas()),pKey,SLOT(refresh()));
     connect(pSampleTable,SIGNAL(changeGlas()),pBigViewCur,SLOT(setRegim()));
 
-
     connect(pSampleTable,SIGNAL(save(QStandardItemModel*,QStandardItemModel*)),SLOT(saveSlot(QStandardItemModel*,QStandardItemModel*)));
-
+    connect(pSampleTable,SIGNAL(clearAllSignal()),SLOT(clearAll()));
 }
 
 void Measure::saveSlot(QStandardItemModel *OD, QStandardItemModel *OS)
@@ -118,8 +117,13 @@ void Measure::stopMeasureSlot()
 
 void Measure::updatePatient()
 {
-    pBigViewCur->updatePatient();
     pSampleTable->clearAll();
+}
+
+void Measure::clearAll()
+{
     pBigView->clearAll();
     pPlot->clearAll();
+    pBigViewCur->updatePatient();
 }
+

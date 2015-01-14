@@ -31,6 +31,7 @@ private:
     QPushButton *pbSave;
     QPushButton *pbLoad;
     QPushButton *pbClear;
+    void keyPressEvent(QKeyEvent * keyEvent);
 
 signals:
     void changeRow(stMeasureParam*);
@@ -38,6 +39,7 @@ signals:
     void stopMeasure();
     void save(QStandardItemModel *,QStandardItemModel *);
     void changeGlas();
+    void clearAllSignal();
 
 public slots:
     void changeRowSlot(QModelIndex curIndex);
@@ -47,7 +49,7 @@ public slots:
     void saveSlot();
     void loadSlot();
     void clearAll();
-
+    void deleteRow(QModelIndex);
 
 };
 
