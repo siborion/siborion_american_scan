@@ -13,8 +13,6 @@ calculator::calculator(QWidget *parent, CurParam *link) :
 
     curParam = link;
 
-    qDebug()<<"9900";
-
     QStandardItemModel *model;
 
     QVBoxLayout *layout              = new QVBoxLayout(this);
@@ -32,7 +30,7 @@ calculator::calculator(QWidget *parent, CurParam *link) :
         model->item   (i, 0)->setEditable(false);
     }
 
-    qDebug()<<"9902";
+
 
     //-------------------------------
     columnPercent.clear();
@@ -64,7 +62,7 @@ calculator::calculator(QWidget *parent, CurParam *link) :
         model->item   (i, 2)->setEnabled(false);
     }
 
-    qDebug()<<"9904";
+
 
     QPalette palette;
     QBrush brush(QColor(0, 0, 0, 255));
@@ -74,7 +72,7 @@ calculator::calculator(QWidget *parent, CurParam *link) :
 
     pCalcPatient = new calculator_patient(this, link);
 
-    qDebug()<<"9906";
+
 
     columnPercent.clear();
     columnPercent<<50<<50;
@@ -95,7 +93,7 @@ calculator::calculator(QWidget *parent, CurParam *link) :
 
     pbPrint = new QPushButton("Print");
 
-    qDebug()<<"9908";
+
 
     layoutTop->addWidget(pCalcPatient);
     layoutTop->addWidget(twLens);
@@ -119,7 +117,7 @@ calculator::calculator(QWidget *parent, CurParam *link) :
 
     connect(pCalcPatient, SIGNAL(refreshFormula()), SLOT(refreshFormuls()));
     connect(pbPrint, SIGNAL(clicked()), SLOT(printPreview()));
-    qDebug()<<"9910";
+
 }
 
 void calculator::refreshFormuls()
@@ -130,9 +128,9 @@ void calculator::refreshFormuls()
 
     personalParam = pCalcPatient->getPersonalParam();
 
-    qDebug()<<"curParam->ACD"<<curParam->ACD;
-    qDebug()<<"curParam->AL" <<curParam->AL;
-    qDebug()<<"curParam->K"  <<curParam->K;
+
+
+
 
     if(!((curParam->ACD>0)&&(curParam->AL>0)&&(curParam->K>0)))
         return;
@@ -141,7 +139,7 @@ void calculator::refreshFormuls()
     Formula2->setEnabled(false);
     Formula3->setEnabled(false);
 
-    qDebug()<<"modelMainLens->rowCount()"<<twLens->model()->rowCount();
+
 
     if(twLens->model()->rowCount()>0)
     {
@@ -165,9 +163,9 @@ void calculator::refreshFormuls()
             else
                 lensFs = twLens->model()->itemData(twLens->model()->index(i,3)).value(0).toString();
 
-            qDebug()<<"lensAconst"<<lensAconst;
-            qDebug()<<"lensAcd"<<lensAcd;
-            qDebug()<<"lensFs"<<lensFs;
+
+
+
 
             switch (i)
             {
@@ -350,8 +348,8 @@ void calculator::print( QPrinter* printer )
 
 void calculator::refreshLens(QSqlQueryModel *link)
 {
-//    qDebug()<<"modelMainLens->rowCount()"<<modelMainLens->rowCount();
-//    qDebug()<<link;
+
+
     twLens->setModel(link);
 }
 

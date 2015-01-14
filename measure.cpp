@@ -48,7 +48,6 @@ Measure::Measure(QWidget *parent, CurParam *link) :
 
 void Measure::saveSlot(QStandardItemModel *OD, QStandardItemModel *OS)
 {
-    qDebug()<<"saveSlot1";
     emit save(OD, OS);
 }
 

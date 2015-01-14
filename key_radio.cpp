@@ -6,7 +6,7 @@ key_radio::key_radio(QWidget *parent, CurParam *link) :
 {
     QHBoxLayout *layoutkey_radio = new QHBoxLayout(this);
 
-    qDebug()<<link;
+
 
     curentParam = link;
 
@@ -138,7 +138,7 @@ void key_radio::refresh()
 void key_radio::doChangeRegim()
 {
 //    QObject* sender = const_cast<QObject*>(QObject::sender());
-//    qDebug()<<sender->objectName();
+
 //    if(sender->objectName()=="leAConst_personal")
 //    {
 //    }

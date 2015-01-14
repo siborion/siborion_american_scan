@@ -1,5 +1,6 @@
 #include "device.h"
 #include <qdebug.h>
+#include <QDateTime>
 
 Device::Device(QObject *parent) :
     QObject(parent)

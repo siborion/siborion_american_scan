@@ -1,6 +1,9 @@
 #include "sampletable.h"
 #include <QtCore/qmath.h>
 #include <QMessageBox>
+#include <QDateTime>
+#include <QSqlQuery>
+#include <QSqlRecord>
 
 sampletable::sampletable(QWidget *parent, CurParam *link) :
     QWidget(parent)
@@ -41,12 +44,59 @@ sampletable::sampletable(QWidget *parent, CurParam *link) :
 
     connect(twMeas->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), SLOT(changeRowSlot(QModelIndex)));
     connect(pbSave,SIGNAL(pressed()),SLOT(saveSlot()));
+    connect(pbLoad,SIGNAL(pressed()),SLOT(loadSlot()));
 }
 
 void sampletable::saveSlot()
 {
     emit save(modelOD, modelOS);
     pbSave->setEnabled(false);
+}
+
+void sampletable::loadSlot()
+{
+    QDateTime selectTime;
+    QSqlQuery query;
+    QModelIndex index;
+    quint16 i=0;
+    stMeasureParam measureParam;
+    QByteArray Sample;
+    QList<quint16> extremum;
+    ListResult *listResult = new ListResult(this, curParam);
+    if(listResult->exec() == QDialog::Accepted)
+    {
+        if(listResult->twListResult->currentIndex().row()>=0)
+        {
+            index = listResult->twListResult->currentIndex();
+            index = listResult->twListResult->model()->index(index.row(), 0);
+            selectTime = listResult->twListResult->model()->data(index, Qt::DisplayRole).toDateTime();
+            QString str = "SELECT * FROM history  WHERE patient=:patient AND session_time=:session_time;";
+            query.prepare(str);
+            query.bindValue(":patient", curParam->patientId);
+            query.bindValue(":session_time", selectTime);
+
+            if(query.exec())
+            {
+                while(query.next())
+//                    query.next();
+                {
+                i++;
+                qDebug()<<i;
+                measureParam.ACD = query.value(query.record().indexOf("acd")).toDouble();
+                measureParam.AL  = query.value(query.record().indexOf("al")).toDouble();
+                measureParam.ALave  = query.value(query.record().indexOf("al_ave")).toDouble();
+                measureParam.Cornea = query.value(query.record().indexOf("cornea")).toUInt();
+                measureParam.L1 = query.value(query.record().indexOf("l1")).toUInt();
+                measureParam.L2 = query.value(query.record().indexOf("l2")).toUInt();
+                measureParam.Retina = query.value(query.record().indexOf("retina")).toUInt();
+                Sample = query.value(query.record().indexOf("sample")).toByteArray();
+                measureParam.VIT = query.value(query.record().indexOf("vit")).toDouble();
+                qDebug()<<measureParam.VIT;
+                addSample(&Sample, &extremum, &measureParam);
+                }
+            }
+        }
+    }
 }
 
 void sampletable::changeRowSlot(QModelIndex index)

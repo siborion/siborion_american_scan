@@ -9,6 +9,7 @@
 #include <QPushButton>
 #include "plot.h"
 #include "curparam.h"
+#include "listresult.h"
 
 class sampletable : public QWidget
 {
@@ -43,6 +44,7 @@ public slots:
     void changeRegimManual();
     void startMeasure();
     void saveSlot();
+    void loadSlot();
 
 
 };

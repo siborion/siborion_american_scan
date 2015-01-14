@@ -115,7 +115,7 @@ void Scanbase::updateCurPatient(quint16 id)
     str.append("AND doctor_lens.nom_formula=formula.id ");
     str.append(QString("WHERE patient.id=%1;").arg(id));
     lensModel.setQuery(str);
-//    qDebug()<<"adr"<<(&lensModel);
+
     emit (setLens(&lensModel));
 }
 
@@ -158,7 +158,7 @@ void Scanbase::saveCurPatient(quint16 *id)
 
     query.prepare(sql);
     query.exec();
-    qDebug()<<sql;
+
 }
 
 void Scanbase::delPatient()
@@ -357,7 +357,7 @@ void Scanbase::delLens()
 
 void Scanbase::saveSlot(QStandardItemModel *OD, QStandardItemModel *OS)
 {
-    qDebug()<<"saveSlot2";
+
     QSqlQuery   query;
     QString     sql;
     quint16     rowCount;

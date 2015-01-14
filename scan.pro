@@ -54,7 +54,8 @@ SOURCES += main.cpp\
     formula.cpp \
     calc.cpp \
     calculator_patient.cpp \
-    leaddzero.cpp
+    leaddzero.cpp \
+    listresult.cpp
 
 HEADERS  += mainwindow.h \
     bases.h \
@@ -84,7 +85,8 @@ HEADERS  += mainwindow.h \
     formula.h \
     calculator_patient.h \
     calc.h \
-    leaddzero.h
+    leaddzero.h \
+    listresult.h
 
 FORMS    += mainwindow.ui \
     dialog_doctor.ui \
@@ -92,7 +94,8 @@ FORMS    += mainwindow.ui \
     bigviewnumcur.ui \
     velosity.ui \
     bigviewnum.ui \
-    calculator_patient.ui
+    calculator_patient.ui \
+    listresult.ui
 
 RESOURCES += \
     scan.qrc
