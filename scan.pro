@@ -4,6 +4,8 @@
 #
 #-------------------------------------------------
 
+QMAKE_CXXFLAGS += -std=gnu++11
+
 QT       += sql
 QT       += core gui
 QT	 += serialport

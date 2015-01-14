@@ -15,7 +15,32 @@ Scanbase::Scanbase(QObject *parent, CurParam *link)
 
     if(pDB.open())
     {
-
+        QString str = "SELECT sample FROM history;";
+        QSqlQuery sql(str);
+        if(!sql.exec())
+        {
+            str = "CREATE TABLE \"history\"(";
+            str.append("\"acd\" Double,");
+            str.append("\"al\" Double,");
+            str.append("\"al_ave\" Double,");
+            str.append("\"cornea\" Integer,");
+            str.append("\"id\" Integer PRIMARY KEY,");
+            str.append("\"l1\" Integer,");
+            str.append("\"l2\" Integer,");
+            str.append("\"regim_side\" Integer,");
+            str.append("\"retina\" Integer,");
+            str.append("\"sample\" BLOB,");
+            str.append("\"session\" Integer,");
+            str.append("\"session_time\" DateTime,");
+            str.append("\"vit\" Double ,");
+            str.append("\"patient\" Integer,");
+            str.append("\"lt\" Double,");
+            str.append("\"nom\" Integer);");
+            QSqlQuery sql(str);
+//            qDebug()<<str;
+//            qDebug()<<sql.exec();
+        }
+        //        qDebug()<<sql.record().count();
     }
     else
     {
