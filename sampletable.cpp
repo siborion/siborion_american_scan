@@ -45,6 +45,7 @@ sampletable::sampletable(QWidget *parent, CurParam *link) :
     connect(twMeas->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), SLOT(changeRowSlot(QModelIndex)));
     connect(pbSave,SIGNAL(pressed()),SLOT(saveSlot()));
     connect(pbLoad,SIGNAL(pressed()),SLOT(loadSlot()));
+    connect(pbClear,SIGNAL(pressed()),SLOT(clearAll()));
 }
 
 void sampletable::saveSlot()
@@ -75,13 +76,13 @@ void sampletable::loadSlot()
             query.bindValue(":patient", curParam->patientId);
             query.bindValue(":session_time", selectTime);
 
+            clearAll();
+            pbSave->setEnabled(false);
+
             if(query.exec())
             {
                 while(query.next())
-//                    query.next();
                 {
-                i++;
-                qDebug()<<i;
                 measureParam.ACD = query.value(query.record().indexOf("acd")).toDouble();
                 measureParam.AL  = query.value(query.record().indexOf("al")).toDouble();
                 measureParam.ALave  = query.value(query.record().indexOf("al_ave")).toDouble();
@@ -91,10 +92,11 @@ void sampletable::loadSlot()
                 measureParam.Retina = query.value(query.record().indexOf("retina")).toUInt();
                 Sample = query.value(query.record().indexOf("sample")).toByteArray();
                 measureParam.VIT = query.value(query.record().indexOf("vit")).toDouble();
-                qDebug()<<measureParam.VIT;
-                addSample(&Sample, &extremum, &measureParam);
+                curParam->regimSide = (REGIM::RegimSide)query.value(query.record().indexOf("regim_side")).toUInt();
+                addSample(&Sample, &extremum, &measureParam, true);
                 }
             }
+            emit changeGlas();
         }
     }
 }
@@ -128,7 +130,7 @@ void sampletable::changeRowSlot(QModelIndex index)
     emit changeRow(&measureParam);
 }
 
-void sampletable::addSample(QByteArray *Sample, QList<quint16> *extremum, stMeasureParam* measureParam)
+void sampletable::addSample(QByteArray *Sample, QList<quint16> *extremum, stMeasureParam* measureParam, bool fromBase)
 {
     QModelIndex index;
     quint8 rowNom;
@@ -144,14 +146,17 @@ void sampletable::addSample(QByteArray *Sample, QList<quint16> *extremum, stMeas
     twMeas->model()->setData(index, *Sample,      roleSample);
     twMeas->model()->setData(index, listExtremum, roleExtremum);
     editSample(rowNom, measureParam);
-    if (curParam->regimMeasure  == REGIM::AUTOFREEZ)
+    if(!fromBase)
     {
-        if(twMeas->model()->rowCount()>=10)
+        if (curParam->regimMeasure  == REGIM::AUTOFREEZ)
+        {
+            if(twMeas->model()->rowCount()>=10)
+                emit stopMeasure();
+        }
+        if (curParam->regimMeasure  == REGIM::AUTO)
             emit stopMeasure();
+        pbSave->setEnabled(true);
     }
-    if (curParam->regimMeasure  == REGIM::AUTO)
-            emit stopMeasure();
-    pbSave->setEnabled(true);
 }
 
 void sampletable::editSample(quint16 rowNom, stMeasureParam* measureParam)
@@ -315,10 +320,14 @@ void sampletable::changeRegimManual()
 
 void sampletable::startMeasure()
 {
-    QStandardItemModel *model;
     if (curParam->regimMeasure  == REGIM::AUTOFREEZ)
-    {
-        model = (QStandardItemModel*)twMeas->model();
-        model->setRowCount(0);
-    }
+        clearAll();
 }
+
+void sampletable::clearAll()
+{
+    QStandardItemModel *model;
+    model = (QStandardItemModel*)twMeas->model();
+    model->setRowCount(0);
+}
+

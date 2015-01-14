@@ -357,7 +357,6 @@ void Scanbase::delLens()
 
 void Scanbase::saveSlot(QStandardItemModel *OD, QStandardItemModel *OS)
 {
-
     QSqlQuery   query;
     QString     sql;
     quint16     rowCount;

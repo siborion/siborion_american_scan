@@ -15,9 +15,9 @@ class sampletable : public QWidget
 {
     Q_OBJECT
 public:
-    explicit sampletable(QWidget *parent = 0, CurParam *link = 0 );
+    explicit sampletable(QWidget *parent = 0, CurParam *link = 0);
     adjview *twMeas;
-    void addSample(QByteArray *Sample, QList<quint16> *extremum, stMeasureParam*);
+    void addSample(QByteArray *Sample, QList<quint16> *extremum, stMeasureParam*, bool fromBase = false);
     void editSample(quint16 rowNom, stMeasureParam* measureParam);
 
 private:
@@ -37,6 +37,7 @@ signals:
     void sendAvg(stAverageParam*);
     void stopMeasure();
     void save(QStandardItemModel *,QStandardItemModel *);
+    void changeGlas();
 
 public slots:
     void changeRowSlot(QModelIndex curIndex);
@@ -45,6 +46,7 @@ public slots:
     void startMeasure();
     void saveSlot();
     void loadSlot();
+    void clearAll();
 
 
 };

@@ -46,4 +46,9 @@ void Bigviewnumcur::updatePatient()
 {
     ui->lFioPatient->setText(curParam->patientName);
     ui->lFioDoctor->setText (curParam->doctorName);
+
+    ui->lCurAL->setText(QString("%1").arg (0,5,'f',2,'0'));
+    ui->lCurACD->setText(QString("%1").arg(0,5,'f',2,'0'));
+    ui->lCurLT->setText(QString("%1").arg (0,5,'f',2,'0'));
+    ui->lCurVIT->setText(QString("%1").arg(0,5,'f',2,'0'));
 }

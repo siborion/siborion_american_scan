@@ -59,4 +59,20 @@ void bigviewnum::setRegim()
     ui->lStdAL->setText(bVal?"AL":"Dist");
 }
 
+void bigviewnum::clearAll()
+{
+    ui->lAvgAL_2->setText(QString("%1").arg(0,5,'f',2,'0'));
+    ui->lDevAL_2->setText(QString("%1").arg(0,5,'f',2,'0'));
 
+    ui->lAvgAcd_2->setText(QString("%1").arg(0,5,'f',2,'0'));
+    ui->lDevAcd_2->setText(QString("%1").arg(0,5,'f',2,'0'));
+
+    ui->lAvgLt_2 ->setText(QString("%1").arg(0, 5,'f',2,'0'));
+    ui->lDevLt_2 ->setText(QString("%1").arg(0, 5,'f',2,'0'));
+
+    ui->lAvgVit_2->setText(QString("%1").arg(0,5,'f',2,'0'));
+    ui->lDevVit_2->setText(QString("%1").arg(0,5,'f',2,'0'));
+
+    curParam->AL  = 0;
+    curParam->ACD = 0;
+}

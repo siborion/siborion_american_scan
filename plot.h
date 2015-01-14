@@ -47,6 +47,7 @@ public:
     void drawSample(QByteArray *Sample);
     Plot *pPlot;
     CurParam *curParam;
+    void clearAll();
 
 public slots:
     void updateSample(stMeasureParam *);

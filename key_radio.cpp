@@ -115,24 +115,24 @@ void key_radio::changeSideSlot()
 
 void key_radio::refresh()
 {
-//    if(curentParam->regimMeasure  == RegimMeasure::AUTOFREEZ)
-//        rbAutoFreeze->setChecked(true);
-//    if(curentParam->regimMeasure  == RegimMeasure::AUTO)
-//        rbAuto->setChecked(true);
-//    if(curentParam->regimMeasure == RegimMeasure::MANUAL)
-//        rbManual->setChecked(true);
-//    if(curentParam->regimContact  == RegimContact::CONTACT)
-//        rbContact->setChecked(true);
-//    if(curentParam->regimContact  == RegimContact::IMMERSION)
-//        rbImmersion->setChecked(true);
-//    if(curentParam->regimCataract == RegimCataract::CATARACT)
-//        rbCataract->setChecked(true);
-//    if(curentParam->regimCataract == RegimCataract::APHAKIC)
-//        rbAphakic->setChecked(true);
-//    if(curentParam->regimSide     == RegimSide::OD)
-//        rbOd->setChecked(true);
-//    if(curentParam->regimSide     == RegimSide::OS)
-//        rbOs->setChecked(true);
+    if(curentParam->regimMeasure  == REGIM::AUTOFREEZ)
+        rbAutoFreeze->setChecked(true);
+    if(curentParam->regimMeasure  == REGIM::AUTO)
+        rbAuto->setChecked(true);
+    if(curentParam->regimMeasure == REGIM::MANUAL)
+        rbManual->setChecked(true);
+    if(curentParam->regimContact  == REGIM::CONTACT)
+        rbContact->setChecked(true);
+    if(curentParam->regimContact  == REGIM::IMMERSION)
+        rbImmersion->setChecked(true);
+    if(curentParam->regimCataract == REGIM::CATARACT)
+        rbCataract->setChecked(true);
+    if(curentParam->regimCataract == REGIM::APHAKIC)
+        rbAphakic->setChecked(true);
+    if(curentParam->regimSide     == REGIM::OD)
+        rbOd->setChecked(true);
+    if(curentParam->regimSide     == REGIM::OS)
+        rbOs->setChecked(true);
 }
 
 void key_radio::doChangeRegim()

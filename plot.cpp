@@ -363,4 +363,14 @@ void Plot::updateInterval()
     retinaInterval->setSample(curParam->retinaX1, curParam->retinaX2);
 }
 
+void Plot::clearAll()
+{
+    foreach (QwtPlotItem *p, itemList())
+    {
+        if(p->rtti() == QwtPlotItem::Rtti_PlotMarker)
+        {
+            removeItem(p);
+        }
+    }
+}
 

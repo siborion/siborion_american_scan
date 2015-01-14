@@ -18,7 +18,6 @@ Q_SIGNALS:
 //    void change();
 
 private:
-    void refresh();
     CurParam *curentParam;
     QRadioButton *rbOd;
     QRadioButton *rbOs;
@@ -38,6 +37,8 @@ private slots:
     void changeSideSlot();
     void doChangeRegim();
 
+public slots:
+    void refresh();
 };
 
 #endif // key_radio_H
