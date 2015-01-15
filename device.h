@@ -5,6 +5,8 @@
 #include <QSerialPortInfo>
 #include <QTimer>
 #include <QObject>
+#include <qt_windows.h>
+#include "ftd2xx.h"
 
 class Device : public QObject
 {
@@ -18,6 +20,12 @@ private:
     bool doDll;
     bool *doMeasure;
 
+    FT_STATUS ftStatus;
+    DWORD ftNumDevice;
+    FT_DEVICE_LIST_INFO_NODE *devInfo;
+    FT_HANDLE ftHandle;
+    char FT_Out_Buffer[10];
+
 signals:
     void resiveData(QByteArray);
 
@@ -25,8 +33,6 @@ private slots:
     void openDevice(bool *doMeasure);
     void doTimer();
     void stopMeasure();
-
-
 };
 
 #endif // DEVICE_H

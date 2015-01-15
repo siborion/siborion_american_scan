@@ -10,7 +10,6 @@ QT       += sql
 QT       += core gui
 QT	 += serialport
 
-
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = scan
@@ -27,7 +26,7 @@ CONFIG(release, debug|release)
   LIBS +=  -lqwt -LC:\Qt\Qwt-6.1.0\lib
 }
 
-  LIBS += ftd2xx.lib
+LIBS += ftd2xx.lib
 
 SOURCES += main.cpp\
         mainwindow.cpp \
@@ -89,7 +88,8 @@ HEADERS  += mainwindow.h \
     calculator_patient.h \
     calc.h \
     leaddzero.h \
-    listresult.h
+    listresult.h \
+    ftd2xx.h
 
 FORMS    += mainwindow.ui \
     dialog_doctor.ui \

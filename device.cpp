@@ -5,6 +5,7 @@
 Device::Device(QObject *parent) :
     QObject(parent)
 {
+    doDll = true;
     port = new QSerialPort(this);
     timer = new QTimer();
     timer->setInterval(50);
@@ -16,7 +17,7 @@ void Device::openDevice(bool *link)
     doMeasure = link;
     QString str;
     str.append("\\\\.\\");
-    str.append("COM1");
+    str.append("COM18");
     port->setPortName(str);
     port->setBaudRate(QSerialPort::Baud115200);
     port->setDataBits(QSerialPort::Data8);
@@ -26,16 +27,39 @@ void Device::openDevice(bool *link)
     port->waitForBytesWritten(-1);
     if(*doMeasure)
     {
-        port->close();
+        if(doDll)
+            FT_Close(ftHandle);
+        else
+            port->close();
         *doMeasure = false;
         timer->stop();
     }
     else
     {
-        if(port->open(QIODevice::ReadWrite))
+        if(doDll)
         {
+            ftStatus = FT_CreateDeviceInfoList (&ftNumDevice);
+            if((ftStatus != FT_OK)||(ftNumDevice==0))
+                return;
+            FT_Out_Buffer[0] = 'A';
+            ftStatus = FT_Open(0, &ftHandle);
+            if(ftStatus!=FT_OK)
+                return;
+            FT_SetBaudRate(ftHandle,9600);
+            FT_SetFlowControl(ftHandle, FT_FLOW_NONE, 0x00, 0x00);
+            FT_SetDtr(ftHandle);
+            FT_SetRts(ftHandle);
+            FT_Purge(ftHandle,3);
             *doMeasure = true;
             timer->start();
+        }
+        else
+        {
+            if(port->open(QIODevice::ReadWrite))
+            {
+                *doMeasure = true;
+                timer->start();
+            }
         }
     }
 }
@@ -43,10 +67,34 @@ void Device::openDevice(bool *link)
 void Device::doTimer()
 {
     QByteArray baTmp;
-    baTmp = port->readAll();
-    port->write("A", 1);
-    if(baTmp.count()>=1024)
-        emit resiveData(baTmp.left(1024));
+    quint16 kolvo = 0;
+    DWORD BytesWritten;
+    DWORD BytesReceived;
+    DWORD BytesReceivedCount;
+    char RxBuffer[2048];
+    if(doDll)
+    {
+        FT_GetQueueStatus(ftHandle, &BytesReceivedCount);
+        if(BytesReceivedCount>=1023)
+        {
+            FT_Read(ftHandle,RxBuffer,BytesReceivedCount,&BytesReceived);
+            FT_Purge(ftHandle,1);
+            for(int i=0; i<=1023; i++)
+            {
+                baTmp.append((unsigned char)(RxBuffer[i]));
+                kolvo++;
+            }
+            emit resiveData(baTmp.left(1024));
+        }
+        ftStatus = FT_Write(ftHandle, FT_Out_Buffer, 1,  &BytesWritten);
+    }
+    else
+    {
+        baTmp = port->readAll();
+        port->write("A", 1);
+        if(baTmp.count()>=1024)
+            emit resiveData(baTmp.left(1024));
+    }
 }
 
 void Device::stopMeasure()
