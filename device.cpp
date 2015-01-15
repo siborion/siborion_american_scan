@@ -1,6 +1,7 @@
 #include "device.h"
 #include <qdebug.h>
 #include <QDateTime>
+#include <QApplication>
 
 Device::Device(QObject *parent) :
     QObject(parent)
@@ -14,10 +15,28 @@ Device::Device(QObject *parent) :
 
 void Device::openDevice(bool *link)
 {
+    QStringList lsName;
     doMeasure = link;
     QString str;
     str.append("\\\\.\\");
-    str.append("COM18");
+
+    if(QApplication::keyboardModifiers().testFlag(Qt::ControlModifier))
+    {
+        if(!(*doMeasure))
+        {
+            foreach(const QSerialPortInfo &info, QSerialPortInfo::availablePorts())
+            {lsName.append(info.portName());}
+            DialogSerial *dialogSerial = new DialogSerial(0, &lsName);
+            if(dialogSerial->exec() == QDialog::Accepted)
+            {
+                str.append(dialogSerial->cbPort->currentText());
+                doDll = false;
+            }
+            else
+                doDll =true;
+        }
+    }
+
     port->setPortName(str);
     port->setBaudRate(QSerialPort::Baud115200);
     port->setDataBits(QSerialPort::Data8);

@@ -7,6 +7,7 @@
 #include <QObject>
 #include <qt_windows.h>
 #include "ftd2xx.h"
+#include "dialogserial.h"
 
 class Device : public QObject
 {
