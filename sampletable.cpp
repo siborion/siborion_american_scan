@@ -333,6 +333,8 @@ void sampletable::keyPressEvent(QKeyEvent * keyEvent)
     if(keyEvent->key() == Qt::Key_Delete)
     {
         twMeas->model()->removeRow(twMeas->currentIndex().row());
+        calculateAvg();
+        emit changeGlas();
     }
 }
 
