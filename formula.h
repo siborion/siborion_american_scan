@@ -11,7 +11,6 @@
 #include <math.h>
 #include "typedef.h"
 
-
 class formula : public QWidget
 {
     Q_OBJECT
@@ -22,8 +21,6 @@ private:
     double ACD;
     double SF;
     double ACD_measure;
-
-//    adjview *twHead;
     QLabel *lLens;
     QLineEdit *leLens;
     adjview *twCalculator;

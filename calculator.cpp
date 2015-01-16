@@ -1,9 +1,9 @@
 #include "calculator.h"
 #include "calc.h"
+#include <adjview.h>
 #include <QDebug>
 #include <qwt_plot_renderer.h>
-//#include "mesurement.h"
-//#include "panel.h"
+#include <QAbstractItemModel>
 
 calculator::calculator(QWidget *parent, CurParam *link) :
     QWidget(parent)
@@ -215,141 +215,152 @@ void calculator::printPreview()
 
 void calculator::print( QPrinter* printer )
 {
-    stPrintSample printSample;
-//    stPatientParam patientParam;
-    stFormulaInfo *pModel1, *pModel2, *pModel3;
-    double x[2048], y[2048];
-    quint16 kolvo;
-//!!    QObject * parentClass = parent()->parent();  //get parent for current class
-//!!    Panel * pClass = qobject_cast<Panel *>(parentClass); //cast QObject * to ParentClass
-//!!    if(pClass == NULL)
-//!!        return;
+    QByteArray sample;
+    QModelIndex index;
+    QModelIndexList lsSelect;
+    quint8 kolvo = 0;
 
-    // create painter for drawing print page
     QPainter painter( printer );
-
-//    printSample = pClass->Mesur->pSampleTable->printSample();
-//    patientParam = pCalcPatient->getParam();
-
+    lsSelect = twMeas->selectionModel()->selectedRows();
     QwtPlotRenderer renderer;
-    pPlotPrint1 = new Plot(this, true);
-    kolvo = 0;
-    foreach (quint8 val, printSample.sample1)
-    {
-        x[kolvo] = kolvo;
-        y[kolvo] = double(val);
-        kolvo++;
-    }
-    pPlotPrint1->drawSample(x, y, 1024);
-    pPlotPrint1->enableAxis(QwtPlot::xTop,false);
-    pPlotPrint1->enableAxis(QwtPlot::xBottom,false);
-    pPlotPrint1->enableAxis(QwtPlot::yLeft,false);
-    pPlotPrint1->replot();
-    renderer.render(pPlotPrint1, &painter, QRectF(500,1000,2000,1800));
 
-    pPlotPrint2 = new Plot(this, true);
-    kolvo = 0;
-    foreach (quint8 val, printSample.sample2)
+    foreach (index, lsSelect)
     {
-        x[kolvo] = kolvo;
-        y[kolvo] = double(val);
+        index = twMeas->model()->index(kolvo, 0);
+        sample = twMeas->model()->data(index, roleSample).toByteArray();
+        switch (kolvo)
+        {
+        case 0:
+            pPlotPrint1 = new Plot(this, true, curParam);
+            pPlotPrint1->drawSample(&sample);
+            pPlotPrint1->enableAxis(QwtPlot::xTop,false);
+            pPlotPrint1->enableAxis(QwtPlot::xBottom,false);
+            pPlotPrint1->enableAxis(QwtPlot::yLeft,false);
+            pPlotPrint1->replot();
+            renderer.render(pPlotPrint1, &painter, QRectF(500,1000,2000,1800));
+            break;
+        case 1:
+            pPlotPrint2 = new Plot(this, true, curParam);
+            pPlotPrint2->drawSample(&sample);
+            pPlotPrint2->enableAxis(QwtPlot::xTop,false);
+            pPlotPrint2->enableAxis(QwtPlot::xBottom,false);
+            pPlotPrint2->enableAxis(QwtPlot::yLeft,false);
+            pPlotPrint2->replot();
+            renderer.render(pPlotPrint2, &painter, QRectF(2700,1000,2000,1800));
+            break;
+        case 2:
+            pPlotPrint3 = new Plot(this, true, curParam);
+            pPlotPrint3->drawSample(&sample);
+            pPlotPrint3->enableAxis(QwtPlot::xTop,false);
+            pPlotPrint3->enableAxis(QwtPlot::xBottom,false);
+            pPlotPrint3->enableAxis(QwtPlot::yLeft,false);
+            pPlotPrint3->replot();
+            renderer.render(pPlotPrint3, &painter, QRectF(500,3000,2000,1800));
+            break;
+        }
         kolvo++;
     }
-    pPlotPrint2->drawSample(x, y, 1024);
-    pPlotPrint2->enableAxis(QwtPlot::xTop,false);
-    pPlotPrint2->enableAxis(QwtPlot::xBottom,false);
-    pPlotPrint2->enableAxis(QwtPlot::yLeft,false);
-    pPlotPrint2->replot();
-    renderer.render(pPlotPrint2, &painter, QRectF(2700,1000,2000,1800));
-
-    pPlotPrint3 = new Plot(this, true);
-    kolvo = 0;
-    foreach (quint8 val, printSample.sample3)
-    {
-        x[kolvo] = kolvo;
-        y[kolvo] = double(val);
-        kolvo++;
-    }
-    pPlotPrint3->drawSample(x, y, 1024);
-    pPlotPrint3->enableAxis(QwtPlot::xTop,false);
-    pPlotPrint3->enableAxis(QwtPlot::xBottom,false);
-    pPlotPrint3->enableAxis(QwtPlot::yLeft,false);
-    pPlotPrint3->replot();
-    renderer.render(pPlotPrint3, &painter, QRectF(500,3000,2000,1800));
 
     painter.drawRect(500, 200, 4000, 400);
-
     QFont    font = painter.font();
     font.setPixelSize(80);
     painter.setFont( font );
-
     QRect    page0( 500, 200, 500, 400);
     painter.drawText(page0, Qt::AlignRight, "Name:\r\nID:\r\nDate of Birth:\r\nExam Date:" );
-
     font.setBold(true);
     painter.setFont( font );
-    QRect    page1(1000, 200, 1000, 400);
-//    painter.drawText(page1, Qt::AlignLeft, QString("%1\r\n%2\r\n%3\r\n%4").arg(patientParam.Name).arg(patientParam.id).arg(patientParam.BirthDay).arg("555"));
 
-    pModel1 = Formula1->getModel();
-    pModel2 = Formula2->getModel();
-    pModel3 = Formula3->getModel();
+    QRect    page1( 1000, 200, 500, 400);
+    QString  sPatient;
+    sPatient.append(QString("%1\r\n%2").arg(curParam->patientName).arg(curParam->patientId));
+    painter.drawText(page1, Qt::AlignLeft, sPatient);
 
-    int kolLine = 0;
+//    QRect    page1(1000, 200, 1000, 400);
+//    pModel1 = Formula1->getModel();
+//    pModel2 = Formula2->getModel();
+//    pModel3 = Formula3->getModel();
+
+//    int kolLine = 0;
 #define kolColumn  3
 #define hightLine  100
 #define yPosTable  5000
 #define xPosTable  500
 #define widthTable 3900
 
-    kolLine = qMax(pModel1->model->rowCount(), pModel2->model->rowCount());
-    kolLine = qMax(kolLine, pModel3->model->rowCount());
-
-    for(quint8 i=0; i<kolLine; i++)
+//    QSize size;
+//    size.setHeight(2000);
+//    size.setWidth (2000);
+    if(Formula1->isEnabled())
     {
-        painter.drawRect(xPosTable, yPosTable+i*hightLine, widthTable, hightLine);
+        QPixmap pixmap(Formula1->size());
+        Formula1->render(&pixmap);
+        painter.drawPixmap(2700,3000,2000,1800,pixmap);
     }
 
-    for(quint8 i=0; i<kolColumn; i++)
+    if(Formula2->isEnabled())
     {
-        painter.drawRect(xPosTable+((widthTable/kolColumn)*i), yPosTable, (widthTable/kolColumn), kolLine*hightLine);
+        QPixmap pixmap(Formula2->size());
+        Formula2->render(&pixmap);
+        painter.drawPixmap(500,5000,2000,1800,pixmap);
     }
 
-    for(quint8 i=0; i<(kolColumn*2); i++)
+    if(Formula3->isEnabled())
     {
-        painter.drawRect(xPosTable+(widthTable/(kolColumn*2)*i), yPosTable+hightLine, (widthTable/(kolColumn*2)), (kolLine-1)*hightLine);
+        QPixmap pixmap(Formula3->size());
+        Formula3->render(&pixmap);
+        painter.drawPixmap(2700,5000,2000,1800,pixmap);
     }
 
-    for (quint8 i=0; i<pModel1->model->rowCount(); i++)
-    {
-        QRect    txt1(xPosTable+(widthTable/(kolColumn*2))*0, yPosTable+(i+3)*hightLine, (widthTable/(kolColumn*2)), 100);
-        QRect    txt2(xPosTable+(widthTable/(kolColumn*2))*1, yPosTable+(i+3)*hightLine, (widthTable/(kolColumn*2)), 100);
-        painter.drawText(txt1, Qt::AlignCenter, pModel1->model->data(pModel1->model->index(i, 0), Qt::DisplayRole).toString());
-        painter.drawText(txt2, Qt::AlignCenter, pModel1->model->data(pModel1->model->index(i, 1), Qt::DisplayRole).toString());
-    }
+//    QRect    txt1(xPosTable+(widthTable/(kolColumn*2))*0, yPosTable+(0+3)*hightLine, (widthTable/(kolColumn*2)), 100);
+//    QRect    txt2(xPosTable+(widthTable/(kolColumn*2))*1, yPosTable+(+3)*hightLine, (widthTable/(kolColumn*2)), 100);
+//    painter.drawText(txt1, Qt::AlignCenter, curParam->patientName);
+//    painter.drawText(txt2, Qt::AlignCenter, pModel1->model->data(pModel1->model->index(i, 1), Qt::DisplayRole).toString());
 
-    for (quint8 i=0; i<pModel2->model->rowCount(); i++)
-    {
-        QRect    txt1(xPosTable+(widthTable/(kolColumn*2))*2, yPosTable+(i+3)*hightLine, (widthTable/(kolColumn*2)), 100);
-        QRect    txt2(xPosTable+(widthTable/(kolColumn*2))*3, yPosTable+(i+3)*hightLine, (widthTable/(kolColumn*2)), 100);
-        painter.drawText(txt1, Qt::AlignCenter, pModel2->model->data(pModel2->model->index(i, 0), Qt::DisplayRole).toString());
-        painter.drawText(txt2, Qt::AlignCenter, pModel2->model->data(pModel2->model->index(i, 1), Qt::DisplayRole).toString());
-    }
+//    kolLine = qMax(pModel1->model->rowCount(), pModel2->model->rowCount());
+//    kolLine = qMax(kolLine, pModel3->model->rowCount());
 
-    for (quint8 i=0; i<pModel3->model->rowCount(); i++)
-    {
-        QRect    txt1(xPosTable+(widthTable/(kolColumn*2))*4, yPosTable+(i+3)*hightLine, (widthTable/(kolColumn*2)), 100);
-        QRect    txt2(xPosTable+(widthTable/(kolColumn*2))*5, yPosTable+(i+3)*hightLine, (widthTable/(kolColumn*2)), 100);
-        painter.drawText(txt1, Qt::AlignCenter, pModel3->model->data(pModel3->model->index(i, 0), Qt::DisplayRole).toString());
-        painter.drawText(txt2, Qt::AlignCenter, pModel3->model->data(pModel3->model->index(i, 1), Qt::DisplayRole).toString());
-    }
+//    for(quint8 i=0; i<kolLine; i++)
+//    {
+//        painter.drawRect(xPosTable, yPosTable+i*hightLine, widthTable, hightLine);
+//    }
+
+//    for(quint8 i=0; i<kolColumn; i++)
+//    {
+//        painter.drawRect(xPosTable+((widthTable/kolColumn)*i), yPosTable, (widthTable/kolColumn), kolLine*hightLine);
+//    }
+
+//    for(quint8 i=0; i<(kolColumn*2); i++)
+//    {
+//        painter.drawRect(xPosTable+(widthTable/(kolColumn*2)*i), yPosTable+hightLine, (widthTable/(kolColumn*2)), (kolLine-1)*hightLine);
+//    }
+
+//    for (quint8 i=0; i<pModel1->model->rowCount(); i++)
+//    {
+//        QRect    txt1(xPosTable+(widthTable/(kolColumn*2))*0, yPosTable+(i+3)*hightLine, (widthTable/(kolColumn*2)), 100);
+//        QRect    txt2(xPosTable+(widthTable/(kolColumn*2))*1, yPosTable+(i+3)*hightLine, (widthTable/(kolColumn*2)), 100);
+//        painter.drawText(txt1, Qt::AlignCenter, pModel1->model->data(pModel1->model->index(i, 0), Qt::DisplayRole).toString());
+//        painter.drawText(txt2, Qt::AlignCenter, pModel1->model->data(pModel1->model->index(i, 1), Qt::DisplayRole).toString());
+//    }
+
+//    for (quint8 i=0; i<pModel2->model->rowCount(); i++)
+//    {
+//        QRect    txt1(xPosTable+(widthTable/(kolColumn*2))*2, yPosTable+(i+3)*hightLine, (widthTable/(kolColumn*2)), 100);
+//        QRect    txt2(xPosTable+(widthTable/(kolColumn*2))*3, yPosTable+(i+3)*hightLine, (widthTable/(kolColumn*2)), 100);
+//        painter.drawText(txt1, Qt::AlignCenter, pModel2->model->data(pModel2->model->index(i, 0), Qt::DisplayRole).toString());
+//        painter.drawText(txt2, Qt::AlignCenter, pModel2->model->data(pModel2->model->index(i, 1), Qt::DisplayRole).toString());
+//    }
+
+//    for (quint8 i=0; i<pModel3->model->rowCount(); i++)
+//    {
+//        QRect    txt1(xPosTable+(widthTable/(kolColumn*2))*4, yPosTable+(i+3)*hightLine, (widthTable/(kolColumn*2)), 100);
+//        QRect    txt2(xPosTable+(widthTable/(kolColumn*2))*5, yPosTable+(i+3)*hightLine, (widthTable/(kolColumn*2)), 100);
+//        painter.drawText(txt1, Qt::AlignCenter, pModel3->model->data(pModel3->model->index(i, 0), Qt::DisplayRole).toString());
+//        painter.drawText(txt2, Qt::AlignCenter, pModel3->model->data(pModel3->model->index(i, 1), Qt::DisplayRole).toString());
+//    }
 }
-
 
 void calculator::refreshLens(QSqlQueryModel *link)
 {
-
-
     twLens->setModel(link);
 }
 

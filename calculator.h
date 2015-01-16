@@ -31,6 +31,7 @@ class calculator : public QWidget
     Q_OBJECT
 public:
     explicit calculator(QWidget *parent = 0, CurParam *link=0);
+    adjview *twMeas;
     void refreshAl();
     void refreshAcd();
 

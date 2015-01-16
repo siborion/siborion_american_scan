@@ -54,29 +54,26 @@ Plot::Plot( QWidget *parent, bool print, CurParam *link):
     if(print)
         d_curve1->setPen( Qt::black );
     else
-//        d_curve1->setPen(QColor(255,170,0,255));   //( Qt::yellow );
         d_curve1->setPen(QColor(255,255,255,255));   //( Qt::yellow );
     d_curve1->setLegendAttribute( QwtPlotCurve::LegendShowLine );
     d_curve1->setYAxis(QwtPlot::yLeft);
     d_curve1->setXAxis(QwtPlot::xTop);
     d_curve1->attach(this);
 
-    startInterval  = new SampleInterval(0, 0, "Start_Interval", curParam);
-    lensInterval   = new SampleInterval(0, 0, "Lens_Interval",  curParam);
-    retinaInterval = new SampleInterval(0, 0, "Retina_Interval",curParam);
-
-    startInterval->setXAxis(QwtPlot::xTop);
-    lensInterval->setXAxis(QwtPlot::xTop);
-    retinaInterval->setXAxis(QwtPlot::xTop);
-
-    startInterval->attach( this );
-    lensInterval->attach( this );
-    retinaInterval->attach( this );
-
+    if(!print)
+    {
+        startInterval  = new SampleInterval(0, 0, "Start_Interval", curParam);
+        lensInterval   = new SampleInterval(0, 0, "Lens_Interval",  curParam);
+        retinaInterval = new SampleInterval(0, 0, "Retina_Interval",curParam);
+        startInterval->setXAxis(QwtPlot::xTop);
+        lensInterval->setXAxis(QwtPlot::xTop);
+        retinaInterval->setXAxis(QwtPlot::xTop);
+        startInterval->attach( this );
+        lensInterval->attach( this );
+        retinaInterval->attach( this );
+        updateInterval();
+    }
     setAutoReplot( true );
-
-    updateInterval();
-
 }
 
 void Plot::drawSample(QByteArray *Sample)

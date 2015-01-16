@@ -41,6 +41,9 @@ sampletable::sampletable(QWidget *parent, CurParam *link) :
     modelOS->setHorizontalHeaderLabels(lst);
 
     twMeas->setModel(modelOD);
+//    twMeas->setSelectionMode(MultiSelection);
+//    twMeas->setSelectionMode(QAbstractItemView::SelectionMode::MultiSelection);
+//    twMeas->selectedIndexes();//
 
     connect(twMeas->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), SLOT(changeRowSlot(QModelIndex)));
     connect(pbSave,SIGNAL(pressed()),SLOT(saveSlot()));

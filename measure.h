@@ -22,11 +22,11 @@ public:
     void resiveData(QByteArray*);
     void addSample(QByteArray *Sample, QList<quint16> *extremum, stMeasureParam*);
     Plot *pPlot;
+    sampletable *pSampleTable;
 
 private:
     Bigviewnumcur *pBigViewCur;
     key_radio *pKey;
-    sampletable *pSampleTable;
     Velosity *velosity;
     bigviewnum *pBigView;
     CurParam *curParam;
