@@ -27,8 +27,16 @@ private:
     FT_HANDLE ftHandle;
     char FT_Out_Buffer[10];
 
+    DWORD BytesWritten;
+    DWORD BytesReceived;
+    DWORD BytesReceivedCount;
+    char RxBuffer[2048];
+
+
+    QByteArray baTmp;
+
 signals:
-    void resiveData(QByteArray);
+    void resiveData(QByteArray*);
 
 private slots:
     void openDevice(bool *doMeasure);

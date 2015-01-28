@@ -28,7 +28,7 @@ public:
     QSqlQueryModel *modelBases;
     QMap <QString, QString> curPatient;
     QMap <QString, QString> curDoctor;
-    QMap <QString, QString> curLens;\
+    QMap <QString, QString> curLens;
     QSqlQueryModel lensModel;
 
 public slots:

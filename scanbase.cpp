@@ -9,7 +9,13 @@ Scanbase::Scanbase(QObject *parent, CurParam *link)
     sCurPath = QDir::currentPath();
     sCurPath.append("/base.db");
     pDB = QSqlDatabase::addDatabase("QSQLITE");
+//    qDebug()<<pDB;
     pDB.setDatabaseName(sCurPath);
+    
+
+    QMessageBox msgBox;
+//    msgBox.setText(sCurPath);
+//    msgBox.exec();
 
     modelBases = new QSqlQueryModel();
 
@@ -44,8 +50,8 @@ Scanbase::Scanbase(QObject *parent, CurParam *link)
     }
     else
     {
-//        msgBox.setText("File not found");
-//        msgBox.exec();
+        msgBox.setText("File not found");
+        msgBox.exec();
     }
 
 

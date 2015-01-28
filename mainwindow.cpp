@@ -52,7 +52,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(measure,SIGNAL(doScan(bool*)),device,SLOT(openDevice(bool*)));
     connect(measure,SIGNAL(refreshTable(stMeasureParam*)),parcer,SLOT(calculateParam(stMeasureParam*)));
-    connect(device,SIGNAL(resiveData(QByteArray)),SLOT(resiveDataSlot(QByteArray)));
+    connect(device,SIGNAL(resiveData(QByteArray*)),SLOT(resiveDataSlot(QByteArray*)));
 
     connect(measure,SIGNAL(stopMeasure()),device,SLOT(stopMeasure()));
 
@@ -71,14 +71,14 @@ void MainWindow::moveWindowToCenter()
     move(0,0);
 }
 
-void MainWindow::resiveDataSlot(QByteArray Sample)
+void MainWindow::resiveDataSlot(QByteArray *Sample)
 {
     stMeasureParam measureParam;
     QList<quint16> exstremum;
-    measure->resiveData(&Sample);
-    if(parcer->findExtremum(&Sample, &exstremum, &measureParam))
+    measure->resiveData(Sample);
+    if(parcer->findExtremum(Sample, &exstremum, &measureParam))
     {
-        measure->addSample(&Sample, &exstremum, &measureParam);
+        measure->addSample(Sample, &exstremum, &measureParam);
     }
 }
 

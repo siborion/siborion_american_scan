@@ -1,7 +1,11 @@
 #include "device.h"
 #include <qdebug.h>
 #include <QDateTime>
+#include <QTime>
 #include <QApplication>
+#include <QMessageBox>
+
+#define comLen 1
 
 Device::Device(QObject *parent) :
     QObject(parent)
@@ -9,7 +13,7 @@ Device::Device(QObject *parent) :
     doDll = true;
     port = new QSerialPort(this);
     timer = new QTimer();
-    timer->setInterval(50);
+    timer->setInterval(68);
     connect(timer,SIGNAL(timeout()),SLOT(doTimer()));
 }
 
@@ -42,7 +46,7 @@ void Device::openDevice(bool *link)
     port->setDataBits(QSerialPort::Data8);
     port->setParity(QSerialPort::NoParity);
     port->setStopBits(QSerialPort::OneStop);
-    port->setFlowControl(QSerialPort::NoFlowControl);
+    port->setFlowControl(QSerialPort::HardwareControl);
     port->waitForBytesWritten(-1);
     if(*doMeasure)
     {
@@ -61,6 +65,13 @@ void Device::openDevice(bool *link)
             if((ftStatus != FT_OK)||(ftNumDevice==0))
                 return;
             FT_Out_Buffer[0] = 'A';
+            FT_Out_Buffer[1] = 'T';
+            FT_Out_Buffer[2] = '+';
+            FT_Out_Buffer[3] = 'G';
+            FT_Out_Buffer[4] = 'M';
+            FT_Out_Buffer[5] = 'I';
+            FT_Out_Buffer[6] = 0x0d;
+            FT_Out_Buffer[7] = 0x0a;
             ftStatus = FT_Open(0, &ftHandle);
             if(ftStatus!=FT_OK)
                 return;
@@ -76,6 +87,8 @@ void Device::openDevice(bool *link)
         {
             if(port->open(QIODevice::ReadWrite))
             {
+                port->setRequestToSend(true);
+                port->setDataTerminalReady(true);
                 *doMeasure = true;
                 timer->start();
             }
@@ -85,34 +98,40 @@ void Device::openDevice(bool *link)
 
 void Device::doTimer()
 {
-    QByteArray baTmp;
-    quint16 kolvo = 0;
-    DWORD BytesWritten;
-    DWORD BytesReceived;
-    DWORD BytesReceivedCount;
-    char RxBuffer[2048];
+    baTmp.clear();
     if(doDll)
     {
         FT_GetQueueStatus(ftHandle, &BytesReceivedCount);
-        if(BytesReceivedCount>=1023)
+
+//        QMessageBox msg;
+//        msg.setText(QString("%1").arg(BytesReceivedCount));
+//        msg.exec();
+
+        if(BytesReceivedCount==1024)
+//        if(BytesReceivedCount>=27)
         {
+//            qDebug()<<QTime::currentTime().msec();
+//            BytesReceivedCount &= 0x3ff;
             FT_Read(ftHandle,RxBuffer,BytesReceivedCount,&BytesReceived);
             FT_Purge(ftHandle,1);
-            for(int i=0; i<=1023; i++)
-            {
-                baTmp.append((unsigned char)(RxBuffer[i]));
-                kolvo++;
-            }
-            emit resiveData(baTmp.left(1024));
+            ftStatus = FT_Write(ftHandle, FT_Out_Buffer, comLen, &BytesWritten);
+            baTmp.append(RxBuffer,1023);
+            emit resiveData(&baTmp);
         }
-        ftStatus = FT_Write(ftHandle, FT_Out_Buffer, 1,  &BytesWritten);
+        else
+        {
+//            qDebug()<<"-"<<QTime::currentTime().msec();
+            FT_Purge(ftHandle,1);
+            ftStatus = FT_Write(ftHandle, FT_Out_Buffer, comLen, &BytesWritten);
+        }
     }
     else
     {
-        baTmp = port->readAll();
-        port->write("A", 1);
-        if(baTmp.count()>=1024)
-            emit resiveData(baTmp.left(1024));
+        baTmp=port->read(1024);
+        port->readAll();
+        port->write("AT+GMI\r\n", comLen);
+        if(baTmp.length()>=1024)
+            emit resiveData(&baTmp);
     }
 }
 

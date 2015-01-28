@@ -107,6 +107,7 @@ RESOURCES += \
     scan.qrc
 
 OTHER_FILES += \
-    qwt.prf
+    qwt.prf \
+    plugins/sqldrivers/qsqlite.dll
 
-OTHER_FILES += plugins/sqldrivers/qsqlite.dll
+#OTHER_FILES += plugins/sqldrivers/qsqlite.dll

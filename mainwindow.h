@@ -36,7 +36,7 @@ private:
     void moveWindowToCenter();
 
 public slots:
-    void resiveDataSlot(QByteArray);
+    void resiveDataSlot(QByteArray*);
     void setStPatient(QMap <QString, QString> *stPatientBases);
 
 Q_SIGNALS:

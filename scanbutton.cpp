@@ -6,7 +6,7 @@ ScanButton::ScanButton()
     QIcon icon;
     doMeasure = false;
     timer = new QTimer();
-    timer->start(200);
+    timer->start(300);
     icon.addFile(QStringLiteral(":/test/scan"), QSize(), QIcon::Normal, QIcon::Off);
     setIcon(icon);
     setIconSize(QSize(30, 30));
