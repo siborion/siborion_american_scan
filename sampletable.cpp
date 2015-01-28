@@ -88,6 +88,7 @@ void sampletable::loadSlot()
                 {
                 measureParam.ACD = query.value(query.record().indexOf("acd")).toDouble();
                 measureParam.AL  = query.value(query.record().indexOf("al")).toDouble();
+                measureParam.LT  = query.value(query.record().indexOf("lt")).toDouble();
                 measureParam.ALave  = query.value(query.record().indexOf("al_ave")).toDouble();
                 measureParam.Cornea = query.value(query.record().indexOf("cornea")).toUInt();
                 measureParam.L1 = query.value(query.record().indexOf("l1")).toUInt();
