@@ -299,22 +299,32 @@ void sampletable::calculateAvg()
 
 void sampletable::changeRegimManual()
 {
+    QMessageBox msg;
     QList<int> columnPercent;
     QStringList lst;
     QStandardItemModel *model = new QStandardItemModel();
     model = (QStandardItemModel*)twMeas->model();
 
+//    msg.setText("The document has been modified.");
+    msg.setInformativeText("Do you want to save your changes?");
+    msg.setStandardButtons(QMessageBox::Save | QMessageBox::Discard);
+    msg.setDefaultButton(QMessageBox::Save);
+
     if(model->horizontalHeaderItem(2)->text()=="Distance")
     {
-        if (curParam->regimMeasure != REGIM::MANUAL)
+        if((curParam->regimMeasure != REGIM::MANUAL)&&(model->rowCount()>0))
         {
+            if(QMessageBox::Save == msg.exec())
+                saveSlot();
             clearAll();
         }
     }
     else
     {
-        if (curParam->regimMeasure == REGIM::MANUAL)
+        if ((curParam->regimMeasure == REGIM::MANUAL)&&(model->rowCount()>0))
         {
+            if(QMessageBox::Save == msg.exec())
+                saveSlot();
             clearAll();
         }
     }
