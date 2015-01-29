@@ -40,7 +40,7 @@ Plot::Plot( QWidget *parent, bool print, CurParam *link):
     dMin=(-20.0); dMax=(1024.0);
     setAxisScale(QwtPlot::xTop, dMin, dMax);
     setAxisScale(QwtPlot::xBottom, (dMin/27), (dMax/27));
-    setAxisScale(QwtPlot::yLeft, -4, 600.0);
+    setAxisScale(QwtPlot::yLeft, -4, 280.0);
 
     QPalette palette;
     palette.setColor(QPalette::WindowText, Qt::gray);
@@ -73,6 +73,10 @@ Plot::Plot( QWidget *parent, bool print, CurParam *link):
         retinaInterval->attach( this );
         updateInterval();
     }
+    drawMarker(0, "Cornea");
+    drawMarker(100, "L1");
+    drawMarker(200, "L2");
+    drawMarker(300, "Retina");
     setAutoReplot( true );
 }
 
@@ -90,7 +94,7 @@ void Plot::drawSample(QByteArray *Sample)
     {
         if(p->rtti() == QwtPlotItem::Rtti_PlotMarker)
         {
-            removeItem(p);
+//            removeItem(p);
         }
     }
     d_curve1->setSamples(xData, yData);
@@ -102,7 +106,7 @@ void Plot::drawSample(const double *x, const double *y, int count)
     {
         if(p->rtti() == QwtPlotItem::Rtti_PlotMarker)
         {
-            removeItem(p);
+//            removeItem(p);
         }
     }
     d_curve1->setSamples(x, y, count );
@@ -127,6 +131,39 @@ void Plot::drawMarker(quint16 pos, QString title)
     d_marker->setLabel(qT);
     d_marker->setLabelAlignment(Qt::AlignRight | Qt::AlignTop);
     d_marker->attach( this );
+    d_marker->setVisible(false);
+}
+
+void Plot::drawMarker(quint16 pos, QString title, bool visible)
+{
+    QFont qF;
+    qF.setPixelSize(20);
+    QwtText qT;
+    qT.setFont(qF);
+
+    const QwtPlotItemList& itmList = itemList();
+    for ( QwtPlotItemIterator it = itmList.begin();it != itmList.end(); ++it )
+    {
+        if ( ( *it )->rtti() == QwtPlotItem::Rtti_PlotMarker)
+        {
+            QwtPlotMarker *c = static_cast<QwtPlotMarker *>( *it );
+            if((c->title().text()==title))
+            {
+                if(title=="Cornea")
+                {
+                    qT.setText(curParam->regimMeasure!=REGIM::MANUAL?"Cornea":"Gate1");
+                    c->setLabel(qT);
+                }
+                if(title=="Retina")
+                {
+                    qT.setText(curParam->regimMeasure!=REGIM::MANUAL?"Retina":"Gate2");
+                    c->setLabel(qT);
+                }
+                c->setVisible(visible);
+                c->setXValue(pos);
+            }
+        }
+    }
 }
 
 void Plot::drawMarker(double x, double y, const QColor &color)
@@ -179,12 +216,12 @@ void Plot::select( const QPoint &pos )
         if ( ( *it )->rtti() == QwtPlotItem::Rtti_PlotMarker)
         {
             QwtPlotMarker *c = static_cast<QwtPlotMarker *>( *it );
-            if((c->title().text()=="Start")||(c->title().text()=="L1")||(c->title().text()=="L2")||(c->title().text()=="Retina"))
+            if(c->isVisible()&&((c->title().text()=="Cornea")||(c->title().text()=="L1")||(c->title().text()=="L2")||(c->title().text()=="Retina")))
             {
                 double d;
                 d = abs(c->xValue() - (invTransform(c->xAxis(), pos.x())));
                 int idx = c->xValue();
-                if ( d < dist )
+                if ( d <= dist )
                 {
                     curve = c;
                     index = idx;
@@ -202,7 +239,7 @@ void Plot::select( const QPoint &pos )
             if ( ( *it )->rtti() == QwtPlotItem::Rtti_PlotMarker)
             {
                 QwtPlotMarker *c = static_cast<QwtPlotMarker *>( *it );
-                if((c->title().text()!="Start")&&(c->title().text()!="L1")&&(c->title().text()!="L2")&&(c->title().text()!="Retina"))
+                if((c->title().text()!="Cornea")&&(c->title().text()!="L1")&&(c->title().text()!="L2")&&(c->title().text()!="Retina"))
                 {
                     if (d_selectedPoint == c->xValue())
                     {
@@ -247,12 +284,16 @@ void Plot::select( const QPoint &pos )
 
 void Plot::move( const QPoint &pos )
 {
-//    stMainParam mainParam;
+
     quint16 val, in=0, curDist, dist=0xffff;
+    const QwtPlotItemList& itmList = itemList();
+
     if ( d_selectedCurve )
     {
         if((d_selectedCurve->title().text()=="Cornea")||(d_selectedCurve->title().text()=="L1")||(d_selectedCurve->title().text()=="L2")||(d_selectedCurve->title().text()=="Retina"))
         {
+            bool bNear = false;
+
             if (QApplication::keyboardModifiers().testFlag(Qt::ControlModifier) == false)
             {
                 foreach(val, allExtremum)
@@ -264,25 +305,58 @@ void Plot::move( const QPoint &pos )
                         dist = curDist;
                     }
                 }
-                d_selectedCurve->setXValue(in);
-                romb_selectedCurve->setXValue(in);
+                if(allExtremum.count()>0)
+                {
+                    for ( QwtPlotItemIterator it = itmList.begin();it != itmList.end(); ++it )
+                    {
+                        if ( ( *it )->rtti() == QwtPlotItem::Rtti_PlotMarker)
+                        {
+                            QwtPlotMarker *c = static_cast<QwtPlotMarker *>( *it );
+                            if((c!=d_selectedCurve) && c->isVisible()&&((c->title().text()=="Cornea")||(c->title().text()=="L1")||(c->title().text()=="L2")||(c->title().text()=="Retina")))
+                            {
+                                if(qAbs(c->xValue() - in)<60)
+                                    bNear = true;
+                            }
+                        }
+                    }
+                    if(!bNear)
+                    {
+                    d_selectedCurve->setXValue(in);
+                    romb_selectedCurve->setXValue(in);
+                    }
+                }
             }
             else
-                d_selectedCurve->setXValue(invTransform(d_selectedCurve->xAxis(), pos.x()));
+            {
+                for ( QwtPlotItemIterator it = itmList.begin();it != itmList.end(); ++it )
+                {
+                    if ( ( *it )->rtti() == QwtPlotItem::Rtti_PlotMarker)
+                    {
+                        QwtPlotMarker *c = static_cast<QwtPlotMarker *>( *it );
+                        if((c!=d_selectedCurve) && c->isVisible()&&((c->title().text()=="Cornea")||(c->title().text()=="L1")||(c->title().text()=="L2")||(c->title().text()=="Retina")))
+                        {
+                            if(qAbs(c->xValue() - invTransform(d_selectedCurve->xAxis(), pos.x()))<60)
+                                bNear = true;
+                        }
+                    }
+                }
+                if(!bNear)
+                    d_selectedCurve->setXValue(invTransform(d_selectedCurve->xAxis(), pos.x()));
+            }
 
-            const QwtPlotItemList& itmList = itemList();
+//            const QwtPlotItemList& itmList = itemList();
             for ( QwtPlotItemIterator it = itmList.begin(); it != itmList.end(); ++it )
             {
                 if ( ( *it )->rtti() == QwtPlotItem::Rtti_PlotMarker)
                 {
                     QwtPlotMarker *c = static_cast<QwtPlotMarker *>( *it );
-                    if(c->title().text()=="Cornea")
+                    if((c->title().text()=="Cornea"))
                         measureParam.Cornea = c->xValue();
                     if(c->title().text()=="L1")
                         measureParam.L1 = c->xValue();
                     if(c->title().text()=="L2")
                         measureParam.L2 = c->xValue();
-                    if(c->title().text()=="Retina")
+                    if((c->title().text()=="Retina"))
                         measureParam.Retina = c->xValue();
                     emit(refreshTable(&measureParam));
                 }
@@ -329,18 +403,18 @@ void Plot::move( const QPoint &pos )
     }
 }
 
-
 void Plot::updateSample(stMeasureParam *link)
 {
     measureParam = *link;
+    clearMarker();
     drawSample(&measureParam.Sample);
-    drawMarker(measureParam.Cornea,"Cornea");
+    drawMarker(measureParam.Cornea,"Cornea",true);
     drawMarker((double)measureParam.Cornea,(double)60, Qt::white);
-    drawMarker(measureParam.L1,"L1");
+    drawMarker(measureParam.L1,"L1",curParam->regimMeasure!=REGIM::MANUAL);
     drawMarker((double)measureParam.L1,(double)60, Qt::white);
-    drawMarker(measureParam.L2,"L2");
+    drawMarker(measureParam.L2,"L2",curParam->regimMeasure!=REGIM::MANUAL);
     drawMarker((double)measureParam.L2,(double)60, Qt::white);
-    drawMarker(measureParam.Retina,"Retina");
+    drawMarker(measureParam.Retina,"Retina",true);
     drawMarker((double)measureParam.Retina,(double)60, Qt::white);
     allExtremum = measureParam.extremum;
 }
@@ -354,10 +428,26 @@ void Plot::updateInterval()
     curParam->retinaX1 = 459+offSet; curParam->retinaX2 = 864+offSet;
     if((curParam->regimMeasure == REGIM::MANUAL)||(curParam->regimCataract == REGIM::APHAKIC))
     {curParam->lensX1 = 0;    curParam->lensX2 = 0;}
-
     startInterval->setSample (curParam->corneaX1, curParam->corneaX2);
     lensInterval->setSample  (curParam->lensX1,   curParam->lensX2);
     retinaInterval->setSample(curParam->retinaX1, curParam->retinaX2);
+    updateSample(&measureParam);
+    clearMarker();
+}
+
+void Plot::clearMarker()
+{
+    foreach (QwtPlotItem *p, itemList())
+    {
+        if(p->rtti() == QwtPlotItem::Rtti_PlotMarker)
+        {
+            QwtPlotMarker *c = static_cast<QwtPlotMarker *>( p );
+            if((c->title().text()==""))
+                removeItem(p);
+            else
+                c->setVisible(false);
+        }
+    }
 }
 
 void Plot::clearAll()
@@ -370,4 +460,3 @@ void Plot::clearAll()
         }
     }
 }
-

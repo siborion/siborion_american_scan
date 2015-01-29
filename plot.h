@@ -42,11 +42,13 @@ public:
     void drawSample(const double *frequency, const double *amplitude, int count);
     void drawMarker(quint16 pos, QString title);
     void drawMarker(double x, double y, const QColor &);
+    void drawMarker(quint16 pos, QString title, bool visible);
     virtual bool eventFilter( QObject *, QEvent * );
     QList<quint16> allExtremum;
     void drawSample(QByteArray *Sample);
     Plot *pPlot;
     CurParam *curParam;
+    void clearMarker();
     void clearAll();
 
 public slots:

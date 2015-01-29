@@ -302,10 +302,26 @@ void sampletable::changeRegimManual()
     QList<int> columnPercent;
     QStringList lst;
     QStandardItemModel *model = new QStandardItemModel();
+    model = (QStandardItemModel*)twMeas->model();
+
+    if(model->horizontalHeaderItem(2)->text()=="Distance")
+    {
+        if (curParam->regimMeasure != REGIM::MANUAL)
+        {
+            clearAll();
+        }
+    }
+    else
+    {
+        if (curParam->regimMeasure == REGIM::MANUAL)
+        {
+            clearAll();
+        }
+    }
 
     if (curParam->regimMeasure  == REGIM::MANUAL)
     {
-        columnPercent<<10      <<0            <<90      <<0       <<0      <<0;
+        columnPercent<<10      <<0            <<83      <<0       <<0      <<0;
         lst          <<tr("No")<<tr("AveVelAl")<<tr("Distance");
     }
     else
@@ -313,7 +329,6 @@ void sampletable::changeRegimManual()
         columnPercent<<10      <<23            <<15      <<15       <<15      <<15;
         lst          <<tr("No")<<tr("AveVelAl")<<tr("AL")<<tr("ACD")<<tr("LT")<<tr("VIT");
     }
-    model = (QStandardItemModel*)twMeas->model();
     model->setHorizontalHeaderLabels(lst);
     twMeas->setColumnPercent(columnPercent);
 }
