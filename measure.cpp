@@ -26,7 +26,7 @@ Measure::Measure(QWidget *parent, CurParam *link) :
     layout->addWidget(fmPlot      ,0,0,3,1);
     layout->addWidget(pKey        ,3,0,1,2);
     layout->addWidget(pSampleTable,0,1);
-//    layout->addWidget(velosity    ,1,1);
+    layout->addWidget(velosity    ,1,1);
     layout->addWidget(pBigView    ,2,1);
 
     layout->setColumnStretch(0,2);
