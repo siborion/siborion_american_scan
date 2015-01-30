@@ -40,7 +40,7 @@ Plot::Plot( QWidget *parent, bool print, CurParam *link):
     dMin=(-20.0); dMax=(1024.0);
     setAxisScale(QwtPlot::xTop, dMin, dMax);
     setAxisScale(QwtPlot::xBottom, (dMin/27), (dMax/27));
-    setAxisScale(QwtPlot::yLeft, -4, 280.0);
+    setAxisScale(QwtPlot::yLeft, -4, 300.0);
 
     QPalette palette;
     palette.setColor(QPalette::WindowText, Qt::gray);
