@@ -49,6 +49,7 @@ public slots:
     void saveSlot();
     void loadSlot();
     void clearAll();
+    void del();
 };
 
 #endif // SAMPLETABLE_H

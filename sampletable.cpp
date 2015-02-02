@@ -48,7 +48,7 @@ sampletable::sampletable(QWidget *parent, CurParam *link) :
     connect(twMeas->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), SLOT(changeRowSlot(QModelIndex)));
     connect(pbSave,SIGNAL(pressed()),SLOT(saveSlot()));
     connect(pbLoad,SIGNAL(pressed()),SLOT(loadSlot()));
-    connect(pbClear,SIGNAL(pressed()),SLOT(clearAll()));
+    connect(pbClear,SIGNAL(pressed()),SLOT(del()));
 }
 
 void sampletable::saveSlot()
@@ -355,6 +355,35 @@ void sampletable::clearAll()
     model = (QStandardItemModel*)twMeas->model();
     model->setRowCount(0);
     emit clearAllSignal();
+}
+
+void sampletable::del()
+{
+    QModelIndexList indexes = twMeas->selectionModel()->selectedRows();
+
+    if (!indexes.count())
+        return;
+
+    if (QMessageBox::question(this, tr("Removing data"), tr("Data will be removed. Continue?"),
+                              QMessageBox::Yes, QMessageBox::No ) == QMessageBox::No)
+        return;
+
+    int removed = 0;
+    int count = 1;
+    int start = indexes[0].row();
+
+    for (int i = 1; i < indexes.count(); ++i) {
+        if (indexes.at(i - 1).row() != indexes.at(i).row() - 1) {
+            twMeas->model()->removeRows(start - removed, count);
+            removed += count;
+            start = indexes.at(i).row();
+            count = 1;
+        } else {
+            ++count;
+        }
+    }
+    twMeas->model()->removeRows(start - removed, count);
+    calculateAvg();
 }
 
 void sampletable::keyPressEvent(QKeyEvent * keyEvent)
