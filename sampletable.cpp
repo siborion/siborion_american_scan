@@ -173,15 +173,15 @@ void sampletable::editSample(quint16 rowNom, stMeasureParam* measureParam)
     twMeas->model()->setData(index, measureParam->Retina, roleRetina);
 
     index = twMeas->model()->index(rowNom, 1);
-    twMeas->model()->setData(index, measureParam->ALave, Qt::DisplayRole);
+    twMeas->model()->setData(index, QString("%1").arg(measureParam->ALave, 4, 'f', 2, '0'), Qt::DisplayRole);
     index = twMeas->model()->index(rowNom, 2);
-    twMeas->model()->setData(index, measureParam->AL, Qt::DisplayRole);
+    twMeas->model()->setData(index, QString("%1").arg(measureParam->AL,    4, 'f', 2, '0'), Qt::DisplayRole);
     index = twMeas->model()->index(rowNom, 3);
-    twMeas->model()->setData(index, measureParam->ACD, Qt::DisplayRole);
+    twMeas->model()->setData(index, QString("%1").arg(measureParam->ACD,   4, 'f', 2, '0'), Qt::DisplayRole);
     index = twMeas->model()->index(rowNom, 4);
-    twMeas->model()->setData(index, measureParam->LT, Qt::DisplayRole);
+    twMeas->model()->setData(index, QString("%1").arg(measureParam->LT,    4, 'f', 2, '0'), Qt::DisplayRole);
     index = twMeas->model()->index(rowNom, 5);
-    twMeas->model()->setData(index, measureParam->VIT, Qt::DisplayRole);
+    twMeas->model()->setData(index, QString("%1").arg(measureParam->VIT,   4, 'f', 2, '0'), Qt::DisplayRole);
     calculateAvg();
 }
 
