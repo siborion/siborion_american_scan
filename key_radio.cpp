@@ -161,5 +161,5 @@ void key_radio::doChangeRegim()
         curentParam->regimSide     = REGIM::OD;
     if(rbOs->isChecked())
         curentParam->regimSide     = REGIM::OS;
-    emit changeInterval();
+   emit changeInterval(QObject::sender()->objectName());
 }

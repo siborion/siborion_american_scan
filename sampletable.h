@@ -44,7 +44,7 @@ signals:
 public slots:
     void changeRowSlot(QModelIndex curIndex);
     void editSample(stMeasureParam* measureParam);
-    void changeRegimManual();
+    void changeRegimManual(QString);
     void startMeasure();
     void saveSlot();
     void loadSlot();

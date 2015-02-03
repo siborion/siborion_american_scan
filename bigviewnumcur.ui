@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>484</width>
-    <height>69</height>
+    <width>621</width>
+    <height>71</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -111,6 +111,12 @@
        <property name="enabled">
         <bool>false</bool>
        </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="minimumSize">
         <size>
          <width>0</width>
@@ -123,20 +129,33 @@
          <pointsize>12</pointsize>
          <weight>75</weight>
          <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
          <kerning>false</kerning>
         </font>
        </property>
-       <property name="layoutDirection">
-        <enum>Qt::RightToLeft</enum>
+       <property name="autoFillBackground">
+        <bool>false</bool>
        </property>
        <property name="styleSheet">
         <string notr="true">color: rgb(255, 255, 255);</string>
        </property>
+       <property name="inputMask">
+        <string notr="true"/>
+       </property>
        <property name="text">
-        <string>Select patient</string>
+        <string notr="true">Select patient</string>
        </property>
        <property name="frame">
         <bool>false</bool>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+       <property name="placeholderText">
+        <string notr="true"/>
        </property>
       </widget>
      </item>
@@ -201,6 +220,12 @@
        <property name="enabled">
         <bool>false</bool>
        </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="minimumSize">
         <size>
          <width>0</width>
@@ -213,20 +238,33 @@
          <pointsize>12</pointsize>
          <weight>75</weight>
          <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
          <kerning>false</kerning>
         </font>
        </property>
-       <property name="layoutDirection">
-        <enum>Qt::RightToLeft</enum>
+       <property name="autoFillBackground">
+        <bool>false</bool>
        </property>
        <property name="styleSheet">
         <string notr="true">color: rgb(255, 255, 255);</string>
        </property>
+       <property name="inputMask">
+        <string notr="true"/>
+       </property>
        <property name="text">
-        <string>Select doctor</string>
+        <string notr="true">Select doctor</string>
        </property>
        <property name="frame">
         <bool>false</bool>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+       <property name="placeholderText">
+        <string notr="true"/>
        </property>
       </widget>
      </item>
@@ -235,6 +273,12 @@
        <property name="enabled">
         <bool>false</bool>
        </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="minimumSize">
         <size>
          <width>0</width>
@@ -247,19 +291,33 @@
          <pointsize>12</pointsize>
          <weight>75</weight>
          <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
+         <kerning>false</kerning>
         </font>
        </property>
-       <property name="layoutDirection">
-        <enum>Qt::RightToLeft</enum>
+       <property name="autoFillBackground">
+        <bool>false</bool>
        </property>
        <property name="styleSheet">
         <string notr="true">color: rgb(255, 255, 255);</string>
        </property>
+       <property name="inputMask">
+        <string notr="true"/>
+       </property>
        <property name="text">
-        <string/>
+        <string notr="true"/>
        </property>
        <property name="frame">
         <bool>false</bool>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+       <property name="placeholderText">
+        <string notr="true"/>
        </property>
       </widget>
      </item>
@@ -396,6 +454,7 @@
          <pointsize>36</pointsize>
          <weight>75</weight>
          <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
         </font>
        </property>
        <property name="styleSheet">
@@ -422,6 +481,7 @@
          <pointsize>36</pointsize>
          <weight>75</weight>
          <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
         </font>
        </property>
        <property name="styleSheet">
@@ -440,9 +500,12 @@
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Maximum</enum>
+       </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>5</width>
+         <width>10</width>
          <height>20</height>
         </size>
        </property>
@@ -453,9 +516,12 @@
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Maximum</enum>
+       </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>5</width>
+         <width>10</width>
          <height>20</height>
         </size>
        </property>
@@ -466,9 +532,12 @@
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Maximum</enum>
+       </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>5</width>
+         <width>10</width>
          <height>20</height>
         </size>
        </property>

@@ -40,11 +40,11 @@ Measure::Measure(QWidget *parent, CurParam *link) :
     connect(pSampleTable,SIGNAL(sendAvg(stAverageParam*)),pBigView,SLOT(setDisplay(stAverageParam*)));
     connect(pSampleTable,SIGNAL(stopMeasure()),SLOT(stopMeasureSlot()));
     connect(pPlot,SIGNAL(refreshTable(stMeasureParam*)),SLOT(refreshTableSlot(stMeasureParam*)));
-    connect(pKey,SIGNAL(changeInterval()),pSampleTable,SLOT(changeRegimManual()));
-    connect(pKey,SIGNAL(changeInterval()),pPlot,SLOT(updateInterval()));
-    connect(pKey,SIGNAL(changeInterval()),pBigViewCur,SLOT(setRegim()));
-    connect(pKey,SIGNAL(changeInterval()),pBigView,SLOT(setRegim()));
-    connect(pKey,SIGNAL(changeInterval()),SLOT(changeGlasSlot()));
+    connect(pKey,SIGNAL(changeInterval(QString)),pSampleTable,SLOT(changeRegimManual(QString)));
+    connect(pKey,SIGNAL(changeInterval(QString)),pPlot,SLOT(updateInterval()));
+    connect(pKey,SIGNAL(changeInterval(QString)),pBigViewCur,SLOT(setRegim()));
+    connect(pKey,SIGNAL(changeInterval(QString)),pBigView,SLOT(setRegim()));
+    connect(pKey,SIGNAL(changeInterval(QString)),SLOT(changeGlasSlot()));
 
     connect(pSampleTable,SIGNAL(changeGlas()),SLOT(changeGlasSlot()));;
     connect(pSampleTable,SIGNAL(changeGlas()),pKey,SLOT(refresh()));

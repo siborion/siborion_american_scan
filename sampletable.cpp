@@ -297,37 +297,50 @@ void sampletable::calculateAvg()
     emit sendAvg(&averageParam);
 }
 
-void sampletable::changeRegimManual()
+void sampletable::changeRegimManual(QString objectName)
 {
+    qDebug()<<objectName;
+
     QMessageBox msg;
     QList<int> columnPercent;
     QStringList lst;
     QStandardItemModel *model = new QStandardItemModel();
     model = (QStandardItemModel*)twMeas->model();
 
-//    msg.setText("The document has been modified.");
-    msg.setInformativeText("Do you want to save your changes?");
-    msg.setStandardButtons(QMessageBox::Save | QMessageBox::Discard);
-    msg.setDefaultButton(QMessageBox::Save);
+//    if(pbSave->isEnabled())
+//    {
+        msg.setInformativeText("Do you want to save your changes?");
+        msg.setStandardButtons(QMessageBox::Save | QMessageBox::Discard);
+        msg.setDefaultButton(QMessageBox::Save);
 
-    if(model->horizontalHeaderItem(2)->text()=="Distance")
-    {
-        if((curParam->regimMeasure != REGIM::MANUAL)&&(model->rowCount()>0))
+        if(((objectName == "OS")||(objectName == "OD"))&&(model->rowCount()>0))
         {
-            if(QMessageBox::Save == msg.exec())
+            if(pbSave->isEnabled()&&(QMessageBox::Save == msg.exec()))
                 saveSlot();
             clearAll();
         }
-    }
-    else
-    {
-        if ((curParam->regimMeasure == REGIM::MANUAL)&&(model->rowCount()>0))
+        else
         {
-            if(QMessageBox::Save == msg.exec())
-                saveSlot();
-            clearAll();
+            if(model->horizontalHeaderItem(2)->text()=="Distance")
+            {
+                if((curParam->regimMeasure != REGIM::MANUAL)&&(model->rowCount()>0))
+                {
+                    if(pbSave->isEnabled()&&(QMessageBox::Save == msg.exec()))
+                        saveSlot();
+                    clearAll();
+                }
+            }
+            else
+            {
+                if ((curParam->regimMeasure == REGIM::MANUAL)&&(model->rowCount()>0))
+                {
+                    if(pbSave->isEnabled()&&(QMessageBox::Save == msg.exec()))
+                        saveSlot();
+                    clearAll();
+                }
+            }
         }
-    }
+//    }
 
     if (curParam->regimMeasure  == REGIM::MANUAL)
     {

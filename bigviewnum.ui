@@ -88,6 +88,7 @@
               <pointsize>32</pointsize>
               <weight>75</weight>
               <bold>true</bold>
+              <stylestrategy>PreferAntialias</stylestrategy>
              </font>
             </property>
             <property name="text">
@@ -312,6 +313,7 @@
               <pointsize>32</pointsize>
               <weight>75</weight>
               <bold>true</bold>
+              <stylestrategy>PreferAntialias</stylestrategy>
              </font>
             </property>
             <property name="text">

@@ -14,7 +14,7 @@ class key_radio : public QWidget
     Q_OBJECT
 
 Q_SIGNALS:
-    void changeInterval();
+    void changeInterval(QString);
 //    void change();
 
 private:
