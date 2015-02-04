@@ -137,11 +137,7 @@ void key_radio::refresh()
 
 void key_radio::doChangeRegim()
 {
-//    QObject* sender = const_cast<QObject*>(QObject::sender());
-
-//    if(sender->objectName()=="leAConst_personal")
-//    {
-//    }
+    emit changeInterval(QObject::sender()->objectName());
 
     if(rbAutoFreeze->isChecked())
         curentParam->regimMeasure  = REGIM::AUTOFREEZ;
@@ -161,5 +157,6 @@ void key_radio::doChangeRegim()
         curentParam->regimSide     = REGIM::OD;
     if(rbOs->isChecked())
         curentParam->regimSide     = REGIM::OS;
-   emit changeInterval(QObject::sender()->objectName());
+
+    emit changeInterval(QObject::sender()->objectName());
 }

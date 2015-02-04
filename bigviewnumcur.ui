@@ -71,6 +71,7 @@
          <pointsize>11</pointsize>
          <weight>75</weight>
          <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
          <kerning>false</kerning>
         </font>
        </property>
@@ -95,6 +96,7 @@
          <pointsize>11</pointsize>
          <weight>75</weight>
          <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
          <kerning>false</kerning>
         </font>
        </property>
@@ -166,6 +168,7 @@
          <pointsize>11</pointsize>
          <weight>75</weight>
          <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
          <kerning>false</kerning>
         </font>
        </property>
@@ -204,6 +207,7 @@
          <pointsize>11</pointsize>
          <weight>75</weight>
          <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
          <kerning>false</kerning>
         </font>
        </property>
@@ -328,6 +332,7 @@
          <pointsize>11</pointsize>
          <weight>75</weight>
          <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
          <kerning>false</kerning>
         </font>
        </property>
@@ -346,6 +351,7 @@
          <pointsize>11</pointsize>
          <weight>75</weight>
          <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
          <kerning>false</kerning>
         </font>
        </property>
@@ -364,6 +370,7 @@
          <pointsize>11</pointsize>
          <weight>75</weight>
          <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
          <kerning>false</kerning>
         </font>
        </property>
@@ -382,6 +389,7 @@
          <pointsize>11</pointsize>
          <weight>75</weight>
          <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
          <kerning>false</kerning>
         </font>
        </property>
@@ -403,6 +411,7 @@
          <pointsize>11</pointsize>
          <weight>75</weight>
          <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
          <kerning>false</kerning>
         </font>
        </property>
@@ -421,6 +430,7 @@
          <pointsize>11</pointsize>
          <weight>75</weight>
          <bold>true</bold>
+         <stylestrategy>PreferAntialias</stylestrategy>
          <kerning>false</kerning>
         </font>
        </property>

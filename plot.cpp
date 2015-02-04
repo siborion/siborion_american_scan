@@ -43,9 +43,22 @@ Plot::Plot( QWidget *parent, bool print, CurParam *link):
     setAxisScale(QwtPlot::yLeft, -4, 300.0);
 
     QPalette palette;
-    palette.setColor(QPalette::WindowText, Qt::gray);
+    if(print)
+    {
+        palette.setColor(QPalette::WindowText, Qt::black);
+        palette.setColor(QPalette::Text, Qt::black);
+        palette.setColor(QPalette::Background, Qt::white);
+//        palette.setColor(QPalette::Foreground, Qt::blue);
+//        palette.setColor(QPalette::Base, Qt::red);
+        this->setPalette(palette);
+    }
+    else
+    {
+        palette.setColor(QPalette::WindowText, Qt::gray);
+        palette.setColor(QPalette::Text, Qt::gray);
+    }
+
     this->axisWidget(QwtPlot::yLeft)->setPalette(palette);
-    palette.setColor(QPalette::Text, Qt::gray);
     this->axisWidget(QwtPlot::xBottom)->setPalette(palette);
 
     // curves

@@ -307,53 +307,47 @@ void sampletable::changeRegimManual(QString objectName)
     QStandardItemModel *model = new QStandardItemModel();
     model = (QStandardItemModel*)twMeas->model();
 
-//    if(pbSave->isEnabled())
-//    {
+    if(model->rowCount()>0)
+    {
         msg.setInformativeText("Do you want to save your changes?");
         msg.setStandardButtons(QMessageBox::Save | QMessageBox::Discard);
         msg.setDefaultButton(QMessageBox::Save);
 
-        if(((objectName == "OS")||(objectName == "OD"))&&(model->rowCount()>0))
+        if(((objectName=="OS")&&(curParam->regimSide==REGIM::OD))||((objectName=="OD")&&(curParam->regimSide==REGIM::OS)))
         {
             if(pbSave->isEnabled()&&(QMessageBox::Save == msg.exec()))
                 saveSlot();
-            clearAll();
         }
-        else
-        {
-            if(model->horizontalHeaderItem(2)->text()=="Distance")
-            {
-                if((curParam->regimMeasure != REGIM::MANUAL)&&(model->rowCount()>0))
-                {
-                    if(pbSave->isEnabled()&&(QMessageBox::Save == msg.exec()))
-                        saveSlot();
-                    clearAll();
-                }
-            }
-            else
-            {
-                if ((curParam->regimMeasure == REGIM::MANUAL)&&(model->rowCount()>0))
-                {
-                    if(pbSave->isEnabled()&&(QMessageBox::Save == msg.exec()))
-                        saveSlot();
-                    clearAll();
-                }
-            }
-        }
-//    }
 
-    if (curParam->regimMeasure  == REGIM::MANUAL)
+        if(((objectName=="rbAutoFreeze")||(objectName=="rbAuto"))&&(curParam->regimSide==REGIM::MANUAL))
+        {
+            if(pbSave->isEnabled()&&(QMessageBox::Save == msg.exec()))
+                saveSlot();
+        }
+
+        if((objectName=="rbManual")&&((curParam->regimSide==REGIM::AUTOFREEZ)||(curParam->regimSide==REGIM::AUTO)))
+        {
+            if(pbSave->isEnabled()&&(QMessageBox::Save == msg.exec()))
+                saveSlot();
+        }
+    }
+    clearAll();
+
+    if (objectName=="rbManual")
     {
         columnPercent<<10      <<0            <<83      <<0       <<0      <<0;
         lst          <<tr("No")<<tr("AveVelAl")<<tr("Distance");
+        model->setHorizontalHeaderLabels(lst);
+        twMeas->setColumnPercent(columnPercent);
     }
-    else
+
+    if ((objectName=="rbAuto")||(objectName=="rbAutoFreeze"))
     {
         columnPercent<<10      <<23            <<15      <<15       <<15      <<15;
         lst          <<tr("No")<<tr("AveVelAl")<<tr("AL")<<tr("ACD")<<tr("LT")<<tr("VIT");
+        model->setHorizontalHeaderLabels(lst);
+        twMeas->setColumnPercent(columnPercent);
     }
-    model->setHorizontalHeaderLabels(lst);
-    twMeas->setColumnPercent(columnPercent);
 }
 
 void sampletable::startMeasure()

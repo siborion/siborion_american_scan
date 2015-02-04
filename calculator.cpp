@@ -208,7 +208,9 @@ void calculator::refreshMeasure()
 void calculator::printPreview()
 {
     QPrinter             printer( QPrinter::HighResolution );
-    QPrintPreviewDialog  preview( &printer, this );
+    printer.setPageSize(QPrinter::A4);
+//    QPrintPreviewDialog  preview( &printer, this );
+      QPrintPreviewDialog  preview( &printer);
     connect( &preview, SIGNAL(paintRequested(QPrinter*)), SLOT(print(QPrinter*)) );
     preview.exec();
 }
@@ -234,8 +236,8 @@ void calculator::print( QPrinter* printer )
             pPlotPrint1 = new Plot(this, true, curParam);
             pPlotPrint1->drawSample(&sample);
             pPlotPrint1->enableAxis(QwtPlot::xTop,false);
-            pPlotPrint1->enableAxis(QwtPlot::xBottom,false);
-            pPlotPrint1->enableAxis(QwtPlot::yLeft,false);
+            pPlotPrint1->enableAxis(QwtPlot::xBottom,true);
+            pPlotPrint1->enableAxis(QwtPlot::yLeft,true);
             pPlotPrint1->replot();
             renderer.render(pPlotPrint1, &painter, QRectF(500,1000,2000,1800));
             break;
@@ -243,8 +245,8 @@ void calculator::print( QPrinter* printer )
             pPlotPrint2 = new Plot(this, true, curParam);
             pPlotPrint2->drawSample(&sample);
             pPlotPrint2->enableAxis(QwtPlot::xTop,false);
-            pPlotPrint2->enableAxis(QwtPlot::xBottom,false);
-            pPlotPrint2->enableAxis(QwtPlot::yLeft,false);
+            pPlotPrint2->enableAxis(QwtPlot::xBottom,true);
+            pPlotPrint2->enableAxis(QwtPlot::yLeft,true);
             pPlotPrint2->replot();
             renderer.render(pPlotPrint2, &painter, QRectF(2700,1000,2000,1800));
             break;
@@ -252,8 +254,8 @@ void calculator::print( QPrinter* printer )
             pPlotPrint3 = new Plot(this, true, curParam);
             pPlotPrint3->drawSample(&sample);
             pPlotPrint3->enableAxis(QwtPlot::xTop,false);
-            pPlotPrint3->enableAxis(QwtPlot::xBottom,false);
-            pPlotPrint3->enableAxis(QwtPlot::yLeft,false);
+            pPlotPrint3->enableAxis(QwtPlot::xBottom,true);
+            pPlotPrint3->enableAxis(QwtPlot::yLeft,true);
             pPlotPrint3->replot();
             renderer.render(pPlotPrint3, &painter, QRectF(500,3000,2000,1800));
             break;
@@ -288,8 +290,8 @@ void calculator::print( QPrinter* printer )
 #define widthTable 3900
 
 //    QSize size;
-//    size.setHeight(2000);
-//    size.setWidth (2000);
+//    size.setHeight(20000);
+//    size.setWidth (20000);
     if(Formula1->isEnabled())
     {
         QPixmap pixmap(Formula1->size());
