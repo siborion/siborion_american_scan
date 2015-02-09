@@ -23,17 +23,17 @@ bigviewnum::~bigviewnum()
 
 void bigviewnum::setDisplay(stAverageParam *averageParam)
 {
-    ui->lAvgAL_2->setText(QString("%1").arg(averageParam->AL,5,'f',2,'0'));
-    ui->lDevAL_2->setText(QString("%1").arg(averageParam->ALdiv,5,'f',2,'0'));
+    ui->lAvgAL_2->setText(QString("%1").arg(averageParam->AL,     5,'f',2,'0'));
+    ui->lDevAL_2->setText(QString("%1").arg(averageParam->ALdiv,  4,'f',2,'0'));
 
-    ui->lAvgAcd_2->setText(QString("%1").arg(averageParam->ACD,5,'f',2,'0'));
-    ui->lDevAcd_2->setText(QString("%1").arg(averageParam->ACDdiv,5,'f',2,'0'));
+    ui->lAvgAcd_2->setText(QString("%1").arg(averageParam->ACD,   4,'f',2,'0'));
+    ui->lDevAcd_2->setText(QString("%1").arg(averageParam->ACDdiv,4,'f',2,'0'));
 
-    ui->lAvgLt_2 ->setText(QString("%1").arg(averageParam->LT, 5,'f',2,'0'));
-    ui->lDevLt_2 ->setText(QString("%1").arg(averageParam->LTdiv, 5,'f',2,'0'));
+    ui->lAvgLt_2 ->setText(QString("%1").arg(averageParam->LT,    4,'f',2,'0'));
+    ui->lDevLt_2 ->setText(QString("%1").arg(averageParam->LTdiv, 4,'f',2,'0'));
 
-    ui->lAvgVit_2->setText(QString("%1").arg(averageParam->VIT,5,'f',2,'0'));
-    ui->lDevVit_2->setText(QString("%1").arg(averageParam->VITdiv,5,'f',2,'0'));
+    ui->lAvgVit_2->setText(QString("%1").arg(averageParam->VIT,   5,'f',2,'0'));
+    ui->lDevVit_2->setText(QString("%1").arg(averageParam->VITdiv,4,'f',2,'0'));
 
     curParam->AL  = averageParam->AL;
     curParam->ACD = averageParam->ACD;
