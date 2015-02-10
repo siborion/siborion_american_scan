@@ -31,22 +31,23 @@ void bigviewnum::setDisplay(stAverageParam *averageParam)
 
 void bigviewnum::setRegim()
 {
-    bool bVal;
-    bVal = (curParam->regimMeasure  != REGIM::MANUAL);
-    ui->lAveACD->setVisible(bVal);
-    ui->lAveLT->setVisible(bVal);
-    ui->lAveVIT->setVisible(bVal);
-    ui->lAvgAcd_2->setVisible(bVal);
-    ui->lDevAcd_2->setVisible(bVal);
-    ui->lAvgLt_2 ->setVisible(bVal);
-    ui->lDevLt_2 ->setVisible(bVal);
-    ui->lAvgVit_2->setVisible(bVal);
-    ui->lDevVit_2->setVisible(bVal);
-    ui->lStdACD->setVisible(bVal);
-    ui->lStdLT->setVisible(bVal);
-    ui->lStdVIT->setVisible(bVal);
-    ui->lAveAL->setText(bVal?"AL":"Dist");
-    ui->lStdAL->setText(bVal?"AL":"Dist");
+    bool bAuto, bCataract;
+    bAuto = (curParam->regimMeasure  != REGIM::MANUAL);
+    bCataract = (curParam->regimCataract == REGIM::CATARACT);
+    ui->lAveACD->setVisible(bAuto && bCataract);
+    ui->lAveLT->setVisible (bAuto && bCataract);
+    ui->lAveVIT->setVisible(bAuto && bCataract);
+    ui->lAvgAcd_2->setVisible(bAuto && bCataract);
+    ui->lDevAcd_2->setVisible(bAuto && bCataract);
+    ui->lAvgLt_2 ->setVisible(bAuto && bCataract);
+    ui->lDevLt_2 ->setVisible(bAuto && bCataract);
+    ui->lAvgVit_2->setVisible(bAuto && bCataract);
+    ui->lDevVit_2->setVisible(bAuto && bCataract);
+    ui->lStdACD->setVisible  (bAuto && bCataract);
+    ui->lStdLT->setVisible   (bAuto && bCataract);
+    ui->lStdVIT->setVisible  (bAuto && bCataract);
+    ui->lAveAL->setText(bAuto?"AL":"Dist");
+    ui->lStdAL->setText(bAuto?"AL":"Dist");
 }
 
 void bigviewnum::clearAll()

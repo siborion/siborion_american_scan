@@ -300,7 +300,7 @@ void sampletable::calculateAvg()
 void sampletable::changeRegimManual(QString objectName)
 {
     qDebug()<<objectName;
-
+    bool bAuto, bCataract;
     QMessageBox msg;
     QList<int> columnPercent;
     QStringList lst;
@@ -333,21 +333,42 @@ void sampletable::changeRegimManual(QString objectName)
     }
     clearAll();
 
+    bCataract = (curParam->regimCataract == REGIM::CATARACT);
+    bAuto = (curParam->regimMeasure != REGIM::MANUAL);
+
+    if (objectName=="rbCataract")
+        bCataract = true;
+
+    if (objectName=="Aphakic")
+        bCataract = false;
+
     if (objectName=="rbManual")
-    {
-        columnPercent<<10      <<0            <<83      <<0       <<0      <<0;
-        lst          <<tr("No")<<tr("AveVelAl")<<tr("Distance");
-        model->setHorizontalHeaderLabels(lst);
-        twMeas->setColumnPercent(columnPercent);
-    }
+        bAuto = false;
 
     if ((objectName=="rbAuto")||(objectName=="rbAutoFreeze"))
+        bAuto = true;
+
+    if(bAuto)
     {
-        columnPercent<<10      <<23            <<15      <<15       <<15      <<15;
-        lst          <<tr("No")<<tr("AveVelAl")<<tr("AL")<<tr("ACD")<<tr("LT")<<tr("VIT");
-        model->setHorizontalHeaderLabels(lst);
-        twMeas->setColumnPercent(columnPercent);
+        if(bCataract)
+        {
+            columnPercent<<10      <<23            <<15      <<15       <<15      <<15;
+            lst          <<tr("No")<<tr("AveVelAl")<<tr("AL")<<tr("ACD")<<tr("LT")<<tr("VIT");
+        }
+        else
+        {
+            columnPercent<<10      <<83            <<0      <<0       <<0      <<0;
+            lst          <<tr("No")<<tr("AveVelAl");
+        }
     }
+    else
+    {
+        columnPercent<<10      <<83            <<0      <<0       <<0      <<0;
+        lst          <<tr("No")<<tr("Distance");
+    }
+
+    model->setHorizontalHeaderLabels(lst);
+    twMeas->setColumnPercent(columnPercent);
 }
 
 void sampletable::startMeasure()

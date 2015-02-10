@@ -28,15 +28,17 @@ void Bigviewnumcur::setDisplay(stMeasureParam *link)
 
 void Bigviewnumcur::setRegim()
 {
-    bool bVal;
-    bVal = (curParam->regimMeasure  != REGIM::MANUAL);
-    ui->lCurACD->setVisible(bVal);
-    ui->lCurLT->setVisible(bVal);
-    ui->lCurVIT->setVisible(bVal);
-    ui->lACD->setVisible(bVal);
-    ui->lLT->setVisible(bVal);
-    ui->lVIT->setVisible(bVal);
-    ui->lAL->setText(bVal?"AL":"Dist");
+    bool bAuto, bCataract, bVal;
+    bAuto = (curParam->regimMeasure  != REGIM::MANUAL);
+    bCataract = (curParam->regimCataract == REGIM::CATARACT);
+
+    ui->lCurACD->setVisible(bAuto);
+    ui->lCurLT->setVisible(bAuto);
+    ui->lCurVIT->setVisible(bAuto);
+    ui->lACD->setVisible(bAuto);
+    ui->lLT->setVisible(bAuto);
+    ui->lVIT->setVisible(bAuto);
+    ui->lAL->setText(bAuto?"AL":"Dist");
 
     bVal = (curParam->regimSide == REGIM::OD);
     ui->leSide->setText(bVal?"OD":"OS");
