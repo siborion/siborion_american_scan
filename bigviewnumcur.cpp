@@ -20,7 +20,7 @@ Bigviewnumcur::~Bigviewnumcur()
 
 void Bigviewnumcur::setDisplay(stMeasureParam *link)
 {
-    ui->lCurAL->setText(QString("%1").arg (link->AL, 5,'f',2,'0'));
+    ui->lCurAL->setText(QString("%1").arg (link->ALave , 5,'f',2,'0'));
     ui->lCurACD->setText(QString("%1").arg(link->ACD,4,'f',2,'0'));
     ui->lCurLT->setText(QString("%1").arg (link->LT, 4,'f',2,'0'));
     ui->lCurVIT->setText(QString("%1").arg(link->VIT,5,'f',2,'0'));

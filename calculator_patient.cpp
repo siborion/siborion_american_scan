@@ -27,8 +27,8 @@ void calculator_patient::refreshAlACD()
     if(softUpdate)
         return;
     softUpdate = true;
-    curParam->ACD = ui->leACD_measure->text().toDouble();
-    curParam->AL  = ui->leAL_measure->text().toDouble();
+    curParam->ACD    = ui->leACD_measure->text().toDouble();
+    curParam->ALave  = ui->leAL_measure->text().toDouble();
     emit (refreshFormula());
     softUpdate = false;
 }
@@ -58,7 +58,7 @@ void calculator_patient::refreshPatientParam()
     ui->lePatientName->setText(curParam->patientName);
     ui->leDoctorName->setText(curParam->doctorName);
     ui->leACD_measure->setTextZero(QString("%1").arg(curParam->ACD));
-    ui->leAL_measure->setTextZero(QString("%1").arg(curParam->AL));
+    ui->leAL_measure->setTextZero(QString("%1").arg(curParam->ALave));
     RefreshK();
     softUpdate = false;
 }

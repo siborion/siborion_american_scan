@@ -47,11 +47,11 @@ struct stMeasureParam
 
 struct stAverageParam
 {
-    double AL;
+    double ALave;
     double ACD;
     double LT;
     double VIT;
-    double ALdiv;
+    double ALavediv;
     double ACDdiv;
     double LTdiv;
     double VITdiv;

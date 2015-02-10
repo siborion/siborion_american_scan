@@ -36,7 +36,7 @@ public:
     double k1right;
     double k2right;
     double K;
-    double AL;
+    double ALave;
     double ACD;
 
 private:

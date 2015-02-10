@@ -132,7 +132,7 @@ void calculator::refreshFormuls()
 
 
 
-    if(!((curParam->ACD>0)&&(curParam->AL>0)&&(curParam->K>0)))
+    if(!((curParam->ACD>0)&&(curParam->ALave>0)&&(curParam->K>0)))
         return;
 
     Formula1->setEnabled(false);
@@ -170,15 +170,15 @@ void calculator::refreshFormuls()
             switch (i)
             {
             case 0:
-                Formula1->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, curParam->K, curParam->AL, curParam->ACD);
+                Formula1->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, curParam->K, curParam->ALave, curParam->ACD);
                 Formula1->setEnabled(true);
                 break;
             case 1:
-                Formula2->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, curParam->K, curParam->AL, curParam->ACD);
+                Formula2->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, curParam->K, curParam->ALave, curParam->ACD);
                 Formula2->setEnabled(true);
                 break;
             case 2:
-                Formula3->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, curParam->K, curParam->AL, curParam->ACD);
+                Formula3->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, curParam->K, curParam->ALave, curParam->ACD);
                 Formula3->setEnabled(true);
             default:
                 break;
@@ -195,7 +195,7 @@ void calculator::refreshFormuls()
             lensAcd = QString("%1").arg(personalParam.ACD);
         if(personalParam.SF>0)
             lensFs = QString("%1").arg(personalParam.SF);
-        Formula1->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, curParam->K, curParam->AL, curParam->ACD);
+        Formula1->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, curParam->K, curParam->ALave, curParam->ACD);
         Formula1->setEnabled(true);
     }
 }

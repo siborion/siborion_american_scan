@@ -201,8 +201,8 @@ void sampletable::calculateAvg()
     QModelIndex index;
     quint8 rowCount;
     stAverageParam averageParam;
-    averageParam.ACD    = averageParam.AL    = averageParam.LT    = averageParam.VIT    = 0;
-    averageParam.ACDdiv = averageParam.ALdiv = averageParam.LTdiv = averageParam.VITdiv = 0;
+    averageParam.ACD    = averageParam.ALave    = averageParam.LT    = averageParam.VIT    = 0;
+    averageParam.ACDdiv = averageParam.ALavediv = averageParam.LTdiv = averageParam.VITdiv = 0;
     ALave = ACDave = LTave = VITave = 0;
     rowCount = twMeas->model()->rowCount();
 
@@ -225,7 +225,7 @@ void sampletable::calculateAvg()
 
     for(quint8 i=0; i<rowCount; i++)
     {
-        index = twMeas->model()->index(i, 2);
+        index = twMeas->model()->index(i, 1);
         AL    = twMeas->model()->data(index, Qt::DisplayRole).toDouble();
         index = twMeas->model()->index(i, 3);
         ACD   = twMeas->model()->data(index, Qt::DisplayRole).toDouble();
@@ -234,7 +234,7 @@ void sampletable::calculateAvg()
         index = twMeas->model()->index(i, 5);
         VIT   = twMeas->model()->data(index, Qt::DisplayRole).toDouble();
 
-        averageParam.ALdiv  += pow((AL  - ALave), 2);
+        averageParam.ALavediv  += pow((AL  - ALave), 2);
         averageParam.ACDdiv += pow((ACD - ACDave),2);
         averageParam.LTdiv  += pow((LT  - LTave), 2);
         averageParam.VITdiv += pow((VIT - VITave),2);
@@ -245,38 +245,38 @@ void sampletable::calculateAvg()
         VIT = pow(VIT,2);
 
         averageParam.ACD += ACD;
-        averageParam.AL  += AL;
+        averageParam.ALave  += AL;
         averageParam.LT  += LT;
         averageParam.VIT += VIT;
     }
 
     averageParam.ACD /= rowCount;
-    averageParam.AL  /= rowCount;
+    averageParam.ALave  /= rowCount;
     averageParam.LT  /= rowCount;
     averageParam.VIT /= rowCount;
 
-    averageParam.ALdiv  /= rowCount;
+    averageParam.ALavediv  /= rowCount;
     averageParam.ACDdiv /= rowCount;
     averageParam.LTdiv  /= rowCount;
     averageParam.VITdiv /= rowCount;
 
     averageParam.ACD = pow(averageParam.ACD, 0.5);
-    averageParam.AL  = pow(averageParam.AL,  0.5);
+    averageParam.ALave  = pow(averageParam.ALave,  0.5);
     averageParam.LT  = pow(averageParam.LT,  0.5);
     averageParam.VIT = pow(averageParam.VIT, 0.5);
 
     averageParam.ACDdiv = pow(averageParam.ACDdiv, 0.5);
-    averageParam.ALdiv  = pow(averageParam.ALdiv,  0.5);
+    averageParam.ALavediv  = pow(averageParam.ALavediv,  0.5);
     averageParam.LTdiv  = pow(averageParam.LTdiv,  0.5);
     averageParam.VITdiv = pow(averageParam.VITdiv, 0.5);
 
     averageParam.ACD = round(averageParam.ACD*100)/100;
-    averageParam.AL  = round(averageParam.AL*100) /100;
+    averageParam.ALave  = round(averageParam.ALave*100) /100;
     averageParam.LT  = round(averageParam.LT*100) /100;
     averageParam.VIT = round(averageParam.VIT*100)/100;
 
     averageParam.ACDdiv = round(averageParam.ACDdiv*100)/100;
-    averageParam.ALdiv  = round(averageParam.ALdiv*100) /100;
+    averageParam.ALavediv  = round(averageParam.ALavediv*100) /100;
     averageParam.LTdiv  = round(averageParam.LTdiv*100) /100;
     averageParam.VITdiv = round(averageParam.VITdiv*100)/100;
 
@@ -284,7 +284,7 @@ void sampletable::calculateAvg()
     {
         index = twMeas->model()->index(i, 2);
         curDev = twMeas->model()->data(index, Qt::DisplayRole).toDouble();
-        curDev = round(abs(averageParam.AL*100 - curDev*100));
+        curDev = round(abs(averageParam.ALave*100 - curDev*100));
         curDev /= 100;
         for(int j=0; j<=5; j++)
         {
@@ -293,7 +293,7 @@ void sampletable::calculateAvg()
         }
     }
     curParam->ACD = averageParam.ACD;
-    curParam->AL = averageParam.AL;
+    curParam->ALave = averageParam.ALave;
     emit sendAvg(&averageParam);
 }
 
@@ -391,6 +391,7 @@ void sampletable::del()
     }
     twMeas->model()->removeRows(start - removed, count);
     calculateAvg();
+    emit changeGlas();
 }
 
 void sampletable::keyPressEvent(QKeyEvent * keyEvent)

@@ -8,12 +8,6 @@ bigviewnum::bigviewnum(QWidget *parent, CurParam *link) :
 {
     ui->setupUi(this);
     curParam = link;
-    //    curentParam = CurentParam::instanse();
-    //    setMinimumSize(200,200);
-
-    //    curentParam->measureParamMaper.addMapping(ui->lAveAL_2, 0,"text");
-    //    curentParam->measureParamMaper.addMapping(ui->lAvgAcd_2,1,"text");
-
 }
 
 bigviewnum::~bigviewnum()
@@ -23,19 +17,15 @@ bigviewnum::~bigviewnum()
 
 void bigviewnum::setDisplay(stAverageParam *averageParam)
 {
-    ui->lAvgAL_2->setText(QString("%1").arg(averageParam->AL,     5,'f',2,'0'));
-    ui->lDevAL_2->setText(QString("%1").arg(averageParam->ALdiv,  4,'f',2,'0'));
-
+    ui->lAvgAL_2->setText(QString("%1").arg(averageParam->ALave,     5,'f',2,'0'));
+    ui->lDevAL_2->setText(QString("%1").arg(averageParam->ALavediv,  4,'f',2,'0'));
     ui->lAvgAcd_2->setText(QString("%1").arg(averageParam->ACD,   4,'f',2,'0'));
     ui->lDevAcd_2->setText(QString("%1").arg(averageParam->ACDdiv,4,'f',2,'0'));
-
     ui->lAvgLt_2 ->setText(QString("%1").arg(averageParam->LT,    4,'f',2,'0'));
     ui->lDevLt_2 ->setText(QString("%1").arg(averageParam->LTdiv, 4,'f',2,'0'));
-
     ui->lAvgVit_2->setText(QString("%1").arg(averageParam->VIT,   5,'f',2,'0'));
     ui->lDevVit_2->setText(QString("%1").arg(averageParam->VITdiv,4,'f',2,'0'));
-
-    curParam->AL  = averageParam->AL;
+    curParam->ALave  = averageParam->ALave;
     curParam->ACD = averageParam->ACD;
 }
 
@@ -63,16 +53,12 @@ void bigviewnum::clearAll()
 {
     ui->lAvgAL_2->setText(QString("%1").arg(0, 5,'f',2,'0'));
     ui->lDevAL_2->setText(QString("%1").arg(0, 4,'f',2,'0'));
-
     ui->lAvgAcd_2->setText(QString("%1").arg(0,4,'f',2,'0'));
     ui->lDevAcd_2->setText(QString("%1").arg(0,4,'f',2,'0'));
-
     ui->lAvgLt_2 ->setText(QString("%1").arg(0,4,'f',2,'0'));
     ui->lDevLt_2 ->setText(QString("%1").arg(0,4,'f',2,'0'));
-
     ui->lAvgVit_2->setText(QString("%1").arg(0,5,'f',2,'0'));
     ui->lDevVit_2->setText(QString("%1").arg(0,4,'f',2,'0'));
-
-    curParam->AL  = 0;
+    curParam->ALave  = 0;
     curParam->ACD = 0;
 }

@@ -23,5 +23,5 @@ CurParam::CurParam(QObject *parent) :
     doctorName  = "Select Doctor";
     doctorId = patientId = 0;
 
-    ACD = AL = K = k1left = k2left = k1right = k2right =0;
+    ACD = ALave = K = k1left = k2left = k1right = k2right =0;
 }
