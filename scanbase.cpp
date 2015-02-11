@@ -139,7 +139,12 @@ void Scanbase::updateCurPatient(quint16 id)
     str.append("lens.acd,");
     str.append("lens.sf,");
     str.append("formula.id,");
-    str.append("formula.name ");
+    str.append("formula.name, ");
+
+    str.append("0 as A1 ,");
+    str.append("0 as A2 ,");
+    str.append("0 as A3 ");
+
     str.append("FROM patient, doctor_lens, lens, formula ");
     str.append("ON patient.doctor=doctor_lens.id_doctor ");
     str.append("AND lens.id=doctor_lens.id_lens ");

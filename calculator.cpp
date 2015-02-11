@@ -34,17 +34,20 @@ calculator::calculator(QWidget *parent, CurParam *link) :
 
     //-------------------------------
     columnPercent.clear();
-    columnPercent<<20<<20<<20<<20<<20;
-    lst<<"Lens Name"<<"AConst"<<"ACD"<<"SF"<<"FORMULA";
+//    columnPercent<<20<<20<<20<<20<<20;
+    columnPercent<<20<<15<<10<<10<<0<<21<<8<<8<<8;
+//    lst<<"Lens Name"<<"AConst"<<"ACD"<<"SF"<<"FORMULA";
+    lst<<"Lens Name"<<"AConst"<<"ACD"<<"SF"<<"FORMULA"<<"id"<<"A1"<<"A2"<<"A3";
+
     twLens = new adjview(3, lst, columnPercent);
-    twLens->setMinimumWidth(250);
+    twLens->setMinimumWidth(350);
     modelMainLens = curParam->lensModel;
     twLens->setModel(modelMainLens);
-    modelMainLens->setHeaderData(0, Qt::Horizontal, "Lens Name", Qt::DisplayRole);
-    modelMainLens->setHeaderData(1, Qt::Horizontal, "AConst", Qt::DisplayRole);
-    modelMainLens->setHeaderData(2, Qt::Horizontal, "ACD", Qt::DisplayRole);
-    modelMainLens->setHeaderData(3, Qt::Horizontal, "SF", Qt::DisplayRole);
-    modelMainLens->setHeaderData(4, Qt::Horizontal, "FORMULA", Qt::DisplayRole);
+//    modelMainLens->setHeaderData(0, Qt::Horizontal, "Lens Name", Qt::DisplayRole);
+//    modelMainLens->setHeaderData(1, Qt::Horizontal, "AConst", Qt::DisplayRole);
+//    modelMainLens->setHeaderData(2, Qt::Horizontal, "ACD", Qt::DisplayRole);
+//    modelMainLens->setHeaderData(3, Qt::Horizontal, "SF", Qt::DisplayRole);
+//    modelMainLens->setHeaderData(4, Qt::Horizontal, "FORMULA", Qt::DisplayRole);
     //-------------------------------
     columnPercent.clear();
     columnPercent<<40<<40<<20;
