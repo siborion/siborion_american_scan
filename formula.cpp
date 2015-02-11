@@ -32,14 +32,14 @@ formula::formula(QWidget *parent) :
     columnPercent<<33<<33<<34;
     lst.clear();
     lst<<"Formula"<<"IOL"<<"REF";
-    twFormula = new adjview(15, lst, columnPercent);
+    twFormula = new adjview(12, lst, columnPercent);
     twFormula->setFrameStyle(0);
-    twFormula->setSpan(0,  0, 10, 1);
+    twFormula->setSpan(0,  0, 7, 1);
+    twFormula->setSpan(7, 1, 1,  2);
+    twFormula->setSpan(8, 1, 1,  2);
+    twFormula->setSpan(9, 1, 1,  2);
     twFormula->setSpan(10, 1, 1,  2);
     twFormula->setSpan(11, 1, 1,  2);
-    twFormula->setSpan(12, 1, 1,  2);
-    twFormula->setSpan(13, 1, 1,  2);
-    twFormula->setSpan(14, 1, 1,  2);
 //    twFormula->setStyleSheet(QLatin1String("gridline-color: rgba(255, 255, 255);\n""background-color: rgb(200, 200, 200);\n""border-color: rgba(255, 255, 255);"));
 
     columnPercent.clear();
@@ -102,8 +102,6 @@ void formula::refreshFormula(int curIndex)
     model->setItem(0, 0, getItem(slTmp.at(curIndex), Qt::AlignCenter));
     for(quint8 i=1; i<=5; i++)
     {
-        //        if(curIndex != i)
-        //        {
         j++;
         switch (i)
         {
@@ -112,13 +110,10 @@ void formula::refreshFormula(int curIndex)
         case HOFFERQ: Calculator(i, AL, ACD, K, 0, &stFormula);     break;
         case HOLLADAY:Calculator(i, AL, SF, K, 0, &stFormula);     break;
         case HAIGIS:  Calculator(i, AL, AConst, K, ACD_measure, &stFormula);  break;
-
         }
-        model1->setItem(9+j, 1, getItem(stFormula.PEMM, Qt::AlignCenter));
-        model->setItem(9+j, 0, getItem(slTmp.at(i), Qt::AlignCenter));
-        //        }
+        model1->setItem(6+j, 1, getItem(stFormula.PEMM, Qt::AlignCenter));
+        model->setItem (6+j, 0, getItem(slTmp.at(i),    Qt::AlignCenter));
     }
-    //    calculateIOL(curIndex);
 }
 
 QStringList formula::getListFormula()
