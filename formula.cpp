@@ -5,8 +5,6 @@
 formula::formula(QWidget *parent) :
     QWidget(parent)
 {
-    QLineEdit *qLe;
-
     QGridLayout *layout = new QGridLayout(this);
     layout->setSpacing(0);
     layout->setHorizontalSpacing(0);
@@ -14,9 +12,16 @@ formula::formula(QWidget *parent) :
     layout->setColumnStretch(0,1);
     layout->setColumnStretch(1,2);
 
+    QFont font;
+    font.setBold(true);
+    font.setPointSize(12);
+    font.setFamily(QStringLiteral("Arial"));
+
     lLens = new QLabel("lens");
+    lLens->setAlignment(Qt::AlignCenter);
+    lLens->setFont(font);
+
     leLens = new QLineEdit();
-//    lFormula->setText("formula");
 
     QList<int> columnPercent;
     QStringList lst;
@@ -76,18 +81,12 @@ formula::formula(QWidget *parent) :
     for(int i = 0; i < cbFormula->count(); i++)
         cbFormula->setItemData(i, Qt::AlignCenter, Qt::TextAlignmentRole);
 
-
-    layout->addWidget(cbFormula, 0, 0, 1, 2);
-//    layout->addWidget(twHead,    1, 0, 1, 2);
-    layout->addWidget(lLens,    1, 0, 1, 1);
-    layout->addWidget(leLens,   1, 1, 1, 1);
-
-    layout->addWidget(twFormula,    2, 0, 1, 2);
-//    layout->addWidget(twCalculator, 3, 1, 1, 1, Qt::AlignTop);
-//    layout->addWidget(twEmm, 4, 1, 1, 1, Qt::AlignTop);
+    layout->addWidget(cbFormula, 0, 0, 1, 1);
+    layout->addWidget(lLens,     0, 1, 1, 1);
+    layout->addWidget(leLens,    0, 2, 1, 1);
+    layout->addWidget(twFormula, 1, 0, 1, 3);
 
     connect(cbFormula, SIGNAL(currentIndexChanged(int)), this, SLOT(changeFotmula(int)));
-//    refreshFormula();
 }
 
 void formula::refreshFormula(int curIndex)
@@ -151,24 +150,10 @@ void formula::setValue(quint8 formula, QString name, QString aconst, QString acd
     ACD_measure = dACD;
     lLens->setText(name);
 
-
-
     if(formula==cbFormula->currentIndex())
         changeFotmula(formula);
     else
         cbFormula->setCurrentIndex(formula);
-    //    cbFormula->setCurrentIndex(1);
-
-
-
-
-
-
-
-
-
-//    changeFotmula(formula);
-
 }
 
 void formula::calculateIOL(quint8 formula)
