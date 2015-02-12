@@ -5,6 +5,8 @@
 formula::formula(QWidget *parent) :
     QWidget(parent)
 {
+    QLineEdit *qLe;
+
     QGridLayout *layout = new QGridLayout(this);
     layout->setSpacing(0);
     layout->setHorizontalSpacing(0);
@@ -65,14 +67,15 @@ formula::formula(QWidget *parent) :
     lst.clear();
     lst=getListFormula();
     cbFormula = new QComboBox();
-    cbFormula->setStyleSheet(QLatin1String("text-align: right;"));
+    cbFormula->setStyleSheet(QLatin1String("text-align: center;"));
     cbFormula->addItems(lst);
-    cbFormula->setItemData(0, Qt::AlignCenter, Qt::TextAlignmentRole);
-    cbFormula->setItemData(1, Qt::AlignCenter, Qt::TextAlignmentRole);
-    cbFormula->setItemData(2, Qt::AlignCenter, Qt::TextAlignmentRole);
-    cbFormula->setItemData(3, Qt::AlignCenter, Qt::TextAlignmentRole);
-    cbFormula->setItemData(4, Qt::AlignCenter, Qt::TextAlignmentRole);
-    cbFormula->setItemData(5, Qt::AlignCenter, Qt::TextAlignmentRole);
+
+    cbFormula->setEditable(true);
+    cbFormula->lineEdit()->setReadOnly(true);
+    cbFormula->lineEdit()->setAlignment(Qt::AlignCenter);
+    for(int i = 0; i < cbFormula->count(); i++)
+        cbFormula->setItemData(i, Qt::AlignCenter, Qt::TextAlignmentRole);
+
 
     layout->addWidget(cbFormula, 0, 0, 1, 2);
 //    layout->addWidget(twHead,    1, 0, 1, 2);
