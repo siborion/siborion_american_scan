@@ -58,7 +58,8 @@ SOURCES += main.cpp\
     calculator_patient.cpp \
     leaddzero.cpp \
     listresult.cpp \
-    dialogserial.cpp
+    dialogserial.cpp \
+    delegate_lens.cpp
 
 HEADERS  += mainwindow.h \
     bases.h \
@@ -91,7 +92,8 @@ HEADERS  += mainwindow.h \
     leaddzero.h \
     listresult.h \
     ftd2xx.h \
-    dialogserial.h
+    dialogserial.h \
+    delegate_lens.h
 
 FORMS    += mainwindow.ui \
     dialog_doctor.ui \

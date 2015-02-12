@@ -10,6 +10,7 @@
 #include <QLineEdit>
 #include <math.h>
 #include "typedef.h"
+#include "delegate_lens.h"
 
 class formula : public QWidget
 {

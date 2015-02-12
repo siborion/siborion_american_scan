@@ -1,6 +1,9 @@
 #include "formula.h"
 #include <QDebug>
 #include <QLabel>
+#include <QTableWidgetItem>
+#include <QBrush>
+
 
 formula::formula(QWidget *parent) :
     QWidget(parent)
@@ -47,6 +50,9 @@ formula::formula(QWidget *parent) :
     twFormula->setSpan(9, 1, 1,  2);
     twFormula->setSpan(10, 1, 1,  2);
     twFormula->setSpan(11, 1, 1,  2);
+
+//    DelegateLens * delegateLens = new DelegateLens();
+//    twFormula->setItemDelegate(delegateLens);
 //    twFormula->setStyleSheet(QLatin1String("gridline-color: rgba(255, 255, 255);\n""background-color: rgb(200, 200, 200);\n""border-color: rgba(255, 255, 255);"));
 
     columnPercent.clear();
@@ -80,6 +86,9 @@ formula::formula(QWidget *parent) :
     cbFormula->lineEdit()->setAlignment(Qt::AlignCenter);
     for(int i = 0; i < cbFormula->count(); i++)
         cbFormula->setItemData(i, Qt::AlignCenter, Qt::TextAlignmentRole);
+
+    twFormula->setStyleSheet(QStringLiteral("gridline-color: rgb(0, 0, 0);"));
+    twFormula->setGridStyle(Qt::SolidLine);
 
     layout->addWidget(cbFormula, 0, 0, 1, 1);
     layout->addWidget(lLens,     0, 1, 1, 1);
@@ -197,8 +206,12 @@ void formula::calculateIOL(quint8 formula)
 
 void formula::saveParam(_formulae *val)
 {
+    QModelIndex index1, index2;
     double dTmp;
+    QBrush hhh;
+    hhh.setColor(Qt::red);
     QStandardItemModel *model = new QStandardItemModel();
+    QStandardItem  *item;
     model = (QStandardItemModel*)twCalculator->model();
     for(quint8 i=0; i<7; i++)
     {
@@ -213,6 +226,16 @@ void formula::saveParam(_formulae *val)
         QStandardItem *sTmp2 = new QStandardItem(str);
         sTmp2->setTextAlignment(Qt::AlignCenter);
         model->setItem(i, 2, sTmp2);
+
+        if(i==3)
+        {
+            index1 = model->index(i,1);
+            index2 = model->index(i,2);
+            QColor color;
+            color.setRgb(0,255,0);
+            model->setData(index1,color,Qt::BackgroundRole);
+            model->setData(index2,color,Qt::BackgroundRole);
+        }
     }
 }
 
