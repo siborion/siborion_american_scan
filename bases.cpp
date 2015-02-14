@@ -91,6 +91,7 @@ void Bases::adjTable()
         if(model->rowCount()<=numRowPatient)
             numRowPatient = model->rowCount()-1;
         twTable->selectRow(numRowPatient);
+        qDebug()<<"numRowPatient"<<numRowPatient;
         break;
     case Base::enDoctor:
         columnPercent   <<       8        <<      30        <<      30       <<     30;
@@ -152,8 +153,12 @@ void Bases::Add()
         emit updateCurPatient(0);
         Dialog_Patient *pPatient = new Dialog_Patient(stPatient);
         if(pPatient->exec() == QDialog::Accepted)
+        {
             emit savePatient(&newId);
-        adjTable();
+            emit updateCurPatient(newId);
+            adjTable();
+            twTable->selectRow(twTable->model()->rowCount()-1);
+        }
         delete pPatient;
     }
     if(typeBase==Base::enDoctor)

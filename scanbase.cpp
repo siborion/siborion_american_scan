@@ -188,13 +188,18 @@ void Scanbase::saveCurPatient(quint16 *id)
     value.resize(value.length()-1);
 
     if(curPatient["id"].toInt()>0)
+    {
         sql.append(QString("update patient set id=id %1 where id=%2").arg(str).arg(curPatient["id"].toInt()));
+        query.prepare(sql);
+        query.exec();
+    }
     else
+    {
         sql.append(QString("insert into patient (%1) values (%2)").arg(field).arg(value));
-
-    query.prepare(sql);
-    query.exec();
-
+        query.prepare(sql);
+        query.exec();
+        *id = query.lastInsertId().toUInt();
+    }
 }
 
 void Scanbase::delPatient()
