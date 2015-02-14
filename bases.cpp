@@ -86,8 +86,8 @@ void Bases::adjTable()
     switch (typeBase)
     {
     case Base::enPatient:
-        columnPercent<<   8        <<    30     <<       30        <<     30;
-        lstButton<<tr("Add Patient")<<tr("Edit Patient")<<tr("Delete Patient")<<tr("Patient History");
+        columnPercent<<   8        <<    30     <<       30  << 30;
+        lstButton<<tr("Add Patient")<<tr("Edit Patient")<<tr("Delete Patient");
         if(model->rowCount()<=numRowPatient)
             numRowPatient = model->rowCount()-1;
         twTable->selectRow(numRowPatient);

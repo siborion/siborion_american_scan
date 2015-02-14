@@ -155,10 +155,18 @@ void sampletable::addSample(QByteArray *Sample, QList<quint16> *extremum, stMeas
         if (curParam->regimMeasure  == REGIM::AUTOFREEZ)
         {
             if(twMeas->model()->rowCount()>=10)
+            {
                 emit stopMeasure();
+                if(twMeas->model()->rowCount()>0)
+                    twMeas->selectRow(twMeas->model()->rowCount()-1);
+            }
         }
         if (curParam->regimMeasure  == REGIM::AUTO)
+        {
             emit stopMeasure();
+            if(twMeas->model()->rowCount()>0)
+                twMeas->selectRow(twMeas->model()->rowCount()-1);
+        }
         pbSave->setEnabled(true);
     }
 }
