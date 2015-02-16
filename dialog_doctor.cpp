@@ -48,9 +48,9 @@ Dialog_Doctor::Dialog_Doctor(QMap <QString, QString> *stDoctor, QWidget *parent)
     CheckBoxDelegate * pCheck_Delegate = new CheckBoxDelegate( ui->tableView );
     ui->tableView->setItemDelegateForColumn(0, pCheck_Delegate);
 
-
     ui->tableView->setModel(model);
     ui->tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->tableView->setEditTriggers(QAbstractItemView::EditTrigger::AllEditTriggers);
 
     lst.clear();
     columnPercent << 5 << 20  <<     15 <<            15 <<           15       <<     30;
@@ -62,6 +62,7 @@ Dialog_Doctor::Dialog_Doctor(QMap <QString, QString> *stDoctor, QWidget *parent)
         ui->tableView->setColumnWidth(i, (tableWidth*columnPercent.at(i))/100);
     }
 
+    connect(ui->tableView, SIGNAL(activated(QModelIndex)), this, SLOT(edit(QModelIndex)));
     connect(ui->buttonBox, SIGNAL(accepted()), SLOT(saveData()));
     pBaseFill = new basefill(children(), stDoctor);
     pBaseFill->fillData();
