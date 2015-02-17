@@ -6,14 +6,18 @@
 
 
 formula::formula(QWidget *parent) :
-    QWidget(parent)
+    QFrame(parent)
 {
+
+    setFrameShape(QFrame::StyledPanel);
+    setFrameShadow(QFrame::Raised);
+
     QGridLayout *layout = new QGridLayout(this);
-    layout->setSpacing(0);
-    layout->setHorizontalSpacing(0);
-    layout->setVerticalSpacing(0);
-    layout->setColumnStretch(0,1);
-    layout->setColumnStretch(1,2);
+//    layout->setSpacing(0);
+//    layout->setHorizontalSpacing(0);
+//    layout->setVerticalSpacing(0);
+//    layout->setColumnStretch(0,1);
+//    layout->setColumnStretch(1,2);
 
     QFont font;
     font.setBold(true);
@@ -23,8 +27,10 @@ formula::formula(QWidget *parent) :
     lLens = new QLabel("lens");
     lLens->setAlignment(Qt::AlignCenter);
     lLens->setFont(font);
+    lLens->setMaximumHeight(30);
 
-    leLens = new QLineEdit();
+    leLens = new QLabel("A-Const");
+    leLens->setAlignment(Qt::AlignCenter);
 
     QList<int> columnPercent;
     QStringList lst;
@@ -90,10 +96,10 @@ formula::formula(QWidget *parent) :
     twFormula->setStyleSheet(QStringLiteral("gridline-color: rgb(0, 0, 0);"));
     twFormula->setGridStyle(Qt::SolidLine);
 
-    layout->addWidget(cbFormula, 0, 0, 1, 1);
-    layout->addWidget(lLens,     0, 1, 1, 1);
-    layout->addWidget(leLens,    0, 2, 1, 1);
-    layout->addWidget(twFormula, 1, 0, 1, 3);
+    layout->addWidget(lLens,     0, 0, 1, 2);
+    layout->addWidget(cbFormula, 1, 0, 1, 1);
+    layout->addWidget(leLens,    1, 1, 1, 1);
+    layout->addWidget(twFormula, 2, 0, 1, 2);
 
     connect(cbFormula, SIGNAL(currentIndexChanged(int)), this, SLOT(changeFotmula(int)));
 }

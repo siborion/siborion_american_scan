@@ -12,7 +12,7 @@
 #include "typedef.h"
 #include "delegate_lens.h"
 
-class formula : public QWidget
+class formula : public QFrame
 {
     Q_OBJECT
 private:
@@ -23,7 +23,7 @@ private:
     double SF;
     double ACD_measure;
     QLabel *lLens;
-    QLineEdit *leLens;
+    QLabel *leLens;
     adjview *twCalculator;
     adjview *twFormula;
     adjview *twEmm;
