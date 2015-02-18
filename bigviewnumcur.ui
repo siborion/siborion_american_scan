@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>621</width>
-    <height>71</height>
+    <width>590</width>
+    <height>77</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -268,6 +268,12 @@
          <height>0</height>
         </size>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>380</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <family>MS Shell Dlg 2</family>
@@ -365,6 +371,12 @@
          <height>0</height>
         </size>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>380</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <family>MS Shell Dlg 2</family>
@@ -416,6 +428,12 @@
         <size>
          <width>0</width>
          <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>380</width>
+         <height>16777215</height>
         </size>
        </property>
        <property name="font">

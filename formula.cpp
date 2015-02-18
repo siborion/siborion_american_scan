@@ -9,7 +9,7 @@ formula::formula(QWidget *parent) :
     QFrame(parent)
 {
 
-    setFrameShape(QFrame::StyledPanel);
+    setFrameShape(QFrame::WinPanel);
     setFrameShadow(QFrame::Raised);
 
     QGridLayout *layout = new QGridLayout(this);

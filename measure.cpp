@@ -13,6 +13,7 @@ Measure::Measure(QWidget *parent, CurParam *link) :
     fmPlot->setStyleSheet(QStringLiteral("background-color: rgb(100, 100, 100);"));
     fmPlot->setFrameShape(QFrame::NoFrame);
     fmPlot->setFrameShadow(QFrame::Plain);
+
     QGridLayout *glPlot  = new QGridLayout(fmPlot);
     pPlot = new Plot(this, false, curParam);
     glPlot->addWidget(pBigViewCur, 0, 0);
