@@ -102,9 +102,9 @@ calculator::calculator(QWidget *parent, CurParam *link) :
     layoutTop->addWidget(twLens);
     layout->addLayout(layoutTop);
 
-    frCalculator = new QFrame();
-    frCalculator->setFrameShape(QFrame::WinPanel);
-    frCalculator->setFrameShadow(QFrame::Raised);
+    frCalculator = new QWidget();
+//    frCalculator->setFrameShape(QFrame::WinPanel);
+//    frCalculator->setFrameShadow(QFrame::Raised);
     QHBoxLayout *frLayout = new QHBoxLayout(frCalculator);
 
     Formula1 = new formula();

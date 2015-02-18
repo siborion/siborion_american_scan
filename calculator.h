@@ -69,7 +69,7 @@ private:
 //    adjview *twcalculator2;
 //    adjview *twcalculator3;
 //    QStandardItemModel *modelcalculator1;
-    QFrame *frCalculator;
+    QWidget *frCalculator;
 //    QComboBox *cbFormula1;
 //    QComboBox *cbFormula2;
 //    QComboBox *cbFormula3;
