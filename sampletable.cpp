@@ -6,15 +6,14 @@
 #include <QSqlRecord>
 
 sampletable::sampletable(QWidget *parent, CurParam *link) :
-    QWidget(parent)
+    QFrame(parent)
 {
     curParam = link;
-
+    setFrameShape(QFrame::WinPanel);
+    setFrameShadow(QFrame::Raised);
     QList<int> columnPercent;
     QStringList lst;
-
     QGridLayout *layout              = new QGridLayout(this);
-
     lst.clear();
     columnPercent.clear();
     columnPercent<<10      <<23            <<15      <<15       <<15      <<15;
@@ -41,6 +40,7 @@ sampletable::sampletable(QWidget *parent, CurParam *link) :
     modelOS->setHorizontalHeaderLabels(lst);
 
     twMeas->setModel(modelOD);
+    twMeas->setFrameStyle(QFrame::Box);
 //    twMeas->setSelectionMode(MultiSelection);
 //    twMeas->setSelectionMode(QAbstractItemView::SelectionMode::MultiSelection);
 //    twMeas->selectedIndexes();//

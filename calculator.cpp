@@ -41,6 +41,7 @@ calculator::calculator(QWidget *parent, CurParam *link) :
 
     twLens = new adjview(3, lst, columnPercent);
     twLens->setMinimumWidth(350);
+    twLens->setFrameStyle(QFrame::Box);
     modelMainLens = curParam->lensModel;
     twLens->setModel(modelMainLens);
 //    modelMainLens->setHeaderData(0, Qt::Horizontal, "Lens Name", Qt::DisplayRole);

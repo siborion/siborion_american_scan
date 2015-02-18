@@ -11,7 +11,7 @@
 #include "curparam.h"
 #include "listresult.h"
 
-class sampletable : public QWidget
+class sampletable : public QFrame
 {
     Q_OBJECT
 public:

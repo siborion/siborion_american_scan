@@ -8,10 +8,8 @@
 formula::formula(QWidget *parent) :
     QFrame(parent)
 {
-
     setFrameShape(QFrame::WinPanel);
     setFrameShadow(QFrame::Raised);
-
     QGridLayout *layout = new QGridLayout(this);
 //    layout->setSpacing(0);
 //    layout->setHorizontalSpacing(0);
@@ -56,6 +54,8 @@ formula::formula(QWidget *parent) :
     twFormula->setSpan(9, 1, 1,  2);
     twFormula->setSpan(10, 1, 1,  2);
     twFormula->setSpan(11, 1, 1,  2);
+
+    twFormula->setFrameStyle(QFrame::Box);
 
 //    DelegateLens * delegateLens = new DelegateLens();
 //    twFormula->setItemDelegate(delegateLens);
