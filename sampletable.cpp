@@ -40,7 +40,7 @@ sampletable::sampletable(QWidget *parent, CurParam *link) :
     modelOS->setHorizontalHeaderLabels(lst);
 
     twMeas->setModel(modelOD);
-    twMeas->setFrameStyle(QFrame::Box);
+//    twMeas->setFrameStyle(QFrame::Box);
 //    twMeas->setSelectionMode(MultiSelection);
 //    twMeas->setSelectionMode(QAbstractItemView::SelectionMode::MultiSelection);
 //    twMeas->selectedIndexes();//

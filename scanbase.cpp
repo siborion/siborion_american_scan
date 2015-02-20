@@ -75,8 +75,8 @@ void Scanbase::getBasesModel(Base::TypeBase typeBase, QSqlQueryModel** model)
         str = "SELECT id, name, last, note from doctor;";
         break;
     case Base::enLens:
-        lst             <<tr("id") <<tr("Lens Name")<<tr("Mfg Name")<<tr("Mfg A_Const")<<tr("Mfg ACD")<<tr("Mfg SF")<<tr("Hoffer ACD");
-        str = "SELECT id, name, mfg, aconst, acd, sf, hacd from lens;";
+        lst             <<tr("id") <<tr("Lens Name")<<tr("Mfg Name")<<tr("Mfg A_Const")<<tr("Mfg ACD")<<tr("Mfg SF")<<tr("Hoffer ACD")<<tr("A1")<<tr("A2")<<tr("A3");
+        str = "SELECT id, name, mfg, aconst, acd, sf, hacd, 0 as A1, 0 as A2, 0 as A3 from lens;";
         break;
     }
     modelBases->setQuery(str);

@@ -18,10 +18,11 @@ adjview::adjview(int row, int col, QList<int> columnPercent, QTableView *parent)
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setColumnPercent(columnPercent);
     verticalHeader()->setDefaultSectionSize(15);
-    setMinimumHeight(rowHeight(0)*row + 2);
-    setMaximumHeight(rowHeight(0)*row + 2);
+    setMinimumHeight(rowHeight(0)*row + 4);
+    setMaximumHeight(rowHeight(0)*row + 4);
     horizontalHeader()->setSectionsClickable(false);
-    setFrameShape(QFrame::NoFrame);
+    setStyleSheet(QStringLiteral("gridline-color: rgb(0, 0, 0);"));
+    setFrameShape(QFrame::WinPanel);
 }
 
 adjview::adjview(int row, QStringList col, QList<int> columnPercent, QTableView *parent):
@@ -37,10 +38,11 @@ adjview::adjview(int row, QStringList col, QList<int> columnPercent, QTableView 
     setColumnPercent(columnPercent);
     model->setHorizontalHeaderLabels(col);
     verticalHeader()->setDefaultSectionSize(15);
-    setMinimumHeight(rowHeight(0)*row + horizontalHeader()->height() + 2);
-    setMaximumHeight(rowHeight(0)*row + horizontalHeader()->height() + 2);
+    setMinimumHeight(rowHeight(0)*row + horizontalHeader()->height() + 4);
+    setMaximumHeight(rowHeight(0)*row + horizontalHeader()->height() + 4);
     horizontalHeader()->setSectionsClickable(false);
-    setFrameShape(QFrame::NoFrame);
+    setStyleSheet(QStringLiteral("gridline-color: rgb(0, 0, 0);"));
+    setFrameShape(QFrame::WinPanel);
 }
 
 adjview::adjview(QStringList row, int col, QList<int> columnPercent, QTableView *parent):
@@ -56,10 +58,11 @@ adjview::adjview(QStringList row, int col, QList<int> columnPercent, QTableView 
     setColumnPercent(columnPercent);
     model->setVerticalHeaderLabels(row);
     verticalHeader()->setDefaultSectionSize(20);
-    setMinimumHeight(rowHeight(0)*row.count() + horizontalHeader()->height() + 2);
-    setMaximumHeight(rowHeight(0)*row.count() + horizontalHeader()->height() + 2);
+    setMinimumHeight(rowHeight(0)*row.count() + horizontalHeader()->height() + 4);
+    setMaximumHeight(rowHeight(0)*row.count() + horizontalHeader()->height() + 4);
     verticalHeader()->setSectionsClickable(false);
-    setFrameShape(QFrame::NoFrame);
+    setStyleSheet(QStringLiteral("gridline-color: rgb(0, 0, 0);"));
+    setFrameShape(QFrame::WinPanel);
 }
 
 void adjview::setColumnPercent(QList<int> percentList)

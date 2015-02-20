@@ -11,7 +11,7 @@ Measure::Measure(QWidget *parent, CurParam *link) :
     pBigViewCur = new Bigviewnumcur(this, curParam);
     QFrame *fmPlot = new QFrame();
     fmPlot->setStyleSheet(QStringLiteral("background-color: rgb(100, 100, 100);"));
-    fmPlot->setFrameShape(QFrame::NoFrame);
+//    fmPlot->setFrameShape(QFrame::NoFrame);
     fmPlot->setFrameShadow(QFrame::Plain);
 
     QGridLayout *glPlot  = new QGridLayout(fmPlot);

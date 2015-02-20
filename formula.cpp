@@ -29,6 +29,7 @@ formula::formula(QWidget *parent) :
 
     leLens = new QLabel("A-Const");
     leLens->setAlignment(Qt::AlignCenter);
+    leLens->setVisible(false);
 
     QList<int> columnPercent;
     QStringList lst;
@@ -47,7 +48,10 @@ formula::formula(QWidget *parent) :
     lst.clear();
     lst<<"Formula"<<"IOL"<<"REF";
     twFormula = new adjview(12, lst, columnPercent);
-    twFormula->setFrameStyle(0);
+//    twFormula->setStyleSheet(QStringLiteral("gridline-color: rgb(0, 0, 0);"));
+//    twFormula->setGridStyle(Qt::SolidLine);
+
+//    twFormula->setFrameStyle(0);
     twFormula->setSpan(0,  0, 7, 1);
     twFormula->setSpan(7, 1, 1,  2);
     twFormula->setSpan(8, 1, 1,  2);
@@ -55,7 +59,8 @@ formula::formula(QWidget *parent) :
     twFormula->setSpan(10, 1, 1,  2);
     twFormula->setSpan(11, 1, 1,  2);
 
-    twFormula->setFrameStyle(QFrame::Box);
+//    twFormula->setFrameStyle(QFrame::Box);
+//    twFormula->setFrameStyle(QFrame::StyledPanel);
 
 //    DelegateLens * delegateLens = new DelegateLens();
 //    twFormula->setItemDelegate(delegateLens);
@@ -79,7 +84,7 @@ formula::formula(QWidget *parent) :
 //    twEmm = new adjview(5, 1, columnPercent);
     twEmm = twFormula;
 //    twEmm->setFrameStyle(0);
-//    twEmm->setStyleSheet(QLatin1String("gridline-color: rgba(255, 255, 255);\n""background-color: rgb(200, 200, 200);\n"                                   "border-color: rgba(255, 255, 255);"));
+//    twEmm->setStyleSheet(QLatin1String("gridline-color: rgba(255, 255, 255);\n""background-color: rgb(200, 200, 200);\n" "border-color: rgba(255, 255, 255);"));
 
     lst.clear();
     lst=getListFormula();
@@ -93,8 +98,6 @@ formula::formula(QWidget *parent) :
     for(int i = 0; i < cbFormula->count(); i++)
         cbFormula->setItemData(i, Qt::AlignCenter, Qt::TextAlignmentRole);
 
-    twFormula->setStyleSheet(QStringLiteral("gridline-color: rgb(0, 0, 0);"));
-    twFormula->setGridStyle(Qt::SolidLine);
 
     layout->addWidget(lLens,     0, 0, 1, 2);
     layout->addWidget(cbFormula, 1, 0, 1, 1);
@@ -157,6 +160,16 @@ QStandardItem* formula::getItem(double val, Qt::AlignmentFlag align)
 
 void formula::setValue(quint8 formula, QString name, QString aconst, QString acd, QString fs, double dK, double dAL, double dACD)
 {
+
+    QStringList s;
+    s = getListFormula();
+
+    cbFormula->setItemText(1, s.at(1)+"   A_Const: "+aconst);
+    cbFormula->setItemText(2, s.at(2)+"   A_Const: "+aconst);
+    cbFormula->setItemText(3, s.at(3)+"   ACD: "+acd);
+    cbFormula->setItemText(4, s.at(4)+"   SF: "+fs);
+    cbFormula->setItemText(5, s.at(5)+"   A_Const: "+aconst);
+
     AConst = aconst.toDouble();
     ACD = acd.toDouble();
     SF = fs.toDouble();
