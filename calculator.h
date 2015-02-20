@@ -43,6 +43,7 @@ private:
     Plot *pPlotPrint1;
     Plot *pPlotPrint2;
     Plot *pPlotPrint3;
+    Plot *pPlotPrint4;
     double ACD_measure;
     quint16 patientCurId;
     _formulae stFormula;

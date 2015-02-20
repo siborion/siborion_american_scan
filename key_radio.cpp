@@ -4,9 +4,11 @@
 key_radio::key_radio(QWidget *parent, CurParam *link) :
     QWidget(parent)
 {
+
+    setContentsMargins(-1, 0, -1, 0);
+
     QHBoxLayout *layoutkey_radio = new QHBoxLayout(this);
-
-
+    layoutkey_radio->setContentsMargins(-1, 2, -1, 2);
 
     curentParam = link;
 

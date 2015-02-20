@@ -57,7 +57,7 @@ void calculator_patient::refreshPatientParam()
     ui->lePatientId->setText(QString("%1").arg(curParam->patientId));
     ui->lePatientName->setText(curParam->patientName);
     ui->leDoctorName->setText(curParam->doctorName);
-    ui->leACD_measure->setTextZero(QString("%1").arg(curParam->ACD));
+    ui->leACD_measure->setText(QString("%1").arg(curParam->ACD));
     ui->leAL_measure->setTextZero(QString("%1").arg(curParam->ALave));
     RefreshK();
     softUpdate = false;

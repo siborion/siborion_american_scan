@@ -216,7 +216,7 @@ void sampletable::calculateAvg()
 
     for(quint8 i=0; i<rowCount; i++)
     {
-        index = twMeas->model()->index(i, 2);
+        index = twMeas->model()->index(i, 1);
         AL    = twMeas->model()->data(index, Qt::DisplayRole).toDouble();
         index = twMeas->model()->index(i, 3);
         ACD   = twMeas->model()->data(index, Qt::DisplayRole).toDouble();

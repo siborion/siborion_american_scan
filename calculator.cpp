@@ -263,6 +263,15 @@ void calculator::print( QPrinter* printer )
             pPlotPrint3->replot();
             renderer.render(pPlotPrint3, &painter, QRectF(500,3000,2000,1800));
             break;
+        case 3:
+            pPlotPrint4 = new Plot(this, true, curParam);
+            pPlotPrint4->drawSample(&sample);
+            pPlotPrint4->enableAxis(QwtPlot::xTop,false);
+            pPlotPrint4->enableAxis(QwtPlot::xBottom,true);
+            pPlotPrint4->enableAxis(QwtPlot::yLeft,true);
+            pPlotPrint4->replot();
+            renderer.render(pPlotPrint4, &painter, QRectF(2700,3000,2000,1800));
+            break;
         }
         kolvo++;
     }
@@ -296,26 +305,32 @@ void calculator::print( QPrinter* printer )
 //    QSize size;
 //    size.setHeight(20000);
 //    size.setWidth (20000);
-    if(Formula1->isEnabled())
-    {
-        QPixmap pixmap(Formula1->size());
-        Formula1->render(&pixmap);
-        painter.drawPixmap(2700,3000,2000,1800,pixmap);
-    }
 
-    if(Formula2->isEnabled())
-    {
-        QPixmap pixmap(Formula2->size());
-        Formula2->render(&pixmap);
-        painter.drawPixmap(500,5000,2000,1800,pixmap);
-    }
 
-    if(Formula3->isEnabled())
-    {
-        QPixmap pixmap(Formula3->size());
-        Formula3->render(&pixmap);
-        painter.drawPixmap(2700,5000,2000,1800,pixmap);
-    }
+
+//    if(Formula1->isEnabled())
+//    {
+//        QPixmap pixmap(Formula1->size());
+//        Formula1->render(&pixmap);
+//        painter.drawPixmap(2700,3000,2000,1800,pixmap);
+//    }
+
+//    if(Formula2->isEnabled())
+//    {
+//        QPixmap pixmap(Formula2->size());
+//        Formula2->render(&pixmap);
+//        painter.drawPixmap(500,5000,2000,1800,pixmap);
+//    }
+
+//    if(Formula3->isEnabled())
+//    {
+//        QPixmap pixmap(Formula3->size());
+//        Formula3->render(&pixmap);
+//        painter.drawPixmap(2700,5000,2000,1800,pixmap);
+//    }
+
+
+
 
 //    QRect    txt1(xPosTable+(widthTable/(kolColumn*2))*0, yPosTable+(0+3)*hightLine, (widthTable/(kolColumn*2)), 100);
 //    QRect    txt2(xPosTable+(widthTable/(kolColumn*2))*1, yPosTable+(+3)*hightLine, (widthTable/(kolColumn*2)), 100);
