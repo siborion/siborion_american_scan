@@ -48,7 +48,7 @@ private:
     quint16 patientCurId;
     _formulae stFormula;
 //    QSqlQueryModel  *modelMainLens;
-    QAbstractItemModel  *modelMainLens;
+//    QAbstractItemModel  *modelMainLens;
 //    void refreshPatientParam(quint16 id);
 //    scanbase *pBase;
     adjview *twName;

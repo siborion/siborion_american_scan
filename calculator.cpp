@@ -34,21 +34,15 @@ calculator::calculator(QWidget *parent, CurParam *link) :
 
     //-------------------------------
     columnPercent.clear();
-//    columnPercent<<20<<20<<20<<20<<20;
-    columnPercent<<20<<15<<10<<10<<0<<21<<8<<8<<8;
-//    lst<<"Lens Name"<<"AConst"<<"ACD"<<"SF"<<"FORMULA";
-    lst<<"Lens Name"<<"AConst"<<"ACD"<<"SF"<<"FORMULA"<<"id"<<"A1"<<"A2"<<"A3";
+    columnPercent<<20<<0<<21<<15<<10<<10<<8<<8<<8;
+    lst<<"Lens Name"<<"id"<<"Formula"<<"AConst"<<"ACD"<<"SF"<<"A1"<<"A2"<<"A3";
 
     twLens = new adjview(3, lst, columnPercent);
     twLens->setMinimumWidth(350);
 //    twLens->setFrameStyle(QFrame::Box);
-    modelMainLens = curParam->lensModel;
-    twLens->setModel(modelMainLens);
-//    modelMainLens->setHeaderData(0, Qt::Horizontal, "Lens Name", Qt::DisplayRole);
-//    modelMainLens->setHeaderData(1, Qt::Horizontal, "AConst", Qt::DisplayRole);
-//    modelMainLens->setHeaderData(2, Qt::Horizontal, "ACD", Qt::DisplayRole);
-//    modelMainLens->setHeaderData(3, Qt::Horizontal, "SF", Qt::DisplayRole);
-//    modelMainLens->setHeaderData(4, Qt::Horizontal, "FORMULA", Qt::DisplayRole);
+//    modelMainLens = curParam->lensModel;
+//    twLens->setModel(modelMainLens);
+    refreshLens(curParam->lensModel);
     //-------------------------------
     columnPercent.clear();
     columnPercent<<40<<40<<20;
@@ -150,23 +144,23 @@ void calculator::refreshFormuls()
     {
         for(quint8 i=0; i<twLens->model()->rowCount() && i<3; i++)
         {
-            nFormula   = twLens->model()->itemData(twLens->model()->index(i,4)).value(0).toInt();
+            nFormula   = twLens->model()->itemData(twLens->model()->index(i,1)).value(0).toInt();
             lensName   = twLens->model()->itemData(twLens->model()->index(i,0)).value(0).toString();
 
             if(personalParam.AConst>0)
                 lensAconst = QString("%1").arg(personalParam.AConst);
             else
-                lensAconst = twLens->model()->itemData(twLens->model()->index(i,1)).value(0).toString();
+                lensAconst = twLens->model()->itemData(twLens->model()->index(i,3)).value(0).toString();
 
             if(personalParam.ACD>0)
                 lensAcd = QString("%1").arg(personalParam.ACD);
             else
-                lensAcd = twLens->model()->itemData(twLens->model()->index(i,2)).value(0).toString();
+                lensAcd = twLens->model()->itemData(twLens->model()->index(i,4)).value(0).toString();
 
             if(personalParam.SF>0)
                 lensFs = QString("%1").arg(personalParam.SF);
             else
-                lensFs = twLens->model()->itemData(twLens->model()->index(i,3)).value(0).toString();
+                lensFs = twLens->model()->itemData(twLens->model()->index(i,5)).value(0).toString();
 
 
 
@@ -387,7 +381,14 @@ void calculator::print( QPrinter* printer )
 
 void calculator::refreshLens(QSqlQueryModel *link)
 {
+    qDebug()<<"twLens->setModel(link)";
     twLens->setModel(link);
+    link->setHeaderData(0, Qt::Horizontal, "Lens", Qt::DisplayRole);
+    link->setHeaderData(1, Qt::Horizontal, "numF", Qt::DisplayRole);
+    link->setHeaderData(2, Qt::Horizontal, "Formula", Qt::DisplayRole);
+    link->setHeaderData(3, Qt::Horizontal, "AConst", Qt::DisplayRole);
+    link->setHeaderData(4, Qt::Horizontal, "ACD", Qt::DisplayRole);
+    link->setHeaderData(5, Qt::Horizontal, "SF", Qt::DisplayRole);
 }
 
 void calculator::updatePatient()

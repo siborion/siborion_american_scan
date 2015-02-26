@@ -98,7 +98,7 @@ void Bases::adjTable()
         lstButton<<tr("Add Doctor")<<tr("Edit Doctor")<<tr("Delete Doctor");
         break;
     case Base::enLens:
-        columnPercent   << 0 <<            8       <<      20      <<      20         <<     20    <<      20    <<      10;
+        columnPercent   << 0 <<            8       <<      20      <<      15         <<     15    <<      15    <<      10 << 5<<5<<5;
         lstButton<<tr("Add Lens")<<tr("Edit Lens")<<tr("Delete Lens");
         break;
     }

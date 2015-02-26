@@ -135,11 +135,11 @@ void Scanbase::updateCurPatient(quint16 id)
     emit (setStPatient(&curPatient));
 
     str = "SELECT lens.name,";
+    str.append("formula.id,");
+    str.append("formula.name, ");
     str.append("lens.aconst,");
     str.append("lens.acd,");
     str.append("lens.sf,");
-    str.append("formula.id,");
-    str.append("formula.name, ");
 
     str.append("0 as A1 ,");
     str.append("0 as A2 ,");
