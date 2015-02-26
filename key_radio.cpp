@@ -69,8 +69,8 @@ key_radio::key_radio(QWidget *parent, CurParam *link) :
     QHBoxLayout  *ltEye = new QHBoxLayout(gbEye);
     rbOd = new QRadioButton(tr("OD"));
     rbOs = new QRadioButton(tr("OS"));
-    rbOd->setObjectName("OD");
-    rbOs->setObjectName("OS");
+    rbOd->setObjectName("rbOD");
+    rbOs->setObjectName("rbOS");
     rbOd->setFont(font);
     rbOs->setFont(font);
     rbOd->setChecked(true);
@@ -78,7 +78,7 @@ key_radio::key_radio(QWidget *parent, CurParam *link) :
     ltEye->addWidget(rbOd);
     ltEye->addWidget(rbOs);
 
-//    QSpacerItem  *hs5 = new QSpacerItem(50, 5, QSizePolicy::Expanding, QSizePolicy::Minimum);
+    QSpacerItem  *hs5 = new QSpacerItem(50, 5, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
     layoutkey_radio->setSpacing(0);
     layoutkey_radio->addWidget(gbAuto);
@@ -88,7 +88,7 @@ key_radio::key_radio(QWidget *parent, CurParam *link) :
     layoutkey_radio->addWidget(gbCataract);
     layoutkey_radio->addItem(hs4);
     layoutkey_radio->addWidget(gbEye);
-//    layoutkey_radio->addItem(hs5);
+    layoutkey_radio->addItem(hs5);
 
 //    curentParam->regimMeasure  = REGIM::AUTOFREEZ;
 //    curentParam->regimContact  = REGIM::CONTACT;
@@ -161,4 +161,18 @@ void key_radio::doChangeRegim()
         curentParam->regimSide     = REGIM::OS;
 
     emit changeInterval(QObject::sender()->objectName());
+}
+
+void key_radio::changeSideCalculatorSlot()
+{
+    if(curentParam->regimSide == REGIM::OD)
+    {
+        rbOd->setChecked(true);
+        emit rbOd->clicked(true);
+    }
+    else
+    {
+        rbOs->setChecked(true);
+        emit rbOs->clicked(true);
+    }
 }

@@ -44,6 +44,7 @@ public slots:
     void changeGlasSlot();
     void saveSlot(QStandardItemModel *,QStandardItemModel *);
     void clearAll();
+    void changeSideCalculatorSlot();
 
 Q_SIGNALS:
     void doScan(bool*);

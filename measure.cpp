@@ -36,11 +36,14 @@ Measure::Measure(QWidget *parent, CurParam *link) :
     connect(velosity,SIGNAL(doScan(bool*)),SLOT(doScanSlot(bool*)));
     connect(velosity,SIGNAL(doStop()),SLOT(stopMeasureSlot()));
 
+    connect(pSampleTable,SIGNAL(clearSample()),pPlot,SLOT(clearSample()));
     connect(pSampleTable,SIGNAL(changeRow(stMeasureParam*)),pPlot,SLOT(updateSample(stMeasureParam*)));
     connect(pSampleTable,SIGNAL(changeRow(stMeasureParam*)),pBigViewCur,SLOT(setDisplay(stMeasureParam*)));
     connect(pSampleTable,SIGNAL(sendAvg(stAverageParam*)),pBigView,SLOT(setDisplay(stAverageParam*)));
     connect(pSampleTable,SIGNAL(stopMeasure()),SLOT(stopMeasureSlot()));
     connect(pPlot,SIGNAL(refreshTable(stMeasureParam*)),SLOT(refreshTableSlot(stMeasureParam*)));
+
+    connect(pKey,SIGNAL(changeInterval(QString)),pSampleTable,SLOT(changeGlasSlot()));
     connect(pKey,SIGNAL(changeInterval(QString)),pSampleTable,SLOT(changeRegimManual(QString)));
     connect(pKey,SIGNAL(changeInterval(QString)),pPlot,SLOT(updateInterval()));
     connect(pKey,SIGNAL(changeInterval(QString)),pBigViewCur,SLOT(setRegim()));
@@ -131,3 +134,7 @@ void Measure::clearAll()
     pBigViewCur->updatePatient();
 }
 
+void Measure::changeSideCalculatorSlot()
+{
+    pKey->changeSideCalculatorSlot();
+}

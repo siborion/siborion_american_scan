@@ -121,6 +121,7 @@ calculator::calculator(QWidget *parent, CurParam *link) :
 
     connect(pCalcPatient, SIGNAL(refreshFormula()), SLOT(refreshFormuls()));
     connect(pbPrint, SIGNAL(clicked()), SLOT(printPreview()));
+    connect(pCalcPatient, SIGNAL(changeSideCalculator()), SLOT(changeSideCalculatorSlot()));
 
 }
 
@@ -290,6 +291,11 @@ void calculator::print( QPrinter* printer )
     sPatient.append(QString("%1\r\n%2").arg(curParam->patientName).arg(curParam->patientId));
     painter.drawText(page1, Qt::AlignLeft, sPatient);
 
+
+
+    painter.drawRect(500,5000,500,100);
+
+
 //    QRect    page1(1000, 200, 1000, 400);
 //    pModel1 = Formula1->getModel();
 //    pModel2 = Formula2->getModel();
@@ -328,7 +334,6 @@ void calculator::print( QPrinter* printer )
 //        Formula3->render(&pixmap);
 //        painter.drawPixmap(2700,5000,2000,1800,pixmap);
 //    }
-
 
 
 
@@ -388,4 +393,9 @@ void calculator::refreshLens(QSqlQueryModel *link)
 void calculator::updatePatient()
 {
     pCalcPatient->updatePatient();
+}
+
+void calculator::changeSideCalculatorSlot()
+{
+    emit changeSideCalculator();
 }

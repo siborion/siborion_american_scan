@@ -39,6 +39,7 @@ private slots:
 
 public slots:
     void refresh();
+    void changeSideCalculatorSlot();
 };
 
 #endif // key_radio_H

@@ -96,7 +96,7 @@ void sampletable::loadSlot()
                 measureParam.Retina = query.value(query.record().indexOf("retina")).toUInt();
                 Sample = query.value(query.record().indexOf("sample")).toByteArray();
                 measureParam.VIT = query.value(query.record().indexOf("vit")).toDouble();
-                curParam->regimSide = (REGIM::RegimSide)query.value(query.record().indexOf("regim_side")).toUInt();
+//                curParam->regimSide = (REGIM::RegimSide)query.value(query.record().indexOf("regim_side")).toUInt();
                 addSample(&Sample, &extremum, &measureParam, true);
                 }
             }
@@ -116,6 +116,8 @@ void sampletable::changeRowSlot(QModelIndex index)
     measureParam.L2 =     twMeas->model()->data(index, roleL2).toDouble();
     measureParam.Retina = twMeas->model()->data(index, roleRetina).toDouble();
     listExtremum =        twMeas->model()->data(index, roleExtremum).toStringList();
+
+    qDebug()<<"measureParam.Sample"<<measureParam.Sample.count();
 
     index = twMeas->model()->index(index.row(), 1);
     measureParam.ALave = twMeas->model()->data(index, Qt::DisplayRole).toDouble();
@@ -213,6 +215,19 @@ void sampletable::calculateAvg()
     averageParam.ACDdiv = averageParam.ALavediv = averageParam.LTdiv = averageParam.VITdiv = 0;
     ALave = ACDave = LTave = VITave = 0;
     rowCount = twMeas->model()->rowCount();
+    if(rowCount==0)
+    {
+        averageParam.ACD=0;
+        averageParam.ACDdiv=0;
+        averageParam.ALave=0;
+        averageParam.ALavediv=0;
+        averageParam.LT=0;
+        averageParam.LTdiv=0;
+        averageParam.VIT=0;
+        averageParam.VITdiv=0;
+        emit sendAvg(&averageParam);
+        return;
+    }
 
     for(quint8 i=0; i<rowCount; i++)
     {
@@ -339,7 +354,12 @@ void sampletable::changeRegimManual(QString objectName)
                 saveSlot();
         }
     }
-    clearAll();
+
+    if(QObject::sender())
+        qDebug()<<QObject::sender()->objectName();
+
+    if (!((objectName=="rbOD")||(objectName=="rbOS")))
+        clearAll();
 
     bCataract = (curParam->regimCataract == REGIM::CATARACT);
     bAuto = (curParam->regimMeasure != REGIM::MANUAL);
@@ -387,6 +407,7 @@ void sampletable::startMeasure()
 
 void sampletable::clearAll()
 {
+    qDebug()<<"ClearAll";
     QStandardItemModel *model;
     model = (QStandardItemModel*)twMeas->model();
     model->setRowCount(0);
@@ -433,3 +454,26 @@ void sampletable::keyPressEvent(QKeyEvent * keyEvent)
     }
 }
 
+void sampletable::changeGlasSlot()
+{
+
+    if(curParam->regimSide==0)
+    {
+        if(twMeas->model()==modelOD)
+            return;
+        twMeas->setModel(modelOD);
+    }
+    else
+    {
+        if(twMeas->model()==modelOS)
+            return;
+        twMeas->setModel(modelOS);
+    }
+    connect(twMeas->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), SLOT(changeRowSlot(QModelIndex)));
+
+    calculateAvg();
+    if(twMeas->model()->rowCount()>0)
+        twMeas->selectRow(twMeas->model()->rowCount()-1);
+    else
+        emit clearSample();
+}

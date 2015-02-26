@@ -104,7 +104,17 @@ stPersonalParam calculator_patient::getPersonalParam()
 
 void calculator_patient::ChangeSide()
 {
-//!!    curentParam->changeSide();
+    if(curParam->regimSide==REGIM::OD)
+    {
+        curParam->regimSide = REGIM::OS;
+        ui->pbSide->setText("OS");
+    }
+    else
+    {
+        curParam->regimSide = REGIM::OD;
+        ui->pbSide->setText("OD");
+    }
+    emit changeSideCalculator();
     updateParam();
 }
 

@@ -49,11 +49,11 @@ public:
     Plot *pPlot;
     CurParam *curParam;
     void clearMarker();
-    void clearAll();
 
 public slots:
     void updateSample(stMeasureParam *);
     void updateInterval();
+    void clearSample();
 
 private:
     void select( const QPoint &pos );

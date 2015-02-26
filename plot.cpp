@@ -463,13 +463,8 @@ void Plot::clearMarker()
     }
 }
 
-void Plot::clearAll()
+void Plot::clearSample()
 {
-    foreach (QwtPlotItem *p, itemList())
-    {
-        if(p->rtti() == QwtPlotItem::Rtti_PlotMarker)
-        {
-            removeItem(p);
-        }
-    }
+    QByteArray baTmp;
+    drawSample(&baTmp);
 }

@@ -108,6 +108,7 @@ public:
 
 private slots:
 //    void setAL(QModelIndex,QModelIndex);
+    void changeSideCalculatorSlot();
 
 public slots:
 //    void changeRow(quint8 id ,quint16 id1 ,QString sTmp1, QString sTmp2);
@@ -116,6 +117,9 @@ public slots:
     void printPreview();
     void print( QPrinter* printer );
     void refreshLens(QSqlQueryModel *link);
+
+signals:
+    void changeSideCalculator();
 
 };
 

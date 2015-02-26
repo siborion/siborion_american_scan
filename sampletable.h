@@ -40,6 +40,7 @@ signals:
     void save(QStandardItemModel *,QStandardItemModel *);
     void changeGlas();
     void clearAllSignal();
+    void clearSample();
 
 public slots:
     void changeRowSlot(QModelIndex curIndex);
@@ -50,6 +51,7 @@ public slots:
     void loadSlot();
     void clearAll();
     void del();
+    void changeGlasSlot();
 };
 
 #endif // SAMPLETABLE_H
