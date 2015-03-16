@@ -197,6 +197,7 @@ void Plot::drawMarker(double x, double y, const QColor &color)
     d_marker->setLinePen( color, 0, Qt::SolidLine );
     d_marker->setSymbol( new QwtSymbol( QwtSymbol::Diamond,QColor( color ), QColor( color ), QSize( 8, 8 ) ) );
     d_marker->setValue(x, y);
+    d_marker->setVisible(color!=Qt::black);
     d_marker->attach( this );
 }
 
@@ -436,9 +437,9 @@ void Plot::updateSample(stMeasureParam *link)
     drawMarker(measureParam.Cornea,"Cornea",true);
     drawMarker((double)measureParam.Cornea,(double)60, Qt::white);
     drawMarker(measureParam.L1,"L1", !bTmp);
-    drawMarker((double)measureParam.L1,(double)60, bTmp?(Qt::darkGray):(Qt::white));
+    drawMarker((double)measureParam.L1,(double)60, bTmp?(Qt::black):(Qt::white));
     drawMarker(measureParam.L2,"L2", !bTmp);
-    drawMarker((double)measureParam.L2,(double)60, bTmp?(Qt::darkGray):(Qt::white));
+    drawMarker((double)measureParam.L2,(double)60, bTmp?(Qt::black):(Qt::white));
     drawMarker(measureParam.Retina,"Retina",true);
     drawMarker((double)measureParam.Retina,(double)60, Qt::white);
     allExtremum = measureParam.extremum;
