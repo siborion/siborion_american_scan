@@ -70,7 +70,17 @@ bool Parcer::findExtremum(QByteArray *Sample, QList<quint16> *extremum, stMeasur
     else
     {
         if (corneaEn && lens1En && lens2En && retinaEn)
+        {
             bValid = true;
+            qDebug()<<"measureParam->L2"<<measureParam->L2;
+            qDebug()<<"measureParam->Retine"<<measureParam->Retina;
+            for(int i=(measureParam->L2+50); i<=(measureParam->Retina-10); i++)
+            {
+//                qDebug()<<i<<(unsigned char)Sample->at(i);
+                if(((unsigned char)Sample->at(i))>50)
+                    bValid = false;
+            }
+        }
     }
 
     if(bValid)
