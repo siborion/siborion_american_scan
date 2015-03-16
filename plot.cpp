@@ -428,15 +428,17 @@ void Plot::move( const QPoint &pos )
 
 void Plot::updateSample(stMeasureParam *link)
 {
+    bool bTmp;
+    bTmp = (curParam->regimMeasure==REGIM::MANUAL || curParam->regimCataract==REGIM::APHAKIC);
     measureParam = *link;
     clearMarker();
     drawSample(&measureParam.Sample);
     drawMarker(measureParam.Cornea,"Cornea",true);
     drawMarker((double)measureParam.Cornea,(double)60, Qt::white);
-    drawMarker(measureParam.L1,"L1",curParam->regimMeasure!=REGIM::MANUAL);
-    drawMarker((double)measureParam.L1,(double)60, Qt::white);
-    drawMarker(measureParam.L2,"L2",curParam->regimMeasure!=REGIM::MANUAL);
-    drawMarker((double)measureParam.L2,(double)60, Qt::white);
+    drawMarker(measureParam.L1,"L1", !bTmp);
+    drawMarker((double)measureParam.L1,(double)60, bTmp?(Qt::darkGray):(Qt::white));
+    drawMarker(measureParam.L2,"L2", !bTmp);
+    drawMarker((double)measureParam.L2,(double)60, bTmp?(Qt::darkGray):(Qt::white));
     drawMarker(measureParam.Retina,"Retina",true);
     drawMarker((double)measureParam.Retina,(double)60, Qt::white);
     allExtremum = measureParam.extremum;

@@ -315,6 +315,10 @@ void sampletable::calculateAvg()
             twMeas->model()->setData(twMeas->model()->index(i, j), color, Qt::BackgroundRole);
         }
     }
+
+    if(curParam->regimMeasure == REGIM::MANUAL)
+        averageParam.ACD = 0;
+
     curParam->ACD = averageParam.ACD;
     curParam->ALave = averageParam.ALave;
     emit sendAvg(&averageParam);
