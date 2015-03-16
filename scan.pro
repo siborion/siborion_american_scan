@@ -20,13 +20,16 @@ include(qwt.prf)
 CONFIG(debug, debug|release)
 {
   LIBS += -lqwt -LC:\Qt\Qwt-6.1.0\lib
+  LIBS += ftd2xx.lib
 }
+
 CONFIG(release, debug|release)
 {
   LIBS +=  -lqwt -LC:\Qt\Qwt-6.1.0\lib
+  LIBS += ftd2xx.lib
 }
 
-LIBS += ftd2xx.lib
+
 
 SOURCES += main.cpp\
         mainwindow.cpp \

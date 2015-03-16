@@ -158,7 +158,7 @@ QStandardItem* formula::getItem(double val, Qt::AlignmentFlag align)
     return siTmp;
 }
 
-void formula::setValue(quint8 formula, QString name, QString aconst, QString acd, QString fs, double dK, double dAL, double dACD)
+void formula::setValue(quint8 formula, QString name, QString aconst, QString acd, QString fs, QString a0, QString a1, QString a2, double dK, double dAL, double dACD)
 {
 
     QStringList s;
@@ -173,6 +173,9 @@ void formula::setValue(quint8 formula, QString name, QString aconst, QString acd
     AConst = aconst.toDouble();
     ACD = acd.toDouble();
     SF = fs.toDouble();
+    A0 = a0.toDouble();
+    A1 = a1.toDouble();
+    A2 = a2.toDouble();
     K = dK;
     AL = dAL;
     ACD_measure = dACD;
@@ -206,7 +209,8 @@ void formula::calculateIOL(quint8 formula)
         Calculator(formula, AL, SF, K, 0, &stFormula);
         break;
     case HAIGIS:
-        Calculator(formula, AL, AConst, K, ACD_measure, &stFormula);
+//        Calculator(formula, AL, AConst, K, ACD_measure, &stFormula);
+        HaigisCalc(A0, A1, A2, AL, AConst, ACD_measure, K, 0, &stFormula);
         break;
 
     }
@@ -299,4 +303,11 @@ stFormulaInfo *formula::getModel()
 //    stInfo.formulaName =
     stInfo.model = (QStandardItemModel*)twCalculator->model();
 return &stInfo;
+}
+
+void formula::clear()
+{
+    QStandardItemModel *model;
+    model = (QStandardItemModel*)twFormula->model();
+    model->setRowCount(0);
 }

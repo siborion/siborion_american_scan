@@ -132,6 +132,7 @@ void Measure::clearAll()
     pBigView->clearAll();
     pPlot->clearMarker();
     pBigViewCur->updatePatient();
+    pPlot->clearSample();
 }
 
 void Measure::changeSideCalculatorSlot()

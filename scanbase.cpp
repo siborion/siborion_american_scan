@@ -76,7 +76,7 @@ void Scanbase::getBasesModel(Base::TypeBase typeBase, QSqlQueryModel** model)
         break;
     case Base::enLens:
         lst             <<tr("id") <<tr("Lens Name")<<tr("Mfg Name")<<tr("Mfg A_Const")<<tr("Mfg ACD")<<tr("Mfg SF")<<tr("Hoffer ACD")<<tr("A1")<<tr("A2")<<tr("A3");
-        str = "SELECT id, name, mfg, aconst, acd, sf, hacd, 0 as A1, 0 as A2, 0 as A3 from lens;";
+        str = "SELECT id, name, mfg, aconst, acd, sf, hacd, a0, a1, a2 from lens;";
         break;
     }
     modelBases->setQuery(str);
@@ -140,10 +140,9 @@ void Scanbase::updateCurPatient(quint16 id)
     str.append("lens.aconst,");
     str.append("lens.acd,");
     str.append("lens.sf,");
-
-    str.append("0 as A1 ,");
-    str.append("0 as A2 ,");
-    str.append("0 as A3 ");
+    str.append("lens.a0 ,");
+    str.append("lens.a1 ,");
+    str.append("lens.a2 ");
 
     str.append("FROM patient, doctor_lens, lens, formula ");
     str.append("ON patient.doctor=doctor_lens.id_doctor ");

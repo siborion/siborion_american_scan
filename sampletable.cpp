@@ -305,7 +305,7 @@ void sampletable::calculateAvg()
 
     for(quint8 i=0; i<rowCount; i++)
     {
-        index = twMeas->model()->index(i, 2);
+        index = twMeas->model()->index(i, 1);
         curDev = twMeas->model()->data(index, Qt::DisplayRole).toDouble();
         curDev = round(abs(averageParam.ALave*100 - curDev*100));
         curDev /= 100;
@@ -356,7 +356,10 @@ void sampletable::changeRegimManual(QString objectName)
     }
 
     if(QObject::sender())
+    {
         qDebug()<<QObject::sender()->objectName();
+        qDebug()<<"test";
+    }
 
     if (!((objectName=="rbOD")||(objectName=="rbOS")))
         clearAll();
@@ -456,7 +459,7 @@ void sampletable::keyPressEvent(QKeyEvent * keyEvent)
 
 void sampletable::changeGlasSlot()
 {
-
+    QModelIndex index;
     if(curParam->regimSide==0)
     {
         if(twMeas->model()==modelOD)
@@ -473,7 +476,11 @@ void sampletable::changeGlasSlot()
 
     calculateAvg();
     if(twMeas->model()->rowCount()>0)
+    {
         twMeas->selectRow(twMeas->model()->rowCount()-1);
+        index=twMeas->model()->index(twMeas->model()->rowCount()-1,0);
+        changeRowSlot(index);
+    }
     else
         emit clearSample();
 }

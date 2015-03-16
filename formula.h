@@ -21,6 +21,9 @@ private:
     double AConst;
     double ACD;
     double SF;
+    double A0;
+    double A1;
+    double A2;
     double ACD_measure;
     QLabel *lLens;
     QLabel *leLens;
@@ -35,8 +38,9 @@ private:
     stFormulaInfo stInfo;
 
 public:
-    void setValue(quint8 formula, QString name, QString aconst, QString acd, QString fs, double K, double AL, double ACD);
+    void setValue(quint8 formula, QString name, QString aconst, QString acd, QString fs, QString A0, QString A1, QString A2,  double K, double AL, double ACD);
     stFormulaInfo *getModel();
+    void clear();
 
 public:
     explicit formula(QWidget *parent = 0);

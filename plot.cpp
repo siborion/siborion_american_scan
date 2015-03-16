@@ -40,7 +40,7 @@ Plot::Plot( QWidget *parent, bool print, CurParam *link):
     dMin=(-20.0); dMax=(1024.0);
     setAxisScale(QwtPlot::xTop, dMin, dMax);
     setAxisScale(QwtPlot::xBottom, (dMin/27), (dMax/27));
-    setAxisScale(QwtPlot::yLeft, -4, 550.0);
+    setAxisScale(QwtPlot::yLeft, -4, 280.0);
 
     QPalette palette;
     if(print)
@@ -95,12 +95,13 @@ Plot::Plot( QWidget *parent, bool print, CurParam *link):
 
 void Plot::drawSample(QByteArray *Sample)
 {
+    qDebug()<<"SampleLenth"<<Sample->length();
     QVector<double>  xData, yData;
     quint16 kolvo = 0;
     foreach(quint8 val, *Sample)
     {
         xData.append(kolvo);
-        yData.append(val*2);
+        yData.append(val);
         kolvo++;
     }
     foreach (QwtPlotItem *p, itemList())
@@ -111,6 +112,9 @@ void Plot::drawSample(QByteArray *Sample)
         }
     }
     d_curve1->setSamples(xData, yData);
+//    d_curve1->setSamples(xData, yData);
+//    qDebug("d_curve1->setSamples(xData, yData);");
+    d_curve1->setVisible(true);
 }
 
 void Plot::drawSample(const double *x, const double *y, int count)
@@ -147,8 +151,10 @@ void Plot::drawMarker(quint16 pos, QString title)
     d_marker->setVisible(false);
 }
 
-void Plot::drawMarker(quint16 pos, QString title, bool visible)
+void Plot::drawMarker(quint16 pos, QString title, bool visibleVal)
 {
+    qDebug()<<"title"<<title<<visibleVal<<pos;
+
     QFont qF;
     qF.setPixelSize(20);
     QwtText qT;
@@ -160,8 +166,12 @@ void Plot::drawMarker(quint16 pos, QString title, bool visible)
         if ( ( *it )->rtti() == QwtPlotItem::Rtti_PlotMarker)
         {
             QwtPlotMarker *c = static_cast<QwtPlotMarker *>( *it );
+
             if((c->title().text()==title))
             {
+
+                qDebug()<<"c->title().text()"<<c->title().text();
+
                 if(title=="Cornea")
                 {
                     qT.setText(curParam->regimMeasure!=REGIM::MANUAL?"Cornea":"Gate1");
@@ -172,7 +182,7 @@ void Plot::drawMarker(quint16 pos, QString title, bool visible)
                     qT.setText(curParam->regimMeasure!=REGIM::MANUAL?"Retina":"Gate2");
                     c->setLabel(qT);
                 }
-                c->setVisible(visible);
+                c->setVisible(visibleVal);
                 c->setXValue(pos);
             }
         }
@@ -430,6 +440,7 @@ void Plot::updateSample(stMeasureParam *link)
     drawMarker(measureParam.Retina,"Retina",true);
     drawMarker((double)measureParam.Retina,(double)60, Qt::white);
     allExtremum = measureParam.extremum;
+    qDebug()<<"drawMarker";
 }
 
 void Plot::updateInterval()
@@ -444,12 +455,13 @@ void Plot::updateInterval()
     startInterval->setSample (curParam->corneaX1, curParam->corneaX2);
     lensInterval->setSample  (curParam->lensX1,   curParam->lensX2);
     retinaInterval->setSample(curParam->retinaX1, curParam->retinaX2);
-    updateSample(&measureParam);
-    clearMarker();
+//    updateSample(&measureParam);
+//    clearMarker();
 }
 
 void Plot::clearMarker()
 {
+    qDebug()<<"clearMarcer";
     foreach (QwtPlotItem *p, itemList())
     {
         if(p->rtti() == QwtPlotItem::Rtti_PlotMarker)
@@ -465,6 +477,15 @@ void Plot::clearMarker()
 
 void Plot::clearSample()
 {
-    QByteArray baTmp;
-    drawSample(&baTmp);
+//    QByteArray baTmp;
+//    baTmp.append((char)0);
+//    baTmp.append((char)0);
+//    baTmp.append((char)100);
+//    baTmp.append((char)100);
+
+//    drawSample(&baTmp);
+//    qDebug()<<"drawSample(&baTmp);";
+//    qDebug()<<"drawSample.lenth"<<baTmp.length();
+    d_curve1->hide();
+    clearMarker();
 }

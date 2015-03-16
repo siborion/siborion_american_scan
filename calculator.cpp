@@ -35,7 +35,7 @@ calculator::calculator(QWidget *parent, CurParam *link) :
     //-------------------------------
     columnPercent.clear();
     columnPercent<<20<<0<<21<<15<<10<<10<<8<<8<<8;
-    lst<<"Lens Name"<<"id"<<"Formula"<<"AConst"<<"ACD"<<"SF"<<"A1"<<"A2"<<"A3";
+    lst<<"Lens Name"<<"id"<<"Formula"<<"AConst"<<"ACD"<<"SF"<<"A0"<<"A1"<<"A2";
 
     twLens = new adjview(3, lst, columnPercent);
     twLens->setMinimumWidth(350);
@@ -123,13 +123,13 @@ void calculator::refreshFormuls()
 {
     stPersonalParam personalParam;
     quint8 nFormula;
-    QString lensName, lensAconst, lensAcd, lensFs;
+    QString lensName, lensAconst, lensAcd, lensFs, lensA0, lensA1, lensA2;
 
     personalParam = pCalcPatient->getPersonalParam();
 
-
-
-
+    Formula1->clear();
+    Formula2->clear();
+    Formula3->clear();
 
     if(!((curParam->ACD>0)&&(curParam->ALave>0)&&(curParam->K>0)))
         return;
@@ -137,8 +137,6 @@ void calculator::refreshFormuls()
     Formula1->setEnabled(false);
     Formula2->setEnabled(false);
     Formula3->setEnabled(false);
-
-
 
     if(twLens->model()->rowCount()>0)
     {
@@ -162,22 +160,23 @@ void calculator::refreshFormuls()
             else
                 lensFs = twLens->model()->itemData(twLens->model()->index(i,5)).value(0).toString();
 
-
-
+            lensA0 =  twLens->model()->itemData(twLens->model()->index(i,6)).value(0).toString();
+            lensA1 =  twLens->model()->itemData(twLens->model()->index(i,7)).value(0).toString();
+            lensA2 =  twLens->model()->itemData(twLens->model()->index(i,8)).value(0).toString();
 
 
             switch (i)
             {
             case 0:
-                Formula1->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, curParam->K, curParam->ALave, curParam->ACD);
+                Formula1->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, lensA0, lensA1, lensA2, curParam->K, curParam->ALave, curParam->ACD);
                 Formula1->setEnabled(true);
                 break;
             case 1:
-                Formula2->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, curParam->K, curParam->ALave, curParam->ACD);
+                Formula2->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, lensA0, lensA1, lensA2, curParam->K, curParam->ALave, curParam->ACD);
                 Formula2->setEnabled(true);
                 break;
             case 2:
-                Formula3->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, curParam->K, curParam->ALave, curParam->ACD);
+                Formula3->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, lensA0, lensA1, lensA2, curParam->K, curParam->ALave, curParam->ACD);
                 Formula3->setEnabled(true);
             default:
                 break;
@@ -194,7 +193,7 @@ void calculator::refreshFormuls()
             lensAcd = QString("%1").arg(personalParam.ACD);
         if(personalParam.SF>0)
             lensFs = QString("%1").arg(personalParam.SF);
-        Formula1->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, curParam->K, curParam->ALave, curParam->ACD);
+        Formula1->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, lensA0, lensA1, lensA2, curParam->K, curParam->ALave, curParam->ACD);
         Formula1->setEnabled(true);
     }
 }

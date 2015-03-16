@@ -25,7 +25,7 @@ void SRKTCalc(double AL, double AConst,double K,double Rx,iol_formula* SRKTValue
 int HofferCalc(double A, double AConst, double K,double Rx,iol_formula* HofferValues);
 void HolladayCalc(double AL, double AConst, double K,double Rx, iol_formula* HolladayValues);
 void BinkhorstCalc(double AL,double AConst, double K,double Rx,iol_formula* BinhorstValues );
-
+int HaigisCalc(double a0, double a1, double a2, double AL, double AConst,double ac,double K,double Rx,iol_formula* HaigisValues);
 
 class calc
 {

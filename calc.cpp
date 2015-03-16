@@ -208,7 +208,7 @@ LP = P_Emmetropia;
 
 
 
-void SRKIICalc(double AL, double AConst, double K,double Rx,iol_formula* SRKIIValues)
+void SRKIICalc(double AL, double AConst, double K, double Rx, iol_formula* SRKIIValues)
 {
   double i;
   double Emmetropia, Emmetropia_Rounded,Emmetropia_New,CR,REFR1;
@@ -388,12 +388,12 @@ int HofferCalc(double A, double ACD, double K,double Rx,iol_formula* HofferValue
  return 0;
 }
 
-int HaigisCalc(double AL, double AConst,double ac,double K,double Rx,iol_formula* HaigisValues)
+int HaigisCalc(double a0, double a1, double a2, double AL, double AConst, double ac,double K,double Rx,iol_formula* HaigisValues)
 {
     double R=337.5;
-    double a0;
-    double a1=0.4;
-    double a2=0.1;
+//    double a0;
+//    double a1=0.4;
+//    double a2=0.1;
     double ACDd;
     double u = -0.241;
     double v= 0.139;
@@ -415,7 +415,7 @@ int HaigisCalc(double AL, double AConst,double ac,double K,double Rx,iol_formula
     int Loop;
     double P;
 
-    a0= 0.62467 * AConst -72.434;
+//    a0= 0.62467 * AConst -72.434;
 
     //Optical ACD calculation
     if (ac!= 0.00)
@@ -522,9 +522,6 @@ int Calculator(int FormulaType, double AL, double AConst, double K, double ACD_m
 //   printf("\r\nSRKII");
 //   SRKIICalc(AL,AConst,K);
 
-
-
-
    switch (FormulaType)
    {
    case SRKII:
@@ -539,12 +536,10 @@ int Calculator(int FormulaType, double AL, double AConst, double K, double ACD_m
    case HOLLADAY:
             HolladayCalc(AL,AConst,K, 0,formula_values);
        break;
-   case HAIGIS:
-            HaigisCalc(AL, AConst, ACD_measure, K, 0, formula_values);
-
-       break;
+//   case HAIGIS:
+//            HaigisCalc(AL, AConst, ACD_measure, K, 0, formula_values);
+//       break;
    }
-
   return 0;
 }
 
