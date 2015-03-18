@@ -91,10 +91,22 @@ bool Parcer::findExtremum(QByteArray *Sample, QList<quint16> *extremum, stMeasur
 
 void Parcer::calculateParam(stMeasureParam *measureParam)
 {
+    quint16 tmpCornea;
+
+    tmpCornea = measureParam->Cornea;
     if(curParam->regimContact == REGIM::CONTACT)
-        measureParam->Cornea = 4;
-    measureParam->ALave  = decRound(measureParam->Retina - measureParam->Cornea, 2, 1555);
-    measureParam->ACD    = decRound(measureParam->L1 - measureParam->Cornea,     2, 1534);
+        tmpCornea = 4;
+
+    if(curParam->regimMeasure == REGIM::MANUAL)
+        measureParam->ALave  = decRound(measureParam->Retina - tmpCornea, 2, 1550);
+    else
+    {
+        if(curParam->regimCataract == REGIM::CATARACT)
+            measureParam->ALave  = decRound(measureParam->Retina - tmpCornea, 2, 1555);
+        else
+            measureParam->ALave  = decRound(measureParam->Retina - tmpCornea, 2, 1532);
+    }
+    measureParam->ACD    = decRound(measureParam->L1 - tmpCornea,     2, 1534);
     measureParam->LT     = decRound(measureParam->L2 - measureParam->L1,         2, 1641);
     measureParam->VIT    = decRound(measureParam->Retina - measureParam->L2,     2, 1532);
     measureParam->AL     = measureParam->ACD + measureParam->LT + measureParam->VIT;

@@ -153,5 +153,12 @@ void Dialog_Patient::calculateAge(QDate val)
 {
     quint8 age;
     age = (QDate::currentDate().year() - val.year());
+    if(QDate(2000,val.month(),val.day())>QDate(2000,QDate::currentDate().month(),QDate::currentDate().day()))
+        age--;
+
+
+//    qDebug()<<QDate(,1,1);
+//    qDebug()<<QDate(0,QDate::currentDate().month(),QDate::currentDate().day());
+
     leAge->setText(QString("%1").arg(age));
 }
