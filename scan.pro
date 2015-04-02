@@ -9,6 +9,7 @@ QMAKE_CXXFLAGS += -std=gnu++11
 QT       += sql
 QT       += core gui
 QT	 += serialport
+QT       += multimedia
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 

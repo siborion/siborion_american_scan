@@ -4,6 +4,10 @@
 #include <QDateTime>
 #include <QSqlQuery>
 #include <QSqlRecord>
+#include <QSound>
+#include <QThread>
+#include <QApplication>
+
 
 sampletable::sampletable(QWidget *parent, CurParam *link) :
     QFrame(parent)
@@ -44,6 +48,8 @@ sampletable::sampletable(QWidget *parent, CurParam *link) :
 //    twMeas->setSelectionMode(MultiSelection);
 //    twMeas->setSelectionMode(QAbstractItemView::SelectionMode::MultiSelection);
 //    twMeas->selectedIndexes();//
+
+    bells = new QSound(":/test/sinus");
 
     connect(twMeas->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), SLOT(changeRowSlot(QModelIndex)));
     connect(pbSave,SIGNAL(pressed()),SLOT(saveSlot()));
@@ -171,6 +177,8 @@ void sampletable::addSample(QByteArray *Sample, QList<quint16> *extremum, stMeas
         }
         pbSave->setEnabled(true);
     }
+
+
 }
 
 void sampletable::editSample(quint16 rowNom, stMeasureParam* measureParam)
@@ -193,6 +201,9 @@ void sampletable::editSample(quint16 rowNom, stMeasureParam* measureParam)
     index = twMeas->model()->index(rowNom, 5);
     twMeas->model()->setData(index, QString("%1").arg(measureParam->VIT,   4, 'f', 2, '0'), Qt::DisplayRole);
     calculateAvg();
+    bells->play();
+    qDebug()<<"QSOUND";
+    QApplication::beep();
 }
 
 void sampletable::editSample(stMeasureParam* measureParam)
@@ -423,6 +434,8 @@ void sampletable::clearAll()
 
 void sampletable::del()
 {
+    QApplication::beep();
+
     QModelIndexList indexes = twMeas->selectionModel()->selectedRows();
 
     if (!indexes.count())
