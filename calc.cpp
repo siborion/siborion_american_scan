@@ -511,7 +511,7 @@ int HaigisCalc(double a0, double a1, double a2, double AL, double AConst, double
 
 
 
-int Calculator(int FormulaType, double AL, double AConst, double K, double ACD_measure,iol_formula* formula_values)
+int Calculator(int FormulaType, double AL, double AConst, double K, double Rx,iol_formula* formula_values)
 {
    double i;
 
@@ -525,16 +525,16 @@ int Calculator(int FormulaType, double AL, double AConst, double K, double ACD_m
    switch (FormulaType)
    {
    case SRKII:
-            SRKIICalc(AL,AConst,K, 0,formula_values);
+            SRKIICalc(AL,AConst,K, Rx,formula_values);
        break;
    case SRKT:
-            SRKTCalc(AL,AConst,K, 0,formula_values);
+            SRKTCalc(AL,AConst,K, Rx,formula_values);
        break;
    case HOFFERQ:
-            HofferCalc(AL,AConst,K, 0,formula_values);
+            HofferCalc(AL,AConst,K, Rx,formula_values);
        break;
    case HOLLADAY:
-            HolladayCalc(AL,AConst,K, 0,formula_values);
+            HolladayCalc(AL,AConst,K, Rx,formula_values);
        break;
 //   case HAIGIS:
 //            HaigisCalc(AL, AConst, ACD_measure, K, 0, formula_values);

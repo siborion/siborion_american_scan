@@ -138,6 +138,7 @@ void calculator::refreshFormuls()
     Formula2->setEnabled(false);
     Formula3->setEnabled(false);
 
+
     if(twLens->model()->rowCount()>0)
     {
         for(quint8 i=0; i<twLens->model()->rowCount() && i<3; i++)
@@ -168,15 +169,15 @@ void calculator::refreshFormuls()
             switch (i)
             {
             case 0:
-                Formula1->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, lensA0, lensA1, lensA2, curParam->K, curParam->ALave, curParam->ACD);
+                Formula1->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, lensA0, lensA1, lensA2, curParam->K, curParam->ALave, curParam->ACD, personalParam.Rx);
                 Formula1->setEnabled(true);
                 break;
             case 1:
-                Formula2->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, lensA0, lensA1, lensA2, curParam->K, curParam->ALave, curParam->ACD);
+                Formula2->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, lensA0, lensA1, lensA2, curParam->K, curParam->ALave, curParam->ACD, personalParam.Rx);
                 Formula2->setEnabled(true);
                 break;
             case 2:
-                Formula3->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, lensA0, lensA1, lensA2, curParam->K, curParam->ALave, curParam->ACD);
+                Formula3->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, lensA0, lensA1, lensA2, curParam->K, curParam->ALave, curParam->ACD, personalParam.Rx);
                 Formula3->setEnabled(true);
             default:
                 break;
@@ -193,7 +194,7 @@ void calculator::refreshFormuls()
             lensAcd = QString("%1").arg(personalParam.ACD);
         if(personalParam.SF>0)
             lensFs = QString("%1").arg(personalParam.SF);
-        Formula1->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, lensA0, lensA1, lensA2, curParam->K, curParam->ALave, curParam->ACD);
+        Formula1->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, lensA0, lensA1, lensA2, curParam->K, curParam->ALave, curParam->ACD, personalParam.Rx);
         Formula1->setEnabled(true);
     }
 }
@@ -275,7 +276,7 @@ void calculator::print( QPrinter* printer )
     font.setPixelSize(80);
     painter.setFont( font );
     QRect    page0( 500, 200, 500, 400);
-    painter.drawText(page0, Qt::AlignRight, "Name:\r\nID:\r\nDate of Birth:\r\nExam Date:" );
+    painter.drawText(page0, Qt::AlignLeft, "Name:\r\nID:\r\nDate of Birth:\r\nExam Date:" );
     font.setBold(true);
     painter.setFont( font );
 
@@ -286,7 +287,7 @@ void calculator::print( QPrinter* printer )
 
 
 
-    painter.drawRect(500,5000,500,100);
+//    painter.drawRect(500,5000,500,100);
 
 
 //    QRect    page1(1000, 200, 1000, 400);
@@ -301,32 +302,32 @@ void calculator::print( QPrinter* printer )
 #define xPosTable  500
 #define widthTable 3900
 
-//    QSize size;
-//    size.setHeight(20000);
-//    size.setWidth (20000);
+    QSize size;
+    size.setHeight(20000);
+    size.setWidth (20000);
 
 
 
-//    if(Formula1->isEnabled())
-//    {
-//        QPixmap pixmap(Formula1->size());
-//        Formula1->render(&pixmap);
-//        painter.drawPixmap(2700,3000,2000,1800,pixmap);
-//    }
+    if(Formula1->isEnabled())
+    {
+        QPixmap pixmap(Formula1->size());
+        Formula1->render(&pixmap);
+        painter.drawPixmap(2700,3000,2000,1800,pixmap);
+    }
 
-//    if(Formula2->isEnabled())
-//    {
-//        QPixmap pixmap(Formula2->size());
-//        Formula2->render(&pixmap);
-//        painter.drawPixmap(500,5000,2000,1800,pixmap);
-//    }
+    if(Formula2->isEnabled())
+    {
+        QPixmap pixmap(Formula2->size());
+        Formula2->render(&pixmap);
+        painter.drawPixmap(500,5000,2000,1800,pixmap);
+    }
 
-//    if(Formula3->isEnabled())
-//    {
-//        QPixmap pixmap(Formula3->size());
-//        Formula3->render(&pixmap);
-//        painter.drawPixmap(2700,5000,2000,1800,pixmap);
-//    }
+    if(Formula3->isEnabled())
+    {
+        QPixmap pixmap(Formula3->size());
+        Formula3->render(&pixmap);
+        painter.drawPixmap(2700,5000,2000,1800,pixmap);
+    }
 
 
 

@@ -25,6 +25,7 @@ private:
     double A1;
     double A2;
     double ACD_measure;
+    double Rx;
     QLabel *lLens;
     QLabel *leLens;
     adjview *twCalculator;
@@ -38,7 +39,7 @@ private:
     stFormulaInfo stInfo;
 
 public:
-    void setValue(quint8 formula, QString name, QString aconst, QString acd, QString fs, QString A0, QString A1, QString A2,  double K, double AL, double ACD);
+    void setValue(quint8 formula, QString name, QString aconst, QString acd, QString fs, QString A0, QString A1, QString A2,  double K, double AL, double ACD, double Rx);
     stFormulaInfo *getModel();
     void clear();
 

@@ -82,6 +82,7 @@ struct stPersonalParam
     float AConst;
     float ACD;
     float SF;
+    float Rx;
 };
 
 struct stPrintSample

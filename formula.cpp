@@ -158,7 +158,7 @@ QStandardItem* formula::getItem(double val, Qt::AlignmentFlag align)
     return siTmp;
 }
 
-void formula::setValue(quint8 formula, QString name, QString aconst, QString acd, QString fs, QString a0, QString a1, QString a2, double dK, double dAL, double dACD)
+void formula::setValue(quint8 formula, QString name, QString aconst, QString acd, QString fs, QString a0, QString a1, QString a2, double dK, double dAL, double dACD, double RxVal)
 {
 
     QStringList s;
@@ -178,6 +178,7 @@ void formula::setValue(quint8 formula, QString name, QString aconst, QString acd
     A2 = a2.toDouble();
     K = dK;
     AL = dAL;
+    Rx = RxVal;
     ACD_measure = dACD;
     lLens->setText(name);
 
@@ -197,20 +198,20 @@ void formula::calculateIOL(quint8 formula)
     case 0:
         break;
     case SRKII:
-        Calculator(formula, AL, AConst, K, 0, &stFormula);
+        Calculator(formula, AL, AConst, K, Rx, &stFormula);
         break;
     case SRKT:
-        Calculator(formula, AL, AConst, K, 0, &stFormula);
+        Calculator(formula, AL, AConst, K, Rx, &stFormula);
         break;
     case HOFFERQ:
-        Calculator(formula, AL, ACD, K, 0, &stFormula);
+        Calculator(formula, AL, ACD, K, Rx, &stFormula);
         break;
     case HOLLADAY:
-        Calculator(formula, AL, SF, K, 0, &stFormula);
+        Calculator(formula, AL, SF, K, Rx, &stFormula);
         break;
     case HAIGIS:
 //        Calculator(formula, AL, AConst, K, ACD_measure, &stFormula);
-        HaigisCalc(A0, A1, A2, AL, AConst, ACD_measure, K, 0, &stFormula);
+        HaigisCalc(A0, A1, A2, AL, AConst, ACD_measure, K, Rx, &stFormula);
         break;
 
     }
