@@ -208,10 +208,14 @@ void calculator::printPreview()
 {
     QPrinter             printer( QPrinter::HighResolution );
     printer.setPageSize(QPrinter::A4);
-//    QPrintPreviewDialog  preview( &printer, this );
-      QPrintPreviewDialog  preview( &printer);
+    printer.setFullPage(false);
+    QPrintPreviewDialog  preview( &printer);
+//    preview.setSizeGripEnabled(true);
+
     connect( &preview, SIGNAL(paintRequested(QPrinter*)), SLOT(print(QPrinter*)) );
+    preview.showFullScreen();
     preview.exec();
+
 }
 
 void calculator::print( QPrinter* printer )
@@ -224,52 +228,6 @@ void calculator::print( QPrinter* printer )
     QPainter painter( printer );
     lsSelect = twMeas->selectionModel()->selectedRows();
     QwtPlotRenderer renderer;
-
-    foreach (index, lsSelect)
-    {
-        index = twMeas->model()->index(kolvo, 0);
-        sample = twMeas->model()->data(index, roleSample).toByteArray();
-        switch (kolvo)
-        {
-        case 0:
-            pPlotPrint1 = new Plot(this, true, curParam);
-            pPlotPrint1->drawSample(&sample);
-            pPlotPrint1->enableAxis(QwtPlot::xTop,false);
-            pPlotPrint1->enableAxis(QwtPlot::xBottom,true);
-            pPlotPrint1->enableAxis(QwtPlot::yLeft,true);
-            pPlotPrint1->replot();
-            renderer.render(pPlotPrint1, &painter, QRectF(500,1000,2000,1800));
-            break;
-        case 1:
-            pPlotPrint2 = new Plot(this, true, curParam);
-            pPlotPrint2->drawSample(&sample);
-            pPlotPrint2->enableAxis(QwtPlot::xTop,false);
-            pPlotPrint2->enableAxis(QwtPlot::xBottom,true);
-            pPlotPrint2->enableAxis(QwtPlot::yLeft,true);
-            pPlotPrint2->replot();
-            renderer.render(pPlotPrint2, &painter, QRectF(2700,1000,2000,1800));
-            break;
-        case 2:
-            pPlotPrint3 = new Plot(this, true, curParam);
-            pPlotPrint3->drawSample(&sample);
-            pPlotPrint3->enableAxis(QwtPlot::xTop,false);
-            pPlotPrint3->enableAxis(QwtPlot::xBottom,true);
-            pPlotPrint3->enableAxis(QwtPlot::yLeft,true);
-            pPlotPrint3->replot();
-            renderer.render(pPlotPrint3, &painter, QRectF(500,3000,2000,1800));
-            break;
-        case 3:
-            pPlotPrint4 = new Plot(this, true, curParam);
-            pPlotPrint4->drawSample(&sample);
-            pPlotPrint4->enableAxis(QwtPlot::xTop,false);
-            pPlotPrint4->enableAxis(QwtPlot::xBottom,true);
-            pPlotPrint4->enableAxis(QwtPlot::yLeft,true);
-            pPlotPrint4->replot();
-            renderer.render(pPlotPrint4, &painter, QRectF(2700,3000,2000,1800));
-            break;
-        }
-        kolvo++;
-    }
 
     painter.drawRect(500, 200, 4000, 400);
     QFont    font = painter.font();
@@ -284,6 +242,35 @@ void calculator::print( QPrinter* printer )
     QString  sPatient;
     sPatient.append(QString("%1\r\n%2").arg(curParam->patientName).arg(curParam->patientId));
     painter.drawText(page1, Qt::AlignLeft, sPatient);
+
+
+
+
+    foreach (index, lsSelect)
+    {
+        index = twMeas->model()->index(kolvo, 0);
+        sample = twMeas->model()->data(index, roleSample).toByteArray();
+        switch (kolvo)
+        {
+        case 0:
+            pPlotPrint1 = new PrintPlot(this, curParam, &sample);
+            renderer.render(pPlotPrint1, &painter, QRectF(500,1000,2000,1800));
+            break;
+        case 1:
+            pPlotPrint1 = new PrintPlot(this, curParam, &sample);
+            renderer.render(pPlotPrint1, &painter, QRectF(2700,1000,2000,1800));
+            break;
+        case 2:
+            pPlotPrint1 = new PrintPlot(this, curParam, &sample);
+            renderer.render(pPlotPrint1, &painter, QRectF(500,3000,2000,1800));
+            break;
+        case 3:
+            pPlotPrint1 = new PrintPlot(this, curParam, &sample);
+            renderer.render(pPlotPrint1, &painter, QRectF(2700,3000,2000,1800));
+            break;
+        }
+        kolvo++;
+    }
 
 
 
@@ -302,32 +289,32 @@ void calculator::print( QPrinter* printer )
 #define xPosTable  500
 #define widthTable 3900
 
-    QSize size;
-    size.setHeight(20000);
-    size.setWidth (20000);
+//    QSize size;
+//    size.setHeight(20000);
+//    size.setWidth (20000);
 
 
 
-    if(Formula1->isEnabled())
-    {
-        QPixmap pixmap(Formula1->size());
-        Formula1->render(&pixmap);
-        painter.drawPixmap(2700,3000,2000,1800,pixmap);
-    }
+//    if(Formula1->isEnabled())
+//    {
+//        QPixmap pixmap(Formula1->size());
+//        Formula1->render(&pixmap);
+//        painter.drawPixmap(2700,3000,2000,1800,pixmap);
+//    }
 
-    if(Formula2->isEnabled())
-    {
-        QPixmap pixmap(Formula2->size());
-        Formula2->render(&pixmap);
-        painter.drawPixmap(500,5000,2000,1800,pixmap);
-    }
+//    if(Formula2->isEnabled())
+//    {
+//        QPixmap pixmap(Formula2->size());
+//        Formula2->render(&pixmap);
+//        painter.drawPixmap(500,5000,2000,1800,pixmap);
+//    }
 
-    if(Formula3->isEnabled())
-    {
-        QPixmap pixmap(Formula3->size());
-        Formula3->render(&pixmap);
-        painter.drawPixmap(2700,5000,2000,1800,pixmap);
-    }
+//    if(Formula3->isEnabled())
+//    {
+//        QPixmap pixmap(Formula3->size());
+//        Formula3->render(&pixmap);
+//        painter.drawPixmap(2700,5000,2000,1800,pixmap);
+//    }
 
 
 

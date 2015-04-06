@@ -17,6 +17,8 @@
 Plot::Plot( QWidget *parent, bool print, CurParam *link):
     QwtPlot( parent )
 {
+    qDebug()<<"Plot";
+
     setMinimumHeight(150);
     setMinimumWidth (150);
 

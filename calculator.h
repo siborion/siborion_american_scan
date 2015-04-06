@@ -24,6 +24,7 @@
 #include "plot.h"
 #include "curparam.h"
 #include "typedef.h"
+#include "printplot.h"
 
 
 class calculator : public QWidget
@@ -40,7 +41,7 @@ signals:
 
 private:
     CurParam *curParam;
-    Plot *pPlotPrint1;
+    PrintPlot *pPlotPrint1;
     Plot *pPlotPrint2;
     Plot *pPlotPrint3;
     Plot *pPlotPrint4;

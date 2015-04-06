@@ -1,16 +1,12 @@
 #ifndef PRINTPLOT_H
 #define PRINTPLOT_H
 #include "plot.h"
-
-class PrintPlot: public QwtPlot
+#include "curparam.h"
+class PrintPlot: public Plot
 {
 Q_OBJECT
-
 public:
-    PrintPlot();
-
+    PrintPlot(QWidget*, CurParam*, QByteArray*);
 private:
-    Plot *pPlotPrint;
 };
-
 #endif // PRINTPLOT_H
