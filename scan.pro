@@ -63,7 +63,8 @@ SOURCES += main.cpp\
     leaddzero.cpp \
     listresult.cpp \
     dialogserial.cpp \
-    delegate_lens.cpp
+    delegate_lens.cpp \
+    printplot.cpp
 
 HEADERS  += mainwindow.h \
     bases.h \
@@ -97,7 +98,8 @@ HEADERS  += mainwindow.h \
     listresult.h \
     ftd2xx.h \
     dialogserial.h \
-    delegate_lens.h
+    delegate_lens.h \
+    printplot.h
 
 FORMS    += mainwindow.ui \
     dialog_doctor.ui \

@@ -4,6 +4,7 @@
 
 class parserFront
 {
+
 public:
     parserFront(quint16 start, quint16 end, quint8 front, quint8 zero, quint8 max);
     qint16 parser(quint16 pos, quint8 val);
