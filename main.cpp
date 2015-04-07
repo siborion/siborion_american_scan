@@ -1,6 +1,6 @@
 #include <QApplication>
 #include "mainwindow.h"
-#include <QSound>
+//#include <QSound>
 
 int main(int argc, char *argv[])
 {
@@ -11,7 +11,8 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     a.addLibraryPath(a.applicationDirPath()+"/plugins");
     MainWindow w;
-//    QApplication::beep();
+    QApplication::beep();
+    printf("\a");
 //    QSound bells(":/test/sinus");
 //    bells.setLoops(10);
 //    bells.play();

@@ -29,8 +29,6 @@ private:
     QLabel *lLens;
     QLabel *leLens;
     adjview *twCalculator;
-    adjview *twFormula;
-    adjview *twEmm;
     QComboBox *cbFormula;
     QStringList getListFormula();
     QStandardItem *getItem(QString, Qt::AlignmentFlag);
@@ -42,6 +40,9 @@ public:
     void setValue(quint8 formula, QString name, QString aconst, QString acd, QString fs, QString A0, QString A1, QString A2,  double K, double AL, double ACD, double Rx);
     stFormulaInfo *getModel();
     void clear();
+    adjview *twFormula;
+    adjview *twEmm;
+
 
 public:
     explicit formula(QWidget *parent = 0);

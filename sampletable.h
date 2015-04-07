@@ -7,7 +7,7 @@
 #include <QFileDialog>
 #include <QStandardItem>
 #include <QPushButton>
-#include <QSound>
+//#include <QSound>
 #include "plot.h"
 #include "curparam.h"
 #include "listresult.h"
@@ -33,7 +33,7 @@ private:
     QPushButton *pbLoad;
     QPushButton *pbClear;
     void keyPressEvent(QKeyEvent * keyEvent);
-    QSound *bells;
+//    QSound *bells;
 
 signals:
     void changeRow(stMeasureParam*);

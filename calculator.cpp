@@ -208,7 +208,7 @@ void calculator::printPreview()
 {
     QPrinter             printer( QPrinter::HighResolution );
     printer.setPageSize(QPrinter::A4);
-    printer.setFullPage(false);
+//    printer.setFullPage(false);
     QPrintPreviewDialog  preview( &printer);
 //    preview.setSizeGripEnabled(true);
 
@@ -243,9 +243,6 @@ void calculator::print( QPrinter* printer )
     sPatient.append(QString("%1\r\n%2").arg(curParam->patientName).arg(curParam->patientId));
     painter.drawText(page1, Qt::AlignLeft, sPatient);
 
-
-
-
     foreach (index, lsSelect)
     {
         index = twMeas->model()->index(kolvo, 0);
@@ -273,14 +270,16 @@ void calculator::print( QPrinter* printer )
     }
 
 
-
 //    painter.drawRect(500,5000,500,100);
 
 
 //    QRect    page1(1000, 200, 1000, 400);
-//    pModel1 = Formula1->getModel();
-//    pModel2 = Formula2->getModel();
-//    pModel3 = Formula3->getModel();
+    stFormulaInfo *pModel;
+    pModel = Formula1->getModel();
+    pModel = Formula2->getModel();
+    pModel = Formula3->getModel();
+
+//    pModel = Formula4->getModel();
 
 //    int kolLine = 0;
 #define kolColumn  3

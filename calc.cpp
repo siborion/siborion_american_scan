@@ -227,12 +227,15 @@ void SRKIICalc(double AL, double AConst, double K, double Rx, iol_formula* SRKII
    AConst = AConst - 0.5;
 
   Emmetropia = AConst - (0.9 * K) - (2.5 * AL);
+
+
+
   SRKIIValues->PEMM = Emmetropia;
+
 
   Emmetropia_Rounded = floor(Emmetropia);
 
   Diff_In_Emmetropia = Emmetropia - Emmetropia_Rounded;
-
 
   if (Emmetropia < 14.0)
    CR = 1.0;
@@ -400,10 +403,10 @@ int HaigisCalc(double a0, double a1, double a2, double AL, double AConst, double
     double Dc;
     double nc = 1.3315;
     double z;
-//    double dx=0.012;
-    double dx=12;
+    double dx=0.012;
+//    double dx=12;
     double Dl;
-    double n = 1.336;
+    double n = 1336;
     double q;
     double Refr;
     double iol;
@@ -419,32 +422,37 @@ int HaigisCalc(double a0, double a1, double a2, double AL, double AConst, double
 
     //Optical ACD calculation
     if (ac!= 0.00)
-        ACDd=a0+a1*ac+a2*AL;
+        ACDd=   a0 + a1*ac + a2*AL;
     else
         ACDd = (a0 + u*a1) +(a2+v*a1) * AL;
 
 
-
-
-
-
-
-
 //    R = 336.0;
-    R /= K;
-    Dc= ((nc -1))/R;
+//    R /= K;
+    if(K>40)
+        R = (R/K);
+    else
+        R = K;
 
 
+    R /= 1000;
+    qDebug()<<R;
 
+    Dc = ((nc -1))/(R);
+    qDebug()<<"Dc"<<Dc;
 
 
 
 /// P_Emmetropia
     z = Dc  +  (Rx/(1-Rx*dx));
+    qDebug()<<"z"<<z;
 
 
     Dl= (((n/(AL-ACDd))-(n/((n/z)-ACDd))));
-    Dl*=1000;
+    qDebug()<<"AL"<<AL;
+    qDebug()<<"ACDd"<<ACDd;
+    qDebug()<<"Dl"<<Dl;
+//    Dl*=1000;
 
 
     haigis_PEmm = Dl;
@@ -479,8 +487,8 @@ int HaigisCalc(double a0, double a1, double a2, double AL, double AConst, double
 
    Loop=0;
 
-   n*=1000;
-   Dc*=1000;
+//   n*=1000;
+//   Dc*=1000;
 
    for (P = haigis_PEmm_New - 1.5; P<=haigis_PEmm_New + 1.5; P= P + 0.5)
    {

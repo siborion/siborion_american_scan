@@ -9,7 +9,7 @@ QMAKE_CXXFLAGS += -std=gnu++11
 QT       += sql
 QT       += core gui
 QT	 += serialport
-QT       += multimedia
+#QT       += multimedia
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -26,7 +26,7 @@ CONFIG(debug, debug|release)
 
 CONFIG(release, debug|release)
 {
-  LIBS +=  -lqwt -LC:\Qt\Qwt-6.1.0\lib
+  LIBS +=  -lqwtd -LC:\Qt\Qwt-6.1.0\lib
   LIBS += ftd2xx.lib
 }
 
