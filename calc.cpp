@@ -215,32 +215,28 @@ void SRKIICalc(double AL, double AConst, double K, double Rx, iol_formula* SRKII
   double Diff_In_Emmetropia, Diff_Add;
   double REFR;
   int Loop;
+
   if (AL < 20.0)
-   AConst = AConst + 3;
+      AConst = AConst + 3;
   else if ((AL >= 20.0) & (AL < 21.0))
-   AConst = AConst + 2;
+      AConst = AConst + 2;
   else if ((AL >= 21.0) & (AL < 22.0))
-   AConst = AConst + 1;
+      AConst = AConst + 1;
   else if ((AL >= 22) & (AL < 24.5))
-   AConst = AConst;
+      AConst = AConst;
   else if (AL >= 24.5)
-   AConst = AConst - 0.5;
+      AConst = AConst - 0.5;
 
   Emmetropia = AConst - (0.9 * K) - (2.5 * AL);
 
-
-
   SRKIIValues->PEMM = Emmetropia;
-
 
   Emmetropia_Rounded = floor(Emmetropia);
 
-  Diff_In_Emmetropia = Emmetropia - Emmetropia_Rounded;
-
-  if (Emmetropia < 14.0)
-   CR = 1.0;
-  else if (Emmetropia >= 14.0)
-   CR = 1.25;
+  if (Emmetropia <= 14.0)
+      CR = 1.0;
+  else
+      CR = 1.25;
 
   Diff_Add = Diff(Diff_In_Emmetropia);
 
@@ -253,10 +249,8 @@ void SRKIICalc(double AL, double AConst, double K, double Rx, iol_formula* SRKII
     REFR = (REFR1 + (Emmetropia_New - i) / CR);
     SRKIIValues->PORx[Loop] = REFR;
     SRKIIValues->IOLPower[Loop] = i;
-//	printf("\r\n%5.2f,%5.2f",SRKIIValues->IOLPower[Loop],SRKIIValues->PORx[Loop]);
     Loop++;
  }
- //printf("\r\n");
 }
 
 void SRKTCalc(double AL, double AConst,double K,double Rx,iol_formula* SRKTValues)
@@ -300,30 +294,21 @@ void SRKTCalc(double AL, double AConst,double K,double Rx,iol_formula* SRKTValue
 
  C9 = 12.0 * C5 + ACCORR * C1;
 
-
  REFR1 = Rx;
-
  Emmetropia = (1336.0 * (C6 - 0.001 * REFR1 * C8)) / (C4 * (C5 - 0.001 * REFR1 * C9));
  Emmetropia_Rounded = floor(Emmetropia);
  SRKTValues->PEMM = (1336.0 * (C6 - 0.001 * 0 * C8)) / (C4 * (C5 - 0.001 * REFR1 * C9));
-// lcdWriteString("P EMMETROPIA:",IOL_TABLE_HPOSITION - 20,21);
-// lcdWriteValue(Emmetropia,IOL_TABLE_HPOSITION - 20,35,FLOAT);
  Diff_In_Emmetropia = Emmetropia - Emmetropia_Rounded;
  Diff_Add = Diff(Diff_In_Emmetropia);
-
-  Emmetropia_New = Emmetropia_Rounded + Diff_Add;
-  for (i = Emmetropia_New - 1.5; i <= Emmetropia_New + 1.5; i = i + 0.5)
-   {
-    SRKTValues->IOLPower[Loop] = i;
-    REFR = (1336.0 * C6 - i * C4 * C5) / (1.336 * C8 - 0.001 * i * C4 * C9);
-    SRKTValues->PORx[Loop] = REFR;
-    SRKTValues->IOLPower[Loop] = i;
-//	lcdWriteValue(SRKTValues.IOLPower[Loop],IOL_TABLE_HPOSITION+ 35 +(Loop * 15),22,FLOAT);
-//	lcdWriteValue(SRKTValues.PORx[Loop],IOL_TABLE_HPOSITION + 35 +(Loop * 15),32,FLOAT);
-//    printf("\r\n%5.2f,%5.2f",SRKTValues->IOLPower[Loop],SRKTValues->PORx[Loop]);
-    Loop++;
-   }
-  // printf("\r\n");
+ Emmetropia_New = Emmetropia_Rounded + Diff_Add;
+ for (i = Emmetropia_New - 1.5; i <= Emmetropia_New + 1.5; i = i + 0.5)
+ {
+     SRKTValues->IOLPower[Loop] = i;
+     REFR = (1336.0 * C6 - i * C4 * C5) / (1.336 * C8 - 0.001 * i * C4 * C9);
+     SRKTValues->PORx[Loop] = REFR;
+     SRKTValues->IOLPower[Loop] = i;
+     Loop++;
+ }
 }
 
 
