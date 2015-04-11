@@ -206,51 +206,59 @@ LP = P_Emmetropia;
 
 }
 
-
-
 void SRKIICalc(double AL, double AConst, double K, double Rx, iol_formula* SRKIIValues)
 {
-  double i;
-  double Emmetropia, Emmetropia_Rounded,Emmetropia_New,CR,REFR1;
-  double Diff_In_Emmetropia, Diff_Add;
-  double REFR;
-  int Loop;
+    double i;
+    double Emmetropia, Emmetropia_Rounded,Emmetropia_New,CR,REFR1;
+    double Diff_In_Emmetropia, Diff_Add;
+    double REFR;
+    int Loop;
 
-  if (AL < 20.0)
-      AConst = AConst + 3;
-  else if ((AL >= 20.0) & (AL < 21.0))
-      AConst = AConst + 2;
-  else if ((AL >= 21.0) & (AL < 22.0))
-      AConst = AConst + 1;
-  else if ((AL >= 22) & (AL < 24.5))
-      AConst = AConst;
-  else if (AL >= 24.5)
-      AConst = AConst - 0.5;
+    if (AL < 20.0)
+        AConst = AConst + 3;
+    else if ((AL >= 20.0) & (AL < 21.0))
+        AConst = AConst + 2;
+    else if ((AL >= 21.0) & (AL < 22.0))
+        AConst = AConst + 1;
+    else if ((AL >= 22) & (AL < 24.5))
+        AConst = AConst;
+    else if (AL >= 24.5)
+        AConst = AConst - 0.5;
 
-  Emmetropia = AConst - (0.9 * K) - (2.5 * AL);
+    Emmetropia = AConst - (0.9 * K) - (2.5 * AL);
+    qDebug()<<"Emmetropia"<<Emmetropia;
 
-  SRKIIValues->PEMM = Emmetropia;
+    SRKIIValues->PEMM = Emmetropia;
 
-  Emmetropia_Rounded = floor(Emmetropia);
+    Emmetropia_Rounded = floor(Emmetropia);
 
-  if (Emmetropia <= 14.0)
-      CR = 1.0;
-  else
-      CR = 1.25;
+    Diff_In_Emmetropia = Emmetropia - Emmetropia_Rounded;
 
-  Diff_Add = Diff(Diff_In_Emmetropia);
+    if (Emmetropia < 14.0)
+        CR = 1.0;
+    else if (Emmetropia >= 14.0)
+        CR = 1.25;
 
-  Emmetropia_New = Emmetropia_Rounded + Diff_Add;
-  Diff_In_Emmetropia = Emmetropia - Emmetropia_New;
-  REFR1 = Diff_In_Emmetropia / CR;
-  Loop=0;
-  for (i = Emmetropia_New - 1.5; i <= Emmetropia_New + 1.5; i = i + 0.5)
-   {
-    REFR = (REFR1 + (Emmetropia_New - i) / CR);
-    SRKIIValues->PORx[Loop] = REFR;
-    SRKIIValues->IOLPower[Loop] = i;
-    Loop++;
- }
+    Diff_Add = Diff(Diff_In_Emmetropia);
+
+    Emmetropia_New = Emmetropia_Rounded + Diff_Add;
+    Diff_In_Emmetropia = Emmetropia - Emmetropia_New;
+    REFR1 = Diff_In_Emmetropia / CR;
+
+//    Emmetropia_New += Rx;
+
+    Emmetropia_New += Rx*CR;
+    REFR1 += Rx;
+
+
+    Loop=0;
+    for (i = Emmetropia_New - 1.5; i <= Emmetropia_New + 1.5; i = i + 0.5)
+    {
+        REFR = (REFR1 + (Emmetropia_New - i) / CR);
+        SRKIIValues->PORx[Loop] = REFR;
+        SRKIIValues->IOLPower[Loop] = i;
+        Loop++;
+    }
 }
 
 void SRKTCalc(double AL, double AConst,double K,double Rx,iol_formula* SRKTValues)
