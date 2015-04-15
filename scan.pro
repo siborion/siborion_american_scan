@@ -17,6 +17,8 @@ TARGET = scan
 TEMPLATE = app
 
 include(qwt.prf)
+include(../QtRPT/QtRPT.pri)
+
 
 CONFIG(debug, debug|release)
 {

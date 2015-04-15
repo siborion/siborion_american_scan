@@ -52,6 +52,7 @@ public:
 
 public slots:
     void updateSample(stMeasureParam *);
+    void updateSample(stMeasureParam *, bool print);
     void updateInterval();
     void clearSample();
 

@@ -429,7 +429,7 @@ void Plot::move( const QPoint &pos )
     }
 }
 
-void Plot::updateSample(stMeasureParam *link)
+void Plot::updateSample(stMeasureParam *link, bool print)
 {
     bool bTmp;
     bTmp = (curParam->regimMeasure==REGIM::MANUAL || curParam->regimCataract==REGIM::APHAKIC);
@@ -437,15 +437,19 @@ void Plot::updateSample(stMeasureParam *link)
     clearMarker();
     drawSample(&measureParam.Sample);
     drawMarker(measureParam.Cornea,"Cornea",true);
-    drawMarker((double)measureParam.Cornea,(double)60, Qt::white);
+    drawMarker((double)measureParam.Cornea,(double)60, print?(Qt::blue):(Qt::white));
     drawMarker(measureParam.L1,"L1", !bTmp);
-    drawMarker((double)measureParam.L1,(double)60, bTmp?(Qt::black):(Qt::white));
+    drawMarker((double)measureParam.L1,(double)60, bTmp?(Qt::black):(print?(Qt::blue):(Qt::white)));
     drawMarker(measureParam.L2,"L2", !bTmp);
-    drawMarker((double)measureParam.L2,(double)60, bTmp?(Qt::black):(Qt::white));
+    drawMarker((double)measureParam.L2,(double)60, bTmp?(Qt::black):(print?(Qt::blue):(Qt::white)));
     drawMarker(measureParam.Retina,"Retina",true);
-    drawMarker((double)measureParam.Retina,(double)60, Qt::white);
+    drawMarker((double)measureParam.Retina,(double)60, print?(Qt::blue):(Qt::white));
     allExtremum = measureParam.extremum;
-    qDebug()<<"drawMarker";
+}
+
+void Plot::updateSample(stMeasureParam *link)
+{
+    updateSample(link, false);
 }
 
 void Plot::updateInterval()

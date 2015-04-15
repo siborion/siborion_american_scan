@@ -125,11 +125,11 @@ void formula::refreshFormula(int curIndex)
         j++;
         switch (i)
         {
-        case SRKII:   Calculator(i, AL, AConst, K, Rx, &stFormula); break;
-        case SRKT:    Calculator(i, AL, AConst, K, Rx, &stFormula);    break;
-        case HOFFERQ: Calculator(i, AL, ACD, K, Rx, &stFormula);     break;
-        case HOLLADAY:Calculator(i, AL, SF, K, Rx, &stFormula);     break;
-        case HAIGIS:  HaigisCalc(A0, A1, A2, AL, AConst, ACD_measure, K, Rx, &stFormula);  break;
+        case SRKII:   Calculator(i, AL, AConst, K, 0, &stFormula); break;
+        case SRKT:    Calculator(i, AL, AConst, K, 0, &stFormula);    break;
+        case HOFFERQ: Calculator(i, AL, ACD,    K, 0, &stFormula);     break;
+        case HOLLADAY:Calculator(i, AL, SF,     K, 0, &stFormula);     break;
+        case HAIGIS:  HaigisCalc(A0, A1, A2, AL, AConst, ACD_measure, K, 0, &stFormula);  break;
         }
         model1->setItem(6+j, 1, getItem(stFormula.PEMM, Qt::AlignCenter));
         model->setItem (6+j, 0, getItem(slTmp.at(i),    Qt::AlignCenter));

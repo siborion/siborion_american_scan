@@ -7,7 +7,7 @@ PrintPlot::PrintPlot(QWidget *parent, CurParam *tmpParam, QByteArray *sample):Pl
     qDebug()<<"PrintPlot";
 //    QByteArray sample;
 //    pPlotPrint = new Plot(this, true, &curParam);
-    drawSample(sample);
+//    drawSample(sample);
     enableAxis(QwtPlot::xTop,false);
     enableAxis(QwtPlot::xBottom,true);
     enableAxis(QwtPlot::yLeft,true);

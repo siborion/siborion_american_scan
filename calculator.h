@@ -110,6 +110,8 @@ public:
 private slots:
 //    void setAL(QModelIndex,QModelIndex);
     void changeSideCalculatorSlot();
+//    void setValueImage(const int recNo, const QString paramName, QImage &paramValue, const int reportPage);
+    void setValue(const int recNo, const QString paramName, QVariant &paramValue, const int reportPage);
 
 public slots:
 //    void changeRow(quint8 id ,quint16 id1 ,QString sTmp1, QString sTmp2);

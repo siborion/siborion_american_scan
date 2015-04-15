@@ -226,7 +226,6 @@ void SRKIICalc(double AL, double AConst, double K, double Rx, iol_formula* SRKII
         AConst = AConst - 0.5;
 
     Emmetropia = AConst - (0.9 * K) - (2.5 * AL);
-    qDebug()<<"Emmetropia"<<Emmetropia;
 
     SRKIIValues->PEMM = Emmetropia;
 
@@ -239,22 +238,26 @@ void SRKIICalc(double AL, double AConst, double K, double Rx, iol_formula* SRKII
     else if (Emmetropia >= 14.0)
         CR = 1.25;
 
+    qDebug()<<"Emmetropia"<<Emmetropia;
+
+
     Diff_Add = Diff(Diff_In_Emmetropia);
 
     Emmetropia_New = Emmetropia_Rounded + Diff_Add;
     Diff_In_Emmetropia = Emmetropia - Emmetropia_New;
     REFR1 = Diff_In_Emmetropia / CR;
 
-//    Emmetropia_New += Rx;
+    Emmetropia_New -= Rx;
 
-    Emmetropia_New += Rx*CR;
+//    Emmetropia_New += Rx*CR;
+
     REFR1 += Rx;
-
 
     Loop=0;
     for (i = Emmetropia_New - 1.5; i <= Emmetropia_New + 1.5; i = i + 0.5)
     {
         REFR = (REFR1 + (Emmetropia_New - i) / CR);
+//        REFR = (REFR1 + (i) / CR);
         SRKIIValues->PORx[Loop] = REFR;
         SRKIIValues->IOLPower[Loop] = i;
         Loop++;
@@ -429,24 +432,14 @@ int HaigisCalc(double a0, double a1, double a2, double AL, double AConst, double
 
 
     R /= 1000;
-    qDebug()<<R;
 
     Dc = ((nc -1))/(R);
-    qDebug()<<"Dc"<<Dc;
-
 
 
 /// P_Emmetropia
     z = Dc  +  (Rx/(1-Rx*dx));
-    qDebug()<<"z"<<z;
-
 
     Dl= (((n/(AL-ACDd))-(n/((n/z)-ACDd))));
-    qDebug()<<"AL"<<AL;
-    qDebug()<<"ACDd"<<ACDd;
-    qDebug()<<"Dl"<<Dl;
-//    Dl*=1000;
-
 
     haigis_PEmm = Dl;
     haigis_PEmm_New = HaigisValues->PEMM = haigis_PEmm;

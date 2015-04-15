@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include <QDesktopWidget>
 #include <QStyle>
+#include "qtrpt.h"
 
 
 //#include "control.h"
@@ -64,6 +65,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     bases->Init();
     moveWindowToCenter();
+
 }
 
 void MainWindow::moveWindowToCenter()

@@ -4,6 +4,8 @@
 #include <QDebug>
 #include <qwt_plot_renderer.h>
 #include <QAbstractItemModel>
+#include "qtrpt.h"
+#include <QCoreApplication>
 
 calculator::calculator(QWidget *parent, CurParam *link) :
     QWidget(parent)
@@ -206,16 +208,87 @@ void calculator::refreshMeasure()
 
 void calculator::printPreview()
 {
-    QPrinter             printer( QPrinter::HighResolution );
-    printer.setPageSize(QPrinter::A4);
-//    printer.setFullPage(false);
-    QPrintPreviewDialog  preview( &printer);
-//    preview.setSizeGripEnabled(true);
+    stMeasureParam measureParam;
 
-    connect( &preview, SIGNAL(paintRequested(QPrinter*)), SLOT(print(QPrinter*)) );
-    preview.showFullScreen();
-    preview.exec();
+    quint8 kolvo = 0;
+    QwtPlotRenderer renderer;
+//    QByteArray sample;
+    QModelIndexList lsSelect;
+    QModelIndex index;
+    lsSelect = twMeas->selectionModel()->selectedRows();
 
+//    QPixmap pix("qt.png");// = new QPixmap(1000,1000);
+    QPixmap pix(2100, 2970);
+    QPainter *painter = new QPainter(&pix);
+    pix.fill(QColor(Qt::white));
+//    painter->setBackground()
+
+//    painter->drawLine(0,0,200,200);
+//    painter->drawText(200,200,"999999999");
+
+    foreach (index, lsSelect)
+    {
+        index = twMeas->model()->index(kolvo, 0);
+        measureParam.Sample = twMeas->model()->data(index, roleSample).toByteArray();
+        measureParam.Cornea = twMeas->model()->data(index, roleCornea).toDouble();
+        measureParam.L1 =     twMeas->model()->data(index, roleL1).toDouble();
+        measureParam.L2 =     twMeas->model()->data(index, roleL2).toDouble();
+        measureParam.Retina = twMeas->model()->data(index, roleRetina).toDouble();
+
+        switch (kolvo)
+        {
+        case 0:
+            pPlotPrint1 = new PrintPlot(this, curParam, &measureParam.Sample);
+            pPlotPrint1->updateSample(&measureParam, true);
+            renderer.render(pPlotPrint1, painter, QRectF(100,  600, 900, 900));
+            break;
+        case 1:
+            pPlotPrint1 = new PrintPlot(this, curParam, &measureParam.Sample);
+            pPlotPrint1->updateSample(&measureParam, true);
+            renderer.render(pPlotPrint1, painter, QRectF(1100, 600, 900, 900));
+            break;
+        case 2:
+            pPlotPrint1 = new PrintPlot(this, curParam, &measureParam.Sample);
+            pPlotPrint1->updateSample(&measureParam, true);
+            renderer.render(pPlotPrint1, painter, QRectF(100,  1600, 900, 900));
+            break;
+        case 3:
+            pPlotPrint1 = new PrintPlot(this, curParam, &measureParam.Sample);
+            pPlotPrint1->updateSample(&measureParam, true);
+            renderer.render(pPlotPrint1, painter, QRectF(1100, 1600, 900, 900));
+            break;
+        }
+        kolvo++;
+    }
+
+    painter->end();
+
+    qDebug()<<"pix.size()"<<pix.size();
+
+    QString fileName = "example9.xml";
+    QtRPT *report = new QtRPT(this);
+
+    report->setBackgroundImage((QPixmap)pix);
+
+    report->loadReport(fileName);
+    report->recordCount << 2;
+
+//    QObject::connect(report, SIGNAL(setValue(int&, QString&, QVariant&, int)), this, SLOT(setValue(int&, QString&, QVariant&, int)));
+    QObject::connect(report, SIGNAL(setValue(const int, const QString, QVariant&, const int)),
+                     this, SLOT(setValue(const int, const QString, QVariant&, const int)));
+
+
+    report->printExec(true);
+
+
+
+
+//    QPrinter             printer( QPrinter::HighResolution );
+//    printer.setPageSize(QPrinter::A4);
+//    QPrintPreviewDialog  preview( &printer);
+//    connect( &preview, SIGNAL(paintRequested(QPrinter*)), SLOT(print(QPrinter*)) );
+//    preview.showFullScreen();
+//    preview.exec();
 }
 
 void calculator::print( QPrinter* printer )
@@ -225,144 +298,64 @@ void calculator::print( QPrinter* printer )
     QModelIndexList lsSelect;
     quint8 kolvo = 0;
 
-    QPainter painter( printer );
-    lsSelect = twMeas->selectionModel()->selectedRows();
+    QPixmap *pix = new QPixmap(500,500);
+//    scene->addPixmap(*pix);
+
+    QPainter *paint = new QPainter(pix);
+
+
+//    QPixmap tt;
+//    qDebug()<<"000";
+    QPainter painter;
+//    qDebug()<<"444";
     QwtPlotRenderer renderer;
+    QString fileName = "example9.xml";
+    QtRPT *report = new QtRPT(this);
+    report->loadReport(fileName);
+    report->recordCount << 2;
 
-    painter.drawRect(500, 200, 4000, 400);
-    QFont    font = painter.font();
-    font.setPixelSize(80);
-    painter.setFont( font );
-    QRect    page0( 500, 200, 500, 400);
-    painter.drawText(page0, Qt::AlignLeft, "Name:\r\nID:\r\nDate of Birth:\r\nExam Date:" );
-    font.setBold(true);
-    painter.setFont( font );
-
-    QRect    page1( 1000, 200, 500, 400);
-    QString  sPatient;
-    sPatient.append(QString("%1\r\n%2").arg(curParam->patientName).arg(curParam->patientId));
-    painter.drawText(page1, Qt::AlignLeft, sPatient);
-
-    foreach (index, lsSelect)
-    {
-        index = twMeas->model()->index(kolvo, 0);
-        sample = twMeas->model()->data(index, roleSample).toByteArray();
-        switch (kolvo)
-        {
-        case 0:
-            pPlotPrint1 = new PrintPlot(this, curParam, &sample);
-            renderer.render(pPlotPrint1, &painter, QRectF(500,1000,2000,1800));
-            break;
-        case 1:
-            pPlotPrint1 = new PrintPlot(this, curParam, &sample);
-            renderer.render(pPlotPrint1, &painter, QRectF(2700,1000,2000,1800));
-            break;
-        case 2:
-            pPlotPrint1 = new PrintPlot(this, curParam, &sample);
-            renderer.render(pPlotPrint1, &painter, QRectF(500,3000,2000,1800));
-            break;
-        case 3:
-            pPlotPrint1 = new PrintPlot(this, curParam, &sample);
-            renderer.render(pPlotPrint1, &painter, QRectF(2700,3000,2000,1800));
-            break;
-        }
-        kolvo++;
-    }
+//    QObject::connect(report, SIGNAL(setValue(int&, QString&, QVariant&, int)),
+//                     this, SLOT(setValue(int&, QString&, QVariant&, int)));
 
 
-//    painter.drawRect(500,5000,500,100);
-
-
-//    QRect    page1(1000, 200, 1000, 400);
-    stFormulaInfo *pModel;
-    pModel = Formula1->getModel();
-    pModel = Formula2->getModel();
-    pModel = Formula3->getModel();
-
-//    pModel = Formula4->getModel();
-
-//    int kolLine = 0;
-#define kolColumn  3
-#define hightLine  100
-#define yPosTable  5000
-#define xPosTable  500
-#define widthTable 3900
-
-//    QSize size;
-//    size.setHeight(20000);
-//    size.setWidth (20000);
-
-
-
-//    if(Formula1->isEnabled())
+//    foreach (index, lsSelect)
 //    {
-//        QPixmap pixmap(Formula1->size());
-//        Formula1->render(&pixmap);
-//        painter.drawPixmap(2700,3000,2000,1800,pixmap);
+//        index = twMeas->model()->index(kolvo, 0);
+//        sample = twMeas->model()->data(index, roleSample).toByteArray();
+//        switch (kolvo)
+//        {
+//        case 0:
+//            pPlotPrint1 = new PrintPlot(this, curParam, &sample);
+//            renderer.render(pPlotPrint1, &painter, QRectF(500,1000,2000,1800));
+//            break;
+//        case 1:
+//            pPlotPrint1 = new PrintPlot(this, curParam, &sample);
+//            renderer.render(pPlotPrint1, &painter, QRectF(2700,1000,2000,1800));
+//            break;
+//        case 2:
+//            pPlotPrint1 = new PrintPlot(this, curParam, &sample);
+//            renderer.render(pPlotPrint1, &painter, QRectF(500,3000,2000,1800));
+//            break;
+//        case 3:
+//            pPlotPrint1 = new PrintPlot(this, curParam, &sample);
+//            renderer.render(pPlotPrint1, &painter, QRectF(2700,3000,2000,1800));
+//            break;
+//        }
+//        kolvo++;
 //    }
+    qDebug()<<"111";
+//    report->setBackgroundImage(pix);
+//    report->drawBackground(&painter);
+//    report->setBackgroundImage(QPixmap("qt.png"));
 
-//    if(Formula2->isEnabled())
-//    {
-//        QPixmap pixmap(Formula2->size());
-//        Formula2->render(&pixmap);
-//        painter.drawPixmap(500,5000,2000,1800,pixmap);
-//    }
-
-//    if(Formula3->isEnabled())
-//    {
-//        QPixmap pixmap(Formula3->size());
-//        Formula3->render(&pixmap);
-//        painter.drawPixmap(2700,5000,2000,1800,pixmap);
-//    }
+//    QObject::connect(report, SIGNAL(setValue(const int, const QString, QVariant&, const int)),
+//                     this, SLOT(setValue(const int, const QString, QVariant&, const int)));
+//    QObject::connect(report, SIGNAL(setValueImage(const int, const QString, QImage&, const int)),
+//                     this, SLOT(setValueImage(const int, const QString, QImage&, const int)));
 
 
-
-//    QRect    txt1(xPosTable+(widthTable/(kolColumn*2))*0, yPosTable+(0+3)*hightLine, (widthTable/(kolColumn*2)), 100);
-//    QRect    txt2(xPosTable+(widthTable/(kolColumn*2))*1, yPosTable+(+3)*hightLine, (widthTable/(kolColumn*2)), 100);
-//    painter.drawText(txt1, Qt::AlignCenter, curParam->patientName);
-//    painter.drawText(txt2, Qt::AlignCenter, pModel1->model->data(pModel1->model->index(i, 1), Qt::DisplayRole).toString());
-
-//    kolLine = qMax(pModel1->model->rowCount(), pModel2->model->rowCount());
-//    kolLine = qMax(kolLine, pModel3->model->rowCount());
-
-//    for(quint8 i=0; i<kolLine; i++)
-//    {
-//        painter.drawRect(xPosTable, yPosTable+i*hightLine, widthTable, hightLine);
-//    }
-
-//    for(quint8 i=0; i<kolColumn; i++)
-//    {
-//        painter.drawRect(xPosTable+((widthTable/kolColumn)*i), yPosTable, (widthTable/kolColumn), kolLine*hightLine);
-//    }
-
-//    for(quint8 i=0; i<(kolColumn*2); i++)
-//    {
-//        painter.drawRect(xPosTable+(widthTable/(kolColumn*2)*i), yPosTable+hightLine, (widthTable/(kolColumn*2)), (kolLine-1)*hightLine);
-//    }
-
-//    for (quint8 i=0; i<pModel1->model->rowCount(); i++)
-//    {
-//        QRect    txt1(xPosTable+(widthTable/(kolColumn*2))*0, yPosTable+(i+3)*hightLine, (widthTable/(kolColumn*2)), 100);
-//        QRect    txt2(xPosTable+(widthTable/(kolColumn*2))*1, yPosTable+(i+3)*hightLine, (widthTable/(kolColumn*2)), 100);
-//        painter.drawText(txt1, Qt::AlignCenter, pModel1->model->data(pModel1->model->index(i, 0), Qt::DisplayRole).toString());
-//        painter.drawText(txt2, Qt::AlignCenter, pModel1->model->data(pModel1->model->index(i, 1), Qt::DisplayRole).toString());
-//    }
-
-//    for (quint8 i=0; i<pModel2->model->rowCount(); i++)
-//    {
-//        QRect    txt1(xPosTable+(widthTable/(kolColumn*2))*2, yPosTable+(i+3)*hightLine, (widthTable/(kolColumn*2)), 100);
-//        QRect    txt2(xPosTable+(widthTable/(kolColumn*2))*3, yPosTable+(i+3)*hightLine, (widthTable/(kolColumn*2)), 100);
-//        painter.drawText(txt1, Qt::AlignCenter, pModel2->model->data(pModel2->model->index(i, 0), Qt::DisplayRole).toString());
-//        painter.drawText(txt2, Qt::AlignCenter, pModel2->model->data(pModel2->model->index(i, 1), Qt::DisplayRole).toString());
-//    }
-
-//    for (quint8 i=0; i<pModel3->model->rowCount(); i++)
-//    {
-//        QRect    txt1(xPosTable+(widthTable/(kolColumn*2))*4, yPosTable+(i+3)*hightLine, (widthTable/(kolColumn*2)), 100);
-//        QRect    txt2(xPosTable+(widthTable/(kolColumn*2))*5, yPosTable+(i+3)*hightLine, (widthTable/(kolColumn*2)), 100);
-//        painter.drawText(txt1, Qt::AlignCenter, pModel3->model->data(pModel3->model->index(i, 0), Qt::DisplayRole).toString());
-//        painter.drawText(txt2, Qt::AlignCenter, pModel3->model->data(pModel3->model->index(i, 1), Qt::DisplayRole).toString());
-//    }
+    qDebug()<<"222";
+    report->printExec();
 }
 
 void calculator::refreshLens(QSqlQueryModel *link)
@@ -386,3 +379,22 @@ void calculator::changeSideCalculatorSlot()
 {
     emit changeSideCalculator();
 }
+
+
+void calculator::setValue(const int recNo, const QString paramName, QVariant &paramValue, const int reportPage)
+{
+    Q_UNUSED(reportPage);
+    Q_UNUSED(recNo);
+    if (paramName == "ttt")
+        paramValue = "8888";
+    qDebug()<<paramName;
+}
+
+//void calculator::setValueImage(const int recNo, const QString paramName, QImage &paramValue, const int reportPage) {
+//    Q_UNUSED(recNo);
+//    Q_UNUSED(reportPage);
+//    if (paramName == "image") {
+//        QImage *image = new QImage(QCoreApplication::applicationDirPath()+"/qt.png");
+//        paramValue = *image;
+//    }
+//}
