@@ -212,19 +212,13 @@ void calculator::printPreview()
 
     quint8 kolvo = 0;
     QwtPlotRenderer renderer;
-//    QByteArray sample;
     QModelIndexList lsSelect;
     QModelIndex index;
     lsSelect = twMeas->selectionModel()->selectedRows();
 
-//    QPixmap pix("qt.png");// = new QPixmap(1000,1000);
     QPixmap pix(2100, 2970);
     QPainter *painter = new QPainter(&pix);
     pix.fill(QColor(Qt::white));
-//    painter->setBackground()
-
-//    painter->drawLine(0,0,200,200);
-//    painter->drawText(200,200,"999999999");
 
     foreach (index, lsSelect)
     {
@@ -240,22 +234,22 @@ void calculator::printPreview()
         case 0:
             pPlotPrint1 = new PrintPlot(this, curParam, &measureParam.Sample);
             pPlotPrint1->updateSample(&measureParam, true);
-            renderer.render(pPlotPrint1, painter, QRectF(100,  600, 900, 900));
+            renderer.render(pPlotPrint1, painter, QRectF(100,  500, 900, 800));
             break;
         case 1:
             pPlotPrint1 = new PrintPlot(this, curParam, &measureParam.Sample);
             pPlotPrint1->updateSample(&measureParam, true);
-            renderer.render(pPlotPrint1, painter, QRectF(1100, 600, 900, 900));
+            renderer.render(pPlotPrint1, painter, QRectF(1100, 500, 900, 800));
             break;
         case 2:
             pPlotPrint1 = new PrintPlot(this, curParam, &measureParam.Sample);
             pPlotPrint1->updateSample(&measureParam, true);
-            renderer.render(pPlotPrint1, painter, QRectF(100,  1600, 900, 900));
+            renderer.render(pPlotPrint1, painter, QRectF(100,  1350, 900, 800));
             break;
         case 3:
             pPlotPrint1 = new PrintPlot(this, curParam, &measureParam.Sample);
             pPlotPrint1->updateSample(&measureParam, true);
-            renderer.render(pPlotPrint1, painter, QRectF(1100, 1600, 900, 900));
+            renderer.render(pPlotPrint1, painter, QRectF(1100, 1350, 900, 800));
             break;
         }
         kolvo++;
@@ -265,98 +259,20 @@ void calculator::printPreview()
 
     qDebug()<<"pix.size()"<<pix.size();
 
-    QString fileName = "example9.xml";
+    QString fileName = ":/test/report";
     QtRPT *report = new QtRPT(this);
 
     report->setBackgroundImage((QPixmap)pix);
 
     report->loadReport(fileName);
-    report->recordCount << 2;
+    report->recordCount << 7;
 
-//    QObject::connect(report, SIGNAL(setValue(int&, QString&, QVariant&, int)), this, SLOT(setValue(int&, QString&, QVariant&, int)));
     QObject::connect(report, SIGNAL(setValue(const int, const QString, QVariant&, const int)),
                      this, SLOT(setValue(const int, const QString, QVariant&, const int)));
 
-
     report->printExec(true);
-
-
-
-
-//    QPrinter             printer( QPrinter::HighResolution );
-//    printer.setPageSize(QPrinter::A4);
-//    QPrintPreviewDialog  preview( &printer);
-//    connect( &preview, SIGNAL(paintRequested(QPrinter*)), SLOT(print(QPrinter*)) );
-//    preview.showFullScreen();
-//    preview.exec();
 }
 
-void calculator::print( QPrinter* printer )
-{
-    QByteArray sample;
-    QModelIndex index;
-    QModelIndexList lsSelect;
-    quint8 kolvo = 0;
-
-    QPixmap *pix = new QPixmap(500,500);
-//    scene->addPixmap(*pix);
-
-    QPainter *paint = new QPainter(pix);
-
-
-//    QPixmap tt;
-//    qDebug()<<"000";
-    QPainter painter;
-//    qDebug()<<"444";
-    QwtPlotRenderer renderer;
-    QString fileName = "example9.xml";
-    QtRPT *report = new QtRPT(this);
-    report->loadReport(fileName);
-    report->recordCount << 2;
-
-//    QObject::connect(report, SIGNAL(setValue(int&, QString&, QVariant&, int)),
-//                     this, SLOT(setValue(int&, QString&, QVariant&, int)));
-
-
-//    foreach (index, lsSelect)
-//    {
-//        index = twMeas->model()->index(kolvo, 0);
-//        sample = twMeas->model()->data(index, roleSample).toByteArray();
-//        switch (kolvo)
-//        {
-//        case 0:
-//            pPlotPrint1 = new PrintPlot(this, curParam, &sample);
-//            renderer.render(pPlotPrint1, &painter, QRectF(500,1000,2000,1800));
-//            break;
-//        case 1:
-//            pPlotPrint1 = new PrintPlot(this, curParam, &sample);
-//            renderer.render(pPlotPrint1, &painter, QRectF(2700,1000,2000,1800));
-//            break;
-//        case 2:
-//            pPlotPrint1 = new PrintPlot(this, curParam, &sample);
-//            renderer.render(pPlotPrint1, &painter, QRectF(500,3000,2000,1800));
-//            break;
-//        case 3:
-//            pPlotPrint1 = new PrintPlot(this, curParam, &sample);
-//            renderer.render(pPlotPrint1, &painter, QRectF(2700,3000,2000,1800));
-//            break;
-//        }
-//        kolvo++;
-//    }
-    qDebug()<<"111";
-//    report->setBackgroundImage(pix);
-//    report->drawBackground(&painter);
-//    report->setBackgroundImage(QPixmap("qt.png"));
-
-//    QObject::connect(report, SIGNAL(setValue(const int, const QString, QVariant&, const int)),
-//                     this, SLOT(setValue(const int, const QString, QVariant&, const int)));
-//    QObject::connect(report, SIGNAL(setValueImage(const int, const QString, QImage&, const int)),
-//                     this, SLOT(setValueImage(const int, const QString, QImage&, const int)));
-
-
-    qDebug()<<"222";
-    report->printExec();
-}
 
 void calculator::refreshLens(QSqlQueryModel *link)
 {
@@ -380,21 +296,95 @@ void calculator::changeSideCalculatorSlot()
     emit changeSideCalculator();
 }
 
-
 void calculator::setValue(const int recNo, const QString paramName, QVariant &paramValue, const int reportPage)
 {
+
     Q_UNUSED(reportPage);
     Q_UNUSED(recNo);
-    if (paramName == "ttt")
-        paramValue = "8888";
-    qDebug()<<paramName;
-}
 
-//void calculator::setValueImage(const int recNo, const QString paramName, QImage &paramValue, const int reportPage) {
-//    Q_UNUSED(recNo);
-//    Q_UNUSED(reportPage);
-//    if (paramName == "image") {
-//        QImage *image = new QImage(QCoreApplication::applicationDirPath()+"/qt.png");
-//        paramValue = *image;
-//    }
-//}
+    if (paramName == "name")
+        paramValue = curParam->patientName;
+    if (paramName == "id")
+        paramValue = curParam->patientId;
+    if (paramName == "birth")
+        paramValue = curParam->birthDate;
+    if (paramName == "al")
+        paramValue = curParam->ALave;
+    if (paramName == "acd")
+        paramValue = curParam->ACD;
+    if (paramName == "k1")
+        paramValue = (curParam->regimSide==REGIM::OD)?curParam->k1left:curParam->k1right;
+    if (paramName == "k2")
+        paramValue = (curParam->regimSide==REGIM::OD)?curParam->k2left:curParam->k2right;
+    if (paramName == "rx")
+    {
+        stPersonalParam personalParam;
+        personalParam = pCalcPatient->getPersonalParam();
+        paramValue = personalParam.Rx;
+    }
+
+    if ((paramName == "iol1")||(paramName == "ref1")||(paramName == "exact1"))
+    {
+        QStandardItemModel *model;
+        model = (QStandardItemModel*)Formula1->twFormula->model();
+        QModelIndex index;
+        if (paramName == "iol1")
+            index = model->index(recNo, 1);
+        if (paramName == "ref1")
+            index = model->index(recNo, 2);
+        if (paramName == "exact1")
+        {
+//            model = (QStandardItemModel*)Formula1->twEmm->model();
+            index = model->index(Formula1->cbFormula->currentIndex()+6, 1);
+        }
+        paramValue = model->data(index, Qt::DisplayRole);
+    }
+
+    if ((paramName == "iol2")||(paramName == "ref2")||(paramName == "exact2"))
+    {
+        QStandardItemModel *model;
+        model = (QStandardItemModel*)Formula2->twFormula->model();
+        QModelIndex index;
+        if (paramName == "iol2")
+            index = model->index(recNo, 1);
+        if (paramName == "ref2")
+            index = model->index(recNo, 2);
+        if (paramName == "exact2")
+        {
+//            model = (QStandardItemModel*)Formula2->twEmm->model();
+            index = model->index(Formula2->cbFormula->currentIndex()+6, 1);
+        }
+        paramValue = model->data(index, Qt::DisplayRole);
+    }
+
+    if ((paramName == "iol3")||(paramName == "ref3")||(paramName == "exact3"))
+    {
+        QStandardItemModel *model;
+        model = (QStandardItemModel*)Formula3->twFormula->model();
+        QModelIndex index;
+        if (paramName == "iol3")
+            index = model->index(recNo, 1);
+        if (paramName == "ref3")
+            index = model->index(recNo, 2);
+        if (paramName == "exact3")
+        {
+//            model = (QStandardItemModel*)Formula3->twEmm->model();
+            index = model->index(Formula3->cbFormula->currentIndex()+6, 1);
+        }
+        paramValue = model->data(index, Qt::DisplayRole);
+    }
+
+    if (paramName == "lens1")
+        paramValue = Formula1->lLens->text();
+    if (paramName == "lens2")
+        paramValue = Formula2->lLens->text();
+    if (paramName == "lens3")
+        paramValue = Formula3->lLens->text();
+
+    if (paramName == "formula1")
+        paramValue = Formula1->cbFormula->currentText();
+    if (paramName == "formula2")
+        paramValue = Formula2->cbFormula->currentText();
+    if (paramName == "formula3")
+        paramValue = Formula3->cbFormula->currentText();
+}

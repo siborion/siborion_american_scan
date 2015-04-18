@@ -9,5 +9,6 @@
         <file alias="scan3">pic/scan3.png</file>
         <file alias="scan">scan.png</file>
         <file alias="sinus">sinus.wav</file>
+        <file alias="report">report.xml</file>
     </qresource>
 </RCC>

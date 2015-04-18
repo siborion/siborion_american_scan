@@ -26,10 +26,8 @@ private:
     double A2;
     double ACD_measure;
     double Rx;
-    QLabel *lLens;
     QLabel *leLens;
     adjview *twCalculator;
-    QComboBox *cbFormula;
     QStringList getListFormula();
     QStandardItem *getItem(QString, Qt::AlignmentFlag);
     QStandardItem *getItem(double, Qt::AlignmentFlag);
@@ -42,7 +40,8 @@ public:
     void clear();
     adjview *twFormula;
     adjview *twEmm;
-
+    QLabel *lLens;
+    QComboBox *cbFormula;
 
 public:
     explicit formula(QWidget *parent = 0);

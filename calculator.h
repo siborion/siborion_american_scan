@@ -108,17 +108,13 @@ public:
     void refreshMeasure();
 
 private slots:
-//    void setAL(QModelIndex,QModelIndex);
     void changeSideCalculatorSlot();
-//    void setValueImage(const int recNo, const QString paramName, QImage &paramValue, const int reportPage);
     void setValue(const int recNo, const QString paramName, QVariant &paramValue, const int reportPage);
 
 public slots:
-//    void changeRow(quint8 id ,quint16 id1 ,QString sTmp1, QString sTmp2);
     void updatePatient();
     void refreshFormuls();
     void printPreview();
-    void print( QPrinter* printer );
     void refreshLens(QSqlQueryModel *link);
 
 signals:

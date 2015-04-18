@@ -20,10 +20,9 @@ public:
     explicit calculator_patient(QWidget *parent = 0, CurParam *link = 0);
     ~calculator_patient();
     Ui::calculator_patient *ui;
+    stPatientParam patientParam;
 
 private:
-
-    stPatientParam patientParam;
     CurParam *curParam;
     bool softUpdate;
 

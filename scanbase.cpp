@@ -115,6 +115,7 @@ void Scanbase::updateCurPatient(quint16 id)
             curParam->k2left = curPatient.value("k2left").toDouble();
             curParam->k1right = curPatient.value("k1right").toDouble();
             curParam->k2right = curPatient.value("k2right").toDouble();
+            curParam->birthDate = curPatient.value("birth");
         }
         else
         {

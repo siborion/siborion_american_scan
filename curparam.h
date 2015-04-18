@@ -38,6 +38,7 @@ public:
     double K;
     double ALave;
     double ACD;
+    QString birthDate;
 
 private:
 
