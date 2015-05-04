@@ -216,9 +216,19 @@ void calculator::printPreview()
     QModelIndex index;
     lsSelect = twMeas->selectionModel()->selectedRows();
 
-    QPixmap pix(2100, 2970);
-    QPainter *painter = new QPainter(&pix);
-    pix.fill(QColor(Qt::white));
+    QPixmap pix1(750, 600);
+    QPainter *painter1 = new QPainter(&pix1);
+    QPixmap pix2(750, 600);
+    QPainter *painter2 = new QPainter(&pix2);
+    QPixmap pix3(750, 600);
+    QPainter *painter3 = new QPainter(&pix3);
+    QPixmap pix4(750, 600);
+    QPainter *painter4 = new QPainter(&pix4);
+
+    pix1.fill(QColor(Qt::white));
+    pix2.fill(QColor(Qt::white));
+    pix3.fill(QColor(Qt::white));
+    pix4.fill(QColor(Qt::white));
 
     foreach (index, lsSelect)
     {
@@ -234,41 +244,55 @@ void calculator::printPreview()
         case 0:
             pPlotPrint1 = new PrintPlot(this, curParam, &measureParam.Sample);
             pPlotPrint1->updateSample(&measureParam, true);
-            renderer.render(pPlotPrint1, painter, QRectF(100,  500, 900, 800));
+            renderer.render(pPlotPrint1, painter1, QRectF(0, 0, 750, 600));
             break;
         case 1:
             pPlotPrint1 = new PrintPlot(this, curParam, &measureParam.Sample);
             pPlotPrint1->updateSample(&measureParam, true);
-            renderer.render(pPlotPrint1, painter, QRectF(1100, 500, 900, 800));
+            renderer.render(pPlotPrint1, painter2, QRectF(0, 0, 750, 600));
             break;
         case 2:
             pPlotPrint1 = new PrintPlot(this, curParam, &measureParam.Sample);
             pPlotPrint1->updateSample(&measureParam, true);
-            renderer.render(pPlotPrint1, painter, QRectF(100,  1350, 900, 800));
+            renderer.render(pPlotPrint1, painter3, QRectF(0, 0, 750, 600));
             break;
         case 3:
             pPlotPrint1 = new PrintPlot(this, curParam, &measureParam.Sample);
             pPlotPrint1->updateSample(&measureParam, true);
-            renderer.render(pPlotPrint1, painter, QRectF(1100, 1350, 900, 800));
+            renderer.render(pPlotPrint1, painter4, QRectF(0, 0, 750, 600));
             break;
         }
         kolvo++;
     }
 
-    painter->end();
+    painter1->end();
+    painter2->end();
+    painter3->end();
+    painter4->end();
 
-    qDebug()<<"pix.size()"<<pix.size();
+//    qDebug()<<"pix.size()"<<pix.size();
+
+    iPlot1 = pix1.toImage();
+    iPlot2 = pix2.toImage();
+    iPlot3 = pix3.toImage();
+    iPlot4 = pix4.toImage();
 
     QString fileName = ":/test/report";
     QtRPT *report = new QtRPT(this);
 
-    report->setBackgroundImage((QPixmap)pix);
+//    report->setBackgroundImage((QPixmap)pix);
 
     report->loadReport(fileName);
     report->recordCount << 7;
 
     QObject::connect(report, SIGNAL(setValue(const int, const QString, QVariant&, const int)),
                      this, SLOT(setValue(const int, const QString, QVariant&, const int)));
+
+    QObject::connect(report, SIGNAL(setValueImage(int,QString,QImage&,int)),
+                     this, SLOT(setValueImage(int,QString,QImage&,int)));
+
+//    QObject::connect(report, SIGNAL(setValueImage(int&, QString&, QImage&, int)),
+//                     this, SLOT(setValueImage(int&, QString&, QImage&, int)));
 
     report->printExec(true);
 }
@@ -387,4 +411,16 @@ void calculator::setValue(const int recNo, const QString paramName, QVariant &pa
         paramValue = Formula2->cbFormula->currentText();
     if (paramName == "formula3")
         paramValue = Formula3->cbFormula->currentText();
+}
+
+void calculator::setValueImage(int recNo, QString paramName, QImage &paramValue,int reportPage)
+{
+    if (paramName == "image1")
+        paramValue = iPlot1;
+    if (paramName == "image2")
+        paramValue = iPlot2;
+    if (paramName == "image3")
+        paramValue = iPlot3;
+    if (paramName == "image4")
+        paramValue = iPlot4;
 }

@@ -40,6 +40,7 @@ public:
 signals:
 
 private:
+    QImage iPlot1, iPlot2, iPlot3, iPlot4;
     CurParam *curParam;
     PrintPlot *pPlotPrint1;
     Plot *pPlotPrint2;
@@ -110,6 +111,10 @@ public:
 private slots:
     void changeSideCalculatorSlot();
     void setValue(const int recNo, const QString paramName, QVariant &paramValue, const int reportPage);
+//    void setValueImage(int &recNo, QString &paramName, QImage &paramValue,int reportPage);
+    void setValueImage(int recNo, QString paramName, QImage &paramValue,int reportPage);
+
+
 
 public slots:
     void updatePatient();
