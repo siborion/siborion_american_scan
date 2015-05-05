@@ -322,6 +322,7 @@ void calculator::changeSideCalculatorSlot()
 
 void calculator::setValue(const int recNo, const QString paramName, QVariant &paramValue, const int reportPage)
 {
+   QString paramTmp;
 
     Q_UNUSED(reportPage);
     Q_UNUSED(recNo);
@@ -336,6 +337,9 @@ void calculator::setValue(const int recNo, const QString paramName, QVariant &pa
         paramValue = curParam->ALave;
     if (paramName == "acd")
         paramValue = curParam->ACD;
+
+
+
     if (paramName == "k1")
         paramValue = (curParam->regimSide==REGIM::OD)?curParam->k1left:curParam->k1right;
     if (paramName == "k2")
@@ -411,6 +415,31 @@ void calculator::setValue(const int recNo, const QString paramName, QVariant &pa
         paramValue = Formula2->cbFormula->currentText();
     if (paramName == "formula3")
         paramValue = Formula3->cbFormula->currentText();
+    if (paramName == "regimMeasure")
+    {
+        switch(curParam->regimMeasure)
+        {
+        case REGIM::AUTOFREEZ: paramTmp = "AutoFreez/ "; break;
+        case REGIM::AUTO:      paramTmp = "Auto/ "; break;
+        case REGIM::MANUAL:    paramTmp = "Manual/ "; break;
+        }
+        switch(curParam->regimContact)
+        {
+        case REGIM::CONTACT:   paramTmp.append("Contact/ "); break;
+        case REGIM::IMMERSION: paramTmp.append("Immersion/ "); break;
+        }
+        switch(curParam->regimCataract)
+        {
+        case REGIM::CATARACT: paramTmp.append("Cataract"); break;
+        case REGIM::APHAKIC:  paramTmp.append("Aphakic"); break;
+        }
+        paramValue = paramTmp;
+    }
+    if (paramName == "measureParam")
+    {
+        paramTmp.append(QString("AL: %1   ACD:%2").arg(curParam->ALave).arg(curParam->ACD));
+        paramValue = paramTmp;
+    }
 }
 
 void calculator::setValueImage(int recNo, QString paramName, QImage &paramValue,int reportPage)
