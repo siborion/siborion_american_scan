@@ -40,6 +40,7 @@ public:
 signals:
 
 private:
+    double al1, al2, al3, al4, acd1, acd2, acd3, acd4;
     QImage iPlot1, iPlot2, iPlot3, iPlot4;
     CurParam *curParam;
     PrintPlot *pPlotPrint1;

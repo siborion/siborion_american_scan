@@ -230,6 +230,8 @@ void calculator::printPreview()
     pix3.fill(QColor(Qt::white));
     pix4.fill(QColor(Qt::white));
 
+    al1=al2=al3=al4=acd1=acd2=acd3=acd4=0;
+
     foreach (index, lsSelect)
     {
         index = twMeas->model()->index(kolvo, 0);
@@ -245,21 +247,37 @@ void calculator::printPreview()
             pPlotPrint1 = new PrintPlot(this, curParam, &measureParam.Sample);
             pPlotPrint1->updateSample(&measureParam, true);
             renderer.render(pPlotPrint1, painter1, QRectF(0, 0, 750, 600));
+            index = twMeas->model()->index(kolvo, 1);
+            al1   = twMeas->model()->data(index, Qt::DisplayRole).toDouble();
+            index = twMeas->model()->index(kolvo, 3);
+            acd1  = twMeas->model()->data(index, Qt::DisplayRole).toDouble();
             break;
         case 1:
             pPlotPrint1 = new PrintPlot(this, curParam, &measureParam.Sample);
             pPlotPrint1->updateSample(&measureParam, true);
             renderer.render(pPlotPrint1, painter2, QRectF(0, 0, 750, 600));
+            index = twMeas->model()->index(kolvo, 1);
+            al2   = twMeas->model()->data(index, Qt::DisplayRole).toDouble();
+            index = twMeas->model()->index(kolvo, 3);
+            acd2  = twMeas->model()->data(index, Qt::DisplayRole).toDouble();
             break;
         case 2:
             pPlotPrint1 = new PrintPlot(this, curParam, &measureParam.Sample);
             pPlotPrint1->updateSample(&measureParam, true);
             renderer.render(pPlotPrint1, painter3, QRectF(0, 0, 750, 600));
+            index = twMeas->model()->index(kolvo, 1);
+            al3   = twMeas->model()->data(index, Qt::DisplayRole).toDouble();
+            index = twMeas->model()->index(kolvo, 3);
+            acd3  = twMeas->model()->data(index, Qt::DisplayRole).toDouble();
             break;
         case 3:
             pPlotPrint1 = new PrintPlot(this, curParam, &measureParam.Sample);
             pPlotPrint1->updateSample(&measureParam, true);
             renderer.render(pPlotPrint1, painter4, QRectF(0, 0, 750, 600));
+            index = twMeas->model()->index(kolvo, 1);
+            al4   = twMeas->model()->data(index, Qt::DisplayRole).toDouble();
+            index = twMeas->model()->index(kolvo, 3);
+            acd4  = twMeas->model()->data(index, Qt::DisplayRole).toDouble();
             break;
         }
         kolvo++;
@@ -327,6 +345,43 @@ void calculator::setValue(const int recNo, const QString paramName, QVariant &pa
     Q_UNUSED(reportPage);
     Q_UNUSED(recNo);
 
+
+   if(paramName == "measureParam1")
+   {
+       if((al1>0)&&(acd1>0))
+       {
+           paramTmp.append(QString("AL: %1   ACD:%2").arg(al1).arg(acd1));
+           paramValue = paramTmp;
+       }
+   }
+
+   if(paramName == "measureParam2")
+   {
+       if((al2>0)&&(acd2>0))
+       {
+           paramTmp.append(QString("AL: %1   ACD:%2").arg(al2).arg(acd2));
+           paramValue = paramTmp;
+       }
+   }
+
+   if(paramName == "measureParam3")
+   {
+       if((al3>0)&&(acd3>0))
+       {
+           paramTmp.append(QString("AL: %1   ACD:%2").arg(al3).arg(acd3));
+           paramValue = paramTmp;
+       }
+   }
+
+   if(paramName == "measureParam4")
+   {
+       if((al4>0)&&(acd4>0))
+       {
+           paramTmp.append(QString("AL: %1   ACD:%2").arg(al4).arg(acd4));
+           paramValue = paramTmp;
+       }
+   }
+
     if (paramName == "name")
         paramValue = curParam->patientName;
     if (paramName == "id")
@@ -340,6 +395,9 @@ void calculator::setValue(const int recNo, const QString paramName, QVariant &pa
 
 
 
+
+    if (paramName == "side")
+        paramValue = (curParam->regimSide==REGIM::OD)?"OD\r\nright":"OS\r\nleft";
     if (paramName == "k1")
         paramValue = (curParam->regimSide==REGIM::OD)?curParam->k1left:curParam->k1right;
     if (paramName == "k2")
