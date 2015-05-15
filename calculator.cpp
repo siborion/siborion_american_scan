@@ -407,54 +407,158 @@ void calculator::setValue(const int recNo, const QString paramName, QVariant &pa
         paramValue = personalParam.Rx;
     }
 
-    if ((paramName == "iol1")||(paramName == "ref1")||(paramName == "exact1"))
+    if (paramName.indexOf("IOL1")>=0)
     {
         QStandardItemModel *model;
+        QModelIndex index;
         model = (QStandardItemModel*)Formula1->twFormula->model();
+        if(paramName.indexOf("11")>0)
+            index = model->index(0, 1);
+        if(paramName.indexOf("12")>0)
+            index = model->index(1, 1);
+        if(paramName.indexOf("13")>0)
+            index = model->index(2, 1);
+        if(paramName.indexOf("14")>0)
+            index = model->index(3, 1);
+        if(paramName.indexOf("15")>0)
+            index = model->index(4, 1);
+        if(paramName.indexOf("16")>0)
+            index = model->index(5, 1);
+        if(paramName.indexOf("17")>0)
+            index = model->index(6, 1);
+        paramValue = model->data(index, Qt::DisplayRole);
+    }
+    if (paramName.indexOf("Ref1")>=0)
+    {
+        QStandardItemModel *model;
         QModelIndex index;
-        if (paramName == "iol1")
-            index = model->index(recNo, 1);
-        if (paramName == "ref1")
-            index = model->index(recNo, 2);
-        if (paramName == "exact1")
-        {
-//            model = (QStandardItemModel*)Formula1->twEmm->model();
-            index = model->index(Formula1->cbFormula->currentIndex()+6, 1);
-        }
+        model = (QStandardItemModel*)Formula1->twFormula->model();
+        if(paramName.indexOf("11")>0)
+            index = model->index(0, 2);
+        if(paramName.indexOf("12")>0)
+            index = model->index(1, 2);
+        if(paramName.indexOf("13")>0)
+            index = model->index(2, 2);
+        if(paramName.indexOf("14")>0)
+            index = model->index(3, 2);
+        if(paramName.indexOf("15")>0)
+            index = model->index(4, 2);
+        if(paramName.indexOf("16")>0)
+            index = model->index(5, 2);
+        if(paramName.indexOf("17")>0)
+            index = model->index(6, 2);
         paramValue = model->data(index, Qt::DisplayRole);
     }
 
-    if ((paramName == "iol2")||(paramName == "ref2")||(paramName == "exact2"))
+
+    if (paramName.indexOf("IOL2")>=0)
     {
         QStandardItemModel *model;
+        QModelIndex index;
         model = (QStandardItemModel*)Formula2->twFormula->model();
+        if(paramName.indexOf("21")>0)
+            index = model->index(0, 1);
+        if(paramName.indexOf("22")>0)
+            index = model->index(1, 1);
+        if(paramName.indexOf("23")>0)
+            index = model->index(2, 1);
+        if(paramName.indexOf("24")>0)
+            index = model->index(3, 1);
+        if(paramName.indexOf("25")>0)
+            index = model->index(4, 1);
+        if(paramName.indexOf("26")>0)
+            index = model->index(5, 1);
+        if(paramName.indexOf("27")>0)
+            index = model->index(6, 1);
+        paramValue = model->data(index, Qt::DisplayRole);
+    }
+    if (paramName.indexOf("Ref2")>=0)
+    {
+        QStandardItemModel *model;
         QModelIndex index;
-        if (paramName == "iol2")
-            index = model->index(recNo, 1);
-        if (paramName == "ref2")
-            index = model->index(recNo, 2);
-        if (paramName == "exact2")
-        {
-//            model = (QStandardItemModel*)Formula2->twEmm->model();
-            index = model->index(Formula2->cbFormula->currentIndex()+6, 1);
-        }
+        model = (QStandardItemModel*)Formula2->twFormula->model();
+        if(paramName.indexOf("21")>0)
+            index = model->index(0, 2);
+        if(paramName.indexOf("22")>0)
+            index = model->index(1, 2);
+        if(paramName.indexOf("23")>0)
+            index = model->index(2, 2);
+        if(paramName.indexOf("24")>0)
+            index = model->index(3, 2);
+        if(paramName.indexOf("25")>0)
+            index = model->index(4, 2);
+        if(paramName.indexOf("26")>0)
+            index = model->index(5, 2);
+        if(paramName.indexOf("27")>0)
+            index = model->index(6, 2);
         paramValue = model->data(index, Qt::DisplayRole);
     }
 
-    if ((paramName == "iol3")||(paramName == "ref3")||(paramName == "exact3"))
+    if (paramName.indexOf("IOL3")>=0)
     {
         QStandardItemModel *model;
-        model = (QStandardItemModel*)Formula3->twFormula->model();
         QModelIndex index;
-        if (paramName == "iol3")
-            index = model->index(recNo, 1);
-        if (paramName == "ref3")
-            index = model->index(recNo, 2);
-        if (paramName == "exact3")
-        {
-//            model = (QStandardItemModel*)Formula3->twEmm->model();
-            index = model->index(Formula3->cbFormula->currentIndex()+6, 1);
-        }
+        model = (QStandardItemModel*)Formula3->twFormula->model();
+        if(paramName.indexOf("31")>0)
+            index = model->index(0, 1);
+        if(paramName.indexOf("32")>0)
+            index = model->index(1, 1);
+        if(paramName.indexOf("33")>0)
+            index = model->index(2, 1);
+        if(paramName.indexOf("34")>0)
+            index = model->index(3, 1);
+        if(paramName.indexOf("35")>0)
+            index = model->index(4, 1);
+        if(paramName.indexOf("36")>0)
+            index = model->index(5, 1);
+        if(paramName.indexOf("37")>0)
+            index = model->index(6, 1);
+        paramValue = model->data(index, Qt::DisplayRole);
+    }
+    if (paramName.indexOf("Ref3")>=0)
+    {
+        QStandardItemModel *model;
+        QModelIndex index;
+        model = (QStandardItemModel*)Formula1->twFormula->model();
+        if(paramName.indexOf("31")>0)
+            index = model->index(0, 2);
+        if(paramName.indexOf("32")>0)
+            index = model->index(1, 2);
+        if(paramName.indexOf("33")>0)
+            index = model->index(2, 2);
+        if(paramName.indexOf("34")>0)
+            index = model->index(3, 2);
+        if(paramName.indexOf("35")>0)
+            index = model->index(4, 2);
+        if(paramName.indexOf("36")>0)
+            index = model->index(5, 2);
+        if(paramName.indexOf("37")>0)
+            index = model->index(6, 2);
+        paramValue = model->data(index, Qt::DisplayRole);
+    }
+
+    if (paramName == "exact1")
+    {
+        QStandardItemModel *model;
+        QModelIndex index;
+        model = (QStandardItemModel*)Formula1->twEmm->model();
+        index = model->index(Formula1->cbFormula->currentIndex()+6, 1);
+        paramValue = model->data(index, Qt::DisplayRole);
+    }
+    if (paramName == "exact2")
+    {
+        QStandardItemModel *model;
+        QModelIndex index;
+        model = (QStandardItemModel*)Formula2->twEmm->model();
+        index = model->index(Formula1->cbFormula->currentIndex()+6, 1);
+        paramValue = model->data(index, Qt::DisplayRole);
+    }
+    if (paramName == "exact3")
+    {
+        QStandardItemModel *model;
+        QModelIndex index;
+        model = (QStandardItemModel*)Formula3->twEmm->model();
+        index = model->index(Formula1->cbFormula->currentIndex()+6, 1);
         paramValue = model->data(index, Qt::DisplayRole);
     }
 
