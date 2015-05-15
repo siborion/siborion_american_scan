@@ -380,19 +380,18 @@ void calculator::setValue(const int recNo, const QString paramName, QVariant &pa
        }
    }
 
-    if (paramName == "name")
-        paramValue = curParam->patientName;
-    if (paramName == "id")
-        paramValue = curParam->patientId;
-    if (paramName == "birth")
-        paramValue = curParam->birthDate;
-    if (paramName == "al")
-        paramValue = curParam->ALave;
-    if (paramName == "acd")
-        paramValue = curParam->ACD;
-
-
-
+   if (paramName == "doctor")
+       paramValue = curParam->doctorName;
+   if (paramName == "name")
+       paramValue = curParam->patientName;
+   if (paramName == "id")
+       paramValue = curParam->patientId;
+   if (paramName == "birth")
+       paramValue = curParam->birthDate;
+   if (paramName == "al")
+       paramValue = curParam->ALave;
+   if (paramName == "acd")
+       paramValue = curParam->ACD;
 
     if (paramName == "side")
         paramValue = (curParam->regimSide==REGIM::OD)?"OD\r\nright":"OS\r\nleft";
