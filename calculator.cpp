@@ -340,11 +340,9 @@ void calculator::changeSideCalculatorSlot()
 
 void calculator::setValue(const int recNo, const QString paramName, QVariant &paramValue, const int reportPage)
 {
-   QString paramTmp;
-
+    QString paramTmp;
     Q_UNUSED(reportPage);
     Q_UNUSED(recNo);
-
 
    if(paramName == "measureParam1")
    {
@@ -488,9 +486,10 @@ void calculator::setValue(const int recNo, const QString paramName, QVariant &pa
         }
         switch(curParam->regimCataract)
         {
-        case REGIM::CATARACT: paramTmp.append("Cataract"); break;
-        case REGIM::APHAKIC:  paramTmp.append("Aphakic"); break;
+        case REGIM::CATARACT: paramTmp.append("Cataract/"); break;
+        case REGIM::APHAKIC:  paramTmp.append("Aphakic/"); break;
         }
+        paramTmp.append((curParam->regimSide==REGIM::OD)?"OD right":"OS left");
         paramValue = paramTmp;
     }
     if (paramName == "measureParam")
