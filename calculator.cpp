@@ -562,11 +562,23 @@ void calculator::setValue(const int recNo, const QString paramName, QVariant &pa
     }
 
     if (paramName == "lens1")
-        paramValue = Formula1->lLens->text();
+    {
+        paramTmp = "lens: ";
+        paramTmp.append(Formula1->lLens->text());
+        paramValue = paramTmp;
+    }
     if (paramName == "lens2")
-        paramValue = Formula2->lLens->text();
+    {
+        paramTmp = "lens: ";
+        paramTmp.append(Formula2->lLens->text());
+        paramValue = paramTmp;
+    }
     if (paramName == "lens3")
-        paramValue = Formula3->lLens->text();
+    {
+        paramTmp = "lens: ";
+        paramTmp.append(Formula3->lLens->text());
+        paramValue = paramTmp;
+    }
 
     if (paramName == "formula1")
         paramValue = Formula1->cbFormula->currentText();
@@ -600,6 +612,13 @@ void calculator::setValue(const int recNo, const QString paramName, QVariant &pa
         paramTmp.append(QString("AL: %1   ACD:%2").arg(curParam->ALave).arg(curParam->ACD));
         paramValue = paramTmp;
     }
+
+    if (paramName == "date")
+    {
+//        paramTmp.append(QString("AL: %1   ACD:%2").arg(curParam->ALave).arg(curParam->ACD));
+        paramValue = curParam->curTime.toString("dd.mm.yyyy hh:mm:ss");
+    }
+
 }
 
 void calculator::setValueImage(int recNo, QString paramName, QImage &paramValue,int reportPage)

@@ -86,6 +86,7 @@ void sampletable::loadSlot()
             query.bindValue(":patient", curParam->patientId);
             query.bindValue(":session_time", selectTime);
 
+            curParam->curTime = selectTime;
             clearAll();
             pbSave->setEnabled(false);
 

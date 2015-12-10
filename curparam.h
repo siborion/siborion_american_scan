@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QSqlQueryModel>
+#include <QDateTime>
 #include "curparam.h"
 #include "typedef.h"
 
@@ -15,6 +16,8 @@ public:
     REGIM::RegimContact  regimContact;
     REGIM::RegimCataract regimCataract;
     REGIM::RegimSide     regimSide;
+
+    QDateTime curTime;
 
     quint16 corneaX1;
     quint16 corneaX2;
