@@ -1,0 +1,466 @@
+diff -r bc241efb2d30 calculator.cpp
+--- a/calculator.cpp	Tue Jan 13 23:11:26 2015 +0600
++++ b/calculator.cpp	Wed Jan 14 17:36:36 2015 +0600
+@@ -13,8 +13,6 @@
+ 
+     curParam = link;
+ 
+-    qDebug()<<"9900";
+-
+     QStandardItemModel *model;
+ 
+     QVBoxLayout *layout              = new QVBoxLayout(this);
+@@ -32,7 +30,7 @@
+         model->item   (i, 0)->setEditable(false);
+     }
+ 
+-    qDebug()<<"9902";
++
+ 
+     //-------------------------------
+     columnPercent.clear();
+@@ -64,7 +62,7 @@
+         model->item   (i, 2)->setEnabled(false);
+     }
+ 
+-    qDebug()<<"9904";
++
+ 
+     QPalette palette;
+     QBrush brush(QColor(0, 0, 0, 255));
+@@ -74,7 +72,7 @@
+ 
+     pCalcPatient = new calculator_patient(this, link);
+ 
+-    qDebug()<<"9906";
++
+ 
+     columnPercent.clear();
+     columnPercent<<50<<50;
+@@ -95,7 +93,7 @@
+ 
+     pbPrint = new QPushButton("Print");
+ 
+-    qDebug()<<"9908";
++
+ 
+     layoutTop->addWidget(pCalcPatient);
+     layoutTop->addWidget(twLens);
+@@ -119,7 +117,7 @@
+ 
+     connect(pCalcPatient, SIGNAL(refreshFormula()), SLOT(refreshFormuls()));
+     connect(pbPrint, SIGNAL(clicked()), SLOT(printPreview()));
+-    qDebug()<<"9910";
++
+ }
+ 
+ void calculator::refreshFormuls()
+@@ -130,9 +128,9 @@
+ 
+     personalParam = pCalcPatient->getPersonalParam();
+ 
+-    qDebug()<<"curParam->ACD"<<curParam->ACD;
+-    qDebug()<<"curParam->AL" <<curParam->AL;
+-    qDebug()<<"curParam->K"  <<curParam->K;
++
++
++
+ 
+     if(!((curParam->ACD>0)&&(curParam->AL>0)&&(curParam->K>0)))
+         return;
+@@ -141,7 +139,7 @@
+     Formula2->setEnabled(false);
+     Formula3->setEnabled(false);
+ 
+-    qDebug()<<"modelMainLens->rowCount()"<<twLens->model()->rowCount();
++
+ 
+     if(twLens->model()->rowCount()>0)
+     {
+@@ -165,9 +163,9 @@
+             else
+                 lensFs = twLens->model()->itemData(twLens->model()->index(i,3)).value(0).toString();
+ 
+-            qDebug()<<"lensAconst"<<lensAconst;
+-            qDebug()<<"lensAcd"<<lensAcd;
+-            qDebug()<<"lensFs"<<lensFs;
++
++
++
+ 
+             switch (i)
+             {
+@@ -350,8 +348,8 @@
+ 
+ void calculator::refreshLens(QSqlQueryModel *link)
+ {
+-//    qDebug()<<"modelMainLens->rowCount()"<<modelMainLens->rowCount();
+-//    qDebug()<<link;
++
++
+     twLens->setModel(link);
+ }
+ 
+diff -r bc241efb2d30 device.cpp
+--- a/device.cpp	Tue Jan 13 23:11:26 2015 +0600
++++ b/device.cpp	Wed Jan 14 17:36:36 2015 +0600
+@@ -1,5 +1,6 @@
+ #include "device.h"
+ #include <qdebug.h>
++#include <QDateTime>
+ 
+ Device::Device(QObject *parent) :
+     QObject(parent)
+diff -r bc241efb2d30 key_radio.cpp
+--- a/key_radio.cpp	Tue Jan 13 23:11:26 2015 +0600
++++ b/key_radio.cpp	Wed Jan 14 17:36:36 2015 +0600
+@@ -6,7 +6,7 @@
+ {
+     QHBoxLayout *layoutkey_radio = new QHBoxLayout(this);
+ 
+-    qDebug()<<link;
++
+ 
+     curentParam = link;
+ 
+@@ -138,7 +138,7 @@
+ void key_radio::doChangeRegim()
+ {
+ //    QObject* sender = const_cast<QObject*>(QObject::sender());
+-//    qDebug()<<sender->objectName();
++
+ //    if(sender->objectName()=="leAConst_personal")
+ //    {
+ //    }
+diff -r bc241efb2d30 listresult.cpp
+--- /dev/null	Thu Jan 01 00:00:00 1970 +0000
++++ b/listresult.cpp	Wed Jan 14 17:36:36 2015 +0600
+@@ -0,0 +1,58 @@
++#include "listresult.h"
++#include "ui_listresult.h"
++#include <QDebug>
++#include <QSqlQuery>
++#include <QSqlRecord>
++#include <QDateTime>
++
++ListResult::ListResult(QWidget *parent, CurParam *link) :
++    QDialog(parent),
++    ui(new Ui::ListResult)
++{
++    QStandardItemModel *model;
++    QModelIndex index;
++    quint16 i;
++
++    ui->setupUi(this);
++
++    curParam = link;
++
++    QList<int> columnPercent;
++    QStringList lst;
++
++    lst.clear();
++    columnPercent.clear();
++    columnPercent<<50        <<25        <<25;
++    lst          <<tr("Data")<<tr("Side")<<tr("No of scan");
++    twListResult  = new adjview(15, lst, columnPercent);
++    twListResult->setSelectionBehavior(QAbstractItemView::SelectRows);
++    twListResult->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
++
++    ui->gridLayout->addWidget(twListResult);
++
++    model = (QStandardItemModel*)twListResult->model();
++    model->setRowCount(0);
++
++    QString str = QString("SELECT session_time, regim_side, count(*) FROM history  WHERE patient=%1 GROUP BY patient, session_time;").arg(curParam->patientId);
++    QSqlQuery sql(str);
++    if(sql.exec())
++    {
++        i = 0;
++        while(sql.next())
++        {
++            twListResult->model()->insertRow(i);
++            index = twListResult->model()->index(i, 0);
++            twListResult->model()->setData(index, sql.record().value(0).toDateTime(), Qt::DisplayRole);
++            index = twListResult->model()->index(i, 1);
++            twListResult->model()->setData(index, (sql.record().value(1).toUInt()==0)?"OD":"OS", Qt::DisplayRole);
++            index = twListResult->model()->index(i, 2);
++            twListResult->model()->setData(index, sql.record().value(2).toString(), Qt::DisplayRole);
++            i++;
++        }
++    }
++}
++
++ListResult::~ListResult()
++{
++    delete ui;
++}
+diff -r bc241efb2d30 listresult.h
+--- /dev/null	Thu Jan 01 00:00:00 1970 +0000
++++ b/listresult.h	Wed Jan 14 17:36:36 2015 +0600
+@@ -0,0 +1,26 @@
++#ifndef LISTRESULT_H
++#define LISTRESULT_H
++
++#include <QDialog>
++#include <adjview.h>
++#include "curparam.h"
++
++namespace Ui {
++class ListResult;
++}
++
++class ListResult : public QDialog
++{
++    Q_OBJECT
++
++public:
++    explicit ListResult(QWidget *parent = 0, CurParam *link = 0);
++    ~ListResult();
++    adjview *twListResult;
++
++private:
++    Ui::ListResult *ui;
++    CurParam *curParam;
++};
++
++#endif // LISTRESULT_H
+diff -r bc241efb2d30 listresult.ui
+--- /dev/null	Thu Jan 01 00:00:00 1970 +0000
++++ b/listresult.ui	Wed Jan 14 17:36:36 2015 +0600
+@@ -0,0 +1,67 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<ui version="4.0">
++ <class>ListResult</class>
++ <widget class="QDialog" name="ListResult">
++  <property name="geometry">
++   <rect>
++    <x>0</x>
++    <y>0</y>
++    <width>400</width>
++    <height>300</height>
++   </rect>
++  </property>
++  <property name="windowTitle">
++   <string>Dialog</string>
++  </property>
++  <layout class="QGridLayout" name="gridLayout_2">
++   <item row="0" column="0">
++    <layout class="QGridLayout" name="gridLayout"/>
++   </item>
++   <item row="1" column="0">
++    <widget class="QDialogButtonBox" name="buttonBox">
++     <property name="orientation">
++      <enum>Qt::Horizontal</enum>
++     </property>
++     <property name="standardButtons">
++      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
++     </property>
++    </widget>
++   </item>
++  </layout>
++ </widget>
++ <resources/>
++ <connections>
++  <connection>
++   <sender>buttonBox</sender>
++   <signal>accepted()</signal>
++   <receiver>ListResult</receiver>
++   <slot>accept()</slot>
++   <hints>
++    <hint type="sourcelabel">
++     <x>248</x>
++     <y>254</y>
++    </hint>
++    <hint type="destinationlabel">
++     <x>157</x>
++     <y>274</y>
++    </hint>
++   </hints>
++  </connection>
++  <connection>
++   <sender>buttonBox</sender>
++   <signal>rejected()</signal>
++   <receiver>ListResult</receiver>
++   <slot>reject()</slot>
++   <hints>
++    <hint type="sourcelabel">
++     <x>316</x>
++     <y>260</y>
++    </hint>
++    <hint type="destinationlabel">
++     <x>286</x>
++     <y>274</y>
++    </hint>
++   </hints>
++  </connection>
++ </connections>
++</ui>
+diff -r bc241efb2d30 measure.cpp
+--- a/measure.cpp	Tue Jan 13 23:11:26 2015 +0600
++++ b/measure.cpp	Wed Jan 14 17:36:36 2015 +0600
+@@ -48,7 +48,6 @@
+ 
+ void Measure::saveSlot(QStandardItemModel *OD, QStandardItemModel *OS)
+ {
+-    qDebug()<<"saveSlot1";
+     emit save(OD, OS);
+ }
+ 
+diff -r bc241efb2d30 release/scan.exe
+Binary file release/scan.exe has changed
+diff -r bc241efb2d30 sampletable.cpp
+--- a/sampletable.cpp	Tue Jan 13 23:11:26 2015 +0600
++++ b/sampletable.cpp	Wed Jan 14 17:36:36 2015 +0600
+@@ -1,6 +1,9 @@
+ #include "sampletable.h"
+ #include <QtCore/qmath.h>
+ #include <QMessageBox>
++#include <QDateTime>
++#include <QSqlQuery>
++#include <QSqlRecord>
+ 
+ sampletable::sampletable(QWidget *parent, CurParam *link) :
+     QWidget(parent)
+@@ -41,6 +44,7 @@
+ 
+     connect(twMeas->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), SLOT(changeRowSlot(QModelIndex)));
+     connect(pbSave,SIGNAL(pressed()),SLOT(saveSlot()));
++    connect(pbLoad,SIGNAL(pressed()),SLOT(loadSlot()));
+ }
+ 
+ void sampletable::saveSlot()
+@@ -49,6 +53,52 @@
+     pbSave->setEnabled(false);
+ }
+ 
++void sampletable::loadSlot()
++{
++    QDateTime selectTime;
++    QSqlQuery query;
++    QModelIndex index;
++    quint16 i=0;
++    stMeasureParam measureParam;
++    QByteArray Sample;
++    QList<quint16> extremum;
++    ListResult *listResult = new ListResult(this, curParam);
++    if(listResult->exec() == QDialog::Accepted)
++    {
++        if(listResult->twListResult->currentIndex().row()>=0)
++        {
++            index = listResult->twListResult->currentIndex();
++            index = listResult->twListResult->model()->index(index.row(), 0);
++            selectTime = listResult->twListResult->model()->data(index, Qt::DisplayRole).toDateTime();
++            QString str = "SELECT * FROM history  WHERE patient=:patient AND session_time=:session_time;";
++            query.prepare(str);
++            query.bindValue(":patient", curParam->patientId);
++            query.bindValue(":session_time", selectTime);
++
++            if(query.exec())
++            {
++                while(query.next())
++//                    query.next();
++                {
++                i++;
++                qDebug()<<i;
++                measureParam.ACD = query.value(query.record().indexOf("acd")).toDouble();
++                measureParam.AL  = query.value(query.record().indexOf("al")).toDouble();
++                measureParam.ALave  = query.value(query.record().indexOf("al_ave")).toDouble();
++                measureParam.Cornea = query.value(query.record().indexOf("cornea")).toUInt();
++                measureParam.L1 = query.value(query.record().indexOf("l1")).toUInt();
++                measureParam.L2 = query.value(query.record().indexOf("l2")).toUInt();
++                measureParam.Retina = query.value(query.record().indexOf("retina")).toUInt();
++                Sample = query.value(query.record().indexOf("sample")).toByteArray();
++                measureParam.VIT = query.value(query.record().indexOf("vit")).toDouble();
++                qDebug()<<measureParam.VIT;
++                addSample(&Sample, &extremum, &measureParam);
++                }
++            }
++        }
++    }
++}
++
+ void sampletable::changeRowSlot(QModelIndex index)
+ {
+     stMeasureParam measureParam;
+diff -r bc241efb2d30 sampletable.h
+--- a/sampletable.h	Tue Jan 13 23:11:26 2015 +0600
++++ b/sampletable.h	Wed Jan 14 17:36:36 2015 +0600
+@@ -9,6 +9,7 @@
+ #include <QPushButton>
+ #include "plot.h"
+ #include "curparam.h"
++#include "listresult.h"
+ 
+ class sampletable : public QWidget
+ {
+@@ -43,6 +44,7 @@
+     void changeRegimManual();
+     void startMeasure();
+     void saveSlot();
++    void loadSlot();
+ 
+ 
+ };
+diff -r bc241efb2d30 scan.pro
+--- a/scan.pro	Tue Jan 13 23:11:26 2015 +0600
++++ b/scan.pro	Wed Jan 14 17:36:36 2015 +0600
+@@ -54,7 +54,8 @@
+     formula.cpp \
+     calc.cpp \
+     calculator_patient.cpp \
+-    leaddzero.cpp
++    leaddzero.cpp \
++    listresult.cpp
+ 
+ HEADERS  += mainwindow.h \
+     bases.h \
+@@ -84,7 +85,8 @@
+     formula.h \
+     calculator_patient.h \
+     calc.h \
+-    leaddzero.h
++    leaddzero.h \
++    listresult.h
+ 
+ FORMS    += mainwindow.ui \
+     dialog_doctor.ui \
+@@ -92,7 +94,8 @@
+     bigviewnumcur.ui \
+     velosity.ui \
+     bigviewnum.ui \
+-    calculator_patient.ui
++    calculator_patient.ui \
++    listresult.ui
+ 
+ RESOURCES += \
+     scan.qrc
+diff -r bc241efb2d30 scanbase.cpp
+--- a/scanbase.cpp	Tue Jan 13 23:11:26 2015 +0600
++++ b/scanbase.cpp	Wed Jan 14 17:36:36 2015 +0600
+@@ -115,7 +115,7 @@
+     str.append("AND doctor_lens.nom_formula=formula.id ");
+     str.append(QString("WHERE patient.id=%1;").arg(id));
+     lensModel.setQuery(str);
+-//    qDebug()<<"adr"<<(&lensModel);
++
+     emit (setLens(&lensModel));
+ }
+ 
+@@ -158,7 +158,7 @@
+ 
+     query.prepare(sql);
+     query.exec();
+-    qDebug()<<sql;
++
+ }
+ 
+ void Scanbase::delPatient()
+@@ -357,7 +357,7 @@
+ 
+ void Scanbase::saveSlot(QStandardItemModel *OD, QStandardItemModel *OS)
+ {
+-    qDebug()<<"saveSlot2";
++
+     QSqlQuery   query;
+     QString     sql;
+     quint16     rowCount;

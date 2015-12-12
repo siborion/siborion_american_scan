@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "scan.h"
 #include <qt_windows.h>
+#include "plot.h"
 
 #ifdef _cplusplus
 extern "C" {
@@ -31,6 +32,7 @@ private:
     bool first;
     Scan *scan;
     QTimer *timer;
+    Plot *plot;
 
 private slots:
     void reDraw();

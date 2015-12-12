@@ -11,9 +11,14 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 //    QThread* thread = new QThread;
     scan = new Scan();
+
     timer = new QTimer();
-    timer->setInterval(100);
+    timer->setInterval(66);
     timer->start();
+
+    plot = new Plot(this, scan->getBuf());
+
+    ui->gridLayout->addWidget(plot,1,0,1,3);
 
 //    scan->moveToThread(thread);
 
@@ -127,7 +132,11 @@ void MainWindow::reDraw()
 {
     unsigned char *p;
     p = scan->getBuf();
-    qDebug()<<p[1];
+
+    plot->updateScan();
+
+//    plot->replot();
+//    plot->update();
 
 }
 

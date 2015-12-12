@@ -1,0 +1,297 @@
+diff -r 3a753ec4f44a calc.cpp
+--- a/calc.cpp	Mon Apr 06 18:27:06 2015 +0600
++++ b/calc.cpp	Tue Apr 07 20:54:08 2015 +0600
+@@ -227,13 +227,16 @@
+    AConst = AConst - 0.5;
+ 
+   Emmetropia = AConst - (0.9 * K) - (2.5 * AL);
++
++
++
+   SRKIIValues->PEMM = Emmetropia;
+ 
++
+   Emmetropia_Rounded = floor(Emmetropia);
+ 
+   Diff_In_Emmetropia = Emmetropia - Emmetropia_Rounded;
+ 
+-
+   if (Emmetropia < 14.0)
+    CR = 1.0;
+   else if (Emmetropia >= 14.0)
+@@ -400,10 +403,10 @@
+     double Dc;
+     double nc = 1.3315;
+     double z;
+-//    double dx=0.012;
+-    double dx=12;
++    double dx=0.012;
++//    double dx=12;
+     double Dl;
+-    double n = 1.336;
++    double n = 1336;
+     double q;
+     double Refr;
+     double iol;
+@@ -419,32 +422,37 @@
+ 
+     //Optical ACD calculation
+     if (ac!= 0.00)
+-        ACDd=a0+a1*ac+a2*AL;
++        ACDd=   a0 + a1*ac + a2*AL;
+     else
+         ACDd = (a0 + u*a1) +(a2+v*a1) * AL;
+ 
+ 
++//    R = 336.0;
++//    R /= K;
++    if(K>40)
++        R = (R/K);
++    else
++        R = K;
+ 
+ 
++    R /= 1000;
++    qDebug()<<R;
+ 
+-
+-
+-
+-//    R = 336.0;
+-    R /= K;
+-    Dc= ((nc -1))/R;
+-
+-
+-
++    Dc = ((nc -1))/(R);
++    qDebug()<<"Dc"<<Dc;
+ 
+ 
+ 
+ /// P_Emmetropia
+     z = Dc  +  (Rx/(1-Rx*dx));
++    qDebug()<<"z"<<z;
+ 
+ 
+     Dl= (((n/(AL-ACDd))-(n/((n/z)-ACDd))));
+-    Dl*=1000;
++    qDebug()<<"AL"<<AL;
++    qDebug()<<"ACDd"<<ACDd;
++    qDebug()<<"Dl"<<Dl;
++//    Dl*=1000;
+ 
+ 
+     haigis_PEmm = Dl;
+@@ -479,8 +487,8 @@
+ 
+    Loop=0;
+ 
+-   n*=1000;
+-   Dc*=1000;
++//   n*=1000;
++//   Dc*=1000;
+ 
+    for (P = haigis_PEmm_New - 1.5; P<=haigis_PEmm_New + 1.5; P= P + 0.5)
+    {
+diff -r 3a753ec4f44a calculator.cpp
+--- a/calculator.cpp	Mon Apr 06 18:27:06 2015 +0600
++++ b/calculator.cpp	Tue Apr 07 20:54:08 2015 +0600
+@@ -208,7 +208,7 @@
+ {
+     QPrinter             printer( QPrinter::HighResolution );
+     printer.setPageSize(QPrinter::A4);
+-    printer.setFullPage(false);
++//    printer.setFullPage(false);
+     QPrintPreviewDialog  preview( &printer);
+ //    preview.setSizeGripEnabled(true);
+ 
+@@ -243,9 +243,6 @@
+     sPatient.append(QString("%1\r\n%2").arg(curParam->patientName).arg(curParam->patientId));
+     painter.drawText(page1, Qt::AlignLeft, sPatient);
+ 
+-
+-
+-
+     foreach (index, lsSelect)
+     {
+         index = twMeas->model()->index(kolvo, 0);
+@@ -273,14 +270,16 @@
+     }
+ 
+ 
+-
+ //    painter.drawRect(500,5000,500,100);
+ 
+ 
+ //    QRect    page1(1000, 200, 1000, 400);
+-//    pModel1 = Formula1->getModel();
+-//    pModel2 = Formula2->getModel();
+-//    pModel3 = Formula3->getModel();
++    stFormulaInfo *pModel;
++    pModel = Formula1->getModel();
++    pModel = Formula2->getModel();
++    pModel = Formula3->getModel();
++
++//    pModel = Formula4->getModel();
+ 
+ //    int kolLine = 0;
+ #define kolColumn  3
+diff -r 3a753ec4f44a formula.cpp
+--- a/formula.cpp	Mon Apr 06 18:27:06 2015 +0600
++++ b/formula.cpp	Tue Apr 07 20:54:08 2015 +0600
+@@ -125,11 +125,11 @@
+         j++;
+         switch (i)
+         {
+-        case SRKII:   Calculator(i, AL, AConst, K, 0, &stFormula); break;
+-        case SRKT:    Calculator(i, AL, AConst, K, 0, &stFormula);    break;
+-        case HOFFERQ: Calculator(i, AL, ACD, K, 0, &stFormula);     break;
+-        case HOLLADAY:Calculator(i, AL, SF, K, 0, &stFormula);     break;
+-        case HAIGIS:  Calculator(i, AL, AConst, K, ACD_measure, &stFormula);  break;
++        case SRKII:   Calculator(i, AL, AConst, K, Rx, &stFormula); break;
++        case SRKT:    Calculator(i, AL, AConst, K, Rx, &stFormula);    break;
++        case HOFFERQ: Calculator(i, AL, ACD, K, Rx, &stFormula);     break;
++        case HOLLADAY:Calculator(i, AL, SF, K, Rx, &stFormula);     break;
++        case HAIGIS:  HaigisCalc(A0, A1, A2, AL, AConst, ACD_measure, K, Rx, &stFormula);  break;
+         }
+         model1->setItem(6+j, 1, getItem(stFormula.PEMM, Qt::AlignCenter));
+         model->setItem (6+j, 0, getItem(slTmp.at(i),    Qt::AlignCenter));
+diff -r 3a753ec4f44a formula.h
+--- a/formula.h	Mon Apr 06 18:27:06 2015 +0600
++++ b/formula.h	Tue Apr 07 20:54:08 2015 +0600
+@@ -29,8 +29,6 @@
+     QLabel *lLens;
+     QLabel *leLens;
+     adjview *twCalculator;
+-    adjview *twFormula;
+-    adjview *twEmm;
+     QComboBox *cbFormula;
+     QStringList getListFormula();
+     QStandardItem *getItem(QString, Qt::AlignmentFlag);
+@@ -42,6 +40,9 @@
+     void setValue(quint8 formula, QString name, QString aconst, QString acd, QString fs, QString A0, QString A1, QString A2,  double K, double AL, double ACD, double Rx);
+     stFormulaInfo *getModel();
+     void clear();
++    adjview *twFormula;
++    adjview *twEmm;
++
+ 
+ public:
+     explicit formula(QWidget *parent = 0);
+diff -r 3a753ec4f44a main.cpp
+--- a/main.cpp	Mon Apr 06 18:27:06 2015 +0600
++++ b/main.cpp	Tue Apr 07 20:54:08 2015 +0600
+@@ -1,6 +1,6 @@
+ #include <QApplication>
+ #include "mainwindow.h"
+-#include <QSound>
++//#include <QSound>
+ 
+ int main(int argc, char *argv[])
+ {
+@@ -11,7 +11,8 @@
+     QApplication a(argc, argv);
+     a.addLibraryPath(a.applicationDirPath()+"/plugins");
+     MainWindow w;
+-//    QApplication::beep();
++    QApplication::beep();
++    printf("\a");
+ //    QSound bells(":/test/sinus");
+ //    bells.setLoops(10);
+ //    bells.play();
+diff -r 3a753ec4f44a release/scan.exe
+Binary file release/scan.exe has changed
+diff -r 3a753ec4f44a sampletable.cpp
+--- a/sampletable.cpp	Mon Apr 06 18:27:06 2015 +0600
++++ b/sampletable.cpp	Tue Apr 07 20:54:08 2015 +0600
+@@ -4,7 +4,7 @@
+ #include <QDateTime>
+ #include <QSqlQuery>
+ #include <QSqlRecord>
+-#include <QSound>
++//#include <QSound>
+ #include <QThread>
+ #include <QApplication>
+ 
+@@ -49,7 +49,7 @@
+ //    twMeas->setSelectionMode(QAbstractItemView::SelectionMode::MultiSelection);
+ //    twMeas->selectedIndexes();//
+ 
+-    bells = new QSound(":/test/sinus");
++//    bells = new QSound(":/test/sinus");
+ 
+     connect(twMeas->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), SLOT(changeRowSlot(QModelIndex)));
+     connect(pbSave,SIGNAL(pressed()),SLOT(saveSlot()));
+@@ -65,6 +65,7 @@
+ 
+ void sampletable::loadSlot()
+ {
++    printf("%c", 7);
+     QDateTime selectTime;
+     QSqlQuery query;
+     QModelIndex index;
+@@ -201,8 +202,8 @@
+     index = twMeas->model()->index(rowNom, 5);
+     twMeas->model()->setData(index, QString("%1").arg(measureParam->VIT,   4, 'f', 2, '0'), Qt::DisplayRole);
+     calculateAvg();
+-    bells->play();
+-    qDebug()<<"QSOUND";
++//    bells->play();
++//    qDebug()<<"QSOUND";
+     QApplication::beep();
+ }
+ 
+diff -r 3a753ec4f44a sampletable.h
+--- a/sampletable.h	Mon Apr 06 18:27:06 2015 +0600
++++ b/sampletable.h	Tue Apr 07 20:54:08 2015 +0600
+@@ -7,7 +7,7 @@
+ #include <QFileDialog>
+ #include <QStandardItem>
+ #include <QPushButton>
+-#include <QSound>
++//#include <QSound>
+ #include "plot.h"
+ #include "curparam.h"
+ #include "listresult.h"
+@@ -33,7 +33,7 @@
+     QPushButton *pbLoad;
+     QPushButton *pbClear;
+     void keyPressEvent(QKeyEvent * keyEvent);
+-    QSound *bells;
++//    QSound *bells;
+ 
+ signals:
+     void changeRow(stMeasureParam*);
+diff -r 3a753ec4f44a scan.pro
+--- a/scan.pro	Mon Apr 06 18:27:06 2015 +0600
++++ b/scan.pro	Tue Apr 07 20:54:08 2015 +0600
+@@ -9,7 +9,7 @@
+ QT       += sql
+ QT       += core gui
+ QT	 += serialport
+-QT       += multimedia
++#QT       += multimedia
+ 
+ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+ 
+@@ -26,7 +26,7 @@
+ 
+ CONFIG(release, debug|release)
+ {
+-  LIBS +=  -lqwt -LC:\Qt\Qwt-6.1.0\lib
++  LIBS +=  -lqwtd -LC:\Qt\Qwt-6.1.0\lib
+   LIBS += ftd2xx.lib
+ }
+ 
+diff -r 3a753ec4f44a scanbase.cpp
+--- a/scanbase.cpp	Mon Apr 06 18:27:06 2015 +0600
++++ b/scanbase.cpp	Tue Apr 07 20:54:08 2015 +0600
+@@ -75,7 +75,7 @@
+         str = "SELECT id, name, last, note from doctor;";
+         break;
+     case Base::enLens:
+-        lst             <<tr("id") <<tr("Lens Name")<<tr("Mfg Name")<<tr("Mfg A_Const")<<tr("Mfg ACD")<<tr("Mfg SF")<<tr("Hoffer ACD")<<tr("A1")<<tr("A2")<<tr("A3");
++        lst             <<tr("id") <<tr("Lens Name")<<tr("Mfg Name")<<tr("Mfg A_Const")<<tr("Mfg ACD")<<tr("Mfg SF")<<tr("Hoffer ACD")<<tr("A0")<<tr("A1")<<tr("A2");
+         str = "SELECT id, name, mfg, aconst, acd, sf, hacd, a0, a1, a2 from lens;";
+         break;
+     }

@@ -1,0 +1,403 @@
+diff -r 2f59b15b5ede calc.cpp
+--- a/calc.cpp	Sat Apr 11 23:35:49 2015 +0600
++++ b/calc.cpp	Tue Apr 14 20:29:58 2015 +0600
+@@ -226,7 +226,6 @@
+         AConst = AConst - 0.5;
+ 
+     Emmetropia = AConst - (0.9 * K) - (2.5 * AL);
+-    qDebug()<<"Emmetropia"<<Emmetropia;
+ 
+     SRKIIValues->PEMM = Emmetropia;
+ 
+@@ -239,22 +238,26 @@
+     else if (Emmetropia >= 14.0)
+         CR = 1.25;
+ 
++    qDebug()<<"Emmetropia"<<Emmetropia;
++
++
+     Diff_Add = Diff(Diff_In_Emmetropia);
+ 
+     Emmetropia_New = Emmetropia_Rounded + Diff_Add;
+     Diff_In_Emmetropia = Emmetropia - Emmetropia_New;
+     REFR1 = Diff_In_Emmetropia / CR;
+ 
+-//    Emmetropia_New += Rx;
++    Emmetropia_New -= Rx;
+ 
+-    Emmetropia_New += Rx*CR;
++//    Emmetropia_New += Rx*CR;
++
+     REFR1 += Rx;
+ 
+-
+     Loop=0;
+     for (i = Emmetropia_New - 1.5; i <= Emmetropia_New + 1.5; i = i + 0.5)
+     {
+         REFR = (REFR1 + (Emmetropia_New - i) / CR);
++//        REFR = (REFR1 + (i) / CR);
+         SRKIIValues->PORx[Loop] = REFR;
+         SRKIIValues->IOLPower[Loop] = i;
+         Loop++;
+@@ -429,24 +432,14 @@
+ 
+ 
+     R /= 1000;
+-    qDebug()<<R;
+ 
+     Dc = ((nc -1))/(R);
+-    qDebug()<<"Dc"<<Dc;
+-
+ 
+ 
+ /// P_Emmetropia
+     z = Dc  +  (Rx/(1-Rx*dx));
+-    qDebug()<<"z"<<z;
+-
+ 
+     Dl= (((n/(AL-ACDd))-(n/((n/z)-ACDd))));
+-    qDebug()<<"AL"<<AL;
+-    qDebug()<<"ACDd"<<ACDd;
+-    qDebug()<<"Dl"<<Dl;
+-//    Dl*=1000;
+-
+ 
+     haigis_PEmm = Dl;
+     haigis_PEmm_New = HaigisValues->PEMM = haigis_PEmm;
+diff -r 2f59b15b5ede calculator.cpp
+--- a/calculator.cpp	Sat Apr 11 23:35:49 2015 +0600
++++ b/calculator.cpp	Tue Apr 14 20:29:58 2015 +0600
+@@ -4,6 +4,8 @@
+ #include <QDebug>
+ #include <qwt_plot_renderer.h>
+ #include <QAbstractItemModel>
++#include "qtrpt.h"
++#include <QCoreApplication>
+ 
+ calculator::calculator(QWidget *parent, CurParam *link) :
+     QWidget(parent)
+@@ -206,16 +208,41 @@
+ 
+ void calculator::printPreview()
+ {
+-    QPrinter             printer( QPrinter::HighResolution );
+-    printer.setPageSize(QPrinter::A4);
+-//    printer.setFullPage(false);
+-    QPrintPreviewDialog  preview( &printer);
+-//    preview.setSizeGripEnabled(true);
++    QPixmap pix("qt.png");// = new QPixmap(1000,1000);
++//    QPixmap pix;
++    QPainter *paint = new QPainter(&pix);
+ 
+-    connect( &preview, SIGNAL(paintRequested(QPrinter*)), SLOT(print(QPrinter*)) );
+-    preview.showFullScreen();
+-    preview.exec();
++    paint->drawLine(0,0,200,200);
++    paint->drawText(200,200,"999999999");
++    paint->end();
+ 
++    qDebug()<<"pix.size()"<<pix.size();
++
++    QString fileName = "example9.xml";
++    QtRPT *report = new QtRPT(this);
++
++//    report->setBackgroundImage(QPixmap("qt.png"));
++    report->setBackgroundImage((QPixmap)pix);
++
++//    report->recordCount << 10;
++//    if (report->loadReport(fileName) == false) {
++//        qDebug()<<"Report's file not found";
++//    }
++//    QObject::connect(report, SIGNAL(setValue(const int, const QString, QVariant&, const int)),
++//                     this, SLOT(setValue(const int, const QString, QVariant&, const int)));
++//    QObject::connect(report, SIGNAL(setValueImage(const int, const QString, QImage&, const int)),
++//                     this, SLOT(setValueImage(const int, const QString, QImage&, const int)));
++    //report->setCallbackFunc(getReportValue);
++    report->loadReport(fileName);
++    report->printExec(true);
++
++
++//    QPrinter             printer( QPrinter::HighResolution );
++//    printer.setPageSize(QPrinter::A4);
++//    QPrintPreviewDialog  preview( &printer);
++//    connect( &preview, SIGNAL(paintRequested(QPrinter*)), SLOT(print(QPrinter*)) );
++//    preview.showFullScreen();
++//    preview.exec();
+ }
+ 
+ void calculator::print( QPrinter* printer )
+@@ -225,144 +252,63 @@
+     QModelIndexList lsSelect;
+     quint8 kolvo = 0;
+ 
+-    QPainter painter( printer );
+-    lsSelect = twMeas->selectionModel()->selectedRows();
++    QPixmap *pix = new QPixmap(500,500);
++//    scene->addPixmap(*pix);
++
++    QPainter *paint = new QPainter(pix);
++
++
++//    QPixmap tt;
++//    qDebug()<<"000";
++    QPainter painter;
++//    qDebug()<<"444";
+     QwtPlotRenderer renderer;
++    QString fileName = "example9.xml";
++    QtRPT *report = new QtRPT(this);
++    report->loadReport(fileName);
++    report->recordCount << 2;
+ 
+-    painter.drawRect(500, 200, 4000, 400);
+-    QFont    font = painter.font();
+-    font.setPixelSize(80);
+-    painter.setFont( font );
+-    QRect    page0( 500, 200, 500, 400);
+-    painter.drawText(page0, Qt::AlignLeft, "Name:\r\nID:\r\nDate of Birth:\r\nExam Date:" );
+-    font.setBold(true);
+-    painter.setFont( font );
++//    QObject::connect(report, SIGNAL(setValue(int&, QString&, QVariant&, int)),
++//                     this, SLOT(setValue(int&, QString&, QVariant&, int)));
+ 
+-    QRect    page1( 1000, 200, 500, 400);
+-    QString  sPatient;
+-    sPatient.append(QString("%1\r\n%2").arg(curParam->patientName).arg(curParam->patientId));
+-    painter.drawText(page1, Qt::AlignLeft, sPatient);
++//    foreach (index, lsSelect)
++//    {
++//        index = twMeas->model()->index(kolvo, 0);
++//        sample = twMeas->model()->data(index, roleSample).toByteArray();
++//        switch (kolvo)
++//        {
++//        case 0:
++//            pPlotPrint1 = new PrintPlot(this, curParam, &sample);
++//            renderer.render(pPlotPrint1, &painter, QRectF(500,1000,2000,1800));
++//            break;
++//        case 1:
++//            pPlotPrint1 = new PrintPlot(this, curParam, &sample);
++//            renderer.render(pPlotPrint1, &painter, QRectF(2700,1000,2000,1800));
++//            break;
++//        case 2:
++//            pPlotPrint1 = new PrintPlot(this, curParam, &sample);
++//            renderer.render(pPlotPrint1, &painter, QRectF(500,3000,2000,1800));
++//            break;
++//        case 3:
++//            pPlotPrint1 = new PrintPlot(this, curParam, &sample);
++//            renderer.render(pPlotPrint1, &painter, QRectF(2700,3000,2000,1800));
++//            break;
++//        }
++//        kolvo++;
++//    }
++    qDebug()<<"111";
++//    report->setBackgroundImage(pix);
++//    report->drawBackground(&painter);
++//    report->setBackgroundImage(QPixmap("qt.png"));
+ 
+-    foreach (index, lsSelect)
+-    {
+-        index = twMeas->model()->index(kolvo, 0);
+-        sample = twMeas->model()->data(index, roleSample).toByteArray();
+-        switch (kolvo)
+-        {
+-        case 0:
+-            pPlotPrint1 = new PrintPlot(this, curParam, &sample);
+-            renderer.render(pPlotPrint1, &painter, QRectF(500,1000,2000,1800));
+-            break;
+-        case 1:
+-            pPlotPrint1 = new PrintPlot(this, curParam, &sample);
+-            renderer.render(pPlotPrint1, &painter, QRectF(2700,1000,2000,1800));
+-            break;
+-        case 2:
+-            pPlotPrint1 = new PrintPlot(this, curParam, &sample);
+-            renderer.render(pPlotPrint1, &painter, QRectF(500,3000,2000,1800));
+-            break;
+-        case 3:
+-            pPlotPrint1 = new PrintPlot(this, curParam, &sample);
+-            renderer.render(pPlotPrint1, &painter, QRectF(2700,3000,2000,1800));
+-            break;
+-        }
+-        kolvo++;
+-    }
++    QObject::connect(report, SIGNAL(setValue(const int, const QString, QVariant&, const int)),
++                     this, SLOT(setValue(const int, const QString, QVariant&, const int)));
++    QObject::connect(report, SIGNAL(setValueImage(const int, const QString, QImage&, const int)),
++                     this, SLOT(setValueImage(const int, const QString, QImage&, const int)));
+ 
+ 
+-//    painter.drawRect(500,5000,500,100);
+-
+-
+-//    QRect    page1(1000, 200, 1000, 400);
+-    stFormulaInfo *pModel;
+-    pModel = Formula1->getModel();
+-    pModel = Formula2->getModel();
+-    pModel = Formula3->getModel();
+-
+-//    pModel = Formula4->getModel();
+-
+-//    int kolLine = 0;
+-#define kolColumn  3
+-#define hightLine  100
+-#define yPosTable  5000
+-#define xPosTable  500
+-#define widthTable 3900
+-
+-//    QSize size;
+-//    size.setHeight(20000);
+-//    size.setWidth (20000);
+-
+-
+-
+-//    if(Formula1->isEnabled())
+-//    {
+-//        QPixmap pixmap(Formula1->size());
+-//        Formula1->render(&pixmap);
+-//        painter.drawPixmap(2700,3000,2000,1800,pixmap);
+-//    }
+-
+-//    if(Formula2->isEnabled())
+-//    {
+-//        QPixmap pixmap(Formula2->size());
+-//        Formula2->render(&pixmap);
+-//        painter.drawPixmap(500,5000,2000,1800,pixmap);
+-//    }
+-
+-//    if(Formula3->isEnabled())
+-//    {
+-//        QPixmap pixmap(Formula3->size());
+-//        Formula3->render(&pixmap);
+-//        painter.drawPixmap(2700,5000,2000,1800,pixmap);
+-//    }
+-
+-
+-
+-//    QRect    txt1(xPosTable+(widthTable/(kolColumn*2))*0, yPosTable+(0+3)*hightLine, (widthTable/(kolColumn*2)), 100);
+-//    QRect    txt2(xPosTable+(widthTable/(kolColumn*2))*1, yPosTable+(+3)*hightLine, (widthTable/(kolColumn*2)), 100);
+-//    painter.drawText(txt1, Qt::AlignCenter, curParam->patientName);
+-//    painter.drawText(txt2, Qt::AlignCenter, pModel1->model->data(pModel1->model->index(i, 1), Qt::DisplayRole).toString());
+-
+-//    kolLine = qMax(pModel1->model->rowCount(), pModel2->model->rowCount());
+-//    kolLine = qMax(kolLine, pModel3->model->rowCount());
+-
+-//    for(quint8 i=0; i<kolLine; i++)
+-//    {
+-//        painter.drawRect(xPosTable, yPosTable+i*hightLine, widthTable, hightLine);
+-//    }
+-
+-//    for(quint8 i=0; i<kolColumn; i++)
+-//    {
+-//        painter.drawRect(xPosTable+((widthTable/kolColumn)*i), yPosTable, (widthTable/kolColumn), kolLine*hightLine);
+-//    }
+-
+-//    for(quint8 i=0; i<(kolColumn*2); i++)
+-//    {
+-//        painter.drawRect(xPosTable+(widthTable/(kolColumn*2)*i), yPosTable+hightLine, (widthTable/(kolColumn*2)), (kolLine-1)*hightLine);
+-//    }
+-
+-//    for (quint8 i=0; i<pModel1->model->rowCount(); i++)
+-//    {
+-//        QRect    txt1(xPosTable+(widthTable/(kolColumn*2))*0, yPosTable+(i+3)*hightLine, (widthTable/(kolColumn*2)), 100);
+-//        QRect    txt2(xPosTable+(widthTable/(kolColumn*2))*1, yPosTable+(i+3)*hightLine, (widthTable/(kolColumn*2)), 100);
+-//        painter.drawText(txt1, Qt::AlignCenter, pModel1->model->data(pModel1->model->index(i, 0), Qt::DisplayRole).toString());
+-//        painter.drawText(txt2, Qt::AlignCenter, pModel1->model->data(pModel1->model->index(i, 1), Qt::DisplayRole).toString());
+-//    }
+-
+-//    for (quint8 i=0; i<pModel2->model->rowCount(); i++)
+-//    {
+-//        QRect    txt1(xPosTable+(widthTable/(kolColumn*2))*2, yPosTable+(i+3)*hightLine, (widthTable/(kolColumn*2)), 100);
+-//        QRect    txt2(xPosTable+(widthTable/(kolColumn*2))*3, yPosTable+(i+3)*hightLine, (widthTable/(kolColumn*2)), 100);
+-//        painter.drawText(txt1, Qt::AlignCenter, pModel2->model->data(pModel2->model->index(i, 0), Qt::DisplayRole).toString());
+-//        painter.drawText(txt2, Qt::AlignCenter, pModel2->model->data(pModel2->model->index(i, 1), Qt::DisplayRole).toString());
+-//    }
+-
+-//    for (quint8 i=0; i<pModel3->model->rowCount(); i++)
+-//    {
+-//        QRect    txt1(xPosTable+(widthTable/(kolColumn*2))*4, yPosTable+(i+3)*hightLine, (widthTable/(kolColumn*2)), 100);
+-//        QRect    txt2(xPosTable+(widthTable/(kolColumn*2))*5, yPosTable+(i+3)*hightLine, (widthTable/(kolColumn*2)), 100);
+-//        painter.drawText(txt1, Qt::AlignCenter, pModel3->model->data(pModel3->model->index(i, 0), Qt::DisplayRole).toString());
+-//        painter.drawText(txt2, Qt::AlignCenter, pModel3->model->data(pModel3->model->index(i, 1), Qt::DisplayRole).toString());
+-//    }
++    qDebug()<<"222";
++    report->printExec();
+ }
+ 
+ void calculator::refreshLens(QSqlQueryModel *link)
+@@ -386,3 +332,14 @@
+ {
+     emit changeSideCalculator();
+ }
++
++
++
++void calculator::setValueImage(const int recNo, const QString paramName, QImage &paramValue, const int reportPage) {
++    Q_UNUSED(recNo);
++    Q_UNUSED(reportPage);
++    if (paramName == "image") {
++        QImage *image = new QImage(QCoreApplication::applicationDirPath()+"/qt.png");
++        paramValue = *image;
++    }
++}
+diff -r 2f59b15b5ede calculator.h
+--- a/calculator.h	Sat Apr 11 23:35:49 2015 +0600
++++ b/calculator.h	Tue Apr 14 20:29:58 2015 +0600
+@@ -110,6 +110,7 @@
+ private slots:
+ //    void setAL(QModelIndex,QModelIndex);
+     void changeSideCalculatorSlot();
++    void setValueImage(const int recNo, const QString paramName, QImage &paramValue, const int reportPage);
+ 
+ public slots:
+ //    void changeRow(quint8 id ,quint16 id1 ,QString sTmp1, QString sTmp2);
+diff -r 2f59b15b5ede formula.cpp
+--- a/formula.cpp	Sat Apr 11 23:35:49 2015 +0600
++++ b/formula.cpp	Tue Apr 14 20:29:58 2015 +0600
+@@ -125,11 +125,11 @@
+         j++;
+         switch (i)
+         {
+-        case SRKII:   Calculator(i, AL, AConst, K, Rx, &stFormula); break;
+-        case SRKT:    Calculator(i, AL, AConst, K, Rx, &stFormula);    break;
+-        case HOFFERQ: Calculator(i, AL, ACD, K, Rx, &stFormula);     break;
+-        case HOLLADAY:Calculator(i, AL, SF, K, Rx, &stFormula);     break;
+-        case HAIGIS:  HaigisCalc(A0, A1, A2, AL, AConst, ACD_measure, K, Rx, &stFormula);  break;
++        case SRKII:   Calculator(i, AL, AConst, K, 0, &stFormula); break;
++        case SRKT:    Calculator(i, AL, AConst, K, 0, &stFormula);    break;
++        case HOFFERQ: Calculator(i, AL, ACD,    K, 0, &stFormula);     break;
++        case HOLLADAY:Calculator(i, AL, SF,     K, 0, &stFormula);     break;
++        case HAIGIS:  HaigisCalc(A0, A1, A2, AL, AConst, ACD_measure, K, 0, &stFormula);  break;
+         }
+         model1->setItem(6+j, 1, getItem(stFormula.PEMM, Qt::AlignCenter));
+         model->setItem (6+j, 0, getItem(slTmp.at(i),    Qt::AlignCenter));
+diff -r 2f59b15b5ede mainwindow.cpp
+--- a/mainwindow.cpp	Sat Apr 11 23:35:49 2015 +0600
++++ b/mainwindow.cpp	Tue Apr 14 20:29:58 2015 +0600
+@@ -2,6 +2,7 @@
+ #include "ui_mainwindow.h"
+ #include <QDesktopWidget>
+ #include <QStyle>
++#include "qtrpt.h"
+ 
+ 
+ //#include "control.h"
+@@ -64,6 +65,7 @@
+ 
+     bases->Init();
+     moveWindowToCenter();
++
+ }
+ 
+ void MainWindow::moveWindowToCenter()
+diff -r 2f59b15b5ede release/scan.exe
+Binary file release/scan.exe has changed
+diff -r 2f59b15b5ede scan.pro
+--- a/scan.pro	Sat Apr 11 23:35:49 2015 +0600
++++ b/scan.pro	Tue Apr 14 20:29:58 2015 +0600
+@@ -17,6 +17,8 @@
+ TEMPLATE = app
+ 
+ include(qwt.prf)
++include(../QtRPT/QtRPT.pri)
++
+ 
+ CONFIG(debug, debug|release)
+ {

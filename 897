@@ -1,0 +1,70 @@
+diff -r aae30fb8883e calculator.cpp
+--- a/calculator.cpp	Tue Feb 10 21:45:32 2015 +0600
++++ b/calculator.cpp	Wed Feb 11 20:27:40 2015 +0600
+@@ -34,17 +34,18 @@
+ 
+     //-------------------------------
+     columnPercent.clear();
+-    columnPercent<<20<<20<<20<<20<<20;
+-    lst<<"Lens Name"<<"AConst"<<"ACD"<<"SF"<<"FORMULA";
++    columnPercent<<20<<15<<10<<10<<0<<20<<8<<8<<9;
++//    lst<<"Lens Name"<<"AConst"<<"ACD"<<"SF"<<"FORMULA<<A1<<A1<<A3";
+     twLens = new adjview(3, lst, columnPercent);
+-    twLens->setMinimumWidth(250);
++    twLens->setMinimumWidth(350);
++    twLens->setMinimumHeight(70);
+     modelMainLens = curParam->lensModel;
+     twLens->setModel(modelMainLens);
+-    modelMainLens->setHeaderData(0, Qt::Horizontal, "Lens Name", Qt::DisplayRole);
+-    modelMainLens->setHeaderData(1, Qt::Horizontal, "AConst", Qt::DisplayRole);
+-    modelMainLens->setHeaderData(2, Qt::Horizontal, "ACD", Qt::DisplayRole);
+-    modelMainLens->setHeaderData(3, Qt::Horizontal, "SF", Qt::DisplayRole);
+-    modelMainLens->setHeaderData(4, Qt::Horizontal, "FORMULA", Qt::DisplayRole);
++//    modelMainLens->setHeaderData(0, Qt::Horizontal, "Lens Name", Qt::DisplayRole);
++//    modelMainLens->setHeaderData(1, Qt::Horizontal, "AConst", Qt::DisplayRole);
++//    modelMainLens->setHeaderData(2, Qt::Horizontal, "ACD", Qt::DisplayRole);
++//    modelMainLens->setHeaderData(3, Qt::Horizontal, "SF", Qt::DisplayRole);
++//    modelMainLens->setHeaderData(4, Qt::Horizontal, "FORMULA", Qt::DisplayRole);
+     //-------------------------------
+     columnPercent.clear();
+     columnPercent<<40<<40<<20;
+diff -r aae30fb8883e calculator_patient.ui
+--- a/calculator_patient.ui	Tue Feb 10 21:45:32 2015 +0600
++++ b/calculator_patient.ui	Wed Feb 11 20:27:40 2015 +0600
+@@ -6,14 +6,14 @@
+    <rect>
+     <x>0</x>
+     <y>0</y>
+-    <width>576</width>
+-    <height>81</height>
++    <width>526</width>
++    <height>78</height>
+    </rect>
+   </property>
+   <property name="windowTitle">
+    <string>Form</string>
+   </property>
+-  <layout class="QGridLayout" name="gridLayout" columnstretch="3,1,0,1" columnminimumwidth="150,0,0,0">
++  <layout class="QGridLayout" name="gridLayout" columnstretch="2,1,0,1" columnminimumwidth="100,0,0,0">
+    <property name="leftMargin">
+     <number>3</number>
+    </property>
+diff -r aae30fb8883e release/scan.exe
+Binary file release/scan.exe has changed
+diff -r aae30fb8883e scanbase.cpp
+--- a/scanbase.cpp	Tue Feb 10 21:45:32 2015 +0600
++++ b/scanbase.cpp	Wed Feb 11 20:27:40 2015 +0600
+@@ -139,7 +139,12 @@
+     str.append("lens.acd,");
+     str.append("lens.sf,");
+     str.append("formula.id,");
+-    str.append("formula.name ");
++    str.append("formula.name, ");
++
++    str.append("0 as A1 ,");
++    str.append("0 as A2 ,");
++    str.append("0 as A3 ");
++
+     str.append("FROM patient, doctor_lens, lens, formula ");
+     str.append("ON patient.doctor=doctor_lens.id_doctor ");
+     str.append("AND lens.id=doctor_lens.id_lens ");

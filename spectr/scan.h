@@ -33,6 +33,7 @@ private:
     unsigned char buf3[NumVectors*NumPoints];
     quint8 lastBuf;
 
+
 signals:
 
 public slots:
