@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include <QThread>
 #include <QDebug>
+#include <QTimer>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -10,14 +11,18 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 //    QThread* thread = new QThread;
     scan = new Scan();
+    timer = new QTimer();
+    timer->setInterval(100);
+    timer->start();
 
 //    scan->moveToThread(thread);
 
 //    connect(thread, SIGNAL(started()), scan, SLOT(process()));
 
-    connect(ui->pbOpen,SIGNAL(clicked()),scan,SLOT(open()));
+//    connect(ui->pbOpen,SIGNAL(clicked()),scan,SLOT(open()));
     connect(ui->pbRead,SIGNAL(clicked()),scan,SLOT(process()));
     connect(ui->pbClose,SIGNAL(clicked()),scan,SLOT(close()));
+    connect(timer, SIGNAL(timeout()),SLOT(reDraw()));
 //    connect(ui->pbOpen,SIGNAL(clicked()),scan,SLOT(open()));
 
 //    thread->start();
@@ -117,6 +122,15 @@ void MainWindow::on_pbClose_clicked()
     FT_Close(ftHandle);
 }
 */
+
+void MainWindow::reDraw()
+{
+    unsigned char *p;
+    p = scan->getBuf();
+    qDebug()<<p[1];
+
+}
+
 
 MainWindow::~MainWindow()
 {

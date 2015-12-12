@@ -30,8 +30,10 @@ private:
     FT_HANDLE ftHandle;
     bool first;
     Scan *scan;
+    QTimer *timer;
 
 private slots:
+    void reDraw();
 //    void on_pbOpen_clicked();
 //    void on_pbRead_clicked();
 //    void on_pbClose_clicked();
