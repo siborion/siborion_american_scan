@@ -11,18 +11,10 @@ QMutex mutexBuf3;
 Scan::Scan(QObject *parent) :
     QObject(parent)
 {
-    //    mutex.lock();
-    //    doScan = false;
-    //    mutex.unlock();
 }
 
 void Scan::open()
 {
-    //    qDebug()<<"true";
-    //    mutex.lock();
-    //    doScan = true;
-    //    mutex.unlock();
-    //    qDebug()<<"test"<<test;
 }
 
 unsigned char *Scan::getBuf()
@@ -66,14 +58,12 @@ unsigned char *Scan::getBuf()
 void Scan::close()
 {
     mutex.lock();
-    qDebug()<<"false";
     doScan = false;
     mutex.unlock();
 }
 
 void Scan::read()
 {
-    qDebug()<<"00";
     while(true)
     {
         if(mutex.tryLock())
@@ -117,12 +107,10 @@ void Scan::read()
             lastBuf = 3;
         }
     }
-    qDebug()<<"33";
 }
 
 void Scan::process()
 {
     doScan = true;
     QFuture <void> func = QtConcurrent::run(this, &Scan::read);
-    qDebug()<<"22";
 }
