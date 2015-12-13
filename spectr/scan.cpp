@@ -130,97 +130,98 @@ void Scan::read()
         {
             ftStatus = FT_Read(ftHandle, RxBuffer, RxBytes, &BytesReceived);
             i = 0;
-            //            while (i<BytesReceived)
-            //            {
-            //                switch(cur)
-            //                {
-            //                case 0:
-            //                case 1:
-            //                    if(mutexBuf1.tryLock())
-            //                    {
-
-            //            qDebug()<<"BytesReceived"<<BytesReceived;
-
             while (i<BytesReceived)
             {
-                if(RxBuffer[i]==0)
+                //                switch(cur)
+                //                {
+                //                case 0:
+                //                case 1:
+                //                    if(mutexBuf1.tryLock())
+                //                    {
+
+                //            qDebug()<<"BytesReceived"<<BytesReceived;
+
+                while (i<BytesReceived)
                 {
-                    if(j!=409600)
-                        qDebug()<<j;
+                    if(RxBuffer[i]==0)
+                    {
+                        if(j!=409600)
+                            qDebug()<<j;
+                        j=0;
+                        cur = 2;
+                        lastBuf = 1;
+                        i++;
+                        break;
+                    }
+                    else
+                    {
+                        buf1[j]=RxBuffer[i];
+                        j++;
+                    }
                     i++;
-                    j=0;
-                    cur = 2;
-                    lastBuf = 1;
-                    //                    break;
                 }
-                else
-                {
-                    //                    buf1[j]=RxBuffer[i];
-                    j++; i++;
-                }
+
+
+
+                //                        mutexBuf1.unlock();
+                //                    }
+                //                    else
+                //                        cur = 2;
+                //                    break;
+
+                //                case 2:
+                //                    if(mutexBuf2.tryLock())
+                //                    {
+                //                        while (i<BytesReceived)
+                //                        {
+                //                            if(RxBuffer[i]==0)
+                //                            {
+                //                                qDebug()<<"j"<<j;
+                //                                i++;
+                //                                j=0;
+                //                                cur =3;
+                //                                lastBuf = 2;
+                //                                break;
+                //                            }
+                //                            else
+                //                            {
+                //                                buf2[j]=RxBuffer[i];
+                //                                j++; i++;
+                //                            }
+                //                        }
+                //                        mutexBuf2.unlock();
+                //                    }
+                //                    else
+                //                        cur = 3;
+                //                    break;
+
+                //                case 3:
+                //                    if(mutexBuf3.tryLock())
+                //                    {
+                //                        while (i<BytesReceived)
+                //                        {
+                //                            if(RxBuffer[i]==0)
+                //                            {
+                //                                qDebug()<<"j"<<j;
+                //                                i++;
+                //                                j=0;
+                //                                cur = 1;
+                //                                lastBuf = 3;
+                //                                break;
+                //                            }
+                //                            else
+                //                            {
+                //                                buf3[j]=RxBuffer[i];
+                //                                j++; i++;
+                //                            }
+                //                        }
+                //                        mutexBuf3.unlock();
+                //                    }
+                //                    else
+                //                        cur = 1;
+                //                    break;
+                //                }
             }
-
-
-
-            //                        mutexBuf1.unlock();
-            //                    }
-            //                    else
-            //                        cur = 2;
-            //                    break;
-
-            //                case 2:
-            //                    if(mutexBuf2.tryLock())
-            //                    {
-            //                        while (i<BytesReceived)
-            //                        {
-            //                            if(RxBuffer[i]==0)
-            //                            {
-            //                                qDebug()<<"j"<<j;
-            //                                i++;
-            //                                j=0;
-            //                                cur =3;
-            //                                lastBuf = 2;
-            //                                break;
-            //                            }
-            //                            else
-            //                            {
-            //                                buf2[j]=RxBuffer[i];
-            //                                j++; i++;
-            //                            }
-            //                        }
-            //                        mutexBuf2.unlock();
-            //                    }
-            //                    else
-            //                        cur = 3;
-            //                    break;
-
-            //                case 3:
-            //                    if(mutexBuf3.tryLock())
-            //                    {
-            //                        while (i<BytesReceived)
-            //                        {
-            //                            if(RxBuffer[i]==0)
-            //                            {
-            //                                qDebug()<<"j"<<j;
-            //                                i++;
-            //                                j=0;
-            //                                cur = 1;
-            //                                lastBuf = 3;
-            //                                break;
-            //                            }
-            //                            else
-            //                            {
-            //                                buf3[j]=RxBuffer[i];
-            //                                j++; i++;
-            //                            }
-            //                        }
-            //                        mutexBuf3.unlock();
-            //                    }
-            //                    else
-            //                        cur = 1;
-            //                    break;
-            //                }
-            //            }
         }
     }
     ftStatus = FT_Close(&ftHandle);
@@ -231,5 +232,5 @@ void Scan::process()
     doScan = true;
     QFuture <void> func = QtConcurrent::run(this, &Scan::read);
 
-//          read();
+    //          read();
 }
