@@ -6,13 +6,13 @@
 #include <qt_windows.h>
 #include "plot.h"
 
-#ifdef _cplusplus
-extern "C" {
-#endif
-#include "ftd2xx.h"
-#ifdef _cplusplus
-}
-#endif
+//#ifdef _cplusplus
+//extern "C" {
+//#endif
+//#include "ftd2xx.h"
+//#ifdef _cplusplus
+//}
+//#endif
 
 namespace Ui {
 class MainWindow;
@@ -28,7 +28,7 @@ public:
 
 private:
     Ui::MainWindow *ui;
-    FT_HANDLE ftHandle;
+//    FT_HANDLE ftHandle;
     bool first;
     Scan *scan;
     QTimer *timer;
