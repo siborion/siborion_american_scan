@@ -19,7 +19,7 @@ void Scan::open()
 
 unsigned char *Scan::getBuf()
 {
-    /*
+    qDebug()<<lastBuf;
     switch(lastBuf)
     {
     case 1:
@@ -53,7 +53,6 @@ unsigned char *Scan::getBuf()
         }
         break;
     }
-*/
     return curBuf;
 }
 
@@ -132,95 +131,87 @@ void Scan::read()
             i = 0;
             while (i<BytesReceived)
             {
-                //                switch(cur)
-                //                {
-                //                case 0:
-                //                case 1:
-                //                    if(mutexBuf1.tryLock())
-                //                    {
-
-                //            qDebug()<<"BytesReceived"<<BytesReceived;
-
-                while (i<BytesReceived)
+                switch(cur)
                 {
-                    if(RxBuffer[i]==0)
+                case 0:
+                case 1:
+                    if(mutexBuf1.tryLock())
                     {
-                        if(j!=409600)
-                            qDebug()<<j;
-                        j=0;
-                        cur = 2;
-                        lastBuf = 1;
-                        i++;
-                        break;
+                        while (i<BytesReceived)
+                        {
+                            if(RxBuffer[i]==0)
+                            {
+                                j=0;
+                                cur = 2;
+                                lastBuf = 1;
+                                i++;
+                                break;
+                            }
+                            else
+                            {
+                                buf1[j]=RxBuffer[i];
+                                j++;
+                            }
+                            i++;
+                        }
+                        mutexBuf1.unlock();
                     }
                     else
+                        cur = 2;
+                    break;
+
+                case 2:
+                    if(mutexBuf2.tryLock())
                     {
-                        buf1[j]=RxBuffer[i];
-                        j++;
+                        while (i<BytesReceived)
+                        {
+                            if(RxBuffer[i]==0)
+                            {
+                                j=0;
+                                cur = 3;
+                                lastBuf = 2;
+                                i++;
+                                break;
+                            }
+                            else
+                            {
+                                buf2[j]=RxBuffer[i];
+                                j++;
+                            }
+                            i++;
+                        }
+                        mutexBuf2.unlock();
                     }
-                    i++;
+                    else
+                        cur = 3;
+                    break;
+
+                case 3:
+                    if(mutexBuf3.tryLock())
+                    {
+                        while (i<BytesReceived)
+                        {
+                            if(RxBuffer[i]==0)
+                            {
+                                j=0;
+                                cur = 1;
+                                lastBuf = 3;
+                                i++;
+                                break;
+                            }
+                            else
+                            {
+                                buf3[j]=RxBuffer[i];
+                                j++;
+                            }
+                            i++;
+                        }
+                        mutexBuf3.unlock();
+                    }
+                    else
+                        cur = 1;
+                    break;
                 }
-
-
-
-                //                        mutexBuf1.unlock();
-                //                    }
-                //                    else
-                //                        cur = 2;
-                //                    break;
-
-                //                case 2:
-                //                    if(mutexBuf2.tryLock())
-                //                    {
-                //                        while (i<BytesReceived)
-                //                        {
-                //                            if(RxBuffer[i]==0)
-                //                            {
-                //                                qDebug()<<"j"<<j;
-                //                                i++;
-                //                                j=0;
-                //                                cur =3;
-                //                                lastBuf = 2;
-                //                                break;
-                //                            }
-                //                            else
-                //                            {
-                //                                buf2[j]=RxBuffer[i];
-                //                                j++; i++;
-                //                            }
-                //                        }
-                //                        mutexBuf2.unlock();
-                //                    }
-                //                    else
-                //                        cur = 3;
-                //                    break;
-
-                //                case 3:
-                //                    if(mutexBuf3.tryLock())
-                //                    {
-                //                        while (i<BytesReceived)
-                //                        {
-                //                            if(RxBuffer[i]==0)
-                //                            {
-                //                                qDebug()<<"j"<<j;
-                //                                i++;
-                //                                j=0;
-                //                                cur = 1;
-                //                                lastBuf = 3;
-                //                                break;
-                //                            }
-                //                            else
-                //                            {
-                //                                buf3[j]=RxBuffer[i];
-                //                                j++; i++;
-                //                            }
-                //                        }
-                //                        mutexBuf3.unlock();
-                //                    }
-                //                    else
-                //                        cur = 1;
-                //                    break;
-                //                }
             }
         }
     }

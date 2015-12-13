@@ -13,8 +13,8 @@ MainWindow::MainWindow(QWidget *parent) :
     scan = new Scan();
 
     timer = new QTimer();
-    timer->setInterval(300);
-//    timer->start();
+    timer->setInterval(66);
+    timer->start();
 
     plot = new Plot(this, scan->getBuf());
 

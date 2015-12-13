@@ -34,9 +34,9 @@ public:
     ColorMap():
         QwtLinearColorMap( Qt::darkCyan, Qt::red )
     {
-        addColorStop( 0.1, Qt::cyan );
+        addColorStop( 0.3, Qt::cyan );
         addColorStop( 0.6, Qt::green );
-        addColorStop( 0.95, Qt::yellow );
+        addColorStop( 0.9, Qt::yellow );
     }
 };
 
