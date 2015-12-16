@@ -11,7 +11,7 @@ public:
     RasterData()
     {
         setInterval( Qt::XAxis, QwtInterval(0.0, 1600.0 ) );
-        setInterval( Qt::YAxis, QwtInterval(0.0, 256.0 ) );
+        setInterval( Qt::YAxis, QwtInterval(0.0, 255.0 ) );
         setInterval( Qt::ZAxis, QwtInterval( 0.0, 255.0 ) );
     }
 

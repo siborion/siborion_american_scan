@@ -19,13 +19,12 @@ void Scan::open()
 
 unsigned char *Scan::getBuf()
 {
-    qDebug()<<lastBuf;
     switch(lastBuf)
     {
     case 1:
         if(mutexBuf1.tryLock())
         {
-            for(quint32 i=0; i<NumVectors*NumPoints-1; i++)
+            for(quint32 i=0; i<NumVectors*NumPoints; i++)
             {
                 curBuf[i]=buf1[i];
             }
@@ -35,7 +34,7 @@ unsigned char *Scan::getBuf()
     case 2:
         if(mutexBuf2.tryLock())
         {
-            for(quint32 i=0; i<NumVectors*NumPoints-1; i++)
+            for(quint32 i=0; i<NumVectors*NumPoints; i++)
             {
                 curBuf[i]=buf2[i];
             }
@@ -45,7 +44,7 @@ unsigned char *Scan::getBuf()
     case 3:
         if(mutexBuf3.tryLock())
         {
-            for(quint32 i=0; i<NumVectors*NumPoints-1; i++)
+            for(quint32 i=0; i<NumVectors*NumPoints; i++)
             {
                 curBuf[i]=buf3[i];
             }
@@ -75,6 +74,32 @@ void Scan::read()
     quint32 i;
     quint32 j;
 
+    FT_DEVICE_LIST_INFO_NODE *devInfo;
+    DWORD numDevs;
+    // create the device information list
+    ftStatus = FT_CreateDeviceInfoList(&numDevs);
+    if (ftStatus == FT_OK) {
+        qDebug("Number of devices is %d",numDevs);
+    }
+    if (numDevs > 0) {
+        // allocate storage for list based on numDevs
+        devInfo = (FT_DEVICE_LIST_INFO_NODE*)malloc(sizeof(FT_DEVICE_LIST_INFO_NODE)*numDevs);
+        // get the device information list
+        ftStatus = FT_GetDeviceInfoList(devInfo,&numDevs);
+        if (ftStatus == FT_OK) {
+            for (int i = 0; i < numDevs; i++) {
+                qDebug("Dev %d:", i);
+                qDebug("  Flags=0x%x", devInfo[i].Flags);
+                qDebug("  Type=0x%x", devInfo[i].Type);
+                qDebug("  ID=0x%x", devInfo[i].ID);
+                qDebug("  LocId=0x%x", devInfo[i].LocId);
+                qDebug("  SerialNumber=%s", devInfo[i].SerialNumber);
+                qDebug("    Description=%s", devInfo[i].Description);
+                qDebug("  ftHandle=0x%x", devInfo[i].ftHandle);
+            }
+        }
+    }
+
     UCHAR Mask = 0xFF;
     UCHAR Mode = 0x40; // 0x40 = Single Channel Synchronous 245 FIFO Mode (FT2232H and FT232H devices only)
     ftStatus = FT_Open(0, &ftHandle);
@@ -103,7 +128,7 @@ void Scan::read()
     }
     FT_SetLatencyTimer(ftHandle, 2);
     FT_SetUSBParameters(ftHandle, 0x10000, 0x10000);
-    FT_SetFlowControl(ftHandle, FT_FLOW_NONE, 0x0, 0x0);
+    FT_SetFlowControl(ftHandle, FT_FLOW_RTS_CTS, 0x0, 0x0);
     FT_Purge(ftHandle, FT_PURGE_RX);
     FT_Purge(ftHandle, FT_PURGE_TX);
 
@@ -124,7 +149,7 @@ void Scan::read()
         }
 
         FT_GetQueueStatus(ftHandle, &RxBytes);
-        FT_GetStatus(ftHandle, &RxBytes, &TxBytes, &EventDWord);
+//        FT_GetStatus(ftHandle, &RxBytes, &TxBytes, &EventDWord);
         if(RxBytes>0)
         {
             ftStatus = FT_Read(ftHandle, RxBuffer, RxBytes, &BytesReceived);
@@ -141,6 +166,7 @@ void Scan::read()
                         {
                             if(RxBuffer[i]==0)
                             {
+                                qDebug()<<j;
                                 j=0;
                                 cur = 2;
                                 lastBuf = 1;
@@ -167,6 +193,7 @@ void Scan::read()
                         {
                             if(RxBuffer[i]==0)
                             {
+                                qDebug()<<j;
                                 j=0;
                                 cur = 3;
                                 lastBuf = 2;
@@ -193,6 +220,7 @@ void Scan::read()
                         {
                             if(RxBuffer[i]==0)
                             {
+                                qDebug()<<j;
                                 j=0;
                                 cur = 1;
                                 lastBuf = 3;
@@ -216,6 +244,7 @@ void Scan::read()
         }
     }
     ftStatus = FT_Close(&ftHandle);
+    qDebug()<<"close";
 }
 
 void Scan::process()

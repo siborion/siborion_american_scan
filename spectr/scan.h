@@ -20,7 +20,7 @@ class Scan : public QObject
     Q_OBJECT
 public:
     explicit Scan(QObject *parent = 0);
-    unsigned char curBuf[NumPoints*NumVectors];
+    unsigned char curBuf[NumPoints*NumVectors+1];
     unsigned char *getBuf();
 
 private:
@@ -28,9 +28,9 @@ private:
     bool doScan;
     bool first;
     quint16 test;
-    unsigned char buf1[NumPoints*NumVectors];
-    unsigned char buf2[NumPoints*NumVectors];
-    unsigned char buf3[NumPoints*NumVectors];
+    unsigned char buf1[NumPoints*NumVectors+1];
+    unsigned char buf2[NumPoints*NumVectors+1];
+    unsigned char buf3[NumPoints*NumVectors+1];
     quint8 lastBuf;
 signals:
 
