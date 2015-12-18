@@ -45,7 +45,6 @@ Plot::Plot( QWidget *parent, unsigned char *val ):
     spectrogramData = new RasterData();
     spectrogramData->setData(val);
 
-//    d_spectrogram->setData(new RasterData());
     d_spectrogram->setData(spectrogramData);
     d_spectrogram->attach( this );
 
@@ -135,7 +134,6 @@ void Plot::printPlot()
             renderer.setDiscardFlag( QwtPlotRenderer::DiscardCanvasFrame );
             renderer.setLayoutFlag( QwtPlotRenderer::FrameWithScales );
         }
-
         renderer.renderTo( this, printer );
     }
 }
@@ -147,5 +145,4 @@ void Plot::updateScan()
     d_spectrogram ->invalidateCache();
     d_spectrogram ->itemChanged();
     this->replot();
-//    dataScan1 = val;
 }

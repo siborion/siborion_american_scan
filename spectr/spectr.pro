@@ -27,7 +27,8 @@ CONFIG(release, debug|release)
 SOURCES += main.cpp\
         mainwindow.cpp \
     scan.cpp \
-    plot.cpp
+    plot.cpp \
+    rasterdata.cpp
 
 HEADERS  += mainwindow.h\
     ftd2xx.h \

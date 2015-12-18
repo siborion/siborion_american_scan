@@ -26,7 +26,7 @@ unsigned char *Scan::getBuf()
         {
             for(quint32 i=0; i<NumVectors*NumPoints; i++)
             {
-                curBuf[i]=buf1[i];
+                tmpBuf[i]=buf1[i];
             }
             mutexBuf1.unlock();
         }
@@ -36,7 +36,7 @@ unsigned char *Scan::getBuf()
         {
             for(quint32 i=0; i<NumVectors*NumPoints; i++)
             {
-                curBuf[i]=buf2[i];
+                tmpBuf[i]=buf2[i];
             }
             mutexBuf2.unlock();
         }
@@ -46,12 +46,24 @@ unsigned char *Scan::getBuf()
         {
             for(quint32 i=0; i<NumVectors*NumPoints; i++)
             {
-                curBuf[i]=buf3[i];
+                tmpBuf[i]=buf3[i];
             }
             mutexBuf3.unlock();
         }
         break;
     }
+
+
+
+    for(quint16 point=0; point<NumPoints; point++)
+    {
+        for(quint16 vektor=0; vektor<NumVectors; vektor++)
+        {
+
+        }
+    }
+
+
     return curBuf;
 }
 

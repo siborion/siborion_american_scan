@@ -5,27 +5,12 @@
 
 class RasterData: public QwtRasterData
 {
+
 public:
+    explicit RasterData();
     unsigned char *scanData;
-
-    RasterData()
-    {
-        setInterval( Qt::XAxis, QwtInterval(0.0, 1600.0 ) );
-        setInterval( Qt::YAxis, QwtInterval(0.0, 255.0 ) );
-        setInterval( Qt::ZAxis, QwtInterval( 0.0, 255.0 ) );
-    }
-
-    void setData(unsigned char *val)
-    {
-        scanData = val;
-    }
-
-    virtual double value( double x, double y ) const
-    {
-        double tmp;
-        tmp = scanData[(quint16)x+(quint16)y*1600];
-        return (tmp);
-    }
+    void setData(unsigned char *val);
+    virtual double value( double x, double y ) const;
 };
 
 class ColorMap: public QwtLinearColorMap
