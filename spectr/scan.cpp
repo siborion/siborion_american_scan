@@ -65,8 +65,6 @@ void Scan::close()
 void Scan::read()
 {
     FT_STATUS ftStatus;
-    DWORD EventDWord;
-    DWORD TxBytes;
     DWORD RxBytes;
     DWORD BytesReceived;
     unsigned char RxBuffer[65536];
@@ -149,7 +147,6 @@ void Scan::read()
         }
 
         FT_GetQueueStatus(ftHandle, &RxBytes);
-//        FT_GetStatus(ftHandle, &RxBytes, &TxBytes, &EventDWord);
         if(RxBytes>0)
         {
             ftStatus = FT_Read(ftHandle, RxBuffer, RxBytes, &BytesReceived);
@@ -243,7 +240,10 @@ void Scan::read()
             }
         }
     }
-    ftStatus = FT_Close(&ftHandle);
+    ftStatus = FT_ResetDevice(ftHandle);
+    qDebug()<<"ftStatus"<<ftStatus;
+    ftStatus = FT_Close(ftHandle);
+    qDebug()<<"ftStatus"<<ftStatus;
     qDebug()<<"close";
 }
 
