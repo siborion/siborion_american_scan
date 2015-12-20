@@ -34,7 +34,8 @@ HEADERS  += mainwindow.h\
     ftd2xx.h \
     scan.h \
     plot.h \
-    rasterdata.h
+    rasterdata.h \
+    size.h
 
 FORMS    += mainwindow.ui
 

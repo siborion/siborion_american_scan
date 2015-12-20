@@ -3,8 +3,7 @@
 
 #include <QObject>
 #include <qt_windows.h>
-#define NumVectors 256
-#define NumPoints  1600
+#include "size.h"
 
 #ifdef _cplusplus
 extern "C" {

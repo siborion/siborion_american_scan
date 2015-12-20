@@ -52,18 +52,6 @@ unsigned char *Scan::getBuf()
         }
         break;
     }
-
-
-
-    for(quint16 point=0; point<NumPoints; point++)
-    {
-        for(quint16 vektor=0; vektor<NumVectors; vektor++)
-        {
-
-        }
-    }
-
-
     return curBuf;
 }
 
