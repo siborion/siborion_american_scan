@@ -19,6 +19,7 @@ void Scan::open()
 
 unsigned char *Scan::getBuf()
 {
+//    qDebug()<<"lastBuf"<<lastBuf;
     switch(lastBuf)
     {
     case 1:
@@ -52,7 +53,8 @@ unsigned char *Scan::getBuf()
         }
         break;
     }
-    return curBuf;
+//    return curBuf;
+    return tmpBuf;
 }
 
 void Scan::close()
@@ -163,7 +165,7 @@ void Scan::read()
                         {
                             if(RxBuffer[i]==0)
                             {
-                                qDebug()<<j;
+//                                qDebug()<<j;
                                 j=0;
                                 cur = 2;
                                 lastBuf = 1;
@@ -190,7 +192,7 @@ void Scan::read()
                         {
                             if(RxBuffer[i]==0)
                             {
-                                qDebug()<<j;
+//                                qDebug()<<j;
                                 j=0;
                                 cur = 3;
                                 lastBuf = 2;
@@ -217,7 +219,7 @@ void Scan::read()
                         {
                             if(RxBuffer[i]==0)
                             {
-                                qDebug()<<j;
+//                                qDebug()<<j;
                                 j=0;
                                 cur = 1;
                                 lastBuf = 3;

@@ -34,7 +34,6 @@ void RasterData::setData(unsigned char *val)
 
     for(qint16 vektor=(-128); vektor<=(128); vektor++)
     {
-
         for(quint16 point=50; point<NumPoints; point++)
         {
             curDeg =  Degrees;
@@ -46,7 +45,7 @@ void RasterData::setData(unsigned char *val)
             curX = ((cos(curDeg))*point);
             curY = ((sin(curDeg))*point)+128;
             mapData[(quint16)curX][(quint16)curY] = &scanData[point + (vektor+128)*1600];
-            scanData[point + (vektor+128)*1600] = 150;
+            scanData[point + (vektor+128)*1600] = 50;
         }
     }
     qDebug()<<"setData1";
@@ -54,12 +53,12 @@ void RasterData::setData(unsigned char *val)
 
 double RasterData::value( double x, double y ) const
 {
-    if((x==0)&&(y==0))
-            qDebug()<<"satrt";
+//    if((x==0)&&(y==0))
+//            qDebug()<<"satrt";
 
-    //    double tmp;
-    //    tmp = scanData[(quint16)x+(quint16)y*1600];
-    //    return (tmp);
+//double tmp;
+//tmp = scanData[(quint16)x+(quint16)y*1600];
+//return (tmp);
     //    qDebug()<<"satrt";
     //    qDebug()<<"x"<<x<<"y"<<y;
 

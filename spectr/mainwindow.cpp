@@ -131,8 +131,8 @@ void MainWindow::on_pbClose_clicked()
 
 void MainWindow::reDraw()
 {
-//    unsigned char *p;
-//    p = scan->getBuf();
+    unsigned char *p;
+    p = scan->getBuf();
     plot->updateScan();
 //    plot->replot();
 //    plot->update();
