@@ -14,7 +14,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     timer = new QTimer();
     timer->setInterval(66);
-    timer->start();
+//    timer->start();
 
     plot = new Plot(this, scan->getBuf());
 

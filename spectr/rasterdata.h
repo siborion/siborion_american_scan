@@ -14,6 +14,8 @@ public:
     void setData(unsigned char *val);
     virtual double value( double x, double y ) const;
     unsigned char zero;
+    unsigned char zero1;
+    unsigned char zero2;
     unsigned char one;
 };
 

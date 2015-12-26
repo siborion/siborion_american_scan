@@ -24,6 +24,8 @@ void RasterData::setData(unsigned char *val)
     scanData = val;
     double curDeg, curX, curY;
     zero = 0;
+    zero1 = 128;
+    zero2 = 255;
 
 
     for(quint16 x=0; x<=(NumPoints); x++)
@@ -33,6 +35,9 @@ void RasterData::setData(unsigned char *val)
             mapData[x][y] = &zero;
         }
     }
+    mapData[1][1] = &zero;
+    mapData[2][1] = &zero1;
+    mapData[2][2] = &zero2;
 
     for(qint16 vektor=(-128); vektor<=(128); vektor++)
     {
@@ -55,75 +60,49 @@ void RasterData::setData(unsigned char *val)
 
 double RasterData::value( double x, double y ) const
 {
-    double dRet=0;
-    double dRetX, dRetY;
+    double h1=1,h2=1,h3=qSin(45*PI/180)*0.5,h1d,h2d,h3d, xh3, yh3;
+    double vesH1, vesH2, vesH3;
     double pX, pY;
     quint16 curX, curY;
-    double dist[4];
-//       if(mapData[(quint16)x][(quint16)y]==&zero)
-//            return 0;
-//        else
-//            return (*mapData[(quint16)x][(quint16)y]);
 
-/*
-    if((x>=1)&&(x<1600)&&(y>=1)&&(y<255))
-    {
-        dRet  = *mapData[qRound(x)][qRound(y)];
-        dRet += *mapData[qRound(x)][qRound(y+1)];
-        dRet += *mapData[qRound(x+1)][qRound(y+1)];
-        dRet += *mapData[qRound(x)][qRound(y-1)];
-        dRet += *mapData[qRound(x-1)][qRound(y)];
-        dRet /= 5;
-    }
-*/
+    double dRet=0;
 
-    curX = qFloor(x);
-    curY = qFloor(y);
+    if (((x>1599)||(y>255)))
+        return dRet;
 
+    curX = (x);
+    curY = (y);
     pX = x-curX;
     pY = y-curY;
 
-/*
-    dist[0] = 1-qSqrt(qPow(ostatokX,2)+qPow(ostatokY,2));
-    dist[1] = 1-qSqrt(qPow(ostatokX,2)+qPow(1-ostatokY,2));
-    dist[2] = 1-qSqrt(qPow(1-ostatokX,2)+qPow(1-ostatokY,2));
-    dist[3] = 1-qSqrt(qPow(1-ostatokX,2)+qPow(ostatokY,2));
+    xh3 = (1-pY+pX)/2;
+    yh3 = 1-xh3;
 
+    h1d = pY;
+    h2d = pX;
+    h3d = qSin(45*PI/180)*yh3;
 
-    return ((dist[0]>0?(*mapData[curX  ][curY  ])*dist[0]:0)+
-            (dist[1]>0?(*mapData[curX  ][curY+1])*dist[1]:0)+
-            (dist[2]>0?(*mapData[curX+1][curY+1])*dist[2]:0)+
-            (dist[3]>0?(*mapData[curX+1][curY  ])*dist[3]:0));
-*/
-/*
+    if(pX>=pY)
+    {
 
-    curX = x;
-    curY = y;
-
-    ostatokX = x-curX;
-    ostatokY = y-curY;
-
-
-    if((x<1599)&&(y<254))
-{
-    dRetX  = *mapData[curX] [curY]*(1-ostatokX);
-    dRetX += *mapData[curX+1][curY]*(ostatokX);
-
-    dRetY = *mapData[curX] [curY]*(1-ostatokY);
-    dRetY += *mapData[curX][curY+1]*(ostatokX);
-
-    dRet = dRetX+dRetY;
-
-    dRet /=2;
-}
-
-*/
-
-
-
-
+        vesH1 = h1d;
+        vesH2 = 1 - h2d;
+        vesH3 = (h3-h3d)/h3;
+        dRet  = (*mapData[curX+0][curY+0])*vesH2;
+        dRet += (*mapData[curX+1][curY+1])*vesH1;
+        dRet += (*mapData[curX+1][curY+0])*vesH3;
+    }
+    else
+    {
+//        h3d = yh3*qSin(45*PI/180);
+        vesH1 = 1 - h1d;
+        vesH2 = h2d;
+        vesH3 = (h3d-h3)/h3;
+        dRet  = (*mapData[curX+1][curY+1])*vesH2;
+        dRet += (*mapData[curX+0][curY+0])*vesH1;
+        dRet += (*mapData[curX+0][curY+1])*vesH3;
+    }
     return (dRet);
-
 }
 
 
