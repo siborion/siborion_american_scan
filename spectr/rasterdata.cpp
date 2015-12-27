@@ -23,10 +23,11 @@ void RasterData::setData(unsigned char *val)
 {
     scanData = val;
     double curDeg, curX, curY;
-    zero = 0;
+    zero = -127;
     zero1 = 128;
     zero2 = 255;
 
+    qDebug()<<"setData0";
 
     for(quint16 x=0; x<=(NumPoints); x++)
     {
@@ -35,11 +36,11 @@ void RasterData::setData(unsigned char *val)
             mapData[x][y] = &zero;
         }
     }
-    mapData[1][1] = &zero;
-    mapData[2][1] = &zero1;
-    mapData[2][2] = &zero2;
+//    mapData[1][1] = &zero;
+//    mapData[2][1] = &zero1;
+//    mapData[2][2] = &zero2;
 
-    for(qint16 vektor=(-128); vektor<=(128); vektor++)
+    for(qint16 vektor=(-128); vektor<=(127); vektor++)
     {
         for(quint16 point=50; point<=NumPoints; point++)
         {
@@ -52,7 +53,7 @@ void RasterData::setData(unsigned char *val)
             curX = ((cos(curDeg))*point);
             curY = ((sin(curDeg))*point)+128;
             mapData[(quint16)curX][(quint16)curY] = &scanData[point + (vektor+128)*1600];
-            scanData[point + (vektor+128)*1600] = 250;
+            scanData[point + (vektor+128)*1600] = qAbs(vektor);
         }
     }
     qDebug()<<"setData1";
@@ -84,7 +85,6 @@ double RasterData::value( double x, double y ) const
 
     if(pX>=pY)
     {
-
         vesH1 = h1d;
         vesH2 = 1 - h2d;
         vesH3 = (h3-h3d)/h3;
@@ -94,7 +94,6 @@ double RasterData::value( double x, double y ) const
     }
     else
     {
-//        h3d = yh3*qSin(45*PI/180);
         vesH1 = 1 - h1d;
         vesH2 = h2d;
         vesH3 = (h3d-h3)/h3;

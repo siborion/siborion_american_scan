@@ -32,10 +32,13 @@ private:
     bool first;
     Scan *scan;
     QTimer *timer;
+    QTimer *timerSec;
     Plot *plot;
+    quint8 countFps;
 
 private slots:
     void reDraw();
+    void fps();
 //    void on_pbOpen_clicked();
 //    void on_pbRead_clicked();
 //    void on_pbClose_clicked();

@@ -13,8 +13,13 @@ MainWindow::MainWindow(QWidget *parent) :
     scan = new Scan();
 
     timer = new QTimer();
-    timer->setInterval(66);
-//    timer->start();
+    timer->setInterval(50);
+    timer->start();
+
+    timerSec = new QTimer();
+    timerSec->setInterval(1000);
+    timerSec->start();
+
 
     plot = new Plot(this, scan->getBuf());
 
@@ -27,7 +32,8 @@ MainWindow::MainWindow(QWidget *parent) :
 //    connect(ui->pbOpen,SIGNAL(clicked()),scan,SLOT(open()));
     connect(ui->pbRead,SIGNAL(clicked()),scan,SLOT(process()));
     connect(ui->pbClose,SIGNAL(clicked()),scan,SLOT(close()));
-    connect(timer, SIGNAL(timeout()),SLOT(reDraw()));
+    connect(timer,    SIGNAL(timeout()),SLOT(reDraw()));
+    connect(timerSec, SIGNAL(timeout()),SLOT(fps()));
     connect(this,SIGNAL(destroyed()), scan, SLOT(close()));
 //    connect(ui->pbOpen,SIGNAL(clicked()),scan,SLOT(open()));
 
@@ -134,10 +140,14 @@ void MainWindow::reDraw()
     unsigned char *p;
     p = scan->getBuf();
     plot->updateScan();
-//    plot->replot();
-//    plot->update();
+    countFps++;
 }
 
+void MainWindow::fps()
+{
+    ui->label->setText(QString("fps: %1").arg(countFps));
+    countFps = 0;
+}
 
 MainWindow::~MainWindow()
 {

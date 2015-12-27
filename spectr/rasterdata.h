@@ -23,11 +23,12 @@ class ColorMap: public QwtLinearColorMap
 {
 public:
     ColorMap():
-        QwtLinearColorMap( Qt::darkCyan, Qt::red )
+//        QwtLinearColorMap( Qt::darkCyan, Qt::red )
+        QwtLinearColorMap( Qt::black, Qt::white )
     {
-        addColorStop( 0.3, Qt::cyan );
-        addColorStop( 0.6, Qt::green );
-        addColorStop( 0.9, Qt::yellow );
+//        addColorStop( 0.3, Qt::cyan );
+//        addColorStop( 0.6, Qt::green );
+//        addColorStop( 0.9, Qt::yellow );
     }
 };
 
