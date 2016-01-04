@@ -39,6 +39,7 @@ private:
 private slots:
     void reDraw();
     void fps();
+    void setGain();
 //    void on_pbOpen_clicked();
 //    void on_pbRead_clicked();
 //    void on_pbClose_clicked();

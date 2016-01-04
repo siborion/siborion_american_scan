@@ -256,3 +256,21 @@ void Scan::process()
 
     //          read();
 }
+
+void Scan::setGain(unsigned char gain)
+{
+    FT_STATUS ftStatus;
+    unsigned char TxBuffer[3];
+    DWORD TxBytes;
+    DWORD BytesTransmited;
+
+    TxBytes = 3;
+    TxBuffer[0] = 0x80;
+    TxBuffer[1] = gain>>8;
+    TxBuffer[2] = gain&0x0f;
+    ftStatus = FT_Write(ftHandle, TxBuffer, TxBytes, &BytesTransmited);
+
+    qDebug()<<"WRITE"<<ftStatus;
+
+}
+

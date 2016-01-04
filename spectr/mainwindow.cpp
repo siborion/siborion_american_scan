@@ -35,6 +35,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(timer,    SIGNAL(timeout()),SLOT(reDraw()));
     connect(timerSec, SIGNAL(timeout()),SLOT(fps()));
     connect(this,SIGNAL(destroyed()), scan, SLOT(close()));
+    connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(setGain()));
+
 //    connect(ui->pbOpen,SIGNAL(clicked()),scan,SLOT(open()));
 
 //    thread->start();
@@ -147,6 +149,11 @@ void MainWindow::fps()
 {
     ui->label->setText(QString("fps: %1").arg(countFps));
     countFps = 0;
+}
+
+void MainWindow::setGain()
+{
+    scan->setGain(ui->lineEdit->text().toInt());
 }
 
 MainWindow::~MainWindow()

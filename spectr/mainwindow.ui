@@ -17,10 +17,24 @@
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
      <layout class="QGridLayout" name="gridLayout_2">
+      <item row="0" column="2">
+       <widget class="QPushButton" name="pbClose">
+        <property name="text">
+         <string>Close</string>
+        </property>
+       </widget>
+      </item>
       <item row="0" column="0">
        <widget class="QPushButton" name="pbOpen">
         <property name="text">
          <string>Open</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="3">
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>TextLabel</string>
         </property>
        </widget>
       </item>
@@ -31,17 +45,13 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="2">
-       <widget class="QPushButton" name="pbClose">
-        <property name="text">
-         <string>Close</string>
-        </property>
-       </widget>
+      <item row="0" column="4">
+       <widget class="QLineEdit" name="lineEdit"/>
       </item>
-      <item row="0" column="3">
-       <widget class="QLabel" name="label">
+      <item row="0" column="5">
+       <widget class="QPushButton" name="pushButton">
         <property name="text">
-         <string>TextLabel</string>
+         <string>PushButton</string>
         </property>
        </widget>
       </item>

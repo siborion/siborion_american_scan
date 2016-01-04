@@ -2,13 +2,18 @@
 #include <math.h>
 #include <qmath.h>
 
+//0x80
+//0x0h
+//0x0l
+
+
 const double PI = 4.*atan(1.);
 
 RasterData::RasterData() :
     QwtRasterData()
 {
     setInterval( Qt::XAxis, QwtInterval(0.0, 1600.0 ) );
-    setInterval( Qt::YAxis, QwtInterval(0.0, 255.0 ) );
+    setInterval( Qt::YAxis, QwtInterval(0.0, 1600.0 ) );
     setInterval( Qt::ZAxis, QwtInterval(0.0, 255.0 ) );
     for(quint16 x=0; x<NumPoints; x++)
     {
@@ -51,7 +56,7 @@ void RasterData::setData(unsigned char *val)
             curDeg *= PI;
             curDeg /= 180;
             curX = ((cos(curDeg))*point);
-            curY = ((sin(curDeg))*point)+128;
+            curY = ((sin(curDeg))*point)+800;
             mapData[(quint16)curX][(quint16)curY] = &scanData[point + (vektor+128)*1600];
             scanData[point + (vektor+128)*1600] = qAbs(vektor);
         }
