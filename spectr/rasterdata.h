@@ -10,7 +10,7 @@ class RasterData: public QwtRasterData
 public:
     explicit RasterData();
     unsigned char *scanData;
-    unsigned char *mapData[NumPoints][1600];
+    unsigned char *mapData[1601][1601];
     void setData(unsigned char *val);
     virtual double value( double x, double y ) const;
     unsigned char zero;
