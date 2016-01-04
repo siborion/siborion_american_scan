@@ -26,6 +26,7 @@ RasterData::RasterData() :
 
 void RasterData::setData(unsigned char *val)
 {
+    qint16 vektor;
     scanData = val;
     double curDeg, curX, curY;
     zero = -127;
@@ -44,24 +45,38 @@ void RasterData::setData(unsigned char *val)
 
     qDebug()<<"setData01";
 
-//    mapData[1][1] = &zero;
-//    mapData[2][1] = &zero1;
-//    mapData[2][2] = &zero2;
+    //    mapData[1][1] = &zero;
+    //    mapData[2][1] = &zero1;
+    //    mapData[2][2] = &zero2;
 
-    for(qint16 vektor=(-128); vektor<=(127); vektor++)
+    for(double dVektor=(-128); dVektor<=(127); dVektor+=0.1)
     {
         for(quint16 point=50; point<=NumPoints; point++)
         {
             curDeg =  Degrees;
             curDeg /= 2;
-            curDeg *= vektor;
+            curDeg *= dVektor;
             curDeg /= 128;
             curDeg *= PI;
             curDeg /= 180;
             curX = ((cos(curDeg))*point);
             curY = ((sin(curDeg))*point)+800;
-            mapData[(quint16)curX][(quint16)curY] = &scanData[point + (vektor+128)*1600];
-            scanData[point + (vektor+128)*1600] = 200;//qAbs(vektor);
+
+            vektor = qRound(dVektor);
+
+            mapData[qRound(curX)][qRound(curY)] = &scanData[point + (vektor+128)*1600];
+            scanData[point + (vektor+128)*1600] = 128;//qAbs(vektor);
+
+            if(((vektor==0)&&(point==1590))||((vektor==120)&&(point==1590)))
+            {
+//                mapData[qRound(curX)][qRound(curY)+1] = &scanData[point + (vektor+128)*1600];
+//                mapData[qRound(curX)][qRound(curY)+2] = &scanData[point + (vektor+128)*1600];
+//                mapData[qRound(curX)][qRound(curY)+3] = &scanData[point + (vektor+128)*1600];
+//                mapData[qRound(curX)][qRound(curY)-1] = &scanData[point + (vektor+128)*1600];
+//                mapData[qRound(curX)][qRound(curY)-2] = &scanData[point + (vektor+128)*1600];
+//                mapData[qRound(curX)][qRound(curY)-3] = &scanData[point + (vektor+128)*1600];
+                scanData[point + (vektor+128)*1600] = 250;//qAbs(vektor);
+            }
         }
     }
     qDebug()<<"setData1";
