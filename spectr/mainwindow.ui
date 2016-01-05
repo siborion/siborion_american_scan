@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>361</width>
+    <width>421</width>
     <height>585</height>
    </rect>
   </property>
@@ -17,10 +17,23 @@
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
      <layout class="QGridLayout" name="gridLayout_2">
-      <item row="0" column="2">
-       <widget class="QPushButton" name="pbClose">
+      <item row="0" column="1">
+       <widget class="QPushButton" name="pbRead">
         <property name="text">
-         <string>Close</string>
+         <string>Read</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="4">
+       <widget class="QSlider" name="horizontalSlider">
+        <property name="maximum">
+         <number>255</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="tickPosition">
+         <enum>QSlider::TicksBelow</enum>
         </property>
        </widget>
       </item>
@@ -38,20 +51,10 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="1">
-       <widget class="QPushButton" name="pbRead">
+      <item row="0" column="2">
+       <widget class="QPushButton" name="pbClose">
         <property name="text">
-         <string>Read</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="4">
-       <widget class="QLineEdit" name="lineEdit"/>
-      </item>
-      <item row="0" column="5">
-       <widget class="QPushButton" name="pushButton">
-        <property name="text">
-         <string>PushButton</string>
+         <string>Close</string>
         </property>
        </widget>
       </item>
@@ -64,7 +67,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>361</width>
+     <width>421</width>
      <height>18</height>
     </rect>
    </property>

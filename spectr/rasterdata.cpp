@@ -67,7 +67,7 @@ void RasterData::setData(unsigned char *val)
             mapData[qRound(curX)][qRound(curY)] = &scanData[point + (vektor+128)*1600];
             scanData[point + (vektor+128)*1600] = 128;//qAbs(vektor);
 
-            if(((vektor==0)&&(point==1590))||((vektor==120)&&(point==1590)))
+//            if(((vektor==0)&&(point==1590))||((vektor==120)&&(point==1590)))
             {
 //                mapData[qRound(curX)][qRound(curY)+1] = &scanData[point + (vektor+128)*1600];
 //                mapData[qRound(curX)][qRound(curY)+2] = &scanData[point + (vektor+128)*1600];
@@ -75,7 +75,7 @@ void RasterData::setData(unsigned char *val)
 //                mapData[qRound(curX)][qRound(curY)-1] = &scanData[point + (vektor+128)*1600];
 //                mapData[qRound(curX)][qRound(curY)-2] = &scanData[point + (vektor+128)*1600];
 //                mapData[qRound(curX)][qRound(curY)-3] = &scanData[point + (vektor+128)*1600];
-                scanData[point + (vektor+128)*1600] = 250;//qAbs(vektor);
+                scanData[point + (vektor+128)*1600] = qAbs(vektor);
             }
         }
     }
@@ -89,13 +89,18 @@ double RasterData::value( double x, double y ) const
     double pX, pY;
     quint16 curX, curY;
 
-    double dRet=0;
+    double dRet=128;
 
-    if (((x>1599)||(y>1599)))
-        return dRet;
 
     curX = (x);
     curY = (y);
+
+    if (((curX>1599)||(curY>1599)))
+        return dRet;
+
+    if((qAbs(curY-800)*1.9)>(curX))
+         return dRet;
+
     pX = x-curX;
     pY = y-curY;
 

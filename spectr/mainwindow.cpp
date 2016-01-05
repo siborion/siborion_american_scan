@@ -35,7 +35,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(timer,    SIGNAL(timeout()),SLOT(reDraw()));
     connect(timerSec, SIGNAL(timeout()),SLOT(fps()));
     connect(this,SIGNAL(destroyed()), scan, SLOT(close()));
-    connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(setGain()));
+//    connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(setGain()));
+    connect(ui->horizontalSlider, SIGNAL(valueChanged(int)), this, SLOT(setGain(int)));
 
 //    connect(ui->pbOpen,SIGNAL(clicked()),scan,SLOT(open()));
 
@@ -151,9 +152,10 @@ void MainWindow::fps()
     countFps = 0;
 }
 
-void MainWindow::setGain()
+void MainWindow::setGain(int val)
 {
-    scan->setGain(ui->lineEdit->text().toInt());
+//    scan->setGain(ui->lineEdit->text().toInt());
+    scan->setGain(val);
 }
 
 MainWindow::~MainWindow()
