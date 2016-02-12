@@ -40,6 +40,10 @@ INPUT(
 ./release/dialogserial.o
 ./release/delegate_lens.o
 ./release/printplot.o
+./release/scena.o
+./release/bscan.o
+./release/bscantools.o
+./release/bscancontrol.o
 ./release/qrc_imagesRpt.o
 ./release/qrc_scan.o
 ./release/moc_chart.o
@@ -75,4 +79,8 @@ INPUT(
 ./release/moc_dialogserial.o
 ./release/moc_delegate_lens.o
 ./release/moc_printplot.o
+./release/moc_scena.o
+./release/moc_bscan.o
+./release/moc_bscantools.o
+./release/moc_bscancontrol.o
 );

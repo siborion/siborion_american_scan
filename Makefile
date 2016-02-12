@@ -179,6 +179,7 @@ Makefile: scan.pro C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/win32-g++/qmake.conf C:
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/lib/qtmain.prl \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/lib/Qt5Core.prl \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/lib/Qt5PrintSupport.prl \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/lib/Qt5OpenGL.prl \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/lib/Qt5Widgets.prl \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/lib/Qt5Script.prl \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/lib/Qt5Xml.prl \
@@ -307,6 +308,7 @@ scan.pro:
 C:/Qt/Qt5.3.1/5.3/mingw482_32/lib/qtmain.prl:
 C:/Qt/Qt5.3.1/5.3/mingw482_32/lib/Qt5Core.prl:
 C:/Qt/Qt5.3.1/5.3/mingw482_32/lib/Qt5PrintSupport.prl:
+C:/Qt/Qt5.3.1/5.3/mingw482_32/lib/Qt5OpenGL.prl:
 C:/Qt/Qt5.3.1/5.3/mingw482_32/lib/Qt5Widgets.prl:
 C:/Qt/Qt5.3.1/5.3/mingw482_32/lib/Qt5Script.prl:
 C:/Qt/Qt5.3.1/5.3/mingw482_32/lib/Qt5Xml.prl:

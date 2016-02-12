@@ -36,6 +36,8 @@ public:
 Plot::Plot( QWidget *parent, unsigned char *val ):
     QwtPlot( parent )
 {
+//    this->setFixedHeight(470);
+//    this->setFixedWidth (470);
     d_spectrogram = new QwtPlotSpectrogram();
     d_spectrogram->setRenderThreadCount( 0 ); // use system specific thread count
 
@@ -62,6 +64,7 @@ Plot::Plot( QWidget *parent, unsigned char *val ):
 
     setAxisScale( QwtPlot::yRight, zInterval.minValue(), zInterval.maxValue() );
     enableAxis( QwtPlot::yRight );
+    this->enableAxis(QwtPlot::yLeft, false);
 
     plotLayout()->setAlignCanvasToScales( true );
     replot();

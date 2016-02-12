@@ -5,6 +5,7 @@
 #include "scan.h"
 #include <qt_windows.h>
 #include "plot.h"
+#include <QGLWidget>
 
 //#ifdef _cplusplus
 //extern "C" {

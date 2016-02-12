@@ -10,6 +10,15 @@ class Plot: public QwtPlot
 public:
     explicit Plot( QWidget * = NULL, unsigned char *val = 0 );
 
+    QSize sizeHint() const
+    {
+        return QSize(10, heightForWidth(10));
+    }
+    int heightForWidth(int w) const
+    {
+        return w / 1;
+    }
+
 public Q_SLOTS:
     void showContour( bool on );
     void showSpectrogram( bool on );

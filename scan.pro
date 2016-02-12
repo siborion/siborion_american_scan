@@ -9,7 +9,7 @@ QMAKE_CXXFLAGS += -std=gnu++11
 QT       += sql
 QT       += core gui
 QT	 += serialport
-#QT       += multimedia
+QT       += opengl
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -66,7 +66,11 @@ SOURCES += main.cpp\
     listresult.cpp \
     dialogserial.cpp \
     delegate_lens.cpp \
-    printplot.cpp
+    printplot.cpp \
+    ../OpenGl/opengl/scena.cpp \
+    bscan.cpp \
+    bscantools.cpp \
+    bscancontrol.cpp
 
 HEADERS  += mainwindow.h \
     bases.h \
@@ -101,7 +105,11 @@ HEADERS  += mainwindow.h \
     ftd2xx.h \
     dialogserial.h \
     delegate_lens.h \
-    printplot.h
+    printplot.h \
+    ../OpenGl/opengl/scena.h \
+    bscan.h \
+    bscantools.h \
+    bscancontrol.h
 
 FORMS    += mainwindow.ui \
     dialog_doctor.ui \
@@ -111,7 +119,10 @@ FORMS    += mainwindow.ui \
     bigviewnum.ui \
     calculator_patient.ui \
     listresult.ui \
-    dialogserial.ui
+    dialogserial.ui \
+    bscan.ui \
+    bscantools.ui \
+    bscancontrol.ui
 
 RESOURCES += \
     scan.qrc

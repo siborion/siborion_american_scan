@@ -7,6 +7,7 @@
 #include "scanbase.h"
 #include "curparam.h"
 #include "device.h"
+#include "bscan.h"
 #include "parcer.h"
 #include "typedef.h"
 #include <QMainWindow>
@@ -33,6 +34,7 @@ private:
     CurParam *curParam;
     Device *device;
     Parcer *parcer;
+    Bscan  *bscan;
     void moveWindowToCenter();
 
 public slots:
