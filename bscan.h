@@ -5,6 +5,7 @@
 #include "d:/_SVN/SibOrion/OpenGl/Opengl/scena.h"
 #include "bscantools.h"
 #include "bscancontrol.h"
+#include "bscanusb.h"
 
 namespace Ui {
 class Bscan;
@@ -23,6 +24,7 @@ private:
     scena *pScena;
     BScanTools   *bScanTools;
     BScanControl *bScanControl;
+    BScanUSB     *bScanUSB;
 
 };
 

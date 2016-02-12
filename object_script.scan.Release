@@ -44,6 +44,7 @@ INPUT(
 ./release/bscan.o
 ./release/bscantools.o
 ./release/bscancontrol.o
+./release/bscanusb.o
 ./release/qrc_imagesRpt.o
 ./release/qrc_scan.o
 ./release/moc_chart.o
@@ -83,4 +84,5 @@ INPUT(
 ./release/moc_bscan.o
 ./release/moc_bscantools.o
 ./release/moc_bscancontrol.o
+./release/moc_bscanusb.o
 );

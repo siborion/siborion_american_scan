@@ -44,6 +44,7 @@ INPUT(
 ./debug/bscan.o
 ./debug/bscantools.o
 ./debug/bscancontrol.o
+./debug/bscanusb.o
 ./debug/qrc_imagesRpt.o
 ./debug/qrc_scan.o
 ./debug/moc_chart.o
@@ -83,4 +84,5 @@ INPUT(
 ./debug/moc_bscan.o
 ./debug/moc_bscantools.o
 ./debug/moc_bscancontrol.o
+./debug/moc_bscanusb.o
 );

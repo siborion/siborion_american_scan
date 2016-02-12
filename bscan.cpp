@@ -9,6 +9,8 @@ Bscan::Bscan(QWidget *parent) :
     pScena = new scena(600);
     bScanTools   = new BScanTools();
     bScanControl = new BScanControl();
+    bScanUSB = new BScanUSB();
+
     ui->horizontalLayout->addWidget(bScanTools);
     ui->horizontalLayout->addWidget(pScena);
     ui->horizontalLayout->addWidget(bScanControl);

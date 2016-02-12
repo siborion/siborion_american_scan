@@ -70,7 +70,8 @@ SOURCES += main.cpp\
     ../OpenGl/opengl/scena.cpp \
     bscan.cpp \
     bscantools.cpp \
-    bscancontrol.cpp
+    bscancontrol.cpp \
+    bscanusb.cpp
 
 HEADERS  += mainwindow.h \
     bases.h \
@@ -109,7 +110,8 @@ HEADERS  += mainwindow.h \
     ../OpenGl/opengl/scena.h \
     bscan.h \
     bscantools.h \
-    bscancontrol.h
+    bscancontrol.h \
+    bscanusb.h
 
 FORMS    += mainwindow.ui \
     dialog_doctor.ui \

@@ -87,7 +87,8 @@ SOURCES       = ../CommonFiles/CommonClasses.cpp \
 		../OpenGl/opengl/scena.cpp \
 		bscan.cpp \
 		bscantools.cpp \
-		bscancontrol.cpp debug/qrc_imagesRpt.cpp \
+		bscancontrol.cpp \
+		bscanusb.cpp debug/qrc_imagesRpt.cpp \
 		debug/qrc_scan.cpp \
 		debug/moc_chart.cpp \
 		debug/moc_Barcode.cpp \
@@ -125,7 +126,8 @@ SOURCES       = ../CommonFiles/CommonClasses.cpp \
 		debug/moc_scena.cpp \
 		debug/moc_bscan.cpp \
 		debug/moc_bscantools.cpp \
-		debug/moc_bscancontrol.cpp
+		debug/moc_bscancontrol.cpp \
+		debug/moc_bscanusb.cpp
 OBJECTS       = debug/CommonClasses.o \
 		debug/chart.o \
 		debug/Barcode.o \
@@ -171,6 +173,7 @@ OBJECTS       = debug/CommonClasses.o \
 		debug/bscan.o \
 		debug/bscantools.o \
 		debug/bscancontrol.o \
+		debug/bscanusb.o \
 		debug/qrc_imagesRpt.o \
 		debug/qrc_scan.o \
 		debug/moc_chart.o \
@@ -209,7 +212,8 @@ OBJECTS       = debug/CommonClasses.o \
 		debug/moc_scena.o \
 		debug/moc_bscan.o \
 		debug/moc_bscantools.o \
-		debug/moc_bscancontrol.o
+		debug/moc_bscancontrol.o \
+		debug/moc_bscanusb.o
 
 DIST          = 
 QMAKE_TARGET  = scan
@@ -250,7 +254,7 @@ dist:
 	$(ZIP) scan.zip $(SOURCES) $(DIST) scan.pro C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/features/spec_pre.prf C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/qdevice.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/features/device_config.prf C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/common/shell-unix.conf C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/qconfig.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_axbase.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_axbase_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_axcontainer.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_axcontainer_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_axserver.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_axserver_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_bluetooth.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_bluetooth_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_bootstrap_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_clucene_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_concurrent.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_concurrent_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_core.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_core_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_declarative.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_declarative_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_designer.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_designer_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_designercomponents_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_enginio.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_enginio_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_gui.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_gui_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_help.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_help_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_multimedia.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_multimedia_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_multimediawidgets.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_multimediawidgets_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_network.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_network_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_nfc.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_nfc_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_opengl.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_opengl_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_openglextensions.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_openglextensions_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_platformsupport_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_positioning.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_positioning_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_printsupport.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_printsupport_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_qml.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_qml_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_qmldevtools_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_qmltest.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_qmltest_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_qtmultimediaquicktools_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_quick.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_quick_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_quickparticles_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_quickwidgets.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_quickwidgets_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_script.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_script_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_scripttools.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_scripttools_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_sensors.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_sensors_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_serialport.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_serialport_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_sql.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_sql_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_svg.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_svg_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_testlib.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_testlib_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_uitools.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_uitools_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_webkit.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_webkit_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_webkitwidgets.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_webkitwidgets_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_websockets.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_websockets_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_widgets.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_widgets_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_winextras.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_winextras_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_xml.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_xml_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_xmlpatterns.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_xmlpatterns_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/features/qt_functions.prf C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/features/qt_config.prf C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/features/win32/qt_config.prf C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/win32-g++/qmake.conf C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/features/spec_post.prf C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/features/exclusive_builds.prf C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/features/default_pre.prf C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/features/win32/default_pre.prf qwt.prf ../QtRPT/config.pri ../CommonFiles/CommonFiles_QtRpt.pri ../QtRPT/QtRPT.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/features/resolve_config.prf C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/features/exclusive_builds_post.prf C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/features/default_post.prf C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/features/build_pass.prf C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/features/win32/rtti.prf C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/features/precompile_header.prf C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/features/warn_on.prf C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/features/qt.prf C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/features/resources.prf C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/features/moc.prf C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/features/win32/opengl.prf C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/features/uic.prf C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/features/win32/windows.prf C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/features/testcase_targets.prf C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/features/exceptions.prf C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/features/yacc.prf C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/features/lex.prf scan.pro ../QtRPT/imagesRpt.qrc scan.qrc C:/Qt/Qt5.3.1/5.3/mingw482_32/lib/qtmaind.prl C:/Qt/Qt5.3.1/5.3/mingw482_32/lib/Qt5Cored.prl C:/Qt/Qt5.3.1/5.3/mingw482_32/lib/Qt5PrintSupportd.prl C:/Qt/Qt5.3.1/5.3/mingw482_32/lib/Qt5OpenGLd.prl C:/Qt/Qt5.3.1/5.3/mingw482_32/lib/Qt5Widgetsd.prl C:/Qt/Qt5.3.1/5.3/mingw482_32/lib/Qt5Scriptd.prl C:/Qt/Qt5.3.1/5.3/mingw482_32/lib/Qt5Xmld.prl C:/Qt/Qt5.3.1/5.3/mingw482_32/lib/Qt5Concurrentd.prl C:/Qt/Qt5.3.1/5.3/mingw482_32/lib/Qt5SerialPortd.prl C:/Qt/Qt5.3.1/5.3/mingw482_32/lib/Qt5Sqld.prl C:/Qt/Qt5.3.1/5.3/mingw482_32/lib/Qt5Guid.prl  NO_PCH_SOURCES RESOURCES HEADERS SOURCES OBJECTIVE_SOURCES FORMS YACCSOURCES YACCSOURCES LEXSOURCES 
 
 clean: compiler_clean 
-	-$(DEL_FILE) debug/CommonClasses.o debug/chart.o debug/Barcode.o debug/qtrpt.o debug/RptSql.o debug/RptFieldObject.o debug/RptBandObject.o debug/RptPageObject.o debug/main.o debug/mainwindow.o debug/bases.o debug/adjview.o debug/scanbase.o debug/dialog_doctor.o debug/dialog_lens.o debug/dialog_patient.o debug/basefill.o debug/combo_delegate.o debug/delegate.o debug/plot.o debug/sampleinterval.o debug/measure.o debug/bigviewnumcur.o debug/key_radio.o debug/sampletable.o debug/velosity.o debug/scanbutton.o debug/bigviewnum.o debug/device.o debug/curparam.o debug/parcer.o debug/parserfront.o debug/calculator.o debug/formula.o debug/calc.o debug/calculator_patient.o debug/leaddzero.o debug/listresult.o debug/dialogserial.o debug/delegate_lens.o debug/printplot.o debug/scena.o debug/bscan.o debug/bscantools.o debug/bscancontrol.o debug/qrc_imagesRpt.o debug/qrc_scan.o debug/moc_chart.o debug/moc_Barcode.o debug/moc_qtrpt.o debug/moc_RptSql.o debug/moc_mainwindow.o debug/moc_bases.o debug/moc_adjview.o debug/moc_scanbase.o debug/moc_dialog_doctor.o debug/moc_dialog_lens.o debug/moc_dialog_patient.o debug/moc_basefill.o debug/moc_delegate.o debug/moc_combo_delegate.o debug/moc_plot.o debug/moc_measure.o debug/moc_bigviewnumcur.o debug/moc_key_radio.o debug/moc_sampletable.o debug/moc_velosity.o debug/moc_scanbutton.o debug/moc_bigviewnum.o debug/moc_device.o debug/moc_curparam.o debug/moc_parcer.o debug/moc_calculator.o debug/moc_formula.o debug/moc_calculator_patient.o debug/moc_leaddzero.o debug/moc_listresult.o debug/moc_dialogserial.o debug/moc_delegate_lens.o debug/moc_printplot.o debug/moc_scena.o debug/moc_bscan.o debug/moc_bscantools.o debug/moc_bscancontrol.o
+	-$(DEL_FILE) debug/CommonClasses.o debug/chart.o debug/Barcode.o debug/qtrpt.o debug/RptSql.o debug/RptFieldObject.o debug/RptBandObject.o debug/RptPageObject.o debug/main.o debug/mainwindow.o debug/bases.o debug/adjview.o debug/scanbase.o debug/dialog_doctor.o debug/dialog_lens.o debug/dialog_patient.o debug/basefill.o debug/combo_delegate.o debug/delegate.o debug/plot.o debug/sampleinterval.o debug/measure.o debug/bigviewnumcur.o debug/key_radio.o debug/sampletable.o debug/velosity.o debug/scanbutton.o debug/bigviewnum.o debug/device.o debug/curparam.o debug/parcer.o debug/parserfront.o debug/calculator.o debug/formula.o debug/calc.o debug/calculator_patient.o debug/leaddzero.o debug/listresult.o debug/dialogserial.o debug/delegate_lens.o debug/printplot.o debug/scena.o debug/bscan.o debug/bscantools.o debug/bscancontrol.o debug/bscanusb.o debug/qrc_imagesRpt.o debug/qrc_scan.o debug/moc_chart.o debug/moc_Barcode.o debug/moc_qtrpt.o debug/moc_RptSql.o debug/moc_mainwindow.o debug/moc_bases.o debug/moc_adjview.o debug/moc_scanbase.o debug/moc_dialog_doctor.o debug/moc_dialog_lens.o debug/moc_dialog_patient.o debug/moc_basefill.o debug/moc_delegate.o debug/moc_combo_delegate.o debug/moc_plot.o debug/moc_measure.o debug/moc_bigviewnumcur.o debug/moc_key_radio.o debug/moc_sampletable.o debug/moc_velosity.o debug/moc_scanbutton.o debug/moc_bigviewnum.o debug/moc_device.o debug/moc_curparam.o debug/moc_parcer.o debug/moc_calculator.o debug/moc_formula.o debug/moc_calculator_patient.o debug/moc_leaddzero.o debug/moc_listresult.o debug/moc_dialogserial.o debug/moc_delegate_lens.o debug/moc_printplot.o debug/moc_scena.o debug/moc_bscan.o debug/moc_bscantools.o debug/moc_bscancontrol.o debug/moc_bscanusb.o
 
 distclean: clean 
 	-$(DEL_FILE) $(DESTDIR_TARGET)
@@ -287,9 +291,9 @@ debug/qrc_scan.cpp: scan.qrc \
 		pic/pacient.png
 	C:/Qt/Qt5.3.1/5.3/mingw482_32/bin/rcc.exe -name scan scan.qrc -o debug/qrc_scan.cpp
 
-compiler_moc_header_make_all: debug/moc_chart.cpp debug/moc_Barcode.cpp debug/moc_qtrpt.cpp debug/moc_RptSql.cpp debug/moc_mainwindow.cpp debug/moc_bases.cpp debug/moc_adjview.cpp debug/moc_scanbase.cpp debug/moc_dialog_doctor.cpp debug/moc_dialog_lens.cpp debug/moc_dialog_patient.cpp debug/moc_basefill.cpp debug/moc_delegate.cpp debug/moc_combo_delegate.cpp debug/moc_plot.cpp debug/moc_measure.cpp debug/moc_bigviewnumcur.cpp debug/moc_key_radio.cpp debug/moc_sampletable.cpp debug/moc_velosity.cpp debug/moc_scanbutton.cpp debug/moc_bigviewnum.cpp debug/moc_device.cpp debug/moc_curparam.cpp debug/moc_parcer.cpp debug/moc_calculator.cpp debug/moc_formula.cpp debug/moc_calculator_patient.cpp debug/moc_leaddzero.cpp debug/moc_listresult.cpp debug/moc_dialogserial.cpp debug/moc_delegate_lens.cpp debug/moc_printplot.cpp debug/moc_scena.cpp debug/moc_bscan.cpp debug/moc_bscantools.cpp debug/moc_bscancontrol.cpp
+compiler_moc_header_make_all: debug/moc_chart.cpp debug/moc_Barcode.cpp debug/moc_qtrpt.cpp debug/moc_RptSql.cpp debug/moc_mainwindow.cpp debug/moc_bases.cpp debug/moc_adjview.cpp debug/moc_scanbase.cpp debug/moc_dialog_doctor.cpp debug/moc_dialog_lens.cpp debug/moc_dialog_patient.cpp debug/moc_basefill.cpp debug/moc_delegate.cpp debug/moc_combo_delegate.cpp debug/moc_plot.cpp debug/moc_measure.cpp debug/moc_bigviewnumcur.cpp debug/moc_key_radio.cpp debug/moc_sampletable.cpp debug/moc_velosity.cpp debug/moc_scanbutton.cpp debug/moc_bigviewnum.cpp debug/moc_device.cpp debug/moc_curparam.cpp debug/moc_parcer.cpp debug/moc_calculator.cpp debug/moc_formula.cpp debug/moc_calculator_patient.cpp debug/moc_leaddzero.cpp debug/moc_listresult.cpp debug/moc_dialogserial.cpp debug/moc_delegate_lens.cpp debug/moc_printplot.cpp debug/moc_scena.cpp debug/moc_bscan.cpp debug/moc_bscantools.cpp debug/moc_bscancontrol.cpp debug/moc_bscanusb.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) debug/moc_chart.cpp debug/moc_Barcode.cpp debug/moc_qtrpt.cpp debug/moc_RptSql.cpp debug/moc_mainwindow.cpp debug/moc_bases.cpp debug/moc_adjview.cpp debug/moc_scanbase.cpp debug/moc_dialog_doctor.cpp debug/moc_dialog_lens.cpp debug/moc_dialog_patient.cpp debug/moc_basefill.cpp debug/moc_delegate.cpp debug/moc_combo_delegate.cpp debug/moc_plot.cpp debug/moc_measure.cpp debug/moc_bigviewnumcur.cpp debug/moc_key_radio.cpp debug/moc_sampletable.cpp debug/moc_velosity.cpp debug/moc_scanbutton.cpp debug/moc_bigviewnum.cpp debug/moc_device.cpp debug/moc_curparam.cpp debug/moc_parcer.cpp debug/moc_calculator.cpp debug/moc_formula.cpp debug/moc_calculator_patient.cpp debug/moc_leaddzero.cpp debug/moc_listresult.cpp debug/moc_dialogserial.cpp debug/moc_delegate_lens.cpp debug/moc_printplot.cpp debug/moc_scena.cpp debug/moc_bscan.cpp debug/moc_bscantools.cpp debug/moc_bscancontrol.cpp
+	-$(DEL_FILE) debug/moc_chart.cpp debug/moc_Barcode.cpp debug/moc_qtrpt.cpp debug/moc_RptSql.cpp debug/moc_mainwindow.cpp debug/moc_bases.cpp debug/moc_adjview.cpp debug/moc_scanbase.cpp debug/moc_dialog_doctor.cpp debug/moc_dialog_lens.cpp debug/moc_dialog_patient.cpp debug/moc_basefill.cpp debug/moc_delegate.cpp debug/moc_combo_delegate.cpp debug/moc_plot.cpp debug/moc_measure.cpp debug/moc_bigviewnumcur.cpp debug/moc_key_radio.cpp debug/moc_sampletable.cpp debug/moc_velosity.cpp debug/moc_scanbutton.cpp debug/moc_bigviewnum.cpp debug/moc_device.cpp debug/moc_curparam.cpp debug/moc_parcer.cpp debug/moc_calculator.cpp debug/moc_formula.cpp debug/moc_calculator_patient.cpp debug/moc_leaddzero.cpp debug/moc_listresult.cpp debug/moc_dialogserial.cpp debug/moc_delegate_lens.cpp debug/moc_printplot.cpp debug/moc_scena.cpp debug/moc_bscan.cpp debug/moc_bscantools.cpp debug/moc_bscancontrol.cpp debug/moc_bscanusb.cpp
 debug/moc_chart.cpp: C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtGui/QPainter \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtGui/qpainter.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qnamespace.h \
@@ -1029,6 +1033,7 @@ debug/moc_mainwindow.cpp: bases.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtGui/QMouseEvent \
 		bscantools.h \
 		bscancontrol.h \
+		bscanusb.h \
 		parcer.h \
 		parserfront.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/QMainWindow \
@@ -5223,6 +5228,8 @@ debug/moc_bscan.cpp: C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/QWidget \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtGui/QMouseEvent \
 		bscantools.h \
 		bscancontrol.h \
+		bscanusb.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/QObject \
 		bscan.h
 	'C:\Qt\Qt5.3.1\5.3\mingw482_32\bin\moc.exe' $(DEFINES) -D__GNUC__ -DWIN32 -IC:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/win32-g++ -ID:/_SVN/SibOrion/siborion_american_scan -IC:/Qt/qwt-6.1.0/include -ID:/_SVN/SibOrion/CommonFiles -ID:/_SVN/SibOrion/QtRPT -IC:/Qt/Qt5.3.1/5.3/mingw482_32/include -IC:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtPrintSupport -IC:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtOpenGL -IC:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets -IC:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtScript -IC:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtXml -IC:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtConcurrent -IC:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtSerialPort -IC:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtSql -IC:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtGui -IC:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore bscan.h -o debug/moc_bscan.cpp
 
@@ -5431,6 +5438,58 @@ debug/moc_bscancontrol.cpp: C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/QWid
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtGui/qtouchdevice.h \
 		bscancontrol.h
 	'C:\Qt\Qt5.3.1\5.3\mingw482_32\bin\moc.exe' $(DEFINES) -D__GNUC__ -DWIN32 -IC:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/win32-g++ -ID:/_SVN/SibOrion/siborion_american_scan -IC:/Qt/qwt-6.1.0/include -ID:/_SVN/SibOrion/CommonFiles -ID:/_SVN/SibOrion/QtRPT -IC:/Qt/Qt5.3.1/5.3/mingw482_32/include -IC:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtPrintSupport -IC:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtOpenGL -IC:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets -IC:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtScript -IC:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtXml -IC:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtConcurrent -IC:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtSerialPort -IC:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtSql -IC:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtGui -IC:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore bscancontrol.h -o debug/moc_bscancontrol.cpp
+
+debug/moc_bscanusb.cpp: C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/QObject \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qobject.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qobjectdefs.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qnamespace.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qglobal.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qconfig.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qfeatures.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qsystemdetection.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qprocessordetection.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qcompilerdetection.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qtypeinfo.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qtypetraits.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qsysinfo.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qlogging.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qflags.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qatomic.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qbasicatomic.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qatomic_bootstrap.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qgenericatomic.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qatomic_msvc.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qatomic_armv7.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qatomic_armv6.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qatomic_armv5.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qatomic_ia64.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qatomic_mips.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qatomic_x86.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qatomic_cxx11.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qatomic_gcc.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qatomic_unix.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qglobalstatic.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qmutex.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qnumeric.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qobjectdefs_impl.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qstring.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qchar.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qbytearray.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qrefcount.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qarraydata.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qstringbuilder.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qlist.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qalgorithms.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qiterator.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qcoreevent.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qscopedpointer.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qmetatype.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qvarlengtharray.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qcontainerfwd.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qisenum.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qobject_impl.h \
+		bscanusb.h
+	'C:\Qt\Qt5.3.1\5.3\mingw482_32\bin\moc.exe' $(DEFINES) -D__GNUC__ -DWIN32 -IC:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/win32-g++ -ID:/_SVN/SibOrion/siborion_american_scan -IC:/Qt/qwt-6.1.0/include -ID:/_SVN/SibOrion/CommonFiles -ID:/_SVN/SibOrion/QtRPT -IC:/Qt/Qt5.3.1/5.3/mingw482_32/include -IC:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtPrintSupport -IC:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtOpenGL -IC:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets -IC:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtScript -IC:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtXml -IC:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtConcurrent -IC:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtSerialPort -IC:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtSql -IC:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtGui -IC:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore bscanusb.h -o debug/moc_bscanusb.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -6991,6 +7050,7 @@ debug/main.o: main.cpp C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/QApplicat
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtGui/QMouseEvent \
 		bscantools.h \
 		bscancontrol.h \
+		bscanusb.h \
 		parcer.h \
 		parserfront.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/QMainWindow \
@@ -7282,6 +7342,7 @@ debug/mainwindow.o: mainwindow.cpp mainwindow.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtGui/QMouseEvent \
 		bscantools.h \
 		bscancontrol.h \
+		bscanusb.h \
 		parcer.h \
 		parserfront.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/QMainWindow \
@@ -12522,6 +12583,8 @@ debug/bscan.o: bscan.cpp bscan.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtGui/QMouseEvent \
 		bscantools.h \
 		bscancontrol.h \
+		bscanusb.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/QObject \
 		ui_bscan.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/QVariant \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/QAction \
@@ -12856,6 +12919,58 @@ debug/bscancontrol.o: bscancontrol.cpp bscancontrol.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/QSpacerItem
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug/bscancontrol.o bscancontrol.cpp
 
+debug/bscanusb.o: bscanusb.cpp bscanusb.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/QObject \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qobject.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qobjectdefs.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qnamespace.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qglobal.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qconfig.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qfeatures.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qsystemdetection.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qprocessordetection.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qcompilerdetection.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qtypeinfo.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qtypetraits.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qsysinfo.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qlogging.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qflags.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qatomic.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qbasicatomic.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qatomic_bootstrap.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qgenericatomic.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qatomic_msvc.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qatomic_armv7.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qatomic_armv6.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qatomic_armv5.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qatomic_ia64.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qatomic_mips.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qatomic_x86.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qatomic_cxx11.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qatomic_gcc.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qatomic_unix.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qglobalstatic.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qmutex.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qnumeric.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qobjectdefs_impl.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qstring.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qchar.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qbytearray.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qrefcount.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qarraydata.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qstringbuilder.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qlist.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qalgorithms.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qiterator.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qcoreevent.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qscopedpointer.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qmetatype.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qvarlengtharray.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qcontainerfwd.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qisenum.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qobject_impl.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug/bscanusb.o bscanusb.cpp
+
 debug/qrc_imagesRpt.o: debug/qrc_imagesRpt.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug/qrc_imagesRpt.o debug/qrc_imagesRpt.cpp
 
@@ -12972,6 +13087,9 @@ debug/moc_bscantools.o: debug/moc_bscantools.cpp
 
 debug/moc_bscancontrol.o: debug/moc_bscancontrol.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug/moc_bscancontrol.o debug/moc_bscancontrol.cpp
+
+debug/moc_bscanusb.o: debug/moc_bscanusb.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug/moc_bscanusb.o debug/moc_bscanusb.cpp
 
 ####### Install
 
