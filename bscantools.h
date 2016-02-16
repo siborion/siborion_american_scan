@@ -17,6 +17,12 @@ public:
 
 private:
     Ui::BScanTools *ui;
+
+signals:
+    void doScan(void);
+
+private slots:
+    void on_pbScan_clicked();
 };
 
 #endif // BSCANTOOLS_H

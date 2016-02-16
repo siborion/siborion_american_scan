@@ -24,7 +24,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_3">
+      <widget class="QPushButton" name="pbScan">
        <property name="text">
         <string>Scan</string>
        </property>

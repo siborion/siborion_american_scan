@@ -71,7 +71,8 @@ SOURCES += main.cpp\
     bscan.cpp \
     bscantools.cpp \
     bscancontrol.cpp \
-    bscanusb.cpp
+    bscanusb.cpp \
+    bscanhard.cpp
 
 HEADERS  += mainwindow.h \
     bases.h \
@@ -111,7 +112,8 @@ HEADERS  += mainwindow.h \
     bscan.h \
     bscantools.h \
     bscancontrol.h \
-    bscanusb.h
+    bscanusb.h \
+    bscanhard.h
 
 FORMS    += mainwindow.ui \
     dialog_doctor.ui \

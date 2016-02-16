@@ -6,6 +6,7 @@
 #include "bscantools.h"
 #include "bscancontrol.h"
 #include "bscanusb.h"
+#include "BScanHard.h"
 
 namespace Ui {
 class Bscan;
@@ -24,7 +25,7 @@ private:
     scena *pScena;
     BScanTools   *bScanTools;
     BScanControl *bScanControl;
-    BScanUSB     *bScanUSB;
+    BScanHard     *bScanHard;
 
 };
 
