@@ -26,6 +26,7 @@ private:
     BScanTools   *bScanTools;
     BScanControl *bScanControl;
     BScanHard     *bScanHard;
+    unsigned char *buf;
 
 };
 

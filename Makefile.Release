@@ -12694,7 +12694,8 @@ release/bscan.o: bscan.cpp bscan.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/qstyle.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/qtabbar.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/qtabwidget.h \
-		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/qrubberband.h
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/qrubberband.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/QDebug
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release/bscan.o bscan.cpp
 
 release/bscantools.o: bscantools.cpp bscantools.h \

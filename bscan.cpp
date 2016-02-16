@@ -1,21 +1,26 @@
 #include "bscan.h"
 #include "ui_bscan.h"
+#include <QDebug>
 
 Bscan::Bscan(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Bscan)
 {
     ui->setupUi(this);
-    pScena = new scena(600);
+
     bScanTools   = new BScanTools();
     bScanControl = new BScanControl();
     bScanHard = new BScanHard();
+    buf = bScanHard->getBuf();
+    qDebug()<<buf[0]<<buf[1]<<buf[2];
+
+    pScena = new scena(600, buf);
 
     ui->horizontalLayout->addWidget(bScanTools);
     ui->horizontalLayout->addWidget(pScena);
     ui->horizontalLayout->addWidget(bScanControl);
 
-    bScanHard->getBuf();
+
 
     connect(bScanTools, SIGNAL(doScan()), bScanHard, SLOT(process()));
 }
