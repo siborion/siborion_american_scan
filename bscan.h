@@ -27,7 +27,15 @@ private:
     BScanControl *bScanControl;
     BScanHard     *bScanHard;
     unsigned char *buf;
+    QTimer *timer;
+    QTimer *timerSec;
+    quint8 fps;
+    bool   run;
 
+private slots:
+    void scenaRefr();
+    void doSec();
+    void softRun();
 };
 
 #endif // BSCAN_H

@@ -17,7 +17,7 @@
    <item row="0" column="0">
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-      <widget class="QPushButton" name="pushButton_2">
+      <widget class="QPushButton" name="pbOS">
        <property name="text">
         <string>OS</string>
        </property>
@@ -27,6 +27,20 @@
       <widget class="QPushButton" name="pbScan">
        <property name="text">
         <string>Scan</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pbStop">
+       <property name="text">
+        <string>Stop</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="lFPS">
+       <property name="text">
+        <string>FPS:</string>
        </property>
       </widget>
      </item>

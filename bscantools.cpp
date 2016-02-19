@@ -16,6 +16,21 @@ void BScanTools::on_pbScan_clicked()
     qDebug()<<"doScan";
 }
 
+void BScanTools::on_pbStop_clicked()
+{
+    emit doStop();
+    qDebug()<<"doStop";
+}
+
+void BScanTools::on_pbOS_clicked()
+{
+    emit doOS();
+}
+
+void BScanTools::setFps(quint8 val)
+{
+    ui->lFPS->setText(QString("FPS:%1").arg(val));
+}
 
 BScanTools::~BScanTools()
 {
