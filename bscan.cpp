@@ -32,8 +32,8 @@ Bscan::Bscan(QWidget *parent) :
     connect(timer,      SIGNAL(timeout()),           SLOT(scenaRefr()));
     connect(timerSec,   SIGNAL(timeout()),           SLOT(doSec()));
 
-    timer->start();
-    timerSec->start();
+//    timer->start();
+//    timerSec->start();
 }
 
 void Bscan::scenaRefr()
@@ -49,11 +49,11 @@ void Bscan::doSec()
     fps = 0;
 }
 
-void Bscan::softRun()
+void Bscan::setRun()
 {
     run ^= 1;
-    bScanHard->softRun(run);
-    qDebug()<<"softRun"<<run;
+    bScanHard->setRun(run);
+//    qDebug()<<"softRun"<<run;
 }
 
 

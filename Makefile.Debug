@@ -1039,6 +1039,7 @@ debug/moc_mainwindow.cpp: bases.h \
 		bscancontrol.h \
 		bscanusb.h \
 		BScanHard.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/QMutex \
 		bscansize.h \
 		parcer.h \
 		parserfront.h \
@@ -5237,6 +5238,7 @@ debug/moc_bscan.cpp: C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/QWidget \
 		bscanusb.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/QObject \
 		BScanHard.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/QMutex \
 		bscansize.h \
 		ftd2xx.h \
 		bscan.h
@@ -5549,6 +5551,10 @@ debug/moc_bscanhard.cpp: C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/QObject \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qcontainerfwd.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qisenum.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qobject_impl.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/QTimer \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qtimer.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qbasictimer.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/QMutex \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qt_windows.h \
 		bscansize.h \
 		ftd2xx.h \
@@ -7116,6 +7122,7 @@ debug/main.o: main.cpp C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/QApplicat
 		bscancontrol.h \
 		bscanusb.h \
 		BScanHard.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/QMutex \
 		bscansize.h \
 		parcer.h \
 		parserfront.h \
@@ -7410,6 +7417,7 @@ debug/mainwindow.o: mainwindow.cpp mainwindow.h \
 		bscancontrol.h \
 		bscanusb.h \
 		BScanHard.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/QMutex \
 		bscansize.h \
 		parcer.h \
 		parserfront.h \
@@ -12654,6 +12662,7 @@ debug/bscan.o: bscan.cpp bscan.h \
 		bscanusb.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/QObject \
 		BScanHard.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/QMutex \
 		bscansize.h \
 		ftd2xx.h \
 		ui_bscan.h \
@@ -13094,6 +13103,10 @@ debug/bscanhard.o: bscanhard.cpp BScanHard.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qcontainerfwd.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qisenum.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qobject_impl.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/QTimer \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qtimer.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qbasictimer.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/QMutex \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qt_windows.h \
 		bscansize.h \
 		ftd2xx.h \
@@ -13167,7 +13180,6 @@ debug/bscanhard.o: bscanhard.cpp BScanHard.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qabstracteventdispatcher.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qeventloop.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qabstractnativeeventfilter.h \
-		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qbasictimer.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qcoreapplication.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qmath.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qmetaobject.h \
@@ -13178,7 +13190,6 @@ debug/bscanhard.o: bscanhard.cpp BScanHard.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qsignalmapper.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qsocketnotifier.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qsystemsemaphore.h \
-		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qtimer.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qtranslator.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qwineventnotifier.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qmimedatabase.h \
@@ -13249,8 +13260,7 @@ debug/bscanhard.o: bscanhard.cpp BScanHard.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtConcurrent/qtconcurrentrun.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtConcurrent/qtconcurrentrunbase.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtConcurrent/qtconcurrentstoredfunctioncall.h \
-		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtConcurrent/qtconcurrentversion.h \
-		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/QMutex
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtConcurrent/qtconcurrentversion.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug/bscanhard.o bscanhard.cpp
 
 debug/qrc_imagesRpt.o: debug/qrc_imagesRpt.cpp 

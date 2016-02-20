@@ -35,7 +35,7 @@ private:
 private slots:
     void scenaRefr();
     void doSec();
-    void softRun();
+    void setRun();
 };
 
 #endif // BSCAN_H
