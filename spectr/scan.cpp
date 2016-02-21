@@ -15,7 +15,51 @@ Scan::Scan(QObject *parent) :
 
 void Scan::open()
 {
+    FT_STATUS ftStatus;
+    unsigned char TxBuffer[10];
+    DWORD TxBytes;
+    DWORD BytesTransmited;
+
+    DWORD RxBytes;
+    DWORD BytesReceived;
+    unsigned char RxBuffer[65536];
+
+
+
+    FT_GetQueueStatus(ftHandle, &RxBytes);
+    FT_Read(ftHandle, RxBuffer, RxBytes, &BytesReceived);
+
+
+
+    TxBytes = 3;
+    TxBuffer[0] = 0x81;
+    TxBuffer[1] = 0;
+    TxBuffer[2] = 1;
+    TxBuffer[3] = 0x00;
+    TxBuffer[4] = 0x05;
+    ftStatus = FT_Write(ftHandle, TxBuffer, TxBytes, &BytesTransmited);
+
+    qDebug()<<"open"<<ftStatus;
 }
+
+void Scan::inv()
+{
+    FT_STATUS ftStatus;
+    unsigned char TxBuffer[10];
+    DWORD TxBytes;
+    DWORD BytesTransmited;
+
+    TxBytes = 3;
+    TxBuffer[0] = 0x81;
+    TxBuffer[1] = 0;
+    TxBuffer[2] = 0;
+    TxBuffer[3] = 0x00;
+    TxBuffer[4] = 0x00;
+    ftStatus = FT_Write(ftHandle, TxBuffer, TxBytes, &BytesTransmited);
+
+    qDebug()<<"inv"<<ftStatus;
+}
+
 
 unsigned char *Scan::getBuf()
 {
@@ -54,6 +98,9 @@ unsigned char *Scan::getBuf()
         break;
     }
 //    return curBuf;
+//    qDebug()<<"---"<<tmpBuf[0]<<(tmpBuf[1]^0xff)<<tmpBuf[2]<<(tmpBuf[3]^0xff)<<(tmpBuf[4]^0xff)<<tmpBuf[5]<<(tmpBuf[6]^0xff)<<(tmpBuf[7]^0xff)<<(tmpBuf[8]^0xff)<<(tmpBuf[9]^0xff)<<(tmpBuf[10]^0xff);
+//    qDebug()<<"---"<<tmpBuf[0]<<(tmpBuf[1])<<tmpBuf[2]<<(tmpBuf[3])<<(tmpBuf[4])<<tmpBuf[5]<<(tmpBuf[6])<<(tmpBuf[7])<<(tmpBuf[8])<<(tmpBuf[9])<<(tmpBuf[10]);
+
     return tmpBuf;
 }
 
@@ -165,7 +212,7 @@ void Scan::read()
                         {
                             if(RxBuffer[i]==0)
                             {
-//                                qDebug()<<j;
+                                qDebug()<<j;
                                 j=0;
                                 cur = 2;
                                 lastBuf = 1;
@@ -192,7 +239,7 @@ void Scan::read()
                         {
                             if(RxBuffer[i]==0)
                             {
-//                                qDebug()<<j;
+                                qDebug()<<j;
                                 j=0;
                                 cur = 3;
                                 lastBuf = 2;
@@ -219,7 +266,7 @@ void Scan::read()
                         {
                             if(RxBuffer[i]==0)
                             {
-//                                qDebug()<<j;
+                                qDebug()<<j;
                                 j=0;
                                 cur = 1;
                                 lastBuf = 3;

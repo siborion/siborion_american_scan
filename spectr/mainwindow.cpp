@@ -29,7 +29,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
 //    connect(thread, SIGNAL(started()), scan, SLOT(process()));
 
-//    connect(ui->pbOpen,SIGNAL(clicked()),scan,SLOT(open()));
+    connect(ui->pbOpen,SIGNAL(clicked()),scan,SLOT(open()));
+    connect(ui->pbInv, SIGNAL(clicked()),scan,SLOT(inv()));
+
+
     connect(ui->pbRead,SIGNAL(clicked()),scan,SLOT(process()));
     connect(ui->pbClose,SIGNAL(clicked()),scan,SLOT(close()));
     connect(timer,    SIGNAL(timeout()),SLOT(reDraw()));

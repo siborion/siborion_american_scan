@@ -7,19 +7,16 @@ BScanTools::BScanTools(QWidget *parent) :
     ui(new Ui::BScanTools)
 {
     ui->setupUi(this);
-//    connect(ui->pbScan,SLOT(click()),
 }
 
 void BScanTools::on_pbScan_clicked()
 {
     emit doScan();
-    qDebug()<<"doScan";
 }
 
 void BScanTools::on_pbStop_clicked()
 {
     emit doStop();
-    qDebug()<<"doStop";
 }
 
 void BScanTools::on_pbOS_clicked()
@@ -30,6 +27,47 @@ void BScanTools::on_pbOS_clicked()
 void BScanTools::setFps(quint8 val)
 {
     ui->lFPS->setText(QString("FPS:%1").arg(val));
+}
+
+void BScanTools::rechecketPb(QGroupBox *gb, QPushButton *pb)
+{
+    QObjectList ol;
+    QObject *ob;
+    ol = gb->children();
+    foreach (ob, ol)
+    {
+        QPushButton *d = dynamic_cast<QPushButton*>(ob);
+        if(d)
+        {
+            if(d!=pb)
+                d->setChecked(false);
+        }
+    }
+}
+
+void BScanTools::on_pbClear_clicked()
+{
+    rechecketPb(ui->gbAnnotation, ui->pbClear);
+}
+
+void BScanTools::on_pbText_clicked()
+{
+    rechecketPb(ui->gbAnnotation, ui->pbText);
+}
+
+void BScanTools::on_pbCallper_clicked()
+{
+    rechecketPb(ui->gbAnnotation, ui->pbCallper);
+}
+
+void BScanTools::on_pbAngle_clicked()
+{
+    rechecketPb(ui->gbAnnotation, ui->pbAngle);
+}
+
+void BScanTools::on_pbArrow_clicked()
+{
+    rechecketPb(ui->gbAnnotation, ui->pbArrow);
 }
 
 BScanTools::~BScanTools()

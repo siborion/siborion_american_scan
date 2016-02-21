@@ -5234,6 +5234,13 @@ debug/moc_bscan.cpp: C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/QWidget \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qmath.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtGui/QMouseEvent \
 		bscantools.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/QGroupBox \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/qgroupbox.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/qframe.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/QPushButton \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/qpushbutton.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/qabstractbutton.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtGui/qicon.h \
 		bscancontrol.h \
 		bscanusb.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/QObject \
@@ -5344,6 +5351,13 @@ debug/moc_bscantools.cpp: C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/QWidge
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qfiledevice.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtGui/qvector2d.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtGui/qtouchdevice.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/QGroupBox \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/qgroupbox.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/qframe.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/QPushButton \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/qpushbutton.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/qabstractbutton.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtGui/qicon.h \
 		bscantools.h
 	'C:\Qt\Qt5.3.1\5.3\mingw482_32\bin\moc.exe' $(DEFINES) -D__GNUC__ -DWIN32 -IC:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/win32-g++ -ID:/_SVN/SibOrion/siborion_american_scan -IC:/Qt/qwt-6.1.0/include -ID:/_SVN/SibOrion/CommonFiles -ID:/_SVN/SibOrion/QtRPT -IC:/Qt/Qt5.3.1/5.3/mingw482_32/include -IC:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtPrintSupport -IC:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtOpenGL -IC:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets -IC:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtScript -IC:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtXml -IC:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtConcurrent -IC:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtSerialPort -IC:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtSql -IC:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtGui -IC:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore bscantools.h -o debug/moc_bscantools.cpp
 
@@ -12658,6 +12672,13 @@ debug/bscan.o: bscan.cpp bscan.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qmath.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtGui/QMouseEvent \
 		bscantools.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/QGroupBox \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/qgroupbox.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/qframe.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/QPushButton \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/qpushbutton.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/qabstractbutton.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtGui/qicon.h \
 		bscancontrol.h \
 		bscanusb.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/QObject \
@@ -12669,7 +12690,6 @@ debug/bscan.o: bscan.cpp bscan.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/QVariant \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/QAction \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/qaction.h \
-		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtGui/qicon.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/qactiongroup.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/QApplication \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/qapplication.h \
@@ -12690,7 +12710,6 @@ debug/bscan.o: bscan.cpp bscan.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/qheaderview.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/qabstractitemview.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/qabstractscrollarea.h \
-		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/qframe.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qabstractitemmodel.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qitemselectionmodel.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/qabstractitemdelegate.h \
@@ -12808,11 +12827,17 @@ debug/bscantools.o: bscantools.cpp bscantools.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qfiledevice.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtGui/qvector2d.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtGui/qtouchdevice.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/QGroupBox \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/qgroupbox.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/qframe.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/QPushButton \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/qpushbutton.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/qabstractbutton.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtGui/qicon.h \
 		ui_bscantools.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/QVariant \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/QAction \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/qaction.h \
-		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtGui/qicon.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/qactiongroup.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/QApplication \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/qapplication.h \
@@ -12832,7 +12857,6 @@ debug/bscantools.o: bscantools.cpp bscantools.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/qheaderview.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/qabstractitemview.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/qabstractscrollarea.h \
-		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/qframe.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qabstractitemmodel.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qitemselectionmodel.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/qabstractitemdelegate.h \
@@ -12848,9 +12872,6 @@ debug/bscantools.o: bscantools.cpp bscantools.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/qrubberband.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/QLabel \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/qlabel.h \
-		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/QPushButton \
-		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/qpushbutton.h \
-		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/qabstractbutton.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/QSpacerItem \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/QVBoxLayout \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/QDebug

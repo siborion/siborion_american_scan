@@ -2,6 +2,8 @@
 #define BSCANTOOLS_H
 
 #include <QWidget>
+#include <QGroupBox>
+#include <QPushButton>
 
 namespace Ui {
 class BScanTools;
@@ -18,6 +20,7 @@ public:
 
 private:
     Ui::BScanTools *ui;
+    void rechecketPb(QGroupBox*, QPushButton *pb);
 
 signals:
     void doScan(void);
@@ -29,6 +32,11 @@ private slots:
     void on_pbStop_clicked();
     void on_pbOS_clicked();
 
+    void on_pbClear_clicked();
+    void on_pbText_clicked();
+    void on_pbCallper_clicked();
+    void on_pbAngle_clicked();
+    void on_pbArrow_clicked();
 };
 
 #endif // BSCANTOOLS_H

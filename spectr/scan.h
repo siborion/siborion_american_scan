@@ -38,6 +38,7 @@ signals:
 public slots:
     void process();
     void open();
+    void inv();
     void close();
     void read();
 
