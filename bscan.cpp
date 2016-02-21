@@ -8,6 +8,8 @@ Bscan::Bscan(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    setFocusPolicy(Qt::StrongFocus);
+
     timer        = new QTimer();
     timer->setInterval(50);
 
@@ -67,6 +69,20 @@ void Bscan::setRun()
     run ^= 1;
     bScanHard->setRun(run);
 }
+
+void Bscan::keyPressEvent(QKeyEvent *kEvent)
+{
+    pScena->keyPressEvent(kEvent);
+}
+
+void Bscan::keyReleaseEvent(QKeyEvent *kEvent)
+{
+    pScena->keyReleaseEvent(kEvent);
+}
+
+
+
+
 
 Bscan::~Bscan()
 {

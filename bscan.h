@@ -31,6 +31,7 @@ private:
     QTimer *timerSec;
     quint8 fps;
     bool   run;
+//    findArrowEdit(quint8 nomElement, arrow_edit);
 
 private slots:
     void scenaRefr();
@@ -38,6 +39,10 @@ private slots:
     void setRun();
     void doStart();
     void doStop();
+
+protected:
+    void keyPressEvent(QKeyEvent *);
+    void keyReleaseEvent(QKeyEvent *);
 };
 
 #endif // BSCAN_H

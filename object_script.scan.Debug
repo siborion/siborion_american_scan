@@ -47,6 +47,7 @@ INPUT(
 ./debug/bscanusb.o
 ./debug/bscanhard.o
 ./debug/bscanarrow.o
+./debug/bscanvertex.o
 ./debug/qrc_imagesRpt.o
 ./debug/qrc_scan.o
 ./debug/moc_chart.o
