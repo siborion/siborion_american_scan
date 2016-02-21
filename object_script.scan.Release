@@ -46,6 +46,7 @@ INPUT(
 ./release/bscancontrol.o
 ./release/bscanusb.o
 ./release/bscanhard.o
+./release/bscanarrow.o
 ./release/qrc_imagesRpt.o
 ./release/qrc_scan.o
 ./release/moc_chart.o

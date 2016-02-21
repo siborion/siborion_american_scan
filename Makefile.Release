@@ -89,7 +89,8 @@ SOURCES       = ../CommonFiles/CommonClasses.cpp \
 		bscantools.cpp \
 		bscancontrol.cpp \
 		bscanusb.cpp \
-		bscanhard.cpp release/qrc_imagesRpt.cpp \
+		bscanhard.cpp \
+		bscanarrow.cpp release/qrc_imagesRpt.cpp \
 		release/qrc_scan.cpp \
 		release/moc_chart.cpp \
 		release/moc_Barcode.cpp \
@@ -177,6 +178,7 @@ OBJECTS       = release/CommonClasses.o \
 		release/bscancontrol.o \
 		release/bscanusb.o \
 		release/bscanhard.o \
+		release/bscanarrow.o \
 		release/qrc_imagesRpt.o \
 		release/qrc_scan.o \
 		release/moc_chart.o \
@@ -258,7 +260,7 @@ dist:
 	$(ZIP) scan.zip $(SOURCES) $(DIST) scan.pro C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/features/spec_pre.prf C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/qdevice.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/features/device_config.prf C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/common/shell-unix.conf C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/qconfig.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_axbase.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_axbase_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_axcontainer.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_axcontainer_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_axserver.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_axserver_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_bluetooth.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_bluetooth_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_bootstrap_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_clucene_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_concurrent.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_concurrent_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_core.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_core_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_declarative.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_declarative_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_designer.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_designer_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_designercomponents_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_enginio.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_enginio_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_gui.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_gui_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_help.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_help_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_multimedia.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_multimedia_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_multimediawidgets.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_multimediawidgets_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_network.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_network_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_nfc.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_nfc_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_opengl.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_opengl_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_openglextensions.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_openglextensions_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_platformsupport_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_positioning.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_positioning_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_printsupport.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_printsupport_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_qml.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_qml_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_qmldevtools_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_qmltest.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_qmltest_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_qtmultimediaquicktools_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_quick.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_quick_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_quickparticles_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_quickwidgets.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_quickwidgets_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_script.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_script_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_scripttools.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_scripttools_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_sensors.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_sensors_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_serialport.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_serialport_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_sql.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_sql_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_svg.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_svg_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_testlib.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_testlib_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_uitools.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_uitools_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_webkit.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_webkit_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_webkitwidgets.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_webkitwidgets_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_websockets.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_websockets_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_widgets.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_widgets_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_winextras.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_winextras_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_xml.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_xml_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_xmlpatterns.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/modules/qt_lib_xmlpatterns_private.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/features/qt_functions.prf C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/features/qt_config.prf C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/features/win32/qt_config.prf C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/win32-g++/qmake.conf C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/features/spec_post.prf C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/features/exclusive_builds.prf C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/features/default_pre.prf C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/features/win32/default_pre.prf qwt.prf ../QtRPT/config.pri ../CommonFiles/CommonFiles_QtRpt.pri ../QtRPT/QtRPT.pri C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/features/resolve_config.prf C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/features/exclusive_builds_post.prf C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/features/default_post.prf C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/features/build_pass.prf C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/features/win32/rtti.prf C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/features/precompile_header.prf C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/features/warn_on.prf C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/features/qt.prf C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/features/resources.prf C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/features/moc.prf C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/features/win32/opengl.prf C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/features/uic.prf C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/features/win32/windows.prf C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/features/testcase_targets.prf C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/features/exceptions.prf C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/features/yacc.prf C:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/features/lex.prf scan.pro ../QtRPT/imagesRpt.qrc scan.qrc C:/Qt/Qt5.3.1/5.3/mingw482_32/lib/qtmain.prl C:/Qt/Qt5.3.1/5.3/mingw482_32/lib/Qt5Core.prl C:/Qt/Qt5.3.1/5.3/mingw482_32/lib/Qt5PrintSupport.prl C:/Qt/Qt5.3.1/5.3/mingw482_32/lib/Qt5OpenGL.prl C:/Qt/Qt5.3.1/5.3/mingw482_32/lib/Qt5Widgets.prl C:/Qt/Qt5.3.1/5.3/mingw482_32/lib/Qt5Script.prl C:/Qt/Qt5.3.1/5.3/mingw482_32/lib/Qt5Xml.prl C:/Qt/Qt5.3.1/5.3/mingw482_32/lib/Qt5Concurrent.prl C:/Qt/Qt5.3.1/5.3/mingw482_32/lib/Qt5SerialPort.prl C:/Qt/Qt5.3.1/5.3/mingw482_32/lib/Qt5Sql.prl C:/Qt/Qt5.3.1/5.3/mingw482_32/lib/Qt5Gui.prl  NO_PCH_SOURCES RESOURCES HEADERS SOURCES OBJECTIVE_SOURCES FORMS YACCSOURCES YACCSOURCES LEXSOURCES 
 
 clean: compiler_clean 
-	-$(DEL_FILE) release/CommonClasses.o release/chart.o release/Barcode.o release/qtrpt.o release/RptSql.o release/RptFieldObject.o release/RptBandObject.o release/RptPageObject.o release/main.o release/mainwindow.o release/bases.o release/adjview.o release/scanbase.o release/dialog_doctor.o release/dialog_lens.o release/dialog_patient.o release/basefill.o release/combo_delegate.o release/delegate.o release/plot.o release/sampleinterval.o release/measure.o release/bigviewnumcur.o release/key_radio.o release/sampletable.o release/velosity.o release/scanbutton.o release/bigviewnum.o release/device.o release/curparam.o release/parcer.o release/parserfront.o release/calculator.o release/formula.o release/calc.o release/calculator_patient.o release/leaddzero.o release/listresult.o release/dialogserial.o release/delegate_lens.o release/printplot.o release/scena.o release/bscan.o release/bscantools.o release/bscancontrol.o release/bscanusb.o release/bscanhard.o release/qrc_imagesRpt.o release/qrc_scan.o release/moc_chart.o release/moc_Barcode.o release/moc_qtrpt.o release/moc_RptSql.o release/moc_mainwindow.o release/moc_bases.o release/moc_adjview.o release/moc_scanbase.o release/moc_dialog_doctor.o release/moc_dialog_lens.o release/moc_dialog_patient.o release/moc_basefill.o release/moc_delegate.o release/moc_combo_delegate.o release/moc_plot.o release/moc_measure.o release/moc_bigviewnumcur.o release/moc_key_radio.o release/moc_sampletable.o release/moc_velosity.o release/moc_scanbutton.o release/moc_bigviewnum.o release/moc_device.o release/moc_curparam.o release/moc_parcer.o release/moc_calculator.o release/moc_formula.o release/moc_calculator_patient.o release/moc_leaddzero.o release/moc_listresult.o release/moc_dialogserial.o release/moc_delegate_lens.o release/moc_printplot.o release/moc_scena.o release/moc_bscan.o release/moc_bscantools.o release/moc_bscancontrol.o release/moc_bscanusb.o release/moc_bscanhard.o
+	-$(DEL_FILE) release/CommonClasses.o release/chart.o release/Barcode.o release/qtrpt.o release/RptSql.o release/RptFieldObject.o release/RptBandObject.o release/RptPageObject.o release/main.o release/mainwindow.o release/bases.o release/adjview.o release/scanbase.o release/dialog_doctor.o release/dialog_lens.o release/dialog_patient.o release/basefill.o release/combo_delegate.o release/delegate.o release/plot.o release/sampleinterval.o release/measure.o release/bigviewnumcur.o release/key_radio.o release/sampletable.o release/velosity.o release/scanbutton.o release/bigviewnum.o release/device.o release/curparam.o release/parcer.o release/parserfront.o release/calculator.o release/formula.o release/calc.o release/calculator_patient.o release/leaddzero.o release/listresult.o release/dialogserial.o release/delegate_lens.o release/printplot.o release/scena.o release/bscan.o release/bscantools.o release/bscancontrol.o release/bscanusb.o release/bscanhard.o release/bscanarrow.o release/qrc_imagesRpt.o release/qrc_scan.o release/moc_chart.o release/moc_Barcode.o release/moc_qtrpt.o release/moc_RptSql.o release/moc_mainwindow.o release/moc_bases.o release/moc_adjview.o release/moc_scanbase.o release/moc_dialog_doctor.o release/moc_dialog_lens.o release/moc_dialog_patient.o release/moc_basefill.o release/moc_delegate.o release/moc_combo_delegate.o release/moc_plot.o release/moc_measure.o release/moc_bigviewnumcur.o release/moc_key_radio.o release/moc_sampletable.o release/moc_velosity.o release/moc_scanbutton.o release/moc_bigviewnum.o release/moc_device.o release/moc_curparam.o release/moc_parcer.o release/moc_calculator.o release/moc_formula.o release/moc_calculator_patient.o release/moc_leaddzero.o release/moc_listresult.o release/moc_dialogserial.o release/moc_delegate_lens.o release/moc_printplot.o release/moc_scena.o release/moc_bscan.o release/moc_bscantools.o release/moc_bscancontrol.o release/moc_bscanusb.o release/moc_bscanhard.o
 
 distclean: clean 
 	-$(DEL_FILE) $(DESTDIR_TARGET)
@@ -1035,6 +1037,7 @@ release/moc_mainwindow.cpp: bases.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtGui/QSurfaceFormat \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtGui/qsurfaceformat.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtGui/QMouseEvent \
+		bscanarrow.h \
 		bscantools.h \
 		bscancontrol.h \
 		bscanusb.h \
@@ -5110,6 +5113,8 @@ release/moc_scena.cpp: C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtOpenGL/QGLWidget 
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qbasictimer.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qmath.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtGui/QMouseEvent \
+		bscanarrow.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/QObject \
 		../OpenGl/opengl/scena.h
 	'C:\Qt\Qt5.3.1\5.3\mingw482_32\bin\moc.exe' $(DEFINES) -D__GNUC__ -DWIN32 -IC:/Qt/Qt5.3.1/5.3/mingw482_32/mkspecs/win32-g++ -ID:/_SVN/SibOrion/siborion_american_scan -IC:/Qt/qwt-6.1.0/include -ID:/_SVN/SibOrion/CommonFiles -ID:/_SVN/SibOrion/QtRPT -IC:/Qt/Qt5.3.1/5.3/mingw482_32/include -IC:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtPrintSupport -IC:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtOpenGL -IC:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets -IC:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtScript -IC:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtXml -IC:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtConcurrent -IC:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtSerialPort -IC:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtSql -IC:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtGui -IC:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore ../OpenGl/opengl/scena.h -o release/moc_scena.cpp
 
@@ -5233,6 +5238,8 @@ release/moc_bscan.cpp: C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/QWidget \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qbasictimer.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qmath.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtGui/QMouseEvent \
+		bscanarrow.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/QObject \
 		bscantools.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/QGroupBox \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/qgroupbox.h \
@@ -5243,7 +5250,6 @@ release/moc_bscan.cpp: C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/QWidget \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtGui/qicon.h \
 		bscancontrol.h \
 		bscanusb.h \
-		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/QObject \
 		BScanHard.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/QMutex \
 		bscansize.h \
@@ -7132,6 +7138,7 @@ release/main.o: main.cpp C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/QApplic
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtGui/QSurfaceFormat \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtGui/qsurfaceformat.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtGui/QMouseEvent \
+		bscanarrow.h \
 		bscantools.h \
 		bscancontrol.h \
 		bscanusb.h \
@@ -7427,6 +7434,7 @@ release/mainwindow.o: mainwindow.cpp mainwindow.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtGui/QSurfaceFormat \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtGui/qsurfaceformat.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtGui/QMouseEvent \
+		bscanarrow.h \
 		bscantools.h \
 		bscancontrol.h \
 		bscanusb.h \
@@ -12544,6 +12552,8 @@ release/scena.o: ../OpenGl/opengl/scena.cpp ../OpenGl/opengl/scena.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qbasictimer.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qmath.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtGui/QMouseEvent \
+		bscanarrow.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/QObject \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/QDebug \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/QMessageBox \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/qmessagebox.h \
@@ -12671,6 +12681,8 @@ release/bscan.o: bscan.cpp bscan.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qbasictimer.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qmath.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtGui/QMouseEvent \
+		bscanarrow.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/QObject \
 		bscantools.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/QGroupBox \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtWidgets/qgroupbox.h \
@@ -12681,7 +12693,6 @@ release/bscan.o: bscan.cpp bscan.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtGui/qicon.h \
 		bscancontrol.h \
 		bscanusb.h \
-		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/QObject \
 		BScanHard.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/QMutex \
 		bscansize.h \
@@ -13283,6 +13294,58 @@ release/bscanhard.o: bscanhard.cpp BScanHard.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtConcurrent/qtconcurrentstoredfunctioncall.h \
 		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtConcurrent/qtconcurrentversion.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release/bscanhard.o bscanhard.cpp
+
+release/bscanarrow.o: bscanarrow.cpp bscanarrow.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/QObject \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qobject.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qobjectdefs.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qnamespace.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qglobal.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qconfig.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qfeatures.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qsystemdetection.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qprocessordetection.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qcompilerdetection.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qtypeinfo.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qtypetraits.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qsysinfo.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qlogging.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qflags.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qatomic.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qbasicatomic.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qatomic_bootstrap.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qgenericatomic.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qatomic_msvc.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qatomic_armv7.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qatomic_armv6.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qatomic_armv5.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qatomic_ia64.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qatomic_mips.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qatomic_x86.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qatomic_cxx11.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qatomic_gcc.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qatomic_unix.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qglobalstatic.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qmutex.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qnumeric.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qobjectdefs_impl.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qstring.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qchar.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qbytearray.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qrefcount.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qarraydata.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qstringbuilder.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qlist.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qalgorithms.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qiterator.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qcoreevent.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qscopedpointer.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qmetatype.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qvarlengtharray.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qcontainerfwd.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qisenum.h \
+		C:/Qt/Qt5.3.1/5.3/mingw482_32/include/QtCore/qobject_impl.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release/bscanarrow.o bscanarrow.cpp
 
 release/qrc_imagesRpt.o: release/qrc_imagesRpt.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release/qrc_imagesRpt.o release/qrc_imagesRpt.cpp
