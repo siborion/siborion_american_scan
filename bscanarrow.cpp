@@ -2,6 +2,7 @@
 
 BScanArrow::BScanArrow(quint16 x, quint16 y)
 {
+    vertex.append(new BScanvertex(x,y));
     start = new BScanvertex(x,y);
     end = new BScanvertex(x,y);
     editStart = editEnd = false;

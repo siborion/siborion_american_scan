@@ -14,9 +14,12 @@ private:
 public:
     BScanArrow(quint16 , quint16 );
 
+    QList<BScanvertex> vertex;
+
     BScanvertex *findVertex(quint16 x, quint16 y);
-    BScanvertex *start;
-    BScanvertex *end;
+
+//    BScanvertex *start;
+//    BScanvertex *end;
 
     quint16 getXStart();
     quint16 getYStart();
