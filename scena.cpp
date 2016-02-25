@@ -14,6 +14,7 @@ scena::scena(quint16 razmer, unsigned char *p)
 
 
     lArrow.append(new BScanArrow(100,100));
+    editVertex =  lArrow.at(0)->addVertex(200,200);
 
     buf = p;
 
@@ -210,10 +211,32 @@ void scena::mousePressEvent(QMouseEvent *mEvent)
     }
     if(mEvent->button() == Qt::LeftButton)
     {
-        if(editVertex)
-            editVertex = 0;
-        else
-            editVertex = findVertex(mEvent->x(), mEvent->y());
+        switch(editRegim)
+        {
+        case CUR_EDIT::NONE:
+            editVertex = editVertex?0:findVertex(mEvent->x(), mEvent->y());
+            break;
+        case CUR_EDIT::TEXT:
+            break;
+        case CUR_EDIT::CALIPER:
+            if(editVertex)
+                editVertex =  lArrow.last()->addVertex(mEvent->x(),mEvent->y());
+            else
+            {
+                lArrow.append(new BScanArrow(mEvent->x(),mEvent->y()));
+                editVertex =  lArrow.last()->addVertex(mEvent->x(),mEvent->y());
+            }
+            break;
+        case CUR_EDIT::ARROW:
+            if(editVertex)
+                editVertex = 0;
+            else
+            {
+                lArrow.append(new BScanArrow(mEvent->x(),mEvent->y()));
+                editVertex =  lArrow.last()->addVertex(mEvent->x(),mEvent->y());
+            }
+            break;
+        }
     }
 }
 
@@ -306,4 +329,11 @@ BScanvertex *scena::findVertex(quint16 x, quint16 y)
     return 0;
 }
 
-
+void scena::doEdit(CUR_EDIT regim, bool on)
+{
+    if((regim==CUR_EDIT::NONE)||(on==false))
+        editRegim = CUR_EDIT::NONE;
+    else
+        editRegim = regim;
+    qDebug()<<"editRegim"<<editRegim;
+}

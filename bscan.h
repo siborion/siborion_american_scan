@@ -2,7 +2,7 @@
 #define BSCAN_H
 
 #include <QWidget>
-#include "d:/_SVN/SibOrion/OpenGl/Opengl/scena.h"
+#include "scena.h"
 #include "bscantools.h"
 #include "bscancontrol.h"
 #include "bscanusb.h"

@@ -40,7 +40,6 @@ INPUT(
 ./debug/dialogserial.o
 ./debug/delegate_lens.o
 ./debug/printplot.o
-./debug/scena.o
 ./debug/bscan.o
 ./debug/bscantools.o
 ./debug/bscancontrol.o
@@ -48,6 +47,8 @@ INPUT(
 ./debug/bscanhard.o
 ./debug/bscanarrow.o
 ./debug/bscanvertex.o
+./debug/scena.o
+./debug/bscancaliper.o
 ./debug/qrc_imagesRpt.o
 ./debug/qrc_scan.o
 ./debug/moc_chart.o
@@ -83,10 +84,10 @@ INPUT(
 ./debug/moc_dialogserial.o
 ./debug/moc_delegate_lens.o
 ./debug/moc_printplot.o
-./debug/moc_scena.o
 ./debug/moc_bscan.o
 ./debug/moc_bscantools.o
 ./debug/moc_bscancontrol.o
 ./debug/moc_bscanusb.o
 ./debug/moc_bscanhard.o
+./debug/moc_scena.o
 );

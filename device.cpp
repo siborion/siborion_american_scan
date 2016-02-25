@@ -107,6 +107,10 @@ void Device::doTimer()
 //        msg.setText(QString("%1").arg(BytesReceivedCount));
 //        msg.exec();
 
+        qDebug()<<BytesReceivedCount;
+
+        FT_Read(ftHandle,RxBuffer,BytesReceivedCount,&BytesReceived);
+
         if(BytesReceivedCount==1024)
 //        if(BytesReceivedCount>=27)
         {
@@ -114,7 +118,7 @@ void Device::doTimer()
 //            BytesReceivedCount &= 0x3ff;
             FT_Read(ftHandle,RxBuffer,BytesReceivedCount,&BytesReceived);
             FT_Purge(ftHandle,1);
-            ftStatus = FT_Write(ftHandle, FT_Out_Buffer, comLen, &BytesWritten);
+//            ftStatus = FT_Write(ftHandle, FT_Out_Buffer, comLen, &BytesWritten);
             baTmp.append(RxBuffer,1023);
             emit resiveData(&baTmp);
         }
@@ -122,7 +126,7 @@ void Device::doTimer()
         {
 //            qDebug()<<"-"<<QTime::currentTime().msec();
             FT_Purge(ftHandle,1);
-            ftStatus = FT_Write(ftHandle, FT_Out_Buffer, comLen, &BytesWritten);
+//            ftStatus = FT_Write(ftHandle, FT_Out_Buffer, comLen, &BytesWritten);
         }
     }
     else

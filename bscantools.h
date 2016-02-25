@@ -5,6 +5,8 @@
 #include <QGroupBox>
 #include <QPushButton>
 
+enum CUR_EDIT{NONE, TEXT, ARROW, CALIPER};
+
 namespace Ui {
 class BScanTools;
 }
@@ -26,6 +28,7 @@ signals:
     void doScan(void);
     void doStop(void);
     void doOS(void);
+    void doEdit(CUR_EDIT regim, bool on);
 
 private slots:
     void on_pbScan_clicked();

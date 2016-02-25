@@ -58,6 +58,7 @@ void BScanTools::on_pbText_clicked()
 void BScanTools::on_pbCallper_clicked()
 {
     rechecketPb(ui->gbAnnotation, ui->pbCallper);
+    emit doEdit(CUR_EDIT::CALIPER, ui->pbCallper->isChecked());
 }
 
 void BScanTools::on_pbAngle_clicked()
@@ -68,6 +69,7 @@ void BScanTools::on_pbAngle_clicked()
 void BScanTools::on_pbArrow_clicked()
 {
     rechecketPb(ui->gbAnnotation, ui->pbArrow);
+    emit doEdit(CUR_EDIT::ARROW, ui->pbArrow->isChecked());
 }
 
 BScanTools::~BScanTools()

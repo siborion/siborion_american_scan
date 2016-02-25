@@ -7,6 +7,7 @@
 #include <QMouseEvent>
 #include <bscanarrow.h>
 #include <bscanvertex.h>
+#include <bscantools.h>
 
 const double PI = 4.*atan(1.);
 const quint8 startKonus = 30;
@@ -44,6 +45,7 @@ private:
     BScanvertex *findVertex(quint16, quint16);
     bool ctrlPress;
     BScanvertex *editVertex;
+    CUR_EDIT editRegim;
 
 protected:
     void mousePressEvent(QMouseEvent *);
@@ -52,10 +54,10 @@ protected:
     void paintGL();
     void resizeGL(int nWidth, int nHeight);
 
-
 public slots:
     void refr();
     void timerSec();
+    void doEdit(CUR_EDIT regim, bool on);
 
 signals:
     void updateFps(quint8);

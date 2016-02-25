@@ -3,7 +3,6 @@
 BScanArrow::BScanArrow(quint16 x, quint16 y)
 {
     vertex.append(new BScanvertex(x,y));
-    vertex.append(new BScanvertex(x+10,y+10));
 }
 
 BScanvertex *BScanArrow::findVertex(quint16 x, quint16 y)
@@ -16,6 +15,12 @@ BScanvertex *BScanArrow::findVertex(quint16 x, quint16 y)
             return vxTmp;
     }
     return 0;
+}
+
+BScanvertex *BScanArrow::addVertex(quint16 x, quint16 y)
+{
+    vertex.append(new BScanvertex(x,y));
+    return vertex.last();
 }
 
 

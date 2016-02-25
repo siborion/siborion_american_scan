@@ -30,6 +30,8 @@ Bscan::Bscan(QWidget *parent) :
     connect(bScanTools, SIGNAL(doScan()),           SLOT(doStart()));
     connect(bScanTools, SIGNAL(doStop()),           SLOT(doStop()));
     connect(bScanTools, SIGNAL(doOS()),             SLOT(setRun()));
+    connect(bScanTools, SIGNAL(doEdit(CUR_EDIT,bool)), pScena, SLOT(doEdit(CUR_EDIT,bool)));
+
     connect(timer,      SIGNAL(timeout()),          SLOT(scenaRefr()));
     connect(timerSec,   SIGNAL(timeout()),          SLOT(doSec()));
 
