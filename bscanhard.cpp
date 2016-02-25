@@ -82,35 +82,6 @@ void BScanHard::read()
     quint32 i;
     quint32 j;
 
-//    while(true)
-//    {
-//        if(mutex.tryLock())
-//        {
-//            if(!doBScanHard)
-//            {
-//                mutex.unlock();
-//                qDebug()<<"return";
-//                break;
-//            }
-//            mutex.unlock();
-//        }
-//        if(mutexStart.tryLock())
-//        {
-//            if((doStart))
-//            {
-//                qDebug()<<"1"<<doStart;
-//                TxBytes = 3;
-//                TxBuffer[0] = 0x81;
-//                TxBuffer[1] = 0x00;
-//                TxBuffer[2] = doStart?1:0;
-//                ftStatus = FT_Write(ftHandle, TxBuffer, TxBytes, &BytesTransmited);
-//                doStart = false;
-//                qDebug()<<"1"<<doStart;
-//            }
-//            mutexStart.unlock();
-//        }
-//    }
-
     FT_DEVICE_LIST_INFO_NODE *devInfo;
     DWORD numDevs;
     // create the device information list

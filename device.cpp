@@ -61,25 +61,88 @@ void Device::openDevice(bool *link)
     {
         if(doDll)
         {
-            ftStatus = FT_CreateDeviceInfoList (&ftNumDevice);
-            if((ftStatus != FT_OK)||(ftNumDevice==0))
-                return;
-            FT_Out_Buffer[0] = 'A';
-            FT_Out_Buffer[1] = 'T';
-            FT_Out_Buffer[2] = '+';
-            FT_Out_Buffer[3] = 'G';
-            FT_Out_Buffer[4] = 'M';
-            FT_Out_Buffer[5] = 'I';
-            FT_Out_Buffer[6] = 0x0d;
-            FT_Out_Buffer[7] = 0x0a;
+//            FT_STATUS ftStatus;
+//            DWORD RxBytes;
+//            DWORD BytesReceived;
+//            unsigned char RxBuffer[65536];
+//            quint8 cur;
+//            quint32 i;
+//            quint32 j;
+
+            FT_DEVICE_LIST_INFO_NODE *devInfo;
+            DWORD numDevs;
+            // create the device information list
+            ftStatus = FT_CreateDeviceInfoList(&numDevs);
+            if (ftStatus == FT_OK)
+                qDebug("Number of devices is %d",numDevs);
+
+            if (numDevs > 0)
+            {
+                // allocate storage for list based on numDevs
+                devInfo = (FT_DEVICE_LIST_INFO_NODE*)malloc(sizeof(FT_DEVICE_LIST_INFO_NODE)*numDevs);
+                // get the device information list
+                ftStatus = FT_GetDeviceInfoList(devInfo,&numDevs);
+                if (ftStatus == FT_OK)
+                {
+                    for (int i = 0; i < numDevs; i++)
+                    {
+                        qDebug("Dev %d:", i);
+                        qDebug("  Flags=0x%x", devInfo[i].Flags);
+                        qDebug("  Type=0x%x", devInfo[i].Type);
+                        qDebug("  ID=0x%x", devInfo[i].ID);
+                        qDebug("  LocId=0x%x", devInfo[i].LocId);
+                        qDebug("  SerialNumber=%s", devInfo[i].SerialNumber);
+                        qDebug("    Description=%s", devInfo[i].Description);
+                        qDebug("  ftHandle=0x%x", devInfo[i].ftHandle);
+                    }
+                }
+            }
+
+            UCHAR Mask = 0xFF;
+            UCHAR Mode = 0x40; // 0x40 = Single Channel Synchronous 245 FIFO Mode (FT2232H and FT232H devices only)
             ftStatus = FT_Open(0, &ftHandle);
-            if(ftStatus!=FT_OK)
+            if(ftStatus != FT_OK) {
+                // FT_Open failed
+                qDebug("FT_Open failed");
                 return;
-            FT_SetBaudRate(ftHandle,9600);
-            FT_SetFlowControl(ftHandle, FT_FLOW_NONE, 0x00, 0x00);
-            FT_SetDtr(ftHandle);
-            FT_SetRts(ftHandle);
-            FT_Purge(ftHandle,3);
+            }
+            ftStatus = FT_ResetDevice(ftHandle);
+            if (ftStatus == FT_OK) {
+                // FT_ResetDevice OK
+                qDebug("FT_ResetDevice OK");
+            }
+            else {
+                // FT_ResetDevice failed
+                qDebug("FT_ResetDevice failed");
+            }
+            ftStatus = FT_SetBitMode(ftHandle, Mask, Mode);
+            if (ftStatus == FT_OK) {
+                // 0xff written to device
+                qDebug("FT_SetBitMode SUCCESS!");
+            }
+            else {
+                // FT_SetBitMode FAILED!
+                qDebug("FT_SetBitMode FAILED!");
+            }
+            FT_SetLatencyTimer(ftHandle, 2);
+            FT_SetUSBParameters(ftHandle, 0x10000, 0x10000);
+            FT_SetFlowControl(ftHandle, FT_FLOW_RTS_CTS, 0x0, 0x0);
+            FT_Purge(ftHandle, FT_PURGE_RX);
+            FT_Purge(ftHandle, FT_PURGE_TX);
+
+            unsigned char TxBuffer[5];
+            DWORD TxBytes;
+            DWORD BytesTransmited;
+            TxBytes = 5;
+            TxBuffer[0] = 0x82;
+            TxBuffer[1] = 0x00;
+            TxBuffer[2] = 0x01;
+            TxBuffer[3] = 0x01;
+            TxBuffer[4] = 0x01;
+            ftStatus = FT_Write(ftHandle, TxBuffer, TxBytes, &BytesTransmited);
+
+
+
             *doMeasure = true;
             timer->start();
         }
@@ -108,16 +171,18 @@ void Device::doTimer()
 //        msg.exec();
 
         qDebug()<<BytesReceivedCount;
+        if(BytesReceivedCount>=2048)
+            BytesReceivedCount=2048;
 
         FT_Read(ftHandle,RxBuffer,BytesReceivedCount,&BytesReceived);
 
-        if(BytesReceivedCount==1024)
+        if(BytesReceivedCount>=1600)
 //        if(BytesReceivedCount>=27)
         {
 //            qDebug()<<QTime::currentTime().msec();
 //            BytesReceivedCount &= 0x3ff;
-            FT_Read(ftHandle,RxBuffer,BytesReceivedCount,&BytesReceived);
-            FT_Purge(ftHandle,1);
+//            FT_Read(ftHandle,RxBuffer,BytesReceivedCount,&BytesReceived);
+//            FT_Purge(ftHandle,1);
 //            ftStatus = FT_Write(ftHandle, FT_Out_Buffer, comLen, &BytesWritten);
             baTmp.append(RxBuffer,1023);
             emit resiveData(&baTmp);
@@ -125,7 +190,7 @@ void Device::doTimer()
         else
         {
 //            qDebug()<<"-"<<QTime::currentTime().msec();
-            FT_Purge(ftHandle,1);
+//            FT_Purge(ftHandle,1);
 //            ftStatus = FT_Write(ftHandle, FT_Out_Buffer, comLen, &BytesWritten);
         }
     }
