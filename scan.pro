@@ -67,14 +67,14 @@ SOURCES += main.cpp\
     dialogserial.cpp \
     delegate_lens.cpp \
     printplot.cpp \
-    ../OpenGl/opengl/scena.cpp \
     bscan.cpp \
     bscantools.cpp \
     bscancontrol.cpp \
     bscanusb.cpp \
     bscanhard.cpp \
     bscanarrow.cpp \
-    bscanvertex.cpp
+    bscanvertex.cpp \
+    scena.cpp
 
 HEADERS  += mainwindow.h \
     bases.h \
@@ -110,14 +110,14 @@ HEADERS  += mainwindow.h \
     dialogserial.h \
     delegate_lens.h \
     printplot.h \
-    ../OpenGl/opengl/scena.h \
     bscan.h \
     bscantools.h \
     bscancontrol.h \
     bscanusb.h \
     bscanhard.h \
     bscanarrow.h \
-    bscanvertex.h
+    bscanvertex.h \
+    scena.h
 
 FORMS    += mainwindow.ui \
     dialog_doctor.ui \
