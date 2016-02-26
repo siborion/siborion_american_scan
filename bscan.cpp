@@ -1,11 +1,22 @@
 #include "bscan.h"
 #include "ui_bscan.h"
 #include <QDebug>
+#include <QSettings>
 
 Bscan::Bscan(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Bscan)
 {
+    quint16 scenaSize;
+
+    QSettings settings("scan.ini", QSettings::IniFormat);
+    settings.beginGroup("b-scan");
+    scenaSize = settings.value("size", 500).toUInt();
+    settings.endGroup();
+
+
+
+
     ui->setupUi(this);
 
     setFocusPolicy(Qt::StrongFocus);
@@ -21,7 +32,7 @@ Bscan::Bscan(QWidget *parent) :
     bScanHard = new BScanHard();
     buf = bScanHard->getBuf();
 
-    pScena = new scena(500, buf);
+    pScena = new scena(scenaSize, buf);
 
     ui->horizontalLayout->addWidget(bScanTools);
     ui->horizontalLayout->addWidget(pScena);

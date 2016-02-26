@@ -13,8 +13,8 @@ scena::scena(quint16 razmer, unsigned char *p)
     quint32 key;
 
 
-    lArrow.append(new BScanArrow(100,100));
-    editVertex =  lArrow.at(0)->addVertex(200,200);
+//    lArrow.append(new BScanArrow(100,100));
+//    editVertex =  lArrow.at(0)->addVertex(200,200);
 
     buf = p;
 
@@ -208,7 +208,20 @@ void scena::mousePressEvent(QMouseEvent *mEvent)
 {
     if(mEvent->button() == Qt::RightButton)
     {
+        switch(editRegim)
+        {
+        case CUR_EDIT::NONE:
+            break;
+        case CUR_EDIT::TEXT:
+            break;
+        case CUR_EDIT::CALIPER:
+                editVertex = 0;
+            break;
+        case CUR_EDIT::ARROW:
+            break;
+        }
     }
+
     if(mEvent->button() == Qt::LeftButton)
     {
         switch(editRegim)
@@ -220,11 +233,11 @@ void scena::mousePressEvent(QMouseEvent *mEvent)
             break;
         case CUR_EDIT::CALIPER:
             if(editVertex)
-                editVertex =  lArrow.last()->addVertex(mEvent->x(),mEvent->y());
+                editVertex =  lCaliper.last()->addVertex(mEvent->x(),mEvent->y());
             else
             {
-                lArrow.append(new BScanArrow(mEvent->x(),mEvent->y()));
-                editVertex =  lArrow.last()->addVertex(mEvent->x(),mEvent->y());
+                lCaliper.append(new BScanCaliper(mEvent->x(),mEvent->y()));
+                editVertex =  lCaliper.last()->addVertex(mEvent->x(),mEvent->y());
             }
             break;
         case CUR_EDIT::ARROW:
@@ -270,8 +283,8 @@ double scena::getDeg(double val)
 
 void scena::drawElement()
 {
-    GLbyte  color   [4][3];
-    GLshort element [4][2];
+    GLbyte  color   [255][3];
+    GLshort element [255][2];
 
     if(ctrlPress)
         color[0][0]=color[0][1]=color[0][2]=color[1][0]=color[1][1]=color[1][2]=100;
@@ -279,6 +292,7 @@ void scena::drawElement()
         color[0][0]=color[0][1]=color[0][2]=color[1][0]=color[1][1]=color[1][2]=255;
 
     foreach(BScanArrow *arrow, lArrow)
+
     {
         element[0][0] = arrow->vertex.at(0)->xKoord;
         element[0][1] = arrow->vertex.at(0)->yKoord;
@@ -315,6 +329,25 @@ void scena::drawElement()
             glDrawArrays   (GL_LINE_LOOP,       0, 4);
         }
     }
+
+    foreach(BScanCaliper *caliper, lCaliper)
+    {
+        quint8 j=0;
+        foreach(BScanvertex *vx, caliper->vertex)
+        {
+            element[j][0] = vx->xKoord;
+            element[j][1] = vx->yKoord;
+            j++;
+        }
+
+        element[j][0] = caliper->vertex.first()->xKoord;
+        element[j][1] = caliper->vertex.first()->yKoord;
+        j++;
+
+        glVertexPointer(2, GL_SHORT,         0, element);
+        glColorPointer (3, GL_UNSIGNED_BYTE, 0, color);
+        glDrawArrays   (GL_LINE_STRIP,       0, j);
+    }
 }
 
 BScanvertex *scena::findVertex(quint16 x, quint16 y)
@@ -323,6 +356,12 @@ BScanvertex *scena::findVertex(quint16 x, quint16 y)
     foreach(BScanArrow *arrow, lArrow)
     {
         vertex = arrow->findVertex(x, y);
+        if(vertex)
+            return vertex;
+    }
+    foreach(BScanCaliper *caliper, lCaliper)
+    {
+        vertex = caliper->findVertex(x, y);
         if(vertex)
             return vertex;
     }
