@@ -151,19 +151,28 @@ void Device::openDevice(bool *link)
 
 void Device::doTimer()
 {
-    baTmp.clear();
+//    baTmp.clear();
     FT_GetQueueStatus(ftHandle, &BytesReceivedCount);
-    qDebug()<<BytesReceivedCount;
-    if(BytesReceivedCount>=2048)
-        BytesReceivedCount=2048;
+//    qDebug()<<BytesReceivedCount;
+    if(BytesReceivedCount>=5000)
+        BytesReceivedCount=5000;
 
     FT_Read(ftHandle,RxBuffer,BytesReceivedCount,&BytesReceived);
 
-    if(BytesReceivedCount>=1600)
+    for(DWORD i=0; i<BytesReceived; i++)
     {
-        baTmp.append(RxBuffer,1023);
-        emit resiveData(&baTmp);
+        if(RxBuffer[i]==0)
+            baTmp.clear();
+        else
+            baTmp.append(RxBuffer[i]);
+
+        if(baTmp.size()>=1024)
+        {
+            emit resiveData(&baTmp);
+            baTmp.clear();
+        }
     }
+//        qDebug()<<baTmp.size();
 }
 
 void Device::stopMeasure()

@@ -97,7 +97,7 @@ Plot::Plot( QWidget *parent, bool print, CurParam *link):
 
 void Plot::drawSample(QByteArray *Sample)
 {
-    qDebug()<<"SampleLenth"<<Sample->length();
+//    qDebug()<<"SampleLenth"<<Sample->length();
     QVector<double>  xData, yData;
     quint16 kolvo = 0;
     foreach(quint8 val, *Sample)

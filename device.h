@@ -30,7 +30,7 @@ private:
     DWORD BytesWritten;
     DWORD BytesReceived;
     DWORD BytesReceivedCount;
-    char RxBuffer[2048];
+    unsigned char RxBuffer[5000];
 
 
     QByteArray baTmp;
