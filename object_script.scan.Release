@@ -89,5 +89,8 @@ INPUT(
 ./release/moc_bscancontrol.o
 ./release/moc_bscanusb.o
 ./release/moc_bscanhard.o
+./release/moc_bscanarrow.o
+./release/moc_bscanvertex.o
 ./release/moc_scena.o
+./release/moc_bscancaliper.o
 );
