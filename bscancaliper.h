@@ -3,8 +3,9 @@
 #include <QObject>
 #include <bscanvertex.h>
 
-class BScanCaliper
+class BScanCaliper: public QObject
 {
+     Q_OBJECT
 public:
     BScanCaliper(quint16 x, quint16 y);
     QList<BScanvertex*> vertex;

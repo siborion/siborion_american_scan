@@ -1,6 +1,7 @@
 #include "scena.h"
 #include <QDebug>
 #include <QMessageBox>
+#include <QMenu>
 
 scena::scena(quint16 razmer, unsigned char *p)
     :  QGLWidget()
@@ -11,10 +12,6 @@ scena::scena(quint16 razmer, unsigned char *p)
     quint16 curX, curY, maxY, midlY, maxX, curPoint;
     QHash<quint32,quint32> map;
     quint32 key;
-
-
-//    lArrow.append(new BScanArrow(100,100));
-//    editVertex =  lArrow.at(0)->addVertex(200,200);
 
     buf = p;
 
@@ -171,6 +168,7 @@ void scena::paintGL() // рисование
     QFont font;
     font.setBold(true);
     font.setPixelSize(100);
+
     qglColor(Qt::white); // Дальше рисуем белым цветом
 //    renderText(10, 10 , 0, QString::fromUtf8("Вы набрали %1 очков:").arg(17), font , 2000);
 //    renderText( 250, 250, 0, "Text" );
@@ -206,11 +204,20 @@ void scena::mouseMoveEvent(QMouseEvent *mEvent)
 
 void scena::mousePressEvent(QMouseEvent *mEvent)
 {
+     QMenu menu;
     if(mEvent->button() == Qt::RightButton)
     {
         switch(editRegim)
         {
         case CUR_EDIT::NONE:
+
+            menu.addAction("ShowMessage");
+            menu.addAction("About Qt");
+            menu.addSeparator();
+            menu.addAction("Exit");
+            menu.exec(mEvent->globalPos());
+//            menu.exec();
+
             break;
         case CUR_EDIT::TEXT:
             break;
@@ -239,6 +246,7 @@ void scena::mousePressEvent(QMouseEvent *mEvent)
                 lCaliper.append(new BScanCaliper(mEvent->x(),mEvent->y()));
                 editVertex =  lCaliper.last()->addVertex(mEvent->x(),mEvent->y());
             }
+            qDebug()<<"parent"<<lCaliper.last()->vertex.at(0)->parent();
             break;
         case CUR_EDIT::ARROW:
             if(editVertex)
@@ -283,71 +291,62 @@ double scena::getDeg(double val)
 
 void scena::drawElement()
 {
-    GLbyte  color   [255][3];
-    GLshort element [255][2];
+    drawArrow();
+    drawCaliper();
+    if(editVertex)
+        drawSelect(editVertex);
+}
 
-    if(ctrlPress)
-        color[0][0]=color[0][1]=color[0][2]=color[1][0]=color[1][1]=color[1][2]=100;
-    else
-        color[0][0]=color[0][1]=color[0][2]=color[1][0]=color[1][1]=color[1][2]=255;
-
+void scena::drawArrow()
+{
     foreach(BScanArrow *arrow, lArrow)
-
     {
-        element[0][0] = arrow->vertex.at(0)->xKoord;
-        element[0][1] = arrow->vertex.at(0)->yKoord;
-        element[1][0] = arrow->vertex.at(1)->xKoord;
-        element[1][1] = arrow->vertex.at(1)->yKoord;
-
-        glVertexPointer(2, GL_SHORT,         0, element);
+        quint8 j=0;
+        foreach(BScanvertex *vx, arrow->vertex)
+        {
+            massiv[j][0] = vx->xKoord;
+            massiv[j][1] = vx->yKoord;
+            color [j][0]=color[j][1]=color[j][2]=200;
+            j++;
+        }
+        glVertexPointer(2, GL_SHORT,         0, massiv);
         glColorPointer (3, GL_UNSIGNED_BYTE, 0, color);
         glDrawArrays   (GL_LINE_STRIP,       0, 2);
-
-        if((editVertex==(arrow->vertex.at(0)))||(editVertex==(arrow->vertex.at(1))))
-        {
-            element[0][0] = editVertex->xKoord-5;
-            element[0][1] = editVertex->yKoord-5;
-            element[1][0] = editVertex->xKoord-5;
-            element[1][1] = editVertex->yKoord+5;
-            element[2][0] = editVertex->xKoord+5;
-            element[2][1] = editVertex->yKoord+5;
-            element[3][0] = editVertex->xKoord+5;
-            element[3][1] = editVertex->yKoord-5;
-
-            color[0][0]=color[0][1]=color[0][2]=
-            color[1][0]=color[1][1]=color[1][2]=
-            color[2][0]=color[2][1]=color[2][2]=
-            color[3][0]=color[3][1]=color[3][2]=50;
-
-            color[0][2]=
-            color[1][2]=
-            color[2][2]=
-            color[3][2]=250;
-
-            glVertexPointer(2, GL_SHORT,         0, element);
-            glColorPointer (3, GL_UNSIGNED_BYTE, 0, color);
-            glDrawArrays   (GL_LINE_LOOP,       0, 4);
-        }
     }
+}
 
+void scena::drawCaliper()
+{
     foreach(BScanCaliper *caliper, lCaliper)
     {
         quint8 j=0;
         foreach(BScanvertex *vx, caliper->vertex)
         {
-            element[j][0] = vx->xKoord;
-            element[j][1] = vx->yKoord;
+            massiv[j][0] = vx->xKoord;
+            massiv[j][1] = vx->yKoord;
+            color [j][0]=color[j][1]=color[j][2]=200;
             j++;
         }
-
-        element[j][0] = caliper->vertex.first()->xKoord;
-        element[j][1] = caliper->vertex.first()->yKoord;
+        massiv[j][0] = caliper->vertex.first()->xKoord;
+        massiv[j][1] = caliper->vertex.first()->yKoord;
+        color [j][0]=color[j][1]=color[j][2]=200;
         j++;
 
-        glVertexPointer(2, GL_SHORT,         0, element);
+        glVertexPointer(2, GL_SHORT,         0, massiv);
         glColorPointer (3, GL_UNSIGNED_BYTE, 0, color);
         glDrawArrays   (GL_LINE_STRIP,       0, j);
     }
+}
+
+void scena::drawSelect(BScanvertex *vx)
+{
+    GLshort massivS[4][2];
+    massivS[0][0] = vx->xKoord-5; massivS[0][1] = vx->yKoord-5; massivS[1][0] = vx->xKoord-5; massivS[1][1] = vx->yKoord+5; massivS[2][0] = vx->xKoord+5; massivS[2][1] = vx->yKoord+5; massivS[3][0] = vx->xKoord+5; massivS[3][1] = vx->yKoord-5;
+    color[0][0]=color[0][1]=color[0][2]=color[1][0]=color[1][1]=color[1][2]=color[2][0]=color[2][1]=color[2][2]=color[3][0]=color[3][1]=color[3][2]=50;
+    color[0][2]=color[1][2]=color[2][2]=color[3][2]=250;
+    glVertexPointer(2, GL_SHORT,         0, massivS);
+    glColorPointer (3, GL_UNSIGNED_BYTE, 0, color);
+    glDrawArrays   (GL_LINE_LOOP,        0, 4);
 }
 
 BScanvertex *scena::findVertex(quint16 x, quint16 y)

@@ -5,8 +5,9 @@
 
 //enum arrow_edit{NONE, START, END};
 
-class BScanArrow
+class BScanArrow: public QObject
 {
+     Q_OBJECT
 private:
 
 public:

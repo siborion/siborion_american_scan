@@ -5,6 +5,7 @@
 #include <QGroupBox>
 #include <QPushButton>
 
+
 enum CUR_EDIT{NONE, TEXT, ARROW, CALIPER};
 
 namespace Ui {
@@ -23,6 +24,7 @@ public:
 private:
     Ui::BScanTools *ui;
     void rechecketPb(QGroupBox*, QPushButton *pb);
+
 
 signals:
     void doScan(void);

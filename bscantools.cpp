@@ -22,6 +22,7 @@ void BScanTools::on_pbStop_clicked()
 void BScanTools::on_pbOS_clicked()
 {
     emit doOS();
+
 }
 
 void BScanTools::setFps(quint8 val)

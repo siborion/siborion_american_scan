@@ -44,6 +44,9 @@ private:
     QList<BScanArrow*> lArrow;
     QList<BScanCaliper*> lCaliper;
     void drawElement();
+    void drawArrow();
+    void drawCaliper();
+    void drawSelect(BScanvertex *vx);
     BScanvertex *findVertex(quint16, quint16);
     bool ctrlPress;
     BScanvertex *editVertex;

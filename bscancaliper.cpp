@@ -1,8 +1,9 @@
 #include "bscancaliper.h"
+#include <QDebug>
 
 BScanCaliper::BScanCaliper(quint16 x, quint16 y)
 {
-        vertex.append(new BScanvertex(x,y));
+        vertex.append(new BScanvertex(this, x,y));
 }
 
 BScanvertex *BScanCaliper::findVertex(quint16 x, quint16 y)
@@ -19,7 +20,8 @@ BScanvertex *BScanCaliper::findVertex(quint16 x, quint16 y)
 
 BScanvertex *BScanCaliper::addVertex(quint16 x, quint16 y)
 {
-    vertex.append(new BScanvertex(x,y));
+    qDebug()<<"this"<<this;
+    vertex.append(new BScanvertex(this,x,y));
     return vertex.last();
 }
 
