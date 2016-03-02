@@ -129,8 +129,8 @@ void Device::openDevice(bool *link)
             TxBuffer[0] = 0x82;
             TxBuffer[1] = 0x00;
             TxBuffer[2] = 0x01;
-            TxBuffer[3] = 0x01;
-            TxBuffer[4] = 0x01;
+            TxBuffer[3] = 0x07;
+            TxBuffer[4] = 0x0f;
             ftStatus = FT_Write(ftHandle, TxBuffer, TxBytes, &BytesTransmited);
 
             *doMeasure = true;
@@ -164,7 +164,11 @@ void Device::doTimer()
         if(RxBuffer[i]==0)
             baTmp.clear();
         else
+        {
+            if(RxBuffer[i]==1)
+                RxBuffer[i]=0;
             baTmp.append(RxBuffer[i]);
+        }
 
         if(baTmp.size()>=1024)
         {

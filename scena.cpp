@@ -29,29 +29,34 @@ scena::scena(quint16 razmer, unsigned char *p)
 //    connect(timer, SIGNAL(timeout()), SLOT(timerSec()));
 //    connect(timerRefresh, SIGNAL(timeout()), SLOT(refr()));
 
-    step  = razmer;
-    step /= 1600;
+    step  = 1600;
+    step /= razmer;
 
-    maxY = midlY = qRound((sin(getDeg(127)))*razmer);
-    maxY  *=2;
-    maxX = qRound((cos(getDeg(127)))*razmer);
+    maxY  = midlY = qRound((sin(getDeg(127)))*razmer);
+    maxY *=2;
+    maxX  = qRound((cos(getDeg(127)))*razmer);
     setMaximumHeight(maxY);
     setMaximumWidth((double)maxY*1.3);
     setMinimumHeight(maxY);
     setMinimumWidth((double)maxY*1.3);
 
+    qDebug()<<"step"<<step;
+    qDebug()<<"maxY"<<maxY;
+    qDebug()<<"maxX"<<maxX;
+
     for(double dVektor=(0); dVektor<=(127); dVektor+=0.1)
     {
         curPoint = qRound((double)startKonus/step);
-        for(double point=curPoint*step; point<razmer; point=point+step)
+        for(double point=curPoint*step; point<1600; point=point+step)
         {
             curDeg = getDeg(dVektor);
-            curX = qRound((cos(curDeg))*point);
-            curY = qRound((sin(curDeg))*point);
+            curX = qRound((cos(curDeg))*curPoint);
+            curY = qRound((sin(curDeg))*curPoint);
             key  = curX;
             key <<= 16;
             key |= midlY+curY;
             map.insert(key, ((quint32)dVektor+127)*1600+(quint32)point);
+            map.insert(key, 0);
 
             key = curX;
             key <<= 16;
@@ -59,7 +64,6 @@ scena::scena(quint16 razmer, unsigned char *p)
             map.insert(key, (127-(quint32)dVektor)*1600+(quint32)point);
             curPoint++;
         }
-//        qDebug()<<curPoint;
     }
 
     massiveSize = 0;
