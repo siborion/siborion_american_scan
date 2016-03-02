@@ -56,7 +56,6 @@ scena::scena(quint16 razmer, unsigned char *p)
             key <<= 16;
             key |= midlY+curY;
             map.insert(key, ((quint32)dVektor+127)*1600+(quint32)point);
-            map.insert(key, 0);
 
             key = curX;
             key <<= 16;
@@ -250,7 +249,8 @@ void scena::mousePressEvent(QMouseEvent *mEvent)
                 lCaliper.append(new BScanCaliper(mEvent->x(),mEvent->y()));
                 editVertex =  lCaliper.last()->addVertex(mEvent->x(),mEvent->y());
             }
-            qDebug()<<"parent"<<lCaliper.last()->vertex.at(0)->parent();
+//            qDebug()<<"parent"<<editVertex->parent();
+//            qDebug()<<"parent"<<lCaliper.last()->vertex.at(0)->parent();
             break;
         case CUR_EDIT::ARROW:
             if(editVertex)
@@ -262,6 +262,16 @@ void scena::mousePressEvent(QMouseEvent *mEvent)
             }
             break;
         }
+    }
+    if(editVertex)
+    {
+        editArrow    = dynamic_cast<BScanArrow   *>(editVertex->parent());
+        editCaliper = dynamic_cast<BScanCaliper *>(editVertex->parent());
+    }
+    else
+    {
+        editArrow = 0;
+        editCaliper = 0;
     }
 }
 
@@ -328,7 +338,9 @@ void scena::drawCaliper()
         {
             massiv[j][0] = vx->xKoord;
             massiv[j][1] = vx->yKoord;
-            color [j][0]=color[j][1]=color[j][2]=200;
+            color [j][0]=color[j][1]=color[j][2]=150;
+            if(editCaliper==caliper)
+                color[j][2]=250;
             j++;
         }
         massiv[j][0] = caliper->vertex.first()->xKoord;

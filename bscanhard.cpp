@@ -316,7 +316,7 @@ void BScanHard::setRun(bool start)
 
 //    sendRun(true);
 
-//    FT_STATUS ftStatus;
+    FT_STATUS ftStatus;
 //    unsigned char TxBuffer[3];
 //    DWORD TxBytes;
 //    DWORD BytesTransmited;
@@ -327,19 +327,26 @@ void BScanHard::setRun(bool start)
 //    ftStatus = FT_Write(ftHandle, TxBuffer, TxBytes, &BytesTransmited);
 //    qDebug()<<"start"<<TxBuffer[2];
 
-
-//    FT_STATUS ftStatus;
-//    unsigned char TxBuffer[5];
-//    DWORD TxBytes;
-//    DWORD BytesTransmited;
-//    TxBytes = 5;
-//    TxBuffer[0] = 0x82;
-//    TxBuffer[1] = 0x00;
-//    TxBuffer[2] = 0x01;
-//    TxBuffer[3] = 0x01;
-//    TxBuffer[4] = 0x01;
-//    ftStatus = FT_Write(ftHandle, TxBuffer, TxBytes, &BytesTransmited);
+    unsigned char TxBuffer[5];
+    DWORD TxBytes;
+    DWORD BytesTransmited;
+    TxBytes = 5;
+    TxBuffer[0] = 0x82;
+    TxBuffer[1] = 0x00;
+    TxBuffer[2] = 0x00;
+    TxBuffer[3] = 0x00;
+    TxBuffer[4] = 0x00;
+    ftStatus = FT_Write(ftHandle, TxBuffer, TxBytes, &BytesTransmited);
 //    qDebug()<<"start"<<TxBuffer[2];
+
+
+    TxBytes = 3;
+    TxBuffer[0] = 0x81;
+    TxBuffer[1] = 0x00;
+    TxBuffer[2] = start?1:0;
+    ftStatus = FT_Write(ftHandle, TxBuffer, TxBytes, &BytesTransmited);
+
+
 }
 
 void BScanHard::sendRun(bool start)

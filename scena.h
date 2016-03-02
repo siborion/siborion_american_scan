@@ -51,6 +51,8 @@ private:
     bool ctrlPress;
     BScanvertex *editVertex;
     CUR_EDIT editRegim;
+    BScanArrow    *editArrow;
+    BScanCaliper  *editCaliper;
 
 protected:
     void mousePressEvent(QMouseEvent *);
