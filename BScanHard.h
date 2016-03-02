@@ -25,7 +25,7 @@ public:
     unsigned char curBuf[NumPoints*NumVectors];
     unsigned char *getBuf();
     void setGain(unsigned char gain);
-    void setRun(bool start);
+//    void setRun(bool start);
 
 private:
     FT_HANDLE ftHandle;

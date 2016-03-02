@@ -79,8 +79,8 @@ void Bscan::doStop()
 
 void Bscan::setRun()
 {
-    run ^= 1;
-    bScanHard->setRun(run);
+//    run ^= 1;
+//    bScanHard->setRun(run);
 }
 
 void Bscan::keyPressEvent(QKeyEvent *kEvent)
@@ -92,10 +92,6 @@ void Bscan::keyReleaseEvent(QKeyEvent *kEvent)
 {
     pScena->keyReleaseEvent(kEvent);
 }
-
-
-
-
 
 Bscan::~Bscan()
 {

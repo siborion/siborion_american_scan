@@ -146,6 +146,8 @@ void BScanHard::read()
     cur = 0;
     j = 0;
 
+    sendRun(true);
+
     while(true)
     {
         if(mutex.tryLock())
@@ -265,6 +267,7 @@ void BScanHard::read()
             }
         }
     }
+    sendRun(false);
     ftStatus = FT_ResetDevice(ftHandle);
     qDebug()<<"ftStatus"<<ftStatus;
     ftStatus = FT_Close(ftHandle);
@@ -297,7 +300,7 @@ void BScanHard::setGain(unsigned char gain)
     ftStatus = FT_Write(ftHandle, TxBuffer, TxBytes, &BytesTransmited);
     qDebug()<<"WRITE"<<ftStatus;
 }
-
+/*
 void BScanHard::setRun(bool start)
 {
     qDebug()<<"setRun";
@@ -345,23 +348,30 @@ void BScanHard::setRun(bool start)
     TxBuffer[1] = 0x00;
     TxBuffer[2] = start?1:0;
     ftStatus = FT_Write(ftHandle, TxBuffer, TxBytes, &BytesTransmited);
-
-
 }
+*/
 
 void BScanHard::sendRun(bool start)
 {
     FT_STATUS ftStatus;
-    unsigned char TxBuffer[3];
+    unsigned char TxBuffer[5];
     DWORD TxBytes;
     DWORD BytesTransmited;
-//    DWORD RxQ, TxQ, StQ;
+
+    if(start)
+    {
+        TxBytes = 5;
+        TxBuffer[0] = 0x82;
+        TxBuffer[1] = 0x00;
+        TxBuffer[2] = 0x00;
+        TxBuffer[3] = 0x00;
+        TxBuffer[4] = 0x00;
+        ftStatus = FT_Write(ftHandle, TxBuffer, TxBytes, &BytesTransmited);
+    }
+
     TxBytes = 3;
     TxBuffer[0] = 0x81;
     TxBuffer[1] = 0x00;
     TxBuffer[2] = start?1:0;
-//    ftStatus = FT_GetStatus(ftHandle, &RxQ, &TxQ, &StQ);
-//    qDebug()<<ftStatus<<RxQ<<TxQ<<StQ;
     ftStatus = FT_Write(ftHandle, TxBuffer, TxBytes, &BytesTransmited);
-    qDebug()<<"BytesTransmited"<<BytesTransmited;
 }

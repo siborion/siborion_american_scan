@@ -40,10 +40,6 @@ scena::scena(quint16 razmer, unsigned char *p)
     setMinimumHeight(maxY);
     setMinimumWidth((double)maxY*1.3);
 
-    qDebug()<<"step"<<step;
-    qDebug()<<"maxY"<<maxY;
-    qDebug()<<"maxX"<<maxX;
-
     for(double dVektor=(0); dVektor<=(127); dVektor+=0.1)
     {
         curPoint = qRound((double)startKonus/step);
@@ -249,8 +245,6 @@ void scena::mousePressEvent(QMouseEvent *mEvent)
                 lCaliper.append(new BScanCaliper(mEvent->x(),mEvent->y()));
                 editVertex =  lCaliper.last()->addVertex(mEvent->x(),mEvent->y());
             }
-//            qDebug()<<"parent"<<editVertex->parent();
-//            qDebug()<<"parent"<<lCaliper.last()->vertex.at(0)->parent();
             break;
         case CUR_EDIT::ARROW:
             if(editVertex)

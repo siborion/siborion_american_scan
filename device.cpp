@@ -4,6 +4,7 @@
 #include <QTime>
 #include <QApplication>
 #include <QMessageBox>
+#include <QSettings>
 
 #define comLen 1
 
@@ -19,6 +20,10 @@ Device::Device(QObject *parent) :
 
 void Device::openDevice(bool *link)
 {
+    unsigned char TxBuffer[5];
+    DWORD TxBytes;
+    DWORD BytesTransmited;
+
     QStringList lsName;
     doMeasure = link;
     QString str;
@@ -50,17 +55,16 @@ void Device::openDevice(bool *link)
     port->waitForBytesWritten(-1);
     if(*doMeasure)
     {
-        if(doDll)
-            FT_Close(ftHandle);
-        else
-            port->close();
+        TxBuffer[0] = 0x81;
+        TxBuffer[1] = 0x00;
+        TxBuffer[2] = 0x01;
+        ftStatus = FT_Write(ftHandle, TxBuffer, TxBytes, &BytesTransmited);
+        FT_Close(ftHandle);
         *doMeasure = false;
         timer->stop();
     }
     else
     {
-        if(doDll)
-        {
             FT_DEVICE_LIST_INFO_NODE *devInfo;
             DWORD numDevs;
             // create the device information list
@@ -122,30 +126,29 @@ void Device::openDevice(bool *link)
             FT_Purge(ftHandle, FT_PURGE_RX);
             FT_Purge(ftHandle, FT_PURGE_TX);
 
-            unsigned char TxBuffer[5];
-            DWORD TxBytes;
-            DWORD BytesTransmited;
+
+            QSettings settings("scan.ini", QSettings::IniFormat);
+            settings.beginGroup("a-scan");
+            quint8 nomVektor = settings.value("nomVektor", 127).toUInt();
+            settings.endGroup();
+            qDebug()<<"nomVektor"<<nomVektor;
+
             TxBytes = 5;
             TxBuffer[0] = 0x82;
             TxBuffer[1] = 0x00;
             TxBuffer[2] = 0x01;
-            TxBuffer[3] = 0x07;
-            TxBuffer[4] = 0x0f;
+            TxBuffer[3] = nomVektor>>4;
+            TxBuffer[4] = nomVektor&0x0f;
+            ftStatus = FT_Write(ftHandle, TxBuffer, TxBytes, &BytesTransmited);
+
+            TxBuffer[0] = 0x81;
+            TxBuffer[1] = 0x00;
+            TxBuffer[2] = 0x01;
             ftStatus = FT_Write(ftHandle, TxBuffer, TxBytes, &BytesTransmited);
 
             *doMeasure = true;
             timer->start();
-        }
-        else
-        {
-            if(port->open(QIODevice::ReadWrite))
-            {
-                port->setRequestToSend(true);
-                port->setDataTerminalReady(true);
-                *doMeasure = true;
-                timer->start();
-            }
-        }
+
     }
 }
 
