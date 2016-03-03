@@ -13,9 +13,11 @@ Bscan::Bscan(QWidget *parent) :
     settings.beginGroup("b-scan");
     scenaSize = settings.value("size", 500).toUInt();
     settings.endGroup();
-    if(scenaSize>900)
+
+    if(scenaSize>=900)
         scenaSize = 900;
 
+    ui->setupUi(this);
 
     setFocusPolicy(Qt::StrongFocus);
 
