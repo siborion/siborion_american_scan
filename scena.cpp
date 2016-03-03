@@ -2,11 +2,14 @@
 #include <QDebug>
 #include <QMessageBox>
 #include <QMenu>
+#include <QApplication>
 
 scena::scena(quint16 razmer, unsigned char *p)
     :  QGLWidget()
 {
     setMouseTracking(true);
+
+    newObject = false;
 
     double curDeg, step;
     quint16 curX, curY, maxY, midlY, maxX, curPoint;
@@ -26,8 +29,8 @@ scena::scena(quint16 razmer, unsigned char *p)
 
     start = true;
 
-//    connect(timer, SIGNAL(timeout()), SLOT(timerSec()));
-//    connect(timerRefresh, SIGNAL(timeout()), SLOT(refr()));
+    //    connect(timer, SIGNAL(timeout()), SLOT(timerSec()));
+    //    connect(timerRefresh, SIGNAL(timeout()), SLOT(refr()));
 
     step  = 1600;
     step /= razmer;
@@ -112,9 +115,9 @@ void scena::timerSec()
 
 void scena::initializeGL()
 {
-//        QGLFormat frmt; // создать формат по умолчанию
-//        frmt.setDoubleBuffer(true); // задать простую буферизацию
-//        setFormat(frmt); // установить формат в контекст
+    //        QGLFormat frmt; // создать формат по умолчанию
+    //        frmt.setDoubleBuffer(true); // задать простую буферизацию
+    //        setFormat(frmt); // установить формат в контекст
 
     //   qglClearColor(Qt::white); // заполняем экран белым цветом
     //   glEnable(GL_DEPTH_TEST); // задаем глубину проверки пикселей
@@ -129,8 +132,8 @@ void scena::initializeGL()
 
 
     // Сглаживание точек
-//       glEnable(GL_POINT_SMOOTH);
-//       glHint(GL_POINT_SMOOTH_HINT, GL_FASTEST);
+    //       glEnable(GL_POINT_SMOOTH);
+    //       glHint(GL_POINT_SMOOTH_HINT, GL_FASTEST);
 
     // Сглаживание линий
     glEnable(GL_LINE_SMOOTH);
@@ -150,7 +153,7 @@ void scena::paintGL() // рисование
 
     for(quint32 i=0; i<massiveSize; i++)
     {
-            color[i][0]=color[i][1]=color[i][2]=buf[massivP[i]];//(qrand()%255);
+        color[i][0]=color[i][1]=color[i][2]=buf[massivP[i]];//(qrand()%255);
     }
     glVertexPointer(2, GL_SHORT,         0, massiv);
     glColorPointer (3, GL_UNSIGNED_BYTE, 0, color);
@@ -169,8 +172,8 @@ void scena::paintGL() // рисование
     font.setPixelSize(100);
 
     qglColor(Qt::white); // Дальше рисуем белым цветом
-//    renderText(10, 10 , 0, QString::fromUtf8("Вы набрали %1 очков:").arg(17), font , 2000);
-//    renderText( 250, 250, 0, "Text" );
+    //    renderText(10, 10 , 0, QString::fromUtf8("Вы набрали %1 очков:").arg(17), font , 2000);
+    //    renderText( 250, 250, 0, "Text" );
 
     drawElement();
     glLoadIdentity();
@@ -194,7 +197,8 @@ void scena::resizeGL(int nWidth, int nHeight)
 
 void scena::mouseMoveEvent(QMouseEvent *mEvent)
 {
-    if(editVertex)
+    Qt::MouseButtons buttons = QApplication::mouseButtons();
+    if((editVertex)&&(buttons.testFlag(Qt::LeftButton)||newObject))
     {
         editVertex->xKoord = mEvent->x();
         editVertex->yKoord = mEvent->y();
@@ -203,25 +207,24 @@ void scena::mouseMoveEvent(QMouseEvent *mEvent)
 
 void scena::mousePressEvent(QMouseEvent *mEvent)
 {
-     QMenu menu;
+    QMenu menu;
     if(mEvent->button() == Qt::RightButton)
     {
         switch(editRegim)
         {
         case CUR_EDIT::NONE:
-
-            menu.addAction("ShowMessage");
-            menu.addAction("About Qt");
-            menu.addSeparator();
-            menu.addAction("Exit");
-            menu.exec(mEvent->globalPos());
-//            menu.exec();
-
+            if(editVertex)
+            {
+                menu.addAction("Delete vertex",this,SLOT(removeEditVertex()));
+                menu.addAction("Delete object",this,SLOT(removeEditObject()));
+                menu.exec(mEvent->globalPos());
+            }
             break;
         case CUR_EDIT::TEXT:
             break;
         case CUR_EDIT::CALIPER:
-                editVertex = 0;
+            editVertex = 0;
+            newObject = false;
             break;
         case CUR_EDIT::ARROW:
             break;
@@ -233,7 +236,8 @@ void scena::mousePressEvent(QMouseEvent *mEvent)
         switch(editRegim)
         {
         case CUR_EDIT::NONE:
-            editVertex = editVertex?0:findVertex(mEvent->x(), mEvent->y());
+//            editVertex = editVertex?0:findVertex(mEvent->x(), mEvent->y());
+            editVertex = findVertex(mEvent->x(), mEvent->y());
             break;
         case CUR_EDIT::TEXT:
             break;
@@ -242,6 +246,7 @@ void scena::mousePressEvent(QMouseEvent *mEvent)
                 editVertex =  lCaliper.last()->addVertex(mEvent->x(),mEvent->y());
             else
             {
+                newObject = true;
                 lCaliper.append(new BScanCaliper(mEvent->x(),mEvent->y()));
                 editVertex =  lCaliper.last()->addVertex(mEvent->x(),mEvent->y());
             }
@@ -260,7 +265,7 @@ void scena::mousePressEvent(QMouseEvent *mEvent)
     if(editVertex)
     {
         editArrow    = dynamic_cast<BScanArrow   *>(editVertex->parent());
-        editCaliper = dynamic_cast<BScanCaliper *>(editVertex->parent());
+        editCaliper  = dynamic_cast<BScanCaliper *>(editVertex->parent());
     }
     else
     {
@@ -337,10 +342,10 @@ void scena::drawCaliper()
                 color[j][2]=250;
             j++;
         }
-        massiv[j][0] = caliper->vertex.first()->xKoord;
-        massiv[j][1] = caliper->vertex.first()->yKoord;
-        color [j][0]=color[j][1]=color[j][2]=200;
-        j++;
+            massiv[j][0] = caliper->vertex.first()->xKoord;
+            massiv[j][1] = caliper->vertex.first()->yKoord;
+            color [j][0]=color[j][1]=color[j][2]=200;
+            j++;
 
         glVertexPointer(2, GL_SHORT,         0, massiv);
         glColorPointer (3, GL_UNSIGNED_BYTE, 0, color);
@@ -385,3 +390,36 @@ void scena::doEdit(CUR_EDIT regim, bool on)
         editRegim = regim;
     qDebug()<<"editRegim"<<editRegim;
 }
+
+void scena::removeEditVertex()
+{
+    if(editArrow)
+    {
+        editArrow->vertex.removeOne(editVertex);
+        editArrow = 0;
+        editVertex = 0;
+    }
+    if(editCaliper)
+    {
+        editCaliper->vertex.removeOne(editVertex);
+        editVertex = 0;
+    }
+}
+
+void scena::removeEditObject()
+{
+    if(editArrow)
+    {
+        lArrow.removeOne(editArrow);
+        editArrow = 0;
+        editVertex = 0;
+    }
+    if(editCaliper)
+    {
+        lCaliper.removeOne(editCaliper);
+        editCaliper = 0;
+        editVertex = 0;
+    }
+
+}
+

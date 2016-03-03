@@ -49,10 +49,11 @@ private:
     void drawSelect(BScanvertex *vx);
     BScanvertex *findVertex(quint16, quint16);
     bool ctrlPress;
-    BScanvertex *editVertex;
-    CUR_EDIT editRegim;
+    BScanvertex   *editVertex;
+    CUR_EDIT       editRegim;
     BScanArrow    *editArrow;
     BScanCaliper  *editCaliper;
+    bool          newObject;
 
 protected:
     void mousePressEvent(QMouseEvent *);
@@ -60,6 +61,10 @@ protected:
     void initializeGL();
     void paintGL();
     void resizeGL(int nWidth, int nHeight);
+
+private slots:
+    void removeEditVertex();
+    void removeEditObject();
 
 public slots:
     void refr();
