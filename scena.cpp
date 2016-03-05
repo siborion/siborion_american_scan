@@ -222,10 +222,10 @@ void scena::mousePressEvent(QMouseEvent *mEvent)
         else
         {
             editVertex = findVertex(mEvent->x(), mEvent->y());
-            editArrow    = dynamic_cast<BScanArrow   *>(editVertex->parent());
-            editCaliper  = dynamic_cast<BScanCaliper *>(editVertex->parent());
             if(editVertex)
             {
+                editArrow    = dynamic_cast<BScanArrow   *>(editVertex->parent());
+                editCaliper  = dynamic_cast<BScanCaliper *>(editVertex->parent());
                 if(editArrow==0)
                     menu.addAction("Delete vertex",this,SLOT(removeEditVertex()));
                 menu.addAction("Delete object",this,SLOT(removeEditObject()));
@@ -259,13 +259,21 @@ void scena::mousePressEvent(QMouseEvent *mEvent)
             }
             break;
         case CUR_EDIT::ARROW:
-            if(editVertex)
+            if(editVertex&&newObject)
+            {
                 editVertex = 0;
+                newObject = false;
+            }
             else
             {
-                newObject = true;
-                lArrow.append(new BScanArrow(mEvent->x(),mEvent->y()));
-                editVertex =  lArrow.last()->addVertex(mEvent->x(),mEvent->y());
+                if(tmpVertex)
+                    editVertex = tmpVertex;
+                else
+                {
+                    newObject = true;
+                    lArrow.append(new BScanArrow(mEvent->x(),mEvent->y()));
+                    editVertex =  lArrow.last()->addVertex(mEvent->x(),mEvent->y());
+                }
             }
             break;
         }
@@ -328,9 +336,13 @@ void scena::drawArrow()
             massiv[j][0] = vx->xKoord;
             massiv[j][1] = vx->yKoord;
             drawCrest(massiv[j][0],massiv[j][1]);
-            color [j][0]=color[j][1]=color[j][2]=150;
+            color [j][0]=color[j][1]=color[j][2]=0;
+            color[j][1]=255;
             if(editArrow==arrow)
-                color[j][2]=250;
+            {
+                color[j][1]=0;
+                color[j][2]=255;
+            }
             j++;
         }
         glVertexPointer(2, GL_SHORT,         0, massiv);
@@ -348,16 +360,24 @@ void scena::drawCaliper()
         {
             massiv[j][0] = vx->xKoord;
             massiv[j][1] = vx->yKoord;
-            color [j][0]=color[j][1]=color[j][2]=150;
+            color [j][0]=color[j][2]=0;
+            color[j][1]=255;
             if(editCaliper==caliper)
-                color[j][2]=250;
+            {
+                color[j][1]=0;
+                color[j][2]=255;
+            }
             j++;
         }
         massiv[j][0] = caliper->vertex.first()->xKoord;
         massiv[j][1] = caliper->vertex.first()->yKoord;
-        color [j][0]=color[j][1]=color[j][2]=150;
+        color [j][0]=color[j][2]=150;
+        color[j][1]=255;
         if(editCaliper==caliper)
-            color[j][2]=250;
+        {
+            color[j][1]=0;
+            color[j][2]=255;
+        }
         j++;
 
         glVertexPointer(2, GL_SHORT,         0, massiv);
