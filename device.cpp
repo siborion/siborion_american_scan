@@ -55,6 +55,7 @@ void Device::openDevice(bool *link)
     port->waitForBytesWritten(-1);
     if(*doMeasure)
     {
+        TxBytes = 3;
         TxBuffer[0] = 0x81;
         TxBuffer[1] = 0x00;
         TxBuffer[2] = 0x00;
