@@ -57,7 +57,7 @@ void Device::openDevice(bool *link)
     {
         TxBuffer[0] = 0x81;
         TxBuffer[1] = 0x00;
-        TxBuffer[2] = 0x01;
+        TxBuffer[2] = 0x00;
         ftStatus = FT_Write(ftHandle, TxBuffer, TxBytes, &BytesTransmited);
         FT_Close(ftHandle);
         *doMeasure = false;
