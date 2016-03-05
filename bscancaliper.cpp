@@ -20,7 +20,6 @@ BScanvertex *BScanCaliper::findVertex(quint16 x, quint16 y)
 
 BScanvertex *BScanCaliper::addVertex(quint16 x, quint16 y)
 {
-    qDebug()<<"this"<<this;
     vertex.append(new BScanvertex(this,x,y));
     return vertex.last();
 }

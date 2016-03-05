@@ -209,41 +209,28 @@ void scena::mousePressEvent(QMouseEvent *mEvent)
 {
     QMenu menu;
     BScanvertex   *tmpVertex;
+
+    tmpVertex = findVertex(mEvent->x(), mEvent->y());
+
     if(mEvent->button() == Qt::RightButton)
     {
-        switch(editRegim)
+        if(newObject)
         {
-        case CUR_EDIT::NONE:
+            removeEditVertex();
+            newObject = false;
+        }
+        else
+        {
+            editVertex = findVertex(mEvent->x(), mEvent->y());
+            editArrow    = dynamic_cast<BScanArrow   *>(editVertex->parent());
+            editCaliper  = dynamic_cast<BScanCaliper *>(editVertex->parent());
             if(editVertex)
             {
-                menu.addAction("Delete vertex",this,SLOT(removeEditVertex()));
+                if(editArrow==0)
+                    menu.addAction("Delete vertex",this,SLOT(removeEditVertex()));
                 menu.addAction("Delete object",this,SLOT(removeEditObject()));
                 menu.exec(mEvent->globalPos());
             }
-            break;
-        case CUR_EDIT::TEXT:
-            break;
-        case CUR_EDIT::CALIPER:
-            if(newObject)
-            {
-                removeEditVertex();
-                newObject = false;
-            }
-            else
-            {
-                editVertex=tmpVertex=findVertex(mEvent->x(), mEvent->y());
-//                if(tmpVertex)
-//                    editVertex = tmpVertex;
-                if(editVertex)
-                {
-                    menu.addAction("Delete vertex",this,SLOT(removeEditVertex()));
-                    menu.addAction("Delete object",this,SLOT(removeEditObject()));
-                    menu.exec(mEvent->globalPos());
-                }
-            }
-            break;
-        case CUR_EDIT::ARROW:
-            break;
         }
     }
 
@@ -252,7 +239,7 @@ void scena::mousePressEvent(QMouseEvent *mEvent)
         switch(editRegim)
         {
         case CUR_EDIT::NONE:
-            editVertex = findVertex(mEvent->x(), mEvent->y());
+            editVertex = tmpVertex;
             break;
         case CUR_EDIT::TEXT:
             break;
@@ -261,7 +248,6 @@ void scena::mousePressEvent(QMouseEvent *mEvent)
                 editVertex =  lCaliper.last()->addVertex(mEvent->x(),mEvent->y());
             else
             {
-                tmpVertex=findVertex(mEvent->x(), mEvent->y());
                 if(tmpVertex)
                     editVertex = tmpVertex;
                 else
@@ -277,6 +263,7 @@ void scena::mousePressEvent(QMouseEvent *mEvent)
                 editVertex = 0;
             else
             {
+                newObject = true;
                 lArrow.append(new BScanArrow(mEvent->x(),mEvent->y()));
                 editVertex =  lArrow.last()->addVertex(mEvent->x(),mEvent->y());
             }
@@ -287,13 +274,11 @@ void scena::mousePressEvent(QMouseEvent *mEvent)
     {
         editArrow    = dynamic_cast<BScanArrow   *>(editVertex->parent());
         editCaliper  = dynamic_cast<BScanCaliper *>(editVertex->parent());
-        qDebug()<<editCaliper;
     }
     else
     {
         editArrow = 0;
         editCaliper = 0;
-        qDebug()<<editCaliper;
     }
 }
 
@@ -342,7 +327,10 @@ void scena::drawArrow()
         {
             massiv[j][0] = vx->xKoord;
             massiv[j][1] = vx->yKoord;
-            color [j][0]=color[j][1]=color[j][2]=200;
+            drawCrest(massiv[j][0],massiv[j][1]);
+            color [j][0]=color[j][1]=color[j][2]=150;
+            if(editArrow==arrow)
+                color[j][2]=250;
             j++;
         }
         glVertexPointer(2, GL_SHORT,         0, massiv);
@@ -365,15 +353,39 @@ void scena::drawCaliper()
                 color[j][2]=250;
             j++;
         }
-            massiv[j][0] = caliper->vertex.first()->xKoord;
-            massiv[j][1] = caliper->vertex.first()->yKoord;
-            color [j][0]=color[j][1]=color[j][2]=200;
-            j++;
+        massiv[j][0] = caliper->vertex.first()->xKoord;
+        massiv[j][1] = caliper->vertex.first()->yKoord;
+        color [j][0]=color[j][1]=color[j][2]=150;
+        if(editCaliper==caliper)
+            color[j][2]=250;
+        j++;
 
         glVertexPointer(2, GL_SHORT,         0, massiv);
         glColorPointer (3, GL_UNSIGNED_BYTE, 0, color);
         glDrawArrays   (GL_LINE_STRIP,       0, j);
     }
+}
+
+void scena::drawCrest(quint16 x, quint16 y)
+{
+    GLshort crest[2][2];
+    GLubyte crestColor[2][3];
+    crest[0][0] = x-5;
+    crest[0][1] = y-5;
+    crest[1][0] = x+5;
+    crest[1][1] = y+5;
+    crestColor [0][0]=crestColor[0][1]=crestColor[0][2]=150;
+    crestColor [1][0]=crestColor[1][1]=crestColor[1][2]=150;
+    glVertexPointer(2, GL_SHORT,         0, crest);
+    glColorPointer (3, GL_UNSIGNED_BYTE, 0, crestColor);
+    glDrawArrays   (GL_LINE_STRIP,       0, 2);
+    crest[0][0] = x-5;
+    crest[0][1] = y+5;
+    crest[1][0] = x+5;
+    crest[1][1] = y-5;
+    glVertexPointer(2, GL_SHORT,         0, crest);
+    glColorPointer (3, GL_UNSIGNED_BYTE, 0, crestColor);
+    glDrawArrays   (GL_LINE_STRIP,       0, 2);
 }
 
 void scena::drawSelect(BScanvertex *vx)
@@ -411,7 +423,6 @@ void scena::doEdit(CUR_EDIT regim, bool on)
         editRegim = CUR_EDIT::NONE;
     else
         editRegim = regim;
-    qDebug()<<"editRegim"<<editRegim;
 }
 
 void scena::removeEditVertex()

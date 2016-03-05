@@ -46,6 +46,7 @@ private:
     void drawElement();
     void drawArrow();
     void drawCaliper();
+    void drawCrest(quint16, quint16);
     void drawSelect(BScanvertex *vx);
     BScanvertex *findVertex(quint16, quint16);
     bool ctrlPress;
