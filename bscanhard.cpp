@@ -358,6 +358,12 @@ void BScanHard::sendRun(bool start)
     DWORD TxBytes;
     DWORD BytesTransmited;
 
+    TxBytes = 3;
+    TxBuffer[0] = 0x81;
+    TxBuffer[1] = 0x00;
+    TxBuffer[2] = start?1:0;
+    ftStatus = FT_Write(ftHandle, TxBuffer, TxBytes, &BytesTransmited);
+
     if(start)
     {
         TxBytes = 5;
@@ -368,10 +374,4 @@ void BScanHard::sendRun(bool start)
         TxBuffer[4] = 0x00;
         ftStatus = FT_Write(ftHandle, TxBuffer, TxBytes, &BytesTransmited);
     }
-
-    TxBytes = 3;
-    TxBuffer[0] = 0x81;
-    TxBuffer[1] = 0x00;
-    TxBuffer[2] = start?1:0;
-    ftStatus = FT_Write(ftHandle, TxBuffer, TxBytes, &BytesTransmited);
 }

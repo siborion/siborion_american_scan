@@ -134,17 +134,18 @@ void Device::openDevice(bool *link)
             settings.endGroup();
             qDebug()<<"nomVektor"<<nomVektor;
 
+            TxBytes = 3;
+            TxBuffer[0] = 0x81;
+            TxBuffer[1] = 0x00;
+            TxBuffer[2] = 0x01;
+            ftStatus = FT_Write(ftHandle, TxBuffer, TxBytes, &BytesTransmited);
+
             TxBytes = 5;
             TxBuffer[0] = 0x82;
             TxBuffer[1] = 0x00;
             TxBuffer[2] = 0x01;
             TxBuffer[3] = nomVektor>>4;
             TxBuffer[4] = nomVektor&0x0f;
-            ftStatus = FT_Write(ftHandle, TxBuffer, TxBytes, &BytesTransmited);
-
-            TxBuffer[0] = 0x81;
-            TxBuffer[1] = 0x00;
-            TxBuffer[2] = 0x01;
             ftStatus = FT_Write(ftHandle, TxBuffer, TxBytes, &BytesTransmited);
 
             *doMeasure = true;
