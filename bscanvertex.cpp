@@ -4,7 +4,6 @@
 BScanvertex::BScanvertex(QObject *p, quint16 x, quint16 y)
 {
     this->setParent(p);
-    qDebug()<<"parent1"<<p;
     xKoord = x;
     yKoord = y;
     edit = false;

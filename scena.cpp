@@ -208,6 +208,7 @@ void scena::mouseMoveEvent(QMouseEvent *mEvent)
 void scena::mousePressEvent(QMouseEvent *mEvent)
 {
     QMenu menu;
+    BScanvertex   *tmpVertex;
     if(mEvent->button() == Qt::RightButton)
     {
         switch(editRegim)
@@ -223,8 +224,23 @@ void scena::mousePressEvent(QMouseEvent *mEvent)
         case CUR_EDIT::TEXT:
             break;
         case CUR_EDIT::CALIPER:
-            editVertex = 0;
-            newObject = false;
+            if(newObject)
+            {
+                removeEditVertex();
+                newObject = false;
+            }
+            else
+            {
+                editVertex=tmpVertex=findVertex(mEvent->x(), mEvent->y());
+//                if(tmpVertex)
+//                    editVertex = tmpVertex;
+                if(editVertex)
+                {
+                    menu.addAction("Delete vertex",this,SLOT(removeEditVertex()));
+                    menu.addAction("Delete object",this,SLOT(removeEditObject()));
+                    menu.exec(mEvent->globalPos());
+                }
+            }
             break;
         case CUR_EDIT::ARROW:
             break;
@@ -236,19 +252,24 @@ void scena::mousePressEvent(QMouseEvent *mEvent)
         switch(editRegim)
         {
         case CUR_EDIT::NONE:
-//            editVertex = editVertex?0:findVertex(mEvent->x(), mEvent->y());
             editVertex = findVertex(mEvent->x(), mEvent->y());
             break;
         case CUR_EDIT::TEXT:
             break;
         case CUR_EDIT::CALIPER:
-            if(editVertex)
+            if(editVertex&&newObject)
                 editVertex =  lCaliper.last()->addVertex(mEvent->x(),mEvent->y());
             else
             {
-                newObject = true;
-                lCaliper.append(new BScanCaliper(mEvent->x(),mEvent->y()));
-                editVertex =  lCaliper.last()->addVertex(mEvent->x(),mEvent->y());
+                tmpVertex=findVertex(mEvent->x(), mEvent->y());
+                if(tmpVertex)
+                    editVertex = tmpVertex;
+                else
+                {
+                    newObject = true;
+                    lCaliper.append(new BScanCaliper(mEvent->x(),mEvent->y()));
+                    editVertex =  lCaliper.last()->addVertex(mEvent->x(),mEvent->y());
+                }
             }
             break;
         case CUR_EDIT::ARROW:
@@ -266,11 +287,13 @@ void scena::mousePressEvent(QMouseEvent *mEvent)
     {
         editArrow    = dynamic_cast<BScanArrow   *>(editVertex->parent());
         editCaliper  = dynamic_cast<BScanCaliper *>(editVertex->parent());
+        qDebug()<<editCaliper;
     }
     else
     {
         editArrow = 0;
         editCaliper = 0;
+        qDebug()<<editCaliper;
     }
 }
 
