@@ -52,8 +52,10 @@ Bscan::Bscan(QWidget *parent) :
 
 void Bscan::scenaRefr()
 {
-    bScanHard->getBuf();
-    pScena->refr();
+    buf = bScanHard->getBuf();
+//    qDebug()<<"buf"<<buf;
+    bScanControl->setArray(buf);
+    pScena->refr(buf);
     fps++;
 }
 

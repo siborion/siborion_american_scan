@@ -43,7 +43,6 @@ INPUT(
 ./release/bscan.o
 ./release/bscantools.o
 ./release/bscancontrol.o
-./release/bscanusb.o
 ./release/bscanhard.o
 ./release/bscanarrow.o
 ./release/bscanvertex.o
@@ -87,7 +86,6 @@ INPUT(
 ./release/moc_bscan.o
 ./release/moc_bscantools.o
 ./release/moc_bscancontrol.o
-./release/moc_bscanusb.o
 ./release/moc_bscanhard.o
 ./release/moc_bscanarrow.o
 ./release/moc_bscanvertex.o

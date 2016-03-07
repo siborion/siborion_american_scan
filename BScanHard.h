@@ -26,7 +26,6 @@ public:
     unsigned char *getBuf();
     void setGain(unsigned char gain);
 //    void setRun(bool start);
-
 private:
     FT_HANDLE ftHandle;
     bool doBScanHard;
@@ -35,6 +34,9 @@ private:
     unsigned char buf1[NumPoints*NumVectors];
     unsigned char buf2[NumPoints*NumVectors];
     unsigned char buf3[NumPoints*NumVectors];
+//    unsigned char b1[NumPoints*NumVectors];
+//    unsigned char b2[NumPoints*NumVectors];
+//    unsigned char b3[NumPoints*NumVectors];
     quint8 lastBuf;
     bool   doStart, doStop;
     void sendRun(bool start);

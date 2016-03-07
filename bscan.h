@@ -5,7 +5,6 @@
 #include "scena.h"
 #include "bscantools.h"
 #include "bscancontrol.h"
-#include "bscanusb.h"
 #include "BScanHard.h"
 
 namespace Ui {

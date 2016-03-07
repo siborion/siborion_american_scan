@@ -151,6 +151,8 @@ void scena::paintGL() // рисование
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //очистка буфера глубины
 
+//    qDebug()<<"buf"<<buf;
+
     for(quint32 i=0; i<massiveSize; i++)
     {
         color[i][0]=color[i][1]=color[i][2]=buf[massivP[i]];//(qrand()%255);
@@ -179,8 +181,9 @@ void scena::paintGL() // рисование
     glLoadIdentity();
 }
 
-void scena::refr()
+void scena::refr(unsigned char *p)
 {
+    buf = p;
     fps++;
     this->repaint();
 }

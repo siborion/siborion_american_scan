@@ -8,6 +8,7 @@ QMutex mutexBuf1;
 QMutex mutexBuf2;
 QMutex mutexBuf3;
 QMutex mutexStart;
+QMutex mutexLastBuf;
 
 
 BScanHard::BScanHard(QObject *parent) :
@@ -26,43 +27,48 @@ void BScanHard::open()
 
 unsigned char *BScanHard::getBuf()
 {
-//    qDebug()<<"lastBuf"<<lastBuf;
-    switch(lastBuf)
-    {
-    case 1:
-        if(mutexBuf1.tryLock())
+//        qDebug()<<"lastBuf"<<lastBuf;
+        switch(lastBuf)
         {
-            for(quint32 i=0; i<NumVectors*NumPoints; i++)
+        case 1:
+            if(mutexBuf1.tryLock())
             {
-                tmpBuf[i]=buf1[i];
+//                for(quint32 i=0; i<NumVectors*NumPoints; i++)
+//                {
+//                    b1[i]=buf1[i];
+//                }
+                mutexBuf1.unlock();
+                return buf1;
             }
-            mutexBuf1.unlock();
-        }
-        break;
-    case 2:
-        if(mutexBuf2.tryLock())
-        {
-            for(quint32 i=0; i<NumVectors*NumPoints; i++)
+            break;
+        case 2:
+            if(mutexBuf2.tryLock())
             {
-                tmpBuf[i]=buf2[i];
+//                for(quint32 i=0; i<NumVectors*NumPoints; i++)
+//                {
+//                    b2[i]=buf2[i];
+//                }
+                mutexBuf2.unlock();
+                return buf2;
             }
-            mutexBuf2.unlock();
-        }
-        break;
-    case 3:
-        if(mutexBuf3.tryLock())
-        {
-            for(quint32 i=0; i<NumVectors*NumPoints; i++)
+            break;
+        case 3:
+            if(mutexBuf3.tryLock())
             {
-                tmpBuf[i]=buf3[i];
+//                for(quint32 i=0; i<NumVectors*NumPoints; i++)
+//                {
+//                    b3[i]=buf3[i];
+//                }
+                mutexBuf3.unlock();
+                return buf3;
             }
-            mutexBuf3.unlock();
+            break;
         }
-        break;
-    }
-//    return curBuf;
-//    qDebug()<<tmpBuf[0]<<tmpBuf[1]<<tmpBuf[2];
-    return tmpBuf;
+
+    qDebug()<<"00000";
+    qDebug()<<"lastBuf"<<lastBuf;
+
+    return buf1;
 }
 
 void BScanHard::close()
@@ -190,7 +196,7 @@ void BScanHard::read()
                         {
                             if(RxBuffer[i]==0)
                             {
-//                                qDebug()<<j;
+//                                qDebug()<<"lastBuf1";
                                 j=0;
                                 cur = 2;
                                 lastBuf = 1;
@@ -217,7 +223,7 @@ void BScanHard::read()
                         {
                             if(RxBuffer[i]==0)
                             {
-//                                qDebug()<<j;
+//                                qDebug()<<"lastBuf2";
                                 j=0;
                                 cur = 3;
                                 lastBuf = 2;
@@ -244,7 +250,7 @@ void BScanHard::read()
                         {
                             if(RxBuffer[i]==0)
                             {
-//                                qDebug()<<j;
+//                                qDebug()<<"lastBuf3";
                                 j=0;
                                 cur = 1;
                                 lastBuf = 3;

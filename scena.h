@@ -68,7 +68,7 @@ private slots:
     void removeEditObject();
 
 public slots:
-    void refr();
+    void refr(unsigned char *);
     void timerSec();
     void doEdit(CUR_EDIT regim, bool on);
 

@@ -70,7 +70,6 @@ SOURCES += main.cpp\
     bscan.cpp \
     bscantools.cpp \
     bscancontrol.cpp \
-    bscanusb.cpp \
     bscanhard.cpp \
     bscanarrow.cpp \
     bscanvertex.cpp \
@@ -114,7 +113,6 @@ HEADERS  += mainwindow.h \
     bscan.h \
     bscantools.h \
     bscancontrol.h \
-    bscanusb.h \
     bscanhard.h \
     bscanarrow.h \
     bscanvertex.h \

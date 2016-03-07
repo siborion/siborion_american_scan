@@ -43,7 +43,6 @@ INPUT(
 ./debug/bscan.o
 ./debug/bscantools.o
 ./debug/bscancontrol.o
-./debug/bscanusb.o
 ./debug/bscanhard.o
 ./debug/bscanarrow.o
 ./debug/bscanvertex.o
@@ -87,7 +86,6 @@ INPUT(
 ./debug/moc_bscan.o
 ./debug/moc_bscantools.o
 ./debug/moc_bscancontrol.o
-./debug/moc_bscanusb.o
 ./debug/moc_bscanhard.o
 ./debug/moc_bscanarrow.o
 ./debug/moc_bscanvertex.o

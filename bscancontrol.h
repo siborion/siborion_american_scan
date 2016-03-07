@@ -2,6 +2,7 @@
 #define BSCANCONTROL_H
 
 #include <QWidget>
+#include "adjview.h"
 
 namespace Ui {
 class BScanControl;
@@ -17,6 +18,14 @@ public:
 
 private:
     Ui::BScanControl *ui;
+    adjview *table;
+
+private slots:
+    void changeRow(QModelIndex);
+
+public slots:
+    void setArray(unsigned char *buf);
+
 };
 
 #endif // BSCANCONTROL_H
