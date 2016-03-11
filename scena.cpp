@@ -477,6 +477,5 @@ void scena::removeEditObject()
         editCaliper = 0;
         editVertex = 0;
     }
-
 }
 

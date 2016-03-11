@@ -27,6 +27,21 @@ BScanControl::BScanControl(QWidget *parent) :
     setArray(0);
 }
 
+unsigned char *BScanControl::getBuf()
+{
+    quint8 nomRow;
+    quint32 ttt;
+    unsigned char *p;
+    QModelIndex index;
+    nomRow = table->currentIndex().row();
+//    qDebug()<<nomRow;
+    index = table->model()->index(nomRow,0);
+    ttt = table->model()->data(index, Qt::UserRole).toLongLong();
+//    qDebug()<<"ttt"<<ttt;
+    p = (unsigned char *)ttt;
+    return p;
+}
+
 void BScanControl::setArray(unsigned char *buf)
 {
     QDateTime time;

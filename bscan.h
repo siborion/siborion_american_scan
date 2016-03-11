@@ -30,6 +30,7 @@ private:
     QTimer *timerSec;
     quint8 fps;
     bool   run;
+
 //    findArrowEdit(quint8 nomElement, arrow_edit);
 
 private slots:

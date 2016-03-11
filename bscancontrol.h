@@ -14,6 +14,7 @@ class BScanControl : public QWidget
 
 public:
     explicit BScanControl(QWidget *parent = 0);
+    unsigned char *getBuf();
     ~BScanControl();
 
 private:

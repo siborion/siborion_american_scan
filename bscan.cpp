@@ -27,6 +27,8 @@ Bscan::Bscan(QWidget *parent) :
     timerSec     = new QTimer();
     timerSec->setInterval(1000);
 
+    run = false;
+
     bScanTools   = new BScanTools();
     bScanControl = new BScanControl();
     bScanHard = new BScanHard();
@@ -40,7 +42,7 @@ Bscan::Bscan(QWidget *parent) :
 
     connect(bScanTools, SIGNAL(doScan()),           SLOT(doStart()));
     connect(bScanTools, SIGNAL(doStop()),           SLOT(doStop()));
-    connect(bScanTools, SIGNAL(doOS()),             SLOT(setRun()));
+//    connect(bScanTools, SIGNAL(doOS()),             SLOT(setRun()));
     connect(bScanTools, SIGNAL(doEdit(CUR_EDIT,bool)), pScena, SLOT(doEdit(CUR_EDIT,bool)));
 
     connect(timer,      SIGNAL(timeout()),          SLOT(scenaRefr()));
@@ -52,9 +54,14 @@ Bscan::Bscan(QWidget *parent) :
 
 void Bscan::scenaRefr()
 {
-    buf = bScanHard->getBuf();
-//    qDebug()<<"buf"<<buf;
-    bScanControl->setArray(buf);
+    if(run)
+    {
+        buf = bScanHard->getBuf();
+        bScanControl->setArray(buf);
+    }
+    else
+        buf = bScanControl->getBuf();
+if(buf)
     pScena->refr(buf);
     fps++;
 }
@@ -67,16 +74,20 @@ void Bscan::doSec()
 
 void Bscan::doStart()
 {
+    qDebug()<<"start";
     bScanHard->process();
     timer->start();
     timerSec->start();
+    run = true;
 }
 
 void Bscan::doStop()
 {
+    qDebug()<<"stop";
     bScanHard->close();
-    timer->stop();
-    timerSec->stop();
+//    timer->stop();
+//    timerSec->stop();
+    run = false;
 }
 
 void Bscan::setRun()
