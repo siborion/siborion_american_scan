@@ -74,7 +74,8 @@ SOURCES += main.cpp\
     bscanarrow.cpp \
     bscanvertex.cpp \
     scena.cpp \
-    bscancaliper.cpp
+    bscancaliper.cpp \
+    bscantabloa.cpp
 
 HEADERS  += mainwindow.h \
     bases.h \
@@ -117,7 +118,8 @@ HEADERS  += mainwindow.h \
     bscanarrow.h \
     bscanvertex.h \
     scena.h \
-    bscancaliper.h
+    bscancaliper.h \
+    bscantabloa.h
 
 FORMS    += mainwindow.ui \
     dialog_doctor.ui \
@@ -130,7 +132,8 @@ FORMS    += mainwindow.ui \
     dialogserial.ui \
     bscan.ui \
     bscantools.ui \
-    bscancontrol.ui
+    bscancontrol.ui \
+    bscantabloa.ui
 
 RESOURCES += \
     scan.qrc

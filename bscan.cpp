@@ -27,6 +27,13 @@ Bscan::Bscan(QWidget *parent) :
     timerSec     = new QTimer();
     timerSec->setInterval(1000);
 
+    bScanTabloA = new BScanTabloA();
+//    bScanTabloA->setMinimumHeight(150);
+//    bScanTabloA->setMaximumHeight(150);
+        bScanTabloA->setMinimumSize(150,150);
+        bScanTabloA->setMaximumSize(150,150);
+
+
     run = false;
 
     bScanTools   = new BScanTools();
@@ -36,9 +43,16 @@ Bscan::Bscan(QWidget *parent) :
 
     pScena = new scena(scenaSize, buf);
 
-    ui->horizontalLayout->addWidget(bScanTools);
-    ui->horizontalLayout->addWidget(pScena);
-    ui->horizontalLayout->addWidget(bScanControl);
+    ui->gridLayout_2->addWidget(bScanTools,  0,0,2,1);
+    ui->gridLayout_2->addWidget(pScena,      0,1,2,1);
+//    ui->gridLayout_2->addWidget(bScanTabloA, 0,1,1,1);
+    ui->gridLayout_2->addWidget(bScanControl,0,2,2,1);
+
+    buf = bScanHard->getBuf();
+    bScanControl->setArray(buf);
+    bScanControl->setArray(buf);
+    bScanControl->setArray(buf);
+    bScanControl->setArray(buf);
 
     connect(bScanTools, SIGNAL(doScan()),           SLOT(doStart()));
     connect(bScanTools, SIGNAL(doStop()),           SLOT(doStop()));

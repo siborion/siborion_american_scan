@@ -48,6 +48,7 @@ INPUT(
 ./release/bscanvertex.o
 ./release/scena.o
 ./release/bscancaliper.o
+./release/bscantabloa.o
 ./release/qrc_imagesRpt.o
 ./release/qrc_scan.o
 ./release/moc_chart.o
@@ -91,4 +92,5 @@ INPUT(
 ./release/moc_bscanvertex.o
 ./release/moc_scena.o
 ./release/moc_bscancaliper.o
+./release/moc_bscantabloa.o
 );
