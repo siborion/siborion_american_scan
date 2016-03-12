@@ -56,15 +56,15 @@ void BScanTools::on_pbText_clicked()
     rechecketPb(ui->gbAnnotation, ui->pbText);
 }
 
-void BScanTools::on_pbCallper_clicked()
+void BScanTools::on_pbArray_clicked()
 {
-    rechecketPb(ui->gbAnnotation, ui->pbCallper);
-    emit doEdit(CUR_EDIT::CALIPER, ui->pbCallper->isChecked());
+    rechecketPb(ui->gbAnnotation, ui->pbArray);
+    emit doEdit(CUR_EDIT::ARRAY, ui->pbArray->isChecked());
 }
 
-void BScanTools::on_pbAngle_clicked()
+void BScanTools::on_pbCaliper_clicked()
 {
-    rechecketPb(ui->gbAnnotation, ui->pbAngle);
+    rechecketPb(ui->gbAnnotation, ui->pbCaliper);
 }
 
 void BScanTools::on_pbArrow_clicked()

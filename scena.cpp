@@ -228,7 +228,7 @@ void scena::mousePressEvent(QMouseEvent *mEvent)
             if(editVertex)
             {
                 editArrow    = dynamic_cast<BScanArrow   *>(editVertex->parent());
-                editCaliper  = dynamic_cast<BScanCaliper *>(editVertex->parent());
+                editArray  = dynamic_cast<BScanArray *>(editVertex->parent());
                 if(editArrow==0)
                     menu.addAction("Delete vertex",this,SLOT(removeEditVertex()));
                 menu.addAction("Delete object",this,SLOT(removeEditObject()));
@@ -246,9 +246,9 @@ void scena::mousePressEvent(QMouseEvent *mEvent)
             break;
         case CUR_EDIT::TEXT:
             break;
-        case CUR_EDIT::CALIPER:
+        case CUR_EDIT::ARRAY:
             if(editVertex&&newObject)
-                editVertex =  lCaliper.last()->addVertex(mEvent->x(),mEvent->y());
+                editVertex =  lArray.last()->addVertex(mEvent->x(),mEvent->y());
             else
             {
                 if(tmpVertex)
@@ -256,8 +256,8 @@ void scena::mousePressEvent(QMouseEvent *mEvent)
                 else
                 {
                     newObject = true;
-                    lCaliper.append(new BScanCaliper(mEvent->x(),mEvent->y()));
-                    editVertex =  lCaliper.last()->addVertex(mEvent->x(),mEvent->y());
+                    lArray.append(new BScanArray(mEvent->x(),mEvent->y()));
+                    editVertex =  lArray.last()->addVertex(mEvent->x(),mEvent->y());
                 }
             }
             break;
@@ -284,12 +284,12 @@ void scena::mousePressEvent(QMouseEvent *mEvent)
     if(editVertex)
     {
         editArrow    = dynamic_cast<BScanArrow   *>(editVertex->parent());
-        editCaliper  = dynamic_cast<BScanCaliper *>(editVertex->parent());
+        editArray  = dynamic_cast<BScanArray *>(editVertex->parent());
     }
     else
     {
         editArrow = 0;
-        editCaliper = 0;
+        editArray = 0;
     }
 }
 
@@ -324,7 +324,7 @@ double scena::getDeg(double val)
 void scena::drawElement()
 {
     drawArrow();
-    drawCaliper();
+    drawArray();
     if(editVertex)
         drawSelect(editVertex);
 }
@@ -354,29 +354,29 @@ void scena::drawArrow()
     }
 }
 
-void scena::drawCaliper()
+void scena::drawArray()
 {
-    foreach(BScanCaliper *caliper, lCaliper)
+    foreach(BScanArray *array, lArray)
     {
         quint8 j=0;
-        foreach(BScanvertex *vx, caliper->vertex)
+        foreach(BScanvertex *vx, array->vertex)
         {
             massiv[j][0] = vx->xKoord;
             massiv[j][1] = vx->yKoord;
             color [j][0]=color[j][2]=0;
             color[j][1]=255;
-            if(editCaliper==caliper)
+            if(editArray==array)
             {
                 color[j][1]=0;
                 color[j][2]=255;
             }
             j++;
         }
-        massiv[j][0] = caliper->vertex.first()->xKoord;
-        massiv[j][1] = caliper->vertex.first()->yKoord;
+        massiv[j][0] = array->vertex.first()->xKoord;
+        massiv[j][1] = array->vertex.first()->yKoord;
         color [j][0]=color[j][2]=150;
         color[j][1]=255;
-        if(editCaliper==caliper)
+        if(editArray==array)
         {
             color[j][1]=0;
             color[j][2]=255;
@@ -431,9 +431,9 @@ BScanvertex *scena::findVertex(quint16 x, quint16 y)
         if(vertex)
             return vertex;
     }
-    foreach(BScanCaliper *caliper, lCaliper)
+    foreach(BScanArray *array, lArray)
     {
-        vertex = caliper->findVertex(x, y);
+        vertex = array->findVertex(x, y);
         if(vertex)
             return vertex;
     }
@@ -456,9 +456,9 @@ void scena::removeEditVertex()
         editArrow = 0;
         editVertex = 0;
     }
-    if(editCaliper)
+    if(editArray)
     {
-        editCaliper->vertex.removeOne(editVertex);
+        editArray->vertex.removeOne(editVertex);
         editVertex = 0;
     }
 }
@@ -471,10 +471,10 @@ void scena::removeEditObject()
         editArrow = 0;
         editVertex = 0;
     }
-    if(editCaliper)
+    if(editArray)
     {
-        lCaliper.removeOne(editCaliper);
-        editCaliper = 0;
+        lArray.removeOne(editArray);
+        editArray = 0;
         editVertex = 0;
     }
 }

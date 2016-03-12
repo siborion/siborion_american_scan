@@ -103,9 +103,9 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pbCallper">
+         <widget class="QPushButton" name="pbArray">
           <property name="text">
-           <string>Caliper..</string>
+           <string>Array...</string>
           </property>
           <property name="checkable">
            <bool>true</bool>
@@ -113,9 +113,9 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pbAngle">
+         <widget class="QPushButton" name="pbCaliper">
           <property name="text">
-           <string>Angle...</string>
+           <string>Caliper...</string>
           </property>
           <property name="checkable">
            <bool>true</bool>

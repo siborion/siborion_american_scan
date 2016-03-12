@@ -6,7 +6,7 @@
 #include <QPushButton>
 
 
-enum CUR_EDIT{NONE, TEXT, ARROW, CALIPER};
+enum CUR_EDIT{NONE, TEXT, ARROW, ARRAY};
 
 namespace Ui {
 class BScanTools;
@@ -39,8 +39,8 @@ private slots:
 
     void on_pbClear_clicked();
     void on_pbText_clicked();
-    void on_pbCallper_clicked();
-    void on_pbAngle_clicked();
+    void on_pbCaliper_clicked();
+    void on_pbArray_clicked();
     void on_pbArrow_clicked();
 };
 

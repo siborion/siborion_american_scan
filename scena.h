@@ -6,7 +6,7 @@
 #include <qmath.h>
 #include <QMouseEvent>
 #include <bscanarrow.h>
-#include <bscancaliper.h>
+#include <bscanarray.h>
 #include <bscanvertex.h>
 #include <bscantools.h>
 
@@ -42,10 +42,10 @@ private:
     GLubyte  colorK [4][4];
     unsigned char *buf;
     QList<BScanArrow*> lArrow;
-    QList<BScanCaliper*> lCaliper;
+    QList<BScanArray*> lArray;
     void drawElement();
     void drawArrow();
-    void drawCaliper();
+    void drawArray();
     void drawCrest(quint16, quint16);
     void drawSelect(BScanvertex *vx);
     BScanvertex *findVertex(quint16, quint16);
@@ -53,7 +53,7 @@ private:
     BScanvertex   *editVertex;
     CUR_EDIT       editRegim;
     BScanArrow    *editArrow;
-    BScanCaliper  *editCaliper;
+    BScanArray  *editArray;
     bool          newObject;
 
 protected:

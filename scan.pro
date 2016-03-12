@@ -74,7 +74,7 @@ SOURCES += main.cpp\
     bscanarrow.cpp \
     bscanvertex.cpp \
     scena.cpp \
-    bscancaliper.cpp \
+    bscanarray.cpp \
     bscantabloa.cpp
 
 HEADERS  += mainwindow.h \
@@ -118,7 +118,7 @@ HEADERS  += mainwindow.h \
     bscanarrow.h \
     bscanvertex.h \
     scena.h \
-    bscancaliper.h \
+    bscanarray.h \
     bscantabloa.h
 
 FORMS    += mainwindow.ui \
