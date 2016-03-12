@@ -75,7 +75,8 @@ SOURCES += main.cpp\
     bscanvertex.cpp \
     scena.cpp \
     bscanarray.cpp \
-    bscantabloa.cpp
+    bscantabloa.cpp \
+    bscancaliper.cpp
 
 HEADERS  += mainwindow.h \
     bases.h \
@@ -119,7 +120,8 @@ HEADERS  += mainwindow.h \
     bscanvertex.h \
     scena.h \
     bscanarray.h \
-    bscantabloa.h
+    bscantabloa.h \
+    bscancaliper.h
 
 FORMS    += mainwindow.ui \
     dialog_doctor.ui \

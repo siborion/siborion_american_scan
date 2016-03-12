@@ -65,6 +65,7 @@ void BScanTools::on_pbArray_clicked()
 void BScanTools::on_pbCaliper_clicked()
 {
     rechecketPb(ui->gbAnnotation, ui->pbCaliper);
+    emit doEdit(CUR_EDIT::CALIPER, ui->pbCaliper->isChecked());
 }
 
 void BScanTools::on_pbArrow_clicked()

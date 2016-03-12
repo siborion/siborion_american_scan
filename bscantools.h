@@ -6,7 +6,7 @@
 #include <QPushButton>
 
 
-enum CUR_EDIT{NONE, TEXT, ARROW, ARRAY};
+enum CUR_EDIT{NONE, TEXT, ARROW, ARRAY, CALIPER};
 
 namespace Ui {
 class BScanTools;

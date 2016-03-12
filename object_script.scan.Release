@@ -49,6 +49,7 @@ INPUT(
 ./release/scena.o
 ./release/bscanarray.o
 ./release/bscantabloa.o
+./release/bscancaliper.o
 ./release/qrc_imagesRpt.o
 ./release/qrc_scan.o
 ./release/moc_chart.o
@@ -93,4 +94,5 @@ INPUT(
 ./release/moc_scena.o
 ./release/moc_bscanarray.o
 ./release/moc_bscantabloa.o
+./release/moc_bscancaliper.o
 );
