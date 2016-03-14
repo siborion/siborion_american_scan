@@ -18,11 +18,17 @@ const quint8 startKonus = 30;
 class scena : public QGLWidget
 {
     Q_OBJECT
-
 public:
     scena(quint16, unsigned char*);
     void keyPressEvent  (QKeyEvent *);
     void keyReleaseEvent(QKeyEvent *);
+
+    QString  getArrowString();
+    QString  getArrayString();
+    QString  getCaliperString();
+    void     setArrow  (QString*);
+    void     setArray  (QString*);
+    void     setCaliper(QString*);
 
 private:
     QTimer *timer;
@@ -80,5 +86,7 @@ signals:
     void updateFps(quint8);
 
 };
+
+QDataStream &operator <<(QDataStream &out, QList<BScanCaliper*> &any);
 
 #endif // SCENA_H

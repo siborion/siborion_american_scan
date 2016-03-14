@@ -1,4 +1,5 @@
 #include "bscancaliper.h"
+#include <QDataStream>
 
 BScanCaliper::BScanCaliper(quint16 x, quint16 y)
 {
@@ -22,6 +23,5 @@ BScanvertex *BScanCaliper::addVertex(quint16 x, quint16 y)
     vertex.append(new BScanvertex(this,x,y));
     return vertex.last();
 }
-
 
 

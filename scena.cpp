@@ -515,6 +515,11 @@ void scena::removeEditVertex()
         editArray->vertex.removeOne(editVertex);
         editVertex = 0;
     }
+    if(editCaliper)
+    {
+        editCaliper->vertex.removeOne(editVertex);
+        editVertex = 0;
+    }
 }
 
 void scena::removeEditObject()
@@ -531,5 +536,109 @@ void scena::removeEditObject()
         editArray = 0;
         editVertex = 0;
     }
+    if(editCaliper)
+    {
+        lCaliper.removeOne(editCaliper);
+        editArray = 0;
+        editVertex = 0;
+    }
 }
+
+
+QString  scena::getArrowString()
+{
+    QString sTmp;
+    bool newArrow;
+    foreach(BScanArrow *arrow, lArrow)
+    {
+        newArrow = true;
+        foreach(BScanvertex *vx, arrow->vertex)
+        {
+            if(!newArrow)
+                sTmp.append(";");
+            sTmp.append(QString("%1,%2").arg(vx->xKoord).arg(vx->yKoord));
+            newArrow = false;
+        }
+        sTmp.append("|");
+    }
+    return sTmp;
+}
+
+QString  scena::getArrayString()
+{
+    QString sTmp;
+    foreach(BScanArray *array, lArray)
+    {
+        foreach(BScanvertex *vx, array->vertex)
+        {sTmp.append(QString("%1,%2;").arg(vx->xKoord,vx->xKoord));}
+
+        sTmp.append("|");
+    }
+    return sTmp;
+}
+
+QString  scena::getCaliperString()
+{
+    QString sTmp;
+    foreach(BScanCaliper *caliper, lCaliper)
+    {
+        foreach(BScanvertex *vx, caliper->vertex)
+        {sTmp.append(QString("%1,%2;").arg(vx->xKoord,vx->xKoord));}
+        sTmp.append("|");
+    }
+    return sTmp;
+}
+
+
+void     scena::setArrow  (QString *str)
+{
+    quint8   i = 0;
+    quint16  coord[2];
+    bool newArrow = false;
+    QStringList slArrow = str->split("|");
+    lArrow.clear();
+    foreach(QString sArrow, slArrow)
+    {
+        newArrow = true;
+
+        QStringList slVertex = sArrow.split(";");
+        foreach(QString sVertex, slVertex)
+        {
+            QStringList slVertex = sVertex.split(",");
+            foreach(QString sPoint, slVertex)
+            {
+                coord[i++] = sPoint.toUInt();
+                if(i==2)
+                {
+                    if(newArrow)
+                    {
+                        lArrow.append(new BScanArrow(coord[0],coord[1]));
+                        qDebug()<<"new";
+                    }
+                    else
+                        lArrow.last()->addVertex(coord[0],coord[1]);
+                    newArrow = false;
+
+                    qDebug()<<coord[0]<<coord[1];
+                    i=0;
+                }
+
+            }
+        }
+    }
+}
+
+void     scena::setArray  (QString *str)
+{
+
+}
+
+void     scena::setCaliper(QString *str)
+{
+
+}
+
+
+
+
 
