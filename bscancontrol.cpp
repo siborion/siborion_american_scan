@@ -11,20 +11,14 @@ BScanControl::BScanControl(QWidget *parent) :
     QList<int>  il;
     sl << " ";
     il << 100;
-
     ui->setupUi(this);
-
     this->setMaximumWidth(200);
-
     table            = new adjview(3, sl, il);
     QSpacerItem  *hs = new QSpacerItem(50, 5, QSizePolicy::Maximum, QSizePolicy::Maximum);
-
     ui->verticalLayout->addWidget(table);
     ui->verticalLayout->addItem(hs);
-
     connect(table->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), SLOT(changeRow(QModelIndex)));
-
-    setArray(0);
+    setBuf(0);
 }
 
 unsigned char *BScanControl::getBuf()
@@ -34,15 +28,13 @@ unsigned char *BScanControl::getBuf()
     unsigned char *p;
     QModelIndex index;
     nomRow = table->currentIndex().row();
-//    qDebug()<<nomRow;
     index = table->model()->index(nomRow,0);
     ttt = table->model()->data(index, Qt::UserRole).toLongLong();
-//    qDebug()<<"ttt"<<ttt;
     p = (unsigned char *)ttt;
     return p;
 }
 
-void BScanControl::setArray(unsigned char *buf)
+void BScanControl::setBuf(unsigned char *buf)
 {
     QDateTime time;
     QModelIndex indexDest, indexSour;
@@ -62,7 +54,36 @@ void BScanControl::setArray(unsigned char *buf)
 
 void BScanControl::changeRow(QModelIndex index)
 {
-    qDebug()<<table->model()->data(index,Qt::UserRole);
+    QString sTmp;
+    sTmp.append(table->model()->data(index, Qt::UserRole+1).toString());
+    emit sgUpdateArray  (&sTmp);
+    sTmp.clear();
+    sTmp.append(table->model()->data(index, Qt::UserRole+2).toString());
+    emit sgUpdateArrow  (&sTmp);
+    sTmp.clear();
+    sTmp.append(table->model()->data(index, Qt::UserRole+3).toString());
+    emit sgUpdateCaliper(&sTmp);
+}
+
+void BScanControl::slSetArray  (QString *array)
+{
+    QModelIndex index;
+    index = table->currentIndex();
+    table->model()->setData(index, *array, Qt::UserRole+1);
+}
+
+void BScanControl::slSetArrow  (QString *arrow)
+{
+    QModelIndex index;
+    index = table->currentIndex();
+    table->model()->setData(index, *arrow, Qt::UserRole+2);
+}
+
+void BScanControl::slSetCaliper(QString *caliper)
+{
+    QModelIndex index;
+    index = table->currentIndex();
+    table->model()->setData(index, *caliper, Qt::UserRole+3);
 }
 
 BScanControl::~BScanControl()

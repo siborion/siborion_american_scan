@@ -49,10 +49,10 @@ Bscan::Bscan(QWidget *parent) :
     ui->gridLayout_2->addWidget(bScanControl,0,2,2,1);
 
     buf = bScanHard->getBuf();
-    bScanControl->setArray(buf);
-    bScanControl->setArray(buf);
-    bScanControl->setArray(buf);
-    bScanControl->setArray(buf);
+    bScanControl->setBuf(buf);
+    bScanControl->setBuf(buf);
+    bScanControl->setBuf(buf);
+    bScanControl->setBuf(buf);
 
     connect(bScanTools, SIGNAL(doScan()),           SLOT(doStart()));
     connect(bScanTools, SIGNAL(doStop()),           SLOT(doStop()));
@@ -61,6 +61,14 @@ Bscan::Bscan(QWidget *parent) :
 
     connect(timer,      SIGNAL(timeout()),          SLOT(scenaRefr()));
     connect(timerSec,   SIGNAL(timeout()),          SLOT(doSec()));
+
+    connect(pScena, SIGNAL(sgUpdateArray(QString*)),   bScanControl, SLOT(slSetArray(QString*)));
+    connect(pScena, SIGNAL(sgUpdateArrow(QString*)),   bScanControl, SLOT(slSetArrow(QString*)));
+    connect(pScena, SIGNAL(sgUpdateCaliper(QString*)), bScanControl, SLOT(slSetCaliper(QString*)));
+
+    connect(bScanControl, SIGNAL(sgUpdateArray(QString*)),   pScena,   SLOT(setArray(QString*)));
+    connect(bScanControl, SIGNAL(sgUpdateArrow(QString*)),   pScena,   SLOT(setArrow(QString*)));
+    connect(bScanControl, SIGNAL(sgUpdateCaliper(QString*)), pScena,   SLOT(setCaliper(QString*)));
 
     timer->start();
     timerSec->start();
@@ -71,7 +79,7 @@ void Bscan::scenaRefr()
     if(run)
     {
         buf = bScanHard->getBuf();
-        bScanControl->setArray(buf);
+        bScanControl->setBuf(buf);
     }
     else
         buf = bScanControl->getBuf();
@@ -108,10 +116,13 @@ void Bscan::setRun()
 {
     QString sTmp;
     sTmp = pScena->getArrowString();
-
-    qDebug()<< sTmp;
-
     pScena->setArrow(&sTmp);
+
+    sTmp = pScena->getArrayString();
+    pScena->setArray(&sTmp);
+
+    sTmp = pScena->getCaliperString();
+    pScena->setCaliper(&sTmp);
 
 }
 

@@ -3,6 +3,9 @@
 
 #include <QWidget>
 #include "adjview.h"
+#include "bscanarray.h"
+#include "bscanarrow.h"
+#include "bscancaliper.h"
 
 namespace Ui {
 class BScanControl;
@@ -25,7 +28,15 @@ private slots:
     void changeRow(QModelIndex);
 
 public slots:
-    void setArray(unsigned char *buf);
+    void setBuf(unsigned char *buf);
+    void slSetArray  (QString*);
+    void slSetArrow  (QString*);
+    void slSetCaliper(QString*);
+
+signals:
+    void sgUpdateArray  (QString*);
+    void sgUpdateArrow  (QString*);
+    void sgUpdateCaliper(QString*);
 
 };
 

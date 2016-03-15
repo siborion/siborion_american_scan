@@ -312,6 +312,19 @@ void scena::mousePressEvent(QMouseEvent *mEvent)
         editArray = 0;
         editCaliper = 0;
     }
+
+    if((mEvent->button() == Qt::RightButton)||(mEvent->button() == Qt::LeftButton))
+    {
+        QString sTmp;
+        sTmp.append(getArrowString());
+        emit sgUpdateArrow(&sTmp);
+        sTmp.clear();
+        sTmp.append(getArrayString());
+        emit sgUpdateArray(&sTmp);
+        sTmp.clear();
+        sTmp.append(getCaliperString());
+        emit sgUpdateCaliper(&sTmp);
+    }
 }
 
 void scena::keyPressEvent(QKeyEvent *kEvent)
@@ -567,10 +580,17 @@ QString  scena::getArrowString()
 QString  scena::getArrayString()
 {
     QString sTmp;
+    bool newArray;
     foreach(BScanArray *array, lArray)
     {
+        newArray = true;
         foreach(BScanvertex *vx, array->vertex)
-        {sTmp.append(QString("%1,%2;").arg(vx->xKoord,vx->xKoord));}
+        {
+            if(!newArray)
+                sTmp.append(";");
+            sTmp.append(QString("%1,%2").arg(vx->xKoord).arg(vx->yKoord));
+            newArray = false;
+        }
 
         sTmp.append("|");
     }
@@ -580,10 +600,17 @@ QString  scena::getArrayString()
 QString  scena::getCaliperString()
 {
     QString sTmp;
+    bool newCaliper;
     foreach(BScanCaliper *caliper, lCaliper)
     {
+        newCaliper = true;
         foreach(BScanvertex *vx, caliper->vertex)
-        {sTmp.append(QString("%1,%2;").arg(vx->xKoord,vx->xKoord));}
+        {
+            if(!newCaliper)
+                sTmp.append(";");
+            sTmp.append(QString("%1,%2").arg(vx->xKoord).arg(vx->yKoord));
+            newCaliper = false;
+        }
         sTmp.append("|");
     }
     return sTmp;
@@ -611,18 +638,12 @@ void     scena::setArrow  (QString *str)
                 if(i==2)
                 {
                     if(newArrow)
-                    {
                         lArrow.append(new BScanArrow(coord[0],coord[1]));
-                        qDebug()<<"new";
-                    }
                     else
                         lArrow.last()->addVertex(coord[0],coord[1]);
                     newArrow = false;
-
-                    qDebug()<<coord[0]<<coord[1];
                     i=0;
                 }
-
             }
         }
     }
@@ -630,12 +651,64 @@ void     scena::setArrow  (QString *str)
 
 void     scena::setArray  (QString *str)
 {
-
+    quint8   i = 0;
+    quint16  coord[2];
+    bool newArray = false;
+    QStringList slArray = str->split("|");
+    lArray.clear();
+    foreach(QString sArray, slArray)
+    {
+        newArray = true;
+        QStringList slVertex = sArray.split(";");
+        foreach(QString sVertex, slVertex)
+        {
+            QStringList slVertex = sVertex.split(",");
+            foreach(QString sPoint, slVertex)
+            {
+                coord[i++] = sPoint.toUInt();
+                if(i==2)
+                {
+                    if(newArray)
+                        lArray.append(new BScanArray(coord[0],coord[1]));
+                    else
+                        lArray.last()->addVertex(coord[0],coord[1]);
+                    newArray = false;
+                    i=0;
+                }
+            }
+        }
+    }
 }
 
 void     scena::setCaliper(QString *str)
 {
-
+    quint8   i = 0;
+    quint16  coord[2];
+    bool newCaliper = false;
+    QStringList slCaliper = str->split("|");
+    lCaliper.clear();
+    foreach(QString sCaliper, slCaliper)
+    {
+        newCaliper = true;
+        QStringList slVertex = sCaliper.split(";");
+        foreach(QString sVertex, slVertex)
+        {
+            QStringList slVertex = sVertex.split(",");
+            foreach(QString sPoint, slVertex)
+            {
+                coord[i++] = sPoint.toUInt();
+                if(i==2)
+                {
+                    if(newCaliper)
+                        lCaliper.append(new BScanCaliper(coord[0],coord[1]));
+                    else
+                        lCaliper.last()->addVertex(coord[0],coord[1]);
+                    newCaliper = false;
+                    i=0;
+                }
+            }
+        }
+    }
 }
 
 

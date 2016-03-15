@@ -26,9 +26,6 @@ public:
     QString  getArrowString();
     QString  getArrayString();
     QString  getCaliperString();
-    void     setArrow  (QString*);
-    void     setArray  (QString*);
-    void     setCaliper(QString*);
 
 private:
     QTimer *timer;
@@ -81,9 +78,15 @@ public slots:
     void refr(unsigned char *);
     void timerSec();
     void doEdit(CUR_EDIT regim, bool on);
+    void     setArrow  (QString*);
+    void     setArray  (QString*);
+    void     setCaliper(QString*);
 
 signals:
     void updateFps(quint8);
+    void sgUpdateArrow  (QString*);
+    void sgUpdateArray  (QString*);
+    void sgUpdateCaliper(QString*);
 
 };
 

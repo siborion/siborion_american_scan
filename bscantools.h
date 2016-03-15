@@ -25,7 +25,6 @@ private:
     Ui::BScanTools *ui;
     void rechecketPb(QGroupBox*, QPushButton *pb);
 
-
 signals:
     void doScan(void);
     void doStop(void);
