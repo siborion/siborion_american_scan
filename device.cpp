@@ -5,6 +5,7 @@
 #include <QApplication>
 #include <QMessageBox>
 #include <QSettings>
+#include <QFile>
 
 #define comLen 1
 
@@ -28,6 +29,18 @@ void Device::openDevice(bool *link)
     doMeasure = link;
     QString str;
     str.append("\\\\.\\");
+
+//    if(*doMeasure)
+//    {
+//        *doMeasure = false;
+//        timer->stop();
+//    }
+//    else
+//    {
+//        *doMeasure = true;
+//        timer->start();
+//    }
+//    return;
 
     if(QApplication::keyboardModifiers().testFlag(Qt::ControlModifier))
     {
@@ -163,6 +176,14 @@ void Device::doTimer()
         BytesReceivedCount=5000;
 
     FT_Read(ftHandle,RxBuffer,BytesReceivedCount,&BytesReceived);
+
+//    baTmp.clear();
+//    QFile file;
+//    file.setFileName("sample4.txt");
+//    file.open(QIODevice::ReadOnly);
+//    baTmp.append(file.readAll());
+//    emit resiveData(&baTmp);
+
 
     for(DWORD i=0; i<BytesReceived; i++)
     {

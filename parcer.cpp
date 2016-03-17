@@ -24,16 +24,18 @@ bool Parcer::findExtremum(QByteArray *Sample, QList<quint16> *extremum, stMeasur
 
     for(int i=0; i<Sample->count(); i++)
     {
-        tmp=parseCornea->parser(i,Sample->at(i)*2);
+        tmp=parseCornea->parser(i,Sample->at(i));
         if(tmp>=0)
         {
             if(!corneaEn)
+            {
                 measureParam->Cornea = tmp;
+            }
             corneaEn = true;
             extremum->append(tmp);
         }
 
-        tmp=parseLens->parser(i,Sample->at(i)*2);
+        tmp=parseLens->parser(i,Sample->at(i));
         if(tmp>=0)
         {
             if(!lens1En)
@@ -52,11 +54,13 @@ bool Parcer::findExtremum(QByteArray *Sample, QList<quint16> *extremum, stMeasur
             extremum->append(tmp);
         }
 
-        tmp=parseRetina->parser(i,Sample->at(i)*2);
+        tmp=parseRetina->parser(i,Sample->at(i));
         if(tmp>=0)
         {
             if(!retinaEn)
+            {
                 measureParam->Retina = tmp;
+            }
             retinaEn = true;
             extremum->append(tmp);
         }
@@ -72,11 +76,8 @@ bool Parcer::findExtremum(QByteArray *Sample, QList<quint16> *extremum, stMeasur
         if (corneaEn && lens1En && lens2En && retinaEn)
         {
             bValid = true;
-            qDebug()<<"measureParam->L2"<<measureParam->L2;
-            qDebug()<<"measureParam->Retine"<<measureParam->Retina;
             for(int i=(measureParam->L2+50); i<=(measureParam->Retina-10); i++)
             {
-//                qDebug()<<i<<(unsigned char)Sample->at(i);
                 if(((unsigned char)Sample->at(i))>50)
                     bValid = false;
             }
