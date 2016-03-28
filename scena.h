@@ -62,6 +62,8 @@ private:
     BScanArray    *editArray;
     BScanCaliper  *editCaliper;
     bool          newObject;
+    quint16       curRazrez;
+    quint16       midlY;
 
 protected:
     void mousePressEvent(QMouseEvent *);

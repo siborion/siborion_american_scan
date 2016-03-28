@@ -2,6 +2,7 @@
 #define BSCANCONTROL_H
 
 #include <QWidget>
+#include <QPushButton>
 #include "adjview.h"
 #include "bscanarray.h"
 #include "bscanarrow.h"
@@ -23,9 +24,12 @@ public:
 private:
     Ui::BScanControl *ui;
     adjview *table;
+    QPushButton *pbUp, *pbDown;
 
 private slots:
     void changeRow(QModelIndex);
+    void slPbUpClick  (void);
+    void slPbDownClick(void);
 
 public slots:
     void setBuf(unsigned char *buf);

@@ -4,15 +4,15 @@
 #include <QMenu>
 #include <QApplication>
 
-scena::scena(quint16 razmer, unsigned char *p)
+scena::scena(quint16 raz, unsigned char *p)
     :  QGLWidget()
 {
     setMouseTracking(true);
-
+    razmer = raz;
     newObject = false;
 
     double curDeg, step;
-    quint16 curX, curY, maxY, midlY, maxX, curPoint;
+    quint16 curX, curY, maxY, maxX, curPoint;
     QHash<quint32,quint32> map;
     quint32 key;
 
@@ -95,7 +95,7 @@ scena::scena(quint16 razmer, unsigned char *p)
     colorK[1][3]=255;
 
     setAutoBufferSwap(true);
-    qDebug()<< doubleBuffer() ;
+    curRazrez = midlY;
 }
 
 void scena::timerSec()
@@ -200,11 +200,33 @@ void scena::resizeGL(int nWidth, int nHeight)
 
 void scena::mouseMoveEvent(QMouseEvent *mEvent)
 {
+    double x;
     Qt::MouseButtons buttons = QApplication::mouseButtons();
     if((editVertex)&&(buttons.testFlag(Qt::LeftButton)||newObject))
     {
-        editVertex->xKoord = mEvent->x();
-        editVertex->yKoord = mEvent->y();
+        if(lArrow.at(0)->vertex.at(1) == editVertex)
+        {
+            editVertex->yKoord = curRazrez = mEvent->y();
+//            editVertex->xKoord = 200;
+//            editVertex->xKoord = qRound(cos(getDeg(abs(curRazrez-midlY)))*razmer);
+            x =  (cos(getDeg(abs(curRazrez-midlY))));
+            qDebug()<<"xKoord"<<x;
+            x *= razmer;
+            qDebug()<<"xKoord"<<razmer;
+            editVertex->xKoord = qRound(x);
+//            qDebug()<<"xKoord"<<(cos(getDeg(abs(curRazrez-midlY))))*razmer;
+
+//            curDeg = getDeg(dVektor);
+//            curX = qRound((cos(curDeg))*curPoint);
+
+
+
+        }
+        else
+        {
+            editVertex->xKoord = mEvent->x();
+            editVertex->yKoord = mEvent->y();
+        }
     }
 }
 
@@ -621,12 +643,14 @@ void     scena::setArrow  (QString *str)
 {
     quint8   i = 0;
     quint16  coord[2];
-    bool newArrow = false;
+//    bool newArrow = false;
     QStringList slArrow = str->split("|");
     lArrow.clear();
+    lArrow.append(new BScanArrow(0, midlY));
+    lArrow.last()->addVertex(200,   curRazrez);
     foreach(QString sArrow, slArrow)
     {
-        newArrow = true;
+//        newArrow = true;
 
         QStringList slVertex = sArrow.split(";");
         foreach(QString sVertex, slVertex)
@@ -637,11 +661,7 @@ void     scena::setArrow  (QString *str)
                 coord[i++] = sPoint.toUInt();
                 if(i==2)
                 {
-                    if(newArrow)
-                        lArrow.append(new BScanArrow(coord[0],coord[1]));
-                    else
-                        lArrow.last()->addVertex(coord[0],coord[1]);
-                    newArrow = false;
+                    lArrow.last()->addVertex(coord[0],coord[1]);
                     i=0;
                 }
             }

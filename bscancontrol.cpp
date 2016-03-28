@@ -13,11 +13,17 @@ BScanControl::BScanControl(QWidget *parent) :
     il << 100;
     ui->setupUi(this);
     this->setMaximumWidth(200);
-    table            = new adjview(3, sl, il);
-    QSpacerItem  *hs = new QSpacerItem(50, 5, QSizePolicy::Maximum, QSizePolicy::Maximum);
-    ui->verticalLayout->addWidget(table);
-    ui->verticalLayout->addItem(hs);
+    table            = new adjview(10, sl, il);
+    pbUp   = new QPushButton("<<");
+    pbDown = new QPushButton(">>");
+//    QSpacerItem  *hs = new QSpacerItem(50, 5, QSizePolicy::Maximum, QSizePolicy::Maximum);
+    ui->layoutGroupBox->addWidget(table,  0, 0, 1, 3);
+    ui->layoutGroupBox->addWidget(pbUp,   1, 0);
+    ui->layoutGroupBox->addWidget(pbDown, 1, 1);
+//    ui->verticalLayout->addItem(hs);
     connect(table->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), SLOT(changeRow(QModelIndex)));
+    connect(pbUp,   SIGNAL(clicked()), SLOT(slPbUpClick()));
+    connect(pbDown, SIGNAL(clicked()), SLOT(slPbDownClick()));
     setBuf(0);
 }
 
@@ -36,6 +42,7 @@ unsigned char *BScanControl::getBuf()
 
 void BScanControl::setBuf(unsigned char *buf)
 {
+    qDebug()<<"setBuf";
     QDateTime time;
     QModelIndex indexDest, indexSour;
     quint8 modelSize;
@@ -84,6 +91,30 @@ void BScanControl::slSetCaliper(QString *caliper)
     QModelIndex index;
     index = table->currentIndex();
     table->model()->setData(index, *caliper, Qt::UserRole+3);
+}
+
+void BScanControl::slPbDownClick(void)
+{
+    QModelIndex index;
+    quint8 nomRow;
+    nomRow = table->currentIndex().row();
+    if(nomRow<(table->model()->rowCount()-1))
+        nomRow++;
+    index = table->model()->index(nomRow, 0);
+    table->setCurrentIndex(index);
+    qDebug()<<nomRow;
+}
+
+void BScanControl::slPbUpClick(void)
+{
+    QModelIndex index;
+    quint8 nomRow;
+    nomRow = table->currentIndex().row();
+    if(nomRow>0)
+        nomRow--;
+    index = table->model()->index(nomRow, 0);
+    table->setCurrentIndex(index);
+    qDebug()<<nomRow;
 }
 
 BScanControl::~BScanControl()

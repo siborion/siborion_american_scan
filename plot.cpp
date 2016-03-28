@@ -17,8 +17,6 @@
 Plot::Plot( QWidget *parent, bool print, CurParam *link):
     QwtPlot( parent )
 {
-    qDebug()<<"Plot";
-
     setMinimumHeight(150);
     setMinimumWidth (150);
 
@@ -470,7 +468,6 @@ void Plot::updateInterval()
 
 void Plot::clearMarker()
 {
-    qDebug()<<"clearMarcer";
     foreach (QwtPlotItem *p, itemList())
     {
         if(p->rtti() == QwtPlotItem::Rtti_PlotMarker)
