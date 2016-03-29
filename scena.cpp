@@ -11,7 +11,7 @@ scena::scena(quint16 raz, unsigned char *p)
     razmer = raz;
     newObject = false;
 
-    double curDeg, step;
+    double curDeg;
     quint16 curX, curY, maxY, maxX, curPoint;
     QHash<quint32,quint32> map;
     quint32 key;
@@ -95,7 +95,7 @@ scena::scena(quint16 raz, unsigned char *p)
     colorK[1][3]=255;
 
     setAutoBufferSwap(true);
-    curRazrez = midlY;
+    curRazrez = 0;
 }
 
 void scena::timerSec()
@@ -200,27 +200,18 @@ void scena::resizeGL(int nWidth, int nHeight)
 
 void scena::mouseMoveEvent(QMouseEvent *mEvent)
 {
-    double x;
+    double x,y;
+    qint8  nomVektor;
     Qt::MouseButtons buttons = QApplication::mouseButtons();
     if((editVertex)&&(buttons.testFlag(Qt::LeftButton)||newObject))
     {
         if(lArrow.at(0)->vertex.at(1) == editVertex)
         {
-            editVertex->yKoord = curRazrez = mEvent->y();
-//            editVertex->xKoord = 200;
-//            editVertex->xKoord = qRound(cos(getDeg(abs(curRazrez-midlY)))*razmer);
-            x =  (cos(getDeg(abs(curRazrez-midlY))));
-            qDebug()<<"xKoord"<<x;
-            x *= razmer;
-            qDebug()<<"xKoord"<<razmer;
-            editVertex->xKoord = qRound(x);
-//            qDebug()<<"xKoord"<<(cos(getDeg(abs(curRazrez-midlY))))*razmer;
-
-//            curDeg = getDeg(dVektor);
-//            curX = qRound((cos(curDeg))*curPoint);
-
-
-
+            nomVektor = curRazrez = ((mEvent->y()-midlY)*127)/midlY;
+            x =  (cos(getDeg((nomVektor))))*razmer;
+            y =  (sin(getDeg((nomVektor))))*razmer+midlY;
+            editVertex->xKoord = x;
+            editVertex->yKoord = y;
         }
         else
         {
@@ -384,6 +375,7 @@ void scena::drawElement()
     drawCaliper();
     if(editVertex)
         drawSelect(editVertex);
+    drawGraf();
 }
 
 void scena::drawArrow()
@@ -397,8 +389,12 @@ void scena::drawArrow()
             massiv[j][1] = vx->yKoord;
             if(vx==arrow->vertex.last())
                 drawCrest(massiv[j][0],massiv[j][1]);
-            color [j][0]=color[j][1]=color[j][2]=0;
-            color[j][1]=255;
+
+            if(lArrow.first()!=arrow)
+            {color [j][0]=color[j][1]=color[j][2]=0;color[j][1]=255;}
+            else
+            {color [j][0]=color[j][1]=color[j][2]=0;color[j][0]=255;}
+
             if(editArrow==arrow)
             {
                 color[j][1]=0;
@@ -445,6 +441,26 @@ void scena::drawArray()
         glColorPointer (3, GL_UNSIGNED_BYTE, 0, color);
         glDrawArrays   (GL_LINE_STRIP,       0, j);
     }
+}
+
+void scena::drawGraf()
+{
+    GLshort lMassiv[1600][2];
+    GLubyte lColor [1600][3];
+
+    quint16 curPoint=0;
+    for(double point=0; point<1600; point=point+step)
+    {
+        lColor [curPoint][0]=255;
+        lColor [curPoint][1]=0;
+        lColor [curPoint][2]=255;
+        lMassiv[curPoint][0] = curPoint;
+        lMassiv[curPoint][1] = (midlY*2) - (buf[(curRazrez+127)*1600+quint16(point)])/2;
+        curPoint++;
+    }
+    glVertexPointer(2, GL_SHORT,         0, lMassiv);
+    glColorPointer (3, GL_UNSIGNED_BYTE, 0, lColor);
+    glDrawArrays   (GL_LINE_STRIP,       0, curPoint);
 }
 
 void scena::drawCaliper()
@@ -643,11 +659,17 @@ void     scena::setArrow  (QString *str)
 {
     quint8   i = 0;
     quint16  coord[2];
+    double x,y;
+
 //    bool newArrow = false;
     QStringList slArrow = str->split("|");
     lArrow.clear();
+
+//    nomVektor = curRazrez;
+    x =  (cos(getDeg((curRazrez))))*razmer;
+    y =  (sin(getDeg((curRazrez))))*razmer+midlY;
     lArrow.append(new BScanArrow(0, midlY));
-    lArrow.last()->addVertex(200,   curRazrez);
+    lArrow.last()->addVertex(x, y);
     foreach(QString sArrow, slArrow)
     {
 //        newArrow = true;

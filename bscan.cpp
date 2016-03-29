@@ -53,6 +53,8 @@ Bscan::Bscan(QWidget *parent) :
     bScanControl->setBuf(buf);
     bScanControl->setBuf(buf);
     bScanControl->setBuf(buf);
+    bScanControl->setBuf(buf);
+    bScanControl->setBuf(buf);
 
     connect(bScanTools, SIGNAL(doScan()),           SLOT(doStart()));
     connect(bScanTools, SIGNAL(doStop()),           SLOT(doStop()));

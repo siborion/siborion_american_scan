@@ -52,6 +52,7 @@ private:
     void drawArrow();
     void drawArray();
     void drawCaliper();
+    void drawGraf();
     void drawCrest(quint16, quint16);
     void drawSelect(BScanvertex *vx);
     BScanvertex *findVertex(quint16, quint16);
@@ -62,8 +63,9 @@ private:
     BScanArray    *editArray;
     BScanCaliper  *editCaliper;
     bool          newObject;
-    quint16       curRazrez;
+    qint8         curRazrez;
     quint16       midlY;
+    double        step;
 
 protected:
     void mousePressEvent(QMouseEvent *);

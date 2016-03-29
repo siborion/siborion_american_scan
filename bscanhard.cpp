@@ -21,7 +21,7 @@ BScanHard::BScanHard(QObject *parent) :
 
     for(quint32 i=0; i<NumVectors*NumPoints; i++)
     {
-        buf1[i] = i;
+        buf1[i] = qrand();
     }
 
     //    QTest::qSleep(500);
