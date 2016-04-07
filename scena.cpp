@@ -455,7 +455,7 @@ void scena::drawGraf()
         lColor [curPoint][1]=0;
         lColor [curPoint][2]=255;
         lMassiv[curPoint][0] = curPoint;
-        lMassiv[curPoint][1] = (midlY*2) - (buf[(curRazrez+127)*1600+quint16(point)])/2;
+        lMassiv[curPoint][1] = (midlY*2) - (buf[(curRazrez+127)*1600+quint16(point)])/2 - 5;
         curPoint++;
     }
     glVertexPointer(2, GL_SHORT,         0, lMassiv);

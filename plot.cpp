@@ -40,7 +40,7 @@ Plot::Plot( QWidget *parent, bool print, CurParam *link):
     dMin=(-20.0); dMax=(1024.0);
     setAxisScale(QwtPlot::xTop, dMin, dMax);
     setAxisScale(QwtPlot::xBottom, (dMin/27), (dMax/27));
-    setAxisScale(QwtPlot::yLeft, -4, 280.0);
+    setAxisScale(QwtPlot::yLeft, -10, 280.0);
 
     QPalette palette;
     if(print)
@@ -54,8 +54,10 @@ Plot::Plot( QWidget *parent, bool print, CurParam *link):
     }
     else
     {
+        palette.setColor(QPalette::Background, Qt::black);
         palette.setColor(QPalette::WindowText, Qt::gray);
         palette.setColor(QPalette::Text, Qt::gray);
+        this->setPalette(palette);
     }
 
     this->axisWidget(QwtPlot::yLeft)->setPalette(palette);
