@@ -16,11 +16,9 @@ BScanControl::BScanControl(QWidget *parent) :
     table            = new adjview(10, sl, il);
     pbUp   = new QPushButton("<<");
     pbDown = new QPushButton(">>");
-//    QSpacerItem  *hs = new QSpacerItem(50, 5, QSizePolicy::Maximum, QSizePolicy::Maximum);
     ui->layoutGroupBox->addWidget(table,  0, 0, 1, 3);
     ui->layoutGroupBox->addWidget(pbUp,   1, 0);
     ui->layoutGroupBox->addWidget(pbDown, 1, 1);
-//    ui->verticalLayout->addItem(hs);
     connect(table->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), SLOT(changeRow(QModelIndex)));
     connect(pbUp,   SIGNAL(clicked()), SLOT(slPbUpClick()));
     connect(pbDown, SIGNAL(clicked()), SLOT(slPbDownClick()));

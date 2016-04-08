@@ -54,6 +54,7 @@ private:
     void drawCaliper();
     void drawGraf();
     void drawCrest(quint16, quint16);
+    void drawStrela(quint16 xStart, quint16 yStart, quint16 xEnd, quint16 yEnd, bool edit);
     void drawSelect(BScanvertex *vx);
     BScanvertex *findVertex(quint16, quint16);
     bool ctrlPress;

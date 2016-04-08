@@ -380,20 +380,23 @@ void scena::drawElement()
 
 void scena::drawArrow()
 {
+    qDebug()<<"--";
     foreach(BScanArrow *arrow, lArrow)
     {
+        qDebug()<<"555";
+        drawStrela(arrow->vertex.first()->xKoord, arrow->vertex.first()->yKoord, arrow->vertex.last()->xKoord, arrow->vertex.last()->yKoord, (editArrow==arrow));
         quint8 j=0;
         foreach(BScanvertex *vx, arrow->vertex)
         {
             massiv[j][0] = vx->xKoord;
             massiv[j][1] = vx->yKoord;
-            if(vx==arrow->vertex.last())
-                drawCrest(massiv[j][0],massiv[j][1]);
+//            if(vx==arrow->vertex.last())
+//                drawCrest(massiv[j][0],massiv[j][1]);
 
             if(lArrow.first()!=arrow)
             {color [j][0]=color[j][1]=color[j][2]=0;color[j][1]=255;}
             else
-            {color [j][0]=color[j][1]=color[j][2]=0;color[j][0]=255;}
+            {color [j][0]=color[j][1]=color[j][2]=0;color[j][2]=255;}
 
             if(editArrow==arrow)
             {
@@ -602,15 +605,18 @@ QString  scena::getArrowString()
     bool newArrow;
     foreach(BScanArrow *arrow, lArrow)
     {
-        newArrow = true;
-        foreach(BScanvertex *vx, arrow->vertex)
+        if(arrow!=lArrow.at(0))
         {
-            if(!newArrow)
-                sTmp.append(";");
-            sTmp.append(QString("%1,%2").arg(vx->xKoord).arg(vx->yKoord));
-            newArrow = false;
+            newArrow = true;
+            foreach(BScanvertex *vx, arrow->vertex)
+            {
+                if(!newArrow)
+                    sTmp.append(";");
+                sTmp.append(QString("%1,%2").arg(vx->xKoord).arg(vx->yKoord));
+                newArrow = false;
+            }
+            sTmp.append("|");
         }
-        sTmp.append("|");
     }
     return sTmp;
 }
@@ -660,20 +666,18 @@ void     scena::setArrow  (QString *str)
     quint8   i = 0;
     quint16  coord[2];
     double x,y;
+    bool newArrow;
 
-//    bool newArrow = false;
     QStringList slArrow = str->split("|");
     lArrow.clear();
 
-//    nomVektor = curRazrez;
     x =  (cos(getDeg((curRazrez))))*razmer;
     y =  (sin(getDeg((curRazrez))))*razmer+midlY;
     lArrow.append(new BScanArrow(0, midlY));
     lArrow.last()->addVertex(x, y);
     foreach(QString sArrow, slArrow)
     {
-//        newArrow = true;
-
+        newArrow = true;
         QStringList slVertex = sArrow.split(";");
         foreach(QString sVertex, slVertex)
         {
@@ -683,7 +687,12 @@ void     scena::setArrow  (QString *str)
                 coord[i++] = sPoint.toUInt();
                 if(i==2)
                 {
-                    lArrow.last()->addVertex(coord[0],coord[1]);
+//                    lArrow.last()->addVertex(coord[0],coord[1]);
+                    if(newArrow)
+                        lArrow.append(new BScanArrow(coord[0],coord[1]));
+                    else
+                        lArrow.last()->addVertex(coord[0],coord[1]);
+                    newArrow = false;
                     i=0;
                 }
             }
@@ -753,7 +762,52 @@ void     scena::setCaliper(QString *str)
     }
 }
 
+void scena::drawStrela(quint16 x1, quint16 y1, quint16 x2, quint16 y2, bool edit)
+{
+    double Vx, Vy, nx, ny, x3, x4, x5, y3, y4, y5, V;
+    const quint8 h = 5;
+    const quint8 w = 5;
 
+    Vx = x2 - x1;
+    Vy = y2 - y1;
+    V  = sqrt(Vx*Vx + Vy*Vy);
+    Vx = Vx/V;
+    Vy = Vy/V;
+    nx = Vy;
+    ny = -Vx;
+    x3 = x2 - h*Vx;
+    y3 = y2 - h*Vy;
+    x4 = x3 + w*nx;
+    y4 = y3 + w*ny;
+    x5 = x3 - w*nx;
+    y5 = y3 - w*ny;
 
+    GLshort crest[3][2];
+    GLubyte sColor[3][3];
+    crest[0][0] = x4;
+    crest[0][1] = y4;
+    crest[1][0] = x2;
+    crest[1][1] = y2;
 
+    if(edit)
+    {
+        {sColor [0][0]=sColor[0][1]=sColor[0][2]=0;sColor[0][2]=255;}
+        {sColor [1][0]=sColor[1][1]=sColor[1][2]=0;sColor[1][2]=255;}
+    }
+    else
+    {
+        {sColor [0][0]=sColor[0][1]=sColor[0][2]=0;sColor[0][1]=255;}
+        {sColor [1][0]=sColor[1][1]=sColor[1][2]=0;sColor[1][1]=255;}
+    }
 
+    glVertexPointer(2, GL_SHORT,         0, crest);
+    glColorPointer (3, GL_UNSIGNED_BYTE, 0, sColor);
+    glDrawArrays   (GL_LINE_STRIP,       0, 2);
+    crest[0][0] = x5;
+    crest[0][1] = y5;
+    crest[1][0] = x2;
+    crest[1][1] = y2;
+    glVertexPointer(2, GL_SHORT,         0, crest);
+    glColorPointer (3, GL_UNSIGNED_BYTE, 0, sColor);
+    glDrawArrays   (GL_LINE_STRIP,       0, 2);
+}
