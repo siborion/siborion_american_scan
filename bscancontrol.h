@@ -32,6 +32,7 @@ private slots:
     void slPbDownClick(void);
 
 public slots:
+    void changeRowFirst();
     void setBuf(unsigned char *buf);
     void slSetArray  (QString*);
     void slSetArrow  (QString*);

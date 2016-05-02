@@ -1,5 +1,4 @@
 #include "bscancaliper.h"
-#include <QDataStream>
 
 BScanCaliper::BScanCaliper(quint16 x, quint16 y)
 {

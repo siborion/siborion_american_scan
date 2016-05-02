@@ -43,18 +43,22 @@ Bscan::Bscan(QWidget *parent) :
 
     pScena = new scena(scenaSize, buf);
 
-    ui->gridLayout_2->addWidget(bScanTools,  0,0,2,1);
-    ui->gridLayout_2->addWidget(pScena,      0,1,2,1);
-//    ui->gridLayout_2->addWidget(bScanTabloA, 0,1,1,1);
-    ui->gridLayout_2->addWidget(bScanControl,0,2,2,1);
+    horizontalSpacer1 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+    horizontalSpacer2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+    ui->gridLayout_2->addWidget(bScanTools,      0, 0, 2, 1);
+    ui->gridLayout_2->addItem(horizontalSpacer1, 0, 1, 1, 1);
+    ui->gridLayout_2->addWidget(pScena,          0, 2, 2, 1);
+    ui->gridLayout_2->addItem(horizontalSpacer2, 0, 3, 1, 1);
+    ui->gridLayout_2->addWidget(bScanControl,    0, 4, 2, 1);
 
     buf = bScanHard->getBuf();
     bScanControl->setBuf(buf);
-    bScanControl->setBuf(buf);
-    bScanControl->setBuf(buf);
-    bScanControl->setBuf(buf);
-    bScanControl->setBuf(buf);
-    bScanControl->setBuf(buf);
+//    bScanControl->setBuf(buf);
+//    bScanControl->setBuf(buf);
+//    bScanControl->setBuf(buf);
+//    bScanControl->setBuf(buf);
+//    bScanControl->setBuf(buf);
 
     connect(bScanTools, SIGNAL(doScan()),           SLOT(doStart()));
     connect(bScanTools, SIGNAL(doStop()),           SLOT(doStop()));
@@ -109,6 +113,7 @@ void Bscan::doStop()
 {
     qDebug()<<"stop";
     bScanHard->close();
+    bScanControl->changeRowFirst();
 //    timer->stop();
 //    timerSec->stop();
     run = false;

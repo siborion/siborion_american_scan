@@ -380,17 +380,19 @@ void scena::drawElement()
 
 void scena::drawArrow()
 {
-    qDebug()<<"--";
     foreach(BScanArrow *arrow, lArrow)
     {
-        qDebug()<<"555";
-        drawStrela(arrow->vertex.first()->xKoord, arrow->vertex.first()->yKoord, arrow->vertex.last()->xKoord, arrow->vertex.last()->yKoord, (editArrow==arrow));
+//        if(arrow->vertex.first()!=arrow->vertex.last())
+        if(editArrow!=arrow)
+            drawStrela(arrow->vertex.first()->xKoord, arrow->vertex.first()->yKoord, arrow->vertex.last()->xKoord, arrow->vertex.last()->yKoord, (editArrow==arrow));
+
         quint8 j=0;
         foreach(BScanvertex *vx, arrow->vertex)
         {
             massiv[j][0] = vx->xKoord;
             massiv[j][1] = vx->yKoord;
 //            if(vx==arrow->vertex.last())
+//                drawStrela(arrow->vertex.first()->xKoord, arrow->vertex.first()->yKoord, arrow->vertex.last()->xKoord, arrow->vertex.last()->yKoord, (editArrow==arrow));
 //                drawCrest(massiv[j][0],massiv[j][1]);
 
             if(lArrow.first()!=arrow)

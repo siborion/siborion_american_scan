@@ -22,7 +22,7 @@ BScanControl::BScanControl(QWidget *parent) :
     connect(table->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), SLOT(changeRow(QModelIndex)));
     connect(pbUp,   SIGNAL(clicked()), SLOT(slPbUpClick()));
     connect(pbDown, SIGNAL(clicked()), SLOT(slPbDownClick()));
-    setBuf(0);
+//    setBuf(0);
 }
 
 unsigned char *BScanControl::getBuf()
@@ -70,6 +70,16 @@ void BScanControl::changeRow(QModelIndex index)
     emit sgUpdateCaliper(&sTmp);
 }
 
+void BScanControl::changeRowFirst()
+{
+    QModelIndex index;
+    index = table->model()->index(0,0);
+    qDebug()<<"changeRowFirst";
+    table->setCurrentIndex(index);
+    changeRow(index);
+
+}
+
 void BScanControl::slSetArray  (QString *array)
 {
     QModelIndex index;
@@ -100,7 +110,6 @@ void BScanControl::slPbDownClick(void)
         nomRow++;
     index = table->model()->index(nomRow, 0);
     table->setCurrentIndex(index);
-    qDebug()<<nomRow;
 }
 
 void BScanControl::slPbUpClick(void)
@@ -112,7 +121,6 @@ void BScanControl::slPbUpClick(void)
         nomRow--;
     index = table->model()->index(nomRow, 0);
     table->setCurrentIndex(index);
-    qDebug()<<nomRow;
 }
 
 BScanControl::~BScanControl()

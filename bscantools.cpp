@@ -11,16 +11,22 @@ BScanTools::BScanTools(QWidget *parent) :
 
 void BScanTools::on_pbScan_clicked()
 {
+    ui->gbAnnotation->setEnabled(false);
     emit doScan();
 }
 
 void BScanTools::on_pbStop_clicked()
 {
+    ui->gbAnnotation->setEnabled(true);
     emit doStop();
 }
 
 void BScanTools::on_pbOS_clicked()
 {
+    if(ui->pbOS->text()=="OS")
+        ui->pbOS->setText("OD");
+    else
+        ui->pbOS->setText("OS");
     emit doOS();
 
 }

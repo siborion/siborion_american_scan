@@ -7,6 +7,7 @@
 #include "bscancontrol.h"
 #include "BScanHard.h"
 #include "bscantabloa.h"
+#include <QSpacerItem>
 
 namespace Ui {
 class Bscan;
@@ -32,6 +33,8 @@ private:
     quint8 fps;
     bool   run;
     BScanTabloA *bScanTabloA;
+    QSpacerItem *horizontalSpacer1;
+    QSpacerItem *horizontalSpacer2;
 
 //    findArrowEdit(quint8 nomElement, arrow_edit);
 
