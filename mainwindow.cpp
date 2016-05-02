@@ -20,7 +20,7 @@ MainWindow::MainWindow(QWidget *parent) :
     measure = new Measure(this, curParam);
     device = new Device(this);
     parcer = new Parcer(this, curParam);
-    bscan = new Bscan();
+    bscan = new Bscan(this, curParam);
 
     ui->tabWidget->removeTab(0);
     ui->tabWidget->removeTab(0);
@@ -41,7 +41,11 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(pCalculator, SIGNAL(changeSideCalculator()), measure, SLOT(changeSideCalculatorSlot()));
 
     connect(measure,SIGNAL(stopMeasure()),pCalculator,SLOT(updatePatient()));
+
+
     connect(scanbase,SIGNAL(setStPatient(QMap<QString,QString>*)),SLOT(setStPatient(QMap<QString,QString>*)));
+
+
     connect(bases,SIGNAL(savePatient(quint16*)),scanbase,SLOT(saveCurPatient(quint16*)));
     connect(bases,SIGNAL(delPatient()),scanbase,SLOT(delPatient()));
 
@@ -93,6 +97,8 @@ void MainWindow::setStPatient(QMap <QString, QString> *stPatientBases)
 {
     bases->setStPatient(stPatientBases);
     measure->updatePatient();
+    bscan->updatePatient();
+
 }
 
 MainWindow::~MainWindow()

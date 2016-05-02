@@ -3,6 +3,7 @@
 #include <QMessageBox>
 #include <QMenu>
 #include <QApplication>
+#include <QDate>
 
 scena::scena(quint16 raz, unsigned char *p)
     :  QGLWidget()
@@ -376,6 +377,19 @@ void scena::drawElement()
     if(editVertex)
         drawSelect(editVertex);
     drawGraf();
+    drawText();
+}
+
+void scena::drawText()
+{
+    QFont font;
+    font.setBold(true);
+    font.setPixelSize(15);
+
+    qglColor(Qt::white); // Дальше рисуем белым цветом
+    renderText(10, 20 , 0, QString::fromUtf8("Data: %1").arg(QDate::currentDate().toString("dd.MM.yyyy")), font);
+    renderText(10, 40 , 0, QString::fromUtf8("Patient: %1").arg(sPatient), font);
+    renderText(10, 60 , 0, QString::fromUtf8("Doctor: %1").arg (sDoctor), font);
 }
 
 void scena::drawArrow()
@@ -812,4 +826,14 @@ void scena::drawStrela(quint16 x1, quint16 y1, quint16 x2, quint16 y2, bool edit
     glVertexPointer(2, GL_SHORT,         0, crest);
     glColorPointer (3, GL_UNSIGNED_BYTE, 0, sColor);
     glDrawArrays   (GL_LINE_STRIP,       0, 2);
+}
+
+void scena::setPatient(QString val)
+{
+    sPatient = val;
+}
+
+void scena::setDoctor(QString val)
+{
+    sDoctor = val;
 }

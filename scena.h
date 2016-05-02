@@ -26,6 +26,8 @@ public:
     QString  getArrowString();
     QString  getArrayString();
     QString  getCaliperString();
+    void setDoctor(QString);
+    void setPatient(QString);
 
 private:
     QTimer *timer;
@@ -56,6 +58,7 @@ private:
     void drawCrest(quint16, quint16);
     void drawStrela(quint16 xStart, quint16 yStart, quint16 xEnd, quint16 yEnd, bool edit);
     void drawSelect(BScanvertex *vx);
+    void drawText();
     BScanvertex *findVertex(quint16, quint16);
     bool ctrlPress;
     BScanvertex   *editVertex;
@@ -67,6 +70,8 @@ private:
     qint8         curRazrez;
     quint16       midlY;
     double        step;
+    QString       sPatient;
+    QString       sDoctor;
 
 protected:
     void mousePressEvent(QMouseEvent *);

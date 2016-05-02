@@ -3,11 +3,13 @@
 #include <QDebug>
 #include <QSettings>
 
-Bscan::Bscan(QWidget *parent) :
+Bscan::Bscan(QWidget *parent, CurParam *link) :
     QWidget(parent),
     ui(new Ui::Bscan)
 {
     quint16 scenaSize;
+
+    curParam = link;
 
     QSettings settings("scan.ini", QSettings::IniFormat);
     settings.beginGroup("b-scan");
@@ -142,6 +144,13 @@ void Bscan::keyReleaseEvent(QKeyEvent *kEvent)
 {
     pScena->keyReleaseEvent(kEvent);
 }
+
+void Bscan::updatePatient()
+{
+    pScena->setPatient(curParam->patientName);
+    pScena->setDoctor(curParam->doctorName);
+}
+
 
 Bscan::~Bscan()
 {

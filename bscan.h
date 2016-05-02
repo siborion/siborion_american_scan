@@ -8,6 +8,7 @@
 #include "BScanHard.h"
 #include "bscantabloa.h"
 #include <QSpacerItem>
+#include "curparam.h"
 
 namespace Ui {
 class Bscan;
@@ -18,8 +19,9 @@ class Bscan : public QWidget
     Q_OBJECT
 
 public:
-    explicit Bscan(QWidget *parent = 0);
+    explicit Bscan(QWidget *parent = 0, CurParam *link=0);
     ~Bscan();
+    void updatePatient();
 
 private:
     Ui::Bscan *ui;
@@ -35,6 +37,7 @@ private:
     BScanTabloA *bScanTabloA;
     QSpacerItem *horizontalSpacer1;
     QSpacerItem *horizontalSpacer2;
+    CurParam *curParam;
 
 //    findArrowEdit(quint8 nomElement, arrow_edit);
 
