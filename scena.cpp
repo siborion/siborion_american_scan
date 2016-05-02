@@ -390,6 +390,9 @@ void scena::drawText()
     renderText(10, 20 , 0, QString::fromUtf8("Data: %1").arg(QDate::currentDate().toString("dd.MM.yyyy")), font);
     renderText(10, 40 , 0, QString::fromUtf8("Patient: %1").arg(sPatient), font);
     renderText(10, 60 , 0, QString::fromUtf8("Doctor: %1").arg (sDoctor), font);
+
+    font.setPixelSize(50);
+    renderText(200, 60 , 0, QString::fromUtf8("%1").arg (sSide), font);
 }
 
 void scena::drawArrow()
@@ -829,11 +832,10 @@ void scena::drawStrela(quint16 x1, quint16 y1, quint16 x2, quint16 y2, bool edit
 }
 
 void scena::setPatient(QString val)
-{
-    sPatient = val;
-}
+{    sPatient = val;}
 
 void scena::setDoctor(QString val)
-{
-    sDoctor = val;
-}
+{    sDoctor = val;}
+
+void scena::setSide(QString val)
+{    sSide = val;}

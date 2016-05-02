@@ -28,6 +28,7 @@ public:
     QString  getCaliperString();
     void setDoctor(QString);
     void setPatient(QString);
+    void setSide(QString);
 
 private:
     QTimer *timer;
@@ -72,6 +73,7 @@ private:
     double        step;
     QString       sPatient;
     QString       sDoctor;
+    QString       sSide;
 
 protected:
     void mousePressEvent(QMouseEvent *);

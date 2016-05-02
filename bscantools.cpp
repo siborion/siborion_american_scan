@@ -24,11 +24,15 @@ void BScanTools::on_pbStop_clicked()
 void BScanTools::on_pbOS_clicked()
 {
     if(ui->pbOS->text()=="OS")
+    {
+        emit doOS(REGIM::OS);
         ui->pbOS->setText("OD");
+    }
     else
+    {
+        emit doOS(REGIM::OD);
         ui->pbOS->setText("OS");
-    emit doOS();
-
+    }
 }
 
 void BScanTools::setFps(quint8 val)

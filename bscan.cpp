@@ -10,6 +10,7 @@ Bscan::Bscan(QWidget *parent, CurParam *link) :
     quint16 scenaSize;
 
     curParam = link;
+    bScanSide = REGIM::OD;
 
     QSettings settings("scan.ini", QSettings::IniFormat);
     settings.beginGroup("b-scan");
@@ -30,10 +31,8 @@ Bscan::Bscan(QWidget *parent, CurParam *link) :
     timerSec->setInterval(1000);
 
     bScanTabloA = new BScanTabloA();
-//    bScanTabloA->setMinimumHeight(150);
-//    bScanTabloA->setMaximumHeight(150);
-        bScanTabloA->setMinimumSize(150,150);
-        bScanTabloA->setMaximumSize(150,150);
+    bScanTabloA->setMinimumSize(150,150);
+    bScanTabloA->setMaximumSize(150,150);
 
 
     run = false;
@@ -56,15 +55,10 @@ Bscan::Bscan(QWidget *parent, CurParam *link) :
 
     buf = bScanHard->getBuf();
     bScanControl->setBuf(buf);
-//    bScanControl->setBuf(buf);
-//    bScanControl->setBuf(buf);
-//    bScanControl->setBuf(buf);
-//    bScanControl->setBuf(buf);
-//    bScanControl->setBuf(buf);
 
     connect(bScanTools, SIGNAL(doScan()),           SLOT(doStart()));
     connect(bScanTools, SIGNAL(doStop()),           SLOT(doStop()));
-    connect(bScanTools, SIGNAL(doOS()),             SLOT(setRun()));
+    connect(bScanTools, SIGNAL(doOS(REGIM::RegimSide)),             SLOT(setRun(REGIM::RegimSide)));
     connect(bScanTools, SIGNAL(doEdit(CUR_EDIT,bool)), pScena, SLOT(doEdit(CUR_EDIT,bool)));
 
     connect(timer,      SIGNAL(timeout()),          SLOT(scenaRefr()));
@@ -80,6 +74,7 @@ Bscan::Bscan(QWidget *parent, CurParam *link) :
 
     timer->start();
     timerSec->start();
+//    updatePatient();
 }
 
 void Bscan::scenaRefr()
@@ -121,17 +116,19 @@ void Bscan::doStop()
     run = false;
 }
 
-void Bscan::setRun()
+void Bscan::setRun(REGIM::RegimSide val)
 {
-    QString sTmp;
-    sTmp = pScena->getArrowString();
-    pScena->setArrow(&sTmp);
+    bScanSide = val;
+//    QString sTmp;
+//    sTmp = pScena->getArrowString();
+//    pScena->setArrow(&sTmp);
 
-    sTmp = pScena->getArrayString();
-    pScena->setArray(&sTmp);
+//    sTmp = pScena->getArrayString();
+//    pScena->setArray(&sTmp);
 
-    sTmp = pScena->getCaliperString();
-    pScena->setCaliper(&sTmp);
+//    sTmp = pScena->getCaliperString();
+//    pScena->setCaliper(&sTmp);
+    updatePatient();
 
 }
 
@@ -149,6 +146,11 @@ void Bscan::updatePatient()
 {
     pScena->setPatient(curParam->patientName);
     pScena->setDoctor(curParam->doctorName);
+    if(bScanSide==REGIM::OD)
+        pScena->setSide("OD11");
+    else
+        pScena->setSide("O11S");
+
 }
 
 

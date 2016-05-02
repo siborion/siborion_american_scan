@@ -9,6 +9,7 @@
 #include "bscantabloa.h"
 #include <QSpacerItem>
 #include "curparam.h"
+#include "typedef.h"
 
 namespace Ui {
 class Bscan;
@@ -38,13 +39,14 @@ private:
     QSpacerItem *horizontalSpacer1;
     QSpacerItem *horizontalSpacer2;
     CurParam *curParam;
+    REGIM::RegimSide bScanSide;
 
 //    findArrowEdit(quint8 nomElement, arrow_edit);
 
 private slots:
     void scenaRefr();
     void doSec();
-    void setRun();
+    void setRun(REGIM::RegimSide);
     void doStart();
     void doStop();
 

@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QGroupBox>
 #include <QPushButton>
+#include "typedef.h"
 
 
 enum CUR_EDIT{NONE, TEXT, ARROW, ARRAY, CALIPER};
@@ -28,7 +29,7 @@ private:
 signals:
     void doScan(void);
     void doStop(void);
-    void doOS(void);
+    void doOS(REGIM::RegimSide);
     void doEdit(CUR_EDIT regim, bool on);
 
 private slots:
