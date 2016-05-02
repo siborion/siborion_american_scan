@@ -838,4 +838,7 @@ void scena::setDoctor(QString val)
 {    sDoctor = val;}
 
 void scena::setSide(QString val)
-{    sSide = val;}
+{
+    sSide = val;
+//    drawText();
+}
