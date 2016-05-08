@@ -8,6 +8,7 @@
 #include <bscanarrow.h>
 #include <bscanarray.h>
 #include <bscancaliper.h>
+#include <bscantext.h>
 #include <bscanvertex.h>
 #include <bscantools.h>
 
@@ -51,6 +52,7 @@ private:
     QList<BScanArrow*>   lArrow;
     QList<BScanArray*>   lArray;
     QList<BScanCaliper*> lCaliper;
+    QList<BScanText*> lText;
     void drawElement();
     void drawArrow();
     void drawArray();
@@ -67,6 +69,7 @@ private:
     BScanArrow    *editArrow;
     BScanArray    *editArray;
     BScanCaliper  *editCaliper;
+    BScanText     *editText;
     bool          newObject;
     qint8         curRazrez;
     quint16       midlY;

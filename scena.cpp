@@ -4,6 +4,7 @@
 #include <QMenu>
 #include <QApplication>
 #include <QDate>
+#include <QMessageBox>
 
 scena::scena(quint16 raz, unsigned char *p)
     :  QGLWidget()
@@ -244,6 +245,7 @@ void scena::mousePressEvent(QMouseEvent *mEvent)
                 editArrow    = dynamic_cast<BScanArrow   *>(editVertex->parent());
                 editArray    = dynamic_cast<BScanArray   *>(editVertex->parent());
                 editCaliper  = dynamic_cast<BScanCaliper *>(editVertex->parent());
+                editText     = dynamic_cast<BScanText *>   (editVertex->parent());
                 if(editArray==0)
                     menu.addAction("Delete vertex",this,SLOT(removeEditVertex()));
                 menu.addAction("Delete object",this,SLOT(removeEditObject()));
@@ -251,7 +253,6 @@ void scena::mousePressEvent(QMouseEvent *mEvent)
             }
         }
     }
-
     if(mEvent->button() == Qt::LeftButton)
     {
         switch(editRegim)
@@ -260,8 +261,20 @@ void scena::mousePressEvent(QMouseEvent *mEvent)
             editVertex = tmpVertex;
             break;
         case CUR_EDIT::TEXT:
+        {
+            lText.append(new BScanText(mEvent->x(),mEvent->y()));
+            editVertex = lText.last()->vertex;
+            QMessageBox msg;
+            msg.setText("777777");
+//            msg.exec();
+        }
             break;
         case CUR_EDIT::ARRAY:
+        {
+
+            QMessageBox msg;
+            msg.setText("88888");
+//            msg.exec();
             if(editVertex&&newObject)
                 editVertex =  lArray.last()->addVertex(mEvent->x(),mEvent->y());
             else
@@ -275,6 +288,7 @@ void scena::mousePressEvent(QMouseEvent *mEvent)
                     editVertex =  lArray.last()->addVertex(mEvent->x(),mEvent->y());
                 }
             }
+        }
             break;
         case CUR_EDIT::ARROW:
             if(editVertex&&newObject)
@@ -319,12 +333,14 @@ void scena::mousePressEvent(QMouseEvent *mEvent)
         editArrow    = dynamic_cast<BScanArrow   *>(editVertex->parent());
         editArray    = dynamic_cast<BScanArray   *>(editVertex->parent());
         editCaliper  = dynamic_cast<BScanCaliper *>(editVertex->parent());
+        editText     = dynamic_cast<BScanText *>   (editVertex->parent());
     }
     else
     {
-        editArrow = 0;
-        editArray = 0;
+        editArrow   = 0;
+        editArray   = 0;
         editCaliper = 0;
+        editText    = 0;
     }
 
     if((mEvent->button() == Qt::RightButton)||(mEvent->button() == Qt::LeftButton))
@@ -346,6 +362,14 @@ void scena::keyPressEvent(QKeyEvent *kEvent)
     if(kEvent->key() == Qt::Key_Control)
     {
         ctrlPress = true;
+    }
+
+    if(editRegim==CUR_EDIT::TEXT)
+    {
+        if(editText)
+        {
+            editText->text = editText->text +   kEvent->key();
+        }
     }
 }
 
@@ -393,6 +417,11 @@ void scena::drawText()
 
     font.setPixelSize(50);
     renderText(200, 60 , 0, QString::fromUtf8("%1").arg (sSide), font);
+
+    foreach(BScanText *text, lText)
+    {
+        renderText(text->vertex->xKoord, text->vertex->yKoord, 0, text->text, font);
+    }
 }
 
 void scena::drawArrow()

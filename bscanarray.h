@@ -11,6 +11,7 @@ public:
     QList<BScanvertex*> vertex;
     BScanvertex *findVertex(quint16 x, quint16 y);
     BScanvertex *addVertex(quint16 x, quint16 y);
+    BScanvertex textVertex;
 };
 
 #endif // BSCANARRAY_H

@@ -147,9 +147,9 @@ void Bscan::updatePatient()
     pScena->setPatient(curParam->patientName);
     pScena->setDoctor(curParam->doctorName);
     if(bScanSide==REGIM::OD)
-        pScena->setSide("OD11");
+        pScena->setSide("OD");
     else
-        pScena->setSide("O11S");
+        pScena->setSide("OS");
 
 }
 

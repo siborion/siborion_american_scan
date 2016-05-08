@@ -64,6 +64,7 @@ void BScanTools::on_pbClear_clicked()
 void BScanTools::on_pbText_clicked()
 {
     rechecketPb(ui->gbAnnotation, ui->pbText);
+    emit doEdit(CUR_EDIT::TEXT, ui->pbText->isChecked());
 }
 
 void BScanTools::on_pbArray_clicked()
