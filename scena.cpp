@@ -264,17 +264,12 @@ void scena::mousePressEvent(QMouseEvent *mEvent)
         {
             lText.append(new BScanText(mEvent->x(),mEvent->y()));
             editVertex = lText.last()->vertex;
-            QMessageBox msg;
-            msg.setText("777777");
-//            msg.exec();
+            if(tmpVertex)
+                editVertex = tmpVertex;
         }
             break;
         case CUR_EDIT::ARRAY:
         {
-
-            QMessageBox msg;
-            msg.setText("88888");
-//            msg.exec();
             if(editVertex&&newObject)
                 editVertex =  lArray.last()->addVertex(mEvent->x(),mEvent->y());
             else
@@ -364,11 +359,32 @@ void scena::keyPressEvent(QKeyEvent *kEvent)
         ctrlPress = true;
     }
 
-    if(editRegim==CUR_EDIT::TEXT)
+//    if(editRegim==CUR_EDIT::TEXT)
     {
         if(editText)
         {
-            editText->text = editText->text +   kEvent->key();
+            QMessageBox msg;
+            msg.setText(QString("%1").arg(kEvent->key()));
+ //           msg.exec();
+
+            switch (kEvent->key())
+            {
+            case Qt::Key_Backspace:
+                editText->text = editText->text.mid(0, editText->text.length()-1);
+                break;
+            case Qt::Key_Return:
+                editText = 0;
+                editVertex = 0;
+                break;
+            default:
+                editText->text = editText->text + kEvent->key();
+                break;
+            }
+
+//            if(kEvent->key()==Qt::Key_Backspace)
+//                editText->text = editText->text.mid(0, editText->text.length()-1);
+//            else
+//                editText->text = editText->text + kEvent->key();
         }
     }
 }
@@ -418,8 +434,13 @@ void scena::drawText()
     font.setPixelSize(50);
     renderText(200, 60 , 0, QString::fromUtf8("%1").arg (sSide), font);
 
+    font.setPixelSize(15);
     foreach(BScanText *text, lText)
     {
+        if(editText == text)
+            qglColor(Qt::green);
+        else
+            qglColor(Qt::white);
         renderText(text->vertex->xKoord, text->vertex->yKoord, 0, text->text, font);
     }
 }
@@ -590,6 +611,12 @@ BScanvertex *scena::findVertex(quint16 x, quint16 y)
     foreach(BScanCaliper *caliper, lCaliper)
     {
         vertex = caliper->findVertex(x, y);
+        if(vertex)
+            return vertex;
+    }
+    foreach(BScanText *text, lText)
+    {
+        vertex = text->findVertex(x, y);
         if(vertex)
             return vertex;
     }

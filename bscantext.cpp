@@ -8,13 +8,10 @@ BScanText::BScanText(quint16 x, quint16 y)
 
 BScanvertex *BScanText::findVertex(quint16 x, quint16 y)
 {
-//    BScanvertex *vxTmp;
-//    foreach (BScanvertex *vx, vertex)
-//    {
-//        vxTmp = vx->findVertex(x,y);
-//        if(vxTmp)
-//            return vxTmp;
-//    }
+    BScanvertex *vxTmp;
+    vxTmp = vertex->findVertex(x,y);
+    if(vxTmp)
+        return vxTmp;
     return 0;
 }
 
