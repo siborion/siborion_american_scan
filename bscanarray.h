@@ -12,6 +12,9 @@ public:
     BScanvertex *findVertex(quint16 x, quint16 y);
     BScanvertex *addVertex(quint16 x, quint16 y);
     BScanvertex textVertex;
+    float getS();
+
+
 };
 
 #endif // BSCANARRAY_H

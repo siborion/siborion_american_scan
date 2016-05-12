@@ -507,6 +507,15 @@ void scena::drawArray()
             color[j][1]=0;
             color[j][2]=255;
         }
+        else
+        {
+            float S;
+            quint16 x,y;
+            S = array->getS();
+            x = array->vertex.last()->xKoord;
+            y = array->vertex.last()->yKoord;
+            renderText(x, y , 0, QString("%1").arg(S));
+        }
         j++;
 
         glVertexPointer(2, GL_SHORT,         0, massiv);
