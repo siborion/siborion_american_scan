@@ -512,6 +512,7 @@ void scena::drawArray()
             float S;
             quint16 x,y;
             S = array->getS();
+            S *= 0.00140625;
             x = array->vertex.last()->xKoord;
             y = array->vertex.last()->yKoord;
             renderText(x, y , 0, QString("%1").arg(S));
