@@ -46,6 +46,6 @@ float BScanArray::getS()
         S2 += sm;
     }
 
-    return (S1-S2);
+    return qAbs((S1-S2)/2);
 }
 
