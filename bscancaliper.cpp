@@ -23,4 +23,11 @@ BScanvertex *BScanCaliper::addVertex(quint16 x, quint16 y)
     return vertex.last();
 }
 
+float BScanCaliper::getLenght()
+{
+    float ret;
+    ret = sqrt(pow(this->vertex.first()->xKoord - this->vertex.last()->xKoord , 2) + pow(this->vertex.first()->yKoord - this->vertex.last()->yKoord , 2));
+    return ret;
+}
+
 

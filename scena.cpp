@@ -564,6 +564,18 @@ void scena::drawCaliper()
                 color[j][1]=0;
                 color[j][2]=255;
             }
+            else
+            {
+                float S;
+                quint16 x,y;
+                S = caliper->getLenght();
+                S *= 0.00140625;
+                S *= step;
+                S *= step;
+                x = caliper->vertex.last()->xKoord;
+                y = caliper->vertex.last()->yKoord;
+                renderText(x, y , 0, QString("%1").arg(S));
+            }
             j++;
         }
         glVertexPointer(2, GL_SHORT,         0, massiv);
