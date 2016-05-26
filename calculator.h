@@ -25,6 +25,7 @@
 #include "curparam.h"
 #include "typedef.h"
 #include "printplot.h"
+#include "calclens.h"
 
 
 class calculator : public QWidget
@@ -40,6 +41,7 @@ public:
 signals:
 
 private:
+    CalcLens *calcLens;
     double al1, al2, al3, al4, acd1, acd2, acd3, acd4;
     QImage iPlot1, iPlot2, iPlot3, iPlot4;
     CurParam *curParam;
@@ -73,7 +75,7 @@ private:
 //    adjview *twcalculator2;
 //    adjview *twcalculator3;
 //    QStandardItemModel *modelcalculator1;
-    QWidget *frCalculator;
+//    QWidget *frCalculator;
 //    QComboBox *cbFormula1;
 //    QComboBox *cbFormula2;
 //    QComboBox *cbFormula3;

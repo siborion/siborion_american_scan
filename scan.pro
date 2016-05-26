@@ -77,7 +77,10 @@ SOURCES += main.cpp\
     bscanarray.cpp \
     bscantabloa.cpp \
     bscancaliper.cpp \
-    bscantext.cpp
+    bscantext.cpp \
+    calclens.cpp \
+    calclenstable.cpp \
+    calclensdelegate.cpp
 
 HEADERS  += mainwindow.h \
     bases.h \
@@ -123,7 +126,10 @@ HEADERS  += mainwindow.h \
     bscanarray.h \
     bscantabloa.h \
     bscancaliper.h \
-    bscantext.h
+    bscantext.h \
+    calclens.h \
+    calclenstable.h \
+    calclensdelegate.h
 
 FORMS    += mainwindow.ui \
     dialog_doctor.ui \
@@ -137,7 +143,9 @@ FORMS    += mainwindow.ui \
     bscan.ui \
     bscantools.ui \
     bscancontrol.ui \
-    bscantabloa.ui
+    bscantabloa.ui \
+    calclens.ui \
+    calclenstable.ui
 
 RESOURCES += \
     scan.qrc

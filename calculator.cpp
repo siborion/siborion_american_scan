@@ -14,11 +14,8 @@ calculator::calculator(QWidget *parent, CurParam *link) :
     QStringList lst;
 
     curParam = link;
-
     QStandardItemModel *model;
-
     QVBoxLayout *layout              = new QVBoxLayout(this);
-    QHBoxLayout *layoutTop           = new QHBoxLayout();
 
     columnPercent.clear();
     columnPercent<<50<<50;
@@ -32,8 +29,6 @@ calculator::calculator(QWidget *parent, CurParam *link) :
         model->item   (i, 0)->setEditable(false);
     }
 
-
-
     //-------------------------------
     columnPercent.clear();
     columnPercent<<20<<0<<21<<15<<10<<10<<8<<8<<8;
@@ -41,9 +36,6 @@ calculator::calculator(QWidget *parent, CurParam *link) :
 
     twLens = new adjview(3, lst, columnPercent);
     twLens->setMinimumWidth(350);
-//    twLens->setFrameStyle(QFrame::Box);
-//    modelMainLens = curParam->lensModel;
-//    twLens->setModel(modelMainLens);
     refreshLens(curParam->lensModel);
     //-------------------------------
     columnPercent.clear();
@@ -62,8 +54,6 @@ calculator::calculator(QWidget *parent, CurParam *link) :
         model->item   (i, 2)->setEnabled(false);
     }
 
-
-
     QPalette palette;
     QBrush brush(QColor(0, 0, 0, 255));
     brush.setStyle(Qt::SolidPattern);
@@ -71,8 +61,6 @@ calculator::calculator(QWidget *parent, CurParam *link) :
     twK->setPalette(palette);
 
     pCalcPatient = new calculator_patient(this, link);
-
-
 
     columnPercent.clear();
     columnPercent<<50<<50;
@@ -93,26 +81,22 @@ calculator::calculator(QWidget *parent, CurParam *link) :
 
     pbPrint = new QPushButton("Print");
 
-
-
-    layoutTop->addWidget(pCalcPatient);
-    layoutTop->addWidget(twLens);
-    layout->addLayout(layoutTop);
-
-    frCalculator = new QWidget();
-//    frCalculator->setFrameShape(QFrame::WinPanel);
-//    frCalculator->setFrameShadow(QFrame::Raised);
-    QHBoxLayout *frLayout = new QHBoxLayout(frCalculator);
+    QFrame *frPatient = new QFrame();
+    frPatient->setFrameShape(QFrame::WinPanel);
+    frPatient->setFrameShadow(QFrame::Raised);
+    QHBoxLayout *layoutFrame = new QHBoxLayout();
+    frPatient->setLayout(layoutFrame);
+    layoutFrame->addWidget(pCalcPatient);
+    layoutFrame->addWidget(twLens);
 
     Formula1 = new formula();
     Formula2 = new formula();
     Formula3 = new formula();
 
-    frLayout->addWidget(Formula1);
-    frLayout->addWidget(Formula2);
-    frLayout->addWidget(Formula3);
+    calcLens = new CalcLens();
 
-    layout->addWidget(frCalculator);
+    layout->addWidget(frPatient);
+    layout->addWidget(calcLens);
     layout->addWidget(pbPrint);
 
     connect(pCalcPatient, SIGNAL(refreshFormula()), SLOT(refreshFormuls()));
