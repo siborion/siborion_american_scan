@@ -97,6 +97,7 @@ calculator::calculator(QWidget *parent, CurParam *link) :
 
     layout->addWidget(frPatient);
     layout->addWidget(calcLens);
+//    layout->addWidget(Formula1);
     layout->addWidget(pbPrint);
 
     connect(pCalcPatient, SIGNAL(refreshFormula()), SLOT(refreshFormuls()));
@@ -151,6 +152,7 @@ void calculator::refreshFormuls()
             lensA1 =  twLens->model()->itemData(twLens->model()->index(i,7)).value(0).toString();
             lensA2 =  twLens->model()->itemData(twLens->model()->index(i,8)).value(0).toString();
 
+            calcLens->setValue(i,nFormula,lensName,lensAconst,lensAcd,lensFs,lensA0,lensA1,lensA2,curParam->K,curParam->ALave,curParam->ACD,personalParam.Rx);
 
             switch (i)
             {

@@ -51,6 +51,9 @@ INPUT(
 ./debug/bscantabloa.o
 ./debug/bscancaliper.o
 ./debug/bscantext.o
+./debug/calclens.o
+./debug/calclenstable.o
+./debug/combo_delegate_cell.o
 ./debug/qrc_imagesRpt.o
 ./debug/qrc_scan.o
 ./debug/moc_chart.o
@@ -97,4 +100,7 @@ INPUT(
 ./debug/moc_bscantabloa.o
 ./debug/moc_bscancaliper.o
 ./debug/moc_bscantext.o
+./debug/moc_calclens.o
+./debug/moc_calclenstable.o
+./debug/moc_combo_delegate_cell.o
 );

@@ -12,7 +12,11 @@ CalcLens::CalcLens(QWidget *parent) :
     QTableView tw;
     lensTable = new CalcLensTable (17, 7, pr, &tw);
     gridLayout->addWidget(lensTable);
+}
 
+void CalcLens::setValue(quint8 nomLens, quint8 formula, QString name, QString aconst, QString acd, QString fs, QString a0, QString a1, QString a2, double dK, double dAL, double dACD, double RxVal)
+{
+    lensTable->setValue(nomLens, formula, name, aconst, acd, fs, a0, a1, a2, dK, dAL, dACD, RxVal);
 }
 
 CalcLens::~CalcLens()
