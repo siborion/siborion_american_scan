@@ -41,6 +41,10 @@ public slots:
     void resiveDataSlot(QByteArray*);
     void setStPatient(QMap <QString, QString> *stPatientBases);
 
+private slots:
+//    void updatePatient();
+
+
 Q_SIGNALS:
 
 };

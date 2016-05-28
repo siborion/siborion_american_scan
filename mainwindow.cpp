@@ -36,6 +36,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(bases,SIGNAL(updateCurPatient(quint16)),scanbase,SLOT(updateCurPatient(quint16)));
     connect(bases,SIGNAL(updateCurPatient(quint16)),pCalculator,SLOT(updatePatient()));
+//    connect(bases,SIGNAL(updateCurPatient(quint16)), SLOT(updatePatient()));
     connect(measure,SIGNAL(changeGlas()),pCalculator,SLOT(updatePatient()));
 
     connect(pCalculator, SIGNAL(changeSideCalculator()), measure, SLOT(changeSideCalculatorSlot()));
@@ -95,10 +96,15 @@ void MainWindow::resiveDataSlot(QByteArray *Sample)
 
 void MainWindow::setStPatient(QMap <QString, QString> *stPatientBases)
 {
+    QString str;
     bases->setStPatient(stPatientBases);
     measure->updatePatient();
     bscan->updatePatient();
-
+    if(curParam->doctorName.isEmpty())
+        str.append("Ocusvm");
+    else
+        str.append(QString("Ocusvm / %1 / %2").arg(curParam->patientName).arg(curParam->doctorName));
+    this->setWindowTitle(str);
 }
 
 MainWindow::~MainWindow()
