@@ -161,7 +161,7 @@ QStandardItem* formula::getItem(double val, Qt::AlignmentFlag align)
 void formula::setValue(quint8 formula, QString name, QString aconst, QString acd, QString fs, QString a0, QString a1, QString a2, double dK, double dAL, double dACD, double RxVal)
 {
 
-    qDebug()<<"nm"<<name;
+//    qDebug()<<"nm"<<name;
 
     QStringList s;
     s = getListFormula();

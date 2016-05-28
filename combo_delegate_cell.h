@@ -22,6 +22,10 @@ public:
     void paint( QPainter * painter, const QStyleOptionViewItem &option,
                 const QModelIndex &index ) const;
 
+//    void drawDecoration(QPainter *painter, const QStyleOptionViewItem &option,
+//                        const QRect &rect, const QPixmap &pixmap) const;
+
+
     inline QHash<int, QString>& values() { return m_values; }
 };
 

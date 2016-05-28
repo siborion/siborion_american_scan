@@ -304,7 +304,6 @@ void calculator::printPreview()
 
 void calculator::refreshLens(QSqlQueryModel *link)
 {
-    qDebug()<<"twLens->setModel(link)";
     twLens->setModel(link);
     link->setHeaderData(0, Qt::Horizontal, "Lens", Qt::DisplayRole);
     link->setHeaderData(1, Qt::Horizontal, "numF", Qt::DisplayRole);

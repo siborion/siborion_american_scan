@@ -8,7 +8,7 @@ CalcLens::CalcLens(QWidget *parent) :
     ui->setupUi(this);
     gridLayout = new QGridLayout(this);
     QList<int>pr;
-    pr<<14<<14<<14<<14<<14<<14<<14;
+    pr<<0<<17<<17<<17<<17<<17<<17;
     QTableView tw;
     lensTable = new CalcLensTable (17, 7, pr, &tw);
     gridLayout->addWidget(lensTable);
