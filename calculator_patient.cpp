@@ -55,9 +55,9 @@ void calculator_patient::refreshPatientParam()
         ui->leK2->setTextZero(QString("%1").arg(curParam->k2right));
         ui->pbSide->setText("OS");
     }
-    ui->lePatientId->setText(QString("%1").arg(curParam->patientId));
-    ui->lePatientName->setText(curParam->patientName);
-    ui->leDoctorName->setText(curParam->doctorName);
+//    ui->lePatientId->setText(QString("%1").arg(curParam->patientId));
+//    ui->lePatientName->setText(curParam->patientName);
+//    ui->leDoctorName->setText(curParam->doctorName);
     ui->leACD_measure->setText(QString("%1").arg(curParam->ACD));
     ui->leAL_measure->setTextZero(QString("%1").arg(curParam->ALave));
     RefreshK();
@@ -122,9 +122,9 @@ void calculator_patient::ChangeSide()
 
 void calculator_patient::setPatient(quint16 id, QString Patient, QString Doctor)
 {
-    ui->lePatientId->setText(QString("%1").arg(id));
-    ui->lePatientName->setText(Patient);
-    ui->leDoctorName->setText(Doctor);
+//    ui->lePatientId->setText(QString("%1").arg(id));
+//    ui->lePatientName->setText(Patient);
+//    ui->leDoctorName->setText(Doctor);
 }
 
 void calculator_patient::updateParam()

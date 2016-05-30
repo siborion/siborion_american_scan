@@ -33,7 +33,9 @@ CalcLensTable::CalcLensTable(int row, int col, QList<int> pr, QTableView *parent
     this->setStyleSheet(QStringLiteral("gridline-color: rgb(200, 200, 255);"));
     this->setSpan(0,0,3,1);
     this->setSpan(3,0,7,1);
-    this->setSpan(10,0,1,7);
+    this->setSpan(10,1,1,2);
+    this->setSpan(10,3,1,2);
+    this->setSpan(10,5,1,2);
 
     this->verticalHeader()->setDefaultSectionSize(16);
     this->horizontalHeader()->setDefaultAlignment(Qt::AlignHCenter);
@@ -77,11 +79,14 @@ CalcLensTable::CalcLensTable(int row, int col, QList<int> pr, QTableView *parent
     pCombo_Delegate.append(new CCombo_Delegate_Cell(this));
     pCombo_Delegate.append(new CCombo_Delegate_Cell(this));
 
-    pCombo_Delegate.at(0)->values().insert(0, "");
+//    pCombo_Delegate.at(0)->values().insert(0, "");
 
     this->setItemDelegateForColumn(1, pCombo_Delegate.at(0));
     this->setItemDelegateForColumn(3, pCombo_Delegate.at(1));
     this->setItemDelegateForColumn(5, pCombo_Delegate.at(2));
+
+    connect(pCombo_Delegate.at(0), SIGNAL(closeEditor(QWidget*,QAbstractItemDelegate::EndEditHint)), SLOT(slChangeCombo1()));
+
 }
 
 void CalcLensTable::setSide(QString val)
@@ -218,6 +223,34 @@ void CalcLensTable::saveParam(quint8 nomLens, _formulae *val)
         tableModel->setData(index, str, Qt::DisplayRole);
     }
 }
+
+void CalcLensTable::slChangeCombo1()
+{
+    QModelIndex index;
+    quint8 nomFormula;
+    index = this->tableModel->index(1,1);
+    nomFormula = tableModel->data(index, Qt::DisplayRole).toUInt();
+    changeFotmula(0, nomFormula);
+}
+
+void CalcLensTable::slChangeCombo2()
+{
+    QModelIndex index;
+    quint8 nomFormula;
+    index = this->tableModel->index(1,3);
+    nomFormula = tableModel->data(index, Qt::DisplayRole).toUInt();
+    changeFotmula(1, nomFormula);
+}
+
+void CalcLensTable::slChangeCombo3()
+{
+    QModelIndex index;
+    quint8 nomFormula;
+    index = this->tableModel->index(1,5);
+    nomFormula = tableModel->data(index, Qt::DisplayRole).toUInt();
+    changeFotmula(2, nomFormula);
+}
+
 
 CalcLensTable::~CalcLensTable()
 {

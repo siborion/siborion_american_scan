@@ -43,6 +43,9 @@ private:
 
 private slots:
     void changeFotmula(quint8 nomLens, int);
+    void slChangeCombo1();
+    void slChangeCombo2();
+    void slChangeCombo3();
 
 
 };

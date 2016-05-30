@@ -36,6 +36,11 @@ calculator::calculator(QWidget *parent, CurParam *link) :
 
     twLens = new adjview(3, lst, columnPercent);
     twLens->setMinimumWidth(350);
+    twLens->setFrameShape(QFrame::NoFrame);
+    twLens->setFrameShadow(QFrame::Plain);
+    twLens->setStyleSheet(QStringLiteral("gridline-color: rgb(200, 200, 255);"));
+//    twLens->horizontalHeader()->setVisible(false);
+
     refreshLens(curParam->lensModel);
     //-------------------------------
     columnPercent.clear();
@@ -86,19 +91,33 @@ calculator::calculator(QWidget *parent, CurParam *link) :
     frPatient->setFrameShadow(QFrame::Raised);
     QHBoxLayout *layoutFrame = new QHBoxLayout();
     frPatient->setLayout(layoutFrame);
+//    QSpacerItem *horisontalSpacer1;
+//    horisontalSpacer1 = new QSpacerItem(20, 40, QSizePolicy::Expanding, QSizePolicy::Expanding);
+
     layoutFrame->addWidget(pCalcPatient);
     layoutFrame->addWidget(twLens);
+//    layoutFrame->addItem(horisontalSpacer1);
+
 
     Formula1 = new formula();
     Formula2 = new formula();
     Formula3 = new formula();
 
     calcLens = new CalcLens();
+    QSpacerItem *verticalSpacer1;
+    verticalSpacer1 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+    QSpacerItem *verticalSpacer2;
+    verticalSpacer2 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+    QSpacerItem *verticalSpacer3;
+    verticalSpacer3 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
     layout->addWidget(frPatient);
+    layout->addItem(verticalSpacer1);
     layout->addWidget(calcLens);
+    layout->addItem(verticalSpacer2);
 //    layout->addWidget(Formula1);
     layout->addWidget(pbPrint);
+    layout->addItem(verticalSpacer3);
 
     connect(pCalcPatient, SIGNAL(refreshFormula()), SLOT(refreshFormuls()));
     connect(pbPrint, SIGNAL(clicked()), SLOT(printPreview()));
