@@ -389,7 +389,7 @@ int HofferCalc(double A, double ACD, double K,double Rx,iol_formula* HofferValue
 
 int HaigisCalc(double a0, double a1, double a2, double AL, double AConst, double ac,double K,double Rx,iol_formula* HaigisValues)
 {
-    double R=337.5;
+    double R=331.5;
 //    double a0;
 //    double a1=0.4;
 //    double a2=0.1;
@@ -425,6 +425,7 @@ int HaigisCalc(double a0, double a1, double a2, double AL, double AConst, double
 
 //    R = 336.0;
 //    R /= K;
+
     if(K>40)
         R = (R/K);
     else

@@ -54,6 +54,7 @@ INPUT(
 ./debug/calclens.o
 ./debug/calclenstable.o
 ./debug/combo_delegate_cell.o
+./debug/comboitem.o
 ./debug/qrc_imagesRpt.o
 ./debug/qrc_scan.o
 ./debug/moc_chart.o
@@ -103,4 +104,5 @@ INPUT(
 ./debug/moc_calclens.o
 ./debug/moc_calclenstable.o
 ./debug/moc_combo_delegate_cell.o
+./debug/moc_comboitem.o
 );

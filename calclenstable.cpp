@@ -3,23 +3,24 @@
 #include <QDebug>
 
 
-CalcLensTable::CalcLensTable(adjview * parent) :
-    adjview(parent)
-{
-//    ui->setupUi(this);
-//    this->row
-    this->setFrameShape(QFrame::NoFrame);
-    this->setFrameShadow(QFrame::Plain);
+//CalcLensTable::CalcLensTable(adjview * parent) :
+//    adjview(parent)
+//{
+//    this->setFrameShape(QFrame::NoFrame);
+//    this->setFrameShadow(QFrame::Plain);
 
-    this->setFrameShape(QFrame::Panel);
-    this->setFrameShadow(QFrame::Plain);
-    this->setStyleSheet(QStringLiteral("gridline-color: rgb(10, 10, 17);"));
-
-}
+//    this->setFrameShape(QFrame::Panel);
+//    this->setFrameShadow(QFrame::Plain);
+//    this->setStyleSheet(QStringLiteral("gridline-color: rgb(10, 10, 17);"));
+//}
 
 CalcLensTable::CalcLensTable(int row, int col, QList<int> pr, QTableView *parent):
     adjview(row, col, pr, parent)
 {
+    QAbstractItemView::EditTriggers triggers = this->editTriggers();
+    triggers |= QAbstractItemView::CurrentChanged;
+    this->setEditTriggers(triggers);
+
     QFont font;
     font.setBold(true);
 
@@ -78,6 +79,9 @@ CalcLensTable::CalcLensTable(int row, int col, QList<int> pr, QTableView *parent
     pCombo_Delegate.append(new CCombo_Delegate_Cell(this));
     pCombo_Delegate.append(new CCombo_Delegate_Cell(this));
     pCombo_Delegate.append(new CCombo_Delegate_Cell(this));
+    pCombo_Delegate.append(new CCombo_Delegate_Cell(this));
+    pCombo_Delegate.append(new CCombo_Delegate_Cell(this));
+    pCombo_Delegate.append(new CCombo_Delegate_Cell(this));
 
 //    pCombo_Delegate.at(0)->values().insert(0, "");
 
@@ -85,8 +89,16 @@ CalcLensTable::CalcLensTable(int row, int col, QList<int> pr, QTableView *parent
     this->setItemDelegateForColumn(3, pCombo_Delegate.at(1));
     this->setItemDelegateForColumn(5, pCombo_Delegate.at(2));
 
-    connect(pCombo_Delegate.at(0), SIGNAL(closeEditor(QWidget*,QAbstractItemDelegate::EndEditHint)), SLOT(slChangeCombo1()));
+    this->setItemDelegateForColumn(2, pCombo_Delegate.at(3));
+    this->setItemDelegateForColumn(4, pCombo_Delegate.at(4));
+    this->setItemDelegateForColumn(6, pCombo_Delegate.at(5));
 
+
+//    connect(pCombo_Delegate.at(0), SIGNAL(closeEditor(QWidget*,QAbstractItemDelegate::EndEditHint)), SLOT(slChangeCombo1()));
+    connect(pCombo_Delegate.at(1), SIGNAL(closeEditor(QWidget*,QAbstractItemDelegate::EndEditHint)), SLOT(slChangeCombo2()));
+    connect(pCombo_Delegate.at(2), SIGNAL(closeEditor(QWidget*,QAbstractItemDelegate::EndEditHint)), SLOT(slChangeCombo3()));
+
+    connect(pCombo_Delegate.at(0), SIGNAL(commitData(QWidget*)), SLOT(slChangeCombo1()));
 }
 
 void CalcLensTable::setSide(QString val)
@@ -251,6 +263,12 @@ void CalcLensTable::slChangeCombo3()
     changeFotmula(2, nomFormula);
 }
 
+void CalcLensTable::mousePressEvent(QMouseEvent *event)
+{
+    QModelIndex index = this->indexAt(event->pos());
+    this->edit(index);
+//    adjview::mousePressEvent(event);
+}
 
 CalcLensTable::~CalcLensTable()
 {

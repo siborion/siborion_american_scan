@@ -80,7 +80,8 @@ SOURCES += main.cpp\
     bscantext.cpp \
     calclens.cpp \
     calclenstable.cpp \
-    combo_delegate_cell.cpp
+    combo_delegate_cell.cpp \
+    comboitem.cpp
 
 HEADERS  += mainwindow.h \
     bases.h \
@@ -129,7 +130,8 @@ HEADERS  += mainwindow.h \
     bscantext.h \
     calclens.h \
     calclenstable.h \
-    combo_delegate_cell.h
+    combo_delegate_cell.h \
+    comboitem.h
 
 FORMS    += mainwindow.ui \
     dialog_doctor.ui \

@@ -1,7 +1,7 @@
 #include "Combo_Delegate_Cell.h"
 
 #include <QPainter>
-#include <QComboBox>
+#include <comboitem.h>
 #include <QLineEdit>
 #include <QDebug>
 
@@ -15,21 +15,32 @@ QWidget * CCombo_Delegate_Cell::createEditor( QWidget * parent,
 {
     if(index.row()==1)
     {
-        QComboBox * pEditor = new QComboBox( parent );
+        quint8 k=0;
+        QFont font;
+        ComboItem * pEditor = new ComboItem( parent );
+        pEditor->setFrame(false);
+        font.setBold(true);
+        pEditor->setFont(font);
         QHash<int, QString>::const_iterator i = m_values.constBegin();
         while ( i != m_values.constEnd() )
         {
             pEditor -> addItem( i.value(), i.key() );
+            pEditor->setItemData(k,Qt::AlignCenter, Qt::TextAlignmentRole);
             ++i;
+            k++;
         }
         pEditor->model()->sort(0);
         pEditor -> installEventFilter( const_cast<CCombo_Delegate_Cell*>( this ) );
+        if(pEditor->lineEdit())
+            pEditor->lineEdit()->setAlignment(Qt::AlignHCenter);
+//        pEditor->showPopup();
         return pEditor;
     }
     else
     {
-        QLineEdit * pEditor = new QLineEdit( parent );
-        return pEditor;
+//        QLineEdit * pEditor = new QLineEdit( parent );
+//        return pEditor;
+        return 0;
     }
 }
 
@@ -38,16 +49,17 @@ void CCombo_Delegate_Cell::setEditorData( QWidget * editor, const QModelIndex &i
     if(index.row()==1)
     {
         int value = index.model()->data( index, Qt::EditRole ).toInt();
-        QComboBox * cb = static_cast<QComboBox*>( editor );
+        ComboItem * cb = static_cast<ComboItem*>( editor );
         int idx = cb->findData( value );
         if ( idx < 0 ) return;
         cb->setCurrentIndex( idx );
+//        cb->showPopup();
     }
     else
     {
-        QLineEdit * le = static_cast<QLineEdit*>( editor );
-        QString value = index.model()->data( index, Qt::EditRole ).toString();
-        le->setText(value);
+//        QLineEdit * le = static_cast<QLineEdit*>( editor );
+//        QString value = index.model()->data( index, Qt::EditRole ).toString();
+//        le->setText(value);
     }
 }
 
@@ -57,7 +69,7 @@ void CCombo_Delegate_Cell::setModelData( QWidget * editor,
 {
     if(index.row()==1)
     {
-        QComboBox * cb = static_cast<QComboBox*>( editor );
+        ComboItem * cb = static_cast<ComboItem*>( editor );
         int idx = cb->currentIndex();
         if ( idx < 0 ) return;
         int value = cb->itemData( idx ).toInt();
@@ -74,6 +86,7 @@ void CCombo_Delegate_Cell::updateEditorGeometry( QWidget *editor,
                                          const QStyleOptionViewItem &option,
                                          const QModelIndex& /* index */) const
 {
+    qDebug()<<"qDebug()<<";
     editor->setGeometry( option.rect );
 }
 
@@ -81,8 +94,6 @@ void CCombo_Delegate_Cell::paint( QPainter * painter, const QStyleOptionViewItem
                                   const QModelIndex &index ) const
 {
     QString s;
-    QRect decorationRect;
-    QPixmap pixmap;
     QStyleOptionViewItem opt = option;
 
     if(index.row()==1)
@@ -93,65 +104,34 @@ void CCombo_Delegate_Cell::paint( QPainter * painter, const QStyleOptionViewItem
     else
         s = index.data(Qt::DisplayRole).toString();
 
-//    QVariant color = index.data( Qt::TextColorRole );
-//    if ( color.isValid() && qvariant_cast<QColor>(color).isValid() )
-//        opt.palette.setColor( QPalette::Text, qvariant_cast<QColor>(color) );
-//    color = index.data( Qt::BackgroundColorRole);
-//    if ( color.isValid() && qvariant_cast<QColor>(color).isValid() )
-//        opt.palette.setColor( QPalette::Base, qvariant_cast<QColor>(color) );
-
-//    if (option.showDecorationSelected && (option.state & QStyle::State_Selected))
-//    {
-//        QPalette::ColorGroup cg = option.state & QStyle::State_Enabled
-//                ? QPalette::Normal : QPalette::Disabled;
-//        if (cg == QPalette::Normal && !(option.state & QStyle::State_Active))
-//            cg = QPalette::Inactive;
-//        painter->fillRect(option.rect, option.palette.brush(cg, QPalette::Highlight));
-//    } else
-//    {
-//        QVariant value = index.data(Qt::BackgroundRole);
-//        if (value.canConvert<QBrush>())
-//        {
-//            QPointF oldBO = painter->brushOrigin();
-//            painter->setBrushOrigin(option.rect.topLeft());
-//            painter->fillRect(option.rect, qvariant_cast<QBrush>(value));
-//            painter->setBrushOrigin(oldBO);
-//        }
-//    }
 
     opt.displayAlignment = (Qt::Alignment)index.data(Qt::TextAlignmentRole).toUInt();//   Qt::AlignVCenter | Qt::AlignHCenter;\
 
-//    opt.font.setBold(index.data(Qt::FontRole).toBool());
 
     QVariant value;
     QFont font;
     value = index.data(Qt::FontRole);
     if (value.canConvert<QFont>())
     {
-//        qDebug()<<"font";
-//        qDebug()<<font.bold();
         font = qvariant_cast<QFont>(value);
         opt.font.setBold(font.bold());
     }
 
     drawBackground(painter, opt, index);
-    drawDecoration(painter, opt, decorationRect, pixmap);
+
+    if((index.row()==1) && ((opt.state & QStyle::State_Editing)==0))
+    {
+        ComboItem cb;
+        cb.setFrame(false);
+        cb.setMaximumSize(opt.rect.size());
+        cb.setMinimumSize(opt.rect.size());
+        QPixmap pm(cb.size());
+        cb.render(&pm, QPoint(0,0));
+        painter->drawPixmap(opt.rect.topLeft(),pm);
+    }
+
+//    drawDecoration(painter, opt, decorationRect, pixmap);
+//    drawDecoration(painter, opt, decorationRect, pm);
     drawDisplay(painter, opt, opt.rect, s);
     drawFocus(painter, opt, opt.rect);
 }
-
-
-//void CCombo_Delegate_Cell::drawDecoration(QPainter *painter, const QStyleOptionViewItem &option,
-//                                   const QRect &rect, const QPixmap &pixmap) const
-//{
-//    if (pixmap.isNull() || !rect.isValid())
-//        return;
-//    QPoint p = QStyle::alignedRect(option.direction, option.decorationAlignment,
-//                                   pixmap.size(), rect).topLeft();
-//    if (option.state & QStyle::State_Selected) {
-//        QPixmap *pm = selected(pixmap, option.palette, option.state & QStyle::State_Enabled);
-//        painter->drawPixmap(p, *pm);
-//    } else {
-//        painter->drawPixmap(p, pixmap);
-//    }
-//}

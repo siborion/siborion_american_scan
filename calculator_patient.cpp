@@ -11,6 +11,7 @@ calculator_patient::calculator_patient(QWidget *parent, CurParam *link) :
 
     softUpdate = false;
 
+
     bLeft = true;
     connect(ui->leK1, SIGNAL(editingFinished()),SLOT(RefreshK()));
     connect(ui->leK2, SIGNAL(editingFinished()),SLOT(RefreshK()));

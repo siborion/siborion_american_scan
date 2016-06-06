@@ -75,8 +75,8 @@ void Scanbase::getBasesModel(Base::TypeBase typeBase, QSqlQueryModel** model)
         str = "SELECT id, name, last, note from doctor;";
         break;
     case Base::enLens:
-        lst             <<tr("id") <<tr("Lens Name")<<tr("Mfg Name")<<tr("Mfg A_Const")<<tr("Mfg ACD")<<tr("Mfg SF")<<tr("Hoffer ACD");
-        str = "SELECT id, name, mfg, aconst, acd, sf, hacd from lens;";
+        lst             <<tr("id") <<tr("Lens Name")<<tr("Mfg Name")<<tr("Mfg A_Const")<<tr("Mfg ACD")<<tr("Mfg SF")<<tr("Hoffer ACD")<<tr("A0")<<tr("A1")<<tr("A2");
+        str = "SELECT id, name, mfg, aconst, acd, sf, hacd, a0, a1, a2 from lens;";
         break;
     }
     modelBases->setQuery(str);
@@ -115,6 +115,7 @@ void Scanbase::updateCurPatient(quint16 id)
             curParam->k2left = curPatient.value("k2left").toDouble();
             curParam->k1right = curPatient.value("k1right").toDouble();
             curParam->k2right = curPatient.value("k2right").toDouble();
+            curParam->birthDate = curPatient.value("birth");
         }
         else
         {
@@ -135,15 +136,14 @@ void Scanbase::updateCurPatient(quint16 id)
     emit (setStPatient(&curPatient));
 
     str = "SELECT lens.name,";
+    str.append("formula.id,");
+    str.append("formula.name, ");
     str.append("lens.aconst,");
     str.append("lens.acd,");
     str.append("lens.sf,");
-    str.append("formula.id,");
-    str.append("formula.name, ");
-
-    str.append("0 as A1 ,");
-    str.append("0 as A2 ,");
-    str.append("0 as A3 ");
+    str.append("lens.a0 ,");
+    str.append("lens.a1 ,");
+    str.append("lens.a2 ");
 
     str.append("FROM patient, doctor_lens, lens, formula ");
     str.append("ON patient.doctor=doctor_lens.id_doctor ");
@@ -151,7 +151,6 @@ void Scanbase::updateCurPatient(quint16 id)
     str.append("AND doctor_lens.nom_formula=formula.id ");
     str.append(QString("WHERE patient.id=%1;").arg(id));
     lensModel.setQuery(str);
-
     emit (setLens(&lensModel));
 }
 
@@ -188,13 +187,18 @@ void Scanbase::saveCurPatient(quint16 *id)
     value.resize(value.length()-1);
 
     if(curPatient["id"].toInt()>0)
+    {
         sql.append(QString("update patient set id=id %1 where id=%2").arg(str).arg(curPatient["id"].toInt()));
+        query.prepare(sql);
+        query.exec();
+    }
     else
+    {
         sql.append(QString("insert into patient (%1) values (%2)").arg(field).arg(value));
-
-    query.prepare(sql);
-    query.exec();
-
+        query.prepare(sql);
+        query.exec();
+        *id = query.lastInsertId().toUInt();
+    }
 }
 
 void Scanbase::delPatient()
