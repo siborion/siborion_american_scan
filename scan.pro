@@ -6,12 +6,15 @@
 
 QMAKE_CXXFLAGS += -std=gnu++11
 
+QT       += widgets
 QT       += sql
-QT       += core gui
+QT       += core
+#gui
 QT	 += serialport
 QT       += opengl
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
+
 
 TARGET = scan
 TEMPLATE = app
@@ -22,15 +25,18 @@ include(../QtRPT/QtRPT.pri)
 
 CONFIG(debug, debug|release)
 {
-  LIBS += -lqwt -LC:\Qt\Qwt-6.1.0\lib
-  LIBS += ftd2xx.lib
+#  LIBS += -lqwt -LC:\Qt\Qwt-6.1.0\lib
+  LIBS += -lqwt      #   -L/usr/local/qwt-6.1.0/lib
+#  LIBS += /home/evgen/ftdi/libftd2xx.a
+   LIBS += -lftd2xx  -L/home/evgen/ftdi
 }
 
-CONFIG(release, debug|release)
-{
-  LIBS +=  -lqwtd -LC:\Qt\Qwt-6.1.0\lib
-  LIBS += ftd2xx.lib
-}
+#CONFIG(release, debug|release)
+#{
+#  LIBS +=  -lqwtd -LC:\Qt\Qwt-6.1.0\lib
+#  LIBS +=  -lqwtd       -L/usr/local/qwt-6.1.0/lib
+#  LIBS += ftd2xx.lib
+#}
 
 
 

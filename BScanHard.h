@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QTimer>
 #include <QMutex>
-#include <qt_windows.h>
+//#include <qt_windows.h>
 #include "bscansize.h"
 
 #ifdef _cplusplus

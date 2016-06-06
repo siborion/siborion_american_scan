@@ -5,7 +5,7 @@
 #include <QSerialPortInfo>
 #include <QTimer>
 #include <QObject>
-#include <qt_windows.h>
+//#include <qt_windows.h>
 #include "ftd2xx.h"
 #include "dialogserial.h"
 

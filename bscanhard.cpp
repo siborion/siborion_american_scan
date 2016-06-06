@@ -1,6 +1,6 @@
 #include "BScanHard.h"
 #include <QDebug>
-#include <QtConcurrent>
+#include <QtConcurrent/QtConcurrent>
 //#include <QtTest/QTest>
 
 QMutex mutex;
