@@ -9,6 +9,7 @@ Bscan::Bscan(QWidget *parent, CurParam *link) :
 {
     quint16 scenaSize;
 
+
     curParam = link;
     bScanSide = REGIM::OD;
 
