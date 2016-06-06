@@ -1,4 +1,4 @@
-#include "Combo_Delegate_Cell.h"
+#include "combo_delegate_cell.h"
 
 #include <QPainter>
 #include <QComboBox>

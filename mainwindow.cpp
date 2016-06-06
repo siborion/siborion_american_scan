@@ -105,6 +105,7 @@ void MainWindow::setStPatient(QMap <QString, QString> *stPatientBases)
     else
         str.append(QString("Ocusvm / %1 / %2").arg(curParam->patientName).arg(curParam->doctorName));
     this->setWindowTitle(str);
+    qDebug()<<str;
 }
 
 MainWindow::~MainWindow()

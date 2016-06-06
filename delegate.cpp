@@ -1,4 +1,4 @@
-#include <QtGui>
+#include <QtWidgets>
 #include "delegate.h"
 
  CheckBoxDelegate::CheckBoxDelegate(QObject *parent)

@@ -1,4 +1,4 @@
-#include <QtGui>
+#include <QtWidgets>
 #include "delegate_lens.h"
 
  DelegateLens::DelegateLens(QObject *parent)

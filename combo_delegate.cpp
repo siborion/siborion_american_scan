@@ -1,4 +1,4 @@
-#include "Combo_Delegate.h"
+#include "combo_delegate.h"
 
 #include <QPainter>
 #include <QComboBox>

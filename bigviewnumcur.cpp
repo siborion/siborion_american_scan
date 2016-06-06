@@ -1,6 +1,6 @@
 #include "bigviewnumcur.h"
 #include "ui_bigviewnumcur.h"
-#include <qDebug>
+//#include <qDebug>
 
 Bigviewnumcur::Bigviewnumcur(QWidget *parent, CurParam *link) :
     QWidget(parent),
