@@ -23,12 +23,15 @@ Measure::Measure(QWidget *parent, CurParam *link) :
     pSampleTable = new sampletable(this, curParam);
     velosity = new Velosity();
     pBigView = new bigviewnum(this, curParam);
+    QSpacerItem *verticalSpacer;
+    verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
-    layout->addWidget(fmPlot      ,0,0,3,1);
-    layout->addWidget(pKey        ,3,0,1,2);
+    layout->addWidget(fmPlot      ,0,0,4,1);
+    layout->addWidget(pKey        ,4,0,1,2);
     layout->addWidget(pSampleTable,0,1);
     layout->addWidget(velosity    ,1,1);
     layout->addWidget(pBigView    ,2,1);
+    layout->addItem(verticalSpacer, 3,1);
 
     layout->setColumnStretch(0,2);
     layout->setColumnStretch(1,0);
