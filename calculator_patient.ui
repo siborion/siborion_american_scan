@@ -55,10 +55,18 @@
        </widget>
       </item>
       <item row="2" column="1" colspan="2">
-       <widget class="leAddZero" name="leSF_personal"/>
+       <widget class="QLineEdit" name="leSF_personal">
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
       </item>
       <item row="1" column="1" colspan="2">
-       <widget class="leAddZero" name="leACD_personal"/>
+       <widget class="QLineEdit" name="leACD_personal">
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
       </item>
       <item row="0" column="0">
        <widget class="QLabel" name="label_14">
@@ -74,7 +82,11 @@
        </widget>
       </item>
       <item row="0" column="1" colspan="2">
-       <widget class="leAddZero" name="leAConst_personal"/>
+       <widget class="QLineEdit" name="leAConst_personal">
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
       </item>
       <item row="2" column="0">
        <widget class="QLabel" name="label_16">
@@ -103,7 +115,11 @@
        </widget>
       </item>
       <item row="3" column="1">
-       <widget class="leAddZero" name="leRx_personal"/>
+       <widget class="QLineEdit" name="leRx_personal">
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>
@@ -117,10 +133,10 @@
       </font>
      </property>
      <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
+      <enum>QFrame::Box</enum>
      </property>
      <property name="frameShadow">
-      <enum>QFrame::Raised</enum>
+      <enum>QFrame::Sunken</enum>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
       <item row="2" column="0">
@@ -163,13 +179,25 @@
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="leAddZero" name="lineEdit"/>
+       <widget class="QLineEdit" name="lePatientId">
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
       </item>
       <item row="1" column="1">
-       <widget class="leAddZero" name="lineEdit_2"/>
+       <widget class="QLineEdit" name="lePatientName">
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
       </item>
       <item row="2" column="1">
-       <widget class="leAddZero" name="lineEdit_3"/>
+       <widget class="QLineEdit" name="leDoctorName">
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>
@@ -252,19 +280,39 @@
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="leAddZero" name="leACD_measure"/>
+       <widget class="QLineEdit" name="leACD_measure">
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
       </item>
       <item row="0" column="1">
-       <widget class="leAddZero" name="leAL_measure"/>
+       <widget class="leAddZero" name="leAL_measure">
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
       </item>
       <item row="2" column="1">
-       <widget class="leAddZero" name="leK1"/>
+       <widget class="leAddZero" name="leK1">
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
       </item>
       <item row="3" column="1">
-       <widget class="leAddZero" name="leK2"/>
+       <widget class="leAddZero" name="leK2">
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
       </item>
       <item row="4" column="1">
-       <widget class="leAddZero" name="leK"/>
+       <widget class="leAddZero" name="leK">
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>

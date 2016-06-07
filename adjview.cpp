@@ -22,7 +22,8 @@ adjview::adjview(int row, int col, QList<int> columnPercent, QTableView *parent)
     setMaximumHeight(rowHeight(0)*row + 4);
     horizontalHeader()->setSectionsClickable(false);
     setStyleSheet(QStringLiteral("gridline-color: rgb(0, 0, 0);"));
-    setFrameShape(QFrame::WinPanel);
+//    setFrameShape(QFrame::WinPanel);
+    setFrameShape(QFrame::Box);
 }
 
 adjview::adjview(int row, QStringList col, QList<int> columnPercent, QTableView *parent):
@@ -42,7 +43,7 @@ adjview::adjview(int row, QStringList col, QList<int> columnPercent, QTableView 
     setMaximumHeight(rowHeight(0)*row + horizontalHeader()->height() + 4);
     horizontalHeader()->setSectionsClickable(false);
     setStyleSheet(QStringLiteral("gridline-color: rgb(0, 0, 0);"));
-    setFrameShape(QFrame::WinPanel);
+    setFrameShape(QFrame::Box);
 }
 
 
@@ -69,7 +70,7 @@ adjview::adjview(QList<int> col, QTableView *parent):
 //    setMaximumHeight(rowHeight(0)*row + horizontalHeader()->height() + 4);
     horizontalHeader()->setSectionsClickable(false);
     setStyleSheet(QStringLiteral("gridline-color: rgb(0, 0, 0);"));
-    setFrameShape(QFrame::WinPanel);
+    setFrameShape(QFrame::Box);
 }
 
 
@@ -90,7 +91,7 @@ adjview::adjview(QStringList row, int col, QList<int> columnPercent, QTableView 
     setMaximumHeight(rowHeight(0)*row.count() + horizontalHeader()->height() + 4);
     verticalHeader()->setSectionsClickable(false);
     setStyleSheet(QStringLiteral("gridline-color: rgb(0, 0, 0);"));
-    setFrameShape(QFrame::WinPanel);
+    setFrameShape(QFrame::Box);
 }
 
 void adjview::setColumnPercent(QList<int> percentList)

@@ -3,6 +3,7 @@
 leAddZero::leAddZero(QWidget *parent) :
     QLineEdit(parent)
 {
+    this->setFrame(false);
     this->setMinimumWidth(50);
         connect(this, SIGNAL(editingFinished()), SLOT(lineEditUpdate()));
 }

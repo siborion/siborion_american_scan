@@ -56,13 +56,14 @@ void calculator_patient::refreshPatientParam()
         ui->leK2->setTextZero(QString("%1").arg(curParam->k2right));
         ui->pbSide->setText("OS");
     }
-//    ui->lePatientId->setText(QString("%1").arg(curParam->patientId));
-//    ui->lePatientName->setText(curParam->patientName);
-//    ui->leDoctorName->setText(curParam->doctorName);
+    ui->lePatientId->setText(QString("%1").arg(curParam->patientId));
+    ui->lePatientName->setText(curParam->patientName);
+    ui->leDoctorName->setText(curParam->doctorName);
     ui->leACD_measure->setText(QString("%1").arg(curParam->ACD));
     ui->leAL_measure->setTextZero(QString("%1").arg(curParam->ALave));
     RefreshK();
     softUpdate = false;
+    ui->lePatientId->setFocus();
 }
 
 
