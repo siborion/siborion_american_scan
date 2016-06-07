@@ -17,7 +17,7 @@ adjview::adjview(int row, int col, QList<int> columnPercent, QTableView *parent)
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setColumnPercent(columnPercent);
-    verticalHeader()->setDefaultSectionSize(15);
+//    verticalHeader()->setDefaultSectionSize(15);
     setMinimumHeight(rowHeight(0)*row + 4);
     setMaximumHeight(rowHeight(0)*row + 4);
     horizontalHeader()->setSectionsClickable(false);
