@@ -58,8 +58,8 @@ private:
 //    scanbase *pBase;
     adjview *twName;
     QStandardItemModel *modelName;
-//    adjview *twLens;
-    QTableView *twLens;
+    adjview *twLens;
+//    QTableView *twLens;
 //    QStandardItemModel *modelLens;
     adjview *twK;
     QStandardItemModel *modelK;

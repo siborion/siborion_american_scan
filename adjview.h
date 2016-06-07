@@ -16,6 +16,7 @@ public:
     explicit adjview(int row, int col, QList<int> columnPercent, QTableView *parent = 0);
     explicit adjview(int row, QStringList col, QList<int> columnPercent, QTableView *parent = 0);
     explicit adjview(QStringList row, int col, QList<int> columnPercent, QTableView *parent = 0);
+    explicit adjview(QList<int> columnPercent, QTableView *parent = 0);
     void setColumnPercent(QList<int>);
 
 signals:

@@ -11,6 +11,7 @@ CalcLens::CalcLens(QWidget *parent) :
     pr<<0<<10<<10<<10<<10<<10<<10<<10<<10<<10<<10;
     QTableView tw;
     lensTable = new CalcLensTable (17, 11, pr, &tw);
+
     gridLayout->addWidget(lensTable);
 }
 

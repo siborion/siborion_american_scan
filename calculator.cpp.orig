@@ -4,6 +4,8 @@
 #include <QDebug>
 #include <qwt_plot_renderer.h>
 #include <QAbstractItemModel>
+#include "qtrpt.h"
+#include <QCoreApplication>
 
 calculator::calculator(QWidget *parent, CurParam *link) :
     QWidget(parent)
@@ -12,11 +14,8 @@ calculator::calculator(QWidget *parent, CurParam *link) :
     QStringList lst;
 
     curParam = link;
-
     QStandardItemModel *model;
-
     QVBoxLayout *layout              = new QVBoxLayout(this);
-    QHBoxLayout *layoutTop           = new QHBoxLayout();
 
     columnPercent.clear();
     columnPercent<<50<<50;
@@ -30,22 +29,22 @@ calculator::calculator(QWidget *parent, CurParam *link) :
         model->item   (i, 0)->setEditable(false);
     }
 
-
-
     //-------------------------------
     columnPercent.clear();
-    columnPercent<<20<<15<<10<<10<<0<<20<<8<<8<<9;
-//    lst<<"Lens Name"<<"AConst"<<"ACD"<<"SF"<<"FORMULA<<A1<<A1<<A3";
-    twLens = new adjview(3, lst, columnPercent);
+    columnPercent<<20<<0<<21<<15<<10<<10<<8<<8<<8;
+    lst<<"Lens Name"<<"id"<<"Formula"<<"AConst"<<"ACD"<<"SF"<<"A0"<<"A1"<<"A2";
+
+
+
+    twLens = new adjview(5, lst, columnPercent);
+//    twLens = new QTableView();
     twLens->setMinimumWidth(350);
-    twLens->setMinimumHeight(70);
-    modelMainLens = curParam->lensModel;
-    twLens->setModel(modelMainLens);
-//    modelMainLens->setHeaderData(0, Qt::Horizontal, "Lens Name", Qt::DisplayRole);
-//    modelMainLens->setHeaderData(1, Qt::Horizontal, "AConst", Qt::DisplayRole);
-//    modelMainLens->setHeaderData(2, Qt::Horizontal, "ACD", Qt::DisplayRole);
-//    modelMainLens->setHeaderData(3, Qt::Horizontal, "SF", Qt::DisplayRole);
-//    modelMainLens->setHeaderData(4, Qt::Horizontal, "FORMULA", Qt::DisplayRole);
+    twLens->setFrameShape(QFrame::NoFrame);
+    twLens->setFrameShadow(QFrame::Plain);
+    twLens->setStyleSheet(QStringLiteral("gridline-color: rgb(200, 200, 255);"));
+//    twLens->horizontalHeader()->setVisible(false);
+
+    refreshLens(curParam->lensModel);
     //-------------------------------
     columnPercent.clear();
     columnPercent<<40<<40<<20;
@@ -63,8 +62,6 @@ calculator::calculator(QWidget *parent, CurParam *link) :
         model->item   (i, 2)->setEnabled(false);
     }
 
-
-
     QPalette palette;
     QBrush brush(QColor(0, 0, 0, 255));
     brush.setStyle(Qt::SolidPattern);
@@ -72,8 +69,6 @@ calculator::calculator(QWidget *parent, CurParam *link) :
     twK->setPalette(palette);
 
     pCalcPatient = new calculator_patient(this, link);
-
-
 
     columnPercent.clear();
     columnPercent<<50<<50;
@@ -94,30 +89,42 @@ calculator::calculator(QWidget *parent, CurParam *link) :
 
     pbPrint = new QPushButton("Print");
 
+    QFrame *frPatient = new QFrame();
+    frPatient->setFrameShape(QFrame::WinPanel);
+    frPatient->setFrameShadow(QFrame::Raised);
+    QHBoxLayout *layoutFrame = new QHBoxLayout();
+    frPatient->setLayout(layoutFrame);
+//    QSpacerItem *horisontalSpacer1;
+//    horisontalSpacer1 = new QSpacerItem(20, 40, QSizePolicy::Expanding, QSizePolicy::Expanding);
 
+    layoutFrame->addWidget(pCalcPatient);
+    layoutFrame->addWidget(twLens);
+//    layoutFrame->addItem(horisontalSpacer1);
 
-    layoutTop->addWidget(pCalcPatient);
-    layoutTop->addWidget(twLens);
-    layout->addLayout(layoutTop);
-
-    frCalculator = new QFrame();
-    frCalculator->setFrameShape(QFrame::WinPanel);
-    frCalculator->setFrameShadow(QFrame::Raised);
-    QHBoxLayout *frLayout = new QHBoxLayout(frCalculator);
 
     Formula1 = new formula();
     Formula2 = new formula();
     Formula3 = new formula();
 
-    frLayout->addWidget(Formula1);
-    frLayout->addWidget(Formula2);
-    frLayout->addWidget(Formula3);
+    calcLens = new CalcLens();
+    QSpacerItem *verticalSpacer1;
+    verticalSpacer1 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+    QSpacerItem *verticalSpacer2;
+    verticalSpacer2 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+    QSpacerItem *verticalSpacer3;
+    verticalSpacer3 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
-    layout->addWidget(frCalculator);
+    layout->addWidget(frPatient);
+    layout->addItem(verticalSpacer1);
+    layout->addWidget(calcLens);
+    layout->addItem(verticalSpacer2);
+//    layout->addWidget(Formula1);
     layout->addWidget(pbPrint);
+    layout->addItem(verticalSpacer3);
 
     connect(pCalcPatient, SIGNAL(refreshFormula()), SLOT(refreshFormuls()));
     connect(pbPrint, SIGNAL(clicked()), SLOT(printPreview()));
+    connect(pCalcPatient, SIGNAL(changeSideCalculator()), SLOT(changeSideCalculatorSlot()));
 
 }
 
@@ -125,13 +132,15 @@ void calculator::refreshFormuls()
 {
     stPersonalParam personalParam;
     quint8 nFormula;
-    QString lensName, lensAconst, lensAcd, lensFs;
+    QString lensName, lensAconst, lensAcd, lensFs, lensA0, lensA1, lensA2;
+
 
     personalParam = pCalcPatient->getPersonalParam();
 
 
-
-
+    Formula1->clear();
+    Formula2->clear();
+    Formula3->clear();
 
     if(!((curParam->ACD>0)&&(curParam->ALave>0)&&(curParam->K>0)))
         return;
@@ -141,45 +150,48 @@ void calculator::refreshFormuls()
     Formula3->setEnabled(false);
 
 
-
     if(twLens->model()->rowCount()>0)
     {
-        for(quint8 i=0; i<twLens->model()->rowCount() && i<3; i++)
+        for(quint8 i=0; i<twLens->model()->rowCount() && i<5; i++)
         {
-            nFormula   = twLens->model()->itemData(twLens->model()->index(i,4)).value(0).toInt();
+            qDebug()<<"i"<<i;
+
+            nFormula   = twLens->model()->itemData(twLens->model()->index(i,1)).value(0).toInt();
             lensName   = twLens->model()->itemData(twLens->model()->index(i,0)).value(0).toString();
 
             if(personalParam.AConst>0)
                 lensAconst = QString("%1").arg(personalParam.AConst);
             else
-                lensAconst = twLens->model()->itemData(twLens->model()->index(i,1)).value(0).toString();
+                lensAconst = twLens->model()->itemData(twLens->model()->index(i,3)).value(0).toString();
 
             if(personalParam.ACD>0)
                 lensAcd = QString("%1").arg(personalParam.ACD);
             else
-                lensAcd = twLens->model()->itemData(twLens->model()->index(i,2)).value(0).toString();
+                lensAcd = twLens->model()->itemData(twLens->model()->index(i,4)).value(0).toString();
 
             if(personalParam.SF>0)
                 lensFs = QString("%1").arg(personalParam.SF);
             else
-                lensFs = twLens->model()->itemData(twLens->model()->index(i,3)).value(0).toString();
+                lensFs = twLens->model()->itemData(twLens->model()->index(i,5)).value(0).toString();
 
+            lensA0 =  twLens->model()->itemData(twLens->model()->index(i,6)).value(0).toString();
+            lensA1 =  twLens->model()->itemData(twLens->model()->index(i,7)).value(0).toString();
+            lensA2 =  twLens->model()->itemData(twLens->model()->index(i,8)).value(0).toString();
 
-
-
+            calcLens->setValue(i,nFormula,lensName,lensAconst,lensAcd,lensFs,lensA0,lensA1,lensA2,curParam->K,curParam->ALave,curParam->ACD,personalParam.Rx);
 
             switch (i)
             {
             case 0:
-                Formula1->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, curParam->K, curParam->ALave, curParam->ACD);
+                Formula1->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, lensA0, lensA1, lensA2, curParam->K, curParam->ALave, curParam->ACD, personalParam.Rx);
                 Formula1->setEnabled(true);
                 break;
             case 1:
-                Formula2->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, curParam->K, curParam->ALave, curParam->ACD);
+                Formula2->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, lensA0, lensA1, lensA2, curParam->K, curParam->ALave, curParam->ACD, personalParam.Rx);
                 Formula2->setEnabled(true);
                 break;
             case 2:
-                Formula3->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, curParam->K, curParam->ALave, curParam->ACD);
+                Formula3->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, lensA0, lensA1, lensA2, curParam->K, curParam->ALave, curParam->ACD, personalParam.Rx);
                 Formula3->setEnabled(true);
             default:
                 break;
@@ -196,7 +208,7 @@ void calculator::refreshFormuls()
             lensAcd = QString("%1").arg(personalParam.ACD);
         if(personalParam.SF>0)
             lensFs = QString("%1").arg(personalParam.SF);
-        Formula1->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, curParam->K, curParam->ALave, curParam->ACD);
+        Formula1->setValue(nFormula, lensName, lensAconst, lensAcd, lensFs, lensA0, lensA1, lensA2, curParam->K, curParam->ALave, curParam->ACD, personalParam.Rx);
         Formula1->setEnabled(true);
     }
 }
@@ -208,166 +220,427 @@ void calculator::refreshMeasure()
 
 void calculator::printPreview()
 {
-    QPrinter             printer( QPrinter::HighResolution );
-    printer.setPageSize(QPrinter::A4);
-//    QPrintPreviewDialog  preview( &printer, this );
-      QPrintPreviewDialog  preview( &printer);
-    connect( &preview, SIGNAL(paintRequested(QPrinter*)), SLOT(print(QPrinter*)) );
-    preview.exec();
-}
+    stMeasureParam measureParam;
 
-void calculator::print( QPrinter* printer )
-{
-    QByteArray sample;
-    QModelIndex index;
-    QModelIndexList lsSelect;
     quint8 kolvo = 0;
-
-    QPainter painter( printer );
-    lsSelect = twMeas->selectionModel()->selectedRows();
     QwtPlotRenderer renderer;
+    QModelIndexList lsSelect;
+    QModelIndex index;
+    lsSelect = twMeas->selectionModel()->selectedRows();
+
+    QPixmap pix1(750, 600);
+    QPainter *painter1 = new QPainter(&pix1);
+    QPixmap pix2(750, 600);
+    QPainter *painter2 = new QPainter(&pix2);
+    QPixmap pix3(750, 600);
+    QPainter *painter3 = new QPainter(&pix3);
+    QPixmap pix4(750, 600);
+    QPainter *painter4 = new QPainter(&pix4);
+
+    pix1.fill(QColor(Qt::white));
+    pix2.fill(QColor(Qt::white));
+    pix3.fill(QColor(Qt::white));
+    pix4.fill(QColor(Qt::white));
+
+    al1=al2=al3=al4=acd1=acd2=acd3=acd4=0;
 
     foreach (index, lsSelect)
     {
         index = twMeas->model()->index(kolvo, 0);
-        sample = twMeas->model()->data(index, roleSample).toByteArray();
+        measureParam.Sample = twMeas->model()->data(index, roleSample).toByteArray();
+        measureParam.Cornea = twMeas->model()->data(index, roleCornea).toDouble();
+        measureParam.L1 =     twMeas->model()->data(index, roleL1).toDouble();
+        measureParam.L2 =     twMeas->model()->data(index, roleL2).toDouble();
+        measureParam.Retina = twMeas->model()->data(index, roleRetina).toDouble();
+
         switch (kolvo)
         {
         case 0:
-            pPlotPrint1 = new Plot(this, true, curParam);
-            pPlotPrint1->drawSample(&sample);
-            pPlotPrint1->enableAxis(QwtPlot::xTop,false);
-            pPlotPrint1->enableAxis(QwtPlot::xBottom,true);
-            pPlotPrint1->enableAxis(QwtPlot::yLeft,true);
-            pPlotPrint1->replot();
-            renderer.render(pPlotPrint1, &painter, QRectF(500,1000,2000,1800));
+            pPlotPrint1 = new PrintPlot(this, curParam, &measureParam.Sample);
+            pPlotPrint1->updateSample(&measureParam, true);
+            renderer.render(pPlotPrint1, painter1, QRectF(0, 0, 750, 600));
+            index = twMeas->model()->index(kolvo, 1);
+            al1   = twMeas->model()->data(index, Qt::DisplayRole).toDouble();
+            index = twMeas->model()->index(kolvo, 3);
+            acd1  = twMeas->model()->data(index, Qt::DisplayRole).toDouble();
             break;
         case 1:
-            pPlotPrint2 = new Plot(this, true, curParam);
-            pPlotPrint2->drawSample(&sample);
-            pPlotPrint2->enableAxis(QwtPlot::xTop,false);
-            pPlotPrint2->enableAxis(QwtPlot::xBottom,true);
-            pPlotPrint2->enableAxis(QwtPlot::yLeft,true);
-            pPlotPrint2->replot();
-            renderer.render(pPlotPrint2, &painter, QRectF(2700,1000,2000,1800));
+            pPlotPrint1 = new PrintPlot(this, curParam, &measureParam.Sample);
+            pPlotPrint1->updateSample(&measureParam, true);
+            renderer.render(pPlotPrint1, painter2, QRectF(0, 0, 750, 600));
+            index = twMeas->model()->index(kolvo, 1);
+            al2   = twMeas->model()->data(index, Qt::DisplayRole).toDouble();
+            index = twMeas->model()->index(kolvo, 3);
+            acd2  = twMeas->model()->data(index, Qt::DisplayRole).toDouble();
             break;
         case 2:
-            pPlotPrint3 = new Plot(this, true, curParam);
-            pPlotPrint3->drawSample(&sample);
-            pPlotPrint3->enableAxis(QwtPlot::xTop,false);
-            pPlotPrint3->enableAxis(QwtPlot::xBottom,true);
-            pPlotPrint3->enableAxis(QwtPlot::yLeft,true);
-            pPlotPrint3->replot();
-            renderer.render(pPlotPrint3, &painter, QRectF(500,3000,2000,1800));
+            pPlotPrint1 = new PrintPlot(this, curParam, &measureParam.Sample);
+            pPlotPrint1->updateSample(&measureParam, true);
+            renderer.render(pPlotPrint1, painter3, QRectF(0, 0, 750, 600));
+            index = twMeas->model()->index(kolvo, 1);
+            al3   = twMeas->model()->data(index, Qt::DisplayRole).toDouble();
+            index = twMeas->model()->index(kolvo, 3);
+            acd3  = twMeas->model()->data(index, Qt::DisplayRole).toDouble();
+            break;
+        case 3:
+            pPlotPrint1 = new PrintPlot(this, curParam, &measureParam.Sample);
+            pPlotPrint1->updateSample(&measureParam, true);
+            renderer.render(pPlotPrint1, painter4, QRectF(0, 0, 750, 600));
+            index = twMeas->model()->index(kolvo, 1);
+            al4   = twMeas->model()->data(index, Qt::DisplayRole).toDouble();
+            index = twMeas->model()->index(kolvo, 3);
+            acd4  = twMeas->model()->data(index, Qt::DisplayRole).toDouble();
             break;
         }
         kolvo++;
     }
 
-    painter.drawRect(500, 200, 4000, 400);
-    QFont    font = painter.font();
-    font.setPixelSize(80);
-    painter.setFont( font );
-    QRect    page0( 500, 200, 500, 400);
-    painter.drawText(page0, Qt::AlignRight, "Name:\r\nID:\r\nDate of Birth:\r\nExam Date:" );
-    font.setBold(true);
-    painter.setFont( font );
+    painter1->end();
+    painter2->end();
+    painter3->end();
+    painter4->end();
 
-    QRect    page1( 1000, 200, 500, 400);
-    QString  sPatient;
-    sPatient.append(QString("%1\r\n%2").arg(curParam->patientName).arg(curParam->patientId));
-    painter.drawText(page1, Qt::AlignLeft, sPatient);
+//    qDebug()<<"pix.size()"<<pix.size();
 
-//    QRect    page1(1000, 200, 1000, 400);
-//    pModel1 = Formula1->getModel();
-//    pModel2 = Formula2->getModel();
-//    pModel3 = Formula3->getModel();
+    iPlot1 = pix1.toImage();
+    iPlot2 = pix2.toImage();
+    iPlot3 = pix3.toImage();
+    iPlot4 = pix4.toImage();
 
-//    int kolLine = 0;
-#define kolColumn  3
-#define hightLine  100
-#define yPosTable  5000
-#define xPosTable  500
-#define widthTable 3900
+    QString fileName = ":/test/report";
+    QtRPT *report = new QtRPT(this);
 
-//    QSize size;
-//    size.setHeight(20000);
-//    size.setWidth (20000);
-    if(Formula1->isEnabled())
-    {
-        QPixmap pixmap(Formula1->size());
-        Formula1->render(&pixmap);
-        painter.drawPixmap(2700,3000,2000,1800,pixmap);
-    }
+//    report->setBackgroundImage((QPixmap)pix);
 
-    if(Formula2->isEnabled())
-    {
-        QPixmap pixmap(Formula2->size());
-        Formula2->render(&pixmap);
-        painter.drawPixmap(500,5000,2000,1800,pixmap);
-    }
+    report->loadReport(fileName);
+    report->recordCount << 7;
 
-    if(Formula3->isEnabled())
-    {
-        QPixmap pixmap(Formula3->size());
-        Formula3->render(&pixmap);
-        painter.drawPixmap(2700,5000,2000,1800,pixmap);
-    }
+    QObject::connect(report, SIGNAL(setValue(const int, const QString, QVariant&, const int)),
+                     this, SLOT(setValue(const int, const QString, QVariant&, const int)));
 
-//    QRect    txt1(xPosTable+(widthTable/(kolColumn*2))*0, yPosTable+(0+3)*hightLine, (widthTable/(kolColumn*2)), 100);
-//    QRect    txt2(xPosTable+(widthTable/(kolColumn*2))*1, yPosTable+(+3)*hightLine, (widthTable/(kolColumn*2)), 100);
-//    painter.drawText(txt1, Qt::AlignCenter, curParam->patientName);
-//    painter.drawText(txt2, Qt::AlignCenter, pModel1->model->data(pModel1->model->index(i, 1), Qt::DisplayRole).toString());
+    QObject::connect(report, SIGNAL(setValueImage(int,QString,QImage&,int)),
+                     this, SLOT(setValueImage(int,QString,QImage&,int)));
 
-//    kolLine = qMax(pModel1->model->rowCount(), pModel2->model->rowCount());
-//    kolLine = qMax(kolLine, pModel3->model->rowCount());
+//    QObject::connect(report, SIGNAL(setValueImage(int&, QString&, QImage&, int)),
+//                     this, SLOT(setValueImage(int&, QString&, QImage&, int)));
 
-//    for(quint8 i=0; i<kolLine; i++)
-//    {
-//        painter.drawRect(xPosTable, yPosTable+i*hightLine, widthTable, hightLine);
-//    }
-
-//    for(quint8 i=0; i<kolColumn; i++)
-//    {
-//        painter.drawRect(xPosTable+((widthTable/kolColumn)*i), yPosTable, (widthTable/kolColumn), kolLine*hightLine);
-//    }
-
-//    for(quint8 i=0; i<(kolColumn*2); i++)
-//    {
-//        painter.drawRect(xPosTable+(widthTable/(kolColumn*2)*i), yPosTable+hightLine, (widthTable/(kolColumn*2)), (kolLine-1)*hightLine);
-//    }
-
-//    for (quint8 i=0; i<pModel1->model->rowCount(); i++)
-//    {
-//        QRect    txt1(xPosTable+(widthTable/(kolColumn*2))*0, yPosTable+(i+3)*hightLine, (widthTable/(kolColumn*2)), 100);
-//        QRect    txt2(xPosTable+(widthTable/(kolColumn*2))*1, yPosTable+(i+3)*hightLine, (widthTable/(kolColumn*2)), 100);
-//        painter.drawText(txt1, Qt::AlignCenter, pModel1->model->data(pModel1->model->index(i, 0), Qt::DisplayRole).toString());
-//        painter.drawText(txt2, Qt::AlignCenter, pModel1->model->data(pModel1->model->index(i, 1), Qt::DisplayRole).toString());
-//    }
-
-//    for (quint8 i=0; i<pModel2->model->rowCount(); i++)
-//    {
-//        QRect    txt1(xPosTable+(widthTable/(kolColumn*2))*2, yPosTable+(i+3)*hightLine, (widthTable/(kolColumn*2)), 100);
-//        QRect    txt2(xPosTable+(widthTable/(kolColumn*2))*3, yPosTable+(i+3)*hightLine, (widthTable/(kolColumn*2)), 100);
-//        painter.drawText(txt1, Qt::AlignCenter, pModel2->model->data(pModel2->model->index(i, 0), Qt::DisplayRole).toString());
-//        painter.drawText(txt2, Qt::AlignCenter, pModel2->model->data(pModel2->model->index(i, 1), Qt::DisplayRole).toString());
-//    }
-
-//    for (quint8 i=0; i<pModel3->model->rowCount(); i++)
-//    {
-//        QRect    txt1(xPosTable+(widthTable/(kolColumn*2))*4, yPosTable+(i+3)*hightLine, (widthTable/(kolColumn*2)), 100);
-//        QRect    txt2(xPosTable+(widthTable/(kolColumn*2))*5, yPosTable+(i+3)*hightLine, (widthTable/(kolColumn*2)), 100);
-//        painter.drawText(txt1, Qt::AlignCenter, pModel3->model->data(pModel3->model->index(i, 0), Qt::DisplayRole).toString());
-//        painter.drawText(txt2, Qt::AlignCenter, pModel3->model->data(pModel3->model->index(i, 1), Qt::DisplayRole).toString());
-//    }
+    report->printExec(true);
 }
+
 
 void calculator::refreshLens(QSqlQueryModel *link)
 {
     twLens->setModel(link);
+    link->setHeaderData(0, Qt::Horizontal, "Lens", Qt::DisplayRole);
+    link->setHeaderData(1, Qt::Horizontal, "numF", Qt::DisplayRole);
+    link->setHeaderData(2, Qt::Horizontal, "Formula", Qt::DisplayRole);
+    link->setHeaderData(3, Qt::Horizontal, "AConst", Qt::DisplayRole);
+    link->setHeaderData(4, Qt::Horizontal, "ACD", Qt::DisplayRole);
+    link->setHeaderData(5, Qt::Horizontal, "SF", Qt::DisplayRole);
 }
 
 void calculator::updatePatient()
 {
+    qDebug()<<"patient";
     pCalcPatient->updatePatient();
+}
+
+void calculator::changeSideCalculatorSlot()
+{
+    emit changeSideCalculator();
+}
+
+void calculator::setValue(const int recNo, const QString paramName, QVariant &paramValue, const int reportPage)
+{
+    QString paramTmp;
+    Q_UNUSED(reportPage);
+    Q_UNUSED(recNo);
+
+   if(paramName == "measureParam1")
+   {
+       if((al1>0)&&(acd1>0))
+       {
+           paramTmp.append(QString("AL: %1   ACD:%2").arg(al1).arg(acd1));
+           paramValue = paramTmp;
+       }
+   }
+
+   if(paramName == "measureParam2")
+   {
+       if((al2>0)&&(acd2>0))
+       {
+           paramTmp.append(QString("AL: %1   ACD:%2").arg(al2).arg(acd2));
+           paramValue = paramTmp;
+       }
+   }
+
+   if(paramName == "measureParam3")
+   {
+       if((al3>0)&&(acd3>0))
+       {
+           paramTmp.append(QString("AL: %1   ACD:%2").arg(al3).arg(acd3));
+           paramValue = paramTmp;
+       }
+   }
+
+   if(paramName == "measureParam4")
+   {
+       if((al4>0)&&(acd4>0))
+       {
+           paramTmp.append(QString("AL: %1   ACD:%2").arg(al4).arg(acd4));
+           paramValue = paramTmp;
+       }
+   }
+
+   if (paramName == "doctor")
+       paramValue = curParam->doctorName;
+   if (paramName == "name")
+       paramValue = curParam->patientName;
+   if (paramName == "id")
+       paramValue = curParam->patientId;
+   if (paramName == "birth")
+       paramValue = curParam->birthDate;
+   if (paramName == "al")
+       paramValue = curParam->ALave;
+   if (paramName == "acd")
+       paramValue = curParam->ACD;
+
+    if (paramName == "side")
+        paramValue = (curParam->regimSide==REGIM::OD)?"OD\r\nright":"OS\r\nleft";
+    if (paramName == "k1")
+        paramValue = (curParam->regimSide==REGIM::OD)?curParam->k1left:curParam->k1right;
+    if (paramName == "k2")
+        paramValue = (curParam->regimSide==REGIM::OD)?curParam->k2left:curParam->k2right;
+    if (paramName == "rx")
+    {
+        stPersonalParam personalParam;
+        personalParam = pCalcPatient->getPersonalParam();
+        paramValue = personalParam.Rx;
+    }
+
+    if (paramName.indexOf("IOL1")>=0)
+    {
+        QStandardItemModel *model;
+        QModelIndex index;
+        model = (QStandardItemModel*)Formula1->twFormula->model();
+        if(paramName.indexOf("11")>0)
+            index = model->index(0, 1);
+        if(paramName.indexOf("12")>0)
+            index = model->index(1, 1);
+        if(paramName.indexOf("13")>0)
+            index = model->index(2, 1);
+        if(paramName.indexOf("14")>0)
+            index = model->index(3, 1);
+        if(paramName.indexOf("15")>0)
+            index = model->index(4, 1);
+        if(paramName.indexOf("16")>0)
+            index = model->index(5, 1);
+        if(paramName.indexOf("17")>0)
+            index = model->index(6, 1);
+        paramValue = model->data(index, Qt::DisplayRole);
+    }
+    if (paramName.indexOf("Ref1")>=0)
+    {
+        QStandardItemModel *model;
+        QModelIndex index;
+        model = (QStandardItemModel*)Formula1->twFormula->model();
+        if(paramName.indexOf("11")>0)
+            index = model->index(0, 2);
+        if(paramName.indexOf("12")>0)
+            index = model->index(1, 2);
+        if(paramName.indexOf("13")>0)
+            index = model->index(2, 2);
+        if(paramName.indexOf("14")>0)
+            index = model->index(3, 2);
+        if(paramName.indexOf("15")>0)
+            index = model->index(4, 2);
+        if(paramName.indexOf("16")>0)
+            index = model->index(5, 2);
+        if(paramName.indexOf("17")>0)
+            index = model->index(6, 2);
+        paramValue = model->data(index, Qt::DisplayRole);
+    }
+
+
+    if (paramName.indexOf("IOL2")>=0)
+    {
+        QStandardItemModel *model;
+        QModelIndex index;
+        model = (QStandardItemModel*)Formula2->twFormula->model();
+        if(paramName.indexOf("21")>0)
+            index = model->index(0, 1);
+        if(paramName.indexOf("22")>0)
+            index = model->index(1, 1);
+        if(paramName.indexOf("23")>0)
+            index = model->index(2, 1);
+        if(paramName.indexOf("24")>0)
+            index = model->index(3, 1);
+        if(paramName.indexOf("25")>0)
+            index = model->index(4, 1);
+        if(paramName.indexOf("26")>0)
+            index = model->index(5, 1);
+        if(paramName.indexOf("27")>0)
+            index = model->index(6, 1);
+        paramValue = model->data(index, Qt::DisplayRole);
+    }
+    if (paramName.indexOf("Ref2")>=0)
+    {
+        QStandardItemModel *model;
+        QModelIndex index;
+        model = (QStandardItemModel*)Formula2->twFormula->model();
+        if(paramName.indexOf("21")>0)
+            index = model->index(0, 2);
+        if(paramName.indexOf("22")>0)
+            index = model->index(1, 2);
+        if(paramName.indexOf("23")>0)
+            index = model->index(2, 2);
+        if(paramName.indexOf("24")>0)
+            index = model->index(3, 2);
+        if(paramName.indexOf("25")>0)
+            index = model->index(4, 2);
+        if(paramName.indexOf("26")>0)
+            index = model->index(5, 2);
+        if(paramName.indexOf("27")>0)
+            index = model->index(6, 2);
+        paramValue = model->data(index, Qt::DisplayRole);
+    }
+
+    if (paramName.indexOf("IOL3")>=0)
+    {
+        QStandardItemModel *model;
+        QModelIndex index;
+        model = (QStandardItemModel*)Formula3->twFormula->model();
+        if(paramName.indexOf("31")>0)
+            index = model->index(0, 1);
+        if(paramName.indexOf("32")>0)
+            index = model->index(1, 1);
+        if(paramName.indexOf("33")>0)
+            index = model->index(2, 1);
+        if(paramName.indexOf("34")>0)
+            index = model->index(3, 1);
+        if(paramName.indexOf("35")>0)
+            index = model->index(4, 1);
+        if(paramName.indexOf("36")>0)
+            index = model->index(5, 1);
+        if(paramName.indexOf("37")>0)
+            index = model->index(6, 1);
+        paramValue = model->data(index, Qt::DisplayRole);
+    }
+    if (paramName.indexOf("Ref3")>=0)
+    {
+        QStandardItemModel *model;
+        QModelIndex index;
+        model = (QStandardItemModel*)Formula1->twFormula->model();
+        if(paramName.indexOf("31")>0)
+            index = model->index(0, 2);
+        if(paramName.indexOf("32")>0)
+            index = model->index(1, 2);
+        if(paramName.indexOf("33")>0)
+            index = model->index(2, 2);
+        if(paramName.indexOf("34")>0)
+            index = model->index(3, 2);
+        if(paramName.indexOf("35")>0)
+            index = model->index(4, 2);
+        if(paramName.indexOf("36")>0)
+            index = model->index(5, 2);
+        if(paramName.indexOf("37")>0)
+            index = model->index(6, 2);
+        paramValue = model->data(index, Qt::DisplayRole);
+    }
+
+    if (paramName == "exact1")
+    {
+        QStandardItemModel *model;
+        QModelIndex index;
+        model = (QStandardItemModel*)Formula1->twEmm->model();
+        index = model->index(Formula1->cbFormula->currentIndex()+6, 1);
+        paramValue = model->data(index, Qt::DisplayRole);
+    }
+    if (paramName == "exact2")
+    {
+        QStandardItemModel *model;
+        QModelIndex index;
+        model = (QStandardItemModel*)Formula2->twEmm->model();
+        index = model->index(Formula1->cbFormula->currentIndex()+6, 1);
+        paramValue = model->data(index, Qt::DisplayRole);
+    }
+    if (paramName == "exact3")
+    {
+        QStandardItemModel *model;
+        QModelIndex index;
+        model = (QStandardItemModel*)Formula3->twEmm->model();
+        index = model->index(Formula1->cbFormula->currentIndex()+6, 1);
+        paramValue = model->data(index, Qt::DisplayRole);
+    }
+
+    if (paramName == "lens1")
+    {
+        paramTmp = "lens: ";
+        paramTmp.append(Formula1->lLens->text());
+        paramValue = paramTmp;
+    }
+    if (paramName == "lens2")
+    {
+        paramTmp = "lens: ";
+        paramTmp.append(Formula2->lLens->text());
+        paramValue = paramTmp;
+    }
+    if (paramName == "lens3")
+    {
+        paramTmp = "lens: ";
+        paramTmp.append(Formula3->lLens->text());
+        paramValue = paramTmp;
+    }
+
+    if (paramName == "formula1")
+        paramValue = Formula1->cbFormula->currentText();
+    if (paramName == "formula2")
+        paramValue = Formula2->cbFormula->currentText();
+    if (paramName == "formula3")
+        paramValue = Formula3->cbFormula->currentText();
+    if (paramName == "regimMeasure")
+    {
+        switch(curParam->regimMeasure)
+        {
+        case REGIM::AUTOFREEZ: paramTmp = "AutoFreez/ "; break;
+        case REGIM::AUTO:      paramTmp = "Auto/ "; break;
+        case REGIM::MANUAL:    paramTmp = "Manual/ "; break;
+        }
+        switch(curParam->regimContact)
+        {
+        case REGIM::CONTACT:   paramTmp.append("Contact/ "); break;
+        case REGIM::IMMERSION: paramTmp.append("Immersion/ "); break;
+        }
+        switch(curParam->regimCataract)
+        {
+        case REGIM::CATARACT: paramTmp.append("Cataract/"); break;
+        case REGIM::APHAKIC:  paramTmp.append("Aphakic/"); break;
+        }
+        paramTmp.append((curParam->regimSide==REGIM::OD)?"OD right":"OS left");
+        paramValue = paramTmp;
+    }
+    if (paramName == "measureParam")
+    {
+        paramTmp.append(QString("AL: %1   ACD:%2").arg(curParam->ALave).arg(curParam->ACD));
+        paramValue = paramTmp;
+    }
+
+    if (paramName == "date")
+    {
+//        paramTmp.append(QString("AL: %1   ACD:%2").arg(curParam->ALave).arg(curParam->ACD));
+        paramValue = curParam->curTime.toString("dd.mm.yyyy hh:mm:ss");
+    }
+
+}
+
+void calculator::setValueImage(int recNo, QString paramName, QImage &paramValue,int reportPage)
+{
+    if (paramName == "image1")
+        paramValue = iPlot1;
+    if (paramName == "image2")
+        paramValue = iPlot2;
+    if (paramName == "image3")
+        paramValue = iPlot3;
+    if (paramName == "image4")
+        paramValue = iPlot4;
 }

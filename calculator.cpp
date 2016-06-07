@@ -36,13 +36,17 @@ calculator::calculator(QWidget *parent, CurParam *link) :
 
 
 
-    //twLens = new adjview(5, lst, columnPercent);
-    twLens = new QTableView();
+    twLens = new adjview(columnPercent);
+//    twLens = new adjview(5, lst, columnPercent);
+//    twLens = new QTableView();
     twLens->setMinimumWidth(350);
     twLens->setFrameShape(QFrame::NoFrame);
     twLens->setFrameShadow(QFrame::Plain);
     twLens->setStyleSheet(QStringLiteral("gridline-color: rgb(200, 200, 255);"));
 //    twLens->horizontalHeader()->setVisible(false);
+
+
+
 
     refreshLens(curParam->lensModel);
     //-------------------------------
@@ -125,6 +129,13 @@ calculator::calculator(QWidget *parent, CurParam *link) :
     connect(pCalcPatient, SIGNAL(refreshFormula()), SLOT(refreshFormuls()));
     connect(pbPrint, SIGNAL(clicked()), SLOT(printPreview()));
     connect(pCalcPatient, SIGNAL(changeSideCalculator()), SLOT(changeSideCalculatorSlot()));
+
+    quint16 viewWidht = twLens->width();
+    for(quint8 i=0; i<columnPercent.size(); i++)
+    {
+        twLens->setColumnWidth(i, (viewWidht*columnPercent.at(i))/100);
+    }
+
 
 }
 
