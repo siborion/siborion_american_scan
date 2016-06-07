@@ -34,7 +34,10 @@ calculator::calculator(QWidget *parent, CurParam *link) :
     columnPercent<<20<<0<<21<<15<<10<<10<<8<<8<<8;
     lst<<"Lens Name"<<"id"<<"Formula"<<"AConst"<<"ACD"<<"SF"<<"A0"<<"A1"<<"A2";
 
-    twLens = new adjview(5, lst, columnPercent);
+
+
+    //twLens = new adjview(5, lst, columnPercent);
+    twLens = new QTableView();
     twLens->setMinimumWidth(350);
     twLens->setFrameShape(QFrame::NoFrame);
     twLens->setFrameShadow(QFrame::Plain);
