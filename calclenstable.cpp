@@ -216,7 +216,7 @@ void CalcLensTable::refreshFormula(quint8 nomLens, int curIndex)
         index = this->tableModel->index(10+j, nomLens*2+1);
         tableModel->setData(index, slTmp.at(i), Qt::DisplayRole);
         index = this->tableModel->index(10+j, nomLens*2+2);
-        tableModel->setData(index, QString("(EMM) %1").arg(stFormula.PEMM, 0, 'f', 2), Qt::DisplayRole);
+        tableModel->setData(index, QString("EMM = %1").arg(stFormula.PEMM, 0, 'f', 2), Qt::DisplayRole);
     }
 }
 
