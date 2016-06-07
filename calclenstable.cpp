@@ -47,7 +47,7 @@ CalcLensTable::CalcLensTable(int row, int col, QList<int> pr, QTableView *parent
 
     for(quint8 i=0; i<17; i++)
     {
-        for(quint8 j=0; j<7; j++)
+        for(quint8 j=0; j<11; j++)
         {
             index = this->tableModel->index(i,j);
 
@@ -89,16 +89,18 @@ CalcLensTable::CalcLensTable(int row, int col, QList<int> pr, QTableView *parent
     this->setItemDelegateForColumn(3, pCombo_Delegate.at(1));
     this->setItemDelegateForColumn(5, pCombo_Delegate.at(2));
 
-    this->setItemDelegateForColumn(2, pCombo_Delegate.at(3));
-    this->setItemDelegateForColumn(4, pCombo_Delegate.at(4));
-    this->setItemDelegateForColumn(6, pCombo_Delegate.at(5));
+    this->setItemDelegateForColumn(7, pCombo_Delegate.at(3));
+    this->setItemDelegateForColumn(9, pCombo_Delegate.at(4));
+//    this->setItemDelegateForColumn(6, pCombo_Delegate.at(5));
 
 
-//    connect(pCombo_Delegate.at(0), SIGNAL(closeEditor(QWidget*,QAbstractItemDelegate::EndEditHint)), SLOT(slChangeCombo1()));
+    connect(pCombo_Delegate.at(0), SIGNAL(closeEditor(QWidget*,QAbstractItemDelegate::EndEditHint)), SLOT(slChangeCombo1()));
     connect(pCombo_Delegate.at(1), SIGNAL(closeEditor(QWidget*,QAbstractItemDelegate::EndEditHint)), SLOT(slChangeCombo2()));
     connect(pCombo_Delegate.at(2), SIGNAL(closeEditor(QWidget*,QAbstractItemDelegate::EndEditHint)), SLOT(slChangeCombo3()));
+    connect(pCombo_Delegate.at(3), SIGNAL(closeEditor(QWidget*,QAbstractItemDelegate::EndEditHint)), SLOT(slChangeCombo4()));
+    connect(pCombo_Delegate.at(4), SIGNAL(closeEditor(QWidget*,QAbstractItemDelegate::EndEditHint)), SLOT(slChangeCombo5()));
 
-    connect(pCombo_Delegate.at(0), SIGNAL(commitData(QWidget*)), SLOT(slChangeCombo1()));
+//    connect(pCombo_Delegate.at(0), SIGNAL(commitData(QWidget*)), SLOT(slChangeCombo1()));
 }
 
 void CalcLensTable::setSide(QString val)
@@ -261,6 +263,24 @@ void CalcLensTable::slChangeCombo3()
     index = this->tableModel->index(1,5);
     nomFormula = tableModel->data(index, Qt::DisplayRole).toUInt();
     changeFotmula(2, nomFormula);
+}
+
+void CalcLensTable::slChangeCombo4()
+{
+    QModelIndex index;
+    quint8 nomFormula;
+    index = this->tableModel->index(1,7);
+    nomFormula = tableModel->data(index, Qt::DisplayRole).toUInt();
+    changeFotmula(3, nomFormula);
+}
+
+void CalcLensTable::slChangeCombo5()
+{
+    QModelIndex index;
+    quint8 nomFormula;
+    index = this->tableModel->index(1,9);
+    nomFormula = tableModel->data(index, Qt::DisplayRole).toUInt();
+    changeFotmula(4, nomFormula);
 }
 
 void CalcLensTable::mousePressEvent(QMouseEvent *event)

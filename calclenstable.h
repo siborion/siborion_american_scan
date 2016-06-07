@@ -31,22 +31,24 @@ private:
     void refreshFormula(quint8 nomLens, int curIndex);
     void saveParam(quint8 nomLens, _formulae *val);
 
-    double AL[3];
-    double K[3];
-    double AConst[3];
-    double ACD[3];
-    double SF[3];
-    double A0[3];
-    double A1[3];
-    double A2[3];
-    double ACD_measure[3];
-    double Rx[3];
+    double AL[5];
+    double K[5];
+    double AConst[5];
+    double ACD[5];
+    double SF[5];
+    double A0[5];
+    double A1[5];
+    double A2[5];
+    double ACD_measure[5];
+    double Rx[5];
 
 private slots:
     void changeFotmula(quint8 nomLens, int);
     void slChangeCombo1();
     void slChangeCombo2();
     void slChangeCombo3();
+    void slChangeCombo4();
+    void slChangeCombo5();
 
 
 };

@@ -59,7 +59,7 @@ private:
     adjview *twName;
     QStandardItemModel *modelName;
     adjview *twLens;
-    QStandardItemModel *modelLens;
+//    QStandardItemModel *modelLens;
     adjview *twK;
     QStandardItemModel *modelK;
     adjview *twA;

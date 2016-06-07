@@ -34,7 +34,7 @@ calculator::calculator(QWidget *parent, CurParam *link) :
     columnPercent<<20<<0<<21<<15<<10<<10<<8<<8<<8;
     lst<<"Lens Name"<<"id"<<"Formula"<<"AConst"<<"ACD"<<"SF"<<"A0"<<"A1"<<"A2";
 
-    twLens = new adjview(3, lst, columnPercent);
+    twLens = new adjview(5, lst, columnPercent);
     twLens->setMinimumWidth(350);
     twLens->setFrameShape(QFrame::NoFrame);
     twLens->setFrameShadow(QFrame::Plain);
@@ -131,7 +131,9 @@ void calculator::refreshFormuls()
     quint8 nFormula;
     QString lensName, lensAconst, lensAcd, lensFs, lensA0, lensA1, lensA2;
 
+
     personalParam = pCalcPatient->getPersonalParam();
+
 
     Formula1->clear();
     Formula2->clear();
@@ -147,8 +149,10 @@ void calculator::refreshFormuls()
 
     if(twLens->model()->rowCount()>0)
     {
-        for(quint8 i=0; i<twLens->model()->rowCount() && i<3; i++)
+        for(quint8 i=0; i<twLens->model()->rowCount() && i<5; i++)
         {
+            qDebug()<<"i"<<i;
+
             nFormula   = twLens->model()->itemData(twLens->model()->index(i,1)).value(0).toInt();
             lensName   = twLens->model()->itemData(twLens->model()->index(i,0)).value(0).toString();
 
@@ -334,6 +338,7 @@ void calculator::refreshLens(QSqlQueryModel *link)
 
 void calculator::updatePatient()
 {
+    qDebug()<<"patient";
     pCalcPatient->updatePatient();
 }
 
