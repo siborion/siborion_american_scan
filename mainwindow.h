@@ -10,6 +10,7 @@
 #include "bscan.h"
 #include "parcer.h"
 #include "typedef.h"
+#include "print.h"
 #include <QMainWindow>
 
 namespace Ui {
@@ -35,12 +36,13 @@ private:
     Device *device;
     Parcer *parcer;
     Bscan  *bscan;
-    QWidget *print;
+    Print *print;
     void moveWindowToCenter();
 
 public slots:
     void resiveDataSlot(QByteArray*);
     void setStPatient(QMap <QString, QString> *stPatientBases);
+    void slChangeTab(int);
 
 private slots:
 //    void updatePatient();

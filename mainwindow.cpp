@@ -21,7 +21,7 @@ MainWindow::MainWindow(QWidget *parent) :
     device = new Device(this);
     parcer = new Parcer(this, curParam);
     bscan = new Bscan(this, curParam);
-    print = new QWidget(this);
+    print = new Print(this, curParam);
 
     ui->tabWidget->removeTab(0);
     ui->tabWidget->removeTab(0);
@@ -33,6 +33,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     pCalculator->twMeas = measure->pSampleTable->twMeas;
+    print->twMeas = measure->pSampleTable->twMeas;
 
     connect(bases,SIGNAL(getModel(Base::TypeBase,QSqlQueryModel**)),scanbase,SLOT(getBasesModel(Base::TypeBase,QSqlQueryModel**)));
 
@@ -73,6 +74,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(measure,SIGNAL(save(QStandardItemModel*,QStandardItemModel*)),scanbase,SLOT(saveSlot(QStandardItemModel*,QStandardItemModel*)));
 
+    connect(ui->tabWidget, SIGNAL(currentChanged(int)), SLOT(slChangeTab(int)));
+
     bases->Init();
     moveWindowToCenter();
 
@@ -108,6 +111,15 @@ void MainWindow::setStPatient(QMap <QString, QString> *stPatientBases)
         str.append(QString("Ocusvm / %1 / %2").arg(curParam->patientName).arg(curParam->doctorName));
     this->setWindowTitle(str);
     qDebug()<<str;
+}
+
+void MainWindow::slChangeTab(int val)
+{
+//    qDebug()<<"nomTab"<<val;
+    if(val==3)
+    {
+        print->doPreview();
+    }
 }
 
 MainWindow::~MainWindow()
