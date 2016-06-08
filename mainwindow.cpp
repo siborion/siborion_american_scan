@@ -21,12 +21,14 @@ MainWindow::MainWindow(QWidget *parent) :
     device = new Device(this);
     parcer = new Parcer(this, curParam);
     bscan = new Bscan(this, curParam);
+    print = new QWidget(this);
 
     ui->tabWidget->removeTab(0);
     ui->tabWidget->removeTab(0);
     ui->tabWidget->addTab(bases, "Data Bases");
     ui->tabWidget->addTab(measure, "Measurement");
     ui->tabWidget->addTab(pCalculator, "Calculator");
+    ui->tabWidget->addTab(print, "Print");
     ui->tabWidget->addTab(bscan, "B-Scan");
 
 

@@ -35,6 +35,7 @@ private:
     Device *device;
     Parcer *parcer;
     Bscan  *bscan;
+    QWidget *print;
     void moveWindowToCenter();
 
 public slots:
