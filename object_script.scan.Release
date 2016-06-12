@@ -55,6 +55,8 @@ INPUT(
 ./release/calclenstable.o
 ./release/combo_delegate_cell.o
 ./release/comboitem.o
+./release/print.o
+./release/func.o
 ./release/qrc_imagesRpt.o
 ./release/qrc_scan.o
 ./release/moc_chart.o
@@ -105,4 +107,5 @@ INPUT(
 ./release/moc_calclenstable.o
 ./release/moc_combo_delegate_cell.o
 ./release/moc_comboitem.o
+./release/moc_print.o
 );

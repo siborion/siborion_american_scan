@@ -1,27 +1,25 @@
 #include "print.h"
+#include "mainwindow.h"
 #include <qwt_plot_renderer.h>
 //#include <QAbstractItemModel>
-
-
+#include <QTabWidget>
+#include "calclens.h"
 
 Print::Print(QWidget *parent, CurParam *link) : QWidget(parent)
 {
-
     curParam = link;
-
 }
 
 void Print::doPreview()
 {
     stMeasureParam measureParam;
-
     quint8 kolvo = 0;
     QwtPlotRenderer renderer;
     QModelIndexList lsSelect;
     QModelIndex index;
     lsSelect = twMeas->selectionModel()->selectedRows();
 
-    qDebug()<<"lsSelect"<<lsSelect;
+    qDebug()<<"lsSelect"<<lsSelect.size();
 
     QPixmap pix1(750, 600);
     QPainter *painter1 = new QPainter(&pix1);
@@ -89,6 +87,21 @@ void Print::doPreview()
         }
         kolvo++;
     }
+
+
+
+//    QTabWidget *mw;
+//    calculator *cl;
+//    CalcLensTable *cLens;
+//    qDebug()<<"name"<<this->parent()->parent()->objectName();
+//    mw = (QTabWidget*)this->parent()->parent();
+//    cl = (calculator*)mw->widget(2);
+//    cLens = cl->calcLens->lensTable;
+
+
+
+
+
 
     painter1->end();
     painter2->end();
@@ -190,16 +203,17 @@ void Print::setValue(const int recNo, const QString paramName, QVariant &paramVa
         paramValue = (curParam->regimSide==REGIM::OD)?curParam->k2left:curParam->k2right;
     if (paramName == "rx")
     {
-        stPersonalParam personalParam;
-//        personalParam = pCalcPatient->getPersonalParam();
-        paramValue = personalParam.Rx;
+//        stPersonalParam personalParam;
+        paramValue = curParam->Rx;//1;//personalParam.Rx;
     }
+
+    qDebug()<<"Formila1"<<Formila1;
 
     if (paramName.indexOf("IOL1")>=0)
     {
         QStandardItemModel *model;
         QModelIndex index;
-        model = (QStandardItemModel*)Formula1->twFormula->model();
+        model = (QStandardItemModel*)Formila1->twFormula->model();//(QStandardItemModel*)Formula1->twFormula->model();
         if(paramName.indexOf("11")>0)
             index = model->index(0, 1);
         if(paramName.indexOf("12")>0)
@@ -220,7 +234,7 @@ void Print::setValue(const int recNo, const QString paramName, QVariant &paramVa
     {
         QStandardItemModel *model;
         QModelIndex index;
-        model = (QStandardItemModel*)Formula1->twFormula->model();
+        model = (QStandardItemModel*)Formila1->twFormula->model();
         if(paramName.indexOf("11")>0)
             index = model->index(0, 2);
         if(paramName.indexOf("12")>0)
@@ -238,12 +252,11 @@ void Print::setValue(const int recNo, const QString paramName, QVariant &paramVa
         paramValue = model->data(index, Qt::DisplayRole);
     }
 
-
     if (paramName.indexOf("IOL2")>=0)
     {
         QStandardItemModel *model;
         QModelIndex index;
-        model = (QStandardItemModel*)Formula2->twFormula->model();
+        model = (QStandardItemModel*)Formila2->twFormula->model();
         if(paramName.indexOf("21")>0)
             index = model->index(0, 1);
         if(paramName.indexOf("22")>0)
@@ -264,7 +277,7 @@ void Print::setValue(const int recNo, const QString paramName, QVariant &paramVa
     {
         QStandardItemModel *model;
         QModelIndex index;
-        model = (QStandardItemModel*)Formula2->twFormula->model();
+        model = (QStandardItemModel*)Formila2->twFormula->model();
         if(paramName.indexOf("21")>0)
             index = model->index(0, 2);
         if(paramName.indexOf("22")>0)
@@ -286,7 +299,7 @@ void Print::setValue(const int recNo, const QString paramName, QVariant &paramVa
     {
         QStandardItemModel *model;
         QModelIndex index;
-        model = (QStandardItemModel*)Formula3->twFormula->model();
+        model = (QStandardItemModel*)Formila3->twFormula->model();
         if(paramName.indexOf("31")>0)
             index = model->index(0, 1);
         if(paramName.indexOf("32")>0)
@@ -307,7 +320,7 @@ void Print::setValue(const int recNo, const QString paramName, QVariant &paramVa
     {
         QStandardItemModel *model;
         QModelIndex index;
-        model = (QStandardItemModel*)Formula1->twFormula->model();
+        model = (QStandardItemModel*)Formila3->twFormula->model();
         if(paramName.indexOf("31")>0)
             index = model->index(0, 2);
         if(paramName.indexOf("32")>0)
@@ -329,52 +342,53 @@ void Print::setValue(const int recNo, const QString paramName, QVariant &paramVa
     {
         QStandardItemModel *model;
         QModelIndex index;
-        model = (QStandardItemModel*)Formula1->twEmm->model();
-        index = model->index(Formula1->cbFormula->currentIndex()+6, 1);
+        model = (QStandardItemModel*)Formila1->twEmm->model();
+        index = model->index(Formila1->cbFormula->currentIndex()+6, 1);
         paramValue = model->data(index, Qt::DisplayRole);
     }
+
     if (paramName == "exact2")
     {
         QStandardItemModel *model;
         QModelIndex index;
-        model = (QStandardItemModel*)Formula2->twEmm->model();
-        index = model->index(Formula1->cbFormula->currentIndex()+6, 1);
+        model = (QStandardItemModel*)Formila2->twEmm->model();
+        index = model->index(Formila1->cbFormula->currentIndex()+6, 1);
         paramValue = model->data(index, Qt::DisplayRole);
     }
     if (paramName == "exact3")
     {
         QStandardItemModel *model;
         QModelIndex index;
-        model = (QStandardItemModel*)Formula3->twEmm->model();
-        index = model->index(Formula1->cbFormula->currentIndex()+6, 1);
+        model = (QStandardItemModel*)Formila3->twEmm->model();
+        index = model->index(Formila1->cbFormula->currentIndex()+6, 1);
         paramValue = model->data(index, Qt::DisplayRole);
     }
 
     if (paramName == "lens1")
     {
         paramTmp = "lens: ";
-        paramTmp.append(Formula1->lLens->text());
+        paramTmp.append(Formila1->lLens->text());
         paramValue = paramTmp;
     }
     if (paramName == "lens2")
     {
         paramTmp = "lens: ";
-        paramTmp.append(Formula2->lLens->text());
+        paramTmp.append(Formila2->lLens->text());
         paramValue = paramTmp;
     }
     if (paramName == "lens3")
     {
         paramTmp = "lens: ";
-        paramTmp.append(Formula3->lLens->text());
+        paramTmp.append(Formila3->lLens->text());
         paramValue = paramTmp;
     }
 
     if (paramName == "formula1")
-        paramValue = Formula1->cbFormula->currentText();
+        paramValue = Formila1->cbFormula->currentText();
     if (paramName == "formula2")
-        paramValue = Formula2->cbFormula->currentText();
+        paramValue = Formila2->cbFormula->currentText();
     if (paramName == "formula3")
-        paramValue = Formula3->cbFormula->currentText();
+        paramValue = Formila3->cbFormula->currentText();
     if (paramName == "regimMeasure")
     {
         switch(curParam->regimMeasure)

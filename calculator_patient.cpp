@@ -1,5 +1,6 @@
 #include "calculator_patient.h"
 #include "ui_calculator_patient.h"
+#include "func.h"
 #include <QDebug>
 
 calculator_patient::calculator_patient(QWidget *parent, CurParam *link) :
@@ -11,6 +12,22 @@ calculator_patient::calculator_patient(QWidget *parent, CurParam *link) :
 
     softUpdate = false;
 
+
+
+    foreach (QObject *ob1, this->children())
+    {
+        foreach (QObject *ob2, ob1->children())
+        {
+            QLabel *la = dynamic_cast<QLabel*>(ob2);
+            if(la) la->setFont(getFont(10, true));
+            QLineEdit *le = dynamic_cast<QLineEdit*>(ob2);
+            if(le) le->setFont(getFont(10, false));
+        }
+        QLabel *la = dynamic_cast<QLabel*>(ob1);
+        if(la) la->setFont(getFont(10, true));
+        QLineEdit *le = dynamic_cast<QLineEdit*>(ob1);
+        if(le) le->setFont(getFont(10, false));
+    }
 
     bLeft = true;
     connect(ui->leK1, SIGNAL(editingFinished()),SLOT(RefreshK()));
@@ -102,7 +119,7 @@ stPersonalParam calculator_patient::getPersonalParam()
     stTmp.AConst = ui->leAConst_personal->text().toFloat();
     stTmp.ACD    = ui->leACD_personal->text().toFloat();
     stTmp.SF     = ui->leSF_personal->text().toFloat();
-    stTmp.Rx     = ui->leRx_personal->text().toFloat();
+    curParam->Rx = stTmp.Rx     = ui->leRx_personal->text().toFloat();
     return stTmp;
 }
 

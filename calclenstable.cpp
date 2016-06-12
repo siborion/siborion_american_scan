@@ -290,6 +290,21 @@ void CalcLensTable::mousePressEvent(QMouseEvent *event)
 //    adjview::mousePressEvent(event);
 }
 
+void CalcLensTable::clear()
+{
+    QModelIndex index;
+
+    for(quint8 i=0; i<tableModel->rowCount(); i++)
+    {
+        for(quint8 j=0; j<tableModel->rowCount(); j++)
+        {
+            index = this->tableModel->index(i,j);
+            tableModel->setData(index, "", Qt::DisplayRole);
+        }
+    }
+    //    tableModel->in
+}
+
 CalcLensTable::~CalcLensTable()
 {
     delete ui;

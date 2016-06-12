@@ -23,6 +23,8 @@ MainWindow::MainWindow(QWidget *parent) :
     bscan = new Bscan(this, curParam);
     print = new Print(this, curParam);
 
+
+
     ui->tabWidget->removeTab(0);
     ui->tabWidget->removeTab(0);
     ui->tabWidget->addTab(bases, "Data Bases");
@@ -34,6 +36,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     pCalculator->twMeas = measure->pSampleTable->twMeas;
     print->twMeas = measure->pSampleTable->twMeas;
+    print->Formila1 = pCalculator->Formula1;
+    print->Formila2 = pCalculator->Formula2;
+    print->Formila3 = pCalculator->Formula3;
 
     connect(bases,SIGNAL(getModel(Base::TypeBase,QSqlQueryModel**)),scanbase,SLOT(getBasesModel(Base::TypeBase,QSqlQueryModel**)));
 

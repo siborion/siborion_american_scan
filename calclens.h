@@ -17,11 +17,12 @@ public:
     explicit CalcLens(QWidget *parent = 0);
     void setValue(quint8 nomLens, quint8 formula, QString name, QString aconst, QString acd, QString fs, QString a0, QString a1, QString a2, double dK, double dAL, double dACD, double RxVal);
     ~CalcLens();
+    CalcLensTable *lensTable;
 
 private:
     Ui::CalcLens *ui;
     QGridLayout   *gridLayout;
-    CalcLensTable *lensTable;
+
 };
 
 #endif // CALCLENS_H

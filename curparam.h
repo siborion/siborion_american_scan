@@ -42,6 +42,7 @@ public:
     double ALave;
     double ACD;
     QString birthDate;
+    float Rx;
 
 private:
 

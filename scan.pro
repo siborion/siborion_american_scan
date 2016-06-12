@@ -90,7 +90,8 @@ SOURCES += main.cpp\
     calclenstable.cpp \
     combo_delegate_cell.cpp \
     comboitem.cpp \
-    print.cpp
+    print.cpp \
+    func.cpp
 
 HEADERS  += mainwindow.h \
     bases.h \
@@ -141,7 +142,8 @@ HEADERS  += mainwindow.h \
     calclenstable.h \
     combo_delegate_cell.h \
     comboitem.h \
-    print.h
+    print.h \
+    func.h
 
 FORMS    += mainwindow.ui \
     dialog_doctor.ui \

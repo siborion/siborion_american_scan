@@ -7,6 +7,7 @@
 #include "plot.h"
 #include "printplot.h"
 #include "qtrpt.h"
+#include "formula.h"
 
 class Print : public QWidget
 {
@@ -14,6 +15,12 @@ class Print : public QWidget
 public:
     explicit Print(QWidget *parent = 0, CurParam *link=0);
     adjview *twMeas;
+//    QAbstractItemModel *Formila1;
+//    QAbstractItemModel *Formila2;
+//    QAbstractItemModel *Formila3;
+    formula *Formila1;
+    formula *Formila2;
+    formula *Formila3;
     void doPreview();
 private:
     double al1, al2, al3, al4, acd1, acd2, acd3, acd4;

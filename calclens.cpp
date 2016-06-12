@@ -1,5 +1,6 @@
 #include "calclens.h"
 #include "ui_calclens.h"
+#include "func.h"
 
 CalcLens::CalcLens(QWidget *parent) :
     QFrame(parent),
@@ -11,6 +12,7 @@ CalcLens::CalcLens(QWidget *parent) :
     pr<<0<<10<<10<<10<<10<<10<<10<<10<<10<<10<<10;
     QTableView tw;
     lensTable = new CalcLensTable (17, 11, pr, &tw);
+    lensTable->setFont(getFont(10,false));
 
     gridLayout->addWidget(lensTable);
 }

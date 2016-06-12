@@ -6,10 +6,13 @@
 #include <QAbstractItemModel>
 #include "qtrpt.h"
 #include <QCoreApplication>
+#include "func.h"
 
 calculator::calculator(QWidget *parent, CurParam *link) :
     QWidget(parent)
 {
+    this->setObjectName("Calculator");
+
     QList<int> columnPercent;
     QStringList lst;
 
@@ -34,18 +37,17 @@ calculator::calculator(QWidget *parent, CurParam *link) :
     columnPercent<<20<<0<<21<<15<<10<<10<<8<<8<<8;
     lst<<"Lens Name"<<"id"<<"Formula"<<"AConst"<<"ACD"<<"SF"<<"A0"<<"A1"<<"A2";
 
-
-
     twLens = new adjview(columnPercent);
-//    twLens = new adjview(5, lst, columnPercent);
-//    twLens = new QTableView();
     twLens->setMinimumWidth(350);
     twLens->setFrameShape(QFrame::NoFrame);
     twLens->setFrameShadow(QFrame::Plain);
     twLens->setStyleSheet(QStringLiteral("gridline-color: rgb(200, 200, 255);"));
-//    twLens->horizontalHeader()->setVisible(false);
-
-
+//    QFont font;
+//    font.setBold(false);
+//    font.setPointSize(12);
+//    font.setFamily(QStringLiteral("Arial"));
+    twLens->setFont(getFont(11, false));
+    twLens->horizontalHeader()->setFont(getFont(12, true));
 
 
     refreshLens(curParam->lensModel);
@@ -121,10 +123,10 @@ calculator::calculator(QWidget *parent, CurParam *link) :
     layout->addWidget(frPatient);
     layout->addItem(verticalSpacer1);
     layout->addWidget(calcLens);
-    layout->addItem(verticalSpacer2);
+//    layout->addItem(verticalSpacer2);
 //    layout->addWidget(Formula1);
-    layout->addWidget(pbPrint);
-    layout->addItem(verticalSpacer3);
+//    layout->addWidget(pbPrint);
+//    layout->addItem(verticalSpacer3);
 
     connect(pCalcPatient, SIGNAL(refreshFormula()), SLOT(refreshFormuls()));
     connect(pbPrint, SIGNAL(clicked()), SLOT(printPreview()));
@@ -353,6 +355,7 @@ void calculator::refreshLens(QSqlQueryModel *link)
 void calculator::updatePatient()
 {
     qDebug()<<"patient";
+    calcLens->lensTable->clear();
     pCalcPatient->updatePatient();
 }
 

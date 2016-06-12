@@ -19,6 +19,7 @@ public:
     explicit CalcLensTable(int row, int col, QList<int> pr, QTableView *parent);
     void setValue(quint8 nomLens, quint8 formula, QString name, QString aconst, QString acd, QString fs, QString a0, QString a1, QString a2, double dK, double dAL, double dACD, double RxVal);
     ~CalcLensTable();
+    void clear();
 
 private:
     virtual void mousePressEvent(QMouseEvent *event);

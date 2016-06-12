@@ -51,23 +51,12 @@ adjview::adjview(QList<int> col, QTableView *parent):
     QTableView(parent)
 {
     QStandardItemModel *model = new QStandardItemModel();
-//    model->setRowCount(1);
     model->setColumnCount(col.count());
     setModel(model);
     verticalHeader()->hide();
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setColumnPercent(col);
-//    QStringList sl;
-//    foreach(int t, col)
-//    {
-//        sl.append("");
-//    }
-
-//    model->setHorizontalHeaderLabels(sl);
-//    verticalHeader()->setDefaultSectionSize(15);
-//    setMinimumHeight(rowHeight(0)*row + horizontalHeader()->height() + 4);
-//    setMaximumHeight(rowHeight(0)*row + horizontalHeader()->height() + 4);
     horizontalHeader()->setSectionsClickable(false);
     setStyleSheet(QStringLiteral("gridline-color: rgb(0, 0, 0);"));
     setFrameShape(QFrame::Box);
