@@ -12,5 +12,7 @@
         <file alias="report">report.xml</file>
         <file alias="ocu_32">Ocu_32_16.ico</file>
         <file alias="ocu">Ocu.ico</file>
+        <file alias="bscan_dis">pic/bscan_ico_dis.png</file>
+        <file alias="bscan_en">pic/bscan_ico_en.png</file>
     </qresource>
 </RCC>

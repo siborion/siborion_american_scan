@@ -1,4 +1,4 @@
-#include <Qfont>
+#include <QFont>
 
 
 QFont getFont(quint8 size, bool bold)

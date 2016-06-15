@@ -6,7 +6,6 @@
 #include "bscantools.h"
 #include "bscancontrol.h"
 #include "BScanHard.h"
-#include "bscantabloa.h"
 #include <QSpacerItem>
 #include "curparam.h"
 #include "typedef.h"
@@ -35,7 +34,6 @@ private:
     QTimer *timerSec;
     quint8 fps;
     bool   run;
-    BScanTabloA *bScanTabloA;
     QSpacerItem *horizontalSpacer1;
     QSpacerItem *horizontalSpacer2;
     CurParam *curParam;

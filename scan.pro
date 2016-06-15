@@ -83,7 +83,6 @@ SOURCES += main.cpp\
     bscanvertex.cpp \
     scena.cpp \
     bscanarray.cpp \
-    bscantabloa.cpp \
     bscancaliper.cpp \
     bscantext.cpp \
     calclens.cpp \
@@ -135,7 +134,6 @@ HEADERS  += mainwindow.h \
     bscanvertex.h \
     scena.h \
     bscanarray.h \
-    bscantabloa.h \
     bscancaliper.h \
     bscantext.h \
     calclens.h \

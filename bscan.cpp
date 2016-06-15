@@ -31,10 +31,6 @@ Bscan::Bscan(QWidget *parent, CurParam *link) :
     timerSec     = new QTimer();
     timerSec->setInterval(1000);
 
-//    bScanTabloA = new BScanTabloA();
-//    bScanTabloA->setMinimumSize(150,150);
-//    bScanTabloA->setMaximumSize(150,150);
-
 
     run = false;
 

@@ -40,11 +40,11 @@ unsigned char *BScanControl::getBuf()
 
 void BScanControl::setBuf(unsigned char *buf)
 {
-    qDebug()<<"setBuf";
     QDateTime time;
     QModelIndex indexDest, indexSour;
     quint8 modelSize;
     modelSize = table->model()->rowCount()-1;
+
     for(quint8 i = 0; i<modelSize; i++)
     {
         indexDest = table->model()->index(modelSize-i,0);
@@ -54,7 +54,7 @@ void BScanControl::setBuf(unsigned char *buf)
     }
     indexDest = table->model()->index(0, 0);
     table->model()->setData(indexDest, QString("%1").arg(time.currentDateTime().toString("yyyy.MM.dd hh:mm:ss.zzz")), Qt::DisplayRole);
-    table->model()->setData(indexDest, (quint32)buf, Qt::UserRole);
+//    table->model()->setData(indexDest, (quint32)buf, Qt::UserRole);
 }
 
 void BScanControl::changeRow(QModelIndex index)
