@@ -12,8 +12,8 @@ BScanControl::BScanControl(QWidget *parent) :
     sl << " ";
     il << 100;
     ui->setupUi(this);
-    this->setMaximumWidth(200);
-    table = new adjview(il);
+    this->setMaximumWidth(300);
+    table = new adjview(il, 80);
 //    table            = new adjview(10, sl, il);
 //    table = new QTableView();
 

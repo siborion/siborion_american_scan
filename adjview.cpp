@@ -62,6 +62,23 @@ adjview::adjview(QList<int> col, QTableView *parent):
     setFrameShape(QFrame::Box);
 }
 
+adjview::adjview(QList<int> col, int row, QTableView *parent):
+    QTableView(parent)
+{
+    QStandardItemModel *model = new QStandardItemModel();
+    model->setColumnCount(col.count());
+    model->setRowCount(row);
+    setModel(model);
+    verticalHeader()->hide();
+    setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    setColumnPercent(col);
+    horizontalHeader()->setSectionsClickable(false);
+    setStyleSheet(QStringLiteral("gridline-color: rgb(0, 0, 0);"));
+    setFrameShape(QFrame::Box);
+}
+
+
 
 adjview::adjview(QStringList row, int col, QList<int> columnPercent, QTableView *parent):
     QTableView(parent)
