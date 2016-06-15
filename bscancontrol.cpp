@@ -13,16 +13,25 @@ BScanControl::BScanControl(QWidget *parent) :
     il << 100;
     ui->setupUi(this);
     this->setMaximumWidth(200);
-    table            = new adjview(10, sl, il);
+    table = new adjview(il);
+//    table            = new adjview(10, sl, il);
+//    table = new QTableView();
+
+    for(quint8 i=0; i<3; i++)
+    {
+        pbSample.append(new BScanButton());
+        ui->layoutGroupBox->addWidget(pbSample.last(),0,i);
+    }
+    pbSample.last()->setEnabled(false);
+
     pbUp   = new QPushButton("<<");
     pbDown = new QPushButton(">>");
-    ui->layoutGroupBox->addWidget(table,  0, 0, 1, 3);
-    ui->layoutGroupBox->addWidget(pbUp,   1, 0);
-    ui->layoutGroupBox->addWidget(pbDown, 1, 1);
+    ui->layoutGroupBox->addWidget(table,  1, 0, 1, 3);
+    ui->layoutGroupBox->addWidget(pbUp,   2, 0);
+    ui->layoutGroupBox->addWidget(pbDown, 2, 1);
     connect(table->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), SLOT(changeRow(QModelIndex)));
     connect(pbUp,   SIGNAL(clicked()), SLOT(slPbUpClick()));
     connect(pbDown, SIGNAL(clicked()), SLOT(slPbDownClick()));
-//    setBuf(0);
 }
 
 unsigned char *BScanControl::getBuf()

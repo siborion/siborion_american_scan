@@ -7,6 +7,7 @@
 #include "bscanarray.h"
 #include "bscanarrow.h"
 #include "bscancaliper.h"
+#include "bscanbutton.h"
 
 namespace Ui {
 class BScanControl;
@@ -24,7 +25,9 @@ public:
 private:
     Ui::BScanControl *ui;
     adjview *table;
+//    QTableView *table;
     QPushButton *pbUp, *pbDown;
+    QList<BScanButton*> pbSample;
 
 private slots:
     void changeRow(QModelIndex);

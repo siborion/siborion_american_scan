@@ -90,7 +90,8 @@ SOURCES += main.cpp\
     combo_delegate_cell.cpp \
     comboitem.cpp \
     print.cpp \
-    func.cpp
+    func.cpp \
+    bscanbutton.cpp
 
 HEADERS  += mainwindow.h \
     bases.h \
@@ -141,7 +142,8 @@ HEADERS  += mainwindow.h \
     combo_delegate_cell.h \
     comboitem.h \
     print.h \
-    func.h
+    func.h \
+    bscanbutton.h
 
 FORMS    += mainwindow.ui \
     dialog_doctor.ui \
@@ -155,7 +157,6 @@ FORMS    += mainwindow.ui \
     bscan.ui \
     bscantools.ui \
     bscancontrol.ui \
-    bscantabloa.ui \
     calclens.ui \
     calclenstable.ui
 
