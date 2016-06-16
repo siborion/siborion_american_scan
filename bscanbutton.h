@@ -2,9 +2,9 @@
 #define BSCANBUTTON_H
 
 #include <QObject>
-#include <QToolButton>
+#include <QRadioButton>
 
-class BScanButton : public QToolButton
+class BScanButton : public QRadioButton
 {
 public:
     BScanButton();
