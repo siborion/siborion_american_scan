@@ -48,7 +48,6 @@ INPUT(
 ./debug/bscanvertex.o
 ./debug/scena.o
 ./debug/bscanarray.o
-./debug/bscantabloa.o
 ./debug/bscancaliper.o
 ./debug/bscantext.o
 ./debug/calclens.o
@@ -57,6 +56,7 @@ INPUT(
 ./debug/comboitem.o
 ./debug/print.o
 ./debug/func.o
+./debug/bscanbutton.o
 ./debug/qrc_imagesRpt.o
 ./debug/qrc_scan.o
 ./debug/moc_chart.o
@@ -100,7 +100,6 @@ INPUT(
 ./debug/moc_bscanvertex.o
 ./debug/moc_scena.o
 ./debug/moc_bscanarray.o
-./debug/moc_bscantabloa.o
 ./debug/moc_bscancaliper.o
 ./debug/moc_bscantext.o
 ./debug/moc_calclens.o

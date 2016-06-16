@@ -14,16 +14,12 @@ BScanControl::BScanControl(QWidget *parent) :
     ui->setupUi(this);
     this->setMaximumWidth(300);
     table = new adjview(il, 80);
-//    table            = new adjview(10, sl, il);
-//    table = new QTableView();
-
     for(quint8 i=0; i<3; i++)
     {
         pbSample.append(new BScanButton());
         ui->layoutGroupBox->addWidget(pbSample.last(),0,i);
     }
     pbSample.last()->setEnabled(false);
-
     pbUp   = new QPushButton("<<");
     pbDown = new QPushButton(">>");
     ui->layoutGroupBox->addWidget(table,  1, 0, 1, 3);

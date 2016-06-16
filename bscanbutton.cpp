@@ -7,5 +7,6 @@ BScanButton::BScanButton()
     iconPatient.addFile(QStringLiteral(":/test/bscan_en"), QSize(), QIcon::Normal, QIcon::Off);
     setIcon(iconPatient);
     this->setMaximumHeight(50);
+    this->setCheckable(true);
     setIconSize(this->size());
 }
