@@ -31,10 +31,12 @@ void Printb::doPreview()
 
 void Printb::setValue(const int recNo, const QString paramName, QVariant &paramValue, const int reportPage)
 {
+      qDebug()<<"value"<<paramName;
 }
 
 void Printb::setValueImage(int recNo, QString paramName, QImage &paramValue,int reportPage)
 {
+    qDebug()<<paramName;
     if (paramName == "bscan")
         paramValue = iScan;
 }

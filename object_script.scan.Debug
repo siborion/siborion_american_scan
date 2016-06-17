@@ -57,6 +57,7 @@ INPUT(
 ./debug\print.o
 ./debug\func.o
 ./debug\bscanbutton.o
+./debug\printb.o
 ./debug\qrc_imagesRpt.o
 ./debug\qrc_scan.o
 ./debug\moc_chart.o
@@ -107,4 +108,5 @@ INPUT(
 ./debug\moc_combo_delegate_cell.o
 ./debug\moc_comboitem.o
 ./debug\moc_print.o
+./debug\moc_printb.o
 );

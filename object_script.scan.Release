@@ -57,6 +57,7 @@ INPUT(
 ./release\print.o
 ./release\func.o
 ./release\bscanbutton.o
+./release\printb.o
 ./release\qrc_imagesRpt.o
 ./release\qrc_scan.o
 ./release\moc_chart.o
@@ -107,4 +108,5 @@ INPUT(
 ./release\moc_combo_delegate_cell.o
 ./release\moc_comboitem.o
 ./release\moc_print.o
+./release\moc_printb.o
 );
