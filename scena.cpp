@@ -6,12 +6,14 @@
 #include <QDate>
 #include <QMessageBox>
 
-scena::scena(quint16 raz, unsigned char *p)
+scena::scena(quint16 raz, unsigned char *p, CurParam *link)
     :  QGLWidget()
 {
     setMouseTracking(true);
     razmer = raz;
     newObject = false;
+
+    curParam = link;
 
     double curDeg;
     quint16 curX, curY, maxY, maxX, curPoint;

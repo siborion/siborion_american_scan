@@ -15,6 +15,7 @@ public:
 private:
     CurParam *curParam;
     QtRPT *report    ;
+    QImage iScan;
 
 signals:
 

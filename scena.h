@@ -11,6 +11,7 @@
 #include <bscantext.h>
 #include <bscanvertex.h>
 #include <bscantools.h>
+#include "curparam.h"
 
 const double PI = 4.*atan(1.);
 const quint8 startKonus = 30;
@@ -20,7 +21,7 @@ class scena : public QGLWidget
 {
     Q_OBJECT
 public:
-    scena(quint16, unsigned char*);
+    scena(quint16, unsigned char*, CurParam *);
     void keyPressEvent  (QKeyEvent *);
     void keyReleaseEvent(QKeyEvent *);
 
@@ -32,6 +33,7 @@ public:
     void setSide(QString);
 
 private:
+    CurParam *curParam;
     QTimer *timer;
     QTimer *timerRefresh;
     quint8 fps;

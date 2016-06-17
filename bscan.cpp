@@ -39,7 +39,12 @@ Bscan::Bscan(QWidget *parent, CurParam *link) :
     bScanHard = new BScanHard();
     buf = bScanHard->getBuf();
 
-    pScena = new scena(scenaSize, buf);
+    pScena = new scena(scenaSize, buf, link);
+    curParam->scanB = pScena;
+//    pScena->grabFrameBuffer();
+
+    curParam->scanB = pScena;
+
 
     horizontalSpacer1 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
     horizontalSpacer2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);

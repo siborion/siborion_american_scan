@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QSqlQueryModel>
 #include <QDateTime>
+#include <QGLWidget>
 #include "curparam.h"
 #include "typedef.h"
 
@@ -43,6 +44,8 @@ public:
     double ACD;
     QString birthDate;
     float Rx;
+    QGLWidget *scanB;
+
 
 private:
 

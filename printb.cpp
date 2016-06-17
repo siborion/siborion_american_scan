@@ -8,6 +8,9 @@ Printb::Printb(QWidget *parent, CurParam *link) : QWidget(parent)
 
 void Printb::doPreview()
 {
+    iScan = curParam->scanB->grabFrameBuffer(false);
+    qDebug()<<iScan.size();
+
     QString fileName = ":/test/reportb";
     report = new QtRPT(this);
 
@@ -32,5 +35,7 @@ void Printb::setValue(const int recNo, const QString paramName, QVariant &paramV
 
 void Printb::setValueImage(int recNo, QString paramName, QImage &paramValue,int reportPage)
 {
+    if (paramName == "bscan")
+        paramValue = iScan;
 }
 
