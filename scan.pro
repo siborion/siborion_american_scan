@@ -91,7 +91,8 @@ SOURCES += main.cpp\
     comboitem.cpp \
     print.cpp \
     func.cpp \
-    bscanbutton.cpp
+    bscanbutton.cpp \
+    printb.cpp
 
 HEADERS  += mainwindow.h \
     bases.h \
@@ -143,7 +144,8 @@ HEADERS  += mainwindow.h \
     comboitem.h \
     print.h \
     func.h \
-    bscanbutton.h
+    bscanbutton.h \
+    printb.h
 
 FORMS    += mainwindow.ui \
     dialog_doctor.ui \

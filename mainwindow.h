@@ -11,6 +11,7 @@
 #include "parcer.h"
 #include "typedef.h"
 #include "print.h"
+#include "printb.h"
 #include <QMainWindow>
 
 namespace Ui {
@@ -37,6 +38,7 @@ private:
     Parcer *parcer;
     Bscan  *bscan;
     Print *print;
+    Printb *printB;
     void moveWindowToCenter();
 
 public slots:

@@ -20,8 +20,9 @@ MainWindow::MainWindow(QWidget *parent) :
     measure = new Measure(this, curParam);
     device = new Device(this);
     parcer = new Parcer(this, curParam);
-    bscan = new Bscan(this, curParam);
-    print = new Print(this, curParam);
+    bscan  = new Bscan(this, curParam);
+    print  = new Print(this, curParam);
+    printB = new Printb(this, curParam);
 
 
 
@@ -30,8 +31,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->tabWidget->addTab(bases, "Data Bases");
     ui->tabWidget->addTab(measure, "Measurement");
     ui->tabWidget->addTab(pCalculator, "Calculator");
-    ui->tabWidget->addTab(print, "Print");
-    ui->tabWidget->addTab(bscan, "B-Scan");
+    ui->tabWidget->addTab(print,  "Print");
+    ui->tabWidget->addTab(bscan,  "B-Scan");
+    ui->tabWidget->addTab(printB, "B-Print");
 
 
     pCalculator->twMeas = measure->pSampleTable->twMeas;
@@ -120,11 +122,10 @@ void MainWindow::setStPatient(QMap <QString, QString> *stPatientBases)
 
 void MainWindow::slChangeTab(int val)
 {
-//    qDebug()<<"nomTab"<<val;
     if(val==3)
-    {
         print->doPreview();
-    }
+    if(val==5)
+        printB->doPreview();
 }
 
 MainWindow::~MainWindow()

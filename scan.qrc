@@ -14,5 +14,6 @@
         <file alias="ocu">Ocu.ico</file>
         <file alias="bscan_dis">pic/bscan_ico_dis.png</file>
         <file alias="bscan_en">pic/bscan_ico_en.png</file>
+        <file alias="reportb">reportb.xml</file>
     </qresource>
 </RCC>
