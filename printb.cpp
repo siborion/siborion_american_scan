@@ -37,7 +37,7 @@ void Printb::setValue(const int recNo, const QString paramName, QVariant &paramV
 void Printb::setValueImage(int recNo, QString paramName, QImage &paramValue,int reportPage)
 {
     qDebug()<<paramName;
-    if (paramName == "bscan")
+    if (paramName == "image")
         paramValue = iScan;
 }
 
