@@ -97,7 +97,8 @@ QSqlQuery Scanbase::getData(QString str)
 
 void Scanbase::updateCurPatient(quint16 id)
 {
-    QString str = QString("SELECT * FROM patient WHERE id=%1;").arg(id);
+//    QString str = QString("SELECT * FROM patient WHERE id=%1;").arg(id);
+    QString str = QString("select * from patient;");
     QSqlQuery sql(str);
     if(sql.exec())
     {

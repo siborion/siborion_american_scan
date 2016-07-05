@@ -21,6 +21,7 @@ Scanbase::Scanbase(QObject *parent, CurParam *link)
 
     if(pDB.open())
     {
+        qDebug()<<"open";
         QString str = "SELECT sample FROM history;";
         QSqlQuery sql(str);
         if(!sql.exec())
@@ -97,12 +98,18 @@ QSqlQuery Scanbase::getData(QString str)
 
 void Scanbase::updateCurPatient(quint16 id)
 {
+    qDebug()<<"updateCurPatient";
     QString str = QString("SELECT * FROM patient WHERE id=%1;").arg(id);
     QSqlQuery sql(str);
+
+    qDebug()<<"--"<<str<<" "<<sql.exec();
+
     if(sql.exec())
     {
+        qDebug()<<"exec";
         if(sql.next())
         {
+            qDebug()<<"next";
             for(int i=0; i<sql.record().count(); i++)
             {
                 curPatient[sql.record().fieldName(i)] = sql.record().value(i).toString();
@@ -125,6 +132,8 @@ void Scanbase::updateCurPatient(quint16 id)
             }
         }
     }
+
+    qDebug()<<pDB.lastError();
 
     str = QString("SELECT name, last FROM doctor WHERE id=%1;").arg(curParam->doctorId);
     if(sql.exec(str))
@@ -151,6 +160,7 @@ void Scanbase::updateCurPatient(quint16 id)
     str.append("AND doctor_lens.nom_formula=formula.id ");
     str.append(QString("WHERE patient.id=%1;").arg(id));
     lensModel.setQuery(str);
+
     emit (setLens(&lensModel));
 }
 
