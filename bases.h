@@ -22,6 +22,7 @@
 #include "dialog_patient.h"
 #include "typedef.h"
 #include "scanbase.h"
+#include <QSpacerItem>
 
 class Bases : public QWidget
 {

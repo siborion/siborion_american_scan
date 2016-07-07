@@ -28,7 +28,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->tabWidget->removeTab(0);
     ui->tabWidget->removeTab(0);
-    ui->tabWidget->addTab(bases, "Data Bases");
+    ui->tabWidget->addTab(bases, "Database");
     ui->tabWidget->addTab(measure, "Measurement");
     ui->tabWidget->addTab(pCalculator, "Calculator");
     ui->tabWidget->addTab(print,  "Print");

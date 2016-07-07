@@ -47,14 +47,40 @@ Bases::Bases(QWidget *parent) :
     twTable->setSelectionBehavior(QAbstractItemView::SelectRows);
     twTable->setSelectionMode(QAbstractItemView::SingleSelection);
 
-    topRightLayout->addWidget(gbSelect);
-    topRightLayout->addWidget(lSearch);
-    topRightLayout->addWidget(leSearch);
+    QGroupBox   *gbPushButton = new QGroupBox();
+    gbPushButton->setMaximumWidth(400);
+    QHBoxLayout *hlPushButton1 = new QHBoxLayout();
+    QHBoxLayout *hlPushButton2 = new QHBoxLayout();
+    QVBoxLayout *vlPushButton = new QVBoxLayout();
+    gbPushButton->setLayout(vlPushButton);
+    hlPushButton2->addWidget(lSearch);
+    hlPushButton2->addWidget(leSearch);
+    hlPushButton1->addWidget(pbAdd);
+    hlPushButton1->addWidget(pbEdit);
+    hlPushButton1->addWidget(pbDel);
+    vlPushButton->addLayout(hlPushButton1);
+    vlPushButton->addLayout(hlPushButton2);
 
-    botRightLayout->addWidget(pbAdd);
-    botRightLayout->addWidget(pbEdit);
-    botRightLayout->addWidget(pbDel);
-    botRightLayout->addWidget(pbPatientHistory);
+
+    QSpacerItem *horizontalSpacer = new QSpacerItem (40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+
+    topRightLayout->addWidget(gbSelect);
+    topRightLayout->addWidget(gbPushButton);
+    topRightLayout->addItem(horizontalSpacer);
+
+//    topRightLayout->addWidget(lSearch);
+//    topRightLayout->addWidget(leSearch);
+
+//    topRightLayout->addWidget(pbAdd);
+//    topRightLayout->addWidget(pbEdit);
+//    topRightLayout->addWidget(pbDel);
+//    topRightLayout->addWidget(pbPatientHistory);
+
+//    botRightLayout->addWidget(pbAdd);
+//    botRightLayout->addWidget(pbEdit);
+//    botRightLayout->addWidget(pbDel);
+//    botRightLayout->addWidget(pbPatientHistory);
 
     rightLayout->addLayout(topRightLayout, 0, 0);
     rightLayout->addWidget(twTable,        1, 0, 1, 1);
