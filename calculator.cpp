@@ -46,8 +46,8 @@ calculator::calculator(QWidget *parent, CurParam *link) :
 //    font.setBold(false);
 //    font.setPointSize(12);
 //    font.setFamily(QStringLiteral("Arial"));
-    twLens->setFont(getFont(11, false));
-    twLens->horizontalHeader()->setFont(getFont(12, true));
+    twLens->setFont(getFont(8, false));
+    twLens->horizontalHeader()->setFont(getFont(9, true));
 
 
     refreshLens(curParam->lensModel);
@@ -344,7 +344,7 @@ void calculator::printPreview()
 void calculator::refreshLens(QSqlQueryModel *link)
 {
     twLens->setModel(link);
-    link->setHeaderData(0, Qt::Horizontal, "Lens", Qt::DisplayRole);
+    link->setHeaderData(0, Qt::Horizontal, "IOLs", Qt::DisplayRole);
     link->setHeaderData(1, Qt::Horizontal, "numF", Qt::DisplayRole);
     link->setHeaderData(2, Qt::Horizontal, "Formula", Qt::DisplayRole);
     link->setHeaderData(3, Qt::Horizontal, "AConst", Qt::DisplayRole);

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>243</width>
-    <height>284</height>
+    <height>305</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -39,7 +39,7 @@
       </font>
      </property>
      <property name="title">
-      <string>Measure</string>
+      <string>Biometry</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_5">
       <item row="2" column="0">
@@ -227,6 +227,12 @@
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>90</width>
+          <height>16777215</height>
+         </size>
         </property>
         <property name="font">
          <font>

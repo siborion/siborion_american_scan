@@ -16,7 +16,7 @@ Bases::Bases(QWidget *parent) :
     rbPatient->setChecked(true);
     QRadioButton *rbDoctor  = new QRadioButton(tr(""), gbSelect);
     rbDoctor->setObjectName("rbDoctor");
-    QRadioButton *rbLens    = new QRadioButton(tr("Lens Styles"), gbSelect);
+    QRadioButton *rbLens    = new QRadioButton(tr("IOLs"), gbSelect);
     rbLens->setObjectName("rbLens");
     groupBoxLayout->addWidget(rbPatient);
     groupBoxLayout->addWidget(rbDoctor);
