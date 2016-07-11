@@ -196,12 +196,6 @@ void CalcLensTable::refreshFormula(quint8 nomLens, int curIndex)
     QStringList slTmp;
     slTmp = getListFormula();
 
-//    QStandardItemModel *model = new QStandardItemModel();
-//    model = (QStandardItemModel*)twFormula->model();
-//    QStandardItemModel *model1 = new QStandardItemModel();
-//    model1 = (QStandardItemModel*)twEmm->model();
-//    model->setItem(0, 0, getItem(slTmp.at(curIndex), Qt::AlignCenter));
-
     for(quint8 i=1; i<=5; i++)
     {
         j++;
@@ -218,6 +212,14 @@ void CalcLensTable::refreshFormula(quint8 nomLens, int curIndex)
         index = this->tableModel->index(10+j, nomLens*2+2);
         tableModel->setData(index, QString("EMM = %1").arg(stFormula.PEMM, 0, 'f', 2), Qt::DisplayRole);
     }
+
+    for(quint8 i=1; i<11; i++)
+    {
+        index = this->tableModel->index(2,i);
+//        tableModel->setData(index, font, Qt::FontRole);
+        tableModel->setData(index, (i&1)?"IOL":"Ref", Qt::DisplayRole);
+    }
+
 }
 
 void CalcLensTable::saveParam(quint8 nomLens, _formulae *val)
