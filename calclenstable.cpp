@@ -213,13 +213,10 @@ void CalcLensTable::refreshFormula(quint8 nomLens, int curIndex)
         tableModel->setData(index, QString("EMM = %1").arg(stFormula.PEMM, 0, 'f', 2), Qt::DisplayRole);
     }
 
-    for(quint8 i=1; i<11; i++)
-    {
-        index = this->tableModel->index(2,i);
-//        tableModel->setData(index, font, Qt::FontRole);
-        tableModel->setData(index, (i&1)?"IOL":"Ref", Qt::DisplayRole);
-    }
-
+        index = this->tableModel->index(2, nomLens*2+1);
+        tableModel->setData(index, "IOL", Qt::DisplayRole);
+        index = this->tableModel->index(2, nomLens*2+2);
+        tableModel->setData(index, "Ref", Qt::DisplayRole);
 }
 
 void CalcLensTable::saveParam(quint8 nomLens, _formulae *val)
