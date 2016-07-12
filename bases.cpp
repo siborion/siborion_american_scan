@@ -6,11 +6,11 @@ Bases::Bases(QWidget *parent) :
     QHBoxLayout *Layout = new QHBoxLayout(this);
     QVBoxLayout *leftLayout  = new QVBoxLayout();
     QGridLayout *rightLayout = new QGridLayout();
-    QHBoxLayout *topRightLayout  = new QHBoxLayout();
-    QHBoxLayout *botRightLayout  = new QHBoxLayout();
+    QVBoxLayout *topRightLayout  = new QVBoxLayout();
+//    QHBoxLayout *botRightLayout  = new QHBoxLayout();
 
     QGroupBox *gbSelect = new QGroupBox();
-    QHBoxLayout *groupBoxLayout  = new QHBoxLayout(gbSelect);
+    QVBoxLayout *groupBoxLayout  = new QVBoxLayout(gbSelect);
     QRadioButton *rbPatient = new QRadioButton(tr(""), gbSelect);
     rbPatient->setObjectName("rbPatient");
     rbPatient->setChecked(true);
@@ -48,8 +48,8 @@ Bases::Bases(QWidget *parent) :
     twTable->setSelectionMode(QAbstractItemView::SingleSelection);
 
     QGroupBox   *gbPushButton = new QGroupBox();
-    gbPushButton->setMaximumWidth(400);
-    QHBoxLayout *hlPushButton1 = new QHBoxLayout();
+    gbPushButton->setMaximumWidth(200);
+    QVBoxLayout *hlPushButton1 = new QVBoxLayout();
     QHBoxLayout *hlPushButton2 = new QHBoxLayout();
     QVBoxLayout *vlPushButton = new QVBoxLayout();
     gbPushButton->setLayout(vlPushButton);
@@ -62,12 +62,12 @@ Bases::Bases(QWidget *parent) :
     vlPushButton->addLayout(hlPushButton2);
 
 
-    QSpacerItem *horizontalSpacer = new QSpacerItem (40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+//    QSpacerItem *horizontalSpacer = new QSpacerItem (40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
 
     topRightLayout->addWidget(gbSelect);
     topRightLayout->addWidget(gbPushButton);
-    topRightLayout->addItem(horizontalSpacer);
+//    topRightLayout->addItem(horizontalSpacer);
 
 //    topRightLayout->addWidget(lSearch);
 //    topRightLayout->addWidget(leSearch);
@@ -83,8 +83,8 @@ Bases::Bases(QWidget *parent) :
 //    botRightLayout->addWidget(pbPatientHistory);
 
     rightLayout->addLayout(topRightLayout, 0, 0);
-    rightLayout->addWidget(twTable,        1, 0, 1, 1);
-    rightLayout->addLayout(botRightLayout, 2, 0);
+    rightLayout->addWidget(twTable,        0, 1);
+//    rightLayout->addLayout(botRightLayout, 0, 0);
 
     Layout->addLayout(leftLayout);
     Layout->addLayout(rightLayout);

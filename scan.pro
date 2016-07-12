@@ -14,6 +14,10 @@ QT	 += serialport
 QT       += opengl
 
 
+win32
+{
+    RC_ICONS = Ocu_32_16.ico
+}
 
 
 TARGET = scan
