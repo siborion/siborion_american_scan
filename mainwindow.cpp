@@ -108,6 +108,7 @@ void MainWindow::resiveDataSlot(QByteArray *Sample)
 
 void MainWindow::setStPatient(QMap <QString, QString> *stPatientBases)
 {
+    qDebug()<<"setStPatient";
     QString str;
     bases->setStPatient(stPatientBases);
     measure->updatePatient();

@@ -112,14 +112,8 @@
         <property name="enabled">
          <bool>true</bool>
         </property>
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(240, 240, 240);</string>
-        </property>
         <property name="frame">
          <bool>false</bool>
-        </property>
-        <property name="readOnly">
-         <bool>true</bool>
         </property>
        </widget>
       </item>
@@ -128,14 +122,8 @@
         <property name="enabled">
          <bool>true</bool>
         </property>
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(240, 240, 240);</string>
-        </property>
         <property name="frame">
          <bool>false</bool>
-        </property>
-        <property name="readOnly">
-         <bool>true</bool>
         </property>
        </widget>
       </item>

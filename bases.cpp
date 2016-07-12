@@ -7,7 +7,7 @@ Bases::Bases(QWidget *parent) :
     QVBoxLayout *leftLayout  = new QVBoxLayout();
     QGridLayout *rightLayout = new QGridLayout();
     QVBoxLayout *topRightLayout  = new QVBoxLayout();
-//    QHBoxLayout *botRightLayout  = new QHBoxLayout();
+    //    QHBoxLayout *botRightLayout  = new QHBoxLayout();
 
     QGroupBox *gbSelect = new QGroupBox();
     QVBoxLayout *groupBoxLayout  = new QVBoxLayout(gbSelect);
@@ -62,29 +62,29 @@ Bases::Bases(QWidget *parent) :
     vlPushButton->addLayout(hlPushButton2);
 
 
-//    QSpacerItem *horizontalSpacer = new QSpacerItem (40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+    //    QSpacerItem *horizontalSpacer = new QSpacerItem (40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
 
     topRightLayout->addWidget(gbSelect);
     topRightLayout->addWidget(gbPushButton);
-//    topRightLayout->addItem(horizontalSpacer);
+    //    topRightLayout->addItem(horizontalSpacer);
 
-//    topRightLayout->addWidget(lSearch);
-//    topRightLayout->addWidget(leSearch);
+    //    topRightLayout->addWidget(lSearch);
+    //    topRightLayout->addWidget(leSearch);
 
-//    topRightLayout->addWidget(pbAdd);
-//    topRightLayout->addWidget(pbEdit);
-//    topRightLayout->addWidget(pbDel);
-//    topRightLayout->addWidget(pbPatientHistory);
+    //    topRightLayout->addWidget(pbAdd);
+    //    topRightLayout->addWidget(pbEdit);
+    //    topRightLayout->addWidget(pbDel);
+    //    topRightLayout->addWidget(pbPatientHistory);
 
-//    botRightLayout->addWidget(pbAdd);
-//    botRightLayout->addWidget(pbEdit);
-//    botRightLayout->addWidget(pbDel);
-//    botRightLayout->addWidget(pbPatientHistory);
+    //    botRightLayout->addWidget(pbAdd);
+    //    botRightLayout->addWidget(pbEdit);
+    //    botRightLayout->addWidget(pbDel);
+    //    botRightLayout->addWidget(pbPatientHistory);
 
     rightLayout->addLayout(topRightLayout, 0, 0);
     rightLayout->addWidget(twTable,        0, 1);
-//    rightLayout->addLayout(botRightLayout, 0, 0);
+    //    rightLayout->addLayout(botRightLayout, 0, 0);
 
     Layout->addLayout(leftLayout);
     Layout->addLayout(rightLayout);
@@ -168,7 +168,10 @@ void Bases::changeBase(bool Val)
         if(sender->objectName() == "rbLens")
             typeBase = Base::enLens;
         adjTable();
+        qDebug()<<"changeBase";
+        connect(twTable->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), SLOT(changeRow(QModelIndex,QModelIndex)));
     }
+
 }
 
 void Bases::Add()
@@ -254,13 +257,22 @@ void Bases::EditIndex(QModelIndex index)
 
 void Bases::Del()
 {
-    if(typeBase==Base::enPatient)
-        emit delPatient();
-    if(typeBase==Base::enDoctor)
-        emit delDoctor();
-    if(typeBase==Base::enLens)
-        emit delLens();
-    adjTable();
+    QMessageBox msgBox;
+    msgBox.setWindowTitle("Do you want delete?");
+    msgBox.setText("Are you sure?");
+    msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+    msgBox.setDefaultButton(QMessageBox::Yes);
+    if(msgBox.exec()==QMessageBox::Yes)
+    {
+
+        if(typeBase==Base::enPatient)
+            emit delPatient();
+        if(typeBase==Base::enDoctor)
+            emit delDoctor();
+        if(typeBase==Base::enLens)
+            emit delLens();
+        adjTable();
+    }
 }
 
 void Bases::changeRow(QModelIndex cur, QModelIndex prev)
@@ -269,19 +281,20 @@ void Bases::changeRow(QModelIndex cur, QModelIndex prev)
     Q_UNUSED(cur); Q_UNUSED(prev);
     if(typeBase == Base::enPatient)
     {
-       numRowPatient = twTable->currentIndex().row();
-       rowId = (quint16)model->data(twTable->model()->index(twTable->currentIndex().row(),0),Qt::DisplayRole).toUInt();
-       emit updateCurPatient(rowId);
+        numRowPatient = twTable->currentIndex().row();
+        rowId = (quint16)model->data(twTable->model()->index(twTable->currentIndex().row(),0),Qt::DisplayRole).toUInt();
+        qDebug()<<"changeRow"<<typeBase;
+        emit updateCurPatient(rowId);
     }
     if(typeBase == Base::enDoctor)
     {
-       rowId = (quint16)model->data(twTable->model()->index(twTable->currentIndex().row(),0),Qt::DisplayRole).toUInt();
-       emit updateCurDoctor(rowId);
+        rowId = (quint16)model->data(twTable->model()->index(twTable->currentIndex().row(),0),Qt::DisplayRole).toUInt();
+        emit updateCurDoctor(rowId);
     }
     if(typeBase == Base::enLens)
     {
-       rowId = (quint16)model->data(twTable->model()->index(twTable->currentIndex().row(),0),Qt::DisplayRole).toUInt();
-       emit updateCurLens(rowId);
+        rowId = (quint16)model->data(twTable->model()->index(twTable->currentIndex().row(),0),Qt::DisplayRole).toUInt();
+        emit updateCurLens(rowId);
     }
 }
 
