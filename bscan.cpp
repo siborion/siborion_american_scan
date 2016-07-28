@@ -89,11 +89,10 @@ void Bscan::scenaRefr()
     else
         buf = bScanControl->getBuf();
 
-//    qDebug()<<buf;
+    qDebug()<<buf;
 
     if(buf)
     {
-
         pScena->refr(buf);
     }
     fps++;
