@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>243</width>
-    <height>305</height>
+    <width>354</width>
+    <height>291</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -42,6 +42,77 @@
       <string>Biometry</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_5">
+      <item row="2" column="1">
+       <widget class="leAddZero" name="leK1">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(240, 240, 240);</string>
+        </property>
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_4">
+        <property name="font">
+         <font>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>AL</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_8">
+        <property name="font">
+         <font>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>ACD</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="leAddZero" name="leK2">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(240, 240, 240);</string>
+        </property>
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="label_7">
+        <property name="font">
+         <font>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>K</string>
+        </property>
+       </widget>
+      </item>
       <item row="2" column="0">
        <widget class="QLabel" name="label_5">
         <property name="font">
@@ -68,42 +139,19 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="0">
-       <widget class="QLabel" name="label_4">
-        <property name="font">
-         <font>
-          <weight>75</weight>
-          <bold>true</bold>
-         </font>
+      <item row="4" column="1">
+       <widget class="leAddZero" name="leK">
+        <property name="enabled">
+         <bool>true</bool>
         </property>
-        <property name="text">
-         <string>AL</string>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(240, 240, 240);</string>
         </property>
-       </widget>
-      </item>
-      <item row="4" column="0">
-       <widget class="QLabel" name="label_7">
-        <property name="font">
-         <font>
-          <weight>75</weight>
-          <bold>true</bold>
-         </font>
+        <property name="frame">
+         <bool>false</bool>
         </property>
-        <property name="text">
-         <string>K</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="label_8">
-        <property name="font">
-         <font>
-          <weight>75</weight>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>ACD</string>
+        <property name="readOnly">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
@@ -127,51 +175,38 @@
         </property>
        </widget>
       </item>
-      <item row="2" column="1">
-       <widget class="leAddZero" name="leK1">
-        <property name="enabled">
-         <bool>true</bool>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(240, 240, 240);</string>
-        </property>
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-        <property name="readOnly">
-         <bool>true</bool>
+      <item row="0" column="2">
+       <widget class="QLabel" name="label_9">
+        <property name="text">
+         <string>mm</string>
         </property>
        </widget>
       </item>
-      <item row="3" column="1">
-       <widget class="leAddZero" name="leK2">
-        <property name="enabled">
-         <bool>true</bool>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(240, 240, 240);</string>
-        </property>
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-        <property name="readOnly">
-         <bool>true</bool>
+      <item row="1" column="2">
+       <widget class="QLabel" name="label_10">
+        <property name="text">
+         <string>mm</string>
         </property>
        </widget>
       </item>
-      <item row="4" column="1">
-       <widget class="leAddZero" name="leK">
-        <property name="enabled">
-         <bool>true</bool>
+      <item row="2" column="2">
+       <widget class="QLabel" name="lK1Unit">
+        <property name="text">
+         <string>D</string>
         </property>
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(240, 240, 240);</string>
+       </widget>
+      </item>
+      <item row="3" column="2">
+       <widget class="QLabel" name="lK2Unit">
+        <property name="text">
+         <string>D</string>
         </property>
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-        <property name="readOnly">
-         <bool>true</bool>
+       </widget>
+      </item>
+      <item row="4" column="2">
+       <widget class="QLabel" name="lKUnit">
+        <property name="text">
+         <string>D</string>
         </property>
        </widget>
       </item>
@@ -365,7 +400,7 @@
          </font>
         </property>
         <property name="text">
-         <string>A Const</string>
+         <string>A-Const</string>
         </property>
        </widget>
       </item>

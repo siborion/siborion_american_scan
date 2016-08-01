@@ -117,7 +117,6 @@ void Bases::adjTable()
         if(model->rowCount()<=numRowPatient)
             numRowPatient = model->rowCount()-1;
         twTable->selectRow(numRowPatient);
-        qDebug()<<"numRowPatient"<<numRowPatient;
         break;
     case Base::enDoctor:
         columnPercent   <<       8        <<      30        <<      30       <<     30;
@@ -283,8 +282,8 @@ void Bases::changeRow(QModelIndex cur, QModelIndex prev)
     {
         numRowPatient = twTable->currentIndex().row();
         rowId = (quint16)model->data(twTable->model()->index(twTable->currentIndex().row(),0),Qt::DisplayRole).toUInt();
-        qDebug()<<"changeRow"<<typeBase;
         emit updateCurPatient(rowId);
+        twTable->setFocus();
     }
     if(typeBase == Base::enDoctor)
     {
