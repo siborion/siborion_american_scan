@@ -191,23 +191,19 @@ void Print::setValue(const int recNo, const QString paramName, QVariant &paramVa
    if (paramName == "birth")
        paramValue = curParam->birthDate;
    if (paramName == "al")
-       paramValue = curParam->ALave;
+       paramValue = QString::number(curParam->ALave, 'f', 2);
    if (paramName == "acd")
-       paramValue = curParam->ACD;
+       paramValue = QString::number(curParam->ACD,   'f', 2);
 
     if (paramName == "side")
         paramValue = (curParam->regimSide==REGIM::OD)?"OD\r\nright":"OS\r\nleft";
     if (paramName == "k1")
-        paramValue = (curParam->regimSide==REGIM::OD)?curParam->k1left:curParam->k1right;
+        paramValue = (curParam->regimSide==REGIM::OD)?QString::number(curParam->k1left, 'f', 2):QString::number(curParam->k1right, 'f', 2);
     if (paramName == "k2")
-        paramValue = (curParam->regimSide==REGIM::OD)?curParam->k2left:curParam->k2right;
-    if (paramName == "rx")
-    {
-//        stPersonalParam personalParam;
-        paramValue = curParam->Rx;//1;//personalParam.Rx;
-    }
+        paramValue = (curParam->regimSide==REGIM::OD)?QString::number(curParam->k2left, 'f', 2):QString::number(curParam->k2right, 'f', 2);
 
-    qDebug()<<"Formila1"<<Formila1;
+    if (paramName == "rx")
+        paramValue = curParam->Rx;//1;//personalParam.Rx;
 
     if (paramName.indexOf("IOL1")>=0)
     {
