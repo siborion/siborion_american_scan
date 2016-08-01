@@ -166,11 +166,11 @@ void formula::setValue(quint8 formula, QString name, QString aconst, QString acd
     QStringList s;
     s = getListFormula();
 
-    cbFormula->setItemText(1, s.at(1)+"   A_Const: "+aconst);
-    cbFormula->setItemText(2, s.at(2)+"   A_Const: "+aconst);
+    cbFormula->setItemText(1, s.at(1)+"   A-Const: "+aconst);
+    cbFormula->setItemText(2, s.at(2)+"   A-Const: "+aconst);
     cbFormula->setItemText(3, s.at(3)+"   ACD: "+acd);
     cbFormula->setItemText(4, s.at(4)+"   SF: "+fs);
-    cbFormula->setItemText(5, s.at(5)+"   A_Const: "+aconst);
+    cbFormula->setItemText(5, s.at(5)+"   A-Const: "+aconst);
 
     AConst = aconst.toDouble();
     ACD = acd.toDouble();

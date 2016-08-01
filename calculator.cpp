@@ -35,7 +35,7 @@ calculator::calculator(QWidget *parent, CurParam *link) :
     //-------------------------------
     columnPercent.clear();
     columnPercent<<20<<0<<21<<15<<10<<10<<8<<8<<8;
-    lst<<"Lens Name"<<"id"<<"Formula"<<"AConst"<<"ACD"<<"SF"<<"A0"<<"A1"<<"A2";
+    lst<<"Lens Name"<<"id"<<"Formula"<<"A-Const"<<"ACD"<<"SF"<<"A0"<<"A1"<<"A2";
 
     twLens = new adjview(columnPercent);
     twLens->setMinimumWidth(350);

@@ -122,11 +122,11 @@ void CalcLensTable::setValue(quint8 nomLens, quint8 formula, QString name, QStri
     QStringList s;
     s = getListFormula();
 
-    pCombo_Delegate.at(nomLens)->values().insert(1, s.at(1)+"   A_Const: "+aconst);
-    pCombo_Delegate.at(nomLens)->values().insert(2, s.at(2)+"   A_Const: "+aconst);
+    pCombo_Delegate.at(nomLens)->values().insert(1, s.at(1)+"   A-Const: "+aconst);
+    pCombo_Delegate.at(nomLens)->values().insert(2, s.at(2)+"   A-Const: "+aconst);
     pCombo_Delegate.at(nomLens)->values().insert(3, s.at(3)+"   ACD: "+acd);
     pCombo_Delegate.at(nomLens)->values().insert(4, s.at(4)+"   SF: "+fs);
-    pCombo_Delegate.at(nomLens)->values().insert(5, s.at(5)+"   A_Const: "+aconst);
+    pCombo_Delegate.at(nomLens)->values().insert(5, s.at(5)+"   A-Const: "+aconst);
 
     AConst[nomLens] = aconst.toDouble();
     ACD[nomLens]    = acd.toDouble();
