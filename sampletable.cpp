@@ -27,6 +27,19 @@ sampletable::sampletable(QWidget *parent, CurParam *link) :
     twMeas->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     twMeas->verticalHeader()->setDefaultSectionSize(25);
 
+//    QString styleSheet = "::section {" // "QHeaderView::section {"
+//                         "spacing: 10px;"
+//                         "background-color: lightblue;"
+//                         "color: black;"
+//                         "border: 1px solid black;"
+//                         "margin: 1px;"
+//                         "text-align: right;"
+//                         "font-family: arial;"
+//                         "font-size: 12px; }";
+
+//    twMeas->horizontalHeader()->setStyleSheet(styleSheet);
+
+
     delegatePrint = new DelegatePrint();
     twMeas->setItemDelegateForColumn(6, delegatePrint);
 
@@ -48,12 +61,12 @@ sampletable::sampletable(QWidget *parent, CurParam *link) :
     modelOS->setHorizontalHeaderLabels(lst);
 
     twMeas->setModel(modelOD);
-//    twMeas->setFrameStyle(QFrame::Box);
-//    twMeas->setSelectionMode(MultiSelection);
-//    twMeas->setSelectionMode(QAbstractItemView::SelectionMode::MultiSelection);
-//    twMeas->selectedIndexes();//
+    //    twMeas->setFrameStyle(QFrame::Box);
+    //    twMeas->setSelectionMode(MultiSelection);
+    //    twMeas->setSelectionMode(QAbstractItemView::SelectionMode::MultiSelection);
+    //    twMeas->selectedIndexes();//
 
-//    bells = new QSound(":/test/sinus");
+    //    bells = new QSound(":/test/sinus");
 
     connect(twMeas->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), SLOT(changeRowSlot(QModelIndex)));
     connect(pbSave,SIGNAL(pressed()),SLOT(saveSlot()));
@@ -73,7 +86,7 @@ void sampletable::loadSlot()
     QDateTime selectTime;
     QSqlQuery query;
     QModelIndex index;
-//    quint16 i=0;
+    //    quint16 i=0;
     stMeasureParam measureParam;
     QByteArray Sample;
     QList<quint16> extremum;
@@ -98,18 +111,18 @@ void sampletable::loadSlot()
             {
                 while(query.next())
                 {
-                measureParam.ACD = query.value(query.record().indexOf("acd")).toDouble();
-                measureParam.AL  = query.value(query.record().indexOf("al")).toDouble();
-                measureParam.LT  = query.value(query.record().indexOf("lt")).toDouble();
-                measureParam.ALave  = query.value(query.record().indexOf("al_ave")).toDouble();
-                measureParam.Cornea = query.value(query.record().indexOf("cornea")).toUInt();
-                measureParam.L1 = query.value(query.record().indexOf("l1")).toUInt();
-                measureParam.L2 = query.value(query.record().indexOf("l2")).toUInt();
-                measureParam.Retina = query.value(query.record().indexOf("retina")).toUInt();
-                Sample = query.value(query.record().indexOf("sample")).toByteArray();
-                measureParam.VIT = query.value(query.record().indexOf("vit")).toDouble();
-//                curParam->regimSide = (REGIM::RegimSide)query.value(query.record().indexOf("regim_side")).toUInt();
-                addSample(&Sample, &extremum, &measureParam, true);
+                    measureParam.ACD = query.value(query.record().indexOf("acd")).toDouble();
+                    measureParam.AL  = query.value(query.record().indexOf("al")).toDouble();
+                    measureParam.LT  = query.value(query.record().indexOf("lt")).toDouble();
+                    measureParam.ALave  = query.value(query.record().indexOf("al_ave")).toDouble();
+                    measureParam.Cornea = query.value(query.record().indexOf("cornea")).toUInt();
+                    measureParam.L1 = query.value(query.record().indexOf("l1")).toUInt();
+                    measureParam.L2 = query.value(query.record().indexOf("l2")).toUInt();
+                    measureParam.Retina = query.value(query.record().indexOf("retina")).toUInt();
+                    Sample = query.value(query.record().indexOf("sample")).toByteArray();
+                    measureParam.VIT = query.value(query.record().indexOf("vit")).toDouble();
+                    //                curParam->regimSide = (REGIM::RegimSide)query.value(query.record().indexOf("regim_side")).toUInt();
+                    addSample(&Sample, &extremum, &measureParam, true);
                 }
             }
             emit changeGlas();
@@ -207,8 +220,8 @@ void sampletable::editSample(quint16 rowNom, stMeasureParam* measureParam)
     index = twMeas->model()->index(rowNom, 5);
     twMeas->model()->setData(index, QString("%1").arg(measureParam->VIT,   4, 'f', 2, '0'), Qt::DisplayRole);
     calculateAvg();
-//    bells->play();
-//    qDebug()<<"QSOUND";
+    //    bells->play();
+    //    qDebug()<<"QSOUND";
     QApplication::beep();
 }
 

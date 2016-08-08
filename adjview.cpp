@@ -3,6 +3,16 @@
 adjview::adjview(QTableView *parent) :
     QTableView(parent)
 {
+    QString styleSheet = "::section {" // "QHeaderView::section {"
+                         "spacing: 10px;"
+                         "background-color: lightblue;"
+                         "color: black;"
+                         "border: 1px solid black;"
+                         "margin: 1px;"
+                         "text-align: right;"
+                         "font-family: arial;"
+                         "font-size: 12px; }";
+    horizontalHeader()->setStyleSheet(styleSheet);
 }
 
 adjview::adjview(int row, int col, QList<int> columnPercent, QTableView *parent):
@@ -24,6 +34,17 @@ adjview::adjview(int row, int col, QList<int> columnPercent, QTableView *parent)
     setStyleSheet(QStringLiteral("gridline-color: rgb(0, 0, 0);"));
 //    setFrameShape(QFrame::WinPanel);
     setFrameShape(QFrame::Box);
+
+    QString styleSheet = "::section {" // "QHeaderView::section {"
+                         "spacing: 10px;"
+                         "background-color: lightblue;"
+                         "color: black;"
+                         "border: 1px solid black;"
+                         "margin: 1px;"
+                         "text-align: right;"
+                         "font-family: arial;"
+                         "font-size: 12px; }";
+    horizontalHeader()->setStyleSheet(styleSheet);
 }
 
 adjview::adjview(int row, QStringList col, QList<int> columnPercent, QTableView *parent):
@@ -44,6 +65,16 @@ adjview::adjview(int row, QStringList col, QList<int> columnPercent, QTableView 
     horizontalHeader()->setSectionsClickable(false);
     setStyleSheet(QStringLiteral("gridline-color: rgb(0, 0, 0);"));
     setFrameShape(QFrame::Box);
+    QString styleSheet = "::section {" // "QHeaderView::section {"
+                         "spacing: 10px;"
+                         "background-color: lightblue;"
+                         "color: black;"
+                         "border: 1px solid black;"
+                         "margin: 1px;"
+                         "text-align: right;"
+                         "font-family: arial;"
+                         "font-size: 12px; }";
+    horizontalHeader()->setStyleSheet(styleSheet);
 }
 
 
@@ -60,6 +91,17 @@ adjview::adjview(QList<int> col, QTableView *parent):
     horizontalHeader()->setSectionsClickable(false);
     setStyleSheet(QStringLiteral("gridline-color: rgb(0, 0, 0);"));
     setFrameShape(QFrame::Box);
+    QString styleSheet = "::section {" // "QHeaderView::section {"
+                         "spacing: 10px;"
+                         "background-color: lightblue;"
+                         "color: black;"
+                         "border: 1px solid black;"
+                         "margin: 1px;"
+                         "text-align: right;"
+                         "font-family: arial;"
+                         "font-size: 12px; }";
+    horizontalHeader()->setStyleSheet(styleSheet);
+
 }
 
 adjview::adjview(QList<int> col, int row, QTableView *parent):
@@ -76,6 +118,16 @@ adjview::adjview(QList<int> col, int row, QTableView *parent):
     horizontalHeader()->setSectionsClickable(false);
     setStyleSheet(QStringLiteral("gridline-color: rgb(0, 0, 0);"));
     setFrameShape(QFrame::Box);
+    QString styleSheet = "::section {" // "QHeaderView::section {"
+                         "spacing: 10px;"
+                         "background-color: lightblue;"
+                         "color: black;"
+                         "border: 1px solid black;"
+                         "margin: 1px;"
+                         "text-align: right;"
+                         "font-family: arial;"
+                         "font-size: 12px; }";
+    horizontalHeader()->setStyleSheet(styleSheet);
 }
 
 
@@ -98,6 +150,17 @@ adjview::adjview(QStringList row, int col, QList<int> columnPercent, QTableView 
     verticalHeader()->setSectionsClickable(false);
     setStyleSheet(QStringLiteral("gridline-color: rgb(0, 0, 0);"));
     setFrameShape(QFrame::Box);
+    QString styleSheet = "::section {" // "QHeaderView::section {"
+                         "spacing: 10px;"
+                         "background-color: lightblue;"
+                         "color: black;"
+                         "border: 1px solid black;"
+                         "margin: 1px;"
+                         "text-align: right;"
+                         "font-family: arial;"
+                         "font-size: 12px; }";
+    horizontalHeader()->setStyleSheet(styleSheet);
+
 }
 
 void adjview::setColumnPercent(QList<int> percentList)
