@@ -165,7 +165,7 @@ void calculator::refreshFormuls()
 
     if(twLens->model()->rowCount()>0)
     {
-        for(quint8 i=0; i<twLens->model()->rowCount() && i<5; i++)
+        for(quint8 i=0; i<twLens->model()->rowCount() && i<4; i++)
         {
             qDebug()<<"i"<<i;
 
