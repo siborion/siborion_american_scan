@@ -86,7 +86,7 @@ void CCombo_Delegate_Cell::updateEditorGeometry( QWidget *editor,
                                          const QStyleOptionViewItem &option,
                                          const QModelIndex& /* index */) const
 {
-    qDebug()<<"qDebug()<<";
+
     editor->setGeometry( option.rect );
 }
 

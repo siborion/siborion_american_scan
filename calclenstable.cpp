@@ -38,7 +38,7 @@ CalcLensTable::CalcLensTable(int row, int col, QList<int> pr, QTableView *parent
     this->setSpan(10,3,1,2);
     this->setSpan(10,5,1,2);
 
-    this->verticalHeader()->setDefaultSectionSize(16);
+    this->verticalHeader()->setDefaultSectionSize(22);
     this->horizontalHeader()->setDefaultAlignment(Qt::AlignHCenter);
 //    setSide("OD");
 

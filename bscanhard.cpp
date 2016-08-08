@@ -33,7 +33,7 @@ void BScanHard::open()
 
 unsigned char *BScanHard::getBuf()
 {
-//            qDebug()<<"lastBuf"<<lastBuf;
+
     mutexLastBuf.lock();
     {
         switch(lastBuf)
@@ -77,8 +77,8 @@ unsigned char *BScanHard::getBuf()
         }
     }
 
-    //    qDebug()<<"00000";
-//    qDebug()<<lastBuf;
+
+
     mutexLastBuf.unlock();
 
     return buf1;
@@ -183,11 +183,11 @@ void BScanHard::read()
         //        {
         //            if((doStart))
         //            {
-        //                qDebug()<<"1"<<doStart;
+
         //                doStart = false;
-        //                qDebug()<<"2"<<doStart;
+
         //                sendRun(true);
-        //                qDebug()<<"3"<<doStart;
+
         //            }
         //            mutexStart.unlock();
         //        }
@@ -209,7 +209,7 @@ void BScanHard::read()
                         {
                             if(RxBuffer[i]==0)
                             {
-                                //                                qDebug()<<"lastBuf1";
+
                                 j=0;
                                 cur = 2;
                                 mutexLastBuf.lock();
@@ -238,7 +238,7 @@ void BScanHard::read()
                         {
                             if(RxBuffer[i]==0)
                             {
-                                //                                qDebug()<<"lastBuf2";
+
                                 j=0;
                                 cur = 3;
                                 mutexLastBuf.lock();
@@ -267,7 +267,7 @@ void BScanHard::read()
                         {
                             if(RxBuffer[i]==0)
                             {
-                                //                                qDebug()<<"lastBuf3";
+
                                 j=0;
                                 cur = 1;
                                 mutexLastBuf.lock();
@@ -294,10 +294,10 @@ void BScanHard::read()
     }
     sendRun(false);
     ftStatus = FT_ResetDevice(ftHandle);
-    qDebug()<<"ftStatus"<<ftStatus;
+
     ftStatus = FT_Close(ftHandle);
-    qDebug()<<"ftStatus"<<ftStatus;
-    qDebug()<<"close";
+
+
 
 }
 
@@ -323,12 +323,12 @@ void BScanHard::setGain(unsigned char gain)
     TxBuffer[1] = gain>>4;
     TxBuffer[2] = gain&0x0f;
     ftStatus = FT_Write(ftHandle, TxBuffer, TxBytes, &BytesTransmited);
-    qDebug()<<"WRITE"<<ftStatus;
+
 }
 /*
 void BScanHard::setRun(bool start)
 {
-    qDebug()<<"setRun";
+
     mutexStart.lock();
 //    if(start)
 //    {
@@ -353,7 +353,7 @@ void BScanHard::setRun(bool start)
 //    TxBuffer[1] = 0x00;
 //    TxBuffer[2] = start?1:0;
 //    ftStatus = FT_Write(ftHandle, TxBuffer, TxBytes, &BytesTransmited);
-//    qDebug()<<"start"<<TxBuffer[2];
+
 
     unsigned char TxBuffer[5];
     DWORD TxBytes;
@@ -365,7 +365,7 @@ void BScanHard::setRun(bool start)
     TxBuffer[3] = 0x00;
     TxBuffer[4] = 0x00;
     ftStatus = FT_Write(ftHandle, TxBuffer, TxBytes, &BytesTransmited);
-//    qDebug()<<"start"<<TxBuffer[2];
+
 
 
     TxBytes = 3;

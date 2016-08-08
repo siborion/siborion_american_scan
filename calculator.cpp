@@ -49,7 +49,6 @@ calculator::calculator(QWidget *parent, CurParam *link) :
     twLens->setFont(getFont(8, false));
     twLens->horizontalHeader()->setFont(getFont(9, true));
 
-
     refreshLens(curParam->lensModel);
     //-------------------------------
     columnPercent.clear();
@@ -103,8 +102,11 @@ calculator::calculator(QWidget *parent, CurParam *link) :
 //    QSpacerItem *horisontalSpacer1;
 //    horisontalSpacer1 = new QSpacerItem(20, 40, QSizePolicy::Expanding, QSizePolicy::Expanding);
 
+//    QPushButton *pbPersonalCalc = new QPushButton("Personal calcalation");
+
     layoutFrame->addWidget(pCalcPatient);
     layoutFrame->addWidget(twLens);
+//    layoutFrame->addWidget(pbPersonalCalc);
 //    layoutFrame->addItem(horisontalSpacer1);
 
 
@@ -167,7 +169,7 @@ void calculator::refreshFormuls()
     {
         for(quint8 i=0; i<twLens->model()->rowCount() && i<4; i++)
         {
-            qDebug()<<"i"<<i;
+
 
             nFormula   = twLens->model()->itemData(twLens->model()->index(i,1)).value(0).toInt();
             lensName   = twLens->model()->itemData(twLens->model()->index(i,0)).value(0).toString();
@@ -313,7 +315,7 @@ void calculator::printPreview()
     painter3->end();
     painter4->end();
 
-//    qDebug()<<"pix.size()"<<pix.size();
+
 
     iPlot1 = pix1.toImage();
     iPlot2 = pix2.toImage();
@@ -354,7 +356,6 @@ void calculator::refreshLens(QSqlQueryModel *link)
 
 void calculator::updatePatient()
 {
-    qDebug()<<"patient";
     calcLens->lensTable->clear();
     pCalcPatient->updatePatient();
 }

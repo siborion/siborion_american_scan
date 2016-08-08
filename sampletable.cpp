@@ -20,11 +20,15 @@ sampletable::sampletable(QWidget *parent, CurParam *link) :
     QGridLayout *layout              = new QGridLayout(this);
     lst.clear();
     columnPercent.clear();
-    columnPercent<<7      <<20            <<15      <<13       <<13      <<15       <<10 ;
+    columnPercent<<0      <<22            <<16      <<14       <<14      <<16       <<10 ;
     lst          <<tr("No")<<tr("AveVelAl")<<tr("AL")<<tr("ACD")<<tr("LT")<<tr("VIT")<<"";
     twMeas  = new adjview(10, lst, columnPercent);
     twMeas->setSelectionBehavior(QAbstractItemView::SelectRows);
     twMeas->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+    twMeas->verticalHeader()->setDefaultSectionSize(25);
+
+    delegatePrint = new DelegatePrint();
+    twMeas->setItemDelegateForColumn(6, delegatePrint);
 
     pbSave = new QPushButton("Save");
     pbLoad = new QPushButton("Load");

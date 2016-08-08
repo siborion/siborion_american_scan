@@ -89,7 +89,7 @@ void Bscan::scenaRefr()
     else
         buf = bScanControl->getBuf();
 
-//    qDebug()<<buf;
+
 
     if(buf)
     {
@@ -106,7 +106,7 @@ void Bscan::doSec()
 
 void Bscan::doStart()
 {
-    qDebug()<<"start";
+
     bScanHard->process();
     timer->start();
     timerSec->start();
@@ -115,7 +115,7 @@ void Bscan::doStart()
 
 void Bscan::doStop()
 {
-    qDebug()<<"stop";
+
     bScanHard->close();
     bScanControl->changeRowFirst();
 //    timer->stop();

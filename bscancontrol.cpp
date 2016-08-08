@@ -79,7 +79,7 @@ void BScanControl::changeRowFirst()
 {
     QModelIndex index;
     index = table->model()->index(0,0);
-    qDebug()<<"changeRowFirst";
+
     table->setCurrentIndex(index);
     changeRow(index);
 

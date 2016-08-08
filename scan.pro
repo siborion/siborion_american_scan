@@ -96,7 +96,8 @@ SOURCES += main.cpp\
     print.cpp \
     func.cpp \
     bscanbutton.cpp \
-    printb.cpp
+    printb.cpp \
+    delegateprint.cpp
 
 HEADERS  += mainwindow.h \
     bases.h \
@@ -149,7 +150,8 @@ HEADERS  += mainwindow.h \
     print.h \
     func.h \
     bscanbutton.h \
-    printb.h
+    printb.h \
+    delegateprint.h
 
 FORMS    += mainwindow.ui \
     dialog_doctor.ui \

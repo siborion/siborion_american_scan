@@ -238,7 +238,7 @@ void SRKIICalc(double AL, double AConst, double K, double Rx, iol_formula* SRKII
     else if (Emmetropia >= 14.0)
         CR = 1.25;
 
-//    qDebug()<<"Emmetropia"<<Emmetropia;
+
 
 
     Diff_Add = Diff(Diff_In_Emmetropia);

@@ -167,7 +167,7 @@ void Bases::changeBase(bool Val)
         if(sender->objectName() == "rbLens")
             typeBase = Base::enLens;
         adjTable();
-        qDebug()<<"changeBase";
+
         connect(twTable->selectionModel(),SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), SLOT(changeRow(QModelIndex,QModelIndex)));
     }
 

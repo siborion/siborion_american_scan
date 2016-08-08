@@ -11,6 +11,7 @@
 #include "plot.h"
 #include "curparam.h"
 #include "listresult.h"
+#include "delegateprint.h"
 
 class sampletable : public QFrame
 {
@@ -22,6 +23,7 @@ public:
     void editSample(quint16 rowNom, stMeasureParam* measureParam);
 
 private:
+    DelegatePrint *delegatePrint;
     double AL;
     QModelIndex tableIndex;
     void refreshResult(quint8 rowNom);

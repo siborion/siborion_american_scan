@@ -1,19 +1,30 @@
 #include <QtWidgets>
-#include "delegate.h"
+#include "delegateprint.h"
 
- CheckBoxDelegate::CheckBoxDelegate(QObject *parent)
+ DelegatePrint::DelegatePrint(QObject *parent)
      : QItemDelegate(parent)
  {
  }
 
- void CheckBoxDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
+ void DelegatePrint::paint(QPainter *painter, const QStyleOptionViewItem &option,
                           const QModelIndex &index) const
  {
-     drawCheck(painter, option, option.rect, index.data().toBool() ? Qt::Checked : Qt::Unchecked);
+//     drawCheck(painter, option, option.rect, index.data().toBool() ? Qt::Checked : Qt::Unchecked);
+     QImage img(":/test/print");
+//     img.scaledToHeight(10);
+     qDebug()<<img.size();
+
+
+//     img.
+
+//     painter->drawImage(painter->viewport(),img);
+       painter->drawImage(option.rect, img);
+
+//     painter->drawPicture(painter->viewport(),
 //     drawFocus(painter, option, option.rect);
  }
 
- QWidget *CheckBoxDelegate::createEditor(QWidget *parent,
+ QWidget *DelegatePrint::createEditor(QWidget *parent,
      const QStyleOptionViewItem &/* option */,
      const QModelIndex &/* index */) const
  {
@@ -21,7 +32,7 @@
      return editor;
  }
 
- void CheckBoxDelegate::setEditorData(QWidget *editor,
+ void DelegatePrint::setEditorData(QWidget *editor,
                                      const QModelIndex &index) const
  {
      int value = index.model()->data(index, Qt::EditRole).toInt();
@@ -29,7 +40,7 @@
      CheckBox->setChecked(value);
  }
 
- void CheckBoxDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
+ void DelegatePrint::setModelData(QWidget *editor, QAbstractItemModel *model,
                                     const QModelIndex &index) const
  {
      QCheckBox *CheckBox = static_cast<QCheckBox*>(editor);
@@ -37,7 +48,7 @@
      model->setData(index, value, Qt::EditRole);
  }
 
- void CheckBoxDelegate::updateEditorGeometry(QWidget *editor,
+ void DelegatePrint::updateEditorGeometry(QWidget *editor,
      const QStyleOptionViewItem &option, const QModelIndex &/* index */) const
  {
      editor->setGeometry(option.rect);
