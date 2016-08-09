@@ -1,6 +1,7 @@
 #include <QApplication>
 #include "mainwindow.h"
 //#include <QSound>
+#include <QStyleFactory>
 
 int main(int argc, char *argv[])
 {
@@ -9,13 +10,19 @@ int main(int argc, char *argv[])
     paths.append("platforms");
     QCoreApplication::setLibraryPaths(paths);
     QApplication a(argc, argv);
+
+    //    a.setStyle(QStyleFactory::create("fusion"));
+    a.setStyle(QStyleFactory::create("windows"));
+    //    a.setStyle(QStyleFactory::create("windowsxp"));
+
+
     a.addLibraryPath(a.applicationDirPath()+"/plugins");
     MainWindow w;
     QApplication::beep();
     printf("\a");
-//    QSound bells(":/test/sinus");
-//    bells.setLoops(10);
-//    bells.play();
+    //    QSound bells(":/test/sinus");
+    //    bells.setLoops(10);
+    //    bells.play();
     //w.show();
     w.showMaximized();
     return a.exec();

@@ -142,8 +142,6 @@ void sampletable::changeRowSlot(QModelIndex index)
     measureParam.Retina = twMeas->model()->data(index, roleRetina).toDouble();
     listExtremum =        twMeas->model()->data(index, roleExtremum).toStringList();
 
-    qDebug()<<"measureParam.Sample"<<measureParam.Sample.count();
-
     index = twMeas->model()->index(index.row(), 1);
     measureParam.ALave = twMeas->model()->data(index, Qt::DisplayRole).toDouble();
     index = twMeas->model()->index(index.row(), 2);
