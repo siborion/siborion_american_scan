@@ -10,9 +10,13 @@
                           const QModelIndex &index) const
  {
 //     drawCheck(painter, option, option.rect, index.data().toBool() ? Qt::Checked : Qt::Unchecked);
-     QImage img(":/test/print");
-//     img.scaledToHeight(10);
-     qDebug()<<img.size();
+       QImage img;
+     if(index.data().toBool())
+         img.load(":/test/print");
+     else
+         img.load(":/test/print_dis");
+
+//       img.load()
 
 
 //     img.

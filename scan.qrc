@@ -16,5 +16,6 @@
         <file alias="bscan_en">pic/bscan_ico_en.png</file>
         <file alias="reportb">reportb.xml</file>
         <file alias="print">pic/Print.png</file>
+        <file alias="print_dis">pic/Print_dis.png</file>
     </qresource>
 </RCC>
