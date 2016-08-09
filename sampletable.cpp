@@ -415,19 +415,20 @@ void sampletable::changeRegimManual(QString objectName)
     {
         if(bCataract)
         {
-            columnPercent<<10      <<23            <<15      <<15       <<15      <<15;
-            lst          <<tr("No")<<tr("AveVelAl")<<tr("AL")<<tr("ACD")<<tr("LT")<<tr("VIT");
+            columnPercent<<0      <<22            <<16      <<14       <<14      <<16       <<10 ;
+//            columnPercent<<10      <<21            <<13      <<13       <<13      <<13 <<10;
+            lst          <<tr("No")<<tr("AveVelAl")<<tr("AL")<<tr("ACD")<<tr("LT")<<tr("VIT")<<"";
         }
         else
         {
-            columnPercent<<10      <<83            <<0      <<0       <<0      <<0;
-            lst          <<tr("No")<<tr("AveVelAl");
+            columnPercent<<10      <<73            <<0      <<0       <<0      <<0 <<10;
+            lst          <<tr("No")<<tr("AveVelAl")<<"";
         }
     }
     else
     {
-        columnPercent<<10      <<83            <<0      <<0       <<0      <<0;
-        lst          <<tr("No")<<tr("Distance");
+        columnPercent<<10      <<73            <<0      <<0       <<0      <<0 <<10;
+        lst          <<tr("No")<<tr("Distance")<<"";
     }
 
     model->setHorizontalHeaderLabels(lst);
