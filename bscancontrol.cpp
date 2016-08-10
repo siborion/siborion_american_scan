@@ -58,7 +58,7 @@ void BScanControl::setBuf(unsigned char *buf)
         table->model()->setData(indexDest,table->model()->data(indexSour,Qt::UserRole),Qt::UserRole);
     }
     indexDest = table->model()->index(0, 0);
-    table->model()->setData(indexDest, QString("%1").arg(time.currentDateTime().toString("yyyy.MM.dd hh:mm:ss.zzz")), Qt::DisplayRole);
+    table->model()->setData(indexDest, QString("%1").arg(time.currentDateTime().toString("MM.dd.yyyy hh:mm:ss.zzz")), Qt::DisplayRole);
 //!!!!!!!!!!!!!!!!!!!!!!!!!!1
     table->model()->setData(indexDest, (quint32)buf, Qt::UserRole);
 }

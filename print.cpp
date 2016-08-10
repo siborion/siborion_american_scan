@@ -415,7 +415,7 @@ void Print::setValue(const int recNo, const QString paramName, QVariant &paramVa
     if (paramName == "date")
     {
 //        paramTmp.append(QString("AL: %1   ACD:%2").arg(curParam->ALave).arg(curParam->ACD));
-        paramValue = curParam->curTime.toString("dd.mm.yyyy hh:mm:ss");
+        paramValue = curParam->curTime.toString("MM.dd.yyyy hh:mm:ss");
     }
 
 }

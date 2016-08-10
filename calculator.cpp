@@ -42,10 +42,10 @@ calculator::calculator(QWidget *parent, CurParam *link) :
     twLens->setFrameShape(QFrame::NoFrame);
     twLens->setFrameShadow(QFrame::Plain);
     twLens->setStyleSheet(QStringLiteral("gridline-color: rgb(200, 200, 255);"));
-//    QFont font;
-//    font.setBold(false);
-//    font.setPointSize(12);
-//    font.setFamily(QStringLiteral("Arial"));
+    //    QFont font;
+    //    font.setBold(false);
+    //    font.setPointSize(12);
+    //    font.setFamily(QStringLiteral("Arial"));
     twLens->setFont(getFont(8, false));
     twLens->horizontalHeader()->setFont(getFont(9, true));
 
@@ -99,19 +99,16 @@ calculator::calculator(QWidget *parent, CurParam *link) :
     frPatient->setFrameShadow(QFrame::Raised);
 
     QGridLayout *layoutFrame = new QGridLayout();
-//    QHBoxLayout *layoutFrame = new QHBoxLayout();
+    //    QHBoxLayout *layoutFrame = new QHBoxLayout();
     frPatient->setLayout(layoutFrame);
-//    QSpacerItem *horisontalSpacer1;
-//    horisontalSpacer1 = new QSpacerItem(20, 40, QSizePolicy::Expanding, QSizePolicy::Expanding);
+    //    QSpacerItem *horisontalSpacer1;
+    //    horisontalSpacer1 = new QSpacerItem(20, 40, QSizePolicy::Expanding, QSizePolicy::Expanding);
 
     QPushButton *pbUserDefined = new QPushButton("User Defined");
 
     layoutFrame->addWidget(pCalcPatient,0,0,2,1);
     layoutFrame->addWidget(twLens,0,1,1,1);
     layoutFrame->addWidget(pbUserDefined,1,1,1,1);
-//    layoutFrame->addWidget(pbPersonalCalc);
-//    layoutFrame->addItem(horisontalSpacer1);
-
 
     Formula1 = new formula();
     Formula2 = new formula();
@@ -128,10 +125,10 @@ calculator::calculator(QWidget *parent, CurParam *link) :
     layout->addWidget(frPatient);
     layout->addItem(verticalSpacer1);
     layout->addWidget(calcLens);
-//    layout->addItem(verticalSpacer2);
-//    layout->addWidget(Formula1);
-//    layout->addWidget(pbPrint);
-//    layout->addItem(verticalSpacer3);
+    //    layout->addItem(verticalSpacer2);
+    //    layout->addWidget(Formula1);
+    //    layout->addWidget(pbPrint);
+    //    layout->addItem(verticalSpacer3);
 
     connect(pCalcPatient, SIGNAL(refreshFormula()), SLOT(refreshFormuls()));
     connect(pbPrint, SIGNAL(clicked()), SLOT(printPreview()));
@@ -172,25 +169,12 @@ void calculator::refreshFormuls()
     {
         for(quint8 i=0; i<twLens->model()->rowCount() && i<4; i++)
         {
-
-
             nFormula   = twLens->model()->itemData(twLens->model()->index(i,1)).value(0).toInt();
+
             lensName   = twLens->model()->itemData(twLens->model()->index(i,0)).value(0).toString();
-
-            if(personalParam.AConst>0)
-                lensAconst = QString("%1").arg(personalParam.AConst);
-            else
-                lensAconst = twLens->model()->itemData(twLens->model()->index(i,3)).value(0).toString();
-
-            if(personalParam.ACD>0)
-                lensAcd = QString("%1").arg(personalParam.ACD);
-            else
-                lensAcd = twLens->model()->itemData(twLens->model()->index(i,4)).value(0).toString();
-
-            if(personalParam.SF>0)
-                lensFs = QString("%1").arg(personalParam.SF);
-            else
-                lensFs = twLens->model()->itemData(twLens->model()->index(i,5)).value(0).toString();
+            lensAconst = twLens->model()->itemData(twLens->model()->index(i,3)).value(0).toString();
+            lensAcd = twLens->model()->itemData(twLens->model()->index(i,4)).value(0).toString();
+            lensFs = twLens->model()->itemData(twLens->model()->index(i,5)).value(0).toString();
 
             lensA0 =  twLens->model()->itemData(twLens->model()->index(i,6)).value(0).toString();
             lensA1 =  twLens->model()->itemData(twLens->model()->index(i,7)).value(0).toString();
@@ -328,7 +312,7 @@ void calculator::printPreview()
     QString fileName = ":/test/report";
     QtRPT *report = new QtRPT(this);
 
-//    report->setBackgroundImage((QPixmap)pix);
+    //    report->setBackgroundImage((QPixmap)pix);
 
     report->loadReport(fileName);
     report->recordCount << 7;
@@ -339,8 +323,8 @@ void calculator::printPreview()
     QObject::connect(report, SIGNAL(setValueImage(int,QString,QImage&,int)),
                      this, SLOT(setValueImage(int,QString,QImage&,int)));
 
-//    QObject::connect(report, SIGNAL(setValueImage(int&, QString&, QImage&, int)),
-//                     this, SLOT(setValueImage(int&, QString&, QImage&, int)));
+    //    QObject::connect(report, SIGNAL(setValueImage(int&, QString&, QImage&, int)),
+    //                     this, SLOT(setValueImage(int&, QString&, QImage&, int)));
 
     report->printExec(true);
 }
@@ -374,54 +358,54 @@ void calculator::setValue(const int recNo, const QString paramName, QVariant &pa
     Q_UNUSED(reportPage);
     Q_UNUSED(recNo);
 
-   if(paramName == "measureParam1")
-   {
-       if((al1>0)&&(acd1>0))
-       {
-           paramTmp.append(QString("AL: %1   ACD:%2").arg(al1).arg(acd1));
-           paramValue = paramTmp;
-       }
-   }
+    if(paramName == "measureParam1")
+    {
+        if((al1>0)&&(acd1>0))
+        {
+            paramTmp.append(QString("AL: %1   ACD:%2").arg(al1).arg(acd1));
+            paramValue = paramTmp;
+        }
+    }
 
-   if(paramName == "measureParam2")
-   {
-       if((al2>0)&&(acd2>0))
-       {
-           paramTmp.append(QString("AL: %1   ACD:%2").arg(al2).arg(acd2));
-           paramValue = paramTmp;
-       }
-   }
+    if(paramName == "measureParam2")
+    {
+        if((al2>0)&&(acd2>0))
+        {
+            paramTmp.append(QString("AL: %1   ACD:%2").arg(al2).arg(acd2));
+            paramValue = paramTmp;
+        }
+    }
 
-   if(paramName == "measureParam3")
-   {
-       if((al3>0)&&(acd3>0))
-       {
-           paramTmp.append(QString("AL: %1   ACD:%2").arg(al3).arg(acd3));
-           paramValue = paramTmp;
-       }
-   }
+    if(paramName == "measureParam3")
+    {
+        if((al3>0)&&(acd3>0))
+        {
+            paramTmp.append(QString("AL: %1   ACD:%2").arg(al3).arg(acd3));
+            paramValue = paramTmp;
+        }
+    }
 
-   if(paramName == "measureParam4")
-   {
-       if((al4>0)&&(acd4>0))
-       {
-           paramTmp.append(QString("AL: %1   ACD:%2").arg(al4).arg(acd4));
-           paramValue = paramTmp;
-       }
-   }
+    if(paramName == "measureParam4")
+    {
+        if((al4>0)&&(acd4>0))
+        {
+            paramTmp.append(QString("AL: %1   ACD:%2").arg(al4).arg(acd4));
+            paramValue = paramTmp;
+        }
+    }
 
-   if (paramName == "doctor")
-       paramValue = curParam->doctorName;
-   if (paramName == "name")
-       paramValue = curParam->patientName;
-   if (paramName == "id")
-       paramValue = curParam->patientId;
-   if (paramName == "birth")
-       paramValue = curParam->birthDate;
-   if (paramName == "al")
-       paramValue = curParam->ALave;
-   if (paramName == "acd")
-       paramValue = curParam->ACD;
+    if (paramName == "doctor")
+        paramValue = curParam->doctorName;
+    if (paramName == "name")
+        paramValue = curParam->patientName;
+    if (paramName == "id")
+        paramValue = curParam->patientId;
+    if (paramName == "birth")
+        paramValue = curParam->birthDate;
+    if (paramName == "al")
+        paramValue = curParam->ALave;
+    if (paramName == "acd")
+        paramValue = curParam->ACD;
 
     if (paramName == "side")
         paramValue = (curParam->regimSide==REGIM::OD)?"OD\r\nright":"OS\r\nleft";
@@ -645,8 +629,8 @@ void calculator::setValue(const int recNo, const QString paramName, QVariant &pa
 
     if (paramName == "date")
     {
-//        paramTmp.append(QString("AL: %1   ACD:%2").arg(curParam->ALave).arg(curParam->ACD));
-        paramValue = curParam->curTime.toString("dd.mm.yyyy hh:mm:ss");
+        //        paramTmp.append(QString("AL: %1   ACD:%2").arg(curParam->ALave).arg(curParam->ACD));
+        paramValue = curParam->curTime.toString("MM.dd.yyyy hh:mm:ss");
     }
 
 }
