@@ -10,7 +10,7 @@ Bigviewnumcur::Bigviewnumcur(QWidget *parent, CurParam *link) :
     curParam = link;
     curData=QDate::currentDate();
     ui->setupUi(this);
-    ui->leData->setText(curData.toString("dd.MM.yyyy"));
+    ui->leData->setText(curData.toString("MM.dd.yyyy"));
 }
 
 Bigviewnumcur::~Bigviewnumcur()

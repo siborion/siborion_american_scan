@@ -59,9 +59,11 @@ adjview::adjview(int row, QStringList col, QList<int> columnPercent, QTableView 
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setColumnPercent(columnPercent);
     model->setHorizontalHeaderLabels(col);
+
     verticalHeader()->setDefaultSectionSize(15);
     setMinimumHeight(rowHeight(0)*row + horizontalHeader()->height() + 4);
     setMaximumHeight(rowHeight(0)*row + horizontalHeader()->height() + 4);
+
     horizontalHeader()->setSectionsClickable(false);
     setStyleSheet(QStringLiteral("gridline-color: rgb(0, 0, 0);"));
     setFrameShape(QFrame::Box);

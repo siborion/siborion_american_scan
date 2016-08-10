@@ -429,7 +429,7 @@ void scena::drawText()
     font.setPixelSize(15);
 
     qglColor(Qt::white); // Дальше рисуем белым цветом
-    renderText(10, 20 , 0, QString::fromUtf8("Data: %1").arg(QDate::currentDate().toString("dd.MM.yyyy")), font);
+    renderText(10, 20 , 0, QString::fromUtf8("Date: %1").arg(QDate::currentDate().toString("MM.dd.yyyy")), font);
     renderText(10, 40 , 0, QString::fromUtf8("Patient: %1").arg(sPatient), font);
     renderText(10, 60 , 0, QString::fromUtf8("Doctor: %1").arg (sDoctor), font);
 

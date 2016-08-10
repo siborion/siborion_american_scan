@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>590</width>
+    <width>631</width>
     <height>77</height>
    </rect>
   </property>
@@ -567,7 +567,7 @@
         <string notr="true">color: rgb(255, 255, 255);</string>
        </property>
        <property name="text">
-        <string>Data:</string>
+        <string>Date:</string>
        </property>
       </widget>
      </item>

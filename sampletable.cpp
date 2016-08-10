@@ -26,6 +26,9 @@ sampletable::sampletable(QWidget *parent, CurParam *link) :
     twMeas->setSelectionBehavior(QAbstractItemView::SelectRows);
     twMeas->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     twMeas->verticalHeader()->setDefaultSectionSize(25);
+    this->setMinimumHeight(330);
+    twMeas->setMinimumHeight(0);
+    twMeas->setMaximumHeight(16777215);
 
 //    QString styleSheet = "::section {" // "QHeaderView::section {"
 //                         "spacing: 10px;"
