@@ -97,15 +97,18 @@ calculator::calculator(QWidget *parent, CurParam *link) :
     QFrame *frPatient = new QFrame();
     frPatient->setFrameShape(QFrame::WinPanel);
     frPatient->setFrameShadow(QFrame::Raised);
-    QHBoxLayout *layoutFrame = new QHBoxLayout();
+
+    QGridLayout *layoutFrame = new QGridLayout();
+//    QHBoxLayout *layoutFrame = new QHBoxLayout();
     frPatient->setLayout(layoutFrame);
 //    QSpacerItem *horisontalSpacer1;
 //    horisontalSpacer1 = new QSpacerItem(20, 40, QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-//    QPushButton *pbPersonalCalc = new QPushButton("Personal calcalation");
+    QPushButton *pbUserDefined = new QPushButton("User Defined");
 
-    layoutFrame->addWidget(pCalcPatient);
-    layoutFrame->addWidget(twLens);
+    layoutFrame->addWidget(pCalcPatient,0,0,2,1);
+    layoutFrame->addWidget(twLens,0,1,1,1);
+    layoutFrame->addWidget(pbUserDefined,1,1,1,1);
 //    layoutFrame->addWidget(pbPersonalCalc);
 //    layoutFrame->addItem(horisontalSpacer1);
 
