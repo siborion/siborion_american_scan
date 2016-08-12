@@ -167,18 +167,23 @@ void calculator::refreshFormuls()
 
     if(twLens->model()->rowCount()>0)
     {
-        for(quint8 i=0; i<twLens->model()->rowCount() && i<4; i++)
+        for(quint8 i=0; (i<=twLens->model()->rowCount()) && i<=4; i++)
         {
-            nFormula   = twLens->model()->itemData(twLens->model()->index(i,1)).value(0).toInt();
-
-            lensName   = twLens->model()->itemData(twLens->model()->index(i,0)).value(0).toString();
-            lensAconst = twLens->model()->itemData(twLens->model()->index(i,3)).value(0).toString();
-            lensAcd = twLens->model()->itemData(twLens->model()->index(i,4)).value(0).toString();
-            lensFs = twLens->model()->itemData(twLens->model()->index(i,5)).value(0).toString();
-
-            lensA0 =  twLens->model()->itemData(twLens->model()->index(i,6)).value(0).toString();
-            lensA1 =  twLens->model()->itemData(twLens->model()->index(i,7)).value(0).toString();
-            lensA2 =  twLens->model()->itemData(twLens->model()->index(i,8)).value(0).toString();
+            if((i==twLens->model()->rowCount())||(i==4))
+            {
+                lensName = "User Defined";
+            }
+            else
+            {
+                nFormula   = twLens->model()->itemData(twLens->model()->index(i,1)).value(0).toInt();
+                lensName   = twLens->model()->itemData(twLens->model()->index(i,0)).value(0).toString();
+                lensAconst = twLens->model()->itemData(twLens->model()->index(i,3)).value(0).toString();
+                lensAcd = twLens->model()->itemData(twLens->model()->index(i,4)).value(0).toString();
+                lensFs = twLens->model()->itemData(twLens->model()->index(i,5)).value(0).toString();
+                lensA0 =  twLens->model()->itemData(twLens->model()->index(i,6)).value(0).toString();
+                lensA1 =  twLens->model()->itemData(twLens->model()->index(i,7)).value(0).toString();
+                lensA2 =  twLens->model()->itemData(twLens->model()->index(i,8)).value(0).toString();
+            }
 
             calcLens->setValue(i,nFormula,lensName,lensAconst,lensAcd,lensFs,lensA0,lensA1,lensA2,curParam->K,curParam->ALave,curParam->ACD,personalParam.Rx);
 

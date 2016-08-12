@@ -23,14 +23,8 @@ void Print::doPreview()
     {
         index = twMeas->model()->index(i,6);
         if(twMeas->model()->data(index, Qt::DisplayRole).toBool())
-        {
             lsSelect << index;
-        }
     }
-
-//    lsSelect = twMeas->selectionModel()->selectedRows();
-
-    qDebug()<<"lsSelect"<<lsSelect.size();
 
     QPixmap pix1(750, 600);
     QPainter *painter1 = new QPainter(&pix1);
