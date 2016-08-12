@@ -17,7 +17,18 @@ void Print::doPreview()
     QwtPlotRenderer renderer;
     QModelIndexList lsSelect;
     QModelIndex index;
-    lsSelect = twMeas->selectionModel()->selectedRows();
+    quint8 rowCount = twMeas->model()->rowCount();
+
+    for(quint8 i=0; i<rowCount; i++)
+    {
+        index = twMeas->model()->index(i,6);
+        if(twMeas->model()->data(index, Qt::DisplayRole).toBool())
+        {
+            lsSelect << index;
+        }
+    }
+
+//    lsSelect = twMeas->selectionModel()->selectedRows();
 
     qDebug()<<"lsSelect"<<lsSelect.size();
 
@@ -90,13 +101,13 @@ void Print::doPreview()
 
 
 
-//    QTabWidget *mw;
-//    calculator *cl;
-//    CalcLensTable *cLens;
-//    qDebug()<<"name"<<this->parent()->parent()->objectName();
-//    mw = (QTabWidget*)this->parent()->parent();
-//    cl = (calculator*)mw->widget(2);
-//    cLens = cl->calcLens->lensTable;
+    //    QTabWidget *mw;
+    //    calculator *cl;
+    //    CalcLensTable *cLens;
+    //    qDebug()<<"name"<<this->parent()->parent()->objectName();
+    //    mw = (QTabWidget*)this->parent()->parent();
+    //    cl = (calculator*)mw->widget(2);
+    //    cLens = cl->calcLens->lensTable;
 
 
 
@@ -108,7 +119,7 @@ void Print::doPreview()
     painter3->end();
     painter4->end();
 
-//    qDebug()<<"pix.size()"<<pix.size();
+    //    qDebug()<<"pix.size()"<<pix.size();
 
     iPlot1 = pix1.toImage();
     iPlot2 = pix2.toImage();
@@ -118,7 +129,7 @@ void Print::doPreview()
     QString fileName = ":/test/report";
     report = new QtRPT(this);
 
-//    report->setBackgroundImage((QPixmap)pix);
+    //    report->setBackgroundImage((QPixmap)pix);
 
     report->loadReport(fileName);
     report->recordCount << 7;
@@ -129,8 +140,8 @@ void Print::doPreview()
     QObject::connect(report, SIGNAL(setValueImage(int,QString,QImage&,int)),
                      this, SLOT(setValueImage(int,QString,QImage&,int)));
 
-//    QObject::connect(report, SIGNAL(setValueImage(int&, QString&, QImage&, int)),
-//                     this, SLOT(setValueImage(int&, QString&, QImage&, int)));
+    //    QObject::connect(report, SIGNAL(setValueImage(int&, QString&, QImage&, int)),
+    //                     this, SLOT(setValueImage(int&, QString&, QImage&, int)));
 
     report->printExec(true);
 
@@ -146,54 +157,54 @@ void Print::setValue(const int recNo, const QString paramName, QVariant &paramVa
     Q_UNUSED(reportPage);
     Q_UNUSED(recNo);
 
-   if(paramName == "measureParam1")
-   {
-       if((al1>0)&&(acd1>0))
-       {
-           paramTmp.append(QString("AL: %1   ACD:%2").arg(al1).arg(acd1));
-           paramValue = paramTmp;
-       }
-   }
+    if(paramName == "measureParam1")
+    {
+        if((al1>0)&&(acd1>0))
+        {
+            paramTmp.append(QString("AL: %1   ACD:%2").arg(al1).arg(acd1));
+            paramValue = paramTmp;
+        }
+    }
 
-   if(paramName == "measureParam2")
-   {
-       if((al2>0)&&(acd2>0))
-       {
-           paramTmp.append(QString("AL: %1   ACD:%2").arg(al2).arg(acd2));
-           paramValue = paramTmp;
-       }
-   }
+    if(paramName == "measureParam2")
+    {
+        if((al2>0)&&(acd2>0))
+        {
+            paramTmp.append(QString("AL: %1   ACD:%2").arg(al2).arg(acd2));
+            paramValue = paramTmp;
+        }
+    }
 
-   if(paramName == "measureParam3")
-   {
-       if((al3>0)&&(acd3>0))
-       {
-           paramTmp.append(QString("AL: %1   ACD:%2").arg(al3).arg(acd3));
-           paramValue = paramTmp;
-       }
-   }
+    if(paramName == "measureParam3")
+    {
+        if((al3>0)&&(acd3>0))
+        {
+            paramTmp.append(QString("AL: %1   ACD:%2").arg(al3).arg(acd3));
+            paramValue = paramTmp;
+        }
+    }
 
-   if(paramName == "measureParam4")
-   {
-       if((al4>0)&&(acd4>0))
-       {
-           paramTmp.append(QString("AL: %1   ACD:%2").arg(al4).arg(acd4));
-           paramValue = paramTmp;
-       }
-   }
+    if(paramName == "measureParam4")
+    {
+        if((al4>0)&&(acd4>0))
+        {
+            paramTmp.append(QString("AL: %1   ACD:%2").arg(al4).arg(acd4));
+            paramValue = paramTmp;
+        }
+    }
 
-   if (paramName == "doctor")
-       paramValue = curParam->doctorName;
-   if (paramName == "name")
-       paramValue = curParam->patientName;
-   if (paramName == "id")
-       paramValue = curParam->patientId;
-   if (paramName == "birth")
-       paramValue = curParam->birthDate;
-   if (paramName == "al")
-       paramValue = QString::number(curParam->ALave, 'f', 2);
-   if (paramName == "acd")
-       paramValue = QString::number(curParam->ACD,   'f', 2);
+    if (paramName == "doctor")
+        paramValue = curParam->doctorName;
+    if (paramName == "name")
+        paramValue = curParam->patientName;
+    if (paramName == "id")
+        paramValue = curParam->patientId;
+    if (paramName == "birth")
+        paramValue = curParam->birthDate;
+    if (paramName == "al")
+        paramValue = QString::number(curParam->ALave, 'f', 2);
+    if (paramName == "acd")
+        paramValue = QString::number(curParam->ACD,   'f', 2);
 
     if (paramName == "side")
         paramValue = (curParam->regimSide==REGIM::OD)?"OD\r\nright":"OS\r\nleft";
@@ -414,7 +425,7 @@ void Print::setValue(const int recNo, const QString paramName, QVariant &paramVa
 
     if (paramName == "date")
     {
-//        paramTmp.append(QString("AL: %1   ACD:%2").arg(curParam->ALave).arg(curParam->ACD));
+        //        paramTmp.append(QString("AL: %1   ACD:%2").arg(curParam->ALave).arg(curParam->ACD));
         paramValue = curParam->curTime.toString("MM.dd.yyyy hh:mm:ss");
     }
 

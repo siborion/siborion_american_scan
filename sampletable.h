@@ -56,6 +56,7 @@ public slots:
     void clearAll();
     void del();
     void changeGlasSlot();
+    void slPrintChange(QModelIndex);
 };
 
 #endif // SAMPLETABLE_H

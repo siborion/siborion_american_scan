@@ -29,33 +29,33 @@ void DelegatePrint::paint(QPainter *painter, const QStyleOptionViewItem &option,
     //     drawFocus(painter, option, option.rect);
 }
 
-QWidget *DelegatePrint::createEditor(QWidget *parent,
-                                     const QStyleOptionViewItem &/* option */,
-                                     const QModelIndex &/* index */) const
-{
-    QCheckBox *editor = new QCheckBox(parent);
-    return editor;
-}
+//QWidget *DelegatePrint::createEditor(QWidget *parent,
+//                                     const QStyleOptionViewItem &/* option */,
+//                                     const QModelIndex &/* index */) const
+//{
+//    QCheckBox *editor = new QCheckBox(parent);
+//    return editor;
+//}
 
-void DelegatePrint::setEditorData(QWidget *editor,
-                                  const QModelIndex &index) const
-{
-    int value = index.model()->data(index, Qt::EditRole).toInt();
-    QCheckBox *CheckBox = static_cast<QCheckBox*>(editor);
-    CheckBox->setChecked(value);
-}
+//void DelegatePrint::setEditorData(QWidget *editor,
+//                                  const QModelIndex &index) const
+//{
+//    int value = index.model()->data(index, Qt::EditRole).toInt();
+//    QCheckBox *CheckBox = static_cast<QCheckBox*>(editor);
+//    CheckBox->setChecked(value);
+//}
 
-void DelegatePrint::setModelData(QWidget *editor, QAbstractItemModel *model,
-                                 const QModelIndex &index) const
-{
-    QCheckBox *CheckBox = static_cast<QCheckBox*>(editor);
-    int value = CheckBox->isChecked();
-    model->setData(index, value, Qt::EditRole);
-}
+//void DelegatePrint::setModelData(QWidget *editor, QAbstractItemModel *model,
+//                                 const QModelIndex &index) const
+//{
+//    QCheckBox *CheckBox = static_cast<QCheckBox*>(editor);
+//    int value = CheckBox->isChecked();
+//    model->setData(index, value, Qt::EditRole);
+//}
 
-void DelegatePrint::updateEditorGeometry(QWidget *editor,
-                                         const QStyleOptionViewItem &option, const QModelIndex &/* index */) const
-{
-    editor->setGeometry(option.rect);
-}
+//void DelegatePrint::updateEditorGeometry(QWidget *editor,
+//                                         const QStyleOptionViewItem &option, const QModelIndex &/* index */) const
+//{
+//    editor->setGeometry(option.rect);
+//}
 
