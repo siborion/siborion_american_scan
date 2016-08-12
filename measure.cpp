@@ -21,6 +21,9 @@ Measure::Measure(QWidget *parent, CurParam *link) :
 
     pKey = new key_radio(this, curParam);
     pSampleTable = new sampletable(this, curParam);
+
+
+
     velosity = new Velosity();
     pBigView = new bigviewnum(this, curParam);
     QSpacerItem *verticalSpacer;

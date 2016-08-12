@@ -26,20 +26,7 @@ sampletable::sampletable(QWidget *parent, CurParam *link) :
     twMeas->setSelectionBehavior(QAbstractItemView::SelectRows);
     twMeas->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     twMeas->verticalHeader()->setDefaultSectionSize(25);
-
-//    QString styleSheet = "::section {" // "QHeaderView::section {"
-//                         "spacing: 10px;"
-//                         "background-color: lightblue;"
-//                         "color: black;"
-//                         "border: 1px solid black;"
-//                         "margin: 1px;"
-//                         "text-align: right;"
-//                         "font-family: arial;"
-//                         "font-size: 12px; }";
-
-//    twMeas->horizontalHeader()->setStyleSheet(styleSheet);
-
-
+    twMeas->setEditTriggers(QAbstractItemView::NoEditTriggers);
     delegatePrint = new DelegatePrint();
     twMeas->setItemDelegateForColumn(6, delegatePrint);
 
@@ -61,17 +48,12 @@ sampletable::sampletable(QWidget *parent, CurParam *link) :
     modelOS->setHorizontalHeaderLabels(lst);
 
     twMeas->setModel(modelOD);
-    //    twMeas->setFrameStyle(QFrame::Box);
-    //    twMeas->setSelectionMode(MultiSelection);
-    //    twMeas->setSelectionMode(QAbstractItemView::SelectionMode::MultiSelection);
-    //    twMeas->selectedIndexes();//
-
-    //    bells = new QSound(":/test/sinus");
 
     connect(twMeas->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), SLOT(changeRowSlot(QModelIndex)));
     connect(pbSave,SIGNAL(pressed()),SLOT(saveSlot()));
     connect(pbLoad,SIGNAL(pressed()),SLOT(loadSlot()));
     connect(pbClear,SIGNAL(pressed()),SLOT(del()));
+    connect(twMeas, SIGNAL(clicked(QModelIndex)), SLOT(slPrintChange(QModelIndex)));
 }
 
 void sampletable::saveSlot()
@@ -174,6 +156,10 @@ void sampletable::addSample(QByteArray *Sample, QList<quint16> *extremum, stMeas
     twMeas->model()->setData(index, rowNom+1,     Qt::DisplayRole);
     twMeas->model()->setData(index, *Sample,      roleSample);
     twMeas->model()->setData(index, listExtremum, roleExtremum);
+
+    //QTableWidgetItem *item =
+
+
     editSample(rowNom, measureParam);
     if(!fromBase)
     {
@@ -416,7 +402,7 @@ void sampletable::changeRegimManual(QString objectName)
         if(bCataract)
         {
             columnPercent<<0      <<22            <<16      <<14       <<14      <<16       <<10 ;
-//            columnPercent<<10      <<21            <<13      <<13       <<13      <<13 <<10;
+            //            columnPercent<<10      <<21            <<13      <<13       <<13      <<13 <<10;
             lst          <<tr("No")<<tr("AveVelAl")<<tr("AL")<<tr("ACD")<<tr("LT")<<tr("VIT")<<"";
         }
         else
@@ -519,3 +505,29 @@ void sampletable::changeGlasSlot()
     else
         emit clearSample();
 }
+
+void sampletable::slPrintChange(QModelIndex index)
+{
+    quint8 nCount=0;
+    QModelIndex tmpIndex;
+
+    quint8 rowCount = twMeas->model()->rowCount();
+    for(quint8 i=0; i<rowCount; i++)
+    {
+        tmpIndex = twMeas->model()->index(i, 6);
+        if(twMeas->model()->data(tmpIndex, Qt::DisplayRole).toBool())
+            nCount++;
+    }
+
+    if(index.column()==6)
+    {
+        if(twMeas->model()->data(index, Qt::DisplayRole).toBool())
+            twMeas->model()->setData(index, false, Qt::DisplayRole);
+        else
+        {
+            if(nCount<4)
+                twMeas->model()->setData(index, true, Qt::DisplayRole);
+        }
+    }
+}
+

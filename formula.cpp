@@ -1,7 +1,7 @@
 #include "formula.h"
 #include <QDebug>
 #include <QLabel>
-#include <QTableWidgetItem>
+//#include <QTableWidgetItem>
 #include <QBrush>
 
 
