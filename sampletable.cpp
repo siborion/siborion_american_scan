@@ -27,7 +27,7 @@ sampletable::sampletable(QWidget *parent, CurParam *link) :
     twMeas->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     twMeas->verticalHeader()->setDefaultSectionSize(25);
     twMeas->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    twMeas->setMinimumHeight(0);
+    twMeas->setMinimumHeight(273);
     twMeas->setMaximumHeight(16777215);
     delegatePrint = new DelegatePrint();
     twMeas->setItemDelegateForColumn(6, delegatePrint);
