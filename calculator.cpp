@@ -172,6 +172,14 @@ void calculator::refreshFormuls()
             if((i==twLens->model()->rowCount())||(i==4))
             {
                 lensName = "User Defined";
+                nFormula = 1;
+                if((personalParam.AConst>0))
+                {
+                    lensAconst = QString("%1").arg(personalParam.AConst);
+                    lensAcd = QString("%1").arg(personalParam.ACD);
+                    lensFs = QString("%1").arg(personalParam.SF);
+                    calcLens->setValue(i,nFormula,lensName,lensAconst,lensAcd,lensFs,lensA0,lensA1,lensA2,curParam->K,curParam->ALave,curParam->ACD,personalParam.Rx);
+                }
             }
             else
             {
@@ -183,9 +191,10 @@ void calculator::refreshFormuls()
                 lensA0 =  twLens->model()->itemData(twLens->model()->index(i,6)).value(0).toString();
                 lensA1 =  twLens->model()->itemData(twLens->model()->index(i,7)).value(0).toString();
                 lensA2 =  twLens->model()->itemData(twLens->model()->index(i,8)).value(0).toString();
+
+                calcLens->setValue(i,nFormula,lensName,lensAconst,lensAcd,lensFs,lensA0,lensA1,lensA2,curParam->K,curParam->ALave,curParam->ACD,personalParam.Rx);
             }
 
-            calcLens->setValue(i,nFormula,lensName,lensAconst,lensAcd,lensFs,lensA0,lensA1,lensA2,curParam->K,curParam->ALave,curParam->ACD,personalParam.Rx);
 
             switch (i)
             {

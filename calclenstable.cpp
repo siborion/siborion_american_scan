@@ -143,9 +143,21 @@ void CalcLensTable::setValue(quint8 nomLens, quint8 formula, QString name, QStri
     index = this->tableModel->index(1, nomLens*2+1);
     curFormulaIndex = tableModel->data(index, Qt::DisplayRole).toUInt();
 
-    if(formula != curFormulaIndex)
-        tableModel->setData(index, formula, Qt::DisplayRole);
+//    if(formula != curFormulaIndex)
+
+    //Для того чтоб отрефрешилось при иручном зменении User Defined
+    if(formula==1)
+        tableModel->setData(index, 2, Qt::DisplayRole);
+    else
+        tableModel->setData(index, 1, Qt::DisplayRole);
+    tableModel->setData(index, formula, Qt::DisplayRole);
+
     changeFotmula(nomLens, formula);
+//    this->repaint();
+
+
+//    qDebug()<<nomLens<<AConst[nomLens];
+
 }
 
 QStringList CalcLensTable::getListFormula()
