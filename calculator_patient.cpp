@@ -87,9 +87,9 @@ void calculator_patient::refreshPatientParam()
 
 void calculator_patient::refreshMeasure()
 {
-//!!    ui->leAL_measure->setText(QString("%1").arg(curentParam->measureAveAL));
-//!!    ui->leACD_measure->setText(QString("%1").arg(curentParam->measureAveACD));
-//    updateParam();
+    //!!    ui->leAL_measure->setText(QString("%1").arg(curentParam->measureAveAL));
+    //!!    ui->leACD_measure->setText(QString("%1").arg(curentParam->measureAveACD));
+    //    updateParam();
 }
 
 void calculator_patient::RefreshK()
@@ -141,9 +141,9 @@ void calculator_patient::ChangeSide()
 
 void calculator_patient::setPatient(quint16 id, QString Patient, QString Doctor)
 {
-//    ui->lePatientId->setText(QString("%1").arg(id));
-//    ui->lePatientName->setText(Patient);
-//    ui->leDoctorName->setText(Doctor);
+    //    ui->lePatientId->setText(QString("%1").arg(id));
+    //    ui->lePatientName->setText(Patient);
+    //    ui->leDoctorName->setText(Doctor);
 }
 
 void calculator_patient::updateParam()
@@ -154,37 +154,60 @@ void calculator_patient::updateParam()
     {
         if(sender->objectName()=="leAConst_personal")
         {
-            dTmp =  ui->leAConst_personal->text().toDouble();
-            dTmp =  (0.5663 * dTmp) - 65.60;
-            ui->leSF_personal->setText(QString("%1").arg(dTmp));
-
-            dTmp =  ui->leAConst_personal->text().toDouble();
-            dTmp = (0.5663* dTmp - 65.60 +3.595) / 0.9704;
-            ui->leACD_personal->setText(QString("%1").arg(dTmp));
+            if(ui->leAConst_personal->text().isEmpty())
+            {
+                ui->leSF_personal->setText("");
+                ui->leACD_personal->setText("");
+            }
+            else
+            {
+                dTmp =  ui->leAConst_personal->text().toDouble();
+                dTmp =  (0.5663 * dTmp) - 65.60;
+                ui->leSF_personal->setText(QString("%1").arg(dTmp));
+                dTmp =  ui->leAConst_personal->text().toDouble();
+                dTmp = (0.5663* dTmp - 65.60 +3.595) / 0.9704;
+                ui->leACD_personal->setText(QString("%1").arg(dTmp));
+            }
         }
+
         if(sender->objectName()=="leACD_personal")
         {
-            dTmp = ui->leACD_personal->text().toDouble();
-            dTmp = (0.9704 * dTmp) - 3.595;
-            ui->leSF_personal->setText(QString("%1").arg(dTmp));
-
-            dTmp = ui->leACD_personal->text().toDouble();
-            dTmp = (0.9704 * dTmp - 3.595 + 65.60) / 0.5663;
-            ui->leAConst_personal->setText(QString("%1").arg(dTmp));
+            if(ui->leACD_personal->text().isEmpty())
+            {
+                ui->leSF_personal->setText("");
+                ui->leAConst_personal->setText("");
+            }
+            else
+            {
+                dTmp = ui->leACD_personal->text().toDouble();
+                dTmp = (0.9704 * dTmp) - 3.595;
+                ui->leSF_personal->setText(QString("%1").arg(dTmp));
+                dTmp = ui->leACD_personal->text().toDouble();
+                dTmp = (0.9704 * dTmp - 3.595 + 65.60) / 0.5663;
+                ui->leAConst_personal->setText(QString("%1").arg(dTmp));
+            }
         }
+
         if(sender->objectName()=="leSF_personal")
         {
-            dTmp = ui->leSF_personal->text().toDouble();
-            dTmp += 65.60;
-            dTmp /= 0.5663;
-            ui->leAConst_personal->setText(QString("%1").arg(dTmp));
-
-            dTmp = ui->leSF_personal->text().toDouble();
-            dTmp += 3.595;
-            dTmp /= 0.9704;
-            ui->leACD_personal->setText(QString("%1").arg(dTmp));
+            if(ui->leSF_personal->text().isEmpty())
+            {
+                ui->leAConst_personal->setText("");
+                ui->leACD_personal->setText("");
+            }
+            else
+            {
+                dTmp = ui->leSF_personal->text().toDouble();
+                dTmp += 65.60;
+                dTmp /= 0.5663;
+                ui->leAConst_personal->setText(QString("%1").arg(dTmp));
+                dTmp = ui->leSF_personal->text().toDouble();
+                dTmp += 3.595;
+                dTmp /= 0.9704;
+                ui->leACD_personal->setText(QString("%1").arg(dTmp));
+            }
         }
-    emit (refreshFormula());
+        emit (refreshFormula());
     }
 }
 

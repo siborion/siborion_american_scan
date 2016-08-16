@@ -31,6 +31,7 @@ private:
     void calculateIOL(quint8 nomLens, quint8 formula);
     void refreshFormula(quint8 nomLens, int curIndex);
     void saveParam(quint8 nomLens, _formulae *val);
+    void clearParam(quint8 nomLens);
 
     double AL[5];
     double K[5];

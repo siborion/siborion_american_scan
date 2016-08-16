@@ -104,11 +104,11 @@ calculator::calculator(QWidget *parent, CurParam *link) :
     //    QSpacerItem *horisontalSpacer1;
     //    horisontalSpacer1 = new QSpacerItem(20, 40, QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-    QPushButton *pbUserDefined = new QPushButton("User Defined");
+//    QPushButton *pbUserDefined = new QPushButton("User Defined");
 
     layoutFrame->addWidget(pCalcPatient,0,0,2,1);
     layoutFrame->addWidget(twLens,0,1,1,1);
-    layoutFrame->addWidget(pbUserDefined,1,1,1,1);
+//    layoutFrame->addWidget(pbUserDefined,1,1,1,1);
 
     Formula1 = new formula();
     Formula2 = new formula();
@@ -179,6 +179,10 @@ void calculator::refreshFormuls()
                     lensAcd = QString("%1").arg(personalParam.ACD);
                     lensFs = QString("%1").arg(personalParam.SF);
                     calcLens->setValue(i,nFormula,lensName,lensAconst,lensAcd,lensFs,lensA0,lensA1,lensA2,curParam->K,curParam->ALave,curParam->ACD,personalParam.Rx);
+                }
+                else
+                {
+                    calcLens->setValue(i,0,lensName,lensAconst,lensAcd,lensFs,lensA0,lensA1,lensA2,curParam->K,curParam->ALave,curParam->ACD,personalParam.Rx);
                 }
             }
             else

@@ -27,7 +27,7 @@ CalcLensTable::CalcLensTable(int row, int col, QList<int> pr, QTableView *parent
     QModelIndex index;
     tableModel = this->model();
 
-//    model = this->selectionModel();
+    //    model = this->selectionModel();
 
     this->setFrameShape(QFrame::Box);
     this->setFrameShadow(QFrame::Plain);
@@ -40,10 +40,10 @@ CalcLensTable::CalcLensTable(int row, int col, QList<int> pr, QTableView *parent
 
     this->verticalHeader()->setDefaultSectionSize(22);
     this->horizontalHeader()->setDefaultAlignment(Qt::AlignHCenter);
-//    setSide("OD");
+    //    setSide("OD");
 
-//    index = this->tableModel->index(0,5);
-//    tableModel->setData(index, "Ref", Qt::DisplayRole);
+    //    index = this->tableModel->index(0,5);
+    //    tableModel->setData(index, "Ref", Qt::DisplayRole);
 
     for(quint8 i=0; i<17; i++)
     {
@@ -83,7 +83,7 @@ CalcLensTable::CalcLensTable(int row, int col, QList<int> pr, QTableView *parent
     pCombo_Delegate.append(new CCombo_Delegate_Cell(this));
     pCombo_Delegate.append(new CCombo_Delegate_Cell(this));
 
-//    pCombo_Delegate.at(0)->values().insert(0, "");
+    //    pCombo_Delegate.at(0)->values().insert(0, "");
 
     this->setItemDelegateForColumn(1, pCombo_Delegate.at(0));
     this->setItemDelegateForColumn(3, pCombo_Delegate.at(1));
@@ -91,7 +91,7 @@ CalcLensTable::CalcLensTable(int row, int col, QList<int> pr, QTableView *parent
 
     this->setItemDelegateForColumn(7, pCombo_Delegate.at(3));
     this->setItemDelegateForColumn(9, pCombo_Delegate.at(4));
-//    this->setItemDelegateForColumn(6, pCombo_Delegate.at(5));
+    //    this->setItemDelegateForColumn(6, pCombo_Delegate.at(5));
 
 
     connect(pCombo_Delegate.at(0), SIGNAL(closeEditor(QWidget*,QAbstractItemDelegate::EndEditHint)), SLOT(slChangeCombo1()));
@@ -100,7 +100,7 @@ CalcLensTable::CalcLensTable(int row, int col, QList<int> pr, QTableView *parent
     connect(pCombo_Delegate.at(3), SIGNAL(closeEditor(QWidget*,QAbstractItemDelegate::EndEditHint)), SLOT(slChangeCombo4()));
     connect(pCombo_Delegate.at(4), SIGNAL(closeEditor(QWidget*,QAbstractItemDelegate::EndEditHint)), SLOT(slChangeCombo5()));
 
-//    connect(pCombo_Delegate.at(0), SIGNAL(commitData(QWidget*)), SLOT(slChangeCombo1()));
+    //    connect(pCombo_Delegate.at(0), SIGNAL(commitData(QWidget*)), SLOT(slChangeCombo1()));
 }
 
 void CalcLensTable::setSide(QString val)
@@ -143,7 +143,7 @@ void CalcLensTable::setValue(quint8 nomLens, quint8 formula, QString name, QStri
     index = this->tableModel->index(1, nomLens*2+1);
     curFormulaIndex = tableModel->data(index, Qt::DisplayRole).toUInt();
 
-//    if(formula != curFormulaIndex)
+    //    if(formula != curFormulaIndex)
 
     //Для того чтоб отрефрешилось при иручном зменении User Defined
     if(formula==1)
@@ -153,10 +153,10 @@ void CalcLensTable::setValue(quint8 nomLens, quint8 formula, QString name, QStri
     tableModel->setData(index, formula, Qt::DisplayRole);
 
     changeFotmula(nomLens, formula);
-//    this->repaint();
+    //    this->repaint();
 
 
-//    qDebug()<<nomLens<<AConst[nomLens];
+    //    qDebug()<<nomLens<<AConst[nomLens];
 
 }
 
@@ -180,24 +180,29 @@ void CalcLensTable::calculateIOL(quint8 nomLens, quint8 formula)
     switch (formula)
     {
     case 0:
+        clearParam(nomLens);
         break;
     case SRKII:
         Calculator(formula, AL[nomLens], AConst[nomLens], K[nomLens], Rx[nomLens], &stFormula);
+        saveParam(nomLens, &stFormula);
         break;
     case SRKT:
         Calculator(formula, AL[nomLens], AConst[nomLens], K[nomLens], Rx[nomLens], &stFormula);
+        saveParam(nomLens, &stFormula);
         break;
     case HOFFERQ:
         Calculator(formula, AL[nomLens], ACD[nomLens], K[nomLens], Rx[nomLens], &stFormula);
+        saveParam(nomLens, &stFormula);
         break;
     case HOLLADAY:
         Calculator(formula, AL[nomLens], SF[nomLens], K[nomLens], Rx[nomLens], &stFormula);
+        saveParam(nomLens, &stFormula);
         break;
     case HAIGIS:
         HaigisCalc(A0[nomLens], A1[nomLens], A2[nomLens], AL[nomLens], AConst[nomLens], ACD_measure[nomLens], K[nomLens], Rx[nomLens], &stFormula);
+        saveParam(nomLens, &stFormula);
         break;
     }
-    saveParam(nomLens, &stFormula);
 }
 
 void CalcLensTable::refreshFormula(quint8 nomLens, int curIndex)
@@ -219,17 +224,43 @@ void CalcLensTable::refreshFormula(quint8 nomLens, int curIndex)
         case HOLLADAY:Calculator(i, AL[nomLens], SF[nomLens],     K[nomLens], 0, &stFormula);     break;
         case HAIGIS:  HaigisCalc(A0[nomLens], A1[nomLens], A2[nomLens], AL[nomLens], AConst[nomLens], ACD_measure[nomLens], K[nomLens], 0, &stFormula);  break;
         }
-        index = this->tableModel->index(10+j, nomLens*2+1);
-        tableModel->setData(index, slTmp.at(i), Qt::DisplayRole);
-        index = this->tableModel->index(10+j, nomLens*2+2);
-        tableModel->setData(index, QString("EMM = %1").arg(stFormula.PEMM, 0, 'f', 2), Qt::DisplayRole);
+        if(curIndex==0)
+        {
+            index = this->tableModel->index(10+j, nomLens*2+1);
+            tableModel->setData(index, "", Qt::DisplayRole);
+            index = this->tableModel->index(10+j, nomLens*2+2);
+            tableModel->setData(index, "", Qt::DisplayRole);
+        }
+        else
+        {
+            index = this->tableModel->index(10+j, nomLens*2+1);
+            tableModel->setData(index, slTmp.at(i), Qt::DisplayRole);
+            index = this->tableModel->index(10+j, nomLens*2+2);
+            tableModel->setData(index, QString("EMM = %1").arg(stFormula.PEMM, 0, 'f', 2), Qt::DisplayRole);
+        }
     }
 
-        index = this->tableModel->index(2, nomLens*2+1);
-        tableModel->setData(index, "IOL", Qt::DisplayRole);
-        index = this->tableModel->index(2, nomLens*2+2);
-        tableModel->setData(index, "Ref", Qt::DisplayRole);
+    index = this->tableModel->index(2, nomLens*2+1);
+    tableModel->setData(index, "IOL", Qt::DisplayRole);
+    index = this->tableModel->index(2, nomLens*2+2);
+    tableModel->setData(index, "Ref", Qt::DisplayRole);
 }
+
+
+void CalcLensTable::clearParam(quint8 nomLens)
+{
+    QModelIndex index;
+    double dTmp;
+    for(quint8 i=0; i<7; i++)
+    {
+        index = this->tableModel->index(i+3, nomLens*2+1);
+        QString str = " ";
+        tableModel->setData(index, str, Qt::DisplayRole);
+        index = this->tableModel->index(i+3, nomLens*2+2);
+        tableModel->setData(index, str, Qt::DisplayRole);
+    }
+}
+
 
 void CalcLensTable::saveParam(quint8 nomLens, _formulae *val)
 {
@@ -298,7 +329,7 @@ void CalcLensTable::mousePressEvent(QMouseEvent *event)
 {
     QModelIndex index = this->indexAt(event->pos());
     this->edit(index);
-//    adjview::mousePressEvent(event);
+    //    adjview::mousePressEvent(event);
 }
 
 void CalcLensTable::clear()
