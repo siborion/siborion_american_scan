@@ -177,4 +177,4 @@ OTHER_FILES += \
     qwt.prf \
     plugins/sqldrivers/qsqlite.dll
 
-#OTHER_FILES += plugins/sqldrivers/qsqlite.dll
+OTHER_FILES += plugins/sqldrivers/qsqlite.dll

@@ -12,19 +12,34 @@ BScanControl::BScanControl(QWidget *parent) :
     sl << " ";
     il << 100;
     ui->setupUi(this);
-    this->setMaximumWidth(300);
+    this->setMaximumWidth(190);
     table = new adjview(il, 80);
-    for(quint8 i=0; i<3; i++)
+    table->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+    table->verticalHeader()->setDefaultSectionSize(12);
+    for(quint8 i=0; i<2; i++)
     {
-        pbSample.append(new BScanButton());
-        ui->layoutGroupBox->addWidget(pbSample.last(),0,i);
+        for(quint8 j=0; j<2; j++)
+        {
+            pbSample.append(new BScanButton());
+            ui->layoutGroupBox->addWidget(pbSample.last(),i,j);
+        }
     }
     pbSample.last()->setEnabled(false);
     pbUp   = new QPushButton("<<");
+    pbUp->setMaximumWidth(50);
     pbDown = new QPushButton(">>");
-    ui->layoutGroupBox->addWidget(table,  1, 0, 1, 3);
-    ui->layoutGroupBox->addWidget(pbUp,   2, 0);
-    ui->layoutGroupBox->addWidget(pbDown, 2, 1);
+    pbDown->setMaximumWidth(50);
+
+    pbLoad = new QPushButton("Load");
+    pbSave = new QPushButton("Save");
+
+    ui->layoutGroupBox->addWidget(table,  3, 0, 1, 2);
+    ui->layoutGroupBox->addWidget(pbUp,   4, 0, 1, 2);
+    ui->layoutGroupBox->addWidget(pbDown, 4, 1, 1, 1);
+
+    ui->layoutGroupBox->addWidget(pbLoad, 5, 0, 1, 2);
+    ui->layoutGroupBox->addWidget(pbSave, 6, 0, 1, 2);
+
     connect(table->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), SLOT(changeRow(QModelIndex)));
     connect(pbUp,   SIGNAL(clicked()), SLOT(slPbUpClick()));
     connect(pbDown, SIGNAL(clicked()), SLOT(slPbDownClick()));
@@ -59,8 +74,8 @@ void BScanControl::setBuf(unsigned char *buf)
     }
     indexDest = table->model()->index(0, 0);
     table->model()->setData(indexDest, QString("%1").arg(time.currentDateTime().toString("MM.dd.yyyy hh:mm:ss.zzz")), Qt::DisplayRole);
-//!!!!!!!!!!!!!!!!!!!!!!!!!!1
-//    table->model()->setData(indexDest, (quint32)buf, Qt::UserRole);
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!1
+    table->model()->setData(indexDest, (quint32)buf, Qt::UserRole);
 }
 
 void BScanControl::changeRow(QModelIndex index)

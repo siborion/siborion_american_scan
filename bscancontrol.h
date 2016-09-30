@@ -26,7 +26,7 @@ private:
     Ui::BScanControl *ui;
     adjview *table;
 //    QTableView *table;
-    QPushButton *pbUp, *pbDown;
+    QPushButton *pbUp, *pbDown , *pbLoad, *pbSave;
     QList<BScanButton*> pbSample;
 
 private slots:
