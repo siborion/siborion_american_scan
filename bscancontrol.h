@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QPushButton>
+#include <QTabWidget>
 #include "adjview.h"
 #include "bscanarray.h"
 #include "bscanarrow.h"
@@ -24,10 +25,11 @@ public:
 
 private:
     Ui::BScanControl *ui;
-    adjview *table;
+    adjview *table, *table1, *table2;
 //    QTableView *table;
     QPushButton *pbUp, *pbDown , *pbLoad, *pbSave;
     QList<BScanButton*> pbSample;
+    QTabWidget *tab;
 
 private slots:
     void changeRow(QModelIndex);

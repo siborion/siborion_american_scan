@@ -13,18 +13,35 @@ BScanControl::BScanControl(QWidget *parent) :
     il << 100;
     ui->setupUi(this);
     this->setMaximumWidth(190);
+
     table = new adjview(il, 80);
     table->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     table->verticalHeader()->setDefaultSectionSize(12);
-    for(quint8 i=0; i<2; i++)
-    {
-        for(quint8 j=0; j<2; j++)
-        {
-            pbSample.append(new BScanButton());
-            ui->layoutGroupBox->addWidget(pbSample.last(),i,j);
-        }
-    }
-    pbSample.last()->setEnabled(false);
+
+    table1 = new adjview(il, 80);
+    table1->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+    table1->verticalHeader()->setDefaultSectionSize(12);
+
+    table2 = new adjview(il, 80);
+    table2->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+    table2->verticalHeader()->setDefaultSectionSize(12);
+
+    //    for(quint8 i=0; i<2; i++)
+//    {
+//        for(quint8 j=0; j<2; j++)
+//        {
+//            pbSample.append(new BScanButton());
+//            ui->layoutGroupBox->addWidget(pbSample.last(),i,j);
+//        }
+//    }
+
+    tab = new QTabWidget();
+    tab->addTab(table, "1");
+    tab->addTab(table1, "2");
+    tab->addTab(table2, "3");
+
+//    pbSample.last()->setEnabled(false);
+
     pbUp   = new QPushButton("<<");
     pbUp->setMaximumWidth(50);
     pbDown = new QPushButton(">>");
@@ -33,14 +50,14 @@ BScanControl::BScanControl(QWidget *parent) :
     pbLoad = new QPushButton("Load");
     pbSave = new QPushButton("Save");
 
-    ui->layoutGroupBox->addWidget(table,  3, 0, 1, 2);
+    ui->layoutGroupBox->addWidget(tab  ,  3, 0, 1, 2);
     ui->layoutGroupBox->addWidget(pbUp,   4, 0, 1, 2);
     ui->layoutGroupBox->addWidget(pbDown, 4, 1, 1, 1);
 
     ui->layoutGroupBox->addWidget(pbLoad, 5, 0, 1, 2);
     ui->layoutGroupBox->addWidget(pbSave, 6, 0, 1, 2);
 
-    connect(table->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), SLOT(changeRow(QModelIndex)));
+//    connect(table->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), SLOT(changeRow(QModelIndex)));
     connect(pbUp,   SIGNAL(clicked()), SLOT(slPbUpClick()));
     connect(pbDown, SIGNAL(clicked()), SLOT(slPbDownClick()));
 }
