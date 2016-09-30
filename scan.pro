@@ -12,6 +12,8 @@ QT       += core
 #gui
 QT	 += serialport
 QT       += opengl
+QT       += printsupport
+
 
 
 win32
