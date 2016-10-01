@@ -22,6 +22,7 @@ public:
     explicit BScanControl(QWidget *parent = 0);
     unsigned char *getBuf();
     ~BScanControl();
+    void start();
 
 private:
     Ui::BScanControl *ui;
@@ -31,6 +32,7 @@ private:
     QPushButton *pbUp, *pbDown , *pbLoad, *pbSave;
     QList<BScanButton*> pbSample;
     QTabWidget *tab;
+    qint8 numTab;
 
 private slots:
     void changeRow(QModelIndex);

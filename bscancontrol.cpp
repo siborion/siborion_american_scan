@@ -13,6 +13,7 @@ BScanControl::BScanControl(QWidget *parent) :
     il << 100;
     ui->setupUi(this);
     this->setMaximumWidth(190);
+    numTab = -1;
 
     table0 = new adjview(il, 80);
     table0->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
@@ -33,7 +34,7 @@ BScanControl::BScanControl(QWidget *parent) :
     tab->addTab(table1, "2");
     tab->addTab(table2, "3");
 
-//    pbSample.last()->setEnabled(false);
+    //    pbSample.last()->setEnabled(false);
 
     pbUp   = new QPushButton("<<");
     pbUp->setMaximumWidth(50);
@@ -154,6 +155,41 @@ void BScanControl::slPbUpClick(void)
         nomRow--;
     index = table->model()->index(nomRow, 0);
     table->setCurrentIndex(index);
+}
+
+void BScanControl::start(void)
+{
+    numTab++;
+    if(numTab>2)
+        numTab = 0;
+    if(numTab==2)
+    {
+        table = table2;
+        tab->setCurrentIndex(2);
+    }
+    else
+    {
+        if(numTab==1)
+        {
+            table = table1;
+            tab->setCurrentIndex(1);
+        }
+        else
+        {
+            table = table0;
+            tab->setCurrentIndex(0);
+        }
+    }
+
+    QModelIndex index;
+    quint8 modelSize;
+    modelSize = table->model()->rowCount()-1;
+    for(quint8 i = 0; i<modelSize; i++)
+    {
+        index = table->model()->index(i,0);
+        table->model()->setData(index,"",Qt::DisplayRole);
+    }
+
 }
 
 BScanControl::~BScanControl()

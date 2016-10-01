@@ -166,6 +166,7 @@ void BScanHard::read()
     j = 0;
 
     sendRun(true);
+        doBScanHard = true;
 
     while(true)
     {

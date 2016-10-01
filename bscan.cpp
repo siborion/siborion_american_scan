@@ -31,6 +31,9 @@ Bscan::Bscan(QWidget *parent, CurParam *link) :
     timerSec     = new QTimer();
     timerSec->setInterval(1000);
 
+    timer->start();
+    timerSec->start();
+
 
     run = false;
 
@@ -107,9 +110,10 @@ void Bscan::doSec()
 void Bscan::doStart()
 {
 
+    bScanControl->start();
     bScanHard->process();
-    timer->start();
-    timerSec->start();
+//    timer->start();
+//    timerSec->start();
     run = true;
 }
 
