@@ -29,29 +29,6 @@
    <item row="1" column="0">
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-      <widget class="QGroupBox" name="gbControl">
-       <property name="title">
-        <string>Control</string>
-       </property>
-       <layout class="QVBoxLayout" name="verticalLayout_3">
-        <item>
-         <widget class="QPushButton" name="pbScan">
-          <property name="text">
-           <string>Scan</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="pbStop">
-          <property name="text">
-           <string>Stop</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-     </item>
-     <item>
       <widget class="QLabel" name="lFPS">
        <property name="text">
         <string>FPS:</string>
