@@ -169,6 +169,9 @@ void BScanHard::read()
 
     while(true)
     {
+
+        qDebug()<<"read";
+
         if(mutex.tryLock())
         {
             if(!doBScanHard)

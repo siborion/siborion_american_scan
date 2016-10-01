@@ -14,9 +14,9 @@ BScanControl::BScanControl(QWidget *parent) :
     ui->setupUi(this);
     this->setMaximumWidth(190);
 
-    table = new adjview(il, 80);
-    table->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-    table->verticalHeader()->setDefaultSectionSize(12);
+    table0 = new adjview(il, 80);
+    table0->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+    table0->verticalHeader()->setDefaultSectionSize(12);
 
     table1 = new adjview(il, 80);
     table1->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
@@ -26,17 +26,10 @@ BScanControl::BScanControl(QWidget *parent) :
     table2->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     table2->verticalHeader()->setDefaultSectionSize(12);
 
-    //    for(quint8 i=0; i<2; i++)
-//    {
-//        for(quint8 j=0; j<2; j++)
-//        {
-//            pbSample.append(new BScanButton());
-//            ui->layoutGroupBox->addWidget(pbSample.last(),i,j);
-//        }
-//    }
+    table = table0;
 
     tab = new QTabWidget();
-    tab->addTab(table, "1");
+    tab->addTab(table0, "1");
     tab->addTab(table1, "2");
     tab->addTab(table2, "3");
 
@@ -57,7 +50,9 @@ BScanControl::BScanControl(QWidget *parent) :
     ui->layoutGroupBox->addWidget(pbLoad, 5, 0, 1, 2);
     ui->layoutGroupBox->addWidget(pbSave, 6, 0, 1, 2);
 
-//    connect(table->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), SLOT(changeRow(QModelIndex)));
+    connect(table0->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), SLOT(changeRow(QModelIndex)));
+    connect(table1->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), SLOT(changeRow(QModelIndex)));
+    connect(table2->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), SLOT(changeRow(QModelIndex)));
     connect(pbUp,   SIGNAL(clicked()), SLOT(slPbUpClick()));
     connect(pbDown, SIGNAL(clicked()), SLOT(slPbDownClick()));
 }

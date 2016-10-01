@@ -7,18 +7,39 @@ BScanTools::BScanTools(QWidget *parent) :
     ui(new Ui::BScanTools)
 {
     ui->setupUi(this);
+    scanButton = new ScanButton();
+    ui->verticalLayout_4->addWidget(scanButton);
+    connect(scanButton, SIGNAL(doScan(bool*)), SLOT(slDoScan(bool*)));
+    connect(scanButton, SIGNAL(doStop()), SLOT(slDoStop()));
+
+}
+
+void BScanTools::slDoStop()
+{
+    on_pbStop_clicked();
+}
+
+void BScanTools::slDoScan(bool *val)
+{
+    linkScan = val;
+//    if(*linkScan)
+        on_pbScan_clicked();
+//    else
+//        on_pbStop_clicked();
 }
 
 void BScanTools::on_pbScan_clicked()
 {
     ui->gbAnnotation->setEnabled(false);
     emit doScan();
+    *linkScan = true;
 }
 
 void BScanTools::on_pbStop_clicked()
 {
     ui->gbAnnotation->setEnabled(true);
     emit doStop();
+    *linkScan = false;
 }
 
 void BScanTools::on_pbOS_clicked()

@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QGroupBox>
 #include <QPushButton>
+#include <scanbutton.h>
 #include "typedef.h"
 
 
@@ -25,6 +26,8 @@ public:
 private:
     Ui::BScanTools *ui;
     void rechecketPb(QGroupBox*, QPushButton *pb);
+    ScanButton *scanButton;
+    bool *linkScan;
 
 signals:
     void doScan(void);
@@ -33,6 +36,8 @@ signals:
     void doEdit(CUR_EDIT regim, bool on);
 
 private slots:
+    void slDoScan(bool*);
+    void slDoStop();
     void on_pbScan_clicked();
     void on_pbStop_clicked();
     void on_pbOS_clicked();
