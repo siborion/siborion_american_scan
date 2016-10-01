@@ -23,6 +23,7 @@ public:
     unsigned char *getBuf();
     ~BScanControl();
     void start();
+    void clearDraw();
 
 private:
     Ui::BScanControl *ui;

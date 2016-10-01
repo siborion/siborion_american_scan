@@ -157,6 +157,15 @@ void BScanControl::slPbUpClick(void)
     table->setCurrentIndex(index);
 }
 
+void BScanControl::clearDraw()
+{
+    QModelIndex index;
+    index = table->model()->index(table->currentIndex().row(),0);
+    table->model()->setData(index,"",Qt::UserRole+1);
+    table->model()->setData(index,"",Qt::UserRole+2);
+    table->model()->setData(index,"",Qt::UserRole+3);
+}
+
 void BScanControl::start(void)
 {
     numTab++;

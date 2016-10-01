@@ -65,6 +65,7 @@ Bscan::Bscan(QWidget *parent, CurParam *link) :
     connect(bScanTools, SIGNAL(doStop()),           SLOT(doStop()));
     connect(bScanTools, SIGNAL(doOS(REGIM::RegimSide)),             SLOT(setRun(REGIM::RegimSide)));
     connect(bScanTools, SIGNAL(doEdit(CUR_EDIT,bool)), pScena, SLOT(doEdit(CUR_EDIT,bool)));
+    connect(bScanTools, SIGNAL(doClear()), SLOT(slClear()));
 
     connect(timer,      SIGNAL(timeout()),          SLOT(scenaRefr()));
     connect(timerSec,   SIGNAL(timeout()),          SLOT(doSec()));
@@ -80,6 +81,13 @@ Bscan::Bscan(QWidget *parent, CurParam *link) :
     timer->start();
     timerSec->start();
 //    updatePatient();
+}
+
+
+void Bscan::slClear()
+{
+    pScena->clearDraw();
+    bScanControl->clearDraw();
 }
 
 void Bscan::scenaRefr()

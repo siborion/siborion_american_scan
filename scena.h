@@ -31,6 +31,7 @@ public:
     void setDoctor(QString);
     void setPatient(QString);
     void setSide(QString);
+    void clearDraw();
 
 private:
     CurParam *curParam;

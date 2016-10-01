@@ -80,6 +80,7 @@ void BScanTools::rechecketPb(QGroupBox *gb, QPushButton *pb)
 void BScanTools::on_pbClear_clicked()
 {
     rechecketPb(ui->gbAnnotation, ui->pbClear);
+    emit doClear();
 }
 
 void BScanTools::on_pbText_clicked()

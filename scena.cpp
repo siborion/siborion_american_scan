@@ -924,3 +924,14 @@ void scena::setSide(QString val)
     sSide = val;
 //    drawText();
 }
+
+void scena::clearDraw()
+{
+    lArrow.clear();
+    lArray.clear();
+    lCaliper.clear();
+    lText.clear();
+    this->repaint();
+}
+
+

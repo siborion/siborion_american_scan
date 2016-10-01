@@ -34,6 +34,7 @@ signals:
     void doStop(void);
     void doOS(REGIM::RegimSide);
     void doEdit(CUR_EDIT regim, bool on);
+    void doClear();
 
 private slots:
     void slDoScan(bool*);

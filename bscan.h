@@ -47,6 +47,7 @@ private slots:
     void setRun(REGIM::RegimSide);
     void doStart();
     void doStop();
+    void slClear();
 
 protected:
     void keyPressEvent(QKeyEvent *);
