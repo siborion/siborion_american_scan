@@ -46,11 +46,13 @@ public slots:
     void slSetArray  (QString*);
     void slSetArrow  (QString*);
     void slSetCaliper(QString*);
+    void slSetText   (QString*);
 
 signals:
     void sgUpdateArray  (QString*);
     void sgUpdateArrow  (QString*);
     void sgUpdateCaliper(QString*);
+    void sgUpdateText   (QString*);
 
 };
 

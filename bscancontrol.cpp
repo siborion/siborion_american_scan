@@ -102,6 +102,11 @@ void BScanControl::changeRow(QModelIndex index)
     sTmp.clear();
     sTmp.append(table->model()->data(index, Qt::UserRole+3).toString());
     emit sgUpdateCaliper(&sTmp);
+    sTmp.clear();
+    sTmp.append(table->model()->data(index, Qt::UserRole+4).toString());
+    emit sgUpdateText(&sTmp);
+    qDebug()<<sTmp;
+
 }
 
 void BScanControl::changeRowFirst()
@@ -135,6 +140,13 @@ void BScanControl::slSetCaliper(QString *caliper)
     table->model()->setData(index, *caliper, Qt::UserRole+3);
 }
 
+void BScanControl::slSetText(QString *text)
+{
+    QModelIndex index;
+    index = table->currentIndex();
+    table->model()->setData(index, *text, Qt::UserRole+4);
+}
+
 void BScanControl::slPbDownClick(void)
 {
     QModelIndex index;
@@ -164,6 +176,7 @@ void BScanControl::clearDraw()
     table->model()->setData(index,"",Qt::UserRole+1);
     table->model()->setData(index,"",Qt::UserRole+2);
     table->model()->setData(index,"",Qt::UserRole+3);
+    table->model()->setData(index,"",Qt::UserRole+4);
 }
 
 void BScanControl::start(void)

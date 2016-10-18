@@ -155,7 +155,7 @@ void scena::paintGL() // рисование
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //очистка буфера глубины
 
-//    qDebug()<<"buf"<<buf;
+    //    qDebug()<<"buf"<<buf;
 
     for(quint32 i=0; i<massiveSize; i++)
     {
@@ -348,9 +348,15 @@ void scena::mousePressEvent(QMouseEvent *mEvent)
         sTmp.clear();
         sTmp.append(getArrayString());
         emit sgUpdateArray(&sTmp);
+
         sTmp.clear();
         sTmp.append(getCaliperString());
         emit sgUpdateCaliper(&sTmp);
+
+        //        sTmp.clear();
+        //        sTmp.append(getTextString());
+        //        emit sgUpdateText(&sTmp);
+
     }
 }
 
@@ -361,13 +367,14 @@ void scena::keyPressEvent(QKeyEvent *kEvent)
         ctrlPress = true;
     }
 
-//    if(editRegim==CUR_EDIT::TEXT)
-    {
+    //    if(editRegim==CUR_EDIT::TEXT)
+        {
         if(editText)
         {
             QMessageBox msg;
+            QString sTmp;
             msg.setText(QString("%1").arg(kEvent->key()));
- //           msg.exec();
+            //           msg.exec();
 
             switch (kEvent->key())
             {
@@ -377,16 +384,20 @@ void scena::keyPressEvent(QKeyEvent *kEvent)
             case Qt::Key_Return:
                 editText = 0;
                 editVertex = 0;
+                sTmp.clear();
+                sTmp.append(getTextString());
+                qDebug()<<"Return"<<sTmp;
+                emit sgUpdateText(&sTmp);
                 break;
             default:
                 editText->text = editText->text + kEvent->key();
                 break;
             }
 
-//            if(kEvent->key()==Qt::Key_Backspace)
-//                editText->text = editText->text.mid(0, editText->text.length()-1);
-//            else
-//                editText->text = editText->text + kEvent->key();
+            //            if(kEvent->key()==Qt::Key_Backspace)
+            //                editText->text = editText->text.mid(0, editText->text.length()-1);
+            //            else
+            //                editText->text = editText->text + kEvent->key();
         }
     }
 }
@@ -451,7 +462,7 @@ void scena::drawArrow()
 {
     foreach(BScanArrow *arrow, lArrow)
     {
-//        if(arrow->vertex.first()!=arrow->vertex.last())
+        //        if(arrow->vertex.first()!=arrow->vertex.last())
         if(editArrow!=arrow)
             drawStrela(arrow->vertex.first()->xKoord, arrow->vertex.first()->yKoord, arrow->vertex.last()->xKoord, arrow->vertex.last()->yKoord, (editArrow==arrow));
 
@@ -460,9 +471,9 @@ void scena::drawArrow()
         {
             massiv[j][0] = vx->xKoord;
             massiv[j][1] = vx->yKoord;
-//            if(vx==arrow->vertex.last())
-//                drawStrela(arrow->vertex.first()->xKoord, arrow->vertex.first()->yKoord, arrow->vertex.last()->xKoord, arrow->vertex.last()->yKoord, (editArrow==arrow));
-//                drawCrest(massiv[j][0],massiv[j][1]);
+            //            if(vx==arrow->vertex.last())
+            //                drawStrela(arrow->vertex.first()->xKoord, arrow->vertex.first()->yKoord, arrow->vertex.last()->xKoord, arrow->vertex.last()->yKoord, (editArrow==arrow));
+            //                drawCrest(massiv[j][0],massiv[j][1]);
 
             if(lArrow.first()!=arrow)
             {color [j][0]=color[j][1]=color[j][2]=0;color[j][1]=255;}
@@ -516,7 +527,7 @@ void scena::drawArray()
             font.setBold(true);
             quint16 x,y;
             S = array->getS();
-//            S *= 0.00140625;
+            //            S *= 0.00140625;
             S *= 0.0375;
             S *= 0.0375;
             S *= step;
@@ -580,7 +591,7 @@ void scena::drawCaliper()
                 S = caliper->getLenght();
                 S *= 0.0375;
                 S *= step;
-//                S *= step;
+                //                S *= step;
                 x = caliper->vertex.last()->xKoord;
                 y = caliper->vertex.last()->yKoord;
                 qglColor(Qt::blue);
@@ -744,7 +755,6 @@ QString  scena::getArrayString()
             sTmp.append(QString("%1,%2").arg(vx->xKoord).arg(vx->yKoord));
             newArray = false;
         }
-
         sTmp.append("|");
     }
     return sTmp;
@@ -769,6 +779,18 @@ QString  scena::getCaliperString()
     return sTmp;
 }
 
+QString  scena::getTextString()
+{
+    QString sTmp;
+    foreach(BScanText *text, lText)
+    {
+        sTmp.append(QString("%1,%2,%3").arg(text->vertex->xKoord).arg(text->vertex->yKoord).arg(text->text));
+        sTmp.append("|");
+        qDebug()<<"text->text"<<text->text;
+    }
+    qDebug()<<"getTextString"<<sTmp;
+    return sTmp;
+}
 
 void     scena::setArrow  (QString *str)
 {
@@ -796,7 +818,7 @@ void     scena::setArrow  (QString *str)
                 coord[i++] = sPoint.toUInt();
                 if(i==2)
                 {
-//                    lArrow.last()->addVertex(coord[0],coord[1]);
+                    //                    lArrow.last()->addVertex(coord[0],coord[1]);
                     if(newArrow)
                         lArrow.append(new BScanArrow(coord[0],coord[1]));
                     else
@@ -871,6 +893,22 @@ void     scena::setCaliper(QString *str)
     }
 }
 
+void     scena::setText(QString *str)
+{
+    QStringList slText = str->split("|");
+    lText.clear();
+    foreach(QString sText, slText)
+    {
+        QStringList slText = sText.split(",");
+        if(slText.size()==3)
+        {
+            lText.append(new BScanText(slText.at(0).toInt(), slText.at(1).toInt()));
+            lText.last()->text = slText.at(2);
+        }
+    }
+}
+
+
 void scena::drawStrela(quint16 x1, quint16 y1, quint16 x2, quint16 y2, bool edit)
 {
     double Vx, Vy, nx, ny, x3, x4, x5, y3, y4, y5, V;
@@ -930,7 +968,7 @@ void scena::setDoctor(QString val)
 void scena::setSide(QString val)
 {
     sSide = val;
-//    drawText();
+    //    drawText();
 }
 
 void scena::clearDraw()
@@ -940,11 +978,11 @@ void scena::clearDraw()
     setArrow(&empt);
     setArray(&empt);
     setCaliper(&empt);
-//    lArrow.clear();
-//    lArray.clear();
-//    lCaliper.clear();
+    //    lArrow.clear();
+    //    lArray.clear();
+    //    lCaliper.clear();
     lText.clear();
-//    this->repaint();
+    //    this->repaint();
 }
 
 

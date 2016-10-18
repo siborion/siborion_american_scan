@@ -28,6 +28,7 @@ public:
     QString  getArrowString();
     QString  getArrayString();
     QString  getCaliperString();
+    QString  getTextString();
     void setDoctor(QString);
     void setPatient(QString);
     void setSide(QString);
@@ -99,12 +100,14 @@ public slots:
     void     setArrow  (QString*);
     void     setArray  (QString*);
     void     setCaliper(QString*);
+    void     setText(QString*);
 
 signals:
     void updateFps(quint8);
     void sgUpdateArrow  (QString*);
     void sgUpdateArray  (QString*);
     void sgUpdateCaliper(QString*);
+    void sgUpdateText(QString*);
 
 };
 

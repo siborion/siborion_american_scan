@@ -31,17 +31,17 @@ include(../QtRPT/QtRPT.pri)
 
 CONFIG(debug, debug|release)
 {
-#win32:  LIBS += -lqwt     -LC:\Qt\Qwt-6.1.0\lib
-#win32:  LIBS += -lftd2xx  -LD:\_SVN\SibOrion\siborion_american_scan
-#unix:  LIBS += -lqwt      #   -L/usr/local/qwt-6.1.0/lib
-#unix:  LIBS += -lftd2xx  -L/home/evgen/ftdi
+win32:  LIBS += -lqwt     -LC:\Qt\Qwt-6.1.0\lib
+win32:  LIBS += -lftd2xx  -LD:\_SVN\SibOrion\siborion_american_scan
+unix:  LIBS += -lqwt      #   -L/usr/local/qwt-6.1.0/lib
+unix:  LIBS += -lftd2xx  -L/home/evgen/ftdi
 }
 
 #CONFIG(release, debug|release)
 #{
-  LIBS +=  -lqwtd -LC:\Qt\Qwt-6.1.0\lib
-  LIBS +=  -lqwtd       -L/usr/local/qwt-6.1.0/lib
-  LIBS += ftd2xx.lib
+#  LIBS +=  -lqwtd -LC:\Qt\Qwt-6.1.0\lib
+#  LIBS +=  -lqwtd       -L/usr/local/qwt-6.1.0/lib
+#  LIBS += ftd2xx.lib
 #}
 
 

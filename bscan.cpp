@@ -73,10 +73,12 @@ Bscan::Bscan(QWidget *parent, CurParam *link) :
     connect(pScena, SIGNAL(sgUpdateArray(QString*)),   bScanControl, SLOT(slSetArray(QString*)));
     connect(pScena, SIGNAL(sgUpdateArrow(QString*)),   bScanControl, SLOT(slSetArrow(QString*)));
     connect(pScena, SIGNAL(sgUpdateCaliper(QString*)), bScanControl, SLOT(slSetCaliper(QString*)));
+    connect(pScena, SIGNAL(sgUpdateText(QString*)),    bScanControl, SLOT(slSetText(QString*)));
 
     connect(bScanControl, SIGNAL(sgUpdateArray(QString*)),   pScena,   SLOT(setArray(QString*)));
     connect(bScanControl, SIGNAL(sgUpdateArrow(QString*)),   pScena,   SLOT(setArrow(QString*)));
     connect(bScanControl, SIGNAL(sgUpdateCaliper(QString*)), pScena,   SLOT(setCaliper(QString*)));
+    connect(bScanControl, SIGNAL(sgUpdateText(QString*)),    pScena,   SLOT(setText(QString*)));
 
     timer->start();
     timerSec->start();
