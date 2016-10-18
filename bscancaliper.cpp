@@ -1,4 +1,5 @@
 #include "bscancaliper.h"
+#include <QDebug>
 
 BScanCaliper::BScanCaliper(quint16 x, quint16 y)
 {
@@ -27,6 +28,9 @@ float BScanCaliper::getLenght()
 {
     float ret;
     ret = sqrt(pow(this->vertex.first()->xKoord - this->vertex.last()->xKoord , 2) + pow(this->vertex.first()->yKoord - this->vertex.last()->yKoord , 2));
+    qDebug()<<"vertex.first()->xKoord"<<vertex.first()->xKoord;
+    qDebug()<<"vertex.first()->yKoord"<<vertex.first()->yKoord;
+
     return ret;
 }
 

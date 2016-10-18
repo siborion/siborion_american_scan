@@ -34,6 +34,8 @@ float BScanArray::getS()
         next = ((i+1)==vertex.size()) ? 0 : (i+1);
         Sum1.append(vertex.at(i)->xKoord*vertex.at(next)->yKoord);
         Sum2.append(vertex.at(i)->yKoord*vertex.at(next)->xKoord);
+//        qDebug()<<"vertex.at(i)->xKoord"<<vertex.at(i)->xKoord;
+//        qDebug()<<"vertex.at(i)->yKoord"<<vertex.at(i)->yKoord;
     }
 
     foreach(float sm, Sum1)

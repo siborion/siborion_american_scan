@@ -40,7 +40,7 @@ private slots:
     void slDoScan(bool*);
     void slDoStop();
     void on_pbScan_clicked();
-    void on_pbStop_clicked();
+    void pbStop_clicked();
     void on_pbOS_clicked();
 
     void on_pbClear_clicked();

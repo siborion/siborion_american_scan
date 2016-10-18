@@ -87,6 +87,8 @@ Bscan::Bscan(QWidget *parent, CurParam *link) :
 void Bscan::slClear()
 {
     pScena->clearDraw();
+
+
     bScanControl->clearDraw();
 }
 

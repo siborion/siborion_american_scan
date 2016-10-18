@@ -16,7 +16,7 @@ BScanTools::BScanTools(QWidget *parent) :
 
 void BScanTools::slDoStop()
 {
-    on_pbStop_clicked();
+    pbStop_clicked();
 }
 
 void BScanTools::slDoScan(bool *val)
@@ -35,7 +35,7 @@ void BScanTools::on_pbScan_clicked()
     *linkScan = true;
 }
 
-void BScanTools::on_pbStop_clicked()
+void BScanTools::pbStop_clicked()
 {
     ui->gbAnnotation->setEnabled(true);
     emit doStop();

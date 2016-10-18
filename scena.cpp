@@ -512,14 +512,19 @@ void scena::drawArray()
         else
         {
             float S;
+            QFont font;
+            font.setBold(true);
             quint16 x,y;
             S = array->getS();
-            S *= 0.00140625;
+//            S *= 0.00140625;
+            S *= 0.0375;
+            S *= 0.0375;
             S *= step;
             S *= step;
             x = array->vertex.last()->xKoord;
             y = array->vertex.last()->yKoord;
-            renderText(x, y , 0, QString("%1").arg(S));
+            qglColor(Qt::blue);
+            renderText(x, y , 0, QString("%1").arg(S), font);
         }
         j++;
 
@@ -569,14 +574,17 @@ void scena::drawCaliper()
             else
             {
                 float S;
+                QFont font;
+                font.setBold(true);
                 quint16 x,y;
                 S = caliper->getLenght();
-                S *= 0.00140625;
+                S *= 0.0375;
                 S *= step;
-                S *= step;
+//                S *= step;
                 x = caliper->vertex.last()->xKoord;
                 y = caliper->vertex.last()->yKoord;
-                renderText(x, y , 0, QString("%1").arg(S));
+                qglColor(Qt::blue);
+                renderText(x, y , 0, QString("%1").arg(S), font);
             }
             j++;
         }
@@ -927,11 +935,16 @@ void scena::setSide(QString val)
 
 void scena::clearDraw()
 {
-    lArrow.clear();
-    lArray.clear();
-    lCaliper.clear();
+    QString empt;
+    empt = "";
+    setArrow(&empt);
+    setArray(&empt);
+    setCaliper(&empt);
+//    lArrow.clear();
+//    lArray.clear();
+//    lCaliper.clear();
     lText.clear();
-    this->repaint();
+//    this->repaint();
 }
 
 
