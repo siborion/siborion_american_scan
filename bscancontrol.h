@@ -39,6 +39,7 @@ private slots:
     void changeRow(QModelIndex);
     void slPbUpClick  (void);
     void slPbDownClick(void);
+    void slSave();
 
 public slots:
     void changeRowFirst();
@@ -53,6 +54,7 @@ signals:
     void sgUpdateArrow  (QString*);
     void sgUpdateCaliper(QString*);
     void sgUpdateText   (QString*);
+    void sgSave (QStandardItemModel*, QStandardItemModel*, QStandardItemModel*);
 
 };
 

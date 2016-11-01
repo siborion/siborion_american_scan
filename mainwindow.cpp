@@ -83,6 +83,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->tabWidget, SIGNAL(currentChanged(int)), SLOT(slChangeTab(int)));
 
+    connect(bscan, SIGNAL(sgSave(QStandardItemModel*,QStandardItemModel*,QStandardItemModel*)), scanbase, SLOT(slSave(QStandardItemModel*,QStandardItemModel*,QStandardItemModel*)));
+
+
+
     bases->Init();
     moveWindowToCenter();
 

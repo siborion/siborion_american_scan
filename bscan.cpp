@@ -80,6 +80,8 @@ Bscan::Bscan(QWidget *parent, CurParam *link) :
     connect(bScanControl, SIGNAL(sgUpdateCaliper(QString*)), pScena,   SLOT(setCaliper(QString*)));
     connect(bScanControl, SIGNAL(sgUpdateText(QString*)),    pScena,   SLOT(setText(QString*)));
 
+    connect(bScanControl, SIGNAL(sgSave(QStandardItemModel*,QStandardItemModel*,QStandardItemModel*)), SLOT(slSave(QStandardItemModel*,QStandardItemModel*,QStandardItemModel*)));
+
     timer->start();
     timerSec->start();
 //    updatePatient();
@@ -176,6 +178,11 @@ void Bscan::updatePatient()
 
 }
 
+void Bscan::slSave(QStandardItemModel* m0, QStandardItemModel* m1, QStandardItemModel* m2)
+{
+    qDebug()<<"void Bscan::slSave(QStandardItemModel* m0, QStandardItemModel* m1, QStandardItemModel* m2)";
+    emit sgSave(m0, m1, m2);
+}
 
 Bscan::~Bscan()
 {

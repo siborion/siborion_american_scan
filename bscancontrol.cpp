@@ -56,6 +56,10 @@ BScanControl::BScanControl(QWidget *parent) :
     connect(table2->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), SLOT(changeRow(QModelIndex)));
     connect(pbUp,   SIGNAL(clicked()), SLOT(slPbUpClick()));
     connect(pbDown, SIGNAL(clicked()), SLOT(slPbDownClick()));
+
+    connect(pbSave, SIGNAL(clicked(bool)), SLOT(slSave()));
+
+
 }
 
 unsigned char *BScanControl::getBuf()
@@ -105,7 +109,7 @@ void BScanControl::changeRow(QModelIndex index)
     sTmp.clear();
     sTmp.append(table->model()->data(index, Qt::UserRole+4).toString());
     emit sgUpdateText(&sTmp);
-    qDebug()<<sTmp;
+//    qDebug()<<sTmp;
 
 }
 
@@ -211,6 +215,17 @@ void BScanControl::start(void)
         index = table->model()->index(i,0);
         table->model()->setData(index,"",Qt::DisplayRole);
     }
+
+}
+
+void BScanControl::slSave()
+{
+    QStandardItemModel *tb0, *tb1, *tb2;
+    tb0 = (QStandardItemModel*)table0->model();
+    tb1 = (QStandardItemModel*)table1->model();
+    tb2 = (QStandardItemModel*)table2->model();
+    emit sgSave(tb0, tb1, tb2);
+    qDebug()<<"void BScanControl::slSave()";
 
 }
 

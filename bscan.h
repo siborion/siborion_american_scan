@@ -48,10 +48,14 @@ private slots:
     void doStart();
     void doStop();
     void slClear();
+    void slSave(QStandardItemModel*, QStandardItemModel*, QStandardItemModel*);
 
 protected:
     void keyPressEvent(QKeyEvent *);
     void keyReleaseEvent(QKeyEvent *);
+
+signals:
+    void sgSave(QStandardItemModel*, QStandardItemModel*, QStandardItemModel*);
 };
 
 #endif // BSCAN_H

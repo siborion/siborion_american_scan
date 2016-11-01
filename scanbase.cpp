@@ -1,5 +1,7 @@
 #include "scanbase.h"
 #include <QDateTime>
+#include <QMimeData>
+#include "bscansize.h"
 //#include <QtGlobal>
 
 Scanbase::Scanbase(QObject *parent, CurParam *link)
@@ -9,13 +11,13 @@ Scanbase::Scanbase(QObject *parent, CurParam *link)
     sCurPath = QDir::currentPath();
     sCurPath.append("/base.db");
     pDB = QSqlDatabase::addDatabase("QSQLITE");
-//    qDebug()<<pDB;
+    //    qDebug()<<pDB;
     pDB.setDatabaseName(sCurPath);
     
 
     QMessageBox msgBox;
-//    msgBox.setText(sCurPath);
-//    msgBox.exec();
+    //    msgBox.setText(sCurPath);
+    //    msgBox.exec();
 
     modelBases = new QSqlQueryModel();
 
@@ -43,8 +45,8 @@ Scanbase::Scanbase(QObject *parent, CurParam *link)
             str.append("\"lt\" Double,");
             str.append("\"nom\" Integer);");
             QSqlQuery sql(str);
-//            qDebug()<<str;
-//            qDebug()<<sql.exec();
+            //            qDebug()<<str;
+            //            qDebug()<<sql.exec();
         }
         //        qDebug()<<sql.record().count();
     }
@@ -55,7 +57,7 @@ Scanbase::Scanbase(QObject *parent, CurParam *link)
     }
 
 
-//    getBasesTable(Base::enPatient);
+    //    getBasesTable(Base::enPatient);
 
 }
 
@@ -100,7 +102,7 @@ void Scanbase::updateCurPatient(quint16 id)
     qDebug()<<"id"<<id;
 
     QString str = QString("SELECT * FROM patient WHERE id=%1;").arg(id);
-//    QString str = QString("select * from patient;");
+    //    QString str = QString("select * from patient;");
     QSqlQuery sql(str);
     if(sql.exec())
     {
@@ -308,11 +310,11 @@ void Scanbase::saveDocLens(quint16 idDoc, QMap<quint16,quint16> *idLens)
     QMap<quint16,quint16>::iterator it = idLens->begin();
     for(;it != idLens->end(); ++it)
     {
-    str = QString("INSERT INTO doctor_lens (id_lens, id_doctor, nom_formula) "
-                  "VALUES (%1, %2, %3) ;")
-          .arg(it.key()).arg(idDoc).arg(it.value());
-    QSqlQuery sql;
-    sql.exec(str);
+        str = QString("INSERT INTO doctor_lens (id_lens, id_doctor, nom_formula) "
+                      "VALUES (%1, %2, %3) ;")
+                .arg(it.key()).arg(idDoc).arg(it.value());
+        QSqlQuery sql;
+        sql.exec(str);
     }
 }
 
@@ -479,4 +481,73 @@ void Scanbase::saveSlot(QStandardItemModel *OD, QStandardItemModel *OS)
     }
 }
 
+void Scanbase::slSave(QStandardItemModel *tab0, QStandardItemModel *tab1, QStandardItemModel *tab2)
+{
+    QSqlQuery   query;
+    QString     sql;
+    quint16     rowCount;
+    QModelIndex index;
+    quint64 session;
+    QDateTime session_time;
+    QStandardItemModel *tab;
 
+    session_time = QDateTime::currentDateTime();
+
+    for(quint16 i=0; i<3; i++)
+    {
+        switch (i)
+        {
+        case 0: tab = tab0; break;
+        case 1: tab = tab1; break;
+        case 2: tab = tab2; break;
+        }
+
+        rowCount = tab->rowCount();
+        for(quint16 i=0; i<rowCount; i++)
+        {
+            sql = "insert into history_bscan (";
+            sql += "patient,";
+            sql += "samples,";
+            sql += "samples_0,";
+            sql += "samples_1,";
+            sql += "samples_2,";
+            sql += "samples_3,";
+            sql += "samples_4,";
+            sql += "session_time";
+            sql += ") ";
+
+            sql += "values (";
+            sql += ":patient,";
+            sql += ":samples,";
+            sql += ":samples_0,";
+            sql += ":samples_1,";
+            sql += ":samples_2,";
+            sql += ":samples_3,";
+            sql += ":samples_4,";
+            sql += ":session_time";
+            sql += ")";
+            query.prepare(sql);
+
+            index = tab->index(i,0);
+
+
+
+            if(tab->data(index, Qt::DisplayRole).toByteArray().size()>0)
+            {
+//                unsigned char buf[NumPoints*NumVectors];
+                unsigned char *buf;
+                buf = (unsigned char *)tab->data(index, Qt::UserRole).toUInt();
+
+                query.bindValue(":samples",   tab->data(index, Qt::DisplayRole).toByteArray());
+                query.bindValue(":samples_0", tab->data(index, Qt::UserRole).toByteArray());
+                query.bindValue(":samples_1", tab->data(index, Qt::UserRole+1).toByteArray());
+                query.bindValue(":samples_2", tab->data(index, Qt::UserRole+2).toByteArray());
+                query.bindValue(":samples_3", tab->data(index, Qt::UserRole+3).toByteArray());
+                query.bindValue(":samples_4", tab->data(index, Qt::UserRole+4).toByteArray());
+                query.bindValue(":patient", curParam->patientId);
+                query.bindValue(":session_time", session_time);
+                query.exec();
+            }
+        }
+    }
+}

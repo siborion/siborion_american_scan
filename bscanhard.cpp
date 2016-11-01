@@ -18,13 +18,10 @@ BScanHard::BScanHard(QObject *parent) :
     mutexStart.lock();
     doStart = doStop = false;
     mutexStart.unlock();
-
     for(quint32 i=0; i<NumVectors*NumPoints; i++)
     {
         buf1[i] = qrand();
     }
-
-    //    QTest::qSleep(500);
 }
 
 void BScanHard::open()

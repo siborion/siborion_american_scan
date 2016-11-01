@@ -48,6 +48,7 @@ public slots:
     void delLens();
 
     void saveSlot(QStandardItemModel *,QStandardItemModel *);
+    void slSave(QStandardItemModel*, QStandardItemModel*, QStandardItemModel*); //bscan
 
 
 Q_SIGNALS:

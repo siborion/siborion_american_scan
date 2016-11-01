@@ -47,6 +47,7 @@ public slots:
     void slChangeTab(int);
 
 private slots:
+
 //    void updatePatient();
 
 
