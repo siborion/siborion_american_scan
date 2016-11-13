@@ -38,7 +38,7 @@ Bscan::Bscan(QWidget *parent, CurParam *link) :
     run = false;
 
     bScanTools   = new BScanTools();
-    bScanControl = new BScanControl();
+    bScanControl = new BScanControl(this, curParam);
     bScanHard = new BScanHard();
     buf = bScanHard->getBuf();
 
