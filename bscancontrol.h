@@ -9,6 +9,7 @@
 #include "bscanarrow.h"
 #include "bscancaliper.h"
 #include "bscanbutton.h"
+#include "curparam.h"
 
 namespace Ui {
 class BScanControl;
@@ -19,7 +20,7 @@ class BScanControl : public QWidget
     Q_OBJECT
 
 public:
-    explicit BScanControl(QWidget *parent = 0);
+    explicit BScanControl(QWidget *parent = 0, CurParam *link=0);
     unsigned char *getBuf();
     ~BScanControl();
     void start();
@@ -34,12 +35,14 @@ private:
     QList<BScanButton*> pbSample;
     QTabWidget *tab;
     qint8 numTab;
+    CurParam *curParam;
 
 private slots:
     void changeRow(QModelIndex);
     void slPbUpClick  (void);
     void slPbDownClick(void);
     void slSave();
+    void slLoad();
 
 public slots:
     void changeRowFirst();

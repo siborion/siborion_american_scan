@@ -2,11 +2,13 @@
 #include "ui_bscancontrol.h"
 #include <QDateTime>
 #include <QDebug>
+#include "listresult.h"
 
-BScanControl::BScanControl(QWidget *parent) :
+BScanControl::BScanControl(QWidget *parent, CurParam *link) :
     QWidget(parent),
     ui(new Ui::BScanControl)
 {
+    curParam = link;
     QStringList sl;
     QList<int>  il;
     sl << " ";
@@ -58,7 +60,7 @@ BScanControl::BScanControl(QWidget *parent) :
     connect(pbDown, SIGNAL(clicked()), SLOT(slPbDownClick()));
 
     connect(pbSave, SIGNAL(clicked(bool)), SLOT(slSave()));
-
+    connect(pbLoad, SIGNAL(clicked(bool)), SLOT(slLoad()));
 
 }
 
@@ -225,7 +227,15 @@ void BScanControl::slSave()
     tb1 = (QStandardItemModel*)table1->model();
     tb2 = (QStandardItemModel*)table2->model();
     emit sgSave(tb0, tb1, tb2);
-    qDebug()<<"void BScanControl::slSave()";
+}
+
+void BScanControl::slLoad()
+{
+    ListResult *listResult = new ListResult(this, curParam);
+//    ListResult *listResult = new ListResult(this);
+    if(listResult->exec() == QDialog::Accepted)
+    {
+    }
 
 }
 

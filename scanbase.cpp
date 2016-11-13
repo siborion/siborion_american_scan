@@ -537,8 +537,13 @@ void Scanbase::slSave(QStandardItemModel *tab0, QStandardItemModel *tab1, QStand
 //                unsigned char buf[NumPoints*NumVectors];
                 unsigned char *buf;
                 buf = (unsigned char *)tab->data(index, Qt::UserRole).toUInt();
+                QByteArray baSample;
+                baSample.append((const char*)buf, NumVectors*NumPoints);
+                baSample = qCompress(baSample, 9);
 
-                query.bindValue(":samples",   tab->data(index, Qt::DisplayRole).toByteArray());
+                qDebug()<<"baSample"<<baSample.length();
+
+                query.bindValue(":samples",   baSample);
                 query.bindValue(":samples_0", tab->data(index, Qt::UserRole).toByteArray());
                 query.bindValue(":samples_1", tab->data(index, Qt::UserRole+1).toByteArray());
                 query.bindValue(":samples_2", tab->data(index, Qt::UserRole+2).toByteArray());

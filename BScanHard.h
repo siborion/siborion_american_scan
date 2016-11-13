@@ -21,8 +21,8 @@ class BScanHard : public QObject
     Q_OBJECT
 public:
     explicit BScanHard(QObject *parent = 0);
-    unsigned char tmpBuf[NumPoints*NumVectors];
-    unsigned char curBuf[NumPoints*NumVectors];
+//    unsigned char tmpBuf[NumPoints*NumVectors];
+//    unsigned char curBuf[NumPoints*NumVectors];
     unsigned char *getBuf();
     void setGain(unsigned char gain);
 //    void setRun(bool start);
@@ -31,13 +31,18 @@ private:
     bool doBScanHard;
     bool first;
     quint16 test;
-    unsigned char buf1[NumPoints*NumVectors];
-    unsigned char buf2[NumPoints*NumVectors];
-    unsigned char buf3[NumPoints*NumVectors];
+//    unsigned char buf1[NumPoints*NumVectors];
+//    unsigned char buf2[NumPoints*NumVectors];
+//    unsigned char buf3[NumPoints*NumVectors];
+
+    unsigned char bufAll[3][80][NumPoints*NumVectors];
+
 //    unsigned char b1[NumPoints*NumVectors];
 //    unsigned char b2[NumPoints*NumVectors];
 //    unsigned char b3[NumPoints*NumVectors];
     quint8 lastBuf;
+    quint8 curBuf;
+    quint8 curPage;
     bool   doStart, doStop;
     void sendRun(bool start);
 

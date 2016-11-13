@@ -106,12 +106,9 @@ void Bscan::scenaRefr()
     else
         buf = bScanControl->getBuf();
 
-
-
     if(buf)
-    {
         pScena->refr(buf);
-    }
+
     fps++;
 }
 
@@ -126,8 +123,6 @@ void Bscan::doStart()
 
     bScanControl->start();
     bScanHard->process();
-//    timer->start();
-//    timerSec->start();
     run = true;
 }
 
