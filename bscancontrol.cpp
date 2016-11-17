@@ -6,6 +6,7 @@
 #include <QSqlQuery>
 #include <QSqlRecord>
 
+
 BScanControl::BScanControl(QWidget *parent, CurParam *link) :
     QWidget(parent),
     ui(new Ui::BScanControl)
@@ -96,7 +97,7 @@ void BScanControl::setBuf(unsigned char *buf)
     indexDest = table->model()->index(0, 0);
     table->model()->setData(indexDest, QString("%1").arg(time.currentDateTime().toString("MM.dd.yyyy hh:mm:ss.zzz")), Qt::DisplayRole);
     //!!!!!!!!!!!!!!!!!!!!!!!!!!1
-    table->model()->setData(indexDest, (quint32)buf, Qt::UserRole);
+//    table->model()->setData(indexDest, (quint64)buf, Qt::UserRole);
 }
 
 void BScanControl::changeRow(QModelIndex index)
@@ -235,6 +236,7 @@ void BScanControl::slLoad()
 {
     QByteArray sample;
     quint32 *pointer;
+    quint32 uuu;
 
     QDateTime selectTime;
     QSqlQuery query;
@@ -262,12 +264,14 @@ void BScanControl::slLoad()
             quint8 i=0;
             while(query.next())
             {
+                pointer = &uuu;
+                qDebug()<<pointer;
                 index = table->model()->index(i,0);
                 table0->model()->setData(index, query.value(query.record().indexOf("time")).toString(), Qt::DisplayRole);
                 sample = query.value(query.record().indexOf("samples")).toByteArray();
-//                emit sgSetSample(0, i, &sample, pointer);
-//                qDebug()<<pointer;
-//                table0->model()->setData(index, *pointer, Qt::UserRole);
+                emit sgSetSample(0, i, &sample, pointer);
+                qDebug()<<pointer;
+                table0->model()->setData(index, &massive[0][i][0], Qt::UserRole);
 
                 i++;
 
@@ -283,6 +287,12 @@ void BScanControl::slLoad()
         }
     }
 
+}
+
+void BScanControl::setMassive(unsigned char* val)
+{
+    ***massive = val;
+    qDebug()<<"***massive"<<***massive;
 }
 
 BScanControl::~BScanControl()

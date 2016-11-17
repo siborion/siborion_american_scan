@@ -36,38 +36,19 @@ void BScanHard::open()
 {
 }
 
+unsigned char *BScanHard::getMassiv()
+{
+    return &bufAll[0][0][0];
+}
+
 unsigned char *BScanHard::getBuf()
 {
-    /*
-    mutexLastBuf.lock();
-    {
-        switch(lastBuf)
-        {
-        case 1:
-            mutexLastBuf.unlock();
-            return buf1;
-            break;
-        case 2:
-            mutexLastBuf.unlock();
-            return buf2;
-            break;
-        case 3:
-            mutexLastBuf.unlock();
-            return buf3;
-            break;
-        }
-    }
-    mutexLastBuf.unlock();
-    return buf1;
-*/
-
     //!!!!!!!На рабочей версии закоментировать
     //    lastBuf++;
     //    if(lastBuf>=64)
     //        lastBuf = 0;
-
+    qDebug()<<"bufAll[0][lastBuf][0]"<<(&bufAll[0][0][0]);
     return &bufAll[0][lastBuf][0];
-
 }
 
 void BScanHard::close()

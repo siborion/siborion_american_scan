@@ -41,6 +41,7 @@ Bscan::Bscan(QWidget *parent, CurParam *link) :
     bScanControl = new BScanControl(this, curParam);
     bScanHard = new BScanHard();
     buf = bScanHard->getBuf();
+    bScanControl->setMassive(bScanHard->getMassiv());
 
     pScena = new scena(scenaSize, buf, link);
     curParam->scanB = pScena;

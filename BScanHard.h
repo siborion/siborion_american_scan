@@ -24,6 +24,8 @@ public:
 //    unsigned char tmpBuf[NumPoints*NumVectors];
 //    unsigned char curBuf[NumPoints*NumVectors];
     unsigned char *getBuf();
+    unsigned char *getMassiv();
+
     void setGain(unsigned char gain);
 //    void setRun(bool start);
 private:

@@ -1,5 +1,5 @@
-#include "BListResult.h"
-#include "ui_BListResult.h"
+#include "blistresult.h"
+#include "ui_blistresult.h"
 #include <QDebug>
 #include <QSqlQuery>
 #include <QSqlRecord>

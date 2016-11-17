@@ -10,6 +10,8 @@
 #include "bscancaliper.h"
 #include "bscanbutton.h"
 #include "curparam.h"
+#include "bscansize.h"
+
 
 namespace Ui {
 class BScanControl;
@@ -25,8 +27,10 @@ public:
     ~BScanControl();
     void start();
     void clearDraw();
+    void setMassive(unsigned char* );
 
 private:
+    unsigned char *massive[3][80][NumPoints*NumVectors];
     Ui::BScanControl *ui;
     adjview *table;
     adjview *table0, *table1, *table2;
@@ -36,6 +40,7 @@ private:
     QTabWidget *tab;
     qint8 numTab;
     CurParam *curParam;
+    unsigned char *bufAll;//[3][80][NumPoints*NumVectors];
 
 private slots:
     void changeRow(QModelIndex);
