@@ -58,6 +58,7 @@ signals:
     void sgUpdateCaliper(QString*);
     void sgUpdateText   (QString*);
     void sgSave (QStandardItemModel*, QStandardItemModel*, QStandardItemModel*);
+    void sgSetSample(quint8, quint8, QByteArray*, quint32*);
 
 };
 

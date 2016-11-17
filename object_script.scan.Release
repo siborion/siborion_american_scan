@@ -61,6 +61,7 @@ INPUT(
 ./release\bscanbutton.o
 ./release\printb.o
 ./release\delegateprint.o
+./release\blistresult.o
 ./release\qrc_imagesRpt.o
 ./release\qrc_scan.o
 ./release\moc_chart.o
@@ -113,4 +114,5 @@ INPUT(
 ./release\moc_print.o
 ./release\moc_printb.o
 ./release\moc_delegateprint.o
+./release\moc_blistresult.o
 );

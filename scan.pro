@@ -97,7 +97,8 @@ SOURCES += main.cpp\
     func.cpp \
     bscanbutton.cpp \
     printb.cpp \
-    delegateprint.cpp
+    delegateprint.cpp \
+    blistresult.cpp
 
 HEADERS  += mainwindow.h \
     bases.h \
@@ -151,7 +152,8 @@ HEADERS  += mainwindow.h \
     func.h \
     bscanbutton.h \
     printb.h \
-    delegateprint.h
+    delegateprint.h \
+    blistresult.h
 
 FORMS    += mainwindow.ui \
     dialog_doctor.ui \
@@ -166,7 +168,8 @@ FORMS    += mainwindow.ui \
     bscantools.ui \
     bscancontrol.ui \
     calclens.ui \
-    calclenstable.ui
+    calclenstable.ui \
+    blistresult.ui
 
 RESOURCES += \
     scan.qrc

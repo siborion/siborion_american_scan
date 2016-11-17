@@ -61,6 +61,7 @@ INPUT(
 ./debug\bscanbutton.o
 ./debug\printb.o
 ./debug\delegateprint.o
+./debug\blistresult.o
 ./debug\qrc_imagesRpt.o
 ./debug\qrc_scan.o
 ./debug\moc_chart.o
@@ -113,4 +114,5 @@ INPUT(
 ./debug\moc_print.o
 ./debug\moc_printb.o
 ./debug\moc_delegateprint.o
+./debug\moc_blistresult.o
 );

@@ -81,6 +81,8 @@ Bscan::Bscan(QWidget *parent, CurParam *link) :
     connect(bScanControl, SIGNAL(sgUpdateText(QString*)),    pScena,   SLOT(setText(QString*)));
 
     connect(bScanControl, SIGNAL(sgSave(QStandardItemModel*,QStandardItemModel*,QStandardItemModel*)), SLOT(slSave(QStandardItemModel*,QStandardItemModel*,QStandardItemModel*)));
+    connect(bScanControl, SIGNAL(sgSetSample(quint8, quint8, QByteArray*,quint32*)), bScanHard, SLOT(slSetSample(quint8, quint8, QByteArray*,quint32*)));
+
 
     timer->start();
     timerSec->start();

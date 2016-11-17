@@ -492,10 +492,11 @@ void Scanbase::slSave(QStandardItemModel *tab0, QStandardItemModel *tab1, QStand
     QStandardItemModel *tab;
 
     session_time = QDateTime::currentDateTime();
+    session = qrand();
 
-    for(quint16 i=0; i<3; i++)
+    for(quint16 j=0; j<3; j++)
     {
-        switch (i)
+        switch (j)
         {
         case 0: tab = tab0; break;
         case 1: tab = tab1; break;
@@ -513,6 +514,9 @@ void Scanbase::slSave(QStandardItemModel *tab0, QStandardItemModel *tab1, QStand
             sql += "samples_2,";
             sql += "samples_3,";
             sql += "samples_4,";
+            sql += "session,";
+            sql += "tab,";
+            sql += "time,";
             sql += "session_time";
             sql += ") ";
 
@@ -524,6 +528,9 @@ void Scanbase::slSave(QStandardItemModel *tab0, QStandardItemModel *tab1, QStand
             sql += ":samples_2,";
             sql += ":samples_3,";
             sql += ":samples_4,";
+            sql += ":session,";
+            sql += ":tab,";
+            sql += ":time,";
             sql += ":session_time";
             sql += ")";
             query.prepare(sql);
@@ -540,16 +547,21 @@ void Scanbase::slSave(QStandardItemModel *tab0, QStandardItemModel *tab1, QStand
                 QByteArray baSample;
                 baSample.append((const char*)buf, NumVectors*NumPoints);
                 baSample = qCompress(baSample, 9);
+//                qDebug()<<"baSample"<<baSample.length();
 
-                qDebug()<<"baSample"<<baSample.length();
+                qDebug()<<tab->data(index, Qt::DisplayRole).toDateTime();
 
+                query.bindValue(":session",   session);
                 query.bindValue(":samples",   baSample);
+                query.bindValue(":time",      tab->data(index, Qt::DisplayRole).toString());
                 query.bindValue(":samples_0", tab->data(index, Qt::UserRole).toByteArray());
                 query.bindValue(":samples_1", tab->data(index, Qt::UserRole+1).toByteArray());
                 query.bindValue(":samples_2", tab->data(index, Qt::UserRole+2).toByteArray());
                 query.bindValue(":samples_3", tab->data(index, Qt::UserRole+3).toByteArray());
                 query.bindValue(":samples_4", tab->data(index, Qt::UserRole+4).toByteArray());
                 query.bindValue(":patient", curParam->patientId);
+                query.bindValue(":session",      session);
+                query.bindValue(":tab",          j);
                 query.bindValue(":session_time", session_time);
                 query.exec();
             }

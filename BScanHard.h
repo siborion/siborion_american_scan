@@ -53,6 +53,7 @@ public slots:
     void open();
     void close();
     void read();
+    void slSetSample(quint8 nomTab, quint8 nomRec, QByteArray*, quint32*);
 
 };
 

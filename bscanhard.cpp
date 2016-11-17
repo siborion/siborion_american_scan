@@ -20,16 +20,16 @@ BScanHard::BScanHard(QObject *parent) :
     doStart = doStop = false;
     mutexStart.unlock();
 
-    for(quint32 j=0; j<80; j++)
-    {
-        for(quint32 i=0; i<NumVectors*NumPoints; i++)
-        {
-            if(i&0b1000000)
-                bufAll[0][j][i] = qrand();
-            else
-                bufAll[0][j][i] = 0;
-        }
-    }
+    //    for(quint32 j=0; j<80; j++)
+    //    {
+    //        for(quint32 i=0; i<NumVectors*NumPoints; i++)
+    //        {
+    //            if(i&0b1000000)
+    //                bufAll[0][j][i] = qrand();
+    //            else
+    //                bufAll[0][j][i] = 0;
+    //        }
+    //    }
 }
 
 void BScanHard::open()
@@ -62,9 +62,9 @@ unsigned char *BScanHard::getBuf()
 */
 
     //!!!!!!!На рабочей версии закоментировать
-    lastBuf++;
-    if(lastBuf>=64)
-        lastBuf = 0;
+    //    lastBuf++;
+    //    if(lastBuf>=64)
+    //        lastBuf = 0;
 
     return &bufAll[0][lastBuf][0];
 
@@ -302,3 +302,15 @@ void BScanHard::sendRun(bool start)
         ftStatus = FT_Write(ftHandle, TxBuffer, TxBytes, &BytesTransmited);
     }
 }
+
+void BScanHard::slSetSample(quint8 nomTab, quint8 nomRec, QByteArray* smp, quint32* pntr)
+{
+    quint16 pixel=0;
+    pntr = (quint32*)&bufAll[nomTab][nomRec][0];
+    foreach (unsigned char val, *smp)
+    {
+        bufAll[nomTab][nomRec][pixel] = val;
+        pixel++;
+    }
+}
+

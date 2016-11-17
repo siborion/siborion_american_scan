@@ -2,7 +2,9 @@
 #include "ui_bscancontrol.h"
 #include <QDateTime>
 #include <QDebug>
-#include "listresult.h"
+#include "blistresult.h"
+#include <QSqlQuery>
+#include <QSqlRecord>
 
 BScanControl::BScanControl(QWidget *parent, CurParam *link) :
     QWidget(parent),
@@ -231,10 +233,54 @@ void BScanControl::slSave()
 
 void BScanControl::slLoad()
 {
-    ListResult *listResult = new ListResult(this, curParam);
-//    ListResult *listResult = new ListResult(this);
+    QByteArray sample;
+    quint32 *pointer;
+
+    QDateTime selectTime;
+    QSqlQuery query;
+    QModelIndex index;
+    BListResult *listResult = new BListResult(this, curParam);
     if(listResult->exec() == QDialog::Accepted)
     {
+        index = listResult->twBListResult->currentIndex();
+        index = listResult->twBListResult->model()->index(index.row(), 0);
+        selectTime = listResult->twBListResult->model()->data(index, Qt::DisplayRole).toDateTime();
+        QString str = "SELECT time, samples, samples_0, samples_1, samples_2, samples_3, samples_4 FROM history_bscan  WHERE patient=:patient AND session_time=:session_time;";
+        query.prepare(str);
+        query.bindValue(":patient", curParam->patientId);
+        query.bindValue(":session_time", selectTime);
+
+        qDebug()<<str;
+        qDebug()<<curParam->patientId;
+        qDebug()<<selectTime;
+//        curParam->curTime = selectTime;
+//        clearAll();
+//        pbSave->setEnabled(false);
+
+        if(query.exec())
+        {
+            quint8 i=0;
+            while(query.next())
+            {
+                index = table->model()->index(i,0);
+                table0->model()->setData(index, query.value(query.record().indexOf("time")).toString(), Qt::DisplayRole);
+                sample = query.value(query.record().indexOf("samples")).toByteArray();
+//                emit sgSetSample(0, i, &sample, pointer);
+//                qDebug()<<pointer;
+//                table0->model()->setData(index, *pointer, Qt::UserRole);
+
+                i++;
+
+//                query.bindValue(":samples_0", tab->data(index, Qt::UserRole).toByteArray());
+//                query.bindValue(":samples_1", tab->data(index, Qt::UserRole+1).toByteArray());
+//                query.bindValue(":samples_2", tab->data(index, Qt::UserRole+2).toByteArray());
+//                query.bindValue(":samples_3", tab->data(index, Qt::UserRole+3).toByteArray());
+//                query.bindValue(":samples_4", tab->data(index, Qt::UserRole+4).toByteArray());
+
+
+
+            }
+        }
     }
 
 }

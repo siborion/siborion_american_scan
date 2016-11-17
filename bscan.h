@@ -50,6 +50,8 @@ private slots:
     void slClear();
     void slSave(QStandardItemModel*, QStandardItemModel*, QStandardItemModel*);
 
+public slots:
+
 protected:
     void keyPressEvent(QKeyEvent *);
     void keyReleaseEvent(QKeyEvent *);
