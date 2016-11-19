@@ -23,12 +23,13 @@ public:
     explicit BScanHard(QObject *parent = 0);
 //    unsigned char tmpBuf[NumPoints*NumVectors];
 //    unsigned char curBuf[NumPoints*NumVectors];
-    unsigned char *getBuf();
+    unsigned char *getBuf(quint8 tab);
     unsigned char *getMassiv();
 
     void setGain(unsigned char gain);
 //    void setRun(bool start);
 private:
+    quint8 curTab;
     FT_HANDLE ftHandle;
     bool doBScanHard;
     bool first;
@@ -44,18 +45,18 @@ private:
 //    unsigned char b3[NumPoints*NumVectors];
     quint8 lastBuf;
     quint8 curBuf;
-    quint8 curPage;
+//    quint8 curPage;
     bool   doStart, doStop;
     void sendRun(bool start);
 
 signals:
 
 public slots:
-    void process();
+    void process(quint8 nomTab);
     void open();
     void close();
     void read();
-    void slSetSample(quint8 nomTab, quint8 nomRec, QByteArray*, quint32*);
+    void slSetSample(quint8 nomTab, quint8 nomRec, QByteArray*);
 
 };
 

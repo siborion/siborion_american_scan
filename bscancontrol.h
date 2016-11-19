@@ -25,12 +25,14 @@ public:
     explicit BScanControl(QWidget *parent = 0, CurParam *link=0);
     unsigned char *getBuf();
     ~BScanControl();
-    void start();
+    quint8 start();
     void clearDraw();
     void setMassive(unsigned char* );
+    quint8 getCurTable();
 
 private:
-    unsigned char *massive[3][80][NumPoints*NumVectors];
+//    unsigned char *massive[3][80][NumPoints*NumVectors];
+    unsigned char *massive;
     Ui::BScanControl *ui;
     adjview *table;
     adjview *table0, *table1, *table2;
@@ -43,6 +45,9 @@ private:
     unsigned char *bufAll;//[3][80][NumPoints*NumVectors];
 
 private slots:
+    void changeRow0(QModelIndex);
+    void changeRow1(QModelIndex);
+    void changeRow2(QModelIndex);
     void changeRow(QModelIndex);
     void slPbUpClick  (void);
     void slPbDownClick(void);
@@ -63,7 +68,7 @@ signals:
     void sgUpdateCaliper(QString*);
     void sgUpdateText   (QString*);
     void sgSave (QStandardItemModel*, QStandardItemModel*, QStandardItemModel*);
-    void sgSetSample(quint8, quint8, QByteArray*, quint32*);
+    void sgSetSample(quint8, quint8, QByteArray*);
 
 };
 

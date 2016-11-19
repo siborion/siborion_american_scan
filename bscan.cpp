@@ -40,7 +40,7 @@ Bscan::Bscan(QWidget *parent, CurParam *link) :
     bScanTools   = new BScanTools();
     bScanControl = new BScanControl(this, curParam);
     bScanHard = new BScanHard();
-    buf = bScanHard->getBuf();
+    buf = bScanHard->getBuf(0);
     bScanControl->setMassive(bScanHard->getMassiv());
 
     pScena = new scena(scenaSize, buf, link);
@@ -59,7 +59,7 @@ Bscan::Bscan(QWidget *parent, CurParam *link) :
     ui->gridLayout_2->addItem(horizontalSpacer2, 0, 3, 1, 1);
     ui->gridLayout_2->addWidget(bScanControl,    0, 4, 2, 1);
 
-    buf = bScanHard->getBuf();
+    buf = bScanHard->getBuf(0);
     bScanControl->setBuf(buf);
 
     connect(bScanTools, SIGNAL(doScan()),           SLOT(doStart()));
@@ -82,7 +82,7 @@ Bscan::Bscan(QWidget *parent, CurParam *link) :
     connect(bScanControl, SIGNAL(sgUpdateText(QString*)),    pScena,   SLOT(setText(QString*)));
 
     connect(bScanControl, SIGNAL(sgSave(QStandardItemModel*,QStandardItemModel*,QStandardItemModel*)), SLOT(slSave(QStandardItemModel*,QStandardItemModel*,QStandardItemModel*)));
-    connect(bScanControl, SIGNAL(sgSetSample(quint8, quint8, QByteArray*,quint32*)), bScanHard, SLOT(slSetSample(quint8, quint8, QByteArray*,quint32*)));
+    connect(bScanControl, SIGNAL(sgSetSample(quint8, quint8, QByteArray*)), bScanHard, SLOT(slSetSample(quint8, quint8, QByteArray*)));
 
 
     timer->start();
@@ -103,7 +103,7 @@ void Bscan::scenaRefr()
 {
     if(run)
     {
-        buf = bScanHard->getBuf();
+        buf = bScanHard->getBuf(bScanControl->getCurTable());
         bScanControl->setBuf(buf);
     }
     else
@@ -123,9 +123,9 @@ void Bscan::doSec()
 
 void Bscan::doStart()
 {
-
-    bScanControl->start();
-    bScanHard->process();
+    quint8 nomTab;
+    nomTab = bScanControl->start();
+    bScanHard->process(nomTab);
     run = true;
 }
 
