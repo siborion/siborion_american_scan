@@ -59,8 +59,8 @@ Bscan::Bscan(QWidget *parent, CurParam *link) :
     ui->gridLayout_2->addItem(horizontalSpacer2, 0, 3, 1, 1);
     ui->gridLayout_2->addWidget(bScanControl,    0, 4, 2, 1);
 
-    buf = bScanHard->getBuf(0);
-    bScanControl->setBuf(buf);
+//    buf = bScanHard->getBuf(0);
+//    bScanControl->setBuf(buf);
 
     connect(bScanTools, SIGNAL(doScan()),           SLOT(doStart()));
     connect(bScanTools, SIGNAL(doStop()),           SLOT(doStop()));
