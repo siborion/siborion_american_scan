@@ -14,7 +14,7 @@ BScanControl::BScanControl(QWidget *parent, CurParam *link) :
     curParam = link;
     QStringList sl;
     QList<int>  il;
-    sl << " ";
+    sl << "88";
     il << 100;
     ui->setupUi(this);
     this->setMaximumWidth(190);
@@ -23,14 +23,18 @@ BScanControl::BScanControl(QWidget *parent, CurParam *link) :
     table0 = new adjview(il, 80);
     table0->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     table0->verticalHeader()->setDefaultSectionSize(12);
+    table0->model()->setHeaderData(0, Qt::Horizontal, "1", Qt::DisplayRole);
+
 
     table1 = new adjview(il, 80);
     table1->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     table1->verticalHeader()->setDefaultSectionSize(12);
+    table1->model()->setHeaderData(0, Qt::Horizontal, "2", Qt::DisplayRole);
 
     table2 = new adjview(il, 80);
     table2->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     table2->verticalHeader()->setDefaultSectionSize(12);
+    table2->model()->setHeaderData(0, Qt::Horizontal, "3", Qt::DisplayRole);
 
     table = table0;
 
