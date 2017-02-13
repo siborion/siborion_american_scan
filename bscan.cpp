@@ -173,6 +173,7 @@ void Bscan::updatePatient()
         pScena->setSide("OD");
     else
         pScena->setSide("OS");
+    bScanControl->clearTable();
 
 }
 

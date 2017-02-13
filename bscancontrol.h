@@ -29,6 +29,7 @@ public:
     void clearDraw();
     void setMassive(unsigned char* );
     quint8 getCurTable();
+    void clearTable();
 
 private:
 //    unsigned char *massive[3][80][NumPoints*NumVectors];

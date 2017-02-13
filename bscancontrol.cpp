@@ -236,7 +236,6 @@ quint8 BScanControl::start(void)
         }
     }
 
-
     QModelIndex index;
     quint8 modelSize;
     modelSize = table->model()->rowCount()-1;
@@ -247,6 +246,32 @@ quint8 BScanControl::start(void)
     }
 
     return numTab;
+}
+
+void BScanControl::clearTable()
+{
+    QModelIndex index;
+    quint8 modelSize;
+    modelSize = table0->model()->rowCount()-1;
+    for(quint8 i = 0; i<modelSize; i++)
+    {
+        index = table0->model()->index(i,0);
+        table0->model()->setData(index,"",Qt::DisplayRole);
+    }
+
+    modelSize = table1->model()->rowCount()-1;
+    for(quint8 i = 0; i<modelSize; i++)
+    {
+        index = table1->model()->index(i,0);
+        table1->model()->setData(index,"",Qt::DisplayRole);
+    }
+
+    modelSize = table2->model()->rowCount()-1;
+    for(quint8 i = 0; i<modelSize; i++)
+    {
+        index = table2->model()->index(i,0);
+        table2->model()->setData(index,"",Qt::DisplayRole);
+    }
 }
 
 quint8 BScanControl::getCurTable()
