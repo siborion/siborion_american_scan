@@ -19,7 +19,7 @@ BScanHard::BScanHard(QObject *parent) :
     mutexStart.lock();
     doStart = doStop = false;
     mutexStart.unlock();
-
+// !!!!!!!!!На рабочей версии закоментировать
 //    for(quint32 k=0; k<3; k++)
 //    {
 //        for(quint32 j=0; j<80; j++)
@@ -29,7 +29,7 @@ BScanHard::BScanHard(QObject *parent) :
 //                if(i<1000)
 //                    bufAll[k][j][i] = qrand();
 //                else
-//                    bufAll[k][j][i] = 0;
+//                    bufAll[k][j][i] =  qrand();
 //            }
 //        }
 //    }
@@ -53,6 +53,8 @@ unsigned char *BScanHard::getBuf(quint8 tab)
 //    lastBuf++;
 //    if(lastBuf>=64)
 //        lastBuf = 0;
+//    qDebug()<<&bufAll[tab][lastBuf][0];
+
     return &bufAll[tab][lastBuf][0];
 }
 
@@ -72,6 +74,8 @@ void BScanHard::read()
     //    quint8 curPage;
     quint32 i;
     quint32 j;
+
+    qDebug()<<"read";
 
     FT_DEVICE_LIST_INFO_NODE *devInfo;
     DWORD numDevs;

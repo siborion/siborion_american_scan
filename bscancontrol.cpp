@@ -58,6 +58,7 @@ BScanControl::BScanControl(QWidget *parent, CurParam *link) :
     ui->layoutGroupBox->addWidget(pbLoad, 5, 0, 1, 2);
     ui->layoutGroupBox->addWidget(pbSave, 6, 0, 1, 2);
 
+    connect(tab, SIGNAL(currentChanged(int)), SLOT(changeTab(int)));
     connect(table0->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), SLOT(changeRow0(QModelIndex)));
     connect(table1->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), SLOT(changeRow1(QModelIndex)));
     connect(table2->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), SLOT(changeRow2(QModelIndex)));
@@ -78,7 +79,6 @@ unsigned char *BScanControl::getBuf()
     nomRow = table->currentIndex().row();
     index = table->model()->index(nomRow,0);
     ttt = table->model()->data(index, Qt::UserRole).toLongLong();
-//    qDebug()<<"ttt"<<ttt;
     p = (unsigned char *)ttt;
     return p;
 }
@@ -100,9 +100,24 @@ void BScanControl::setBuf(unsigned char *buf)
     indexDest = table->model()->index(0, 0);
     table->model()->setData(indexDest, QString("%1").arg(time.currentDateTime().toString("MM.dd.yyyy hh:mm:ss.zzz")), Qt::DisplayRole);
     //!!!!!!!!!!!!!!!!!!!!!!!!!!1
-    qDebug()<<buf;
+    qDebug()<<"setBuf"<<buf;
     table->model()->setData(indexDest, (quint32)buf, Qt::UserRole);
 }
+
+void BScanControl::changeTab(int nomTab)
+{
+    QModelIndex index;
+    if(nomTab==0)
+        table=table0;
+    if(nomTab==1)
+        table=table1;
+    if(nomTab==2)
+        table=table2;
+
+    index = table->currentIndex();
+    changeRow(index);
+}
+
 
 void BScanControl::changeRow0(QModelIndex index)
 {
@@ -124,7 +139,7 @@ void BScanControl::changeRow2(QModelIndex index)
 
 void BScanControl::changeRow(QModelIndex index)
 {
-    qDebug()<<table->model()->data(index, Qt::DisplayRole).toString();
+//    qDebug()<<table->model()->data(index, Qt::DisplayRole).toString();
 
     QString sTmp;
     sTmp.append(table->model()->data(index, Qt::UserRole+1).toString());
@@ -257,6 +272,11 @@ void BScanControl::clearTable()
     {
         index = table0->model()->index(i,0);
         table0->model()->setData(index,"",Qt::DisplayRole);
+        table0->model()->setData(index,0,Qt::UserRole);
+        table0->model()->setData(index,0,Qt::UserRole+1);
+        table0->model()->setData(index,0,Qt::UserRole+2);
+        table0->model()->setData(index,0,Qt::UserRole+3);
+        table0->model()->setData(index,0,Qt::UserRole+4);
     }
 
     modelSize = table1->model()->rowCount()-1;
@@ -264,6 +284,11 @@ void BScanControl::clearTable()
     {
         index = table1->model()->index(i,0);
         table1->model()->setData(index,"",Qt::DisplayRole);
+        table1->model()->setData(index,0,Qt::UserRole);
+        table1->model()->setData(index,0,Qt::UserRole+1);
+        table1->model()->setData(index,0,Qt::UserRole+2);
+        table1->model()->setData(index,0,Qt::UserRole+3);
+        table1->model()->setData(index,0,Qt::UserRole+4);
     }
 
     modelSize = table2->model()->rowCount()-1;
@@ -271,7 +296,13 @@ void BScanControl::clearTable()
     {
         index = table2->model()->index(i,0);
         table2->model()->setData(index,"",Qt::DisplayRole);
+        table2->model()->setData(index,0,Qt::UserRole);
+        table2->model()->setData(index,0,Qt::UserRole+1);
+        table2->model()->setData(index,0,Qt::UserRole+2);
+        table2->model()->setData(index,0,Qt::UserRole+3);
+        table2->model()->setData(index,0,Qt::UserRole+4);
     }
+    changeRow(table->currentIndex());
 }
 
 quint8 BScanControl::getCurTable()
@@ -348,8 +379,8 @@ void BScanControl::setMassive(unsigned char* val)
 {
     massive = val;
     qDebug()<<"***massive"<<(massive);
-//    qDebug()<<"(quint32)&massive[0][0][0]"<<(quint32)(*massive)[0][0][0];
-//    qDebug()<<"(quint32)&massive[0][0][0]"<<(quint32)(*massive)[0][1][0];
+    //    qDebug()<<"(quint32)&massive[0][0][0]"<<(quint32)(*massive)[0][0][0];
+    //    qDebug()<<"(quint32)&massive[0][0][0]"<<(quint32)(*massive)[0][1][0];
 }
 
 BScanControl::~BScanControl()

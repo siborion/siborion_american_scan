@@ -46,6 +46,7 @@ private:
     unsigned char *bufAll;//[3][80][NumPoints*NumVectors];
 
 private slots:
+    void changeTab(int);
     void changeRow0(QModelIndex);
     void changeRow1(QModelIndex);
     void changeRow2(QModelIndex);

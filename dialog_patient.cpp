@@ -125,6 +125,8 @@ Dialog_Patient::Dialog_Patient(QMap <QString, QString> *stPatient, QWidget *pare
 
     pBaseFill = new basefill(children(), stPatient);
     pBaseFill->fillData();
+
+    calculateAge(leBirth->date());
 }
 
 void Dialog_Patient::saveData()

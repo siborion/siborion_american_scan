@@ -23,6 +23,13 @@ Bscan::Bscan(QWidget *parent, CurParam *link) :
 
     ui->setupUi(this);
 
+
+    for(quint32 i=0; i<NumVectors*NumPoints; i++)
+    {blackBuf[i] = 0;}
+
+
+
+
     setFocusPolicy(Qt::StrongFocus);
 
     timer        = new QTimer();
@@ -111,6 +118,9 @@ void Bscan::scenaRefr()
 
     if(buf)
         pScena->refr(buf);
+    else
+        pScena->refr(blackBuf);
+
 
     fps++;
 }

@@ -38,6 +38,7 @@ private:
     QSpacerItem *horizontalSpacer2;
     CurParam *curParam;
     REGIM::RegimSide bScanSide;
+    unsigned char blackBuf[NumVectors*NumPoints];
 
 //    findArrowEdit(quint8 nomElement, arrow_edit);
 
