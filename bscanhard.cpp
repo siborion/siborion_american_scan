@@ -26,10 +26,7 @@ BScanHard::BScanHard(QObject *parent) :
 //        {
 //            for(quint32 i=0; i<NumVectors*NumPoints; i++)
 //            {
-//                if(i<1000)
-//                    bufAll[k][j][i] = qrand();
-//                else
-//                    bufAll[k][j][i] =  qrand();
+//                    bufAll[k][j][i] = (k+1)*50;
 //            }
 //        }
 //    }
@@ -53,8 +50,6 @@ unsigned char *BScanHard::getBuf(quint8 tab)
 //    lastBuf++;
 //    if(lastBuf>=64)
 //        lastBuf = 0;
-//    qDebug()<<&bufAll[tab][lastBuf][0];
-
     return &bufAll[tab][lastBuf][0];
 }
 

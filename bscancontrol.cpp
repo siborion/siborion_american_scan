@@ -254,10 +254,16 @@ quint8 BScanControl::start(void)
     QModelIndex index;
     quint8 modelSize;
     modelSize = table->model()->rowCount()-1;
+    qDebug()<<"modelSize"<<modelSize;
     for(quint8 i = 0; i<modelSize; i++)
     {
         index = table->model()->index(i,0);
         table->model()->setData(index,"",Qt::DisplayRole);
+        table->model()->setData(index,0,Qt::UserRole);
+        table->model()->setData(index,0,Qt::UserRole+1);
+        table->model()->setData(index,0,Qt::UserRole+2);
+        table->model()->setData(index,0,Qt::UserRole+3);
+        table->model()->setData(index,0,Qt::UserRole+4);
     }
 
     return numTab;
