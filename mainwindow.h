@@ -47,6 +47,8 @@ public slots:
     void slChangeTab(int);
 
 private slots:
+    void openDevice(bool*);
+    void stopMeasure();
 
 //    void updatePatient();
 

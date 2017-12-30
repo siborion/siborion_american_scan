@@ -11,6 +11,9 @@ BScanControl::BScanControl(QWidget *parent, CurParam *link) :
     QWidget(parent),
     ui(new Ui::BScanControl)
 {
+    timer = new QTimer();
+    timer->setInterval(150);
+
     curParam = link;
     QStringList sl;
     QList<int>  il;
@@ -45,18 +48,22 @@ BScanControl::BScanControl(QWidget *parent, CurParam *link) :
 
     pbUp   = new QPushButton("<<");
     pbUp->setMaximumWidth(50);
+    pbPlay   = new QPushButton(">");
+    pbPlay->setMaximumWidth(50);
+    pbPlay->setCheckable(true);
     pbDown = new QPushButton(">>");
     pbDown->setMaximumWidth(50);
 
     pbLoad = new QPushButton("Load");
     pbSave = new QPushButton("Save");
 
-    ui->layoutGroupBox->addWidget(tab  ,  3, 0, 1, 2);
-    ui->layoutGroupBox->addWidget(pbUp,   4, 0, 1, 2);
-    ui->layoutGroupBox->addWidget(pbDown, 4, 1, 1, 1);
+    ui->layoutGroupBox->addWidget(tab  ,  3, 0, 1, 3);
+    ui->layoutGroupBox->addWidget(pbUp,   4, 0, 1, 1);
+    ui->layoutGroupBox->addWidget(pbPlay, 4, 1, 1, 1);
+    ui->layoutGroupBox->addWidget(pbDown, 4, 2, 1, 1);
 
-    ui->layoutGroupBox->addWidget(pbLoad, 5, 0, 1, 2);
-    ui->layoutGroupBox->addWidget(pbSave, 6, 0, 1, 2);
+    ui->layoutGroupBox->addWidget(pbLoad, 5, 0, 1, 3);
+    ui->layoutGroupBox->addWidget(pbSave, 6, 0, 1, 3);
 
     connect(tab, SIGNAL(currentChanged(int)), SLOT(changeTab(int)));
     connect(table0->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), SLOT(changeRow0(QModelIndex)));
@@ -64,9 +71,11 @@ BScanControl::BScanControl(QWidget *parent, CurParam *link) :
     connect(table2->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), SLOT(changeRow2(QModelIndex)));
     connect(pbUp,   SIGNAL(clicked()), SLOT(slPbUpClick()));
     connect(pbDown, SIGNAL(clicked()), SLOT(slPbDownClick()));
+    connect(pbPlay, SIGNAL(clicked()), SLOT(slPbPlayClick()));
 
     connect(pbSave, SIGNAL(clicked(bool)), SLOT(slSave()));
     connect(pbLoad, SIGNAL(clicked(bool)), SLOT(slLoad()));
+    connect(timer, SIGNAL(timeout()), SLOT(slPbDownClick()));
 
 }
 
@@ -98,10 +107,21 @@ void BScanControl::setBuf(unsigned char *buf)
         table->model()->setData(indexDest,table->model()->data(indexSour,Qt::UserRole),Qt::UserRole);
     }
     indexDest = table->model()->index(0, 0);
-    table->model()->setData(indexDest, QString("%1").arg(time.currentDateTime().toString("MM.dd.yyyy hh:mm:ss.zzz")), Qt::DisplayRole);
+
+    if(propuskFirstBuf)
+    {
+        table->model()->setData(indexDest, QString(""), Qt::DisplayRole);
+        table->model()->setData(indexDest, (quint32)0, Qt::UserRole);
+        propuskFirstBuf--;
+    }
+    else
+    {
+        table->model()->setData(indexDest, QString("%1").arg(time.currentDateTime().toString("MM.dd.yyyy hh:mm:ss.zzz")), Qt::DisplayRole);
+        table->model()->setData(indexDest, (quint32)buf, Qt::UserRole);
+    }
     //!!!!!!!!!!!!!!!!!!!!!!!!!!1
     qDebug()<<"setBuf"<<buf;
-    table->model()->setData(indexDest, (quint32)buf, Qt::UserRole);
+
 }
 
 void BScanControl::changeTab(int nomTab)
@@ -139,7 +159,7 @@ void BScanControl::changeRow2(QModelIndex index)
 
 void BScanControl::changeRow(QModelIndex index)
 {
-//    qDebug()<<table->model()->data(index, Qt::DisplayRole).toString();
+    //    qDebug()<<table->model()->data(index, Qt::DisplayRole).toString();
 
     QString sTmp;
     sTmp.append(table->model()->data(index, Qt::UserRole+1).toString());
@@ -202,6 +222,8 @@ void BScanControl::slPbDownClick(void)
     nomRow = table->currentIndex().row();
     if(nomRow<(table->model()->rowCount()-1))
         nomRow++;
+    if(table->model()->index(nomRow, 0).data(Qt::DisplayRole).toString().isEmpty())
+        nomRow = 0;
     index = table->model()->index(nomRow, 0);
     table->setCurrentIndex(index);
 }
@@ -229,6 +251,7 @@ void BScanControl::clearDraw()
 
 quint8 BScanControl::start(void)
 {
+    propuskFirstBuf = 5;
     numTab++;
     if(numTab>2)
         numTab = 0;
@@ -384,9 +407,14 @@ void BScanControl::slLoad()
 void BScanControl::setMassive(unsigned char* val)
 {
     massive = val;
-    qDebug()<<"***massive"<<(massive);
-    //    qDebug()<<"(quint32)&massive[0][0][0]"<<(quint32)(*massive)[0][0][0];
-    //    qDebug()<<"(quint32)&massive[0][0][0]"<<(quint32)(*massive)[0][1][0];
+}
+
+void BScanControl::slPbPlayClick()
+{
+    if(pbPlay->isChecked())
+        timer->start();
+    else
+        timer->stop();
 }
 
 BScanControl::~BScanControl()

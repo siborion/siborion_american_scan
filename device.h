@@ -39,8 +39,10 @@ signals:
     void resiveData(QByteArray*);
 
 private slots:
-    void openDevice(bool *doMeasure);
     void doTimer();
+
+public slots:
+    void openDevice(bool *doMeasure);
     void stopMeasure();
 };
 

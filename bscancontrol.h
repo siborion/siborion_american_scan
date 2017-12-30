@@ -11,6 +11,7 @@
 #include "bscanbutton.h"
 #include "curparam.h"
 #include "bscansize.h"
+#include <QTimer>
 
 
 namespace Ui {
@@ -32,13 +33,15 @@ public:
     void clearTable();
 
 private:
+    QTimer *timer;
 //    unsigned char *massive[3][80][NumPoints*NumVectors];
+    unsigned char propuskFirstBuf;
     unsigned char *massive;
     Ui::BScanControl *ui;
     adjview *table;
     adjview *table0, *table1, *table2;
 //    QTableView *table;
-    QPushButton *pbUp, *pbDown , *pbLoad, *pbSave;
+    QPushButton *pbPlay, *pbUp, *pbDown , *pbLoad, *pbSave;
     QList<BScanButton*> pbSample;
     QTabWidget *tab;
     qint8 numTab;
@@ -53,6 +56,7 @@ private slots:
     void changeRow(QModelIndex);
     void slPbUpClick  (void);
     void slPbDownClick(void);
+    void slPbPlayClick(void);
     void slSave();
     void slLoad();
 

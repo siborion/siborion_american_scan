@@ -1,4 +1,5 @@
 #include "printb.h"
+#include <QDateTime>
 
 
 Printb::Printb(QWidget *parent, CurParam *link) : QWidget(parent)
@@ -31,7 +32,19 @@ void Printb::doPreview()
 
 void Printb::setValue(const int recNo, const QString paramName, QVariant &paramValue, const int reportPage)
 {
-      qDebug()<<"value"<<paramName;
+    if(paramName == "name")
+        paramValue =  curParam->patientName;
+    if(paramName == "id")
+        paramValue =  curParam->patientId;
+    if(paramName == "doctor")
+        paramValue =  curParam->doctorName;
+    if(paramName == "birth")
+        paramValue =  curParam->birthDate;
+    if (paramName == "date")
+    {
+        paramValue = QDateTime::currentDateTime().toString("MM.dd.yyyy");
+
+    }
 }
 
 void Printb::setValueImage(int recNo, QString paramName, QImage &paramValue,int reportPage)

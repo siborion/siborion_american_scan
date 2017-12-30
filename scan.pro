@@ -16,10 +16,11 @@ QT       += printsupport
 
 
 
-win32
-{
-    RC_ICONS = Ocu_32_16.ico
-}
+#win32
+#{
+#    RC_ICONS = logo256.ico
+   win32:RC_FILE = myapp.rc
+#}
 
 
 TARGET = scan

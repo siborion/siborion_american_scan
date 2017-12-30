@@ -46,7 +46,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(bases,SIGNAL(updateCurPatient(quint16)),scanbase,SLOT(updateCurPatient(quint16)));
     connect(bases,SIGNAL(updateCurPatient(quint16)),pCalculator,SLOT(updatePatient()));
-//    connect(bases,SIGNAL(updateCurPatient(quint16)), SLOT(updatePatient()));
+    //    connect(bases,SIGNAL(updateCurPatient(quint16)), SLOT(updatePatient()));
     connect(measure,SIGNAL(changeGlas()),pCalculator,SLOT(updatePatient()));
 
     connect(pCalculator, SIGNAL(changeSideCalculator()), measure, SLOT(changeSideCalculatorSlot()));
@@ -71,11 +71,11 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(bases,SIGNAL(saveLens(quint16*)),scanbase,SLOT(saveCurLens(quint16*)));
     connect(bases,SIGNAL(delLens()),scanbase,SLOT(delLens()));
 
-    connect(measure,SIGNAL(doScan(bool*)),device,SLOT(openDevice(bool*)));
+    connect(measure,SIGNAL(doScan(bool*)),SLOT(openDevice(bool*)));
     connect(measure,SIGNAL(refreshTable(stMeasureParam*)),parcer,SLOT(calculateParam(stMeasureParam*)));
     connect(device,SIGNAL(resiveData(QByteArray*)),SLOT(resiveDataSlot(QByteArray*)));
 
-    connect(measure,SIGNAL(stopMeasure()),device,SLOT(stopMeasure()));
+    connect(measure,SIGNAL(stopMeasure()),SLOT(stopMeasure()));
 
     connect(scanbase,SIGNAL(setLens(QSqlQueryModel*)),pCalculator,SLOT(refreshLens(QSqlQueryModel*)));
 
@@ -132,6 +132,30 @@ void MainWindow::slChangeTab(int val)
     if(val==5)
         printB->doPreview();
 }
+
+void MainWindow::openDevice(bool* open)
+{
+    device->openDevice(open);
+    if(*open)
+    {
+        ui->tabWidget->setTabEnabled(0,false);
+        ui->tabWidget->setTabEnabled(2,false);
+        ui->tabWidget->setTabEnabled(3,false);
+        ui->tabWidget->setTabEnabled(4,false);
+        ui->tabWidget->setTabEnabled(5,false);
+    }
+}
+
+void MainWindow::stopMeasure()
+{
+    ui->tabWidget->setTabEnabled(0,true);
+    ui->tabWidget->setTabEnabled(2,true);
+    ui->tabWidget->setTabEnabled(3,true);
+    ui->tabWidget->setTabEnabled(4,true);
+    ui->tabWidget->setTabEnabled(5,true);
+    device->stopMeasure();
+}
+
 
 MainWindow::~MainWindow()
 {
