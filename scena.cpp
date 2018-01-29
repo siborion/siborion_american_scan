@@ -231,14 +231,23 @@ void scena::mousePressEvent(QMouseEvent *mEvent)
     QMenu menu;
     BScanvertex   *tmpVertex;
 
+    if(newObject==2)
+    {
+        newObject=0;
+        editArray = 0;
+        return;
+    }
+
     tmpVertex = findVertex(mEvent->x(), mEvent->y());
 
     if(mEvent->button() == Qt::RightButton)
     {
         if(newObject)
         {
-            removeEditVertex();
-            newObject = false;
+            if(newObject==true)
+                newObject = editArray?2:false;
+            else
+                newObject = false;
         }
         else
         {
@@ -369,7 +378,7 @@ void scena::keyPressEvent(QKeyEvent *kEvent)
     }
 
     //    if(editRegim==CUR_EDIT::TEXT)
-        {
+    {
         if(editText)
         {
             QMessageBox msg;
@@ -501,16 +510,36 @@ void scena::drawArray()
         quint8 j=0;
         foreach(BScanvertex *vx, array->vertex)
         {
-            massiv[j][0] = vx->xKoord;
-            massiv[j][1] = vx->yKoord;
-            color [j][0]=color[j][2]=0;
-            color[j][1]=255;
-            if(editArray==array)
+            if(vx==array->vertex.last() &&  ( (editArray!=array) || ((editArray==array) && (newObject!=true))    )  )
             {
-                color[j][1]=0;
-                color[j][2]=255;
+                float S;
+                QFont font;
+                font.setBold(true);
+                quint16 x,y;
+                S = array->getS();
+                //            S *= 0.00140625;
+                S *= 0.0375;
+                S *= 0.0375;
+                S *= step;
+                S *= step;
+                x = vx->xKoord;
+                y = vx->yKoord;
+                qglColor(editArray==array?Qt::blue:Qt::green);
+                renderText(x, y , 0, QString("%1").arg(S), font);
             }
-            j++;
+            else
+            {
+                massiv[j][0] = vx->xKoord;
+                massiv[j][1] = vx->yKoord;
+                color [j][0]=color[j][2]=0;
+                color[j][1]=255;
+                if(editArray==array)
+                {
+                    color[j][1]=0;
+                    color[j][2]=255;
+                }
+                j++;
+            }
         }
         massiv[j][0] = array->vertex.first()->xKoord;
         massiv[j][1] = array->vertex.first()->yKoord;
@@ -521,23 +550,23 @@ void scena::drawArray()
             color[j][1]=0;
             color[j][2]=255;
         }
-        else
-        {
-            float S;
-            QFont font;
-            font.setBold(true);
-            quint16 x,y;
-            S = array->getS();
-            //            S *= 0.00140625;
-            S *= 0.0375;
-            S *= 0.0375;
-            S *= step;
-            S *= step;
-            x = array->vertex.last()->xKoord;
-            y = array->vertex.last()->yKoord;
-            qglColor(Qt::blue);
-            renderText(x, y , 0, QString("%1").arg(S), font);
-        }
+//        else
+//        {
+//            float S;
+//            QFont font;
+//            font.setBold(true);
+//            quint16 x,y;
+//            S = array->getS();
+//            //            S *= 0.00140625;
+//            S *= 0.0375;
+//            S *= 0.0375;
+//            S *= step;
+//            S *= step;
+//            x = array->vertex.last()->xKoord;
+//            y = array->vertex.last()->yKoord;
+//            qglColor(Qt::blue);
+//            renderText(x, y , 0, QString("%1").arg(S), font);
+//        }
         j++;
 
         glVertexPointer(2, GL_SHORT,         0, massiv);

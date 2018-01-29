@@ -28,7 +28,7 @@ float BScanArray::getS()
 {
     QList<float> Sum1, Sum2;
     float S1=0, S2=0;
-    for(quint8 i=0; i<vertex.size(); i++)
+    for(quint8 i=0; i<(vertex.size()-1); i++)
     {
         quint8 next;
         next = ((i+1)==vertex.size()) ? 0 : (i+1);

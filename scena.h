@@ -74,7 +74,7 @@ private:
     BScanArray    *editArray;
     BScanCaliper  *editCaliper;
     BScanText     *editText;
-    bool          newObject;
+    quint8        newObject;
     qint8         curRazrez;
     quint16       midlY;
     double        step;
