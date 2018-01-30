@@ -217,11 +217,13 @@ void scena::mouseMoveEvent(QMouseEvent *mEvent)
             y =  (sin(getDeg((nomVektor))))*razmer+midlY;
             editVertex->xKoord = x;
             editVertex->yKoord = y;
+            qDebug()<<"move1";
         }
         else
         {
             editVertex->xKoord = mEvent->x();
             editVertex->yKoord = mEvent->y();
+            qDebug()<<"move2";
         }
     }
 }
@@ -235,6 +237,7 @@ void scena::mousePressEvent(QMouseEvent *mEvent)
     {
         newObject=0;
         editArray = 0;
+        editCaliper =0;
         return;
     }
 
@@ -245,7 +248,7 @@ void scena::mousePressEvent(QMouseEvent *mEvent)
         if(newObject)
         {
             if(newObject==true)
-                newObject = editArray?2:false;
+                newObject = (editArray||editCaliper)?2:false;
             else
                 newObject = false;
         }
@@ -314,12 +317,19 @@ void scena::mousePressEvent(QMouseEvent *mEvent)
                     editVertex =  lArrow.last()->addVertex(mEvent->x(),mEvent->y());
                 }
             }
+            qDebug()<<"case CUR_EDIT::ARROW:";
             break;
         case CUR_EDIT::CALIPER:
             if(editVertex&&newObject)
             {
-                editVertex = 0;
-                newObject = false;
+                editVertex =  lCaliper.last()->addVertex(mEvent->x(),mEvent->y());
+                if((lCaliper.last()->vertex.length()>=3))
+                {
+                    newObject=0;
+                    editArray = 0;
+                    editCaliper =0;
+                    editVertex = 0;
+                }
             }
             else
             {
@@ -329,7 +339,7 @@ void scena::mousePressEvent(QMouseEvent *mEvent)
                 {
                     newObject = true;
                     lCaliper.append(new BScanCaliper(mEvent->x(),mEvent->y()));
-                    editVertex =  lCaliper.last()->addVertex(mEvent->x(),mEvent->y());
+                    editVertex =  lCaliper.last()->addVertex(mEvent->x(),mEvent->y()); //  lCaliper.last()->vertex.last();//   ->addVertex(mEvent->x(),mEvent->y());
                 }
             }
             break;
@@ -510,7 +520,7 @@ void scena::drawArray()
         quint8 j=0;
         foreach(BScanvertex *vx, array->vertex)
         {
-            if(vx==array->vertex.last() &&  ( (editArray!=array) || ((editArray==array) && (newObject!=true))    )  )
+            if(vx==array->vertex.last() &&  ((editArray!=array) || ((editArray==array) && (newObject!=true))))
             {
                 float S;
                 QFont font;
@@ -550,25 +560,7 @@ void scena::drawArray()
             color[j][1]=0;
             color[j][2]=255;
         }
-//        else
-//        {
-//            float S;
-//            QFont font;
-//            font.setBold(true);
-//            quint16 x,y;
-//            S = array->getS();
-//            //            S *= 0.00140625;
-//            S *= 0.0375;
-//            S *= 0.0375;
-//            S *= step;
-//            S *= step;
-//            x = array->vertex.last()->xKoord;
-//            y = array->vertex.last()->yKoord;
-//            qglColor(Qt::blue);
-//            renderText(x, y , 0, QString("%1").arg(S), font);
-//        }
         j++;
-
         glVertexPointer(2, GL_SHORT,         0, massiv);
         glColorPointer (3, GL_UNSIGNED_BYTE, 0, color);
         glDrawArrays   (GL_LINE_STRIP,       0, j);
@@ -597,22 +589,19 @@ void scena::drawGraf()
 
 void scena::drawCaliper()
 {
+
     foreach(BScanCaliper *caliper, lCaliper)
     {
         quint8 j=0;
-        foreach(BScanvertex *vx, caliper->vertex)
+        if(caliper->vertex.length()>=2)
         {
-            massiv[j][0] = vx->xKoord;
-            massiv[j][1] = vx->yKoord;
-            drawCrest(massiv[j][0],massiv[j][1]);
-            color [j][0]=color[j][1]=color[j][2]=0;
-            color[j][1]=255;
-            if(editCaliper==caliper)
-            {
-                color[j][1]=0;
-                color[j][2]=255;
-            }
-            else
+            massiv[0][0] = caliper->vertex.at(0)->xKoord;
+            massiv[0][1] = caliper->vertex.at(0)->yKoord;
+            drawCrest(massiv[0][0],massiv[0][1]);
+            massiv[1][0] = caliper->vertex.at(1)->xKoord;
+            massiv[1][1] = caliper->vertex.at(1)->yKoord;
+            drawCrest(massiv[1][0],massiv[1][1]);
+            if(caliper->vertex.length()>=3)
             {
                 float S;
                 QFont font;
@@ -621,17 +610,61 @@ void scena::drawCaliper()
                 S = caliper->getLenght();
                 S *= 0.0375;
                 S *= step;
-                //                S *= step;
-                x = caliper->vertex.last()->xKoord;
-                y = caliper->vertex.last()->yKoord;
+                x = caliper->vertex.at(2)->xKoord;
+                y = caliper->vertex.at(2)->yKoord;
                 qglColor(Qt::blue);
                 renderText(x, y , 0, QString("%1").arg(S), font);
             }
-            j++;
+
+            color[0][0]=color[0][2]=0;
+            color[1][0]=color[1][2]=0;
+            color[0][1]=255;
+            color[1][1]=255;
+            if(editCaliper==caliper)
+            {
+                color[0][1]=0;
+                color[0][2]=255;
+                color[1][1]=0;
+                color[1][2]=255;
+            }
+
+
+
+            /*
+            foreach(BScanvertex *vx, caliper->vertex)
+            {
+                massiv[j][0] = vx->xKoord;
+                massiv[j][1] = vx->yKoord;
+                drawCrest(massiv[j][0],massiv[j][1]);
+                color [j][0]=color[j][1]=color[j][2]=0;
+                color[j][1]=255;
+                if(editCaliper==caliper)
+                {
+                    color[j][1]=255;
+                    color[j][2]=255;
+                }
+                else
+                {
+                    float S;
+                    QFont font;
+                    font.setBold(true);
+                    quint16 x,y;
+                    S = caliper->getLenght();
+                    S *= 0.0375;
+                    S *= step;
+                    //                S *= step;
+                    x = caliper->vertex.last()->xKoord;
+                    y = caliper->vertex.last()->yKoord;
+                    qglColor(Qt::blue);
+                    renderText(x, y , 0, QString("%1").arg(S), font);
+                }
+                j++;
+            }
+            */
+            glVertexPointer(2, GL_SHORT,         0, massiv);
+            glColorPointer (3, GL_UNSIGNED_BYTE, 0, color);
+            glDrawArrays   (GL_LINE_STRIP,       0, 2);
         }
-        glVertexPointer(2, GL_SHORT,         0, massiv);
-        glColorPointer (3, GL_UNSIGNED_BYTE, 0, color);
-        glDrawArrays   (GL_LINE_STRIP,       0, 2);
     }
 }
 
