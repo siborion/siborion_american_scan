@@ -28,10 +28,11 @@ float BScanArray::getS()
 {
     QList<float> Sum1, Sum2;
     float S1=0, S2=0;
+    qDebug()<<"vertex.size()"<<vertex.size();
     for(quint8 i=0; i<(vertex.size()-1); i++)
     {
         quint8 next;
-        next = ((i+1)==vertex.size()) ? 0 : (i+1);
+        next = ((i+1)==(vertex.size()-1)) ? 0 : (i+1);
         Sum1.append(vertex.at(i)->xKoord*vertex.at(next)->yKoord);
         Sum2.append(vertex.at(i)->yKoord*vertex.at(next)->xKoord);
 //        qDebug()<<"vertex.at(i)->xKoord"<<vertex.at(i)->xKoord;
