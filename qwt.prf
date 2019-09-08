@@ -9,6 +9,7 @@
 
 QwtBuild =
 QwtVersion = 6.1.0
+#QwtVersion = 6.1.4-svn
 
 unix {
     QwtBase    = /usr/local/qwt-$${QwtVersion}

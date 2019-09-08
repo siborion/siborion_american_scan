@@ -14,8 +14,8 @@
 #include "curparam.h"
 
 const double PI = 4.*atan(1.);
-const quint8 startKonus = 30;
-#define Degrees    55
+const quint8 startKonus = 117;
+#define Degrees    52
 
 class scena : public QGLWidget
 {
