@@ -12,10 +12,11 @@
 #include <bscanvertex.h>
 #include <bscantools.h>
 #include "curparam.h"
+#include "bscansize.h"
 
 const double PI = 4.*atan(1.);
 const quint8 startKonus = 117;
-#define Degrees    52
+//#define Degrees    52
 
 class scena : public QGLWidget
 {

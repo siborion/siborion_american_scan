@@ -10,6 +10,8 @@ QMutex mutexBuf3;
 QMutex mutexStart;
 QMutex mutexLastBuf;
 
+#define MANUAL_DEBUG 1
+
 
 BScanHard::BScanHard(QObject *parent) :
     QObject(parent)
@@ -22,23 +24,26 @@ BScanHard::BScanHard(QObject *parent) :
     doStart = doStop = false;
     mutexStart.unlock();
 // !!!!!!!!!На рабочей версии закоментировать
-//    for(quint32 k=0; k<3; k++)
-//    {
-//        for(quint32 j=0; j<80; j++)
-//        {
-//            for(quint32 i=0; i<NumVectors*NumPoints; i++)
-//            {
-//                bufAll[k][j][i] = rand();
-//                if((tmp<100)||(tmp>1500))
-//                    bufAll[k][j][i] = 255;
-//                tmp++;
-//                if(tmp==1600)
-//                {
-//                    tmp = 0;
-//                }
-//            }
-//        }
-//    }
+
+#ifdef MANUAL_DEBUG
+    for(quint32 k=0; k<3; k++)
+    {
+        for(quint32 j=0; j<80; j++)
+        {
+            for(quint32 i=0; i<NumVectors*NumPoints; i++)
+            {
+                bufAll[k][j][i] = rand();
+                if((tmp<100)||(tmp>1500))
+                    bufAll[k][j][i] = 255;
+                tmp++;
+                if(tmp==1600)
+                {
+                    tmp = 0;
+                }
+            }
+        }
+    }
+#endif
 }
 
 void BScanHard::open()
@@ -53,9 +58,11 @@ unsigned char *BScanHard::getMassiv()
 unsigned char *BScanHard::getBuf(quint8 tab)
 {
     //!!!!!!!На рабочей версии закоментировать
-//    lastBuf++;
-//    if(lastBuf>=64)
-//        lastBuf = 0;
+#ifdef MANUAL_DEBUG
+    lastBuf++;
+    if(lastBuf>=64)
+        lastBuf = 0;
+#endif
     return &bufAll[tab][lastBuf][0];
 }
 
