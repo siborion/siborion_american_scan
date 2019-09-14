@@ -10,7 +10,7 @@ QMutex mutexBuf3;
 QMutex mutexStart;
 QMutex mutexLastBuf;
 
-#define MANUAL_DEBUG 1
+//#define MANUAL_DEBUG 1
 
 
 BScanHard::BScanHard(QObject *parent) :
@@ -33,8 +33,8 @@ BScanHard::BScanHard(QObject *parent) :
             for(quint32 i=0; i<NumVectors*NumPoints; i++)
             {
                 bufAll[k][j][i] = rand();
-                if((tmp<100)||(tmp>1500))
-                    bufAll[k][j][i] = 255;
+//                if((tmp<100)||(tmp>1500))
+//                    bufAll[k][j][i] = 255;
                 tmp++;
                 if(tmp==1600)
                 {
@@ -285,7 +285,7 @@ void BScanHard::sendRun(bool start)
     DWORD BytesTransmited;
 
     TxBytes = 3;
-    TxBuffer[0] = 0x83;
+    TxBuffer[0] = 0x81;
     TxBuffer[1] = 0x00;
     TxBuffer[2] = start?1:0;
     ftStatus = FT_Write(ftHandle, TxBuffer, TxBytes, &BytesTransmited);

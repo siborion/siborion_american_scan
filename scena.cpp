@@ -39,7 +39,8 @@ scena::scena(quint16 raz, unsigned char *p, CurParam *link)
     curParam = link;
 
     double curDeg;
-    quint16 curX, curY, maxY, maxX, curPoint;
+    quint16 curX, maxY, maxX, curPoint;
+    qint16 curY;
     QHash<quint32,quint32> map;
     quint32 key;
 
@@ -73,11 +74,9 @@ scena::scena(quint16 raz, unsigned char *p, CurParam *link)
     setMinimumHeight(maxY);
     setMinimumWidth((double)maxY*1.3);
 
-    quint16 dVektor4 = 0; //127*4;
-
+    quint16 dVektor4 = 0;
     for(double dVektor=(0); dVektor<=(255); dVektor+=0.25)
     {
-        qDebug()<<"dVektor4"<<dVektor4<<angle_4[dVektor4];
         curPoint = qRound((double)startKonus/step);
         for(double point=0; point<1600; point=point+step)
         {
@@ -88,7 +87,6 @@ scena::scena(quint16 raz, unsigned char *p, CurParam *link)
             key <<= 16;
             key |= midlY+curY;
             map.insert(key, ((quint32)dVektor)*1600+(quint32)point);
-
             curPoint++;
         }
         dVektor4++;
