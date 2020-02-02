@@ -17,7 +17,7 @@ BScanHard::BScanHard(QObject *parent) :
     QObject(parent)
 {
     quint32 tmp=0;;
-
+    volume = 1;
     curTab = 0;
     lastBuf = 1;
     mutexStart.lock();
@@ -33,6 +33,7 @@ BScanHard::BScanHard(QObject *parent) :
             for(quint32 i=0; i<NumVectors*NumPoints; i++)
             {
                 bufAll[k][j][i] = rand();
+                bufAll[k][j][i] *= volume;
 //                if((tmp<100)||(tmp>1500))
 //                    bufAll[k][j][i] = 255;
                 tmp++;
@@ -185,7 +186,8 @@ void BScanHard::read()
                 }
                 else
                 {
-                    bufAll[curTab][curBuf][j] = RxBuffer[i];
+                    bufAll[curTab][curBuf][j] = RxBuffer[i]/2;
+                    bufAll[curTab][curBuf][j] *= volume;
                     j++;
                 }
                 i++;
@@ -315,5 +317,11 @@ void BScanHard::slSetSample(quint8 nomTab, quint8 nomRec, QByteArray* smp)
         bufAll[nomTab][nomRec][pixel] = val;
         pixel++;
     }
+}
+
+void BScanHard::slSetVolume(int inVolume)
+{
+    volume = ((float)inVolume)/100;
+    qDebug()<<volume;
 }
 

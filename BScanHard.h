@@ -25,6 +25,7 @@ public:
 //    unsigned char curBuf[NumPoints*NumVectors];
     unsigned char *getBuf(quint8 tab);
     unsigned char *getMassiv();
+    float volume;
 
     void setGain(unsigned char gain);
 //    void setRun(bool start);
@@ -57,6 +58,7 @@ public slots:
     void close();
     void read();
     void slSetSample(quint8 nomTab, quint8 nomRec, QByteArray*);
+    void slSetVolume(int);
 
 };
 

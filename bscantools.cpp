@@ -8,10 +8,27 @@ BScanTools::BScanTools(QWidget *parent) :
 {
     ui->setupUi(this);
     scanButton = new ScanButton();
+
+    volume = new QDial();
+    volume->setValue(100);
+    volume->setMinimum(20);
+    volume->setMaximum(180);
+    volume->setNotchTarget(20);
+    volume->setNotchesVisible(true);
+
     ui->verticalLayout_4->addWidget(scanButton);
+    ui->verticalLayout_4->addWidget(volume);
+
     connect(scanButton, SIGNAL(doScan(bool*)), SLOT(slDoScan(bool*)));
     connect(scanButton, SIGNAL(doStop()), SLOT(slDoStop()));
 
+    connect(volume, SIGNAL(valueChanged(int)), SLOT(slChangeVolume(int)));
+
+}
+
+void BScanTools::slChangeVolume(int volume)
+{
+    emit sgChangeVolume(volume);
 }
 
 void BScanTools::slDoStop()

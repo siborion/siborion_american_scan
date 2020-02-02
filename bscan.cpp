@@ -9,7 +9,6 @@ Bscan::Bscan(QWidget *parent, CurParam *link) :
 {
     quint16 scenaSize;
 
-
     curParam = link;
     bScanSide = REGIM::OD;
 
@@ -71,6 +70,8 @@ Bscan::Bscan(QWidget *parent, CurParam *link) :
 
     connect(bScanTools, SIGNAL(doScan()),           SLOT(doStart()));
     connect(bScanTools, SIGNAL(doStop()),           SLOT(doStop()));
+    connect(bScanTools, SIGNAL(sgChangeVolume(int)), bScanHard, SLOT(slSetVolume(int)));
+
     connect(bScanTools, SIGNAL(doOS(REGIM::RegimSide)),             SLOT(setRun(REGIM::RegimSide)));
     connect(bScanTools, SIGNAL(doEdit(CUR_EDIT,bool)), pScena, SLOT(doEdit(CUR_EDIT,bool)));
     connect(bScanTools, SIGNAL(doClear()), SLOT(slClear()));
@@ -90,6 +91,9 @@ Bscan::Bscan(QWidget *parent, CurParam *link) :
 
     connect(bScanControl, SIGNAL(sgSave(QStandardItemModel*,QStandardItemModel*,QStandardItemModel*)), SLOT(slSave(QStandardItemModel*,QStandardItemModel*,QStandardItemModel*)));
     connect(bScanControl, SIGNAL(sgSetSample(quint8, quint8, QByteArray*)), bScanHard, SLOT(slSetSample(quint8, quint8, QByteArray*)));
+
+
+
 
 
     timer->start();
