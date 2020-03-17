@@ -59,6 +59,13 @@
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
          <widget class="QPushButton" name="pbClear">
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
           <property name="text">
            <string>Clear All</string>
           </property>
@@ -79,6 +86,13 @@
         </item>
         <item>
          <widget class="QPushButton" name="pbText">
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
           <property name="text">
            <string>Text Box...</string>
           </property>
@@ -89,6 +103,13 @@
         </item>
         <item>
          <widget class="QPushButton" name="pbArray">
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
           <property name="text">
            <string>Area...</string>
           </property>
@@ -99,6 +120,13 @@
         </item>
         <item>
          <widget class="QPushButton" name="pbCaliper">
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
           <property name="text">
            <string>Caliper...</string>
           </property>
@@ -109,6 +137,13 @@
         </item>
         <item>
          <widget class="QPushButton" name="pbArrow">
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
           <property name="text">
            <string>Arrow...</string>
           </property>
@@ -130,6 +165,13 @@
      <layout class="QVBoxLayout" name="verticalLayout_4">
       <item>
        <widget class="QPushButton" name="pbOS">
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
         <property name="text">
          <string>OS</string>
         </property>

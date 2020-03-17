@@ -11,9 +11,11 @@ adjview::adjview(QTableView *parent) :
                          "margin: 1px;"
                          "text-align: right;"
                          "font-family: arial;"
-                         "font-size: 12px; }";
+                         "font: bold 14px;"
+                         "font-size: 14px; }";
     horizontalHeader()->setStyleSheet(styleSheet);
 }
+
 
 adjview::adjview(int row, int col, QList<int> columnPercent, QTableView *parent):
     QTableView(parent)
@@ -43,9 +45,11 @@ adjview::adjview(int row, int col, QList<int> columnPercent, QTableView *parent)
                          "margin: 1px;"
                          "text-align: right;"
                          "font-family: arial;"
+                         "font: bold 12px;"
                          "font-size: 12px; }";
     horizontalHeader()->setStyleSheet(styleSheet);
 }
+
 
 adjview::adjview(int row, QStringList col, QList<int> columnPercent, QTableView *parent):
     QTableView(parent)
@@ -75,6 +79,7 @@ adjview::adjview(int row, QStringList col, QList<int> columnPercent, QTableView 
                          "margin: 1px;"
                          "text-align: right;"
                          "font-family: arial;"
+                         "font: bold 12px;"
                          "font-size: 12px; }";
     horizontalHeader()->setStyleSheet(styleSheet);
 }
@@ -101,6 +106,7 @@ adjview::adjview(QList<int> col, QTableView *parent):
                          "margin: 1px;"
                          "text-align: right;"
                          "font-family: arial;"
+                         "font: bold 12px;"
                          "font-size: 12px; }";
     horizontalHeader()->setStyleSheet(styleSheet);
 
@@ -128,6 +134,7 @@ adjview::adjview(QList<int> col, int row, QTableView *parent):
                          "margin: 1px;"
                          "text-align: right;"
                          "font-family: arial;"
+                         "font: bold 12px;"
                          "font-size: 12px; }";
     horizontalHeader()->setStyleSheet(styleSheet);
 }
@@ -160,6 +167,7 @@ adjview::adjview(QStringList row, int col, QList<int> columnPercent, QTableView 
                          "margin: 1px;"
                          "text-align: right;"
                          "font-family: arial;"
+                         "font: bold 12px;"
                          "font-size: 12px; }";
     horizontalHeader()->setStyleSheet(styleSheet);
 

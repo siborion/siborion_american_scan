@@ -35,11 +35,23 @@ Bases::Bases(QWidget *parent) :
     lSearch  = new QLabel(tr("Search"));
     leSearch = new QLineEdit();
 
-    model = new QSqlQueryModel ();
+    model = new QSqlQueryModel();
     pTest = new QPushButton();
     pbAdd = new QPushButton();
     pbEdit = new QPushButton();
     pbDel = new QPushButton();
+
+    QFont font;
+    font = pTest->font();
+    font.setBold(true);
+    font.setPixelSize(12);
+    pTest->setFont(font);
+    pbAdd->setFont(font);
+    pbEdit->setFont(font);
+    pbDel->setFont(font);
+
+
+
     pbPatientHistory = new QPushButton();
 
     twTable = new adjview();

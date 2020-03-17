@@ -35,6 +35,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->tabWidget->addTab(bscan,  "B-Scan");
     ui->tabWidget->addTab(printB, "B-Print");
 
+    QFont font = ui->tabWidget->font();
+    font.setBold(true);
+    font.setPixelSize(16);
+    ui->tabWidget->tabBar()->setFont(font);
 
     pCalculator->twMeas = measure->pSampleTable->twMeas;
     print->twMeas = measure->pSampleTable->twMeas;

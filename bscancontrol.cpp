@@ -56,6 +56,12 @@ BScanControl::BScanControl(QWidget *parent, CurParam *link) :
 
     pbLoad = new QPushButton("Load");
     pbSave = new QPushButton("Save");
+    QFont font;
+    font = pbLoad->font();
+    font.setBold(true);
+    font.setPixelSize(12);
+    pbLoad->setFont(font);
+    pbSave->setFont(font);
 
     ui->layoutGroupBox->addWidget(tab  ,  3, 0, 1, 3);
     ui->layoutGroupBox->addWidget(pbUp,   4, 0, 1, 1);

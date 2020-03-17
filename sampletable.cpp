@@ -35,6 +35,15 @@ sampletable::sampletable(QWidget *parent, CurParam *link) :
     pbSave = new QPushButton("Save");
     pbLoad = new QPushButton("Load");
     pbClear  = new QPushButton("Clear");
+    QFont font;
+    font = pbLoad->font();
+    font.setBold(true);
+    font.setPixelSize(12);
+    pbLoad->setFont(font);
+    pbSave->setFont(font);
+    pbClear->setFont(font);
+
+
 
     pbSave->setEnabled(false);
 
